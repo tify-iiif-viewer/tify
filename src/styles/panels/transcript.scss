@@ -1,0 +1,13 @@
+.tify-transcript {
+	@extend %panel;
+	overflow-y: auto;
+	padding: ($grid / 2);
+}
+
+.tify-transcript_page {
+	& + & {
+		border-top: $border-width solid $border-color;
+		margin-top: $grid;
+		padding-top: $grid;
+	}
+}

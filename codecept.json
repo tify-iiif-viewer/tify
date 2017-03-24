@@ -1,0 +1,12 @@
+{
+  "tests": "./tests/e2e/*.test.js",
+  "timeout": 10000,
+  "output": "./tests/e2e/console.output",
+  "helpers": {},
+  "include": {
+    "I": "./tests/e2e/steps.js"
+  },
+  "bootstrap": false,
+  "mocha": {},
+  "name": "tify"
+}

@@ -1,0 +1,32 @@
+.tify-scan {
+	@extend %panel;
+	background: $text-color-light;
+	flex: 3;
+}
+
+.tify-scan_buttons {
+	@extend %button-group;
+	float: left;
+	margin: ($grid / 8);
+
+	&.-vertical {
+		clear: both;
+	}
+}
+
+.tify-scan_button {
+	@extend %button;
+}
+
+.tify-scan_controls {
+	padding: ($grid / 8);
+	position: absolute;
+	z-index: 9;
+}
+
+.tify-scan_image {
+	height: 100%;
+	position: absolute;
+	white-space: nowrap;
+	width: 100%;
+}

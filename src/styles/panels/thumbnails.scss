@@ -1,0 +1,57 @@
+.tify-thumbnails {
+	@extend %panel;
+	min-height: 100%;
+	overflow-y: scroll;
+	padding: ($grid / 8);
+	position: relative;
+}
+
+.tify-thumbnails_item {
+	@include transition(opacity);
+	background: $grey;
+	box-shadow: $drop-shadow;
+	display: block;
+	float: left;
+	height: ($grid * 4.75);
+	margin: ($grid / 8);
+	overflow: hidden;
+	position: relative;
+	width: $thumbnail-width;
+
+	@include hover {
+		opacity: .7;
+	}
+
+	img {
+		display: block;
+		width: 100%;
+	}
+
+	&.-current {
+		background: white;
+
+		img {
+			opacity: .4;
+		}
+	}
+}
+
+.tify-thumbnails_page-number {
+	background: $shade-dark;
+	bottom: 0;
+	color: white;
+	display: block;
+	font-size: $font-size-small;
+	font-weight: bold;
+	padding: 0 ($grid / 4);
+	position: absolute;
+	text-align: center;
+	text-shadow: $shade-inset;
+	width: 100%;
+
+	.tify-thumbnails_item.-current & {
+		background: $shine-light;
+		color: $text-color;
+		text-shadow: $shine-inset;
+	}
+}

@@ -1,0 +1,22 @@
+.tify-export {
+	@extend %panel;
+	padding: ($grid / 2);
+
+	hr {
+		background: $border-color;
+		border: 0;
+		height: $border-width;
+		margin: ($grid / 2 - $border-width) (-$grid / 2) ($grid / 2);
+	}
+}
+
+.tify-export_links {
+	clear: both;
+	margin-left: 0;
+
+	li {
+		+ li {
+			margin-top: ($grid / 2);
+		}
+	}
+}

@@ -1,0 +1,28 @@
+@mixin separator($top, $right: -1, $bottom: $top, $left: $right) {
+	$shadows: ();
+	$light-color: rgba(white, .2);
+	$shadow-color: rgba(black, .1);
+
+	@if $top > 0 {
+		$shadows: append($shadows, 0 -1px 0 $shadow-color, 'comma');
+		$shadows: append($shadows, 0 1px 0 $light-color inset, 'comma');
+	}
+	@if $right > 0 {
+		$shadows: append($shadows, -1px 0 0 $shadow-color inset, 'comma');
+		$shadows: append($shadows, 1px 0 0 $light-color, 'comma');
+	}
+	@if $bottom > 0 {
+		$shadows: append($shadows, 0 -1px 0 $shadow-color inset, 'comma');
+		$shadows: append($shadows, 0 1px 0 $light-color, 'comma');
+	}
+	@if $left > 0 {
+		$shadows: append($shadows, -1px 0 0 $shadow-color, 'comma');
+		$shadows: append($shadows, 1px 0 0 $light-color inset, 'comma');
+	}
+	@if $top == 0 and $right == -1 {
+		border: 0;
+		$shadows: none;
+	}
+
+	box-shadow: $shadows;
+}

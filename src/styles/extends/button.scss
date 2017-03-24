@@ -1,0 +1,38 @@
+%button {
+	background: linear-gradient(to bottom, white, shade(white, 5));
+	border: 0;
+	color: $text-color;
+	cursor: pointer;
+	display: inline-block;
+	font: inherit;
+	min-width: $grid * 1.5;
+	outline: 0;
+	padding: ($grid / 4);
+	text-align: center;
+	text-shadow: 0 1px $shine;
+	user-select: none;
+	vertical-align: middle;
+
+	@include hover {
+		background: linear-gradient(to bottom, shade(white, 5), shade(white, 10));
+		color: shade($text-color, 20);
+	}
+
+	&:active:not(:disabled) {
+		box-shadow: 0 .5px 6px $shade inset;
+	}
+
+	&[disabled] {
+		color: tint($text-color, 75);
+	}
+}
+
+%button-active {
+	background: linear-gradient(to bottom, tint($link-color, 10), shade($link-color, 10));
+	color: white;
+	text-shadow: $shade-inset;
+
+	@include hover {
+		background: linear-gradient(to bottom, shade($link-color, 10), shade($link-color, 30));
+	}
+}

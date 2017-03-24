@@ -1,0 +1,52 @@
+// Dimensions
+$border-width: 1px;
+$br: 2px;
+$grid: 24px;
+
+$breakpoints: (
+	large: 1300px,
+	medium: 1000px,
+	small: 700px,
+	tiny: 400px,
+);
+
+$thumbnail-width: (4 * $grid);
+
+// Typography
+$font-family-display: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+$font-family-text: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+
+$font-size: 16px;
+$font-size-small: 14px;
+$line-height: $grid;
+
+$material-design-icons-font-path: '~material-design-icons-iconfont/dist/fonts/';
+
+// Brand colors
+$brand-color: #1a3771;
+$brand-color-light: #93a8cf;
+$brand-color-lighter: tint(lighten($brand-color, 50), 70);
+
+// Shades
+$grey: #666;
+$grey-dark: #333;
+$grey-light: #e7e7e7;
+$shade: rgba(black, .24);
+$shade-dark: rgba(black, .6);
+$shade-light: rgba(black, .08);
+$shine: rgba(white, .9);
+$shine-light: rgba(white, .6);
+
+// Semantic colors
+$border-color: $grey-light;
+$highlight-color: rgba(lighten($brand-color, 50), .3);
+$link-color: $brand-color;
+$text-color: $grey-dark;
+$text-color-light: tint($text-color, 30);
+
+// Combined values
+$card-shadow: 0 0 1px $shade-light, 0 .5px 3px $shade;
+$drop-shadow: 0 0 ($grid / 4) rgba(black, .5);
+$header-bg: $grey-light;
+$shade-inset: 0 -1px $shade;
+$shine-inset: 0 1px $shine;

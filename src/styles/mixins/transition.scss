@@ -1,0 +1,11 @@
+$transition-duration: .2s !default;
+$transition-timing-function: null !default;
+
+@mixin transition($properties...) {
+	$transitions: ();
+	@each $property in $properties {
+		$trans: unquote('#{$property} #{$transition-duration} #{$transition-timing-function}');
+		$transitions: append($transitions, $trans, comma);
+	}
+	transition: $transitions;
+}

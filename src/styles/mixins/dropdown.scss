@@ -1,0 +1,38 @@
+@mixin dropdown($position: center) {
+	border: $br solid $shade-light;
+	border-radius: $br;
+	box-shadow: $drop-shadow;
+	margin: ($grid / 2) 0;
+	overflow: visible;
+	position: absolute;
+	text-shadow: none;
+	z-index: 9;
+
+	@if ($position == center) {
+		left: 50%;
+		transform: translate(-50%);
+	} @else if ($position == right) {
+		right: ($grid / 4);
+	}
+
+	// Wedge
+	&::before {
+		position: absolute;
+		content: '';
+		background: white;
+		box-shadow: $drop-shadow;
+		width: ($grid / 2);
+		height: ($grid / 2);
+		top: (-$grid / 4);
+		transform: rotate(45deg);
+		z-index: -1;
+
+		@if ($position == center) {
+			left: 50%;
+			transform-origin: 0;
+			transform: rotate(45deg) translate(-50%);
+		} @else if ($position == right) {
+			right: $grid;
+		}
+	}
+}

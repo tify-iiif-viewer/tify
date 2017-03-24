@@ -1,0 +1,169 @@
+.tify-app {
+	bottom: 0;
+	box-sizing: border-box;
+	color: $text-color;
+	display: flex;
+	flex-direction: column;
+	font: #{$font-size} / #{$grid} $font-family-text;
+	height: 100%;
+	left: 0;
+	overflow: hidden;
+	position: absolute;
+	right: 0;
+	top: 0;
+
+	*,
+	*::before,
+	*::after {
+		box-sizing: inherit;
+	}
+
+	h3 {
+		color: $text-color-light;
+		font-size: 1.125em;
+		font-weight: bold;
+		margin: 0 0 ($grid / 2);
+	}
+
+	h4,
+	h5,
+	h6 {
+		color: $text-color-light;
+		font-size: 1em;
+		font-weight: bold;
+		margin-bottom: 0;
+	}
+
+	label {
+		cursor: pointer;
+	}
+
+	input,
+	select,
+	textarea {
+		@include transition(border);
+		background: white;
+		border: $border-width solid $shade;
+		border-radius: $br;
+		font: inherit;
+		padding: ($grid / 4 - $border-width) .5em;
+
+		&:focus {
+			border-color: $brand-color;
+			outline: 0;
+		}
+	}
+
+	code {
+		background: $shade-light;
+		border-radius: $br;
+		padding: ($grid / 8) ($grid / 4);
+	}
+
+	table {
+		margin: (-$grid / 4) -.25em ($grid - $grid / 4);
+	}
+
+	tr {
+		@include respond-to(large) {
+			display: block;
+		}
+
+		@include respond-to(medium) {
+			display: table-row;
+		}
+
+		@include respond-to(tiny) {
+			display: block;
+		}
+	}
+
+	th {
+		color: $text-color-light;
+		padding: ($grid / 4) .25em;
+		text-align: left;
+
+		@include respond-to(large) {
+			display: block;
+		}
+
+		@include respond-to(medium) {
+			display: table-cell;
+		}
+
+		@include respond-to(tiny) {
+			display: block;
+		}
+	}
+
+	td {
+		padding: ($grid / 4) .25em;
+
+		@include respond-to(large) {
+			display: block;
+			margin-top: (-$grid / 2);
+		}
+
+		@include respond-to(medium) {
+			display: table-cell;
+			margin-top: 0;
+		}
+
+		@include respond-to(tiny) {
+			display: block;
+			margin-top: (-$grid / 2);
+		}
+	}
+}
+
+.tify-app_error {
+	background: rgba(#d22, .8);
+	color: white;
+	font-weight: bold;
+	padding: ($grid / 4);
+	position: relative;
+}
+
+.tify-app_loading {
+	animation: fadeIn .5s forwards .5s, spin 1.2s infinite ease-in-out;
+	background: $brand-color-light;
+	border-radius: $br;
+	bottom: $grid / 2;
+	height: ($grid * 1.5);
+	left: $grid / 2;
+	opacity: 0;
+	pointer-events: none;
+	position: absolute;
+	width: ($grid * 1.5);
+
+	@keyframes fadeIn {
+		0% {
+			opacity: 0;
+		}
+
+		100% {
+			opacity: 1;
+		}
+	}
+
+	@keyframes spin {
+		0% {
+			transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+		}
+
+		50% {
+			transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+		}
+
+		100% {
+			transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+		}
+	}
+}
+
+.tify-app_main {
+	display: flex;
+	flex: 1;
+	overflow: hidden;
+	position: relative;
+}

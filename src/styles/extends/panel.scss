@@ -1,0 +1,31 @@
+%panel {
+	@include separator(0, 0, 0, 1);
+	background: white;
+	flex: 1;
+	min-width: 20.5em;
+	overflow-y: auto;
+	position: relative;
+	transition: visibility .2s, width .2s;
+
+	@include respond-to(medium) {
+		border: 0;
+		bottom: 0;
+		min-width: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 0;
+	}
+
+	&:first-child {
+		border: 0;
+	}
+
+	&.-active {
+		display: block;
+	}
+
+	&.-always-active {
+		display: block !important;
+	}
+}

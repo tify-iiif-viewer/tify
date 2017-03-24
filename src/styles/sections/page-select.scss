@@ -1,0 +1,55 @@
+.tify-page-select {
+	@extend %button;
+	min-width: ($grid * 3);
+	padding: ($grid / 4) ($grid / 2);
+	position: relative;
+}
+
+.tify-page-select_dropdown {
+	@include dropdown;
+	margin-top: ($grid * .75);
+	min-width: 5em;
+}
+
+.tify-page-select_filter {
+	background: white;
+	padding: ($grid / 4);
+}
+
+.tify-page-select_input {
+	width: 100%;
+}
+
+.tify-page-select_list {
+	background: white;
+	list-style: none;
+	margin: 0;
+	max-height: ($grid * 11);
+	min-width: 100%;
+	overflow-y: scroll;
+	padding: 0;
+	position: relative;
+
+	> li {
+		border-top: $border-width solid $border-color;
+		padding: ($grid / 8) .5em;
+		user-select: none;
+		white-space: nowrap;
+
+		@include hover {
+			background: $shade-light;
+			color: $link-color;
+		}
+
+		&.-current {
+			background: $shade-light;
+			color: $text-color-light;
+			font-weight: bold;
+		}
+
+		&.-highlighted {
+			background: $link-color;
+			color: white;
+		}
+	}
+}
