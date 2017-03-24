@@ -25,6 +25,12 @@
 	&[disabled] {
 		color: tint($text-color, 75);
 	}
+
+	// Fixing button dimensions in Firefox
+	&::-moz-focus-inner {
+		border-style: none;
+		padding: 0;
+	}
 }
 
 %button-active {
