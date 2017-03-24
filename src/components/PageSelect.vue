@@ -25,6 +25,7 @@
 					@keyup.esc="filter ? filter = '' : isOpen = false"
 					@keydown.up="(highlightIndex > 0) && (highlightIndex -= 1)"
 					@keydown.down="(highlightIndex < filteredCanvases.length - 1) && (highlightIndex += 1)"
+					@keyup.stop
 				>
 			</div>
 			<ul class="tify-page-select_list" ref="list">
