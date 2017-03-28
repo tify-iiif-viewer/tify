@@ -45,6 +45,7 @@
 				itemsPerRow: 0,
 				knownImages: [],
 				style: {},
+				thumbnailWidth: 0,
 			};
 		},
 		watch: {
@@ -62,6 +63,7 @@
 				const vMargin = parseInt(itemStyle.marginTop, 10) + parseFloat(itemStyle.marginBottom, 10);
 				this.itemHeight = itemTemplate.offsetHeight + hMargin;
 				this.itemWidth = itemTemplate.offsetWidth + vMargin;
+				this.thumbnailWidth = itemTemplate.offsetWidth;
 
 				this.$el.style = this.style;
 				this.container.style.width = '';
@@ -93,7 +95,7 @@
 					const id = this.canvases[i].images[0].resource.service['@id'];
 					this.items.push({
 						label: this.canvases[i].label,
-						imgUrl: `${id}/full/${this.itemWidth},/0/default.jpg`,
+						imgUrl: `${id}/full/${this.thumbnailWidth},/0/default.jpg`,
 						page: i + 1,
 					});
 				}
