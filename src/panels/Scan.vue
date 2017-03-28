@@ -1,107 +1,105 @@
 <template>
 	<section class="tify-scan">
-		<div class="tify-scan_controls">
-			<div class="tify-scan_buttons">
-				<button
-					class="tify-scan_button"
-					:disabled="page === 1"
-					:title="'First page'|trans"
-					@click="setPage(1)"
-				>
-					<i class="tify-icon">first_page</i>
-					<span class="tify-sr-only">{{ 'First page'|trans }}</span>
-				</button>
+		<div class="tify-scan_buttons">
+			<button
+				class="tify-scan_button"
+				:disabled="page === 1"
+				:title="'First page'|trans"
+				@click="setPage(1)"
+			>
+				<i class="tify-icon">first_page</i>
+				<span class="tify-sr-only">{{ 'First page'|trans }}</span>
+			</button>
 
-				<button
-					v-if="structures"
-					class="tify-scan_button"
-					:disabled="page === 1"
-					:title="'Previous section'|trans"
-					@click="setPage(page === currentStructure.firstPage ? previousStructure.firstPage : currentStructure.firstPage)"
-				>
-					<i class="tify-icon">skip_previous</i>
-					<span class="tify-sr-only">{{ 'Previous section'|trans }}</span>
-				</button>
+			<button
+				v-if="structures"
+				class="tify-scan_button"
+				:disabled="page === 1"
+				:title="'Previous section'|trans"
+				@click="setPage(page === currentStructure.firstPage ? previousStructure.firstPage : currentStructure.firstPage)"
+			>
+				<i class="tify-icon">skip_previous</i>
+				<span class="tify-sr-only">{{ 'Previous section'|trans }}</span>
+			</button>
 
-				<button
-					class="tify-scan_button"
-					:disabled="page === 1"
-					:title="'Previous page'|trans"
-					@click="setPage(page - 1)"
-				>
-					<i class="tify-icon">navigate_before</i>
-					<span class="tify-sr-only">{{ 'Previous page'|trans }}</span>
-				</button>
+			<button
+				class="tify-scan_button"
+				:disabled="page === 1"
+				:title="'Previous page'|trans"
+				@click="setPage(page - 1)"
+			>
+				<i class="tify-icon">navigate_before</i>
+				<span class="tify-sr-only">{{ 'Previous page'|trans }}</span>
+			</button>
 
-				<button
-					class="tify-scan_button"
-					:disabled="this.page === canvases.length"
-					:title="'Next page'|trans"
-					@click="setPage(page + 1)"
-				>
-					<i class="tify-icon">navigate_next</i>
-					<span class="tify-sr-only">{{ 'Next page'|trans }}</span>
-				</button>
+			<button
+				class="tify-scan_button"
+				:disabled="this.page === canvases.length"
+				:title="'Next page'|trans"
+				@click="setPage(page + 1)"
+			>
+				<i class="tify-icon">navigate_next</i>
+				<span class="tify-sr-only">{{ 'Next page'|trans }}</span>
+			</button>
 
-				<button
-					v-if="structures"
-					class="tify-scan_button"
-					:disabled="page >= lastStructure.firstPage"
-					:title="'Next section'|trans"
-					@click="setPage(nextStructure.firstPage)"
-				>
-					<i class="tify-icon">skip_next</i>
-					<span class="tify-sr-only">{{ 'Next section'|trans }}</span>
-				</button>
+			<button
+				v-if="structures"
+				class="tify-scan_button"
+				:disabled="page >= lastStructure.firstPage"
+				:title="'Next section'|trans"
+				@click="setPage(nextStructure.firstPage)"
+			>
+				<i class="tify-icon">skip_next</i>
+				<span class="tify-sr-only">{{ 'Next section'|trans }}</span>
+			</button>
 
-				<button
-					class="tify-scan_button"
-					:disabled="page === canvases.length"
-					:title="'Last page'|trans"
-					@click="setPage(canvases.length)"
-				>
-					<i class="tify-icon">last_page</i>
-					<span class="tify-sr-only">{{ 'Last page'|trans }}</span>
-				</button>
-			</div>
+			<button
+				class="tify-scan_button"
+				:disabled="page === canvases.length"
+				:title="'Last page'|trans"
+				@click="setPage(canvases.length)"
+			>
+				<i class="tify-icon">last_page</i>
+				<span class="tify-sr-only">{{ 'Last page'|trans }}</span>
+			</button>
+		</div>
 
-			<div class="tify-scan_buttons">
-				<page-select
-					class="tify-scan_button"
-					:canvases="canvases"
-					:page="page"
-					@setPage="setPage"
-				/>
-			</div>
+		<div class="tify-scan_buttons">
+			<page-select
+				class="tify-scan_button"
+				:canvases="canvases"
+				:page="page"
+				@setPage="setPage"
+			/>
+		</div>
 
-			<div class="tify-scan_buttons -vertical">
-				<button
-					class="tify-scan_button"
-					:disabled="isMaxZoom"
-					:title="'Zoom in'|trans"
-					@click="zoomIn"
-				>
-					<i class="tify-icon">zoom_in</i>
-					<span class="tify-sr-only">{{ 'Zoom in'|trans }}</span
-				></button>
-				<button
-					class="tify-scan_button"
-					:title="'Reset view'|trans"
-					@click="resetView"
-				>
-					<i class="tify-icon">settings_overscan</i>
-					<span class="tify-sr-only">{{ 'Reset view'|trans }}</span>
-				</button>
-				<button
-					class="tify-scan_button"
-					:disabled="isMinZoom"
-					:title="'Zoom out'|trans"
-					@click="zoomOut"
-				>
-					<i class="tify-icon">zoom_out</i>
-					<span class="tify-sr-only">{{ 'Zoom out'|trans }}</span>
-				</button>
-			</div>
+		<div class="tify-scan_buttons -vertical">
+			<button
+				class="tify-scan_button"
+				:disabled="isMaxZoom"
+				:title="'Zoom in'|trans"
+				@click="zoomIn"
+			>
+				<i class="tify-icon">zoom_in</i>
+				<span class="tify-sr-only">{{ 'Zoom in'|trans }}</span
+			></button>
+			<button
+				class="tify-scan_button"
+				:title="'Reset view'|trans"
+				@click="resetView"
+			>
+				<i class="tify-icon">settings_overscan</i>
+				<span class="tify-sr-only">{{ 'Reset view'|trans }}</span>
+			</button>
+			<button
+				class="tify-scan_button"
+				:disabled="isMinZoom"
+				:title="'Zoom out'|trans"
+				@click="zoomOut"
+			>
+				<i class="tify-icon">zoom_out</i>
+				<span class="tify-sr-only">{{ 'Zoom out'|trans }}</span>
+			</button>
 		</div>
 
 		<div class="tify-scan_image" id="scan_image"></div>

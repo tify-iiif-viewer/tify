@@ -7,7 +7,9 @@
 .tify-scan_buttons {
 	@extend %button-group;
 	float: left;
-	margin: ($grid / 8);
+	margin: ($grid / 4) 0 0 ($grid / 4);
+	position: relative;
+	z-index: 9;
 
 	&.-vertical {
 		clear: both;
@@ -16,12 +18,6 @@
 
 .tify-scan_button {
 	@extend %button;
-}
-
-.tify-scan_controls {
-	padding: ($grid / 8);
-	position: absolute;
-	z-index: 9;
 }
 
 .tify-scan_image {
