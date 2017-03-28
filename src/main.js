@@ -6,11 +6,21 @@ import translationEn from '@/translations/en';
 
 Vue.use(require('vue-resource'));
 
+// In dev mode, stylesheet is inlined for hot reload
+let stylesheetUrl;
+if (process.env.NODE_ENV === 'production') {
+	const scripts = document.getElementsByTagName('script');
+	const scriptUrl = scripts[scripts.length - 1];
+	stylesheetUrl = `${scriptUrl.src.substring(0, scriptUrl.src.lastIndexOf('/'))}/tify.css`;
+} else {
+	stylesheetUrl = null;
+}
+
 const options = Object.assign({
 	container: '#tify',
 	language: 'en',
 	manifestUrl: null,
-	stylesheetUrl: null,
+	stylesheetUrl,
 	title: 'TIFY',
 }, window.tifyOptions);
 
@@ -28,6 +38,12 @@ const app = new Vue({
 		options,
 	},
 	methods: {
+		appendStylesheet(url) {
+			const link = document.createElement('link');
+			link.href = url;
+			link.rel = 'stylesheet';
+			document.head.appendChild(link);
+		},
 		error(message) {
 			this.errorMessage = message;
 			this.loading = false;
@@ -35,20 +51,13 @@ const app = new Vue({
 		},
 	},
 	mounted() {
-		// Load stylesheet
-		if (this.options.stylesheetUrl) {
-			const link = document.createElement('link');
-			link.href = this.options.stylesheetUrl;
-			link.rel = 'stylesheet';
-			document.head.appendChild(link);
-		}
+		if (this.options.stylesheetUrl) this.appendStylesheet(this.options.stylesheetUrl);
 
 		const translations = {
 			de: translationDe,
 			en: translationEn,
 		};
 		this.messages = translations[this.options.language];
-
 		if (!this.messages) this.error(`Translation not available: ${this.options.language}`);
 
 		// TODO: Interceptor should set this to true on first XHR, but does not

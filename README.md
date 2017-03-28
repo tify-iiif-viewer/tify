@@ -36,8 +36,6 @@ The only required parameter `manifestUrl` is a URL pointing to the manifest. It 
 <script src="tify.js"></script>
 ```
 
-> Note that if TIFY is not located in the WWW root, you must set `stylesheet: '<tify-directory>/tify.css'` even for the default styles.
-
 ## Build Setup
 
 Install dependencies:
