@@ -121,8 +121,25 @@
 	background: rgba(#d22, .8);
 	color: white;
 	font-weight: bold;
-	padding: ($grid / 4);
 	position: relative;
+}
+
+.tify-app_error-message {
+	display: inline-block;
+	padding: ($grid / 4);
+}
+
+.tify-app_error-close {
+	background: 0;
+	border: 0;
+	color: white;
+	cursor: pointer;
+	float: right;
+	padding: ($grid / 4);
+
+	@include hover {
+		background: $shade-light;
+	}
 }
 
 .tify-app_loading {

@@ -47,7 +47,12 @@
 			<span class="tify-sr-only">{{ 'Loading'|trans }}</span>
 		</div>
 
-		<div v-if="$root.errorMessage" class="tify-app_error" v-html="$root.errorMessage"></div>
+		<div v-if="$root.errorMessage" class="tify-app_error">
+			<span class="tify-app_error-message" v-html="$root.errorMessage"></span>
+			<button class="tify-app_error-close" @click="$root.errorMessage = ''">
+				<i class="tify-icon">close</i>
+			</button>
+		</div>
 	</div>
 </template>
 

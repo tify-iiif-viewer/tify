@@ -216,6 +216,10 @@
 					}
 				});
 
+				this.viewer.addHandler('tile-load-failed', (error) => {
+					this.$root.error(`Error loading image: ${error.tile.url}`);
+				});
+
 				// TODO: Loading is regarded as complete once the first tile has been downloaded.
 				// OpenSeadragon will probably get a new 'fully-loaded' event with the next release.
 				this.viewer.addHandler('tile-loaded', () => { this.$root.loading = false; });
