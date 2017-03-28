@@ -1,8 +1,8 @@
 <template>
 	<div class="tify-app">
-		<app-header v-if="manifestLoaded" @togglePanel="togglePanel" :manifest="manifest" :panel="params.panel"/>
+		<app-header v-if="manifest" @togglePanel="togglePanel" :manifest="manifest" :panel="params.panel"/>
 
-		<div v-if="manifestLoaded" class="tify-app_main">
+		<div v-if="manifest" class="tify-app_main">
 			<scan
 				:canvases="canvases"
 				:structures="manifest.structures"
@@ -79,9 +79,9 @@
 				params[parts[0]] = parts[1];
 			}
 
-			// Merge user-set query params with defaults
+			// Merging user-set query params with defaults
 			params = {
-				manifest: params.manifest || this.$root.options.manifest || null,
+				manifestUrl: params.manifestUrl || null,
 				page: parseInt(params.page, 10) || 1,
 				panel: typeof params.panel !== 'undefined' ? params.panel : 'metadata',
 				panX: parseFloat(params.panX) || null,
@@ -90,8 +90,7 @@
 			};
 
 			return {
-				manifestLoaded: false,
-				manifest: {},
+				manifest: null,
 				params,
 			};
 		},
@@ -104,14 +103,9 @@
 			},
 		},
 		methods: {
-			error(message) {
-				this.$root.errorMessage = message;
-				this.$root.loading = false;
-				throw new Error(message);
-			},
 			setPage(page) {
 				if (isNaN(page) || page < 1 || page > this.pageCount) {
-					this.error('Invalid page');
+					this.$root.error('Invalid page');
 				}
 				this.updateParams({ page });
 			},
@@ -124,7 +118,7 @@
 
 				const hashes = [];
 				Object.keys(this.params).forEach((key) => {
-					hashes.push(`${key}=${this.params[key]}`);
+					if (this.params[key] !== null) hashes.push(`${key}=${this.params[key]}`);
 				});
 				window.history.pushState({}, '', `${window.location.pathname}?${hashes.join('&')}`);
 			},
@@ -133,18 +127,22 @@
 			},
 		},
 		created() {
-			if (!this.params.manifest) {
-				this.error('Missing query parameter or option: manifest');
+			// Manifest URL in tifyOptions trumps query param
+			const manifestUrl = this.$root.options.manifestUrl || this.params.manifestUrl;
+
+			if (!manifestUrl) {
+				this.$root.error('Missing query parameter or option: manifestUrl');
+			} else if (this.$root.options.manifestUrl && this.params.manifestUrl) {
+				this.$root.error('Setting manifestUrl via query parameter is disabled');
 			}
 
-			this.$http.get(this.params.manifest).then((response) => {
+			this.$http.get(manifestUrl).then((response) => {
 				this.manifest = response.data;
 				if (this.$root.options.title) {
 					window.document.title = `${this.manifest.label} | ${this.$root.options.title}`;
 				}
-				this.manifestLoaded = true;
-			}, () => {
-				this.error('Error loading IIIF manifest');
+			}, (response) => {
+				this.$root.error(`Error loading IIIF manifest: ${response.statusText || 'Disconnected'}`);
 			});
 
 			// TODO: Remove unused key codes

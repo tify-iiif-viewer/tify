@@ -9,8 +9,8 @@ Vue.use(require('vue-resource'));
 const options = Object.assign({
 	container: '#tify',
 	language: 'en',
-	manifest: null,
-	stylesheet: null,
+	manifestUrl: null,
+	stylesheetUrl: null,
 	title: 'TIFY',
 }, window.tifyOptions);
 
@@ -27,24 +27,32 @@ const app = new Vue({
 		messages: {},
 		options,
 	},
+	methods: {
+		error(message) {
+			this.errorMessage = message;
+			this.loading = false;
+			throw new Error(message);
+		},
+	},
 	mounted() {
 		// Load stylesheet
-		if (this.options.stylesheet) {
+		if (this.options.stylesheetUrl) {
 			const link = document.createElement('link');
-			link.href = this.options.stylesheet;
+			link.href = this.options.stylesheetUrl;
 			link.rel = 'stylesheet';
 			document.head.appendChild(link);
 		}
-
-		// TODO: Interceptor should set this to true on first XHR, but does not
-		this.loading = true;
 
 		const translations = {
 			de: translationDe,
 			en: translationEn,
 		};
-
 		this.messages = translations[this.options.language];
+
+		if (!this.messages) this.error(`Translation not available: ${this.options.language}`);
+
+		// TODO: Interceptor should set this to true on first XHR, but does not
+		this.loading = true;
 	},
 });
 

@@ -229,8 +229,8 @@
 				const infoUrl = `${this.id}/info.json`;
 				this.$http.get(infoUrl).then((response) => {
 					this.initOpenSeadragon(response.data);
-				}).catch(() => {
-					this.$root.errorMessage = 'Error loading image info file';
+				}, (response) => {
+					this.$root.errorMessage = `Error loading image info file: ${response.statusText || 'Disconnected'}`;
 				});
 			},
 			resetView() {
