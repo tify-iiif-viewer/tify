@@ -120,7 +120,7 @@
 				Object.keys(this.params).forEach((key) => {
 					if (this.params[key] !== null) hashes.push(`${key}=${this.params[key]}`);
 				});
-				window.history.pushState({}, '', `${window.location.pathname}?${hashes.join('&')}`);
+				window.history.replaceState({}, '', `${window.location.pathname}?${hashes.join('&')}`);
 			},
 			togglePanel(name) {
 				this.updateParams({ panel: (name === this.params.panel ? '' : name) });
