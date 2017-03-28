@@ -10,9 +10,7 @@
 						{{ string|trans }}<span v-if="index < item.value.length - 1">, </span>
 					</template>
 				</td>
-				<td class="tify-metadata_text" v-else>
-					{{ item.value|trans }}
-				</td>
+				<td class="tify-metadata_text" v-else v-html="item.value"></td>
 			</tr>
 		</table>
 	</section>
