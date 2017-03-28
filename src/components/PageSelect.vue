@@ -1,5 +1,5 @@
 <template>
-	<div
+	<button
 		class="tify-page-select"
 		:title="pageTitleAttr"
 		v-click-outside="closeDropdown"
@@ -38,7 +38,7 @@
 				</li>
 			</ul>
 		</div>
-	</div>
+	</button>
 </template>
 
 <script>
