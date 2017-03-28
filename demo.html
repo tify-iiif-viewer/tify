@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>TIFY - The fastest IIIF document viewer</title>
+	<style>
+		body {
+			display: flex;
+			flex-direction: column;
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+			height: 100vh;
+			margin: 0;
+		}
+
+		h1 {
+			font-size: 1.5rem;
+			font-weight: normal;
+			margin: 0;
+			padding: .5rem;
+		}
+
+		#tify {
+			flex: 1;
+			position: relative;
+		}
+	</style>
+</head>
+<body>
+	<h1>TIFY &ndash; The fastest IIIF document viewer</h1>
+	<div id="tify"></div>
+
+	<script>
+		tifyOptions = {
+			container: '#tify',
+			manifestUrl: 'https://purl.stanford.edu/qm670kv1873/iiif/manifest.json',
+		};
+	</script>
+	<script src="dist/tify.js"></script>
+</body>
