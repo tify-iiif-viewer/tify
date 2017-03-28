@@ -77,8 +77,8 @@
 .tify-header_title {
 	font-size: 1.25rem;
 	font-weight: normal;
-	line-height: $grid;
-	margin: ($grid / 4) 0;
+	line-height: ($grid * 1.25);
+	margin: ($grid / 8) 0;
 	overflow: hidden;
 	padding: 0;
 	text-overflow: ellipsis;

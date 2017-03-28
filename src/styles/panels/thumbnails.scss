@@ -10,6 +10,7 @@
 	@include transition(opacity);
 	background: $grey;
 	box-shadow: $drop-shadow;
+	cursor: pointer;
 	display: block;
 	float: left;
 	height: ($grid * 4.75);

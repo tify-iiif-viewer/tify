@@ -82,6 +82,7 @@
 		color: $text-color-light;
 		padding: ($grid / 4) .25em;
 		text-align: left;
+		vertical-align: top;
 
 		@include respond-to(large) {
 			display: block;
