@@ -2,6 +2,8 @@
   "name": "tify",
   "version": "1.0.0",
   "description": "A IIIF document viewer",
+  "homepage": "https://github.com/subugoe/tify",
+  "license": "AGPL-1.0",
   "author": "Tobias Schäfer / SUB Göttingen <tobias.schaefer@sub.uni-goettingen.de>",
   "license": "AGPL-3.0",
   "scripts": {
