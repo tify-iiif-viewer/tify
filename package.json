@@ -1,6 +1,6 @@
 {
   "name": "tify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A IIIF document viewer",
   "homepage": "https://github.com/subugoe/tify",
   "license": "AGPL-1.0",
