@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A IIIF document viewer",
   "author": "Tobias Schäfer / SUB Göttingen <tobias.schaefer@sub.uni-goettingen.de>",
+  "license": "AGPL-3.0",
   "scripts": {
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
