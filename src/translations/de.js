@@ -1,15 +1,16 @@
+/* eslint-disable quote-props */
 module.exports = {
 	// Common
-	Panel: 'Menü',
-	Scan: 'Scan',
-	Transcript: 'Transkription',
-	Pages: 'Seiten',
-	Contents: 'Inhalt',
-	Metadata: 'Metadaten',
-	Export: 'Export',
+	'Panel': 'Menü',
+	'Scan': 'Scan',
+	'Transcript': 'Transkription',
+	'Pages': 'Seiten',
+	'Contents': 'Inhalt',
+	'Metadata': 'Metadaten',
+	'Export': 'Export',
 
 	// Scan
-	Help: 'Hilfe',
+	'Help': 'Hilfe',
 	'First page': 'Erste Seite',
 	'Previous section': 'Voriger Abschnitt',
 	'Previous page': 'Vorige Seite',
@@ -22,20 +23,19 @@ module.exports = {
 	'Physical page': 'Physische Seite',
 	'Logical page': 'Logische Seite',
 	'Current page': 'Aktuelle Seite',
-	Loading: 'Wird geladen',
+	'Loading': 'Wird geladen',
 
 	// Metadata
-	author: 'Autor',
-	classification: 'Klassifikation',
-	language: 'Sprache',
-	publishing_place: 'Ort',
-	publishing_year: 'Jahr',
-	publisher: 'Verlag',
-
-	// TOC
-	'Download this section as PDF': 'Diesen Abschnitt als PDF herunterladen',
+	'Author': 'Autor',
+	'Classification': 'Klassifikation',
+	'Date': 'Datum',
+	'Language': 'Sprache',
+	'Publishing place': 'Ort der Veröffentlichung',
+	'Publishing year': 'Jahr der Veröffentlichung',
+	'Publisher': 'Verlag',
 
 	// Languages
-	eng: 'Englisch',
-	lat: 'Latein',
+	// TODO: Add all
+	'eng': 'Englisch',
+	'lat': 'Latein',
 };
