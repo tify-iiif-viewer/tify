@@ -6,6 +6,7 @@ import translationEn from '@/translations/en';
 
 Vue.use(require('vue-resource'));
 
+// In production mode, add stylesheet link to header
 // In dev mode, stylesheet is inlined for hot reload
 let stylesheetUrl;
 if (process.env.NODE_ENV === 'production') {

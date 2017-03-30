@@ -92,10 +92,10 @@
 		},
 		data() {
 			// Get query params
-			const hashes = window.location.search.substr(1).split('&');
+			const queryTuples = window.location.search.substr(1).split('&');
 			let params = {};
-			for (let i = 0; i < hashes.length; i += 1) {
-				const parts = hashes[i].split('=');
+			for (let i = 0; i < queryTuples.length; i += 1) {
+				const parts = queryTuples[i].split('=');
 				params[parts[0]] = parts[1];
 			}
 
@@ -124,7 +124,7 @@
 				return this.manifest.sequences[0].canvases;
 			},
 			exportItems() {
-				if (!this.manifest.seeAlso) return false;
+				if (!Array.isArray(this.manifest.seeAlso)) return false;
 
 				const exportItems = [];
 				this.manifest.seeAlso.forEach((item) => {
