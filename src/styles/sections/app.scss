@@ -29,13 +29,11 @@
 		margin: 0 0 ($grid / 2);
 	}
 
-	h4,
-	h5,
-	h6 {
+	h4 {
 		color: $text-color-light;
 		font-size: 1em;
 		font-weight: bold;
-		margin-bottom: 0;
+		margin: 0 0 ($grid / 2);
 	}
 
 	label {
