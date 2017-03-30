@@ -1,6 +1,14 @@
 <template>
 	<div class="tify-app">
-		<app-header v-if="manifest" @togglePanel="togglePanel" :manifest="manifest" :panel="params.panel"/>
+		<app-header
+			v-if="manifest"
+			:manifest="manifest"
+			:panel="params.panel"
+			:exportEnabled="!!exportItems"
+			:tocEnabled="!!manifest.structures"
+			:transcriptEnabled="false"
+			@togglePanel="togglePanel"
+		/>
 
 		<div v-if="manifest" class="tify-app_main">
 			<scan
@@ -38,6 +46,11 @@
 				:metadata="manifest.metadata"
 			/>
 
+			<export
+				v-if="!!exportItems && params.panel === 'export'"
+				:items="exportItems"
+			/>
+
 			<help
 				v-if="params.panel === 'help'"
 			/>
@@ -58,22 +71,24 @@
 
 <script>
 	import AppHeader from '@/components/Header';
-	import Scan from '@/panels/Scan';
-	import Transcript from '@/panels/Transcript';
-	import Toc from '@/panels/Toc';
-	import Thumbnails from '@/panels/Thumbnails';
-	import Metadata from '@/panels/Metadata';
+	import Export from '@/panels/Export';
 	import Help from '@/panels/Help';
+	import Metadata from '@/panels/Metadata';
+	import Scan from '@/panels/Scan';
+	import Thumbnails from '@/panels/Thumbnails';
+	import Toc from '@/panels/Toc';
+	import Transcript from '@/panels/Transcript';
 
 	export default {
 		components: {
 			AppHeader,
-			Scan,
-			Transcript,
-			Toc,
-			Thumbnails,
-			Metadata,
+			Export,
 			Help,
+			Metadata,
+			Scan,
+			Thumbnails,
+			Toc,
+			Transcript,
 		},
 		data() {
 			// Get query params
@@ -95,6 +110,11 @@
 			};
 
 			return {
+				exportFormats: [
+					'application/x-bibtex',
+					'application/x-endnote-refer',
+					'application/x-research-info-systems',
+				],
 				manifest: null,
 				params,
 			};
@@ -102,6 +122,20 @@
 		computed: {
 			canvases() {
 				return this.manifest.sequences[0].canvases;
+			},
+			exportItems() {
+				if (!this.manifest.seeAlso) return false;
+
+				const exportItems = [];
+				this.manifest.seeAlso.forEach((item) => {
+					if (this.exportFormats.indexOf(item.format) > -1) {
+						exportItems.push(item);
+					}
+				});
+
+				if (exportItems.length < 1) return false;
+
+				return exportItems;
 			},
 			pageCount() {
 				return this.manifest.sequences[0].canvases.length;

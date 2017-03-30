@@ -25,9 +25,8 @@
 					<i class="tify-icon">photo</i>
 					{{ 'Scan'|trans }}
 				</button>
-				<!-- TODO: Only show transcription button and panel if actually available -->
 				<button
-					v-if="false"
+					v-if="transcriptEnabled"
 					class="tify-header_button"
 					:class="{ '-active': panel === 'transcript' }"
 					@click="$emit('togglePanel', 'transcript')"
@@ -44,7 +43,7 @@
 					{{ 'Pages'|trans }}
 				</button>
 				<button
-					v-if="manifest.structures"
+					v-if="tocEnabled"
 					class="tify-header_button"
 					:class="{ '-active': panel === 'toc' }"
 					@click="$emit('togglePanel', 'toc')"
@@ -59,6 +58,15 @@
 				>
 					<i class="tify-icon">info_outline</i>
 					{{ 'Metadata'|trans }}
+				</button>
+				<button
+					v-if="exportEnabled"
+					class="tify-header_button"
+					:class="{ '-active': panel === 'export' }"
+					@click="$emit('togglePanel', 'export')"
+				>
+					<i class="tify-icon">file_download</i>
+					{{ 'Export'|trans }}
 				</button>
 				<button
 					class="tify-header_button -help"
@@ -79,6 +87,9 @@
 		props: [
 			'manifest',
 			'panel',
+			'exportEnabled',
+			'tocEnabled',
+			'transcriptEnabled',
 		],
 		data() {
 			return {

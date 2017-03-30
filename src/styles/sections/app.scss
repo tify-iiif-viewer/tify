@@ -18,6 +18,10 @@
 		box-sizing: inherit;
 	}
 
+	a {
+		color: $link-color;
+	}
+
 	h3 {
 		color: $text-color-light;
 		font-size: 1.125em;
