@@ -61,9 +61,9 @@
 			<span class="tify-sr-only">{{ 'Loading'|trans }}</span>
 		</div>
 
-		<div v-if="$root.errorMessage" class="tify-app_error">
-			<span class="tify-app_error-message" v-html="$root.errorMessage"></span>
-			<button class="tify-app_error-close" @click="$root.errorMessage = ''">
+		<div v-if="$root.error" class="tify-app_error">
+			<span class="tify-app_error-message" v-html="$root.error"></span>
+			<button class="tify-app_error-close" @click="$root.error = ''">
 				<i class="tify-icon">close</i>
 			</button>
 		</div>
@@ -126,7 +126,7 @@
 		methods: {
 			setPage(page) {
 				if (isNaN(page) || page < 1 || page > this.pageCount) {
-					this.$root.error('Invalid page');
+					this.$root.error = 'Invalid page';
 				}
 				this.updateParams({ page });
 			},
@@ -152,9 +152,9 @@
 			const manifestUrl = this.$root.options.manifestUrl || this.params.manifestUrl;
 
 			if (!manifestUrl) {
-				this.$root.error('Missing query parameter or option: manifestUrl');
+				this.$root.error = 'Missing query parameter or option: manifestUrl';
 			} else if (this.$root.options.manifestUrl && this.params.manifestUrl) {
-				this.$root.error('Setting manifestUrl via query parameter is disabled');
+				this.$root.error = 'Setting manifestUrl via query parameter is disabled';
 			}
 
 			this.$http.get(manifestUrl).then((response) => {
@@ -162,8 +162,8 @@
 				if (this.$root.options.title) {
 					window.document.title = `${this.manifest.label} | ${this.$root.options.title}`;
 				}
-			}, (response) => {
-				this.$root.error(`Error loading IIIF manifest: ${response.response.statusText || 'Disconnected'}`);
+			}, (error) => {
+				this.$root.error = `Error loading IIIF manifest: ${error.response ? error.response.statusText : 'Disconnected'}`;
 			});
 
 			// TODO: Remove unused key codes

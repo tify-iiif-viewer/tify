@@ -217,7 +217,7 @@
 				});
 
 				this.viewer.addHandler('tile-load-failed', (error) => {
-					this.$root.error(`Error loading image: ${error.tile.url}`);
+					this.$root.error = `Error loading image: ${error.tile.url}`;
 				});
 
 				// TODO: Loading is regarded as complete once the first tile has been downloaded.
@@ -231,8 +231,8 @@
 				const infoUrl = `${this.id}/info.json`;
 				this.$http.get(infoUrl).then((response) => {
 					this.initOpenSeadragon(response.data);
-				}, (response) => {
-					this.$root.errorMessage = `Error loading image info file: ${response.response.statusText || 'Disconnected'}`;
+				}, (error) => {
+					this.$root.error = `Error loading image info file: ${error.response ? error.response.statusText : 'Disconnected'}`;
 				});
 			},
 			resetView() {

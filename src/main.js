@@ -1,9 +1,6 @@
 import Vue from 'vue';
 import App from '@/App';
 
-import translationDe from '@/translations/de';
-import translationEn from '@/translations/en';
-
 Vue.prototype.$http = require('axios');
 
 // In production mode, add stylesheet link to header
@@ -33,7 +30,7 @@ const app = new Vue({
 	el: container,
 	render: h => h(App),
 	data: {
-		errorMessage: '',
+		error: '',
 		loading: false,
 		messages: {},
 		options,
@@ -44,10 +41,6 @@ const app = new Vue({
 			link.href = url;
 			link.rel = 'stylesheet';
 			document.head.appendChild(link);
-		},
-		error(message) {
-			this.errorMessage = message;
-			throw new Error(message);
 		},
 	},
 	mounted() {
@@ -63,12 +56,12 @@ const app = new Vue({
 
 		if (this.options.stylesheetUrl) this.appendStylesheet(this.options.stylesheetUrl);
 
-		const translations = {
-			de: translationDe,
-			en: translationEn,
-		};
-		this.messages = translations[this.options.language];
-		if (!this.messages) this.error(`Translation not available: ${this.options.language}`);
+		const translationUrl = `translations/${this.options.language}.json`;
+		this.$http.get(translationUrl).then((response) => {
+			this.messages = response.data;
+		}, (error) => {
+			this.error = `Error loading translation ${this.options.language}: ${error.response ? error.response.statusText : 'Disconnected'}`;
+		});
 
 		// TODO: Interceptor should set this to true on first XHR, but does not
 		this.loading = true;
