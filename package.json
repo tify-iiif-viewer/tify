@@ -1,6 +1,6 @@
 {
   "name": "tify",
-  "version": "1.0.3",
+  "version": "0.1.0",
   "description": "A IIIF document viewer",
   "homepage": "https://github.com/subugoe/tify",
   "repository": {
