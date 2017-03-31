@@ -34,6 +34,12 @@ module.exports = {
 	'Publishing year': 'Jahr der Veröffentlichung',
 	'Publisher': 'Verlag',
 
+	// Export
+	'Renderings': 'Bilddaten',
+	'Literature Management': 'Literaturverwaltung',
+	'PDF download': 'PDF-Download',
+	'Other Formats': 'Sonstige Formate',
+
 	// Languages
 	// TODO: Add all
 	'eng': 'Englisch',

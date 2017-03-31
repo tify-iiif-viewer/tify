@@ -4,7 +4,7 @@
 			v-if="manifest"
 			:manifest="manifest"
 			:panel="params.panel"
-			:exportEnabled="!!manifest.seeAlso"
+			:exportEnabled="!!manifest.rendering || !!manifest.seeAlso"
 			:tocEnabled="!!manifest.structures"
 			:transcriptEnabled="false"
 			@togglePanel="togglePanel"
@@ -48,7 +48,8 @@
 
 			<export
 				v-if="!!manifest.seeAlso && params.panel === 'export'"
-				:items="manifest.seeAlso"
+				:exportItems="manifest.seeAlso"
+				:renderingItems="manifest.rendering"
 			/>
 
 			<help

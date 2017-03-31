@@ -2,20 +2,29 @@
 	<section class="tify-export">
 		<h2 class="tify-sr-only">{{ 'Export'|trans }}</h2>
 
-		<template v-if="literatureItems">
-			<h3>{{ 'Literature Management'|trans }}</h3>
+		<template v-if="renderingItems">
+			<h3>{{ 'Renderings'|trans }}</h3>
 			<ul class="tify-export_links">
-				<li v-for="item in literatureItems">
-					<a :href="item['@id']" download>{{ item.name }}</a>
+				<li v-for="item in renderingItems">
+					<a :href="item['@id']" download>{{ item.label|trans }}</a>
 				</li>
 			</ul>
 		</template>
 
-		<template v-if="metadataItems">
-			<h3>{{ 'Metadata'|trans }}</h3>
+		<template v-if="literatureItems">
+			<h3>{{ 'Literature Management'|trans }}</h3>
 			<ul class="tify-export_links">
-				<li v-for="item in metadataItems">
-					<a :href="item['@id']" download>{{ item.name }}</a>
+				<li v-for="item in literatureItems">
+					<a :href="item['@id']" download>{{ item.label }}</a>
+				</li>
+			</ul>
+		</template>
+
+		<template v-if="otherItems">
+			<h3>{{ 'Other Formats'|trans }}</h3>
+			<ul class="tify-export_links">
+				<li v-for="item in otherItems">
+					<a :href="item['@id']" download>{{ item.label }}</a>
 				</li>
 			</ul>
 		</template>
@@ -26,55 +35,65 @@
 	export default {
 		name: 'PanelExport',
 		props: [
-			'items',
+			'exportItems',
+			'renderingItems',
 		],
 		data() {
 			return {
 				criteria: [
 					{
-						name: 'BibTex',
+						label: 'BibTex',
 						profile: 'http://www.bibtex.org/Format/',
 						type: 'literature',
 					},
 					{
-						name: 'EndNote',
+						label: 'EndNote',
 						profile: 'http://endnote.com/',
 						type: 'literature',
 					},
 					{
-						name: 'RIS',
+						label: 'RIS',
 						profile: 'http://referencemanager.com/sites/rm/files/m/direct_export_ris.pdf',
 						type: 'literature',
 					},
 					{
-						name: 'METS',
+						label: 'METS',
 						profile: 'http://www.loc.gov/standards/mets/profile_docs/mets.profile.v2-0.xsd',
-						type: 'metadata',
+						type: 'other',
+					},
+					{
+						label: 'MODS',
+						format: 'application/mods+xml',
+						type: 'other',
 					},
 				],
 			};
 		},
 		computed: {
 			literatureItems() {
-				return this.filterItems('literature');
+				return this.filterExportItems('literature');
 			},
-			metadataItems() {
-				return this.filterItems('metadata');
+			otherItems() {
+				return this.filterExportItems('other');
 			},
 		},
 		methods: {
-			filterItems(type) {
+			filterExportItems(type) {
+				const exportItems = Array.isArray(this.exportItems) ? this.exportItems : [this.exportItems];
 				const filteredItems = [];
-				this.items.forEach((item) => {
+				exportItems.forEach((item) => {
 					this.criteria.some((criterion) => {
-						if (criterion.type === type && criterion.profile === item.profile) {
+						const formatsMatch = (criterion.format === item.format);
+						const profilesMatch = (criterion.profile === item.profile);
+						if (criterion.type === type && (formatsMatch || profilesMatch)) {
 							const exportItem = item;
-							exportItem.name = criterion.name;
+							exportItem.label = criterion.label;
 							return filteredItems.push(exportItem);
 						}
 						return false;
 					});
 				});
+				if (filteredItems.length < 1) return null;
 				return filteredItems;
 			},
 		},

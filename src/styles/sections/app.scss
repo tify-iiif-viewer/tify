@@ -29,15 +29,16 @@
 	}
 
 	h3 {
-		color: $text-color-light;
+		border-bottom: 1px solid $shade;
 		font-size: 1.125em;
-		font-weight: bold;
-		margin: 0 0 ($grid / 2);
+		font-weight: normal;
+		padding: 0 0 ($grid * .25 - 1px);
+		margin: 0 0 ($grid * .75);
 	}
 
 	h4 {
 		color: $text-color-light;
-		font-size: 1em;
+		font-size: 1.125em;
 		font-weight: bold;
 		margin: 0 0 ($grid / 2);
 	}
