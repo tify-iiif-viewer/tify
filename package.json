@@ -7,6 +7,9 @@
     "type:": "git",
     "url": "https://github.com/subugoe/tify"
   },
+  "bugs": {
+    "url": "https://github.com/subugoe/tify/issues"
+  },
   "author": "Tobias Schäfer / SUB Göttingen <tobias.schaefer@sub.uni-goettingen.de>",
   "license": "AGPL-3.0",
   "scripts": {
