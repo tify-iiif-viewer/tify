@@ -5,13 +5,14 @@ Vue.prototype.$http = require('axios');
 
 // In production mode, add stylesheet link to header
 // In dev mode, stylesheet is inlined for hot reload
-let stylesheetUrl;
+// TODO: We cannot be sure that TIFY was loaded in a script tag, add a base option
+let base = '.';
+let stylesheetUrl = null;
 if (process.env.NODE_ENV === 'production') {
 	const scripts = document.getElementsByTagName('script');
 	const scriptUrl = scripts[scripts.length - 1];
-	stylesheetUrl = `${scriptUrl.src.substring(0, scriptUrl.src.lastIndexOf('/'))}/tify.css`;
-} else {
-	stylesheetUrl = null;
+	base = scriptUrl.src.substring(0, scriptUrl.src.lastIndexOf('/'));
+	stylesheetUrl = `${base}/tify.css`;
 }
 
 const options = Object.assign({
@@ -56,7 +57,7 @@ const app = new Vue({
 
 		if (this.options.stylesheetUrl) this.appendStylesheet(this.options.stylesheetUrl);
 
-		const translationUrl = `translations/${this.options.language}.json`;
+		const translationUrl = `${base}/translations/${this.options.language}.json`;
 		this.$http.get(translationUrl).then((response) => {
 			this.messages = response.data;
 		}, (error) => {
