@@ -20,17 +20,28 @@ The required HTML code looks something like this:
 <script src="tify.js"></script>
 ```
 
-The only required parameter `manifestUrl` is a URL pointing to the manifest. It can be set either as a query parameter or with the `tifyOptions` object, whereby the latter takes precedence. Below an example with all available options, which must be set prior to loading TIFY.
+The only required parameter `manifestUrl` is a URL pointing to the manifest. It can be set either as a query parameter or with the `tifyOptions` object, whereby the latter takes precedence.
+
+### Options
+- `container` (default `#tify`): The HTML element TIFY is loaded into.
+- `language` (default: `en`): The interface language. Currently, only English and German (`de`) are available.
+- `manifestUrl`: A URL pointing to the IIIF manifest. If this option is not set, the URL has to be provided via a query parameter of the same name.
+- `stylesheetUrl`: Provide your own stylesheet, replacing TIFY's default styles. Use `null` to disable loading any styles, e.g. if your site's stylesheet already include styles for TIFY.
+- `title` (default: `TIFY`): By default, TIFY replaces the window title with the document title as defined by the manifest, appended by `TIFY`. Set this to any string, or `null` to disable title modification.
+
+### Example
+
+Below an example with all available options set.
 
 ``` html
 <div id="viewer"></div>
 <script>
 	tifyOptions = {
-		container: '#viewer', // default: '#tify'
-		language: 'de', // default: 'en' (translations are incomplete)
-		manifestUrl: 'https://example.com/iiif/manifest.json', // default: none
-		stylesheetUrl: 'styles/my-very-own-tify-styles.css', // default: none, using default styles
-		title: 'TIFY Demo', // default: 'TIFY'
+		container: '#viewer',
+		language: 'de',
+		manifestUrl: 'https://example.com/iiif/manifest.json',
+		stylesheetUrl: '../styles/my-very-own-tify-styles.css',
+		title: null,
 	}
 </script>
 <script src="tify.js"></script>
