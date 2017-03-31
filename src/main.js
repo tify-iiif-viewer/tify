@@ -60,7 +60,8 @@ const app = new Vue({
 		this.$http.get(translationUrl).then((response) => {
 			this.messages = response.data;
 		}, (error) => {
-			this.error = `Error loading translation ${this.options.language}: ${error.response ? error.response.statusText : 'Disconnected'}`;
+			const status = (error.response ? error.response.statusText : 'Disconnected');
+			this.error = `Error loading translation ${this.options.language}: ${status}`;
 		});
 
 		// TODO: Interceptor should set this to true on first XHR, but does not
