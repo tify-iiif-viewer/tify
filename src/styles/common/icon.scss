@@ -1,6 +1,33 @@
+$MD-icon-path-name: '~material-design-icons-iconfont/dist/fonts/MaterialIcons-Regular';
+
+@font-face {
+	font-family: 'Material Icons';
+	font-style: normal;
+	font-weight: 400;
+	src: local("Material Icons"),
+		local("MaterialIcons-Regular"),
+		url("#{$MD-icon-path-name}.woff2") format('woff2'),
+		url("#{$MD-icon-path-name}.woff") format('woff'),
+}
+
 .tify-icon {
-	@extend .material-icons;
+	direction: ltr;
+	display: inline-block;
+	font-family: 'Material Icons';
+	font-size: 24px;
+	font-style: normal;
+	font-weight: normal;
+	letter-spacing: normal;
+	line-height: 1;
 	overflow: hidden;
+	text-transform: none;
 	vertical-align: top;
+	white-space: nowrap;
 	width: 1em;
+	word-wrap: normal;
+
+	-webkit-font-smoothing: antialiased; // WebKit browsers
+	text-rendering: optimizeLegibility; // Chrome and Safari
+	-moz-osx-font-smoothing: grayscale; // Firefox
+	font-feature-settings: 'liga'; // IE
 }
