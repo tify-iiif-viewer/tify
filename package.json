@@ -18,10 +18,10 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "axios": "^0.15.3",
     "material-design-icons-iconfont": "^3.0.3",
     "openseadragon": "^2.2.1",
-    "vue": "^2.2.6",
-    "vue-resource": "^1.2.1"
+    "vue": "^2.2.6"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.7",

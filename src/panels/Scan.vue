@@ -232,7 +232,7 @@
 				this.$http.get(infoUrl).then((response) => {
 					this.initOpenSeadragon(response.data);
 				}, (response) => {
-					this.$root.errorMessage = `Error loading image info file: ${response.statusText || 'Disconnected'}`;
+					this.$root.errorMessage = `Error loading image info file: ${response.response.statusText || 'Disconnected'}`;
 				});
 			},
 			resetView() {

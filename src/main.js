@@ -4,7 +4,7 @@ import App from '@/App';
 import translationDe from '@/translations/de';
 import translationEn from '@/translations/en';
 
-Vue.use(require('vue-resource'));
+Vue.prototype.$http = require('axios');
 
 // In production mode, add stylesheet link to header
 // In dev mode, stylesheet is inlined for hot reload
@@ -52,6 +52,16 @@ const app = new Vue({
 		},
 	},
 	mounted() {
+		this.$http.interceptors.request.use((request) => {
+			this.loading = true;
+			return request;
+		});
+
+		this.$http.interceptors.response.use((response) => {
+			this.loading = false;
+			return response;
+		});
+
 		if (this.options.stylesheetUrl) this.appendStylesheet(this.options.stylesheetUrl);
 
 		const translations = {
@@ -64,13 +74,6 @@ const app = new Vue({
 		// TODO: Interceptor should set this to true on first XHR, but does not
 		this.loading = true;
 	},
-});
-
-// Set global loading during XHR requests
-Vue.http.interceptors.push((request, next) => {
-	this.loading = true;
-	this.errorMessage = '';
-	next(() => { this.loading = false; });
 });
 
 // Detect click outside of an element

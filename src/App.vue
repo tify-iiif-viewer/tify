@@ -162,7 +162,7 @@
 					window.document.title = `${this.manifest.label} | ${this.$root.options.title}`;
 				}
 			}, (response) => {
-				this.$root.error(`Error loading IIIF manifest: ${response.statusText || 'Disconnected'}`);
+				this.$root.error(`Error loading IIIF manifest: ${response.response.statusText || 'Disconnected'}`);
 			});
 
 			// TODO: Remove unused key codes
