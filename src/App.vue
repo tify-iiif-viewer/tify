@@ -4,7 +4,7 @@
 			v-if="manifest"
 			:manifest="manifest"
 			:panel="params.panel"
-			:exportEnabled="!!exportItems"
+			:exportEnabled="!!manifest.seeAlso"
 			:tocEnabled="!!manifest.structures"
 			:transcriptEnabled="false"
 			@togglePanel="togglePanel"
@@ -47,8 +47,8 @@
 			/>
 
 			<export
-				v-if="!!exportItems && params.panel === 'export'"
-				:items="exportItems"
+				v-if="!!manifest.seeAlso && params.panel === 'export'"
+				:items="manifest.seeAlso"
 			/>
 
 			<help
@@ -110,11 +110,6 @@
 			};
 
 			return {
-				exportFormats: [
-					'application/x-bibtex',
-					'application/x-endnote-refer',
-					'application/x-research-info-systems',
-				],
 				manifest: null,
 				params,
 			};
@@ -122,20 +117,6 @@
 		computed: {
 			canvases() {
 				return this.manifest.sequences[0].canvases;
-			},
-			exportItems() {
-				if (!Array.isArray(this.manifest.seeAlso)) return false;
-
-				const exportItems = [];
-				this.manifest.seeAlso.forEach((item) => {
-					if (this.exportFormats.indexOf(item.format) > -1) {
-						exportItems.push(item);
-					}
-				});
-
-				if (exportItems.length < 1) return false;
-
-				return exportItems;
 			},
 			pageCount() {
 				return this.manifest.sequences[0].canvases.length;

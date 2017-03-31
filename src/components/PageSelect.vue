@@ -28,7 +28,7 @@
 					@keyup.stop
 				>
 			</div>
-			<ul class="tify-page-select_list" ref="list">
+			<ol class="tify-page-select_list" ref="list">
 				<li
 					v-for="canvas, index in filteredCanvases"
 					:class="{ '-current': page === canvas.page, '-highlighted': highlightIndex === index }"
@@ -36,7 +36,7 @@
 				>
 					{{ canvas.page }} : {{ canvas.label }}
 				</li>
-			</ul>
+			</ol>
 		</div>
 	</button>
 </template>

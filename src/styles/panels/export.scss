@@ -2,3 +2,9 @@
 	@extend %panel;
 	padding: ($grid / 2);
 }
+
+.tify-export_links {
+	margin: 0 0 $grid;
+	padding: 0 0 0 $grid;
+	list-style: disc outside;
+}

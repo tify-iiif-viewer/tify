@@ -22,6 +22,12 @@
 		color: $link-color;
 	}
 
+	code {
+		background: $shade-light;
+		border-radius: $br;
+		padding: ($grid / 8) ($grid / 4);
+	}
+
 	h3 {
 		color: $text-color-light;
 		font-size: 1.125em;
@@ -34,10 +40,6 @@
 		font-size: 1em;
 		font-weight: bold;
 		margin: 0 0 ($grid / 2);
-	}
-
-	label {
-		cursor: pointer;
 	}
 
 	input,
@@ -56,27 +58,30 @@
 		}
 	}
 
-	code {
-		background: $shade-light;
-		border-radius: $br;
-		padding: ($grid / 8) ($grid / 4);
+	label {
+		cursor: pointer;
 	}
 
 	table {
 		margin: (-$grid / 4) -.25em ($grid - $grid / 4);
 	}
 
-	tr {
+	td {
+		padding: ($grid / 4) .25em;
+
 		@include respond-to(large) {
 			display: block;
+			margin-top: (-$grid / 2);
 		}
 
 		@include respond-to(medium) {
-			display: table-row;
+			display: table-cell;
+			margin-top: 0;
 		}
 
 		@include respond-to(tiny) {
 			display: block;
+			margin-top: (-$grid / 2);
 		}
 	}
 
@@ -99,22 +104,17 @@
 		}
 	}
 
-	td {
-		padding: ($grid / 4) .25em;
-
+	tr {
 		@include respond-to(large) {
 			display: block;
-			margin-top: (-$grid / 2);
 		}
 
 		@include respond-to(medium) {
-			display: table-cell;
-			margin-top: 0;
+			display: table-row;
 		}
 
 		@include respond-to(tiny) {
 			display: block;
-			margin-top: (-$grid / 2);
 		}
 	}
 }
