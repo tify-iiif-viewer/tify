@@ -1,6 +1,7 @@
 %button {
 	background: linear-gradient(to bottom, white, shade(white, 5));
 	border: 0;
+	border-radius: 0;
 	color: $text-color;
 	cursor: pointer;
 	display: inline-block;

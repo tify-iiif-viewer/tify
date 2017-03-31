@@ -92,6 +92,7 @@
 .tify-header_toggle-controls {
 	@extend %button;
 	@extend %button-group;
+	border-radius: $br;
 	display: none;
 
 	@include respond-to(large) {
