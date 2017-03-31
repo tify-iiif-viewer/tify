@@ -1,6 +1,6 @@
 # TIFY
 
-The fastest IIIF document viewer. [Check out the demo.](https://subugoe.github.io/tify/demo.html?manifestUrl=https://purl.stanford.edu/qm670kv1873/iiif/manifest.json)
+The fastest IIIF document viewer. [Check out the demo.](https://subugoe.github.io/tify/demo.html?manifestUrl=https://gdzdev.sub.uni-goettingen.de/iiif/presentation/PPN857449303/manifest)
 
 ## Embedding TIFY
 
@@ -23,10 +23,10 @@ The required HTML code looks something like this:
 The only required parameter `manifestUrl` is a URL pointing to the manifest. It can be set either as a query parameter or with the `tifyOptions` object, whereby the latter takes precedence.
 
 ### Options
-- `container` (default `#tify`): The HTML element TIFY is loaded into.
+- `container` (default: `#tify`): The HTML element TIFY is loaded into.
 - `language` (default: `en`): The interface language. Currently, only English and German (`de`) are available.
 - `manifestUrl`: A URL pointing to the IIIF manifest. If this option is not set, the URL has to be provided via a query parameter of the same name.
-- `stylesheetUrl`: Provide your own stylesheet, replacing TIFY's default styles. Use `null` to disable loading any styles, e.g. if your site's stylesheet already include styles for TIFY.
+- `stylesheetUrl`: Provide your own stylesheet, replacing TIFY's default styles. Use `null` to disable loading any styles, e.g. if your site's stylesheet already includes styles for TIFY.
 - `title` (default: `TIFY`): By default, TIFY replaces the window title with the document title as defined by the manifest, appended by `TIFY`. Set this to any string, or `null` to disable title modification.
 
 ### Example
