@@ -7,4 +7,3 @@ hotClient.subscribe(function (event) {
 		window.location.reload();
 	};
 });
-
