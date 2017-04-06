@@ -63,7 +63,7 @@ npm run dev
 
 In development mode, the manifest URL must be provided via query parameter, e.g. `http://localhost:8080/?manifestUrl=http://gdzdev.sub.uni-goettingen.de/api/PPN616082037/manifest`.
 
-# Build for production with minification
+Build for production with minification:
 
 ``` bash
 npm run build
@@ -73,12 +73,7 @@ The production build will be stored in `dist`, just copy the contents of this di
 
 ## Running Tests
 
-Install AVA for unit tests and CodeceptJS for end-to-end tests:
-
-``` bash
-npm install -g ava
-npm install -g codeceptjs
-```
+While Karma and all requires plugins are part of the dev dependencies, CodeceptJS, which is used for end-to-end tests, is not. If needed, install CodeceptJS with `npm install -g codeceptjs`.
 
 Run tests:
 
