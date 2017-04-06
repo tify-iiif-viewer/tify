@@ -28,7 +28,7 @@ var webpackConfig = merge(baseWebpackConfig, {
 		chunkFilename: utils.assetsPath('[id].js'),
 	},
 	plugins: [
-		// http://vuejs.github.io/vue-loader/en/workflow/production.html;
+		// http://vuejs.github.io/vue-loader/en/workflow/production.html
 		new webpack.DefinePlugin({
 			'process.env': env,
 		}),
@@ -44,14 +44,14 @@ var webpackConfig = merge(baseWebpackConfig, {
 			},
 			sourceMap: true,
 		}),
-		// extract css into its own file;
+		// extract css into its own file
 		new ExtractTextPlugin({
 			filename: utils.assetsPath('[name].css'),
 		}),
-		// Compress extracted CSS. We are using this plugin so that possible;
-		// duplicated CSS from different components can be deduped.;
+		// Compress extracted CSS. We are using this plugin so that possible
+		// duplicated CSS from different components can be deduped.
 		new OptimizeCSSPlugin(),
-		// copy custom static assets;
+		// copy custom static assets
 		new CopyWebpackPlugin([
 			{
 				from: path.resolve(__dirname, '../static'),

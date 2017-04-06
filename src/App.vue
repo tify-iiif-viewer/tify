@@ -131,6 +131,8 @@
 				this.updateParams({ page });
 			},
 			updateParams(params) {
+				const doPush = ('page' in params && params.page !== this.params.page);
+
 				Object.keys(params).forEach((key) => {
 					this.params[key] = params[key];
 				});
@@ -141,7 +143,13 @@
 				Object.keys(this.params).forEach((key) => {
 					if (this.params[key] !== null) hashes.push(`${key}=${this.params[key]}`);
 				});
-				window.history.replaceState({}, '', `${window.location.pathname}?${hashes.join('&')}`);
+
+				const newUrl = `${window.location.pathname}?${hashes.join('&')}`;
+				if (doPush) {
+					window.history.pushState({}, '', newUrl);
+				} else {
+					window.history.replaceState({}, '', newUrl);
+				}
 			},
 			togglePanel(name) {
 				this.updateParams({ panel: (name === this.params.panel ? '' : name) });

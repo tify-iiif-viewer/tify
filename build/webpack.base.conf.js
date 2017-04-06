@@ -50,7 +50,7 @@ module.exports = {
 				loader: 'url-loader',
 				query: {
 					limit: 10000,
-					name: utils.assetsPath('[name].[hash:7].[ext]') // TODO: Maybe use same folder for all assets, remove subdirs;
+					name: utils.assetsPath('[name].[hash:7].[ext]'),
 				},
 			},
 			{
