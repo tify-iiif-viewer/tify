@@ -8,6 +8,8 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 
+var package = require('../package.json');
+
 var env = process.env.NODE_ENV === 'testing'
 	? require('../config/test.env')
 	: config.build.env;
@@ -30,6 +32,12 @@ var webpackConfig = merge(baseWebpackConfig, {
 		new webpack.DefinePlugin({
 			'process.env': env,
 		}),
+		new webpack.BannerPlugin(
+			'TIFY v' + package.version + '\n'
+			+ '(c) ' + new Date().getFullYear() + ' ' + package.author + '\n'
+			+ package.license + '\n'
+			+ package.homepage
+		),
 		new webpack.optimize.UglifyJsPlugin({
 			compress: {
 				warnings: false,
