@@ -54,8 +54,6 @@
 					return (keptAttributes.length > 0 ? `<${tag} ${keptAttributes.join(' ')}>` : `<${tag}>`);
 				});
 
-				// console.dir(filteredHtml);
-
 				return filteredHtml;
 			},
 		},
