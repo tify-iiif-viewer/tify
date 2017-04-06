@@ -1,5 +1,12 @@
 .tify-page-select {
+
+}
+
+.tify-page-select_button {
 	@extend %button;
+	border-radius: $br;
+	display: block;
+	margin: (-$grid / 4);
 	min-width: ($grid * 3);
 	padding: ($grid / 4) ($grid / 2);
 	position: relative;

@@ -1,12 +1,18 @@
 @mixin dropdown($position: center) {
-	border: $br solid $shade-light;
+	background: #fff;
+	border: $br solid #fff;
 	border-radius: $br;
-	box-shadow: $drop-shadow;
+	filter: drop-shadow($drop-shadow);
 	margin: ($grid / 2) 0;
 	overflow: visible;
 	position: absolute;
 	text-shadow: none;
 	z-index: 9;
+
+	// Target IE10 and 11, which are not supporting CSS filters
+	@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+		box-shadow: $drop-shadow;
+	}
 
 	@if ($position == center) {
 		left: 50%;
@@ -20,7 +26,6 @@
 		position: absolute;
 		content: '';
 		background: white;
-		box-shadow: $drop-shadow;
 		width: ($grid / 2);
 		height: ($grid / 2);
 		top: (-$grid / 4);

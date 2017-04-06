@@ -1,12 +1,14 @@
 <template>
-	<button
-		class="tify-page-select"
-		:title="pageTitleAttr"
-		v-click-outside="closeDropdown"
-		@click="toggleDropdown"
-	>
-		<span class="tify-sr-only">{{ 'Current page'|trans }}</span>
-		{{ page }} : {{ canvases[page - 1].label }}
+	<div class="tify-page-select">
+		<button
+			class="tify-page-select_button"
+			:title="pageTitleAttr"
+			v-click-outside="closeDropdown"
+			@click="toggleDropdown"
+		>
+			<span class="tify-sr-only">{{ 'Current page'|trans }}</span>
+			{{ page }} : {{ canvases[page - 1].label }}
+		</button>
 
 		<div
 			class="tify-page-select_dropdown"
@@ -38,7 +40,7 @@
 				</li>
 			</ol>
 		</div>
-	</button>
+	</div>
 </template>
 
 <script>
@@ -92,10 +94,12 @@
 			},
 			updateFilteredCanvases() {
 				const filteredCanvases = [];
+				const lowercasedFilter = this.filter.toLowerCase();
 				let highlightIndex = -1;
 				this.canvases.forEach((canvas, index) => {
-					if (canvas.label.toLowerCase().indexOf(this.filter.toLowerCase()) > -1
-							|| (index + 1).toFixed().indexOf(this.filter) > -1) {
+					const labelMatchesFilter = canvas.label.toLowerCase().indexOf(lowercasedFilter) > -1;
+					const pageMatchesFilter = (index + 1).toFixed().indexOf(lowercasedFilter) > -1;
+					if (labelMatchesFilter || pageMatchesFilter) {
 						const item = canvas;
 						item.page = index + 1;
 						if (item.page === this.page) highlightIndex = filteredCanvases.length;

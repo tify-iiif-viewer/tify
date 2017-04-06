@@ -15,6 +15,7 @@
   "scripts": {
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
+    "unit-watch": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "codeceptjs run --steps",
     "test": "npm run unit && npm run e2e",
