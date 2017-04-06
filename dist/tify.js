@@ -1,5 +1,5 @@
 /*!
- * TIFY v0.3.1
+ * TIFY v0.3.2
  * (c) 2017 Tobias Schäfer / SUB Göttingen <tobias.schaefer@sub.uni-goettingen.de>
  * AGPL-3.0
  * https://github.com/subugoe/tify
