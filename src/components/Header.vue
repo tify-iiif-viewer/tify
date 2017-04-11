@@ -53,11 +53,11 @@
 				</button>
 				<button
 					class="tify-header_button"
-					:class="{ '-active': panel === 'metadata' }"
-					@click="$emit('togglePanel', 'metadata')"
+					:class="{ '-active': panel === 'info' }"
+					@click="$emit('togglePanel', 'info')"
 				>
 					<i class="tify-icon">info_outline</i>
-					{{ 'Metadata'|trans }}
+					{{ 'Info'|trans }}
 				</button>
 				<button
 					v-if="exportEnabled"

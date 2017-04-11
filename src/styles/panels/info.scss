@@ -1,0 +1,13 @@
+.tify-info {
+	@extend %panel;
+	overflow-y: auto;
+	padding: ($grid / 2);
+}
+
+.tify-info_logo {
+	display: block;
+	max-height: $grid * 2.5;
+	max-width: 100%;
+	height: auto;
+	width: auto;
+}

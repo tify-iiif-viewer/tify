@@ -1,16 +1,27 @@
 <template>
-	<section class="tify-metadata">
-		<h2 class="tify-sr-only">{{ 'Metadata'|trans }}</h2>
+	<section class="tify-info">
+		<h2 class="tify-sr-only">{{ 'Info'|trans }}</h2>
 
-		<table class="tify-metadata_list">
-			<tr class="tify-metadata_row" v-for="item in metadata">
-				<th class="tify-metadata_label">{{ item.label|formatLabel|trans }}</th>
-				<td v-if="Array.isArray(item.value)" class="tify-metadata_text">
+		<h3>{{ 'Metadata'|trans }}</h3>
+
+		<table class="tify-info_list">
+			<tr class="tify-info_row" v-for="item in manifest.metadata">
+				<th class="tify-info_label">{{ item.label|formatLabel|trans }}</th>
+				<td v-if="Array.isArray(item.value)" class="tify-info_text">
 					<div v-for="value, index in item.value" v-html="$root.$options.filters.trans(filterHtml(value))"></div>
 				</td>
-				<td v-else v-html="$root.$options.filters.trans(filterHtml(item.value))" class="tify-metadata_text"></td>
+				<td v-else v-html="$root.$options.filters.trans(filterHtml(item.value))" class="tify-info_text"></td>
 			</tr>
 		</table>
+
+		<h3>{{ 'Attribution'|trans }}</h3>
+		<p>{{ manifest.attribution }}</p>
+
+		<template v-if="manifest.logo.id">
+			<p>
+				<img class="tify-info_logo" :src="manifest.logo.id" alt="">
+			</p>
+		</template>
 	</section>
 </template>
 
@@ -19,7 +30,7 @@
 
 	export default {
 		props: [
-			'metadata',
+			'manifest',
 		],
 		filters: {
 			formatLabel(value) {

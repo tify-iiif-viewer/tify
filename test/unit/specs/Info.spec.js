@@ -1,8 +1,8 @@
 import Vue from 'vue';
-import Metadata from '@/panels/Metadata';
+import Info from '@/panels/Info';
 
-describe('Metadata', () => {
-	const vm = new (Vue.extend(Metadata))().$mount();
+describe('Info', () => {
+	const vm = new (Vue.extend(Info))().$mount();
 
 	it('should filter HTML', () => {
 		const html = '<h1 id="remove"><a href="keep this" class="remove this"><span>label</span></a></h1><img src="keep" alt="keep" id="remove" data-remove>';

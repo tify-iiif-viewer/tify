@@ -41,9 +41,9 @@
 				@setPage="setPage"
 			/>
 
-			<metadata
-				v-if="params.panel === 'metadata'"
-				:metadata="manifest.metadata"
+			<info
+				v-if="params.panel === 'info'"
+				:manifest="manifest"
 			/>
 
 			<export
@@ -74,7 +74,7 @@
 	import AppHeader from '@/components/Header';
 	import Export from '@/panels/Export';
 	import Help from '@/panels/Help';
-	import Metadata from '@/panels/Metadata';
+	import Info from '@/panels/Info';
 	import Scan from '@/panels/Scan';
 	import Thumbnails from '@/panels/Thumbnails';
 	import Toc from '@/panels/Toc';
@@ -85,7 +85,7 @@
 			AppHeader,
 			Export,
 			Help,
-			Metadata,
+			Info,
 			Scan,
 			Thumbnails,
 			Toc,
@@ -104,7 +104,7 @@
 			params = {
 				manifestUrl: params.manifestUrl || null,
 				page: parseInt(params.page, 10) || 1,
-				panel: typeof params.panel !== 'undefined' ? params.panel : 'metadata',
+				panel: typeof params.panel !== 'undefined' ? params.panel : 'info',
 				panX: parseFloat(params.panX) || null,
 				panY: parseFloat(params.panY) || null,
 				zoom: parseFloat(params.zoom) || null,
