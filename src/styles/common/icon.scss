@@ -4,10 +4,8 @@ $MD-icon-path-name: '~material-design-icons-iconfont/dist/fonts/MaterialIcons-Re
 	font-family: 'Material Icons';
 	font-style: normal;
 	font-weight: 400;
-	src: local("Material Icons"),
-		local("MaterialIcons-Regular"),
-		url("#{$MD-icon-path-name}.woff2") format('woff2'),
-		url("#{$MD-icon-path-name}.woff") format('woff'),
+	src: url('#{$MD-icon-path-name}.woff2') format('woff2'),
+		url('#{$MD-icon-path-name}.woff') format('woff'),
 }
 
 .tify-icon {
