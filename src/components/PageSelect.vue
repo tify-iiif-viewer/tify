@@ -71,9 +71,6 @@
 			highlightIndex() {
 				this.$nextTick(() => this.updateScroll());
 			},
-			page() {
-				this.highlightIndex = this.page - 1;
-			},
 		},
 		methods: {
 			setPage(page) {
@@ -111,7 +108,7 @@
 			},
 			updateScroll() {
 				const list = this.$refs.list;
-				if (list.children.length > 0) {
+				if (list.children[this.highlightIndex]) {
 					const offsetTop = list.children[this.highlightIndex].offsetTop;
 					list.scrollTop = offsetTop - ((list.offsetHeight / 2) - list.children[0].offsetHeight);
 				}
