@@ -73,7 +73,7 @@ The production build will be stored in `dist`, just copy the contents of this di
 
 ## Running Tests
 
-While Karma and all requires plugins are part of the dev dependencies, CodeceptJS, which is used for end-to-end tests, is not. If needed, install CodeceptJS with `npm install -g codeceptjs`.
+While Karma and all required plugins are part of the dev dependencies, CodeceptJS, which is used for end-to-end tests, is not. If needed, install CodeceptJS with `npm install -g codeceptjs`.
 
 Run tests:
 
