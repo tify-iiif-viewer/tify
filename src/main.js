@@ -32,7 +32,7 @@ const app = new Vue({
 	render: h => h(App),
 	data: {
 		error: '',
-		loading: false,
+		loading: 0,
 		messages: {},
 		options,
 	},
@@ -44,15 +44,18 @@ const app = new Vue({
 			document.head.appendChild(link);
 		},
 	},
-	mounted() {
+	created() {
 		this.$http.interceptors.request.use((request) => {
-			this.loading = true;
+			this.loading += 1;
 			return request;
 		});
 
 		this.$http.interceptors.response.use((response) => {
-			this.loading = false;
+			if (this.loading > 0) this.loading -= 1;
 			return response;
+		}, (error) => {
+			this.loading = 0;
+			return Promise.reject(error);
 		});
 
 		if (this.options.stylesheetUrl) this.appendStylesheet(this.options.stylesheetUrl);
@@ -61,12 +64,9 @@ const app = new Vue({
 		this.$http.get(translationUrl).then((response) => {
 			this.messages = response.data;
 		}, (error) => {
-			const status = (error.response ? error.response.statusText : 'Disconnected');
+			const status = (error.response ? error.response.statusText : error.message);
 			this.error = `Error loading translation ${this.options.language}: ${status}`;
 		});
-
-		// TODO: Interceptor should set this to true on first XHR, but does not
-		this.loading = true;
 	},
 });
 

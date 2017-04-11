@@ -169,7 +169,7 @@
 		},
 		methods: {
 			initOpenSeadragon(info) {
-				this.$root.loading = true;
+				this.$root.loading += 1;
 
 				// TODO: All tile sources could be added at once (sequence mode)
 				// This requires the correct to be present resolution in the manifest, which is
@@ -222,7 +222,7 @@
 
 				// TODO: Loading is regarded as complete once the first tile has been downloaded.
 				// OpenSeadragon will probably get a new 'fully-loaded' event with the next release.
-				this.viewer.addHandler('tile-loaded', () => { this.$root.loading = false; });
+				this.viewer.addHandler('tile-loaded', () => { this.$root.loading = 0; });
 
 				this.viewer.addHandler('animation-finish', this.updateParams);
 			},
@@ -232,7 +232,7 @@
 				this.$http.get(infoUrl).then((response) => {
 					this.initOpenSeadragon(response.data);
 				}, (error) => {
-					const status = (error.response ? error.response.statusText : 'Disconnected');
+					const status = (error.response ? error.response.statusText : error.message);
 					this.$root.error = `Error loading image info file: ${status}`;
 				});
 			},

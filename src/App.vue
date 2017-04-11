@@ -92,27 +92,9 @@
 			Transcript,
 		},
 		data() {
-			// Get query params
-			const queryTuples = window.location.search.substr(1).split('&');
-			let params = {};
-			for (let i = 0; i < queryTuples.length; i += 1) {
-				const parts = queryTuples[i].split('=');
-				params[parts[0]] = parts[1];
-			}
-
-			// Merging user-set query params with defaults
-			params = {
-				manifestUrl: params.manifestUrl || null,
-				page: parseInt(params.page, 10) || 1,
-				panel: typeof params.panel !== 'undefined' ? params.panel : 'info',
-				panX: parseFloat(params.panX) || null,
-				panY: parseFloat(params.panY) || null,
-				zoom: parseFloat(params.zoom) || null,
-			};
-
 			return {
 				manifest: null,
-				params,
+				params: {},
 			};
 		},
 		computed: {
@@ -124,11 +106,15 @@
 			},
 		},
 		methods: {
+			isValidPage(page) {
+				return (!isNaN(page) && page > 0 && page <= this.pageCount);
+			},
 			setPage(page) {
-				if (isNaN(page) || page < 1 || page > this.pageCount) {
+				if (this.isValidPage(page)) {
+					this.updateParams({ page });
+				} else {
 					this.$root.error = 'Invalid page';
 				}
-				this.updateParams({ page });
 			},
 			updateParams(params) {
 				const doPush = ('page' in params && params.page !== this.params.page);
@@ -156,8 +142,16 @@
 			},
 		},
 		created() {
+			// Get query params. Note that all query params are strings.
+			const queryTuples = window.location.search.substr(1).split('&');
+			const params = {};
+			for (let i = 0; i < queryTuples.length; i += 1) {
+				const parts = queryTuples[i].split('=');
+				params[parts[0]] = parts[1];
+			}
+
 			// Manifest URL in tifyOptions trumps query param
-			const manifestUrl = this.$root.options.manifestUrl || this.params.manifestUrl;
+			const manifestUrl = this.$root.options.manifestUrl || params.manifestUrl;
 
 			if (!manifestUrl) {
 				this.$root.error = 'Missing query parameter or option: manifestUrl';
@@ -167,11 +161,23 @@
 
 			this.$http.get(manifestUrl).then((response) => {
 				this.manifest = response.data;
+
+				// Merging user-set query params with defaults
+				const page = parseInt(params.page, 10);
+				this.params = {
+					manifestUrl: params.manifestUrl || null,
+					page: (this.isValidPage(page) ? page : 1),
+					panel: typeof params.panel !== 'undefined' ? params.panel : 'info',
+					panX: parseFloat(params.panX) || null,
+					panY: parseFloat(params.panY) || null,
+					zoom: parseFloat(params.zoom) || null,
+				};
+
 				if (this.$root.options.title) {
 					window.document.title = `${this.manifest.label} | ${this.$root.options.title}`;
 				}
 			}, (error) => {
-				const status = (error.response ? error.response.statusText : 'Disconnected');
+				const status = (error.response ? error.response.statusText : error.message);
 				this.$root.error = `Error loading IIIF manifest: ${status}`;
 			});
 
