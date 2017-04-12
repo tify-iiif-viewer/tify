@@ -8,9 +8,9 @@
 			<tr class="tify-info_row" v-for="item in manifest.metadata">
 				<th class="tify-info_label">{{ item.label|formatLabel|trans }}</th>
 				<td v-if="Array.isArray(item.value)" class="tify-info_text">
-					<div v-for="value, index in item.value" v-html="$root.$options.filters.trans(filterHtml(value))"></div>
+					<div v-for="value, index in item.value" v-html="formatValue(value)"></div>
 				</td>
-				<td v-else v-html="$root.$options.filters.trans(filterHtml(item.value))" class="tify-info_text"></td>
+				<td v-else v-html="formatValue(item.value)" class="tify-info_text"></td>
 			</tr>
 		</table>
 
@@ -26,46 +26,20 @@
 </template>
 
 <script>
-	import striptags from 'striptags';
-
 	export default {
 		props: [
 			'manifest',
 		],
 		filters: {
-			formatLabel(value) {
-				const cleanedValue = value.replace('_', ' ');
-				return cleanedValue.charAt(0).toUpperCase() + cleanedValue.substr(1);
+			formatLabel(label) {
+				const cleanedLabel = label.replace('_', ' ');
+				return cleanedLabel.charAt(0).toUpperCase() + cleanedLabel.substr(1);
 			},
 		},
 		methods: {
-			filterHtml(html) {
-				// See http://iiif.io/api/presentation/2.1/#html-markup-in-property-values
-				const allowedTags = ['a', 'b', 'br', 'i', 'img', 'p', 'span'];
-				const allowedAttributes = { a: ['href'], img: ['alt', 'src'] };
-
-				// TODO: '<' and '>' inside attribute values should not be removed.
-				// This is a bug within striptags.
-				let filteredHtml = striptags(html, allowedTags);
-
-				// Iterate over all opening (including self-closing) HTML tags
-				const htmlTagsRegex = /<(\w+)((\s+[\w]+(\s*=\s*(?:".*?"|'.*?'|.*?|[\^'">\s]+))?)+\s*|\s*)>/g;
-				filteredHtml = filteredHtml.replace(htmlTagsRegex, (match, tag, attributes) => {
-					if (!attributes) return `<${tag}>`;
-
-					// Iterate over all attibutes and keep only allowed ones
-					const attributesRegex = /(?:([^\s]+)="(.*?)"|'(.*?)')|([^\s]+)/g;
-					const keptAttributes = [];
-					attributes.replace(attributesRegex, (tuple, key) => {
-						if (tuple !== key && allowedAttributes[tag] && allowedAttributes[tag].indexOf(key) > -1) {
-							keptAttributes.push(tuple);
-						}
-					});
-
-					return (keptAttributes.length > 0 ? `<${tag} ${keptAttributes.join(' ')}>` : `<${tag}>`);
-				});
-
-				return filteredHtml;
+			formatValue(value) {
+				const filteredValue = this.$root.$options.filters.filterHtml(value);
+				return this.$root.$options.filters.trans(filteredValue);
 			},
 		},
 	};

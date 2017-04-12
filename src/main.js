@@ -1,10 +1,13 @@
 import Vue from 'vue';
 import App from '@/App';
 
+import './directives';
+import './filters';
+
 Vue.prototype.$http = require('axios');
 
-// In production mode, add stylesheet link to header
-// In dev mode, stylesheet is inlined for hot reload
+// In production mode, load the stylesheet by adding a <link> to <head>
+// In dev mode, the stylesheet is inlined for hot reload
 // TODO: We cannot be sure that TIFY was loaded in a script tag, add a base option
 let base = '.';
 let stylesheetUrl = null;
@@ -26,9 +29,7 @@ const options = Object.assign({
 const container = document.createElement('div');
 document.querySelector(options.container).appendChild(container);
 
-/* eslint-disable no-new */
-const app = new Vue({
-	el: container,
+export default new Vue({
 	render: h => h(App),
 	data: {
 		error: '',
@@ -63,36 +64,12 @@ const app = new Vue({
 		const translationUrl = `${base}/translations/${this.options.language}.json`;
 		this.$http.get(translationUrl).then((response) => {
 			this.messages = response.data;
+
+			// Wait for the translation to be available before mounting the app
+			this.$mount(container);
 		}, (error) => {
 			const status = (error.response ? error.response.statusText : error.message);
 			this.error = `Error loading translation ${this.options.language}: ${status}`;
 		});
 	},
-});
-
-// Detect click outside of an element
-Vue.directive('click-outside', {
-	bind(el, binding, vnode) {
-		/* eslint-disable no-param-reassign */
-		el.event = (event) => {
-			if (!(el === event.target || el.contains(event.target))) {
-				vnode.context[binding.expression](event);
-			}
-		};
-		document.body.addEventListener('click', el.event);
-	},
-	unbind(el) {
-		document.body.removeEventListener('click', el.event);
-	},
-});
-
-// Translate strings, use default (i.e. English) if not translated
-// Translations are located in @/translations/<lang>.js
-Vue.filter('trans', (string) => {
-	if (app.messages[string]) return app.messages[string];
-
-	if (process.env.NODE_ENV === 'development' && app.options.language !== 'en') {
-		console.warn(`Missing translation for ${string}`); // eslint-disable-line no-console
-	}
-	return string;
 });
