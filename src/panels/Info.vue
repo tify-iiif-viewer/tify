@@ -41,7 +41,7 @@
 		methods: {
 			filterHtml(html) {
 				// See http://iiif.io/api/presentation/2.1/#html-markup-in-property-values
-				const allowedTags = ['a', 'b', 'br', 'i', 'img', 'p'];
+				const allowedTags = ['a', 'b', 'br', 'i', 'img', 'p', 'span'];
 				const allowedAttributes = { a: ['href'], img: ['alt', 'src'] };
 
 				// TODO: '<' and '>' inside attribute values should not be removed.
