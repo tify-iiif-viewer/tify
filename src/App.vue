@@ -6,7 +6,7 @@
 			:panel="params.panel"
 			:exportEnabled="!!manifest.rendering || !!manifest.seeAlso"
 			:tocEnabled="!!manifest.structures"
-			:transcriptEnabled="false"
+			:transcriptEnabled="hasOtherContent"
 			@togglePanel="togglePanel"
 		/>
 
@@ -23,7 +23,9 @@
 			/>
 
 			<transcript
-				v-if="false && params.panel === 'transcript'"
+				v-if="hasOtherContent && params.panel === 'transcript'"
+				:canvases="canvases"
+				:page="params.page"
 			/>
 
 			<toc
@@ -62,7 +64,10 @@
 		</div>
 
 		<div v-if="$root.error" class="tify-app_error">
-			<span class="tify-app_error-message" v-html="$root.error"></span>
+			<span class="tify-app_error-message">
+				<i class="tify-icon">error</i>
+				<span v-html="$root.error"></span>
+			</span>
 			<button class="tify-app_error-close" @click="$root.error = ''">
 				<i class="tify-icon">close</i>
 			</button>
@@ -101,8 +106,11 @@
 			canvases() {
 				return this.manifest.sequences[0].canvases;
 			},
+			hasOtherContent() {
+				return this.canvases.some(canvas => 'otherContent' in canvas);
+			},
 			pageCount() {
-				return this.manifest.sequences[0].canvases.length;
+				return this.canvases.length;
 			},
 		},
 		methods: {
