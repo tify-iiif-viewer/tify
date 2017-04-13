@@ -6,8 +6,8 @@ The fastest IIIF document viewer. [Check out the demo.](https://subugoe.github.i
 
 To embed TIFY into your site:
 1. Copy the contents of the `dist/` directory to your server.
-2. Add an HTML element serving as the container
-3. Load `tify.js`.
+2. Add an HTML element serving as the container.
+3. Include `tify.js`.
 
 The container element should have the following CSS applied:
 - either `position: relative` or `position: absolute`
@@ -26,7 +26,7 @@ The only required parameter `manifestUrl` is a URL pointing to the manifest. It 
 - `container` (default: `#tify`): The HTML element TIFY is loaded into.
 - `language` (default: `en`): The interface language. Currently, only English and German (`de`) are available.
 - `manifestUrl`: A URL pointing to the IIIF manifest. If this option is not set, the URL has to be provided via a query parameter of the same name.
-- `stylesheetUrl`: Provide your own stylesheet, replacing TIFY's default styles. Use `null` to disable loading any styles, e.g. if your site's stylesheet already includes styles for TIFY.
+- `stylesheetUrl`: Use this to provide your own stylesheet, replacing TIFY's default styles. Set to `null` to prevent TIFY from loading any styles, e.g. if your site's stylesheet already includes styles for TIFY.
 - `title` (default: `TIFY`): By default, TIFY replaces the window title with the document title as defined by the manifest, appended by `TIFY`. Set this to any string, or `null` to disable title modification.
 
 ### Example
@@ -72,10 +72,6 @@ npm run build
 The production build will be stored in `dist`, just copy the contents of this directory to your server.
 
 ## Running Tests
-
-While Karma and all required plugins are part of the dev dependencies, CodeceptJS, which is used for end-to-end tests, is not. If needed, install CodeceptJS with `npm install -g codeceptjs`.
-
-Run tests:
 
 ``` bash
 # run unit tests
