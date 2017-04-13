@@ -23,9 +23,12 @@
 	}
 
 	code {
-		background: $shade-light;
+		box-shadow: $card-shadow;
 		border-radius: $br;
-		padding: ($grid / 8) ($grid / 4);
+		display: inline-block;
+		min-width: 1.5em;
+		padding: 0 .25em;
+		text-align: center;
 	}
 
 	h3 {

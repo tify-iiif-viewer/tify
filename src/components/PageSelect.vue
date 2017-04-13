@@ -27,7 +27,6 @@
 					@keyup.esc="filter ? filter = '' : isOpen = false"
 					@keydown.up="(highlightIndex > 0) && (highlightIndex -= 1)"
 					@keydown.down="(highlightIndex < filteredCanvases.length - 1) && (highlightIndex += 1)"
-					@keyup.stop
 				>
 			</div>
 			<ol class="tify-page-select_list" ref="list">
@@ -81,7 +80,7 @@
 				this.isOpen = !this.isOpen;
 				if (this.isOpen) {
 					this.$nextTick(() => {
-						this.$refs.search.focus();
+						if (this.$refs.search) this.$refs.search.focus();
 						this.updateScroll();
 					});
 				}

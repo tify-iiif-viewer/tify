@@ -114,6 +114,19 @@
 			},
 		},
 		methods: {
+			forwardToScan(event) {
+				if (event.target.className.indexOf('openseadragon') === 0) return;
+				if (['INPUT', 'SELECT', 'TEXTAREA'].indexOf(event.target.nodeName) > -1) return;
+
+				const canvas = this.$el.getElementsByClassName('openseadragon-canvas')[0];
+				if (!canvas) return;
+				const canvasEvent = new event.constructor(event.type, event);
+
+				// Chrome fix: OpenSeadragon evaluates keyCode
+				Object.defineProperty(canvasEvent, 'keyCode', { get() { return event.keyCode; } });
+
+				canvas.dispatchEvent(canvasEvent);
+			},
 			isValidPage(page) {
 				return (!isNaN(page) && page > 0 && page <= this.pageCount);
 			},
@@ -189,50 +202,26 @@
 				this.$root.error = `Error loading IIIF manifest: ${status}`;
 			});
 
-			// TODO: Remove unused key codes
-			// TODO: Move keys to scan, or move function required for pagination to App?
-			const keys = {
-				pageUp: 33,
-				pageDown: 34,
-				end: 35,
-				home: 36,
-				i: 73,
-				k: 75,
-				l: 76,
-				o: 79,
-				r: 82,
-				numpad0: 96,
-				add: 107,
-				substract: 109,
-				comma: 188,
-				period: 190,
-			};
-
 			window.addEventListener('keyup', (event) => {
-				switch (event.keyCode) {
-				case keys.pageUp:
-				case keys.comma:
+				if (['INPUT', 'SELECT', 'TEXTAREA'].indexOf(event.target.nodeName) > -1) return;
+
+				if (event.key === 'q' || event.key === ',') {
 					if (this.params.page > 1) this.setPage(this.params.page - 1);
-					break;
-				case keys.pageDown:
-				case keys.period:
+				} else if (event.key === 'e' || event.key === '.') {
 					if (this.params.page < this.pageCount) this.setPage(this.params.page + 1);
-					break;
-				case keys.k:
-					// TODO: Skip to previous section
-					break;
-				case keys.l:
-					// TODO: Skip to next section
-					break;
-				case keys.home:
+				} else if (event.key === 'Q') {
 					this.setPage(1);
-					break;
-				case keys.end:
+				} else if (event.key === 'E') {
 					this.setPage(this.pageCount);
-					break;
-				default:
+				} else if (event.key === 'x') {
+					const pageSelect = this.$el.getElementsByClassName('tify-page-select_button')[0];
+					if (pageSelect) pageSelect.click();
+				} else {
+					this.forwardToScan(event);
 				}
 			});
+			window.addEventListener('keydown', this.forwardToScan);
+			window.addEventListener('keypress', this.forwardToScan);
 		},
 	};
 </script>
