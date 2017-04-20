@@ -67,6 +67,7 @@
 	}
 
 	table {
+		border: 0;
 		margin: (-$grid / 4) -.25em ($grid - $grid / 4);
 	}
 
@@ -109,6 +110,8 @@
 	}
 
 	tr {
+		border: 0;
+
 		@include respond-to(large) {
 			display: block;
 		}
