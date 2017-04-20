@@ -11,3 +11,20 @@
 	height: auto;
 	width: auto;
 }
+
+.tify-info_toggle {
+	@extend %button;
+	box-shadow: $card-shadow;
+	border-radius: $br;
+	float: right;
+	font-size: $font-size-small;
+	padding: ($grid / 8) ($grid / 4);
+}
+
+// TODO
+.tify-info_value {
+	&.-limit-height {
+		max-height: ($grid * 5);
+		overflow: hidden;
+	}
+}
