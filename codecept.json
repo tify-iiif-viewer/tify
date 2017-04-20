@@ -1,7 +1,7 @@
 {
-  "tests": "./tests/e2e/*.test.js",
+  "tests": "./test/e2e/*.test.js",
   "timeout": 10000,
-  "output": "./tests/e2e/console.output",
+  "output": "./test/e2e/output",
   "helpers": {},
   "include": {
     "I": "./test/e2e/steps.js"
