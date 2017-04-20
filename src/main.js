@@ -27,7 +27,12 @@ const options = Object.assign({
 }, window.tifyOptions);
 
 const container = document.createElement('div');
-document.querySelector(options.container).appendChild(container);
+const el = document.querySelector(options.container);
+if (el) {
+	el.appendChild(container);
+} else if (process.env.NODE_ENV !== 'testing') {
+	throw new Error('TIFY container element not found');
+}
 
 export default new Vue({
 	render: h => h(App),
