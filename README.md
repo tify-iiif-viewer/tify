@@ -61,7 +61,7 @@ Run in development mode with hot reload on `localhost:8080`:
 npm run dev
 ```
 
-In development mode, the manifest URL must be provided via query parameter, e.g. `http://localhost:8080/?manifestUrl=http://gdzdev.sub.uni-goettingen.de/api/PPN616082037/manifest`.
+In development mode, the manifest URL must be provided via query parameter, e.g. `http://localhost:8080/?manifestUrl=https://gdzdev.sub.uni-goettingen.de/iiif/presentation/PPN857449303/manifest`.
 
 Build for production with minification:
 
