@@ -2,39 +2,50 @@
 	<section class="tify-info">
 		<h2 class="tify-sr-only">{{ 'Info'|trans }}</h2>
 
-		<h3>{{ 'Metadata'|trans }}</h3>
-		<table class="tify-info_list">
-			<tr class="tify-info_row" v-for="item, index in manifest.metadata">
-				<th class="tify-info_label">{{ item.label|formatLabel|trans }}</th>
-				<td class="tify-info_text" :ref="`item${index}`">
-					<div class="tify-info_value" :class="{'-limit-height': !items[index].fullyShown}">
-						<template v-if="Array.isArray(item.value)">
-							<div v-for="value in item.value" v-html="formatValue(value)"></div>
-						</template>
-						<div v-else v-html="formatValue(item.value)"></div>
-					</div>
+		<template v-if="manifest.metadata">
+			<h3>{{ 'Metadata'|trans }}</h3>
+			<table class="tify-info_list">
+				<tr class="tify-info_row" v-for="item, index in manifest.metadata">
+					<th class="tify-info_label">{{ item.label|formatLabel|trans }}</th>
+					<td class="tify-info_text" :ref="`item${index}`">
+						<div class="tify-info_value" :class="{'-limit-height': !items[index].fullyShown}">
+							<template v-if="Array.isArray(item.value)">
+								<div v-for="value in item.value" v-html="formatValue(value)"></div>
+							</template>
+							<div v-else v-html="formatValue(item.value)"></div>
+						</div>
 
-					<button v-if="items[index].isTooBig" class="tify-info_toggle" @click="toggleItem(index)">
-						<template v-if="!items[index].fullyShown">
-							<i class="tify-icon">expand_more</i> {{ 'Show all'|trans }}
-						</template>
-						<template v-else>
-							<i class="tify-icon">expand_less</i> {{ 'Collapse'|trans }}
-						</template>
-					</button>
-				</td>
-			</tr>
-		</table>
+						<button v-if="items[index].isTooBig" class="tify-info_toggle" @click="toggleItem(index)">
+							<template v-if="!items[index].fullyShown">
+								<i class="tify-icon">expand_more</i> {{ 'Show all'|trans }}
+							</template>
+							<template v-else>
+								<i class="tify-icon">expand_less</i> {{ 'Collapse'|trans }}
+							</template>
+						</button>
+					</td>
+				</tr>
+			</table>
+		</template>
 
 		<template v-if="manifest.attribution">
 			<h3>{{ 'Attribution'|trans }}</h3>
 			<p>{{ manifest.attribution }}</p>
 		</template>
 
-		<template v-if="manifest.logo.id">
-			<p>
-				<img class="tify-info_logo" :src="manifest.logo.id" alt="">
-			</p>
+		<template v-if="manifest.license">
+			<h3>{{ 'License'|trans }}</h3>
+			<p><a :href="manifest.license">{{ manifest.license }}</a></p>
+		</template>
+
+		<template v-if="manifest.related">
+			<h3>{{ 'Related'|trans }}</h3>
+			<p><a :href="manifest.related">{{ manifest.related }}</a></p>
+		</template>
+
+		<template v-if="manifest.logo">
+			<h3>{{ 'Logo'|trans }}</h3>
+			<p><img class="tify-info_logo" :src="manifest.logo.id ? manifest.logo.id : manifest.logo" alt=""></p>
 		</template>
 	</section>
 </template>
@@ -65,9 +76,13 @@
 			},
 		},
 		created() {
+			if (!this.manifest.metadata) return;
+
 			for (let i = 0; i < Object.keys(this.manifest.metadata).length; i += 1) this.items.push({});
 		},
 		mounted() {
+			if (!this.manifest.metadata) return;
+
 			this.items = [];
 			for (let i = 0; i < Object.keys(this.manifest.metadata).length; i += 1) {
 				const element = this.$refs[`item${i}`][0];

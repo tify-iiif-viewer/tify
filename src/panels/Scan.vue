@@ -115,6 +115,7 @@
 			PageSelect,
 		},
 		props: [
+			'apiVersion',
 			'canvases',
 			'structures',
 			'page',
@@ -176,11 +177,11 @@
 				// currently loaded from the info file since the former is unreliable.
 				const tileSources = [
 					{
-						'@context': 'http://iiif.io/api/image/2/context.json',
+						'@context': `http://iiif.io/api/image/${this.apiVersion}/context.json`,
 						'@id': this.id,
 						height: info.height,
 						width: info.width,
-						profile: ['http://iiif.io/api/image/2/level2.json'],
+						profile: [`http://iiif.io/api/image/${this.apiVersion}/level2.json`],
 						protocol: 'http://iiif.io/api/image',
 						tiles: info.tiles,
 					},

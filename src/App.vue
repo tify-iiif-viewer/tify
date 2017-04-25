@@ -12,6 +12,7 @@
 
 		<div v-if="manifest" class="tify-app_main">
 			<scan
+				:apiVersion="apiVersion"
 				:canvases="canvases"
 				:structures="manifest.structures"
 				:page="params.page"
@@ -38,6 +39,7 @@
 
 			<thumbnails
 				v-if="params.panel === 'thumbnails'"
+				:apiVersion="apiVersion"
 				:canvases="canvases"
 				:page="params.page"
 				@setPage="setPage"
@@ -103,6 +105,10 @@
 			};
 		},
 		computed: {
+			apiVersion() {
+				if (this.manifest['@context'] === 'http://iiif.io/api/presentation/1/context.json') return 1;
+				return 2;
+			},
 			canvases() {
 				return this.manifest.sequences[0].canvases;
 			},

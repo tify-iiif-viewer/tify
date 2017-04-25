@@ -29,6 +29,7 @@
 
 	export default {
 		props: [
+			'apiVersion',
 			'canvases',
 			'page',
 		],
@@ -93,9 +94,10 @@
 				this.items = [];
 				for (let i = startPage - 1; i < endPage; i += 1) {
 					const id = this.canvases[i].images[0].resource.service['@id'];
+					const quality = (this.apiVersion === 1 ? 'native' : 'default');
 					this.items.push({
 						label: this.canvases[i].label,
-						imgUrl: `${id}/full/${this.thumbnailWidth},/0/default.jpg`,
+						imgUrl: `${id}/full/${this.thumbnailWidth},/0/${quality}.jpg`,
 						page: i + 1,
 					});
 				}
