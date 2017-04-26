@@ -45,7 +45,7 @@
 
 		<template v-if="manifest.logo">
 			<h3>{{ 'Logo'|trans }}</h3>
-			<p><img class="tify-info_logo" :src="manifest.logo.id ? manifest.logo.id : manifest.logo" alt=""></p>
+			<p><img class="tify-info_logo" :src="manifest.logo['@id'] ? manifest.logo['@id'] : manifest.logo" alt=""></p>
 		</template>
 	</section>
 </template>
