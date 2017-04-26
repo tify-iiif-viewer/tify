@@ -23,6 +23,8 @@
 
 // TODO
 .tify-info_value {
+	word-break: break-word;
+
 	&.-limit-height {
 		max-height: ($grid * 5);
 		overflow: hidden;
