@@ -4,8 +4,8 @@
 			v-if="manifest"
 			:manifest="manifest"
 			:panel="params.panel"
-			:exportEnabled="!!manifest.rendering || !!manifest.seeAlso"
-			:tocEnabled="!!manifest.structures"
+			:exportEnabled="hasExport"
+			:tocEnabled="hasToc"
 			:transcriptEnabled="hasOtherContent"
 			@togglePanel="togglePanel"
 		/>
@@ -30,7 +30,7 @@
 			/>
 
 			<toc
-				v-if="manifest.structures && params.panel === 'toc'"
+				v-if="hasToc && params.panel === 'toc'"
 				:canvases="canvases"
 				:structures="manifest.structures"
 				:page="params.page"
@@ -51,7 +51,7 @@
 			/>
 
 			<export
-				v-if="!!manifest.seeAlso && params.panel === 'export'"
+				v-if="hasExport && params.panel === 'export'"
 				:exportItems="manifest.seeAlso"
 				:renderingItems="manifest.rendering"
 			/>
@@ -112,8 +112,14 @@
 			canvases() {
 				return this.manifest.sequences[0].canvases;
 			},
+			hasExport() {
+				return (this.manifest.rendering || this.manifest.seeAlso);
+			},
 			hasOtherContent() {
 				return this.canvases.some(canvas => 'otherContent' in canvas);
+			},
+			hasToc() {
+				return (this.manifest.structures && this.manifest.structures.length);
 			},
 			pageCount() {
 				return this.canvases.length;
@@ -169,6 +175,9 @@
 			},
 		},
 		created() {
+			// TODO: Mock $root.options instead, this is only required for unit testing
+			if (!this.$root.options) this.$root.options = {};
+
 			// Get query params. Note that all query params are strings.
 			const queryTuples = window.location.search.substr(1).split('&');
 			const params = {};
