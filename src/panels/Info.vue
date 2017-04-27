@@ -7,16 +7,26 @@
 			<table class="tify-info_list">
 				<tr class="tify-info_row" v-for="item, index in manifest.metadata">
 					<th class="tify-info_label">{{ item.label|formatLabel|trans }}</th>
-					<td class="tify-info_text" :ref="`item${index}`">
-						<div class="tify-info_value" :class="{'-limit-height': !items[index].fullyShown}">
+					<td class="tify-info_text">
+						<div
+							class="tify-info_value"
+							ref="items"
+							:class="{ '-collapsed': infoItems && infoItems[index].collapsed }"
+							:style="infoItems &&infoItems[index].collapsed ? collapsedStyle : null"
+						>
 							<template v-if="Array.isArray(item.value)">
 								<div v-for="value in item.value" v-html="formatValue(value)"></div>
 							</template>
 							<div v-else v-html="formatValue(item.value)"></div>
 						</div>
 
-						<button v-if="items[index].isTooBig" class="tify-info_toggle" @click="toggleItem(index)">
-							<template v-if="!items[index].fullyShown">
+						<button
+							v-if="!infoItems || infoItems[index].limitHeight"
+							class="tify-info_toggle"
+							ref="buttons"
+							@click="toggleItem(index)"
+						>
+							<template v-if="!infoItems || infoItems[index].collapsed">
 								<i class="tify-icon">expand_more</i> {{ 'Show all'|trans }}
 							</template>
 							<template v-else>
@@ -51,13 +61,17 @@
 </template>
 
 <script>
+	const itemMaxLines = 5;
+	const itemHeightMinDelta = 24;
+
 	export default {
 		props: [
 			'manifest',
 		],
 		data() {
 			return {
-				items: [],
+				collapsedStyle: '',
+				infoItems: null,
 			};
 		},
 		filters: {
@@ -72,26 +86,33 @@
 				return this.$root.$options.filters.trans(filteredValue);
 			},
 			toggleItem(index) {
-				this.items[index].fullyShown = !this.items[index].fullyShown;
+				this.infoItems[index].collapsed = !this.infoItems[index].collapsed;
 			},
-		},
-		created() {
-			if (!this.manifest.metadata) return;
-
-			for (let i = 0; i < Object.keys(this.manifest.metadata).length; i += 1) this.items.push({});
 		},
 		mounted() {
 			if (!this.manifest.metadata) return;
 
-			this.items = [];
+			const button = this.$refs.buttons[0];
+			const buttonStyle = window.getComputedStyle(button);
+			const buttonHeight = button.offsetHeight + parseInt(buttonStyle.marginTop, 10);
+
+			const itemLineHeight = parseInt(window.getComputedStyle(this.$refs.items[0]).lineHeight, 10);
+			const itemMaxHeight = itemLineHeight * itemMaxLines;
+
+			this.collapsedStyle = `max-height: ${itemMaxHeight}px; overflow: hidden`;
+
+			const infoItems = [];
 			for (let i = 0; i < Object.keys(this.manifest.metadata).length; i += 1) {
-				const element = this.$refs[`item${i}`][0];
-				const item = {
-					isTooBig: (element.offsetHeight > 120),
-					fullyShown: false,
+				const element = this.$refs.items[i];
+				const collapsedHeight = itemMaxHeight + buttonHeight;
+				const limitHeight = (element.offsetHeight > collapsedHeight + itemHeightMinDelta);
+				const infoItem = {
+					collapsed: limitHeight,
+					limitHeight,
 				};
-				this.items.push(item);
+				infoItems.push(infoItem);
 			}
+			this.infoItems = infoItems;
 		},
 	};
 </script>

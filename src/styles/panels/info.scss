@@ -16,17 +16,23 @@
 	@extend %button;
 	box-shadow: $card-shadow;
 	border-radius: $br;
-	float: right;
 	font-size: $font-size-small;
+	margin: ($grid / 4) 0 0;
 	padding: ($grid / 8) ($grid / 4);
 }
 
-// TODO
 .tify-info_value {
+	position: relative;
 	word-break: break-word;
 
-	&.-limit-height {
-		max-height: ($grid * 5);
-		overflow: hidden;
+	&.-collapsed {
+		&::after {
+			background: linear-gradient(rgba(#fff, 0), rgba(#fff, 1));
+			bottom: 0;
+			content: '';
+			height: 40%;
+			position: absolute;
+			width: 100%;
+		}
 	}
 }
