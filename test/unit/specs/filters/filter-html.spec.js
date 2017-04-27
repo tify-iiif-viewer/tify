@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import '@/filters';
+import '@/filters/filter-html';
 
 describe('filter-html', () => {
 	it('should filter HTML', () => {

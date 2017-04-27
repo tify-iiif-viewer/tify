@@ -1,8 +1,10 @@
 import Vue from 'vue';
 import App from '@/App';
 
-import './directives';
-import './filters';
+import '@/directives/click-outside';
+
+import '@/filters/filter-html';
+import '@/filters/trans';
 
 Vue.prototype.$http = require('axios');
 
