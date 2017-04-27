@@ -1,5 +1,15 @@
 import Vue from 'vue';
 
+// Mock axios
+Vue.prototype.$http = {
+	get() {
+		return this;
+	},
+	then(func) {
+		return func({});
+	},
+};
+
 Vue.config.productionTip = false;
 
 // Polyfill fn.bind() for PhantomJS

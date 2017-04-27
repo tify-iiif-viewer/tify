@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Info from '@/panels/Info';
 
 describe('Info', () => {
-	const vm = new (Vue.extend(Info))().$mount();
+	const vm = new Vue(Info);
 
 	it('should format a label', () => {
 		const label = 'example_label';

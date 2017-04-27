@@ -2,7 +2,12 @@ import Vue from 'vue';
 import App from '@/App';
 
 describe('App', () => {
-	const vm = new (Vue.extend(App))().$mount();
+	const vm = new Vue(App);
+
+	it('should set default params', () => {
+		expect(vm.params.page).to.equal(1);
+		expect(vm.params.panel).to.equal('info');
+	});
 
 	vm.manifest = {
 		sequences: [

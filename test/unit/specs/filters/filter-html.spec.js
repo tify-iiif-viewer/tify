@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import '@/filters';
 
-describe('Filters', () => {
+describe('filter-html', () => {
 	it('should filter HTML', () => {
 		const html = `
 			<h1 id="remove tag">

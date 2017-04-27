@@ -1,12 +1,11 @@
 import Vue from 'vue';
 import PageSelect from '@/components/PageSelect';
 
-import manifest from '../fixtures/manifest.json';
+import manifest from '../../fixtures/manifest.json';
 
 describe('PageSelect', () => {
-	const vm = new (Vue.extend(PageSelect))().$mount();
-
-	vm.canvases = manifest.sequences[0].canvases;
+	PageSelect.propsData = { canvases: manifest.sequences[0].canvases };
+	const vm = new Vue(PageSelect);
 
 	it('should filter and update canvases', () => {
 		vm.filter = '5';
