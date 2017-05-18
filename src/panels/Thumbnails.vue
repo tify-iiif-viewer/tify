@@ -41,6 +41,7 @@
 				container: null,
 				isInited: false,
 				itemHeight: 0,
+				itemVMargin: 0,
 				itemWidth: 0,
 				items: [{ label: '' }], // Dummy thumbnail to get dimensions
 				itemsPerRow: 0,
@@ -51,7 +52,14 @@
 		},
 		watch: {
 			page() {
-				this.$nextTick(() => this.updateScrollPos('.tify-thumbnails_item.-current'));
+				this.$nextTick(() => {
+					const currentSelector = '.tify-thumbnails_item.-current';
+					if (document.querySelector(currentSelector)) {
+						this.updateScrollPos('.tify-thumbnails_item.-current');
+					} else {
+						this.scrollToCurrentPage();
+					}
+				});
 			},
 		},
 		methods: {
@@ -60,10 +68,11 @@
 
 				const itemTemplate = this.container.querySelector('.tify-thumbnails_item');
 				const itemStyle = itemTemplate.currentStyle || window.getComputedStyle(itemTemplate);
-				const hMargin = parseInt(itemStyle.marginLeft, 10) + parseFloat(itemStyle.marginRight, 10);
 				const vMargin = parseInt(itemStyle.marginTop, 10) + parseFloat(itemStyle.marginBottom, 10);
-				this.itemHeight = itemTemplate.offsetHeight + hMargin;
-				this.itemWidth = itemTemplate.offsetWidth + vMargin;
+				this.itemHeight = itemTemplate.offsetHeight + vMargin;
+				this.itemVMargin = vMargin;
+				const hMargin = parseInt(itemStyle.marginLeft, 10) + parseFloat(itemStyle.marginRight, 10);
+				this.itemWidth = itemTemplate.offsetWidth + hMargin;
 				this.thumbnailWidth = itemTemplate.offsetWidth;
 
 				this.$el.style = this.style;
@@ -78,7 +87,7 @@
 				this.container.style.width = `${this.itemsPerRow * this.itemWidth}px`;
 
 				this.redrawThumbnails();
-				this.updateScrollPos('.tify-thumbnails_item.-current', false);
+				this.scrollToCurrentPage(false);
 			},
 			redrawThumbnails() {
 				const currentPos = this.$el.scrollTop;
@@ -100,6 +109,15 @@
 						imgUrl: `${id}/full/${this.thumbnailWidth},/0/${quality}.jpg`,
 						page: i + 1,
 					});
+				}
+			},
+			scrollToCurrentPage(animated = true) {
+				const rowsBefore = Math.floor((this.page - 1) / this.itemsPerRow);
+				const scrollPos = (rowsBefore * this.itemHeight) + (this.itemVMargin - 50);
+				if (animated) {
+					this.scrollTo(this.$el, scrollPos);
+				} else {
+					this.$el.scrollTop = scrollPos;
 				}
 			},
 		},
