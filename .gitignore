@@ -1,4 +1,5 @@
 .DS_Store
 node_modules/
 npm-debug.log
+test/e2e/output
 test/unit/coverage

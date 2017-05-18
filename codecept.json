@@ -1,11 +1,15 @@
 {
-  "tests": "./test/e2e/*.test.js",
+  "tests": "./test/e2e/specs/*.js",
   "timeout": 10000,
   "output": "./test/e2e/output",
-  "helpers": {},
-  "include": {
-    "I": "./test/e2e/steps.js"
+  "helpers": {
+    "Nightmare": {
+      "url": "http://localhost:8080",
+      "show": false,
+      "restart": false
+    }
   },
+  "include": {},
   "bootstrap": false,
   "mocha": {},
   "name": "tify"
