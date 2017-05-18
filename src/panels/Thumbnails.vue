@@ -25,7 +25,7 @@
 </template>
 
 <script>
-	import animatedScroll from '@/mixins/animated-scroll';
+	import scroll from '@/mixins/scroll';
 
 	export default {
 		props: [
@@ -34,7 +34,7 @@
 			'page',
 		],
 		mixins: [
-			animatedScroll,
+			scroll,
 		],
 		data() {
 			return {
@@ -51,7 +51,7 @@
 		},
 		watch: {
 			page() {
-				this.scrollToCurrentPage();
+				this.$nextTick(() => this.updateScrollPos('.tify-thumbnails_item.-current'));
 			},
 		},
 		methods: {
@@ -78,7 +78,7 @@
 				this.container.style.width = `${this.itemsPerRow * this.itemWidth}px`;
 
 				this.redrawThumbnails();
-				this.scrollToCurrentPage(false);
+				this.updateScrollPos('.tify-thumbnails_item.-current', false);
 			},
 			redrawThumbnails() {
 				const currentPos = this.$el.scrollTop;
@@ -100,15 +100,6 @@
 						imgUrl: `${id}/full/${this.thumbnailWidth},/0/${quality}.jpg`,
 						page: i + 1,
 					});
-				}
-			},
-			scrollToCurrentPage(animated = true) {
-				const rowsBefore = Math.floor((this.page - 1) / this.itemsPerRow);
-				const scrollPos = (rowsBefore * this.itemHeight) - this.itemHeight;
-				if (animated) {
-					this.scrollTo(this.$el, scrollPos);
-				} else {
-					this.$el.scrollTop = scrollPos;
 				}
 			},
 		},

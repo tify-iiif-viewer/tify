@@ -90,11 +90,11 @@
 			},
 			updateFilteredCanvases() {
 				const filteredCanvases = [];
-				const lowercasedFilter = this.filter.toLowerCase();
+				const filter = this.filter.toLowerCase();
 				let highlightIndex = -1;
 				this.canvases.forEach((canvas, index) => {
-					const labelMatchesFilter = canvas.label.toLowerCase().indexOf(lowercasedFilter) > -1;
-					const pageMatchesFilter = (index + 1).toFixed().indexOf(lowercasedFilter) > -1;
+					const labelMatchesFilter = canvas.label.toLowerCase().indexOf(filter) > -1;
+					const pageMatchesFilter = (index + 1).toFixed().indexOf(filter) > -1;
 					if (labelMatchesFilter || pageMatchesFilter) {
 						const item = canvas;
 						item.page = index + 1;
