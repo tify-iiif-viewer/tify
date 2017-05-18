@@ -8,7 +8,7 @@
 .tify-toc {
 	@extend %panel;
 	overflow-y: auto;
-	padding: ($grid / 2) 0;
+	padding: ($grid / 2) ($grid / 2) ($grid / 2) $grid;
 	position: relative;
 	z-index: 0;
 }
@@ -18,30 +18,13 @@
 	padding-right: .2em;
 }
 
-.tify-toc_item {
-	display: block;
-	padding: 0 ($grid / 2);
-
-	&.-current {
-		border-left: ($grid / 4) solid $brand-color-light;
-		padding-left: ($grid / 2 - $grid / 4);
-	}
-
-	& + & {
-		margin-top: ($grid / 2);
-	}
-}
-
 .tify-toc_link {
 	@include transition(background);
-	box-shadow: none;
 	border-radius: $br;
 	color: $link-color;
 	cursor: pointer;
 	display: block;
-	margin: 0 -.2em;
 	overflow: hidden;
-	padding: 0 .2em;
 	position: relative;
 
 	@include hover {
@@ -69,7 +52,8 @@
 	padding: 0;
 
 	& & {
-		margin-left: $grid;
+		// Vertical line on the left, connecting all items
+		margin: ($grid / 4) 0 0 ($grid * 1.25);
 	}
 }
 
@@ -80,6 +64,67 @@
 	z-index: 1;
 }
 
-.tify-toc_row {
+.tify-toc_structure {
+	display: block;
 	position: relative;
+
+	&.-current {
+		// Bold vertical marker
+		box-shadow: (-$grid * .75 + 1px) 0 white, (-$grid) 0 $brand-color-light;
+	}
+
+	&.-children-visible {
+		// Vertical line on the left, connecting all items
+		&::after {
+			border-left: 1px solid $brand-color-light;
+			content: '';
+			left: ($grid / 2);
+			height: 100%;
+			position: absolute;
+			top: 0;
+			z-index: -2;
+		}
+	}
+
+	& + & {
+		margin-top: ($grid / 4);
+	}
+
+	& & {
+		// Horizontal connector
+		&::before {
+			border-top: 1px solid $brand-color-light;
+			content: '';
+			display: block;
+			height: 100%;
+			left: (-$grid * .75);
+			position: absolute;
+			top: ($grid / 2);
+			width: ($grid / 2);
+		}
+
+		// Prevent vertical line from protruding at the bottom
+		&:not(.-current):last-child::before {
+			background: #fff;
+		}
+	}
+}
+
+.tify-toc_toggle {
+	@extend %button;
+	box-shadow: $card-shadow;
+	border-radius: $br;
+	float: left;
+	margin: 0 ($grid / 4) 0 0;
+	padding: 0;
+
+	// White overlay so vertical line does not touch button
+	&::after {
+		content: '';
+		border-bottom: ($grid / 4) solid #fff;
+		left: 0;
+		position: absolute;
+		width: 100%;
+		z-index: -1;
+	}
 }

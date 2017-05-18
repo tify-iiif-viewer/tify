@@ -2,21 +2,20 @@
 	<section class="tify-toc">
 		<h2 class="tify-sr-only">{{ 'Table of contents'|trans }}</h2>
 
-		<ul class="tify-toc_list">
-			<toc-item
-				v-for="item, index in structures"
-				:canvases="canvases"
-				:key="index"
-				:item="item"
-				:page="page"
-				@setPage="setPage"
-			/>
-		</ul>
+		<toc-list
+			:canvases="canvases"
+			:level="0"
+			:page="page"
+			:structures="structures"
+			@setPage="setPage"
+		/>
 	</section>
 </template>
 
 <script>
-	import TocItem from '@/components/TocItem';
+	import TocList from '@/components/TocList';
+
+	import scroll from '@/mixins/scroll';
 
 	export default {
 		props: [
@@ -24,13 +23,22 @@
 			'canvases',
 			'structures',
 		],
+		mixins: [
+			scroll,
+		],
 		components: {
-			TocItem,
+			TocList,
 		},
 		methods: {
 			setPage(page) {
 				this.$emit('setPage', page);
 			},
+		},
+		mounted() {
+			this.updateScrollPos('.tify-toc_structure.-current', false);
+		},
+		updated() {
+			this.updateScrollPos('.tify-toc_structure.-current');
 		},
 	};
 </script>
