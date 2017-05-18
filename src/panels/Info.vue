@@ -2,6 +2,11 @@
 	<section class="tify-info">
 		<h2 class="tify-sr-only">{{ 'Info'|trans }}</h2>
 
+		<template v-if="manifest.label">
+			<h3>{{ 'Title'|trans }}</h3>
+			<p>{{ manifest.label }}</p>
+		</template>
+
 		<template v-if="manifest.metadata">
 			<h3>{{ 'Metadata'|trans }}</h3>
 			<table class="tify-info_list">
