@@ -129,14 +129,13 @@
 
 .tify-app_error {
 	background: rgba(#d22, .8);
+	border-radius: 0 $br 0 0;
+	bottom: 0;
 	color: white;
 	font-weight: bold;
-	position: relative;
-}
-
-.tify-app_error-message {
-	display: inline-block;
+	max-width: 90%;
 	padding: ($grid / 4);
+	position: absolute;
 }
 
 .tify-app_error-close {
@@ -144,7 +143,8 @@
 	border: 0;
 	color: white;
 	cursor: pointer;
-	float: right;
+	float: left;
+	margin: (-$grid / 4) ($grid / 4) (-$grid / 4) (-$grid / 4);
 	padding: ($grid / 4);
 
 	@include hover {

@@ -66,10 +66,7 @@
 		</div>
 
 		<div v-if="$root.error" class="tify-app_error">
-			<span class="tify-app_error-message">
-				<i class="tify-icon">error</i>
-				<span v-html="$root.error"></span>
-			</span>
+			<span v-html="$root.error"></span>
 			<button class="tify-app_error-close" @click="$root.error = ''">
 				<i class="tify-icon">close</i>
 			</button>
@@ -143,6 +140,7 @@
 				return (!isNaN(page) && page > 0 && page <= this.pageCount);
 			},
 			setPage(page) {
+				this.$root.error = '';
 				if (this.isValidPage(page)) {
 					this.updateParams({ page });
 				} else {
