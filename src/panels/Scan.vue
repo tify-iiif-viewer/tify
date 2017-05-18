@@ -1,5 +1,7 @@
 <template>
 	<section class="tify-scan">
+		<h2 class="tify-sr-only">{{ 'Scan'|trans }}</h2>
+
 		<div class="tify-scan_buttons">
 			<button
 				class="tify-scan_button"
@@ -12,11 +14,11 @@
 			</button>
 
 			<button
-				v-if="structures"
+				v-if="structures && structures.length"
 				class="tify-scan_button"
 				:disabled="page === 1"
 				:title="'Previous section'|trans"
-				@click="setPage(page === currentStructure.firstPage ? previousStructure.firstPage : currentStructure.firstPage)"
+				@click="goToPreviousSection()"
 			>
 				<i class="tify-icon">skip_previous</i>
 				<span class="tify-sr-only">{{ 'Previous section'|trans }}</span>
@@ -43,11 +45,11 @@
 			</button>
 
 			<button
-				v-if="structures"
+				v-if="structures && structures.length"
 				class="tify-scan_button"
-				:disabled="page >= lastStructure.firstPage"
+				:disabled="page >= lastSection.firstPage"
 				:title="'Next section'|trans"
-				@click="setPage(nextStructure.firstPage)"
+				@click="goToNextSection()"
 			>
 				<i class="tify-icon">skip_next</i>
 				<span class="tify-sr-only">{{ 'Next section'|trans }}</span>
@@ -125,34 +127,19 @@
 		],
 		data() {
 			return {
-				firstStructureFirstPage: null,
-				lastStructureLastPage: null,
+				currentSectionIndex: 0,
 				id: '',
+				sections: [],
 				viewer: null,
 				zoomFactor: 1.5,
 			};
 		},
 		computed: {
-			currentStructureIndex() {
-				// There may we pages outisde of structure bounds
-				if (this.page < this.firstStructureFirstPage) return 0;
-				if (this.page > this.lastStructureLastPage) return this.structures.length - 1;
-
-				return this.structures.findIndex(
-					structure => (this.page >= structure.firstPage && this.page <= structure.lastPage),
-				);
+			currentSection() {
+				return this.sections[this.currentSectionIndex];
 			},
-			currentStructure() {
-				return this.structures[this.currentStructureIndex];
-			},
-			previousStructure() {
-				return this.structures[Math.max(0, this.currentStructureIndex - 1)];
-			},
-			nextStructure() {
-				return this.structures[Math.min(this.structures.length - 1, this.currentStructureIndex + 1)];
-			},
-			lastStructure() {
-				return this.structures[this.structures.length - 1];
+			lastSection() {
+				return this.sections[this.sections.length - 1];
 			},
 			isMinZoom() {
 				if (!this.viewer) return true;
@@ -166,9 +153,42 @@
 		watch: {
 			page() {
 				this.loadImageInfo();
+
+				// Find the last section containing the current page
+				this.sections.forEach((section, index) => {
+					if (this.page >= section.firstPage && this.page <= section.lastPage) {
+						this.currentSectionIndex = index;
+					}
+				});
 			},
 		},
 		methods: {
+			goToNextSection() {
+				let sectionIndex = this.currentSectionIndex + 1;
+				if (!this.sections[sectionIndex]) return;
+				while (
+					this.sections[sectionIndex + 1]
+					&& this.page >= this.sections[sectionIndex].firstPage
+				) sectionIndex += 1;
+				this.currentSectionIndex = sectionIndex;
+				this.setPage(this.sections[sectionIndex].firstPage);
+			},
+			goToPreviousSection() {
+				if (this.page > this.currentSection.firstPage) {
+					this.setPage(this.currentSection.firstPage);
+					return;
+				}
+
+				let sectionIndex = this.currentSectionIndex - 1;
+				if (!this.sections[sectionIndex]) return;
+
+				while (
+					this.sections[sectionIndex - 1]
+					&& this.page <= this.sections[sectionIndex].lastPage
+				) sectionIndex -= 1;
+				this.currentSectionIndex = sectionIndex;
+				this.setPage(this.sections[sectionIndex].firstPage);
+			},
 			initOpenSeadragon(info) {
 				this.$root.loading += 1;
 
@@ -218,7 +238,7 @@
 				});
 
 				this.viewer.addHandler('tile-load-failed', (error) => {
-					this.$root.error = `Error loading image: ${error.tile.url}`;
+					this.$root.error = `Error loading image for page ${this.page}: ${error.message}`;
 				});
 
 				// TODO: Loading is regarded as complete once the first tile has been downloaded.
@@ -234,7 +254,7 @@
 					this.initOpenSeadragon(response.data);
 				}, (error) => {
 					const status = (error.response ? error.response.statusText : error.message);
-					this.$root.error = `Error loading image info file: ${status}`;
+					this.$root.error = `Error loading info file for page ${this.page}: ${status}`;
 				});
 			},
 			resetView() {
@@ -265,22 +285,15 @@
 
 			if (!this.structures) return;
 
-			// Enrich structures with first and last page
-			this.structures.forEach((structure, index) => {
+			const sections = [];
+			this.structures.forEach((structure) => {
 				const firstCanvasId = structure.canvases[0];
 				const firstPage = this.canvases.findIndex(canvas => canvas['@id'] === firstCanvasId) + 1;
 				const lastCanvasId = structure.canvases[structure.canvases.length - 1];
 				const lastPage = this.canvases.findIndex(canvas => canvas['@id'] === lastCanvasId) + 1;
-
-				if (index === 0) {
-					this.firstStructureFirstPage = firstPage;
-				} else if (index === this.structures.length - 1) {
-					this.lastStructureLastPage = lastPage;
-				}
-
-				this.structures[index].firstPage = firstPage;
-				this.structures[index].lastPage = lastPage;
+				sections.push({ firstPage, lastPage });
 			});
+			this.sections = sections;
 		},
 	};
 </script>
