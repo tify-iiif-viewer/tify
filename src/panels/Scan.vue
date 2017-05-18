@@ -153,40 +153,25 @@
 		watch: {
 			page() {
 				this.loadImageInfo();
-
-				// Find the last section containing the current page
-				this.sections.forEach((section, index) => {
-					if (this.page >= section.firstPage && this.page <= section.lastPage) {
-						this.currentSectionIndex = index;
-					}
-				});
+				this.updateCurrentSessionIndex();
 			},
 		},
 		methods: {
 			goToNextSection() {
 				let sectionIndex = this.currentSectionIndex + 1;
-				if (!this.sections[sectionIndex]) return;
 				while (
-					this.sections[sectionIndex + 1]
-					&& this.page >= this.sections[sectionIndex].firstPage
+					this.sections[sectionIndex]
+					&& this.currentSection.firstPage >= this.sections[sectionIndex].firstPage
 				) sectionIndex += 1;
-				this.currentSectionIndex = sectionIndex;
 				this.setPage(this.sections[sectionIndex].firstPage);
 			},
 			goToPreviousSection() {
-				if (this.page > this.currentSection.firstPage) {
-					this.setPage(this.currentSection.firstPage);
-					return;
-				}
-
 				let sectionIndex = this.currentSectionIndex - 1;
 				if (!this.sections[sectionIndex]) return;
-
 				while (
-					this.sections[sectionIndex - 1]
-					&& this.page <= this.sections[sectionIndex].lastPage
+					this.sections[sectionIndex]
+					&& this.currentSection.firstPage <= this.sections[sectionIndex].firstPage
 				) sectionIndex -= 1;
-				this.currentSectionIndex = sectionIndex;
 				this.setPage(this.sections[sectionIndex].firstPage);
 			},
 			initOpenSeadragon(info) {
@@ -263,6 +248,14 @@
 			setPage(page) {
 				this.$emit('setPage', page);
 			},
+			updateCurrentSessionIndex() {
+				// Find the last section containing the current page
+				this.sections.forEach((section, index) => {
+					if (this.page >= section.firstPage && this.page <= section.lastPage) {
+						this.currentSectionIndex = index;
+					}
+				});
+			},
 			updateParams() {
 				const center = this.viewer.viewport.getCenter();
 				const zoom = this.viewer.viewport.getZoom();
@@ -294,6 +287,8 @@
 				sections.push({ firstPage, lastPage });
 			});
 			this.sections = sections;
+
+			this.updateCurrentSessionIndex();
 		},
 	};
 </script>
