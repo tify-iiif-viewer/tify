@@ -20,10 +20,10 @@ module.exports = {
 
 			if (topCurrentElementRect.top < listRect.top) {
 				const targetPos = (topCurrentElementRect.top - listRect.top) + this.$el.scrollTop;
-				this.scrollTo(this.$el, targetPos - 20, animated);
+				this.scrollTo(this.$el, targetPos - 50, animated);
 			} else if (bottomCurrentElementRect.bottom > listRect.bottom) {
 				const targetPos = (bottomCurrentElementRect.bottom - listRect.bottom) + this.$el.scrollTop;
-				this.scrollTo(this.$el, targetPos + 20, animated);
+				this.scrollTo(this.$el, targetPos + 50, animated);
 			}
 		},
 		scrollTo(element, to, animationDuration = 120) {
