@@ -136,7 +136,10 @@
 		},
 		computed: {
 			currentSection() {
-				return this.sections[this.currentSectionIndex];
+				if (this.currentSectionIndex < this.sections.length) {
+					return this.sections[this.currentSectionIndex];
+				}
+				return {};
 			},
 			lastSection() {
 				return this.sections[this.sections.length - 1];
@@ -250,11 +253,14 @@
 			},
 			updateCurrentSessionIndex() {
 				// Find the last section containing the current page
+				// Setting default value for pages that are not part of a section
+				let newSectionIndex = this.sections.length;
 				this.sections.forEach((section, index) => {
 					if (this.page >= section.firstPage && this.page <= section.lastPage) {
-						this.currentSectionIndex = index;
+						newSectionIndex = index;
 					}
 				});
+				this.currentSectionIndex = newSectionIndex;
 			},
 			updateParams() {
 				const center = this.viewer.viewport.getCenter();
