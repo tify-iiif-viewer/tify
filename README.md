@@ -1,8 +1,19 @@
-# TIFY
+<p>
+	<a href="https://github.com/subugoe/tify">
+		<img src="https://subugoe.github.io/tify/static/tify-logo.svg" alt="TIFY" width="148" height="60">
+	</a>
+</p>
 
-The fastest IIIF document viewer. [Check out the demo.](https://subugoe.github.io/tify/demo.html?manifestUrl=https://gdzdev.sub.uni-goettingen.de/iiif/presentation/PPN857449303/manifest)
+TIFY is a IIIF document viewer built with [Vue.js](https://github.com/vuejs/vue).
+[Check out the demo.](https://subugoe.github.io/tify/demo.html?manifestUrl=https://gdzdev.sub.uni-goettingen.de/iiif/presentation/PPN857449303/manifest)
 
 ## Embedding TIFY
+
+TIFY is available as an [npm package](https://www.npmjs.com/package/tify):
+
+``` bash
+npm install tify
+```
 
 To embed TIFY into your site:
 1. Copy the contents of the `dist/` directory to your server.
