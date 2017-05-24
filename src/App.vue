@@ -195,6 +195,7 @@
 			const manifestUrl = this.$root.options.manifestUrl || this.getQueryParam('manifestUrl');
 			if (!manifestUrl) {
 				this.$root.error = 'Missing query parameter or option: manifestUrl';
+				return;
 			} else if (this.$root.options.manifestUrl && this.params.manifestUrl) {
 				this.$root.error = 'Setting manifestUrl via query parameter is disabled';
 			}
