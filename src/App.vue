@@ -136,6 +136,20 @@
 
 				canvas.dispatchEvent(canvasEvent);
 			},
+			getParams() {
+				const params = JSON.parse(this.getQueryParam('tify')) || {};
+				return {
+					page: (this.isValidPage(params.page) ? params.page : 1),
+					panel: typeof params.panel !== 'undefined' ? params.panel : 'info',
+					panX: parseFloat(params.panX) || null,
+					panY: parseFloat(params.panY) || null,
+					zoom: parseFloat(params.zoom) || null,
+				};
+			},
+			getQueryParam(name) {
+				const match = RegExp(`[?&]${name}=([^&]*)`).exec(window.location.search);
+				return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+			},
 			isValidPage(page) {
 				return (!isNaN(page) && page > 0 && page <= this.pageCount);
 			},
@@ -156,12 +170,13 @@
 
 				if (!window.history) return;
 
-				const hashes = [];
-				Object.keys(this.params).forEach((key) => {
-					if (this.params[key] !== null) hashes.push(`${key}=${this.params[key]}`);
-				});
+				const regex = /([?&])tify=.*?(&|$)/;
+				const tifyParams = `tify=${JSON.stringify(this.params)}`;
+				const uri = window.location.href;
+				const newUrl = uri.match(regex)
+					? uri.replace(regex, `$1${tifyParams}$2`)
+					: `${uri}${uri.indexOf('?') < 0 ? '?' : '&'}${tifyParams}`;
 
-				const newUrl = `${window.location.pathname}?${hashes.join('&')}`;
 				if (doPush) {
 					window.history.pushState({}, '', newUrl);
 				} else {
@@ -176,17 +191,8 @@
 			// TODO: Mock $root.options instead, this is only required for unit testing
 			if (!this.$root.options) this.$root.options = {};
 
-			// Get query params. Note that all query params are strings.
-			const queryTuples = window.location.search.substr(1).split('&');
-			const params = {};
-			for (let i = 0; i < queryTuples.length; i += 1) {
-				const parts = queryTuples[i].split('=');
-				params[parts[0]] = parts[1];
-			}
-
 			// Manifest URL in tifyOptions trumps query param
-			const manifestUrl = this.$root.options.manifestUrl || params.manifestUrl;
-
+			const manifestUrl = this.$root.options.manifestUrl || this.getQueryParam('manifestUrl');
 			if (!manifestUrl) {
 				this.$root.error = 'Missing query parameter or option: manifestUrl';
 			} else if (this.$root.options.manifestUrl && this.params.manifestUrl) {
@@ -197,15 +203,10 @@
 				this.manifest = response.data;
 
 				// Merging user-set query params with defaults
-				const page = parseInt(params.page, 10);
-				this.params = {
-					manifestUrl: params.manifestUrl || null,
-					page: (this.isValidPage(page) ? page : 1),
-					panel: typeof params.panel !== 'undefined' ? params.panel : 'info',
-					panX: parseFloat(params.panX) || null,
-					panY: parseFloat(params.panY) || null,
-					zoom: parseFloat(params.zoom) || null,
-				};
+				this.params = this.getParams();
+				window.addEventListener('popstate', () => {
+					this.params = this.getParams();
+				});
 
 				if (this.$root.options.title) {
 					window.document.title = `${this.manifest.label} | ${this.$root.options.title}`;
