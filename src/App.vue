@@ -6,7 +6,7 @@
 			:panel="params.panel"
 			:exportEnabled="hasExport"
 			:tocEnabled="hasToc"
-			:transcriptEnabled="hasOtherContent"
+			:fulltextEnabled="hasOtherContent"
 			@togglePanel="togglePanel"
 		/>
 
@@ -23,8 +23,8 @@
 				@updateParams="updateParams"
 			/>
 
-			<transcript
-				v-if="hasOtherContent && params.panel === 'transcript'"
+			<fulltext
+				v-if="hasOtherContent && params.panel === 'fulltext'"
 				:canvases="canvases"
 				:page="params.page"
 			/>
@@ -77,12 +77,12 @@
 <script>
 	import AppHeader from '@/components/Header';
 	import Export from '@/panels/Export';
+	import Fulltext from '@/panels/Fulltext';
 	import Help from '@/panels/Help';
 	import Info from '@/panels/Info';
 	import Scan from '@/panels/Scan';
 	import Thumbnails from '@/panels/Thumbnails';
 	import Toc from '@/panels/Toc';
-	import Transcript from '@/panels/Transcript';
 
 	export default {
 		components: {
@@ -93,7 +93,7 @@
 			Scan,
 			Thumbnails,
 			Toc,
-			Transcript,
+			Fulltext,
 		},
 		data() {
 			return {

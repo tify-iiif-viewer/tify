@@ -26,13 +26,13 @@
 					{{ 'Scan'|trans }}
 				</button>
 				<button
-					v-if="transcriptEnabled"
+					v-if="fulltextEnabled"
 					class="tify-header_button"
-					:class="{ '-active': panel === 'transcript' }"
-					@click="$emit('togglePanel', 'transcript')"
+					:class="{ '-active': panel === 'fulltext' }"
+					@click="$emit('togglePanel', 'fulltext')"
 				>
 					<i class="tify-icon">subject</i>
-					{{ 'Transcript'|trans }}
+					{{ 'Fulltext'|trans }}
 				</button>
 				<button
 					class="tify-header_button"
@@ -89,7 +89,7 @@
 			'panel',
 			'exportEnabled',
 			'tocEnabled',
-			'transcriptEnabled',
+			'fulltextEnabled',
 		],
 		data() {
 			return {

@@ -1,8 +1,6 @@
 <template>
-	<section class="tify-transcript">
+	<section class="tify-fulltext">
 		<h2 class="tify-sr-only">{{ 'Help'|trans }}</h2>
-
-		<!--TODO-->
 
 		<h3>Key Bindings</h3>
 		<table>

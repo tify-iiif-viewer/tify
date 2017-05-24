@@ -1,11 +1,11 @@
 <template>
-	<section class="tify-transcript">
-		<h2 class="tify-sr-only">{{ 'Transcript'|trans }}</h2>
+	<section class="tify-fulltext">
+		<h2 class="tify-sr-only">{{ 'Fulltext'|trans }}</h2>
 
-		<div v-if="transcript" class="tify-transcript_text" v-html="transcript">
+		<div v-if="fulltext" class="tify-fulltext_text" v-html="fulltext">
 		</div>
-		<div v-else class="tify-transcript_none">
-			{{ 'No transcript available for this page'|trans }}
+		<div v-else class="tify-fulltext_none">
+			{{ 'No fulltext available for this page'|trans }}
 		</div>
 	</section>
 </template>
@@ -18,31 +18,31 @@
 		],
 		data() {
 			return {
-				transcript: ' ',
+				fulltext: ' ',
 			};
 		},
 		watch: {
 			page() {
-				this.loadTranscript();
+				this.loadFulltext();
 			},
 		},
 		methods: {
-			loadTranscript() {
+			loadFulltext() {
 				const canvas = this.canvases[this.page - 1];
 
 				if (!('otherContent' in canvas)) {
-					this.transcript = '';
+					this.fulltext = '';
 					return;
 				}
 
 				const annotationListUrl = canvas.otherContent[0]['@id'];
 				this.$http.get(annotationListUrl).then((response) => {
-					const transcriptUrl = response.data.resources[0].resource['@id'];
-					this.$http.get(transcriptUrl).then((response2) => {
-						this.transcript = this.$options.filters.filterHtml(response2.data);
+					const fulltextUrl = response.data.resources[0].resource['@id'];
+					this.$http.get(fulltextUrl).then((response2) => {
+						this.fulltext = this.$options.filters.filterHtml(response2.data);
 					}, (error) => {
 						const status = (error.response ? error.response.statusText : error.message);
-						this.$root.error = `Error loading transcript: ${status}`;
+						this.$root.error = `Error loading fulltext: ${status}`;
 					});
 				}, (error) => {
 					const status = (error.response ? error.response.statusText : error.message);
@@ -51,7 +51,7 @@
 			},
 		},
 		mounted() {
-			this.loadTranscript();
+			this.loadFulltext();
 		},
 	};
 </script>

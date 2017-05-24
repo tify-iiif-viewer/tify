@@ -1,7 +1,7 @@
 {
+	"Fulltext": "Volltext",
 	"Panel": "Ansicht",
 	"Scan": "Scan",
-	"Transcript": "Transkription",
 	"Pages": "Seiten",
 	"Contents": "Inhalt",
 	"Metadata": "Metadaten",
@@ -22,7 +22,7 @@
 	"Current page": "Aktuelle Seite",
 	"Loading": "Wird geladen",
 
-	"No transcript available for this page": "Transkription nicht verfügbar",
+	"Fulltext not available for this page": "Volltext nicht verfügbar",
 
 	"Author": "Autor",
 	"Classification": "Klassifikation",

@@ -1,15 +1,15 @@
-.tify-transcript {
+.tify-fulltext {
 	@extend %panel;
 	overflow-y: auto;
 	padding: ($grid / 2);
 }
 
-.tify-transcript_none {
+.tify-fulltext_none {
 	color: $text-color-light;
 	font-style: italic;
 }
 
-.tify-transcript_text {
+.tify-fulltext_text {
 	p {
 		margin: 0 0 1em;
 	}
