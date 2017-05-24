@@ -4,11 +4,6 @@ import App from '@/App';
 describe('App', () => {
 	const vm = new Vue(App);
 
-	it('should set default params', () => {
-		expect(vm.params.page).to.equal(1);
-		expect(vm.params.panel).to.equal('info');
-	});
-
 	vm.manifest = {
 		sequences: [
 			{
@@ -16,6 +11,12 @@ describe('App', () => {
 			},
 		],
 	};
+
+	it('should get default params', () => {
+		const params = vm.getParams();
+		expect(params.page).to.equal(1);
+		expect(params.panel).to.equal('info');
+	});
 
 	it('should validate page numbers', () => {
 		expect(vm.isValidPage('nope')).to.equal(false);

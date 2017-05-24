@@ -1,7 +1,7 @@
 Feature('Scan');
 
 Scenario('Change page', (I) => {
-	I.amOnPage('http://localhost:8080/?manifestUrl=https://gdzdev.sub.uni-goettingen.de/iiif/presentation/PPN478508743_0018/manifest&page=668');
+	I.amOnPage('http://localhost:8080/?manifestUrl=https://gdzdev.sub.uni-goettingen.de/iiif/presentation/PPN478508743_0018/manifest&tify={"page":668}');
 	I.waitForElement('.tify-app_main');
 	I.see('668 : 653', '.tify-page-select_button');
 
