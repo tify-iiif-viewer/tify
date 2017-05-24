@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>TIFY - The fastest IIIF document viewer</title>
+	<title>TIFY - A IIIF document viewer</title>
 	<style>
 		body {
 			display: flex;
@@ -13,11 +13,26 @@
 			margin: 0;
 		}
 
-		h1 {
-			font-size: 1.5rem;
+		.title {
+			background: #333;
+			color: #fff;
+			font-size: 1.25rem;
 			font-weight: normal;
 			margin: 0;
 			padding: .5rem;
+		}
+
+		.title-link {
+			float: left;
+			margin-right: .75rem;
+		}
+
+		.title-logo {
+			display: block;
+		}
+
+		.title-text {
+			vertical-align: middle;
 		}
 
 		#tify {
@@ -27,7 +42,14 @@
 	</style>
 </head>
 <body>
-	<h1>TIFY &ndash; The fastest IIIF document viewer</h1>
+	<h1 class="title">
+		<a class="title-link" href="https://subugoe.github.io/tify/demo.html">
+			<img class="title-logo" src="https://subugoe.github.io/tify/static/tify-logo-white.svg" alt="TIFY" width="74" height="30">
+		</a>
+		<span class="title-text">
+			A IIIF document viewer
+		</span>
+	</h1>
 	<div id="tify"></div>
 	<script src="dist/tify.js"></script>
 </body>
