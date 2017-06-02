@@ -137,6 +137,7 @@ export default new Vue({
 		const manifestUrl = this.options.manifestUrl || this.getQueryParam('manifestUrl');
 		if (!manifestUrl) {
 			this.error = 'Missing query parameter or option: manifestUrl';
+			this.$mount(container);
 			return;
 		} else if (this.options.manifestUrl && this.params.manifestUrl) {
 			this.error = 'Setting manifestUrl via query parameter is disabled';
