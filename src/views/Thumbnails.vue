@@ -11,9 +11,9 @@
 			<a
 				v-for="item in items"
 				class="tify-thumbnails_item"
-				:class="{ '-current': item.page === page }"
+				:class="{ '-current': item.page === $root.params.page }"
 				:key="item.page"
-				@click="$emit('setPage', item.page)"
+				@click="$root.setPage(item.page)"
 			>
 				<img :src="item.imgUrl">
 				<span class="tify-thumbnails_page-number">
@@ -28,11 +28,6 @@
 	import scroll from '@/mixins/scroll';
 
 	export default {
-		props: [
-			'apiVersion',
-			'canvases',
-			'page',
-		],
 		mixins: [
 			scroll,
 		],
@@ -50,8 +45,14 @@
 				thumbnailWidth: 0,
 			};
 		},
+		computed: {
+			apiVersion() {
+				return (this.$root.manifest['@context'] === 'http://iiif.io/api/presentation/1/context.json' ? 1 : 2);
+			},
+		},
 		watch: {
-			page() {
+			// eslint-disable-next-line func-names
+			'$root.params.page': function () {
 				this.$nextTick(() => {
 					const currentSelector = '.tify-thumbnails_item.-current';
 					if (document.querySelector(currentSelector)) {
@@ -79,7 +80,7 @@
 				this.container.style.width = '';
 
 				this.itemsPerRow = Math.floor((this.container.clientWidth) / this.itemWidth);
-				const totalRows = Math.ceil(this.canvases.length / this.itemsPerRow);
+				const totalRows = Math.ceil(this.$root.canvases.length / this.itemsPerRow);
 				const containerHeight = (totalRows * this.itemHeight);
 
 				this.$el.style.flex = 'none';
@@ -95,24 +96,24 @@
 				const visibleRowsCount = Math.ceil(this.$el.offsetHeight / this.itemHeight);
 				const visiblePagesCount = visibleRowsCount * this.itemsPerRow;
 				const lastPage = startPage + this.itemsPerRow + visiblePagesCount;
-				const endPage = Math.min(this.canvases.length, lastPage);
+				const endPage = Math.min(this.$root.canvases.length, lastPage);
 
 				const rowsBefore = Math.floor(startPage / this.itemsPerRow);
 				this.container.style.paddingTop = `${(rowsBefore * this.itemHeight)}px`;
 
 				this.items = [];
 				for (let i = startPage - 1; i < endPage; i += 1) {
-					const id = this.canvases[i].images[0].resource.service['@id'];
+					const id = this.$root.canvases[i].images[0].resource.service['@id'];
 					const quality = (this.apiVersion === 1 ? 'native' : 'default');
 					this.items.push({
-						label: this.canvases[i].label,
+						label: this.$root.canvases[i].label,
 						imgUrl: `${id}/full/${this.thumbnailWidth},/0/${quality}.jpg`,
 						page: i + 1,
 					});
 				}
 			},
 			scrollToCurrentPage(animated = true) {
-				const rowsBefore = Math.floor((this.page - 1) / this.itemsPerRow);
+				const rowsBefore = Math.floor((this.$root.params.page - 1) / this.itemsPerRow);
 				const scrollPos = (rowsBefore * this.itemHeight) + (this.itemVMargin - 50);
 				if (animated) {
 					this.scrollTo(this.$el, scrollPos);

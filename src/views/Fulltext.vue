@@ -28,7 +28,7 @@
 		},
 		methods: {
 			loadFulltext() {
-				const canvas = this.canvases[this.page - 1];
+				const canvas = this.$root.canvases[this.$root.params.page - 1];
 
 				if (!('otherContent' in canvas)) {
 					this.fulltext = '';

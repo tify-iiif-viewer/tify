@@ -43,6 +43,15 @@ export default new Vue({
 		loading: 0,
 		messages: {},
 		options,
+		params: {},
+	},
+	computed: {
+		canvases() {
+			return this.manifest.sequences[0].canvases;
+		},
+		pageCount() {
+			return this.manifest.sequences[0].canvases.length;
+		},
 	},
 	methods: {
 		appendStylesheet(url) {
@@ -50,6 +59,57 @@ export default new Vue({
 			link.href = url;
 			link.rel = 'stylesheet';
 			document.head.appendChild(link);
+		},
+		getParams() {
+			const params = JSON.parse(this.getQueryParam('tify')) || {};
+			const defaultView = (this.isMobile ? 'scan' : 'info');
+			return {
+				page: (this.isValidPage(params.page) ? params.page : 1),
+				view: (typeof params.view !== 'undefined' ? params.view : defaultView),
+				panX: parseFloat(params.panX) || null,
+				panY: parseFloat(params.panY) || null,
+				zoom: parseFloat(params.zoom) || null,
+			};
+		},
+		getQueryParam(name) {
+			const match = RegExp(`[?&]${name}=([^&]*)`).exec(window.location.search);
+			return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+		},
+		isMobile() {
+			const width = window.innerWidth
+				|| document.documentElement.clientWidth
+				|| document.body.clientWidth;
+			return width <= 1000;
+		},
+		isValidPage(page) {
+			return (!isNaN(page) && page > 0 && page <= this.pageCount);
+		},
+		setPage(page) {
+			if (this.isValidPage(page)) {
+				this.updateParams({ page });
+			} else {
+				this.error = 'Invalid page';
+			}
+		},
+		updateParams(params) {
+			const doPush = ('page' in params && params.page !== this.params.page);
+
+			Object.assign(this.params, params);
+
+			if (!window.history) return;
+
+			const regex = /([?&])tify=.*?(&|$)/;
+			const tifyParams = `tify=${JSON.stringify(this.params)}`;
+			const uri = window.location.href;
+			const newUrl = uri.match(regex)
+				? uri.replace(regex, `$1${tifyParams}$2`)
+				: `${uri}${uri.indexOf('?') < 0 ? '?' : '&'}${tifyParams}`;
+
+			if (doPush) {
+				window.history.pushState({}, '', newUrl);
+			} else {
+				window.history.replaceState({}, '', newUrl);
+			}
 		},
 	},
 	created() {
@@ -68,15 +128,42 @@ export default new Vue({
 
 		if (this.options.stylesheetUrl) this.appendStylesheet(this.options.stylesheetUrl);
 
-		const translationUrl = `${base}/translations/${this.options.language}.json`;
-		this.$http.get(translationUrl).then((response) => {
-			this.messages = response.data;
+		// Manifest URL in tifyOptions trumps query param
+		const manifestUrl = this.options.manifestUrl || this.getQueryParam('manifestUrl');
+		if (!manifestUrl) {
+			this.error = 'Missing query parameter or option: manifestUrl';
+			return;
+		} else if (this.options.manifestUrl && this.params.manifestUrl) {
+			this.error = 'Setting manifestUrl via query parameter is disabled';
+		}
 
-			// Wait for the translation to be available before mounting the app
-			this.$mount(container);
+		const manifestPromise = this.$http.get(manifestUrl).then((response) => {
+			this.manifest = response.data;
+
+			// Merging user-set query params with defaults
+			this.params = this.getParams();
+			window.addEventListener('popstate', () => {
+				this.params = this.getParams();
+			});
+
+			if (this.options.title) {
+				window.document.title = `${this.manifest.label} | ${this.options.title}`;
+			}
+		}, (error) => {
+			const status = (error.response ? error.response.statusText : error.message);
+			this.error = `Error loading IIIF manifest: ${status}`;
+		});
+
+		const translationUrl = `${base}/translations/${this.options.language}.json`;
+		const translationPromise = this.$http.get(translationUrl).then((response) => {
+			this.messages = response.data;
 		}, (error) => {
 			const status = (error.response ? error.response.statusText : error.message);
 			this.error = `Error loading translation ${this.options.language}: ${status}`;
+		});
+
+		Promise.all([manifestPromise, translationPromise]).then(() => {
+			this.$mount(container);
 		});
 	},
 });

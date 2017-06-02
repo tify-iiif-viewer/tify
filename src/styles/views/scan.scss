@@ -1,0 +1,52 @@
+.tify-scan {
+	@extend %panel;
+	background: $grey url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAEElEQVQImWNgwAGkcElgAgAEogAbFZcwKQAAAABJRU5ErkJggg==);
+	flex: 3;
+}
+
+.tify-scan_buttons {
+	border-radius: $br;
+	display: flex;
+	flex-direction: column;
+	float: left;
+	margin: ($grid / 8);
+	position: relative;
+	z-index: 9;
+}
+
+.tify-scan_button {
+	background: none;
+	border: 0;
+	border-radius: $br;
+	color: #fff;
+	cursor: pointer;
+	height: ($grid * 1.5);
+	outline: 0;
+	text-shadow: 0 0 1px $shade-dark, 0 0 2px $shade-dark;
+
+	@include hover {
+		background: $shade;
+		color: #fff;
+	}
+
+	&:active:not(:disabled) {
+		box-shadow: 0 .5px 6px $shade inset;
+	}
+
+	&[disabled] {
+		opacity: .4;
+	}
+
+	// Fixing button dimensions in Firefox
+	&::-moz-focus-inner {
+		border-style: none;
+		padding: 0;
+	}
+}
+
+.tify-scan_image {
+	height: 100%;
+	position: absolute;
+	white-space: nowrap;
+	width: 100%;
+}

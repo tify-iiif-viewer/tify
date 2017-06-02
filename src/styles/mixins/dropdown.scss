@@ -1,9 +1,10 @@
-@mixin dropdown($position: center) {
+@mixin dropdown($position: left) {
 	background: #fff;
 	border: $br solid #fff;
 	border-radius: $br;
 	filter: drop-shadow($drop-shadow);
 	margin: ($grid / 2) 0;
+	min-width: 6em;
 	overflow: visible;
 	position: absolute;
 	text-shadow: none;
@@ -14,9 +15,8 @@
 		box-shadow: $drop-shadow;
 	}
 
-	@if ($position == center) {
-		left: 50%;
-		transform: translate(-50%);
+	@if ($position == left) {
+		left: 0;
 	} @else if ($position == right) {
 		right: ($grid / 4);
 	}
@@ -32,10 +32,8 @@
 		transform: rotate(45deg);
 		z-index: -1;
 
-		@if ($position == center) {
-			left: 50%;
-			transform-origin: 0;
-			transform: rotate(45deg) translate(-50%);
+		@if ($position == left) {
+			left: $grid;
 		} @else if ($position == right) {
 			right: $grid;
 		}

@@ -15,7 +15,10 @@
 .tify-page-select_dropdown {
 	@include dropdown;
 	margin-top: ($grid * .75);
-	min-width: 5em;
+
+	@include respond-to(small) {
+		left: 0;
+	}
 }
 
 .tify-page-select_filter {

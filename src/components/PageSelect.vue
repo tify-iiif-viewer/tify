@@ -7,7 +7,7 @@
 			@click="toggleDropdown"
 		>
 			<span class="tify-sr-only">{{ 'Current page'|trans }}</span>
-			{{ page }} : {{ canvases[page - 1].label }}
+			{{ $root.params.page }} : {{ $root.canvases[$root.params.page - 1].label }}
 		</button>
 
 		<div
@@ -32,7 +32,7 @@
 			<ol class="tify-page-select_list" ref="list">
 				<li
 					v-for="canvas, index in filteredCanvases"
-					:class="{ '-current': page === canvas.page, '-highlighted': highlightIndex === index }"
+					:class="{ '-current': $root.params.page === canvas.page, '-highlighted': highlightIndex === index }"
 					@click="setPage(canvas.page)"
 				>
 					{{ canvas.page }} : {{ canvas.label }}
@@ -44,10 +44,6 @@
 
 <script>
 	export default {
-		props: [
-			'canvases',
-			'page',
-		],
 		data() {
 			return {
 				filter: '',
@@ -60,7 +56,7 @@
 			pageTitleAttr() {
 				const phys = this.$options.filters.trans('Physical page');
 				const log = this.$options.filters.trans('Logical page');
-				return `${phys}: ${this.page}\n${log}: ${this.canvases[this.page - 1].label}`;
+				return `${phys}: ${this.$root.params.page}\n${log}: ${this.$root.canvases[this.$root.params.page - 1].label}`;
 			},
 		},
 		watch: {
@@ -74,7 +70,7 @@
 		methods: {
 			setPage(page) {
 				this.closeDropdown();
-				this.$emit('setPage', page);
+				this.$root.setPage(page);
 			},
 			toggleDropdown() {
 				this.isOpen = !this.isOpen;
@@ -92,13 +88,13 @@
 				const filteredCanvases = [];
 				const filter = this.filter.toLowerCase();
 				let highlightIndex = -1;
-				this.canvases.forEach((canvas, index) => {
+				this.$root.canvases.forEach((canvas, index) => {
 					const labelMatchesFilter = canvas.label.toLowerCase().indexOf(filter) > -1;
 					const pageMatchesFilter = (index + 1).toFixed().indexOf(filter) > -1;
 					if (labelMatchesFilter || pageMatchesFilter) {
 						const item = canvas;
 						item.page = index + 1;
-						if (item.page === this.page) highlightIndex = filteredCanvases.length;
+						if (item.page === this.$root.params.page) highlightIndex = filteredCanvases.length;
 						filteredCanvases.push(item);
 					}
 				});
@@ -115,13 +111,6 @@
 		},
 		created() {
 			this.updateFilteredCanvases();
-		},
-		updated() {
-			// TODO: This is a horrible hack to prevent blurry rendering of the
-			// CSS-translated dropdown in Chrome
-			const dropdown = this.$el.querySelector('.tify-page-select_dropdown');
-			dropdown.style.width = '';
-			dropdown.style.width = dropdown.offsetWidth % 2 ? `${dropdown.offsetWidth + 1}px` : '';
 		},
 	};
 </script>

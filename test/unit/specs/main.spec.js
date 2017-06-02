@@ -1,9 +1,6 @@
-import Vue from 'vue';
-import App from '@/App';
+import vm from '@/main';
 
-describe('App', () => {
-	const vm = new Vue(App);
-
+describe('main', () => {
 	vm.manifest = {
 		sequences: [
 			{
@@ -15,7 +12,8 @@ describe('App', () => {
 	it('should get default params', () => {
 		const params = vm.getParams();
 		expect(params.page).to.equal(1);
-		expect(params.panel).to.equal('info');
+		// On small screens, default panel is scan instead of info
+		expect(params.view).to.equal('scan');
 	});
 
 	it('should validate page numbers', () => {

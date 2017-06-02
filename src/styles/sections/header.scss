@@ -2,18 +2,33 @@
 	@include separator(1, 0);
 	background: $header-bg;
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-between;
-	padding: ($grid / 4);
+	padding: ($grid / 8);
 }
 
 .tify-header_column {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
 	min-width: 0;
 
-	& + & {
-		flex-shrink: 0;
-		padding-left: ($grid / 2);
+	&:first-child {
+		flex: 1;
+
+		@include respond-to(small) {
+			margin-bottom: (-$grid / 4);
+		}
 	}
 
+	&.-pagination {
+		@include respond-to(small) {
+			order: 9;
+			width: 100%;
+		}
+	}
+
+	// IE 10 fix
 	@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
 		max-width: 50%;
 	}
@@ -21,17 +36,27 @@
 
 .tify-header_button-group {
 	@extend %button-group;
+	margin: ($grid / 8);
+	position: relative;
 
-	// Prevent border-radius from being overflown when the first button "scan" is hidden
-	overflow: hidden;
+	&.-large {
+		@include respond-to(large) {
+			@include dropdown(right);
+			box-shadow: none;
+			display: none;
+			min-width: 10em;
+			top: ($grid * 1.75);
 
-	@include respond-to(large) {
-		@include dropdown(right);
-		box-shadow: none;
+			&.-visible {
+				display: block;
+			}
+		}
+	}
+
+	&.-small {
 		display: none;
-		min-width: 10em;
 
-		&.-visible {
+		@include respond-to(large) {
 			display: block;
 		}
 	}
@@ -40,37 +65,45 @@
 .tify-header_button {
 	@extend %button;
 
-	@include respond-to(large) {
-		background: white;
-		border-radius: 0 !important;
-		box-shadow: none;
-		display: block;
-		text-align: left;
-		width: 100%;
-
-		&.-active {
-			background: $brand-color;
-			text-shadow: none;
-		}
-	}
-
 	&.-active {
 		@extend %button-active;
 	}
 
 	&.-scan {
-		display: none;
+		display: none !important;
 
 		@include respond-to(medium) {
-			display: block;
+			display: block !important;
 		}
 	}
 
 	&.-help {
-		font-size: 0; // Preventing label from showing
+		font-size: 0; // Prevent label from showing
 
 		@include respond-to(large) {
 			font-size: inherit;
+		}
+	}
+
+	.tify-header_button-group.-large & {
+		@include respond-to(large) {
+			background: white;
+			border-radius: 0 !important;
+			box-shadow: none;
+			display: block;
+			text-align: left;
+			width: 100%;
+
+			&.-active {
+				background: $brand-color;
+				text-shadow: none;
+			}
+
+			&:not(.-active) {
+				@include hover {
+					background: $shade-light;
+				}
+			}
 		}
 	}
 }
@@ -79,7 +112,7 @@
 	font-size: 1.25rem;
 	font-weight: normal;
 	line-height: ($grid * 1.25);
-	margin: ($grid / 8) 0;
+	margin: ($grid / 4) ($grid / 8);
 	overflow: hidden;
 	padding: 0;
 	text-overflow: ellipsis;
@@ -92,8 +125,6 @@
 
 .tify-header_toggle-controls {
 	@extend %button;
-	@extend %button-group;
-	border-radius: $br;
 	display: none;
 
 	@include respond-to(large) {

@@ -26,7 +26,7 @@
 
 			<a
 				class="tify-toc_link"
-				@click="$emit('setPage', structure.firstPage)"
+				@click="$root.setPage(structure.firstPage)"
 			>
 				<span class="tify-toc_chapter">
 					<template v-if="structure.label.trim()">
@@ -44,13 +44,9 @@
 			<toc-list
 				v-if="structure.childStructures"
 				v-show="checkIfChildStructuresVisible(structure)"
-				:canvases="canvases"
 				:level="level + 1"
 				:sectionStructures="structure.childStructures"
-				:page="page"
 				:parentStructure="structure"
-				:structures="structures"
-				@setPage="setPage"
 			/>
 		</li>
 	</ul>
@@ -60,12 +56,9 @@
 	export default {
 		name: 'toc-list',
 		props: [
-			'canvases',
 			'level',
 			'sectionStructures',
-			'page',
 			'parentStructure',
-			'structures',
 		],
 		data() {
 			return {
@@ -75,8 +68,8 @@
 		methods: {
 			checkIfPageInStructure(structure) {
 				return (
-					this.page >= structure.firstPage
-					&& this.page <= structure.lastPage
+					this.$root.params.page >= structure.firstPage
+					&& this.$root.params.page <= structure.lastPage
 				);
 			},
 			checkIfChildStructuresVisible(structure) {
@@ -84,16 +77,13 @@
 				if ('childStructuresVisible' in structure) return structure.childStructuresVisible;
 				return this.checkIfPageInStructure(structure);
 			},
-			setPage(page) {
-				this.$emit('setPage', page);
-			},
 			toggleChildStructures(index) {
 				const struct = this.workingStructures[index];
 				this.$set(struct, 'childStructuresVisible', !this.checkIfChildStructuresVisible(struct));
 			},
 		},
 		created() {
-			const structures = this.sectionStructures || this.structures;
+			const structures = this.sectionStructures || this.$root.manifest.structures;
 
 			structures.forEach((structure) => {
 				const struct = structure;
@@ -102,20 +92,20 @@
 					(!this.parentStructure && !struct.within)
 					|| (this.parentStructure && struct.within === this.parentStructure['@id'])
 				) {
-					struct.pageLabel = this.canvases.find(
+					struct.pageLabel = this.$root.canvases.find(
 						canvas => canvas['@id'] === struct.canvases[0],
 					).label;
 
-					struct.firstPage = this.canvases.findIndex(
+					struct.firstPage = this.$root.canvases.findIndex(
 						canvas => canvas['@id'] === struct.canvases[0],
 					) + 1;
 
-					struct.lastPage = this.canvases.findIndex(
+					struct.lastPage = this.$root.canvases.findIndex(
 						canvas => canvas['@id'] === struct.canvases[struct.canvases.length - 1],
 					) + 1;
 
 					const childStructures = [];
-					this.structures.forEach((struct2) => {
+					this.$root.manifest.structures.forEach((struct2) => {
 						if (struct2.within === struct['@id']) childStructures.push(struct2);
 					});
 					if (childStructures.length) struct.childStructures = childStructures;

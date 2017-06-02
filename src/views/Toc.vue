@@ -3,11 +3,11 @@
 		<h2 class="tify-sr-only">{{ 'Table of contents'|trans }}</h2>
 
 		<toc-list
-			:canvases="canvases"
+			:canvases="$root.canvases"
 			:level="0"
-			:page="page"
-			:structures="structures"
-			@setPage="setPage"
+			:page="$root.params.page"
+			:structures="$root.manifest.structures"
+			@setPage="$root.setPage($root.params.page)"
 		/>
 	</section>
 </template>
@@ -18,21 +18,11 @@
 	import scroll from '@/mixins/scroll';
 
 	export default {
-		props: [
-			'page',
-			'canvases',
-			'structures',
-		],
 		mixins: [
 			scroll,
 		],
 		components: {
 			TocList,
-		},
-		methods: {
-			setPage(page) {
-				this.$emit('setPage', page);
-			},
 		},
 		mounted() {
 			this.updateScrollPos('.tify-toc_structure.-current', false);

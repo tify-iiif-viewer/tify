@@ -144,7 +144,7 @@
 	color: white;
 	cursor: pointer;
 	float: left;
-	margin: (-$grid / 4) ($grid / 4) (-$grid / 4) (-$grid / 4);
+	margin: (-$grid / 4) 0 (-$grid / 4) (-$grid / 4);
 	padding: ($grid / 4);
 
 	@include hover {

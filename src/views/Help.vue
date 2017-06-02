@@ -2,71 +2,71 @@
 	<section class="tify-fulltext">
 		<h2 class="tify-sr-only">{{ 'Help'|trans }}</h2>
 
-		<h3>Key Bindings</h3>
+		<h3>{{ 'Key Bindings'|trans }}</h3>
 		<table>
 			<tr>
-				<th>Previous page</th>
+				<th>{{ 'Previous page'|trans }}</th>
 				<td>
 					<code>Q</code>
-					or
+					{{ 'or'|trans }}
 					<code>,</code>
 				</td>
 			</tr>
 			<tr>
-				<th>Next page</th>
+				<th>{{ 'Next page'|trans }}</th>
 				<td>
 					<code>E</code>
-					or
+					{{ 'or'|trans }}
 					<code>.</code>
 				</td>
 			</tr>
 			<tr>
-				<th>First page</th>
+				<th>{{ 'First page'|trans }}</th>
 				<td><code>&#8679;</code> + <code>Q</code></td>
 			</tr>
 			<tr>
-				<th>Last page</th>
+				<th>{{ 'Last page'|trans }}</th>
 				<td><code>&#8679;</code> + <code>E</code></td>
 			</tr>
 			<tr>
-				<th>Jump to page</th>
+				<th>{{ 'Jump to page'|trans }}</th>
 				<td><code>X</code></td>
 			</tr>
 			<tr>
-				<th>Zoom in</th>
+				<th>{{ 'Zoom in'|trans }}</th>
 				<td>
 					<code>&#8679;</code> + <code>W</code>
-					or
+					{{ 'or'|trans }}
 					<code>&#8679;</code> + <code>&uarr;</code>
-					or
+					{{ 'or'|trans }}
 					<code>+</code>
-					or
+					{{ 'or'|trans }}
 					<code>=</code>
 				</td>
 			</tr>
 			<tr>
-				<th>Zoom out</th>
+				<th>{{ 'Zoom out'|trans }}</th>
 				<td>
 					<code>&#8679;</code> + <code>S</code>
-					or
+					{{ 'or'|trans }}
 					<code>&#8679;</code> + <code>&darr;</code>
-					or
+					{{ 'or'|trans }}
 					<code>-</code>
-					or
+					{{ 'or'|trans }}
 					<code>_</code>
 				</td>
 			</tr>
 			<tr>
-				<th>Pan</th>
+				<th>{{ 'Pan'|trans }}</th>
 				<td>
 					<code>W</code> <code>S</code> <code>A</code> <code>D</code>
-					or
+					{{ 'or'|trans }}
 					<code>&uarr;</code> <code>&darr;</code> <code>&larr;</code> <code>&rarr;</code>
 				</td>
 			</tr>
 			<tr>
-				<th>Reset view</th>
-				<td><code>0</code> (zero)</td>
+				<th>{{ 'Reset view'|trans }}</th>
+				<td><code>0</code></td>
 			</tr>
 		</table>
 	</section>

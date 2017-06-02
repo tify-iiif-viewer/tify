@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Info from '@/panels/Info';
+import Info from '@/views/Info';
 
 describe('Info', () => {
 	const vm = new Vue(Info);
