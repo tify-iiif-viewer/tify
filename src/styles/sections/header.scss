@@ -75,6 +75,10 @@
 		@include respond-to(medium) {
 			display: block !important;
 		}
+
+		+ .tify-header_button {
+			border-radius: $br 0 0 $br;
+		}
 	}
 
 	&.-help {
@@ -88,7 +92,7 @@
 	.tify-header_button-group.-large & {
 		@include respond-to(large) {
 			background: white;
-			border-radius: 0 !important;
+			border-radius: 0;
 			box-shadow: none;
 			display: block;
 			text-align: left;
