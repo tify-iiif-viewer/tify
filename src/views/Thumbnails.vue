@@ -76,7 +76,7 @@
 				this.itemWidth = itemTemplate.offsetWidth + hMargin;
 				this.thumbnailWidth = itemTemplate.offsetWidth;
 
-				this.$el.style = this.style;
+				this.$el.style.flex = this.style.flex;
 				this.container.style.width = '';
 
 				this.itemsPerRow = Math.floor((this.container.clientWidth) / this.itemWidth);
@@ -123,7 +123,7 @@
 			},
 		},
 		mounted() {
-			this.style = this.$el.style;
+			this.style.flex = this.$el.style.flex;
 			this.init();
 			window.addEventListener('resize', this.init);
 		},
