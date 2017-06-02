@@ -4,8 +4,8 @@
 	</a>
 </p>
 
-TIFY is a IIIF document viewer built with [Vue.js](https://github.com/vuejs/vue).
-[Check out the demo.](https://subugoe.github.io/tify/demo.html?manifestUrl=https://gdzdev.sub.uni-goettingen.de/iiif/presentation/PPN857449303/manifest)
+TIFY is a slim and fast IIIF document viewer built with [Vue.js](https://github.com/vuejs/vue).
+[Check out the demo.](https://subugoe.github.io/tify/demo.html?manifestUrl=https://gdzstaging.sub.uni-goettingen.de/iiif/presentation/PPN857449303/manifest)
 
 ## Embedding TIFY
 
@@ -72,7 +72,7 @@ Run in development mode with hot reload on `localhost:8080`:
 npm run dev
 ```
 
-In development mode, the manifest URL must be provided via query parameter, e.g. `http://localhost:8080/?manifestUrl=https://gdzdev.sub.uni-goettingen.de/iiif/presentation/PPN857449303/manifest`.
+In development mode, the manifest URL must be provided via query parameter, e.g. `http://localhost:8080/?manifestUrl=https://gdzstaging.sub.uni-goettingen.de/iiif/presentation/PPN857449303/manifest`.
 
 Build for production with minification:
 
