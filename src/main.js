@@ -86,6 +86,7 @@ export default new Vue({
 		},
 		setPage(page) {
 			if (this.isValidPage(page)) {
+				this.error = '';
 				this.updateParams({ page });
 			} else {
 				this.error = 'Invalid page';
