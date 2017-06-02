@@ -62,10 +62,14 @@ export default new Vue({
 		},
 		getParams() {
 			const params = JSON.parse(this.getQueryParam('tify')) || {};
-			const defaultView = (this.isMobile ? 'scan' : 'info');
+			if (this.isMobile() && !params.view) {
+				params.view = 'scan';
+			} else if (typeof params.view === 'undefined') {
+				params.view = 'info';
+			}
 			return {
 				page: (this.isValidPage(params.page) ? params.page : 1),
-				view: (typeof params.view !== 'undefined' ? params.view : defaultView),
+				view: params.view,
 				panX: parseFloat(params.panX) || null,
 				panY: parseFloat(params.panY) || null,
 				zoom: parseFloat(params.zoom) || null,
