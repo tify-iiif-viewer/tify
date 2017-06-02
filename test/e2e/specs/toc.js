@@ -10,6 +10,10 @@ Scenario('Navigate TOC', (I) => {
 	I.see('Titelseite', '.tify-toc_structure.-current');
 
 	I.click('.tify-toc_toggle + .tify-toc_link');
+	I.dontSee('Table of contents');
+
+	I.resizeWindow(1600, 900);
+	I.click('Contents');
 	I.see('Huddesche Methode', '.tify-toc_structure.-current');
 
 	// "Kurze Nachrichten"

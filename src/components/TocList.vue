@@ -26,7 +26,7 @@
 
 			<a
 				class="tify-toc_link"
-				@click="$root.setPage(structure.firstPage)"
+				@click="setPage(structure.firstPage)"
 			>
 				<span class="tify-toc_chapter">
 					<template v-if="structure.label.trim()">
@@ -76,6 +76,10 @@
 				if (!structure.childStructures) return false;
 				if ('childStructuresVisible' in structure) return structure.childStructuresVisible;
 				return this.checkIfPageInStructure(structure);
+			},
+			setPage(page) {
+				this.$root.setPage(page);
+				if (this.$root.isMobile()) this.$root.updateParams({ view: 'scan' });
 			},
 			toggleChildStructures(index) {
 				const struct = this.workingStructures[index];

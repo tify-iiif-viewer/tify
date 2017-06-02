@@ -13,7 +13,7 @@
 				class="tify-thumbnails_item"
 				:class="{ '-current': item.page === $root.params.page }"
 				:key="item.page"
-				@click="$root.setPage(item.page)"
+				@click="setPage(item.page)"
 			>
 				<img :src="item.imgUrl">
 				<span class="tify-thumbnails_page-number">
@@ -120,6 +120,10 @@
 				} else {
 					this.$el.scrollTop = scrollPos;
 				}
+			},
+			setPage(page) {
+				this.$root.setPage(page);
+				if (this.$root.isMobile()) this.$root.updateParams({ view: 'scan' });
 			},
 		},
 		mounted() {
