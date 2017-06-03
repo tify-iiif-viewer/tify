@@ -12,17 +12,14 @@
 
 <script>
 	export default {
-		props: [
-			'canvases',
-			'page',
-		],
 		data() {
 			return {
 				fulltext: ' ',
 			};
 		},
 		watch: {
-			page() {
+			// eslint-disable-next-line func-names
+			'$root.params.page': function () {
 				this.loadFulltext();
 			},
 		},
