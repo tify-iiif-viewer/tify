@@ -1,5 +1,5 @@
 <template>
-	<section class="tify-fulltext">
+	<section class="tify-help">
 		<h2 class="tify-sr-only">{{ 'Help'|trans }}</h2>
 
 		<h3>{{ 'Key Bindings'|trans }}</h3>
