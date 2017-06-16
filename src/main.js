@@ -61,12 +61,19 @@ export default new Vue({
 			document.head.appendChild(link);
 		},
 		getParams() {
-			const params = JSON.parse(this.getQueryParam('tify')) || {};
+			let params = {};
+			try {
+				params = JSON.parse(this.getQueryParam('tify')) || {};
+			} catch (e) {
+				// Nothing to do here
+			}
+
 			if (this.isMobile() && !params.view) {
 				params.view = 'scan';
 			} else if (typeof params.view === 'undefined') {
 				params.view = 'info';
 			}
+
 			return {
 				page: (this.isValidPage(params.page) ? params.page : 1),
 				view: params.view,
