@@ -45,6 +45,7 @@
 	display: block;
 	font-size: $font-size-small;
 	font-weight: bold;
+	max-height: ($grid * 2);
 	padding: 0 ($grid / 4);
 	position: absolute;
 	text-align: center;
