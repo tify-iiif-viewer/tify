@@ -29,7 +29,8 @@
 	}
 
 	&.-current {
-		background: white;
+		background: $brand-color-light;
+		outline: ($grid / 4) solid $brand-color-light;
 
 		img {
 			opacity: .4;
@@ -49,10 +50,4 @@
 	text-align: center;
 	text-shadow: $shade-inset;
 	width: 100%;
-
-	.tify-thumbnails_item.-current & {
-		background: $shine-light;
-		color: $text-color;
-		text-shadow: $shine-inset;
-	}
 }
