@@ -93,6 +93,7 @@
 				this.viewer = openSeadragon({
 					animationTime: .5,
 					id: 'scan_image',
+					// TODO: This should be re-evaluted on resize
 					immediateRender: this.$root.isMobile(),
 					preserveImageSizeOnResize: true,
 					preserveViewport: true,

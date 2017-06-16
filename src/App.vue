@@ -9,12 +9,12 @@
 
 		<div v-if="$root.manifest" class="tify-app_main">
 			<scan/>
-			<fulltext v-if="$root.params.view === 'fulltext' && hasOtherContent"/>
-			<toc v-if="$root.params.view === 'toc' && hasToc"/>
-			<thumbnails v-if="$root.params.view === 'thumbnails'"/>
-			<info v-if="$root.params.view === 'info'"/>
-			<export v-if="$root.params.view === 'export' && hasExport"/>
-			<help v-if="$root.params.view === 'help'"/>
+			<fulltext v-if="hasOtherContent" v-show="$root.params.view === 'fulltext'"/>
+			<toc v-if="hasToc" v-show="$root.params.view === 'toc'"/>
+			<thumbnails v-show="$root.params.view === 'thumbnails'"/>
+			<info v-show="$root.params.view === 'info'"/>
+			<export v-if="hasExport" v-show="$root.params.view === 'export'"/>
+			<help v-show="$root.params.view === 'help'"/>
 		</div>
 
 		<div v-if="$root.loading" class="tify-app_loading">

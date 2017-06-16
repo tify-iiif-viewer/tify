@@ -69,6 +69,7 @@
 		},
 		created() {
 			const seeAlso = this.$root.manifest.seeAlso;
+			// Create clone
 			const items = JSON.parse(JSON.stringify(Array.isArray(seeAlso) ? seeAlso : [seeAlso]));
 			items.forEach((item) => {
 				const currentItem = item;

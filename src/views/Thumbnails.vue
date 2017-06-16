@@ -56,15 +56,24 @@
 				this.$nextTick(() => {
 					const currentSelector = '.tify-thumbnails_item.-current';
 					if (document.querySelector(currentSelector)) {
-						this.updateScrollPos('.tify-thumbnails_item.-current');
+						// Current page is partitially visible
+						this.updateScrollPos(currentSelector);
 					} else {
 						this.scrollToCurrentPage();
 					}
 				});
 			},
+			// eslint-disable-next-line func-names
+			'$root.params.view': function () {
+				if (this.$root.params.view !== 'thumbnails') return;
+
+				if (!this.isInited) this.init();
+
+				this.scrollToCurrentPage(false);
+			},
 		},
 		methods: {
-			init() {
+			determineDimensions() {
 				this.container = this.$el.querySelector('.tify-thumbnails_list');
 
 				const itemTemplate = this.container.querySelector('.tify-thumbnails_item');
@@ -88,7 +97,11 @@
 				this.container.style.width = `${this.itemsPerRow * this.itemWidth}px`;
 
 				this.redrawThumbnails();
-				this.scrollToCurrentPage(false);
+			},
+			init() {
+				this.determineDimensions();
+				window.addEventListener('resize', () => { this.isInited = false; });
+				this.isInited = true;
 			},
 			redrawThumbnails() {
 				const currentPos = this.$el.scrollTop;
@@ -128,8 +141,11 @@
 		},
 		mounted() {
 			this.style.flex = this.$el.style.flex;
-			this.init();
-			window.addEventListener('resize', this.init);
+			// Thumbnails are expensive, so render them only when required
+			if (this.$root.params.view === 'thumbnails') {
+				this.init();
+				this.scrollToCurrentPage(false);
+			}
 		},
 	};
 </script>
