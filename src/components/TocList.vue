@@ -91,22 +91,21 @@
 
 			structures.forEach((structure) => {
 				const struct = structure;
+				const structLastIndex = struct.canvases.length - 1;
 
 				if (
 					(!this.parentStructure && !struct.within)
 					|| (this.parentStructure && struct.within === this.parentStructure['@id'])
 				) {
-					struct.pageLabel = this.$root.canvases.find(
-						canvas => canvas['@id'] === struct.canvases[0],
-					).label;
-
 					struct.firstPage = this.$root.canvases.findIndex(
 						canvas => canvas['@id'] === struct.canvases[0],
 					) + 1;
 
 					struct.lastPage = this.$root.canvases.findIndex(
-						canvas => canvas['@id'] === struct.canvases[struct.canvases.length - 1],
+						canvas => canvas['@id'] === struct.canvases[structLastIndex],
 					) + 1;
+
+					struct.pageLabel = this.$root.canvases[struct.firstPage - 1].label;
 
 					const childStructures = [];
 					this.$root.manifest.structures.forEach((struct2) => {
