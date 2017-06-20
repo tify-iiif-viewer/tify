@@ -17,7 +17,11 @@
 			<help v-show="$root.params.view === 'help'"/>
 		</div>
 
-		<div v-if="$root.loading" class="tify-app_loading">
+		<div
+			v-if="$root.loading"
+			class="tify-app_loading"
+			:class="{'-centered' : !$root.manifest}"
+		>
 			<span class="tify-sr-only">{{ 'Loading'|trans }}</span>
 		</div>
 
@@ -74,6 +78,7 @@
 
 				const canvas = this.$el.getElementsByClassName('openseadragon-canvas')[0];
 				if (!canvas) return;
+
 				const canvasEvent = new event.constructor(event.type, event);
 
 				// Chrome fix: OpenSeadragon evaluates keyCode

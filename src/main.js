@@ -37,10 +37,12 @@ if (el) {
 }
 
 export default new Vue({
+	el: container,
 	render: h => h(App),
 	data: {
 		error: '',
 		loading: 0,
+		manifest: null,
 		messages: {},
 		options,
 		params: {},
@@ -144,13 +146,12 @@ export default new Vue({
 		const manifestUrl = this.options.manifestUrl || this.getQueryParam('manifestUrl');
 		if (!manifestUrl) {
 			this.error = 'Missing query parameter or option: manifestUrl';
-			this.$mount(container);
 			return;
 		} else if (this.options.manifestUrl && this.params.manifestUrl) {
 			this.error = 'Setting manifestUrl via query parameter is disabled';
 		}
 
-		const manifestPromise = this.$http.get(manifestUrl).then((response) => {
+		this.$http.get(manifestUrl).then((response) => {
 			this.manifest = response.data;
 
 			// Merging user-set query params with defaults
@@ -168,15 +169,11 @@ export default new Vue({
 		});
 
 		const translationUrl = `${base}/translations/${this.options.language}.json`;
-		const translationPromise = this.$http.get(translationUrl).then((response) => {
+		this.$http.get(translationUrl).then((response) => {
 			this.messages = response.data;
 		}, (error) => {
 			const status = (error.response ? error.response.statusText : error.message);
 			this.error = `Error loading translation ${this.options.language}: ${status}`;
-		});
-
-		Promise.all([manifestPromise, translationPromise]).then(() => {
-			this.$mount(container);
 		});
 	},
 });
