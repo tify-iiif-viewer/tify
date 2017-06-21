@@ -40,8 +40,6 @@
 					<code>&#8679;</code> + <code>&uarr;</code>
 					{{ 'or'|trans }}
 					<code>+</code>
-					{{ 'or'|trans }}
-					<code>=</code>
 				</td>
 			</tr>
 			<tr>
@@ -52,8 +50,6 @@
 					<code>&#8679;</code> + <code>&darr;</code>
 					{{ 'or'|trans }}
 					<code>-</code>
-					{{ 'or'|trans }}
-					<code>_</code>
 				</td>
 			</tr>
 			<tr>
