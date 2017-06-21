@@ -28,4 +28,8 @@ $MD-icon-path-name: '~material-design-icons-iconfont/dist/fonts/MaterialIcons-Re
 	text-rendering: optimizeLegibility; // Chrome and Safari
 	-moz-osx-font-smoothing: grayscale; // Firefox
 	font-feature-settings: 'liga'; // IE
+
+	&.-light {
+		opacity: .8;
+	}
 }

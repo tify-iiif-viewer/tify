@@ -1,0 +1,103 @@
+// Based on Styling Cross-Browser Compatible Range Inputs with Sass v1.4.1
+// Github: https://github.com/darlanrod/input-range-sass
+// Author: Darlan Rod https://github.com/darlanrod
+// MIT License
+
+$track-color: $text-color-light;
+
+$thumb-radius: ($grid / 2);
+$thumb-height: $grid;
+$thumb-width: $grid;
+
+$track-height: ($grid / 2);
+
+$track-radius: ($grid / 8);
+$contrast: 25%;
+
+@mixin range_track {
+	cursor: pointer;
+	height: $track-height;
+	transition: all .2s ease;
+	width: 100%;
+}
+
+@mixin range_thumb {
+	background: #fff;
+	border: $border-width solid $border-color;
+	border-radius: $thumb-radius;
+	box-shadow: $card-shadow;
+	cursor: pointer;
+	height: $thumb-height;
+	width: $thumb-width;
+}
+
+@mixin range {
+	-webkit-appearance: none;
+	margin: $thumb-height / 2 0;
+	width: 100%;
+
+	&:focus {
+		outline: 0;
+
+		&::-webkit-slider-runnable-track {
+			background: lighten($track-color, $contrast);
+		}
+
+		&::-ms-fill-lower {
+			background: $track-color;
+		}
+
+		&::-ms-fill-upper {
+			background: lighten($track-color, $contrast);
+		}
+	}
+
+	&::-webkit-slider-runnable-track {
+		@include range_track;
+		background: $track-color;
+		border: $border-width solid $border-color;
+		border-radius: $track-radius;
+	}
+
+	&::-webkit-slider-thumb {
+		@include range_thumb;
+		-webkit-appearance: none;
+		margin-top: ((-$border-width * 2 + $track-height) / 2) - ($thumb-height / 2);
+	}
+
+	&::-moz-range-track {
+		@include range_track;
+		background: $track-color;
+		border: $border-width solid $border-color;
+		border-radius: $track-radius;
+	}
+
+	&::-moz-range-thumb {
+		@include range_thumb;
+	}
+
+	&::-ms-track {
+		@include range_track;
+		background: transparent;
+		border-color: transparent;
+		border-width: ($thumb-height / 2) 0;
+		color: transparent;
+	}
+
+	&::-ms-fill-lower {
+		background: darken($track-color, $contrast);
+		border: $border-width solid $border-color;
+		border-radius: $track-radius * 2;
+	}
+
+	&::-ms-fill-upper {
+		background: $track-color;
+		border: $border-width solid $border-color;
+		border-radius: $track-radius * 2;
+	}
+
+	&::-ms-thumb {
+		@include range_thumb;
+		margin-top: 0;
+	}
+}

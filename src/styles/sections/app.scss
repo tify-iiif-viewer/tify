@@ -47,7 +47,7 @@
 		margin: 0 0 ($grid / 2);
 	}
 
-	input,
+	[type=text],
 	select,
 	textarea {
 		@include transition(border);

@@ -1,4 +1,4 @@
-@mixin dropdown($position: left) {
+@mixin dropdown($position: left, $alignment: bottom) {
 	background: #fff;
 	border: $br solid #fff;
 	border-radius: $br;
@@ -28,14 +28,20 @@
 		background: white;
 		width: ($grid / 2);
 		height: ($grid / 2);
-		top: (-$grid / 4);
 		transform: rotate(45deg);
 		z-index: -1;
 
-		@if ($position == left) {
-			left: $grid;
-		} @else if ($position == right) {
-			right: $grid;
+		@if ($alignment == bottom) {
+			top: (-$grid / 4);
+
+			@if ($position == left) {
+				left: $grid;
+			} @else if ($position == right) {
+				right: $grid;
+			}
+		} @else if ($alignment == right) {
+			left: (-$grid / 4);
+			top: $grid;
 		}
 	}
 }

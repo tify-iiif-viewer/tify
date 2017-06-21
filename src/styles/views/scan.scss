@@ -44,11 +44,46 @@
 		border-style: none;
 		padding: 0;
 	}
+
+	&.-active {
+		color: $brand-color-light;
+	}
+}
+
+.tify-scan_filters {
+	position: relative;
+}
+
+.tify-scan_filter-popup {
+	@include dropdown(left, right);
+	left: ($grid * 2);
+	padding: ($grid / 2);
+	top: (-$grid);
+	width: ($grid * 9);
+
+	> p {
+		margin: 0;
+
+		+ p {
+			margin-top: ($grid / 2);
+		}
+	}
 }
 
 .tify-scan_image {
 	height: 100%;
 	position: absolute;
 	white-space: nowrap;
+	width: 100%;
+}
+
+.tify-scan_range {
+	@include range;
+}
+
+.tify-scan_reset {
+	@extend %button;
+	border-radius: $br;
+	box-shadow: $card-shadow;
 	width: 100%;
 }

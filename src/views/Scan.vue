@@ -32,15 +32,74 @@
 
 			<button
 				class="tify-scan_button"
+				:class="{ '-active': $root.params.rotation }"
 				:title="'Rotate view'|trans"
 				@click="rotateRight"
 			>
 				<i class="tify-icon">rotate_right</i>
 				<span class="tify-sr-only">{{ 'Rotate view'|trans }}</span>
 			</button>
+
+			<div
+				class="tify-scan_filters"
+				v-click-outside="closeFilters"
+				:class="{ '-open': filtersVisible }"
+			>
+				<button
+					class="tify-scan_button"
+					:class="{ '-active': filtersActive }"
+					:title="'Toggle image adjustments'|trans"
+					@click="filtersVisible = !filtersVisible"
+				>
+					<i class="tify-icon">tune</i>
+					<span class="tify-sr-only">{{ 'Toggle image adjustments'|trans }}</span>
+				</button>
+				<div class="tify-scan_filter-popup" v-show="filtersVisible">
+					<p>
+						<label for="tify-scan_brightness">
+							<i class="tify-icon -light">wb_sunny</i>
+							{{ 'Brightness:'|trans }}
+							{{ Math.round(($root.params.filters.brightness || 1) * 100) }}&nbsp;%
+						</label>
+						<input
+							class="tify-scan_range"
+							id="tify-scan_brightness"
+							max="3"
+							min=".5"
+							step=".01"
+							type="range"
+							:value="$root.params.filters.brightness || 1"
+							@input="setFilter('brightness', $event)"
+						>
+					</p>
+					<p>
+						<label for="tify-scan_contrast">
+							<i class="tify-icon -light">brightness_medium</i>
+							{{ 'Contrast:'|trans }}
+							{{ Math.round(($root.params.filters.contrast || 1) * 100) }}&nbsp;%
+						</label>
+						<input
+							class="tify-scan_range"
+							id="tify-scan_contrast"
+							max="3"
+							min=".5"
+							step=".01"
+							type="range"
+							:value="$root.params.filters.contrast || 1"
+							@input="setFilter('contrast', $event)"
+						>
+					</p>
+					<p>
+						<button class="tify-scan_reset" :disabled="!filtersActive" @click="resetFilters">
+							<i class="tify-icon">settings_backup_restore</i>
+							{{ 'Reset'|trans }}
+						</button>
+					</p>
+				</div>
+			</div>
 		</div>
 
-		<div class="tify-scan_image" id="scan_image"></div>
+		<div class="tify-scan_image" id="tify-scan_image" ref="image"></div>
 	</section>
 </template>
 
@@ -50,6 +109,7 @@
 	export default {
 		data() {
 			return {
+				filtersVisible: false,
 				id: '',
 				viewer: null,
 				zoomFactor: 1.5,
@@ -58,6 +118,9 @@
 		computed: {
 			apiVersion() {
 				return (this.$root.manifest['@context'] === 'http://iiif.io/api/presentation/1/context.json' ? 1 : 2);
+			},
+			filtersActive() {
+				return (Object.keys(this.$root.params.filters).length > 0);
 			},
 			isMinZoom() {
 				if (!this.viewer) return true;
@@ -75,6 +138,9 @@
 			},
 		},
 		methods: {
+			closeFilters() {
+				this.filtersVisible = false;
+			},
 			initOpenSeadragon(info) {
 				this.$root.loading += 1;
 
@@ -101,7 +167,7 @@
 				// https://openseadragon.github.io/examples/tilesource-iiif/
 				this.viewer = openSeadragon({
 					animationTime: .5,
-					id: 'scan_image',
+					id: 'tify-scan_image',
 					// TODO: This should be re-evaluted on resize
 					immediateRender: this.$root.isMobile(),
 					preserveImageSizeOnResize: true,
@@ -152,13 +218,43 @@
 					this.$root.error = `Error loading info file for page ${this.$root.params.page}: ${status}`;
 				});
 			},
+			resetFilters() {
+				const image = this.$refs.image;
+				image.style.filter = '';
+				image.style.webkitFilter = '';
+				this.$root.updateParams({ filters: {} });
+			},
 			resetView() {
 				this.viewer.viewport.goHome();
 			},
 			rotateRight() {
-				const degrees = (this.viewer.viewport.getRotation() + 90) % 360;
-				this.viewer.viewport.setRotation(degrees);
-				this.updateParams();
+				const viewport = this.viewer.viewport;
+				const degrees = (viewport.getRotation() + 90) % 360;
+				viewport.setRotation(degrees);
+				this.$root.updateParams({ rotation: degrees });
+			},
+			setFilter(name, event) {
+				const value = event.target.valueAsNumber;
+				if (value === 1) {
+					this.$delete(this.$root.params.filters, name);
+				} else {
+					this.$set(this.$root.params.filters, name, value);
+				}
+				this.$root.updateParams({ filters: this.$root.params.filters });
+				this.updateFilterStyle();
+			},
+			updateFilterStyle() {
+				if (!this.filtersActive) return;
+
+				const filters = [];
+				Object.keys(this.$root.params.filters).forEach((key) => {
+					filters.push(`${key}(${this.$root.params.filters[key]})`);
+				});
+
+				const image = this.$refs.image;
+				const filterString = filters.join(' ');
+				image.style.filter = filterString;
+				image.style.webkitFilter = filterString;
 			},
 			updateParams() {
 				const viewport = this.viewer.viewport;
@@ -167,7 +263,6 @@
 					// 3 decimals are sufficient, keeping URL short
 					panX: Math.round(center.x * 1e3) / 1e3,
 					panY: Math.round(center.y * 1e3) / 1e3,
-					rotation: Math.round(viewport.getRotation()),
 					zoom: Math.round(viewport.getZoom() * 1e3) / 1e3,
 				});
 			},
@@ -180,6 +275,9 @@
 		},
 		created() {
 			this.loadImageInfo();
+		},
+		mounted() {
+			this.updateFilterStyle();
 		},
 	};
 </script>

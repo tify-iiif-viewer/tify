@@ -78,11 +78,12 @@ export default new Vue({
 			}
 
 			return {
+				filters: params.filters || {},
 				page: (this.isValidPage(params.page) ? params.page : 1),
-				view: params.view,
 				panX: parseFloat(params.panX) || null,
 				panY: parseFloat(params.panY) || null,
 				rotation: parseInt(params.rotation, 10) || null,
+				view: params.view,
 				zoom: parseFloat(params.zoom) || null,
 			};
 		},
@@ -110,12 +111,23 @@ export default new Vue({
 		updateParams(params) {
 			const doPush = ('page' in params && params.page !== this.params.page);
 
+			const storedParams = {};
 			Object.assign(this.params, params);
+			Object.keys(this.params).forEach((key) => {
+				const param = this.params[key];
+				if (
+					param === null
+					|| (key === 'page' && param < 2)
+					|| (typeof param === 'object' && !Object.keys(param).length)
+				) return;
+
+				storedParams[key] = this.params[key];
+			});
 
 			if (!window.history) return;
 
 			const regex = /([?&])tify=.*?(&|$)/;
-			const tifyParams = `tify=${JSON.stringify(this.params)}`;
+			const tifyParams = `tify=${JSON.stringify(storedParams)}`;
 			const uri = window.location.href;
 			const newUrl = uri.match(regex)
 				? uri.replace(regex, `$1${tifyParams}$2`)
