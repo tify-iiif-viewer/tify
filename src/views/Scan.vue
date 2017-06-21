@@ -29,6 +29,15 @@
 				<i class="tify-icon">zoom_out</i>
 				<span class="tify-sr-only">{{ 'Zoom out'|trans }}</span>
 			</button>
+
+			<button
+				class="tify-scan_button"
+				:title="'Rotate view'|trans"
+				@click="rotateRight"
+			>
+				<i class="tify-icon">rotate_right</i>
+				<span class="tify-sr-only">{{ 'Rotate view'|trans }}</span>
+			</button>
 		</div>
 
 		<div class="tify-scan_image" id="scan_image"></div>
@@ -107,15 +116,19 @@
 				this.viewer.gestureSettingsMouse.clickToZoom = false;
 
 				this.viewer.addHandler('open', () => {
-					if (this.$root.params.zoom !== null) {
-						this.viewer.viewport.zoomTo(this.$root.params.zoom, null, true);
-					}
-
 					if (this.$root.params.panX !== null && this.$root.params.panY !== null) {
 						this.viewer.viewport.panTo({
 							x: this.$root.params.panX,
 							y: this.$root.params.panY,
 						}, true);
+					}
+
+					if (this.$root.params.rotation !== null) {
+						this.viewer.viewport.setRotation(this.$root.params.rotation);
+					}
+
+					if (this.$root.params.zoom !== null) {
+						this.viewer.viewport.zoomTo(this.$root.params.zoom, null, true);
 					}
 				});
 
@@ -142,14 +155,20 @@
 			resetView() {
 				this.viewer.viewport.goHome();
 			},
+			rotateRight() {
+				const degrees = (this.viewer.viewport.getRotation() + 90) % 360;
+				this.viewer.viewport.setRotation(degrees);
+				this.updateParams();
+			},
 			updateParams() {
-				const center = this.viewer.viewport.getCenter();
-				const zoom = this.viewer.viewport.getZoom();
+				const viewport = this.viewer.viewport;
+				const center = viewport.getCenter();
 				this.$root.updateParams({
 					// 3 decimals are sufficient, keeping URL short
 					panX: Math.round(center.x * 1e3) / 1e3,
 					panY: Math.round(center.y * 1e3) / 1e3,
-					zoom: Math.round(zoom * 1e3) / 1e3,
+					rotation: Math.round(viewport.getRotation()),
+					zoom: Math.round(viewport.getZoom() * 1e3) / 1e3,
 				});
 			},
 			zoomIn() {

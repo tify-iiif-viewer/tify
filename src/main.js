@@ -82,6 +82,7 @@ export default new Vue({
 				view: params.view,
 				panX: parseFloat(params.panX) || null,
 				panY: parseFloat(params.panY) || null,
+				rotation: parseInt(params.rotation, 10) || null,
 				zoom: parseFloat(params.zoom) || null,
 			};
 		},
