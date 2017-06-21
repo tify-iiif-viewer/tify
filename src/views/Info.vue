@@ -61,6 +61,8 @@
 		<template v-if="manifest.logo">
 			<p><img class="tify-info_logo" :src="manifest.logo['@id'] ? manifest.logo['@id'] : manifest.logo" alt=""></p>
 		</template>
+
+		<p class="tify-info_manifest"><a :href="$root.manifestUrl">{{ 'Manifest URL'|trans }}</a></p>
 	</section>
 </template>
 

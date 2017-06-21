@@ -43,6 +43,7 @@ export default new Vue({
 		error: '',
 		loading: 0,
 		manifest: null,
+		manifestUrl: '',
 		messages: {},
 		options,
 		params: {},
@@ -143,15 +144,15 @@ export default new Vue({
 		if (this.options.stylesheetUrl) this.appendStylesheet(this.options.stylesheetUrl);
 
 		// Manifest URL in tifyOptions trumps query param
-		const manifestUrl = this.options.manifestUrl || this.getQueryParam('manifestUrl');
-		if (!manifestUrl) {
+		this.manifestUrl = this.options.manifestUrl || this.getQueryParam('manifestUrl');
+		if (!this.manifestUrl) {
 			this.error = 'Missing query parameter or option: manifestUrl';
 			return;
 		} else if (this.options.manifestUrl && this.params.manifestUrl) {
 			this.error = 'Setting manifestUrl via query parameter is disabled';
 		}
 
-		this.$http.get(manifestUrl).then((response) => {
+		this.$http.get(this.manifestUrl).then((response) => {
 			this.manifest = response.data;
 
 			// Merging user-set query params with defaults

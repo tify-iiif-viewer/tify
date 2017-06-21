@@ -12,6 +12,11 @@
 	width: auto;
 }
 
+.tify-info_manifest {
+	margin-top: 2em;
+	text-align: right;
+}
+
 .tify-info_toggle {
 	@extend %button;
 	box-shadow: $card-shadow;
