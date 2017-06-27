@@ -5,6 +5,7 @@
 </p>
 
 TIFY is a slim and fast IIIF document viewer built with [Vue.js](https://github.com/vuejs/vue).
+
 [Check out the demo.](https://subugoe.github.io/tify/demo.html?manifestUrl=https://gdzstaging.sub.uni-goettingen.de/iiif/presentation/PPN857449303/manifest)
 
 ## Embedding TIFY
