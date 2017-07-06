@@ -2,30 +2,26 @@
 	<section class="tify-info">
 		<h2 class="tify-sr-only">{{ 'Info'|trans }}</h2>
 
-		<template v-if="manifest.label">
-			<h3>{{ 'Title'|trans }}</h3>
-			<p>{{ manifest.label }}</p>
-		</template>
+		<section v-if="manifest.label" class="tify-info_section">
+			<h3 class="tify-info_heading">{{ 'Title'|trans }}</h3>
+			<div v-for="label in iiifFormat(manifest.label)">{{ label }}</div>
+		</section>
 
-		<template v-if="manifest.metadata">
+		<section v-if="manifest.metadata" class="tify-info_section">
 			<h3>{{ 'Metadata'|trans }}</h3>
 			<table class="tify-info_list">
 				<tr class="tify-info_row" v-for="item, index in manifest.metadata">
-					<th class="tify-info_label">{{ item.label|formatLabel|trans }}</th>
+					<th class="tify-info_label">
+						<div v-for="label in iiifFormat(item.label)">{{ label|cleanLabel|trans }}</div>
+					</th>
 					<td class="tify-info_text">
 						<div
 							class="tify-info_value"
 							ref="items"
 							:class="{ '-collapsed': infoItems && infoItems[index].collapsed }"
-							:style="infoItems &&infoItems[index].collapsed ? collapsedStyle : null"
+							:style="infoItems && infoItems[index].collapsed ? collapsedStyle : null"
 						>
-							<template v-if="Array.isArray(item.value)">
-								<template v-if="typeof item.value[0] === 'object'">
-									<div v-html="formatValue(selectTranslation(item.value))"></div>
-								</template>
-								<div v-else v-for="value in item.value" v-html="formatValue(value)"></div>
-							</template>
-							<div v-else v-html="formatValue(item.value)"></div>
+							<div v-for="value in iiifFormat(item.value)" v-html="value"></div>
 						</div>
 
 						<button
@@ -44,26 +40,37 @@
 					</td>
 				</tr>
 			</table>
-		</template>
+		</section>
 
-		<template v-if="manifest.attribution">
+		<section v-if="manifest.description" class="tify-info_section">
+			<h3>{{ 'Description'|trans }}</h3>
+			<div v-for="description in iiifFormat(manifest.description)" v-html="description"></div>
+		</section>
+
+		<section v-if="manifest.attribution" class="tify-info_section">
 			<h3>{{ 'Attribution'|trans }}</h3>
-			<p>{{ manifest.attribution }}</p>
-		</template>
+			<div v-for="attribution in iiifFormat(manifest.attribution)">{{ attribution }}</div>
+		</section>
 
-		<template v-if="manifest.license">
+		<section v-if="manifest.license" class="tify-info_section">
 			<h3>{{ 'License'|trans }}</h3>
-			<p><a :href="manifest.license">{{ manifest.license }}</a></p>
-		</template>
+			<div><a :href="manifest.license">{{ manifest.license }}</a></div>
+		</section>
 
-		<template v-if="manifest.related">
+		<section v-if="manifest.related" class="tify-info_section">
 			<h3>{{ 'Related'|trans }}</h3>
-			<p><a :href="manifest.related">{{ manifest.related }}</a></p>
-		</template>
+			<div><a :href="manifest.related">{{ manifest.related }}</a></div>
+		</section>
 
-		<template v-if="manifest.logo">
-			<p><img class="tify-info_logo" :src="manifest.logo['@id'] ? manifest.logo['@id'] : manifest.logo" alt=""></p>
-		</template>
+		<section v-if="manifest.logo" class="tify-info_section">
+			<a
+				v-if="logoId && manifest.logo.service && manifest.logo.service['@id']"
+				:href="manifest.logo.service['@id']"
+			>
+				<img class="tify-info_logo" :src="logoId" alt="">
+			</a>
+			<img v-else class="tify-info_logo" :src="logoId" alt="">
+		</section>
 
 		<p class="tify-info_manifest"><a :href="$root.manifestUrl">{{ 'Manifest URL'|trans }}</a></p>
 	</section>
@@ -81,20 +88,51 @@
 			};
 		},
 		computed: {
+			logoId() {
+				return (this.manifest.logo['@id'] ? this.manifest.logo['@id'] : this.manifest.logo);
+			},
 			manifest() {
 				return this.$root.manifest;
 			},
 		},
 		filters: {
-			formatLabel(label) {
+			cleanLabel(label) {
 				const cleanedLabel = label.replace('_', ' ');
 				return cleanedLabel.charAt(0).toUpperCase() + cleanedLabel.substr(1);
 			},
 		},
 		methods: {
-			formatValue(value) {
-				const filteredValue = this.$root.$options.filters.filterHtml(value);
-				return this.$root.$options.filters.trans(filteredValue);
+			iiifFormat(value) {
+				// http://iiif.io/api/presentation/2.1/#language-of-property-values
+				const filterHtml = this.$root.$options.filters.filterHtml;
+				if (!Array.isArray(value)) return [filterHtml(value)];
+
+				const language = this.$root.options.language;
+				const displayedValues = [];
+				const translation = {};
+				value.forEach((item) => {
+					if (item && typeof item !== 'object') {
+						displayedValues.push(filterHtml(item));
+					} else if (item['@language'] && item['@value']) {
+						if (!translation.fallback) translation.fallback = item['@value'];
+
+						if (item['@language'] === 'en') {
+							translation.en = item['@value'];
+						} else if (item['@language'] === language) {
+							translation.preferred = item['@value'];
+						}
+					}
+				});
+
+				const translatedValue = (
+					translation.preferred
+					|| translation.en
+					|| translation.fallback
+					|| null
+				);
+				if (translatedValue) displayedValues.push(translatedValue);
+
+				return displayedValues;
 			},
 			selectTranslation(values) {
 				const language = this.$root.options.language;

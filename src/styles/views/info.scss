@@ -17,6 +17,10 @@
 	text-align: right;
 }
 
+.tify-info_section {
+	margin-bottom: $grid;
+}
+
 .tify-info_toggle {
 	@extend %button;
 	box-shadow: $card-shadow;
