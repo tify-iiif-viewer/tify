@@ -72,11 +72,11 @@
 			// Create clone
 			const items = JSON.parse(JSON.stringify(Array.isArray(seeAlso) ? seeAlso : [seeAlso]));
 			items.forEach((item) => {
-				const currentItem = item;
+				const currentItem = (typeof item === 'object' ? item : { '@id': item });
 				let isLiterature = false;
 				itemCriteria.some((criterion) => {
-					const formatsMatch = (criterion.format === item.format);
-					const profilesMatch = (criterion.profile === item.profile);
+					const formatsMatch = (item.format && criterion.format === item.format);
+					const profilesMatch = (item.profile && criterion.profile === item.profile);
 					if (formatsMatch || profilesMatch) {
 						currentItem.label = criterion.label;
 						if (criterion.type === 'literature') isLiterature = true;
