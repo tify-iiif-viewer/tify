@@ -77,6 +77,8 @@
 </template>
 
 <script>
+	// TODO: Handle and display manifest.service, see http://iiif.io/api/presentation/2.1/#service
+
 	const itemMaxLines = 5;
 	const itemHeightMinDelta = 24;
 
@@ -105,7 +107,14 @@
 			iiifFormat(value) {
 				// http://iiif.io/api/presentation/2.1/#language-of-property-values
 				const filterHtml = this.$root.$options.filters.filterHtml;
-				if (!Array.isArray(value)) return [filterHtml(value)];
+
+				const isArray = Array.isArray(value);
+				if (typeof value === 'object' && !isArray) {
+					if (value['@value']) return [filterHtml(value['@value'])];
+					return ['(Invalid value)'];
+				}
+
+				if (!isArray) return [filterHtml(value)];
 
 				const language = this.$root.options.language;
 				const displayedValues = [];
@@ -130,21 +139,9 @@
 					|| translation.fallback
 					|| null
 				);
-				if (translatedValue) displayedValues.push(translatedValue);
+				if (translatedValue) displayedValues.push(filterHtml(translatedValue));
 
 				return displayedValues;
-			},
-			selectTranslation(values) {
-				const language = this.$root.options.language;
-				let string;
-				values.some((value) => {
-					if (value['@language'] === language) {
-						string = value['@value'];
-						return true;
-					}
-					return false;
-				});
-				return string || values[0]['@value'] || '(Invalid value)';
 			},
 			toggleItem(index) {
 				this.infoItems[index].collapsed = !this.infoItems[index].collapsed;
