@@ -4,7 +4,7 @@
 
 		<section v-if="manifest.label" class="tify-info_section">
 			<h3 class="tify-info_heading">{{ 'Title'|trans }}</h3>
-			<div v-for="label in iiifFormat(manifest.label)">{{ label }}</div>
+			<div v-for="label in $root.iiifFormat(manifest.label)">{{ label }}</div>
 		</section>
 
 		<section v-if="manifest.metadata" class="tify-info_section">
@@ -12,7 +12,7 @@
 			<table class="tify-info_list">
 				<tr class="tify-info_row" v-for="item, index in manifest.metadata">
 					<th class="tify-info_label">
-						<div v-for="label in iiifFormat(item.label)">{{ label|cleanLabel|trans }}</div>
+						<div v-for="label in $root.iiifFormat(item.label)">{{ label|cleanLabel|trans }}</div>
 					</th>
 					<td class="tify-info_text">
 						<div
@@ -21,7 +21,7 @@
 							:class="{ '-collapsed': infoItems && infoItems[index].collapsed }"
 							:style="infoItems && infoItems[index].collapsed ? collapsedStyle : null"
 						>
-							<div v-for="value in iiifFormat(item.value)" v-html="value"></div>
+							<div v-for="value in $root.iiifFormat(item.value)" v-html="value"></div>
 						</div>
 
 						<button
@@ -44,12 +44,12 @@
 
 		<section v-if="manifest.description" class="tify-info_section">
 			<h3>{{ 'Description'|trans }}</h3>
-			<div v-for="description in iiifFormat(manifest.description)" v-html="description"></div>
+			<div v-for="description in $root.iiifFormat(manifest.description)" v-html="description"></div>
 		</section>
 
 		<section v-if="manifest.attribution" class="tify-info_section">
 			<h3>{{ 'Attribution'|trans }}</h3>
-			<div v-for="attribution in iiifFormat(manifest.attribution)">{{ attribution }}</div>
+			<div v-for="attribution in $root.iiifFormat(manifest.attribution)">{{ attribution }}</div>
 		</section>
 
 		<section v-if="manifest.license" class="tify-info_section">
@@ -104,45 +104,6 @@
 			},
 		},
 		methods: {
-			iiifFormat(value) {
-				// http://iiif.io/api/presentation/2.1/#language-of-property-values
-				const filterHtml = this.$root.$options.filters.filterHtml;
-
-				const isArray = Array.isArray(value);
-				if (typeof value === 'object' && !isArray) {
-					if (value['@value']) return [filterHtml(value['@value'])];
-					return ['(Invalid value)'];
-				}
-
-				if (!isArray) return [filterHtml(value)];
-
-				const language = this.$root.options.language;
-				const displayedValues = [];
-				const translation = {};
-				value.forEach((item) => {
-					if (item && typeof item !== 'object') {
-						displayedValues.push(filterHtml(item));
-					} else if (item['@language'] && item['@value']) {
-						if (!translation.fallback) translation.fallback = item['@value'];
-
-						if (item['@language'] === 'en') {
-							translation.en = item['@value'];
-						} else if (item['@language'] === language) {
-							translation.preferred = item['@value'];
-						}
-					}
-				});
-
-				const translatedValue = (
-					translation.preferred
-					|| translation.en
-					|| translation.fallback
-					|| null
-				);
-				if (translatedValue) displayedValues.push(filterHtml(translatedValue));
-
-				return displayedValues;
-			},
 			toggleItem(index) {
 				this.infoItems[index].collapsed = !this.infoItems[index].collapsed;
 			},
