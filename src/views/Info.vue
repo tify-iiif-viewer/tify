@@ -20,7 +20,10 @@
 							:style="infoItems &&infoItems[index].collapsed ? collapsedStyle : null"
 						>
 							<template v-if="Array.isArray(item.value)">
-								<div v-for="value in item.value" v-html="formatValue(value)"></div>
+								<template v-if="typeof item.value[0] === 'object'">
+									<div v-html="formatValue(selectTranslation(item.value))"></div>
+								</template>
+								<div v-else v-for="value in item.value" v-html="formatValue(value)"></div>
 							</template>
 							<div v-else v-html="formatValue(item.value)"></div>
 						</div>
@@ -92,6 +95,18 @@
 			formatValue(value) {
 				const filteredValue = this.$root.$options.filters.filterHtml(value);
 				return this.$root.$options.filters.trans(filteredValue);
+			},
+			selectTranslation(values) {
+				const language = this.$root.options.language;
+				let string;
+				values.some((value) => {
+					if (value['@language'] === language) {
+						string = value['@value'];
+						return true;
+					}
+					return false;
+				});
+				return string || values[0]['@value'] || '(Invalid value)';
 			},
 			toggleItem(index) {
 				this.infoItems[index].collapsed = !this.infoItems[index].collapsed;
