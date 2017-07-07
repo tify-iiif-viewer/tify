@@ -2,10 +2,10 @@
 	border-radius: $br;
 	box-shadow: $card-shadow;
 	display: flex;
-	z-index: 1;
 
 	> * + * {
 		@include separator(0, 0, 0, 1);
+		z-index: 0;
 	}
 
 	> :first-child {
