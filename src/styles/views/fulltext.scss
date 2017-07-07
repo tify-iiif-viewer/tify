@@ -9,6 +9,13 @@
 	font-style: italic;
 }
 
+.tify-fulltext_separator {
+	background: $border-color;
+	border: 0;
+	height: $border-width;
+	margin: $grid 0 ($grid - $border-width);
+}
+
 .tify-fulltext_text {
 	p {
 		margin: 0 0 1em;

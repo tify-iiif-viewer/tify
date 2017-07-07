@@ -6,7 +6,7 @@ import manifest from '../../fixtures/manifest.json';
 describe('PageSelect', () => {
 	const vm = new Vue(PageSelect);
 	vm.$root.canvases = manifest.sequences[0].canvases;
-	vm.$root.params = { page: 1 };
+	vm.$root.params = { pages: [1] };
 
 	it('should filter and update canvases', () => {
 		vm.filter = '5';

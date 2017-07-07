@@ -4,7 +4,7 @@ Scenario('Navigate TOC', (I) => {
 	I.amOnPage('http://localhost:8080/?manifestUrl=https://gdzstaging.sub.uni-goettingen.de/iiif/presentation/HANS_DE_7_w042081/manifest');
 	I.waitForElement('.tify-app_main');
 
-	I.click('Menu');
+	I.click('View');
 	I.click('Contents');
 	I.see('Table of contents');
 	I.see('Titelseite', '.tify-toc_structure.-current');

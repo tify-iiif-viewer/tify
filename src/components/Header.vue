@@ -9,12 +9,26 @@
 		<div class="tify-header_column -pagination">
 			<div class="tify-header_button-group">
 				<page-select class="tify-header_button"/>
+
+				<button
+					class="tify-header_button"
+					:class="{
+						'-active': $root.params.pages.length > 1,
+						'-warning': customPageViewActive,
+					}"
+					:title="'Double page view'|trans"
+					@click="toggleDouble"
+				>
+					<i v-if="customPageViewActive" class="tify-icon">view_module</i>
+					<i v-else class="tify-icon">import_contacts</i>
+					<span class="tify-sr-only">{{ 'Double page view'|trans }}</span>
+				</button>
 			</div>
 
 			<div class="tify-header_button-group">
 				<button
 					class="tify-header_button"
-					:disabled="$root.params.page === 1"
+					:disabled="customPageViewActive || $root.params.pages[0] < 2"
 					:title="'First page'|trans"
 					@click="$root.setPage(1)"
 				>
@@ -25,7 +39,7 @@
 				<button
 					v-if="structures && structures.length"
 					class="tify-header_button"
-					:disabled="$root.params.page === 1"
+					:disabled="customPageViewActive || $root.params.pages[0] < 2"
 					:title="'Previous section'|trans"
 					@click="goToPreviousSection()"
 				>
@@ -35,9 +49,9 @@
 
 				<button
 					class="tify-header_button"
-					:disabled="$root.params.page === 1"
+					:disabled="customPageViewActive || $root.params.pages[0] < 2"
 					:title="'Previous page'|trans"
-					@click="$root.setPage($root.params.page - 1)"
+					@click="goToPreviousPage"
 				>
 					<i class="tify-icon">navigate_before</i>
 					<span class="tify-sr-only">{{ 'Previous page'|trans }}</span>
@@ -45,9 +59,9 @@
 
 				<button
 					class="tify-header_button"
-					:disabled="$root.params.page === $root.pageCount"
+					:disabled="customPageViewActive || isLastPage"
 					:title="'Next page'|trans"
-					@click="$root.setPage($root.params.page + 1)"
+					@click="goToNextPage"
 				>
 					<i class="tify-icon">navigate_next</i>
 					<span class="tify-sr-only">{{ 'Next page'|trans }}</span>
@@ -56,7 +70,7 @@
 				<button
 					v-if="structures && structures.length"
 					class="tify-header_button"
-					:disabled="$root.params.page >= lastSection.firstPage"
+					:disabled="customPageViewActive || isLastSection"
 					:title="'Next section'|trans"
 					@click="goToNextSection()"
 				>
@@ -66,7 +80,7 @@
 
 				<button
 					class="tify-header_button"
-					:disabled="$root.params.page === $root.pageCount"
+					:disabled="customPageViewActive || isLastPage"
 					:title="'Last page'|trans"
 					@click="$root.setPage($root.pageCount)"
 				>
@@ -84,7 +98,7 @@
 					@click="toggleControlsPopup"
 				>
 					<i class="tify-icon">menu</i>
-					{{ 'Menu'|trans }}
+					{{ 'View'|trans }}
 				</button>
 			</div>
 
@@ -170,19 +184,28 @@
 		data() {
 			return {
 				controlsVisible: false,
-				currentSectionIndex: 0,
 				sections: [],
 			};
 		},
 		computed: {
-			currentSection() {
-				if (this.currentSectionIndex < this.sections.length) {
-					return this.sections[this.currentSectionIndex];
-				}
-				return {};
+			customPageViewActive() {
+				const pages = this.$root.params.pages;
+				const length = pages.length;
+				return (
+					length > 2
+					|| (length === 2 && (pages[0] % 2 > 0 || pages[1] !== pages[0] + 1) && pages[1] > 0)
+				);
 			},
-			lastSection() {
-				return this.sections[this.sections.length - 1];
+			isLastPage() {
+				const pages = this.$root.params.pages;
+				const count = this.$root.pageCount;
+				return pages[0] >= count || pages[pages.length - 1] >= count;
+			},
+			isLastSection() {
+				const pages = this.$root.params.pages;
+				const lastIndex = pages.length - 1;
+				const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
+				return page >= this.sections[this.sections.length - 1].firstPage;
 			},
 			structures() {
 				return this.$root.manifest.structures;
@@ -191,59 +214,76 @@
 				return this.$root.iiifFormat(this.$root.manifest.label);
 			},
 		},
-		watch: {
-			// eslint-disable-next-line func-names
-			'$root.params.page': function () {
-				this.updateCurrentSectionIndex();
-			},
-		},
 		methods: {
 			closeControlsPopup() {
 				this.controlsVisible = false;
 			},
+			goToNextPage() {
+				const pages = this.$root.params.pages;
+				let page = pages[0] + 1;
+				if (pages.length > 1 && page % 2 > 0 && page < this.$root.pageCount) page += 1;
+				this.$root.setPage(page);
+			},
 			goToNextSection() {
-				let sectionIndex = this.currentSectionIndex + 1;
+				const pages = this.$root.params.pages;
+				const lastIndex = pages.length - 1;
+				const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
+				let sectionIndex = 0;
 				while (
-					this.sections[sectionIndex]
-					&& this.currentSection.firstPage >= this.sections[sectionIndex].firstPage
+					page >= this.sections[sectionIndex].firstPage
+					|| (page && page >= this.sections[sectionIndex].firstPage)
 				) sectionIndex += 1;
 				this.$root.setPage(this.sections[sectionIndex].firstPage);
 			},
+			goToPreviousPage() {
+				const pages = this.$root.params.pages;
+				let page = pages[0] - 1;
+				if (pages.length > 1 && page % 2 > 0 && page > 0) page -= 1;
+				this.$root.setPage(page);
+			},
 			goToPreviousSection() {
-				let sectionIndex = this.currentSectionIndex - 1;
+				const pages = this.$root.params.pages;
+				const page = pages[0] ? pages[0] : pages[1];
+				let sectionIndex = this.sections.length - 1;
 				while (
-					this.sections[sectionIndex]
-					&& this.currentSection.firstPage <= this.sections[sectionIndex].firstPage
+					page <= this.sections[sectionIndex].firstPage
+					|| (page && page <= this.sections[sectionIndex].firstPage)
 				) sectionIndex -= 1;
 				this.$root.setPage(this.sections[sectionIndex].firstPage);
 			},
 			toggleControlsPopup() {
 				this.controlsVisible = !this.controlsVisible;
 			},
+			toggleDouble() {
+				// TODO: If more than 2 pages selected ...
+				const pages = this.$root.params.pages;
+				let newPages;
+				if (pages.length > 1) {
+					// There are already multiple pages shown; switch back to single page
+					newPages = [pages[0] < 1 ? 1 : pages[0]];
+				} else if (pages[0] < 2) {
+					// Show only page 1 in double-page mode
+					newPages = [0, 1];
+				} else if (pages[0] % 2 > 0) {
+					// An odd page was selected, add the preceding page
+					newPages = [pages[0] - 1, pages[0]];
+				} else {
+					// An even page was selected, add the following page or 0 if it is the last one
+					const followingPage = (pages[0] < this.$root.pageCount ? pages[0] + 1 : 0);
+					newPages = [pages[0], followingPage];
+				}
+				this.$root.updateParams({ pages: newPages });
+			},
 			toggleView(name) {
 				const view = (name === this.$root.params.view && !this.$root.isMobile() ? '' : name);
 				this.$root.updateParams({ view });
 			},
-			updateCurrentSectionIndex() {
-				// Find the last section containing the current page
-				// Setting default value for pages that are not part of a section
-				let newSectionIndex = this.sections.length;
-				this.sections.forEach((section, index) => {
-					if (
-						this.$root.params.page >= section.firstPage
-						&& this.$root.params.page <= section.lastPage
-					) {
-						newSectionIndex = index;
-					}
-				});
-				this.currentSectionIndex = newSectionIndex;
-			},
 		},
 		created() {
-			if (!this.$root.manifest.structures) return;
+			if (!this.structures) return;
 
 			const sections = [];
-			this.$root.manifest.structures.forEach((structure) => {
+			this.structures.forEach((structure) => {
 				const firstCanvasId = structure.canvases[0];
 				const firstPage = this.$root.canvases.findIndex(canvas => canvas['@id'] === firstCanvasId) + 1;
 				const lastCanvasId = structure.canvases[structure.canvases.length - 1];
@@ -251,8 +291,6 @@
 				sections.push({ firstPage, lastPage });
 			});
 			this.sections = sections;
-
-			this.updateCurrentSectionIndex();
 		},
 	};
 </script>

@@ -1,19 +1,16 @@
 <template>
-	<section
-		class="tify-thumbnails"
-		@scroll="redrawThumbnails"
-	>
+	<section class="tify-thumbnails" @scroll="redrawThumbnails">
 		<h2 class="tify-sr-only">{{ 'Pages'|trans }}</h2>
 
-		<div
-			class="tify-thumbnails_list"
-		>
+		<div class="tify-thumbnails_list">
 			<a
 				v-for="item in items"
 				class="tify-thumbnails_item"
-				:class="{ '-current': item.page === $root.params.page }"
+				:class="{ '-current': $root.params.pages.indexOf(item.page) > -1 }"
 				:key="item.page"
-				@click="setPage(item.page)"
+				@click="setPageAndSwitchView(item.page, $event.ctrlKey)"
+				@touchstart="touchStartTogglePage(item.page)"
+				@touchend="touchEnd"
 			>
 				<img :src="item.imgUrl">
 				<span class="tify-thumbnails_page-number">
@@ -26,6 +23,8 @@
 
 <script>
 	import scroll from '@/mixins/scroll';
+
+	const longTouchDuration = 750;
 
 	export default {
 		mixins: [
@@ -41,8 +40,10 @@
 				items: [{ label: '' }], // Dummy thumbnail to get dimensions
 				itemsPerRow: 0,
 				knownImages: [],
+				lastScrollTop: 0,
 				style: {},
 				thumbnailWidth: 0,
+				touchTimer: null,
 			};
 		},
 		computed: {
@@ -52,9 +53,13 @@
 		},
 		watch: {
 			// eslint-disable-next-line func-names
-			'$root.params.page': function () {
+			'$root.params.pages': function (pages) {
 				this.$nextTick(() => {
 					const currentSelector = '.tify-thumbnails_item.-current';
+					if (pages.length > 2 || (pages.length > 1 && pages[1] !== pages[0] + 1)) {
+						return;
+					}
+
 					if (document.querySelector(currentSelector)) {
 						// Current page is partitially visible
 						this.updateScrollPos(currentSelector);
@@ -116,17 +121,25 @@
 
 				this.items = [];
 				for (let i = startPage - 1; i < endPage; i += 1) {
-					const id = this.$root.canvases[i].images[0].resource.service['@id'];
-					const quality = (this.apiVersion === 1 ? 'native' : 'default');
-					this.items.push({
-						label: this.$root.canvases[i].label,
-						imgUrl: `${id}/full/${this.thumbnailWidth},/0/${quality}.jpg`,
-						page: i + 1,
-					});
+					const resource = this.$root.canvases[i].images[0].resource;
+					if (resource.service) {
+						const quality = (this.apiVersion === 1 ? 'native' : 'default');
+						this.items.push({
+							label: this.$root.canvases[i].label,
+							imgUrl: `${resource.service['@id']}/full/${this.thumbnailWidth},/0/${quality}.jpg`,
+							page: i + 1,
+						});
+					} else {
+						this.items.push({
+							label: this.$root.canvases[i].label,
+							imgUrl: resource['@id'],
+							page: i + 1,
+						});
+					}
 				}
 			},
 			scrollToCurrentPage(animated = true) {
-				const rowsBefore = Math.floor((this.$root.params.page - 1) / this.itemsPerRow);
+				const rowsBefore = Math.floor((this.$root.params.pages[0] - 1) / this.itemsPerRow);
 				const scrollPos = (rowsBefore * this.itemHeight) + (this.itemVMargin - 50);
 				if (animated) {
 					this.scrollTo(this.$el, scrollPos);
@@ -134,9 +147,37 @@
 					this.$el.scrollTop = scrollPos;
 				}
 			},
-			setPage(page) {
+			setPageAndSwitchView(page, multiple = false) {
+				if (multiple) {
+					// Using slice to get a clone instead of a reference
+					const pages = this.$root.params.pages.slice(0);
+					const index = pages.indexOf(page);
+					if (index < 0) {
+						pages.push(page);
+						pages.sort((a, b) => (a - b));
+					} else if (pages.length > 1) {
+						pages.splice(index, 1);
+					}
+					this.$root.updateParams({ pages });
+					return;
+				}
+
 				this.$root.setPage(page);
 				if (this.$root.isMobile()) this.$root.updateParams({ view: 'scan' });
+			},
+			touchStartTogglePage(page) {
+				this.lastScrollTop = this.$el.scrollTop;
+				this.touchTimer = setTimeout(
+					() => {
+						if (this.$el.scrollTop === this.lastScrollTop) {
+							this.setPageAndSwitchView(page, true);
+						}
+					},
+					longTouchDuration,
+				);
+			},
+			touchEnd() {
+				clearTimeout(this.touchTimer);
 			},
 		},
 		mounted() {

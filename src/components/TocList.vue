@@ -45,8 +45,8 @@
 				v-if="structure.childStructures"
 				v-show="checkIfChildStructuresVisible(structure)"
 				:level="level + 1"
-				:sectionStructures="structure.childStructures"
 				:parentStructure="structure"
+				:structures="structure.childStructures"
 			/>
 		</li>
 	</ul>
@@ -57,7 +57,7 @@
 		name: 'toc-list',
 		props: [
 			'level',
-			'sectionStructures',
+			'structures',
 			'parentStructure',
 		],
 		data() {
@@ -67,10 +67,14 @@
 		},
 		methods: {
 			checkIfPageInStructure(structure) {
-				return (
-					this.$root.params.page >= structure.firstPage
-					&& this.$root.params.page <= structure.lastPage
-				);
+				const pages = this.$root.params.pages;
+				const length = pages.length;
+				for (let i = 0; i < length; i += 1) {
+					if (pages[i] >= structure.firstPage && pages[i] <= structure.lastPage) {
+						return true;
+					}
+				}
+				return false;
 			},
 			checkIfChildStructuresVisible(structure) {
 				if (!structure.childStructures) return false;
@@ -87,7 +91,8 @@
 			},
 		},
 		created() {
-			const structures = this.sectionStructures || this.$root.manifest.structures;
+			// Child instances are using the prop, while the top-most ancestor uses the manifest
+			const structures = this.structures || this.$root.manifest.structures;
 
 			structures.forEach((structure) => {
 				const struct = structure;

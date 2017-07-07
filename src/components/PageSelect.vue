@@ -7,7 +7,7 @@
 			@click="toggleDropdown"
 		>
 			<span class="tify-sr-only">{{ 'Current page'|trans }}</span>
-			{{ $root.params.page }} : {{ $root.canvases[$root.params.page - 1].label }}
+			{{ $root.params.pages[0] || 1 }} : {{ $root.canvases[$root.params.pages[0] ? $root.params.pages[0] - 1 : 0].label }}
 		</button>
 
 		<div
@@ -32,7 +32,10 @@
 			<ol class="tify-page-select_list" ref="list">
 				<li
 					v-for="canvas, index in filteredCanvases"
-					:class="{ '-current': $root.params.page === canvas.page, '-highlighted': highlightIndex === index }"
+					:class="{
+						'-current': $root.params.pages.indexOf(canvas.page) > -1,
+						'-highlighted': highlightIndex === index,
+					}"
 					@click="setPage(canvas.page)"
 				>
 					{{ canvas.page }} : {{ canvas.label }}
@@ -54,9 +57,11 @@
 		},
 		computed: {
 			pageTitleAttr() {
-				const phys = this.$options.filters.trans('Physical page');
-				const log = this.$options.filters.trans('Logical page');
-				return `${phys}: ${this.$root.params.page}\n${log}: ${this.$root.canvases[this.$root.params.page - 1].label}`;
+				const pages = this.$root.params.pages;
+				const page = (pages[0] === 0 && pages.length > 1 ? 1 : pages[0]);
+				const physLabel = this.$options.filters.trans('Physical page');
+				const logLabel = this.$options.filters.trans('Logical page');
+				return `${physLabel}: ${page}\n${logLabel}: ${this.$root.canvases[page - 1].label}`;
 			},
 		},
 		watch: {
@@ -71,18 +76,21 @@
 			setPage(page) {
 				this.closeDropdown();
 				this.$root.setPage(page);
+				if (this.$root.isMobile()) this.$root.updateParams({ view: 'scan' });
 			},
 			toggleDropdown() {
 				this.isOpen = !this.isOpen;
 				if (this.isOpen) {
 					this.$nextTick(() => {
-						if (this.$refs.search) this.$refs.search.focus();
+						this.$refs.search.focus();
 						this.updateScroll();
 					});
 				}
 			},
 			closeDropdown() {
 				this.isOpen = false;
+				this.filter = '';
+				this.highlightIndex = this.$root.params.pages[0] - 1;
 			},
 			updateFilteredCanvases() {
 				const filteredCanvases = [];
@@ -94,7 +102,7 @@
 					if (labelMatchesFilter || pageMatchesFilter) {
 						const item = canvas;
 						item.page = index + 1;
-						if (item.page === this.$root.params.page) highlightIndex = filteredCanvases.length;
+						if (item.page === this.$root.params.pages[0]) highlightIndex = filteredCanvases.length;
 						filteredCanvases.push(item);
 					}
 				});

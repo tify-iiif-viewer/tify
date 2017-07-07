@@ -8,6 +8,7 @@
 	"Current page": "Aktuelle Seite",
 	"Date": "Datum",
 	"Description": "Beschreibung",
+	"Double page view": "Doppelseitenansicht",
 	"Export": "Export",
 	"First page": "Erste Seite",
 	"Fulltext not available for this page": "Volltext nicht verfügbar",
@@ -23,10 +24,10 @@
 	"Loading": "Wird geladen",
 	"Logical page": "Logische Seite",
 	"Manifest URL": "Manifest-URL",
-	"Menu": "Menü",
 	"Metadata": "Metadaten",
 	"Next page": "Nächste Seite",
 	"Next section": "Nächster Abschnitt",
+	"Open the pages view and use <code>Ctrl</code> + <code>Click</code> (or long press if you are using a touch screen) to select multiple pages.": "Öffnen Sie die Seitenansicht und verwenden Sie <code>Strg</code> + <code>Klick</code> (oder drücken Sie für eine halbe Sekunde, falls Sie einen Touchscreen verwenden), um mehrere Seiten auszuwählen.",
 	"or": "oder",
 	"Other Formats": "Andere Formate",
 	"Pages": "Seiten",
@@ -46,6 +47,7 @@
 	"Source": "Quellcode",
 	"Summary": "Zusammenfassung",
 	"Version": "Version",
+	"View": "Ansicht",
 	"Zoom in": "Vergrößern",
 	"Zoom out": "Verkleinern"
 }

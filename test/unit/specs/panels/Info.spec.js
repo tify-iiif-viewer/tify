@@ -6,7 +6,7 @@ describe('Info', () => {
 
 	it('should format a label', () => {
 		const label = 'example_label';
-		const formattedLabel = vm.$options.filters.formatLabel(label);
-		expect(formattedLabel).to.equal('Example label');
+		const cleanedLabel = vm.$options.filters.cleanLabel(label);
+		expect(cleanedLabel).to.equal('Example label');
 	});
 });

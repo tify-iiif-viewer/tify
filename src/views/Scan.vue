@@ -2,7 +2,7 @@
 	<section class="tify-scan">
 		<h2 class="tify-sr-only">{{ 'Scan'|trans }}</h2>
 
-		<div class="tify-scan_buttons">
+		<div class="tify-scan_buttons" v-if="viewer">
 			<button
 				class="tify-scan_button"
 				:disabled="isMaxZoom"
@@ -14,6 +14,7 @@
 			></button>
 			<button
 				class="tify-scan_button"
+				:disabled="isReset"
 				:title="'Reset view'|trans"
 				@click="resetView"
 			>
@@ -110,7 +111,9 @@
 		data() {
 			return {
 				filtersVisible: false,
-				id: '',
+				isReset: false,
+				isResetting: false,
+				tileSources: {},
 				viewer: null,
 				zoomFactor: 1.5,
 			};
@@ -133,40 +136,53 @@
 		},
 		watch: {
 			// eslint-disable-next-line func-names
-			'$root.params.page': function () {
-				this.loadImageInfo();
+			'$root.params.pages': function (newValue, oldValue) {
+				const resetView = newValue.length !== oldValue.length;
+				this.loadImageInfo(resetView);
 			},
 		},
 		methods: {
 			closeFilters() {
 				this.filtersVisible = false;
 			},
-			initOpenSeadragon(info) {
+			initViewer(resetView) {
 				this.$root.loading += 1;
 
+				const currentTileSources = [];
+				this.$root.params.pages.forEach((page) => {
+					if (page > 0) currentTileSources.push(this.tileSources[page]);
+				});
+
 				// TODO: All tile sources could be added at once (sequence mode)
-				// This requires the correct to be present resolution in the manifest, which is
+				// This requires the correct resolution to be present in the manifest, which is
 				// currently loaded from the info file since the former is unreliable.
-				const tileSources = [
-					{
-						'@context': `http://iiif.io/api/image/${this.apiVersion}/context.json`,
-						'@id': this.id,
-						height: info.height,
-						width: info.width,
-						profile: [`http://iiif.io/api/image/${this.apiVersion}/level2.json`],
-						protocol: 'http://iiif.io/api/image',
-						tiles: info.tiles,
-					},
-				];
+				const tileSources = [];
+				const initialWidth = currentTileSources[0].width;
+				let totalWidth = (this.$root.params.pages[0] < 1 ? 1 : 0);
+				currentTileSources.forEach((tileSource) => {
+					const width = tileSource.width / initialWidth;
+					tileSources.push({
+						tileSource,
+						width,
+						x: totalWidth,
+					});
+					totalWidth += width + .01;
+				});
 
 				if (this.viewer) {
+					if (resetView) {
+						this.viewer.addOnceHandler('open', () => {
+							this.resetView();
+						});
+					}
+
 					this.viewer.open(tileSources);
 					return;
 				}
 
 				// https://openseadragon.github.io/examples/tilesource-iiif/
 				this.viewer = openSeadragon({
-					animationTime: .5,
+					animationTime: .4,
 					id: 'tify-scan_image',
 					// TODO: This should be re-evaluted on resize
 					immediateRender: this.$root.isMobile(),
@@ -174,12 +190,27 @@
 					preserveViewport: true,
 					showNavigationControl: false,
 					showZoomControl: false,
-					initialPage: this.$root.params.page - 1,
 					tileSources,
 					visibilityRatio: .2,
 				});
 
 				this.viewer.gestureSettingsMouse.clickToZoom = false;
+
+				this.viewer.addHandler('animation-finish', () => {
+					if (this.isResetting) {
+						this.isReset = true;
+						this.isResetting = false;
+					} else {
+						this.isReset = false;
+						const center = this.viewer.viewport.getCenter();
+						this.$root.updateParams({
+							// 3 decimals are sufficient, keeping URL short
+							panX: Math.round(center.x * 1e3) / 1e3,
+							panY: Math.round(center.y * 1e3) / 1e3,
+							zoom: Math.round(this.viewer.viewport.getZoom() * 1e3) / 1e3,
+						});
+					}
+				});
 
 				this.viewer.addHandler('open', () => {
 					if (this.$root.params.panX !== null && this.$root.params.panY !== null) {
@@ -198,25 +229,61 @@
 					}
 				});
 
+
 				this.viewer.addHandler('tile-load-failed', (error) => {
 					this.$root.error = `Error loading image for page ${this.$root.params.page}: ${error.message}`;
 				});
 
 				// TODO: Loading is regarded as complete once the first tile has been downloaded.
 				// OpenSeadragon will probably get a new 'fully-loaded' event with the next release.
-				this.viewer.addHandler('tile-loaded', () => { this.$root.loading = 0; });
-
-				this.viewer.addHandler('animation-finish', this.updateParams);
-			},
-			loadImageInfo() {
-				this.id = this.$root.canvases[this.$root.params.page - 1].images[0].resource.service['@id'];
-				const infoUrl = `${this.id}/info.json`;
-				this.$http.get(infoUrl).then((response) => {
-					this.initOpenSeadragon(response.data);
-				}, (error) => {
-					const status = (error.response ? error.response.statusText : error.message);
-					this.$root.error = `Error loading info file for page ${this.$root.params.page}: ${status}`;
+				this.viewer.addHandler('tile-loaded', () => {
+					this.$root.loading = 0;
 				});
+			},
+			loadImageInfo(resetView = false) {
+				const infoPromises = [];
+				this.$root.params.pages.forEach((page) => {
+					if (page < 1 || this.tileSources[page]) return;
+
+					const resource = this.$root.canvases[page - 1].images[0].resource;
+					if (resource.service) {
+						const infoUrl = `${resource.service['@id']}/info.json`;
+						infoPromises.push(this.$http.get(infoUrl).then((response) => {
+							response.page = page;
+							return response;
+						}, (error) => {
+							const status = (error.response ? error.response.statusText : error.message);
+							this.$root.error = `Error loading info file for page ${page}: ${status}`;
+						}));
+					} else {
+						this.tileSources[page] = {
+							type: 'image',
+							url: resource['@id'],
+							width: resource.width,
+							height: resource.height,
+						};
+					}
+				});
+
+				if (infoPromises.length) {
+					Promise.all(infoPromises).then((responses) => {
+						responses.forEach((response) => {
+							const info = response.data;
+							this.tileSources[response.page] = {
+								'@context': `http://iiif.io/api/image/${this.apiVersion}/context.json`,
+								'@id': info['@id'],
+								height: info.height,
+								width: info.width,
+								profile: [`http://iiif.io/api/image/${this.apiVersion}/level2.json`],
+								protocol: 'http://iiif.io/api/image',
+								tiles: info.tiles,
+							};
+						});
+						this.initViewer(resetView);
+					});
+				} else {
+					this.initViewer(resetView);
+				}
 			},
 			resetFilters() {
 				const image = this.$refs.image;
@@ -225,13 +292,20 @@
 				this.$root.updateParams({ filters: {} });
 			},
 			resetView() {
+				this.$root.updateParams({
+					panX: null,
+					panY: null,
+					zoom: null,
+				});
+
+				this.isResetting = true;
 				this.viewer.viewport.goHome();
 			},
 			rotateRight() {
 				const viewport = this.viewer.viewport;
 				const degrees = (viewport.getRotation() + 90) % 360;
 				viewport.setRotation(degrees);
-				this.$root.updateParams({ rotation: degrees });
+				this.$root.updateParams({ rotation: degrees || null });
 			},
 			setFilter(name, event) {
 				const value = event.target.valueAsNumber;
@@ -256,16 +330,6 @@
 				image.style.filter = filterString;
 				image.style.webkitFilter = filterString;
 			},
-			updateParams() {
-				const viewport = this.viewer.viewport;
-				const center = viewport.getCenter();
-				this.$root.updateParams({
-					// 3 decimals are sufficient, keeping URL short
-					panX: Math.round(center.x * 1e3) / 1e3,
-					panY: Math.round(center.y * 1e3) / 1e3,
-					zoom: Math.round(viewport.getZoom() * 1e3) / 1e3,
-				});
-			},
 			zoomIn() {
 				this.viewer.viewport.zoomBy(this.zoomFactor);
 			},
@@ -273,10 +337,10 @@
 				this.viewer.viewport.zoomBy(1 / this.zoomFactor);
 			},
 		},
-		created() {
-			this.loadImageInfo();
-		},
 		mounted() {
+			const params = this.$root.params;
+			this.isReset = (params.panX === null && params.panY === null && params.zoom === null);
+			this.loadImageInfo();
 			this.updateFilterStyle();
 		},
 	};

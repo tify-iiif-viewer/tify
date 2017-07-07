@@ -66,6 +66,11 @@
 			</tr>
 		</table>
 
+		<h3>{{ 'Selecting Multiple Pages'|trans }}</h3>
+		<p v-html="this.$root.$options.filters.trans(
+			'Open the pages view and use <code>Ctrl</code> + <code>Click</code> (or long press if you are using a touch screen) to select multiple pages.'
+		)"></p>
+
 		<h3>{{ 'About'|trans }}</h3>
 		<p>{{ description|trans }}</p>
 		<table>
