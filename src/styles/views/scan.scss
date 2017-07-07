@@ -2,6 +2,7 @@
 	@extend %panel;
 	background: $grey url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAEElEQVQImWNgwAGkcElgAgAEogAbFZcwKQAAAABJRU5ErkJggg==);
 	flex: 3;
+	user-select: none;
 }
 
 .tify-scan_buttons {
@@ -23,6 +24,7 @@
 	height: ($grid * 1.5);
 	outline: 0;
 	padding: 0;
+	position: relative;
 	text-shadow: 0 0 1px $shade-dark, 0 0 2px $shade-dark;
 	width: ($grid * 1.5);
 
@@ -46,12 +48,17 @@
 	}
 
 	&.-active {
-		background: rgba($brand-color-light, .2);
-		box-shadow: 0 0 $border-width $brand-color-light inset;
-		color: $brand-color-light;
-
-		@include hover {
-			background: $shade;
+		&::after {
+			background: $brand-color;
+			box-shadow: 0 0 ($grid / 4) $brand-color-light;
+			content: '';
+			border-radius: 50%;
+			display: block;
+			height: .5em;
+			position: absolute;
+			right: ($grid / 4);
+			top: ($grid / 4);
+			width: .5em;
 		}
 	}
 }
@@ -81,6 +88,10 @@
 	position: absolute;
 	white-space: nowrap;
 	width: 100%;
+
+	.openseadragon-canvas {
+		outline: 0;
+	}
 }
 
 .tify-scan_range {
