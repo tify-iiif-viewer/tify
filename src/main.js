@@ -6,6 +6,8 @@ import '@/directives/click-outside';
 import '@/filters/filter-html';
 import '@/filters/trans';
 
+import '@/polyfills/findIndex';
+
 Vue.prototype.$http = require('axios');
 
 // In production mode, load the stylesheet by adding a <link> to <head>
@@ -77,9 +79,17 @@ export default new Vue({
 				params.view = 'info';
 			}
 
+			let pages;
+			if (this.isValidPagesArray(params.pages)) {
+				pages = params.pages;
+			} else {
+				if (params.pages) this.error = 'Invalid pages, reset to first page';
+				pages = [1];
+			}
+
 			return {
 				filters: params.filters || {},
-				page: (this.isValidPage(params.page) ? params.page : 1),
+				pages,
 				panX: parseFloat(params.panX) || null,
 				panY: parseFloat(params.panY) || null,
 				rotation: parseInt(params.rotation, 10) || null,
@@ -134,36 +144,54 @@ export default new Vue({
 			const width = window.innerWidth
 				|| document.documentElement.clientWidth
 				|| document.body.clientWidth;
-			return width <= 1000;
+			return width < 1024;
 		},
-		isValidPage(page) {
-			return (!isNaN(page) && page > 0 && page <= this.pageCount);
+		isValidPagesArray(pages) {
+			if (!Array.isArray(pages)) return false;
+
+			const length = pages.length;
+
+			// Check for duplicates
+			if ((new Set(pages)).size !== length) return false;
+
+			for (let i = 0; i < length; i += 1) {
+				if (
+					isNaN(pages[i])
+					|| (i > 0 && pages[i] > 0 && pages[i] <= pages[i - 1])
+					|| pages[i] < 0
+					|| pages[i] > this.pageCount
+				) return false;
+			}
+
+			return true;
 		},
 		setPage(page) {
-			if (this.isValidPage(page)) {
-				this.error = '';
-				this.updateParams({ page });
-			} else {
-				this.error = 'Invalid page';
+			const pages = this.params.pages;
+			if (pages[0] % 2 < 1 && (pages[1] === pages[0] + 1 || pages[1] === 0)) {
+				const newPage = (page % 2 > 0 ? page - 1 : page);
+				this.updateParams({ pages: [newPage, newPage === this.pageCount ? 0 : newPage + 1] });
+				return;
 			}
+			this.updateParams({ pages: [page] });
 		},
 		updateParams(params) {
-			const doPush = ('page' in params && params.page !== this.params.page);
+			Object.assign(this.params, params);
+
+			if (!window.history) return;
 
 			const storedParams = {};
-			Object.assign(this.params, params);
 			Object.keys(this.params).forEach((key) => {
 				const param = this.params[key];
 				if (
 					param === null
-					|| (key === 'page' && param < 2)
+					|| (key === 'pages' && param.length < 2 && param[0] < 2)
 					|| (typeof param === 'object' && !Object.keys(param).length)
-				) return;
-
-				storedParams[key] = this.params[key];
+				) {
+					delete storedParams[key];
+				} else {
+					storedParams[key] = this.params[key];
+				}
 			});
-
-			if (!window.history) return;
 
 			const regex = /([?&])tify=.*?(&|$)/;
 			const tifyParams = `tify=${JSON.stringify(storedParams)}`;
@@ -172,7 +200,8 @@ export default new Vue({
 				? uri.replace(regex, `$1${tifyParams}$2`)
 				: `${uri}${uri.indexOf('?') < 0 ? '?' : '&'}${tifyParams}`;
 
-			if (doPush) {
+			if (params.pages) {
+				this.error = '';
 				window.history.pushState({}, '', newUrl);
 			} else {
 				window.history.replaceState({}, '', newUrl);

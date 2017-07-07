@@ -4,6 +4,7 @@
 	overflow-y: scroll;
 	padding: ($grid / 8);
 	position: relative;
+	user-select: none;
 }
 
 .tify-thumbnails_item {
@@ -25,6 +26,7 @@
 
 	img {
 		display: block;
+		pointer-events: none;
 		width: 100%;
 	}
 

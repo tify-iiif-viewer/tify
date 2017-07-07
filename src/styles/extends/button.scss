@@ -42,3 +42,13 @@
 		background: linear-gradient(to bottom, shade($link-color, 10), shade($link-color, 30));
 	}
 }
+
+%button-warning {
+	background: linear-gradient(to bottom, tint($warning-color, 10), shade($warning-color, 10));
+	color: white;
+	text-shadow: $shade-inset;
+
+	@include hover {
+		background: linear-gradient(to bottom, shade($warning-color, 10), shade($warning-color, 30));
+	}
+}

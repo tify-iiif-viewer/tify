@@ -4,11 +4,7 @@
 
 		<toc-list
 			v-if="isInited"
-			:canvases="$root.canvases"
 			:level="0"
-			:page="$root.params.page"
-			:structures="$root.manifest.structures"
-			@setPage="$root.setPage($root.params.page)"
 		/>
 	</section>
 </template>
@@ -34,7 +30,7 @@
 		},
 		watch: {
 			// eslint-disable-next-line func-names
-			'$root.params.page': function () {
+			'$root.params.pages': function () {
 				this.$nextTick(() => this.updateScrollPos(currentSelector));
 			},
 			// eslint-disable-next-line func-names

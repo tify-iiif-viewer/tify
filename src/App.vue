@@ -91,11 +91,12 @@
 			window.addEventListener('keyup', (event) => {
 				if (['INPUT', 'SELECT', 'TEXTAREA'].indexOf(event.target.nodeName) > -1) return;
 
+				const pages = this.$root.params.pages;
 				if (event.key === 'q' || event.key === ',') {
-					if (this.$root.params.page > 1) this.$root.setPage(this.$root.params.page - 1);
+					if (pages[0] > 1) this.$root.setPage(pages[0] - 1);
 				} else if (event.key === 'e' || event.key === '.') {
-					if (this.$root.params.page < this.$root.pageCount) {
-						this.$root.setPage(this.$root.params.page + 1);
+					if (pages[pages.length - 1] < this.$root.pageCount) {
+						this.$root.setPage(pages[0] + 1);
 					}
 				} else if (event.key === 'Q') {
 					this.$root.setPage(1);
@@ -108,7 +109,9 @@
 					this.forwardToScan(event);
 				}
 			});
+
 			window.addEventListener('keydown', this.forwardToScan);
+
 			window.addEventListener('keypress', this.forwardToScan);
 		},
 	};

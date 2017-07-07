@@ -69,6 +69,14 @@
 		@extend %button-active;
 	}
 
+	&.-help {
+		font-size: 0; // Prevent label from showing
+
+		@include respond-to(large) {
+			font-size: inherit;
+		}
+	}
+
 	&.-scan {
 		display: none !important;
 
@@ -81,12 +89,8 @@
 		}
 	}
 
-	&.-help {
-		font-size: 0; // Prevent label from showing
-
-		@include respond-to(large) {
-			font-size: inherit;
-		}
+	&.-warning {
+		@extend %button-warning;
 	}
 
 	.tify-header_button-group.-large & {

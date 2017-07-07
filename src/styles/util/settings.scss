@@ -41,6 +41,7 @@ $highlight-color: rgba(lighten($brand-color, 50), .3);
 $link-color: $brand-color;
 $text-color: $grey-dark;
 $text-color-light: tint($text-color, 30);
+$warning-color: adjust-hue($brand-color, 180);
 
 // Combined values
 $card-shadow: 0 0 1px $shade-light, 0 .5px 3px $shade;

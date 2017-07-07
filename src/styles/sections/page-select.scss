@@ -4,7 +4,7 @@
 
 .tify-page-select_button {
 	@extend %button;
-	border-radius: $br;
+	border-radius: inherit;
 	display: block;
 	margin: (-$grid / 4);
 	min-width: ($grid * 3);
@@ -14,7 +14,7 @@
 
 .tify-page-select_dropdown {
 	@include dropdown;
-	margin-top: ($grid * .75);
+	margin-top: ($grid / 2);
 
 	@include respond-to(small) {
 		left: 0;
