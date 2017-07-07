@@ -1,8 +1,8 @@
 <template>
 	<header class="tify-header">
 		<div class="tify-header_column">
-			<h1 class="tify-header_title" :title="$root.manifest.label">
-				{{ $root.manifest.label }}
+			<h1 class="tify-header_title" :title="titles.join(', ')">
+				{{ titles.join(', ') }}
 			</h1>
 		</div>
 
@@ -186,6 +186,9 @@
 			},
 			structures() {
 				return this.$root.manifest.structures;
+			},
+			titles() {
+				return this.$root.iiifFormat(this.$root.manifest.label);
 			},
 		},
 		watch: {

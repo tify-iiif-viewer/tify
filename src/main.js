@@ -91,6 +91,45 @@ export default new Vue({
 			const match = RegExp(`[?&]${name}=([^&]*)`).exec(window.location.search);
 			return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
 		},
+		iiifFormat(value) {
+			// http://iiif.io/api/presentation/2.1/#language-of-property-values
+			const filterHtml = this.$root.$options.filters.filterHtml;
+
+			const isArray = Array.isArray(value);
+			if (typeof value === 'object' && !isArray) {
+				if (value['@value']) return [filterHtml(value['@value'])];
+				return ['(Invalid value)'];
+			}
+
+			if (!isArray) return [filterHtml(value)];
+
+			const language = this.$root.options.language;
+			const displayedValues = [];
+			const translation = {};
+			value.forEach((item) => {
+				if (item && typeof item !== 'object') {
+					displayedValues.push(filterHtml(item));
+				} else if (item['@language'] && item['@value']) {
+					if (!translation.fallback) translation.fallback = item['@value'];
+
+					if (item['@language'] === 'en') {
+						translation.en = item['@value'];
+					} else if (item['@language'] === language) {
+						translation.preferred = item['@value'];
+					}
+				}
+			});
+
+			const translatedValue = (
+				translation.preferred
+				|| translation.en
+				|| translation.fallback
+				|| null
+			);
+			if (translatedValue) displayedValues.push(filterHtml(translatedValue));
+
+			return displayedValues;
+		},
 		isMobile() {
 			const width = window.innerWidth
 				|| document.documentElement.clientWidth

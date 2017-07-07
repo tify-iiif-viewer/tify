@@ -21,9 +21,9 @@ $font-size-small: 14px;
 $line-height: $grid;
 
 // Brand colors
-$brand-color: #1a3771;
-$brand-color-light: #93a8cf;
-$brand-color-lighter: tint(lighten($brand-color, 50), 70);
+$brand-color: #06b;
+$brand-color-light: tint($brand-color, 46);
+$brand-color-lighter: tint($brand-color, 92);
 
 // Shades
 $grey: #666;

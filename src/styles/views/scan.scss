@@ -9,7 +9,7 @@
 	display: flex;
 	flex-direction: column;
 	float: left;
-	margin: ($grid / 8);
+	margin: ($grid / 4);
 	position: relative;
 	z-index: 9;
 }
@@ -36,7 +36,7 @@
 	}
 
 	&[disabled] {
-		opacity: .4;
+		opacity: .3;
 	}
 
 	// Fixing button dimensions in Firefox
@@ -46,7 +46,13 @@
 	}
 
 	&.-active {
+		background: rgba($brand-color-light, .2);
+		box-shadow: 0 0 $border-width $brand-color-light inset;
 		color: $brand-color-light;
+
+		@include hover {
+			background: $shade;
+		}
 	}
 }
 
@@ -59,7 +65,7 @@
 	left: ($grid * 2);
 	padding: ($grid / 2);
 	top: (-$grid);
-	width: ($grid * 9);
+	width: ($grid * 10);
 
 	> p {
 		margin: 0;
