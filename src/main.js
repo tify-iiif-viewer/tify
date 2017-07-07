@@ -3,6 +3,8 @@ import App from '@/App';
 
 import '@/directives/click-outside';
 
+import '@/polyfills/findIndex';
+
 import '@/filters/filter-html';
 import '@/filters/trans';
 
