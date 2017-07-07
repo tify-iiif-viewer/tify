@@ -12,7 +12,7 @@
 				@touchstart="touchStartTogglePage(item.page)"
 				@touchend="touchEnd"
 			>
-				<img :src="item.imgUrl">
+				<img alt="" :src="item.imgUrl">
 				<span class="tify-thumbnails_page-number">
 					{{ item.page }} : {{ item.label }}
 				</span>
