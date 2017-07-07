@@ -65,5 +65,54 @@
 				<td><code>0</code></td>
 			</tr>
 		</table>
+
+		<h3>{{ 'About'|trans }}</h3>
+		<p>{{ description|trans }}</p>
+		<table>
+			<tr>
+				<th>{{ 'Version'|trans }}</th>
+				<td>{{ version }}</td>
+			</tr>
+			<tr>
+				<th>{{ 'Author'|trans }}</th>
+				<td v-html="linkMailAdresses(author)"></td>
+			</tr>
+			<tr v-if="homepage !== repository.url">
+				<th>{{ 'Homepage'|trans }}</th>
+				<td>{{ homepage }}</td>
+			</tr>
+			<tr>
+				<th>{{ 'Source'|trans }}</th>
+				<td><a :href="repository.url">GitHub</a></td>
+			</tr>
+			<tr>
+				<th>{{ 'License'|trans }}</th>
+				<td>{{ license }}</td>
+			</tr>
+		</table>
 	</section>
 </template>
+
+<script>
+	import { author, description, homepage, license, repository, version } from '../../package.json';
+
+	export default {
+		data() {
+			return {
+				author,
+				description,
+				homepage,
+				license,
+				repository,
+				version,
+			};
+		},
+
+		methods: {
+			linkMailAdresses(string) {
+				const stringWithLinks = string.replace(/(.*?)<?([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)>?(\s*)/gi, '<a href="mailto:$2">$1</a>$3');
+				return stringWithLinks;
+			},
+		},
+	};
+</script>

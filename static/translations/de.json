@@ -1,5 +1,6 @@
 {
 	"(Invalid value)": "(Ungültiger Wert)",
+	"About": "Über",
 	"Author": "Autor",
 	"Classification": "Klassifikation",
 	"Collapse": "Verkleinern",
@@ -12,10 +13,12 @@
 	"Fulltext not available for this page": "Volltext nicht verfügbar",
 	"Fulltext": "Volltext",
 	"Help": "Hilfe",
+	"Homepage": "Website",
 	"Jump to page": "Zu Seite springen",
 	"Key Bindings": "Tastenbelegung",
 	"Language": "Sprache",
 	"Last page": "Letzte Seite",
+	"License": "Lizenz",
 	"Literature Management": "Literaturverwaltung",
 	"Loading": "Wird geladen",
 	"Logical page": "Logische Seite",
@@ -40,7 +43,9 @@
 	"Rotate view": "Ansicht drehen",
 	"Scan": "Scan",
 	"Show all": "Alles anzeigen",
+	"Source": "Quellcode",
 	"Summary": "Zusammenfassung",
+	"Version": "Version",
 	"Zoom in": "Vergrößern",
 	"Zoom out": "Verkleinern"
 }
