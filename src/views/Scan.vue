@@ -42,8 +42,9 @@
 			</button>
 
 			<div
-				class="tify-scan_filters"
 				v-click-outside="closeFilters"
+				v-if="cssFiltersSupported"
+				class="tify-scan_filters"
 				:class="{ '-open': filtersVisible }"
 			>
 				<button
@@ -121,6 +122,15 @@
 		computed: {
 			apiVersion() {
 				return (this.$root.manifest['@context'] === 'http://iiif.io/api/presentation/1/context.json' ? 1 : 2);
+			},
+			cssFiltersSupported() {
+				// https://raw.githubusercontent.com/Modernizr/Modernizr/master/feature-detects/css/filters.js
+				const el = document.createElement('a');
+				el.style.cssText = 'filter:blur(2px)';
+				// https://github.com/Modernizr/Modernizr/issues/615
+				// documentMode is needed for false positives in oldIE, please see issue above
+				return !!el.style.length
+					&& ((document.documentMode === undefined || document.documentMode > 9));
 			},
 			filtersActive() {
 				return (Object.keys(this.$root.params.filters).length > 0);

@@ -26,6 +26,7 @@
     "axios": "^0.16.2",
     "material-design-icons-iconfont": "^3.0.3",
     "openseadragon": "^2.2.1",
+    "promise-polyfill": "^6.0.2",
     "striptags": "^2.2.1",
     "vue": "^2.3.4"
   },

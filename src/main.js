@@ -8,6 +8,9 @@ import '@/filters/trans';
 
 import '@/polyfills/findIndex';
 
+// Polyfill Promise for IE 11
+if (!window.Promise) window.Promise = require('promise-polyfill');
+
 Vue.prototype.$http = require('axios');
 
 // In production mode, load the stylesheet by adding a <link> to <head>
