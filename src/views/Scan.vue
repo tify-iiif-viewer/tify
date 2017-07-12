@@ -228,6 +228,12 @@
 					}
 				});
 
+				// Required for touchscreens:
+				// The canvas swallows the touch event, so click-outside is not triggered
+				this.viewer.addHandler('canvas-click', () => {
+					document.body.click();
+				});
+
 				this.viewer.addHandler('open', () => {
 					if (this.$root.params.panX !== null && this.$root.params.panY !== null) {
 						this.viewer.viewport.panTo({
