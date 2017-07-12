@@ -19,11 +19,6 @@
 		@include respond-to(small) {
 			margin-bottom: (-$grid / 4);
 		}
-
-		// IE11 fix: Prevent panel controls from being hidden on large (!) screens
-		@at-root _:-ms-lang(x), & {
-			flex: none;
-		}
 	}
 
 	&.-pagination {
@@ -31,11 +26,6 @@
 			order: 9;
 			width: 100%;
 		}
-	}
-
-	// IE 10 fix
-	@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-		max-width: 50%;
 	}
 }
 
