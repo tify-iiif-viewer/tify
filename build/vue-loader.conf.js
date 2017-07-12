@@ -9,4 +9,9 @@ module.exports = {
 			: config.dev.cssSourceMap,
 		extract: isProduction,
 	}),
+	// https://github.com/vuejs-templates/webpack/issues/421#issuecomment-284322065
+	postcss: [
+		require('postcss-import')(),
+		require('autoprefixer')(),
+	],
 };

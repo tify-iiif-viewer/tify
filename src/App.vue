@@ -117,6 +117,4 @@
 	};
 </script>
 
-<style lang="scss">
-	@import 'styles/main';
-</style>
+<style src="@/styles/main.scss" lang="scss"></style>
