@@ -255,7 +255,6 @@
 				this.controlsVisible = !this.controlsVisible;
 			},
 			toggleDouble() {
-				// TODO: If more than 2 pages selected ...
 				const pages = this.$root.params.pages;
 				let newPages;
 				if (pages.length > 1) {
