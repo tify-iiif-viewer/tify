@@ -10,8 +10,8 @@
 	text-shadow: none;
 	z-index: 9;
 
-	// Target IE10 and 11, which are not supporting CSS filters
-	@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+	// Target IE 11, which is not supporting CSS filters
+	_:-ms-lang(x), & {
 		box-shadow: $drop-shadow;
 	}
 
