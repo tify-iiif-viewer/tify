@@ -71,7 +71,7 @@
 	@include dropdown(left, right);
 	left: ($grid * 2);
 	padding: ($grid / 2);
-	top: (-$grid);
+	top: (-$grid * .75 - $br);
 	width: ($grid * 10);
 
 	> p {
