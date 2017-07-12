@@ -92,7 +92,11 @@
 						>
 					</p>
 					<p>
-						<button class="tify-scan_reset" :disabled="!filtersActive" @click="resetFilters">
+						<button
+							class="tify-scan_reset"
+							:disabled="!filtersActive"
+							@click="resetFilters"
+						>
 							<i class="tify-icon">settings_backup_restore</i>
 							{{ 'Reset'|trans }}
 						</button>
@@ -107,6 +111,8 @@
 
 <script>
 	import openSeadragon from 'openseadragon';
+
+	const vendorPrefixes = ['-webkit-', '-moz-', '-o-', '-ms-'];
 
 	export default {
 		data() {
@@ -126,7 +132,7 @@
 			cssFiltersSupported() {
 				// https://raw.githubusercontent.com/Modernizr/Modernizr/master/feature-detects/css/filters.js
 				const el = document.createElement('a');
-				el.style.cssText = 'filter:blur(2px)';
+				el.style.cssText = vendorPrefixes.join('filter:blur(2px);');
 				// https://github.com/Modernizr/Modernizr/issues/615
 				// documentMode is needed for false positives in oldIE, please see issue above
 				return !!el.style.length
@@ -296,9 +302,7 @@
 				}
 			},
 			resetFilters() {
-				const image = this.$refs.image;
-				image.style.filter = '';
-				image.style.webkitFilter = '';
+				this.$refs.image.style.cssText = '';
 				this.$root.updateParams({ filters: {} });
 			},
 			resetView() {
@@ -328,7 +332,7 @@
 				this.updateFilterStyle();
 			},
 			updateFilterStyle() {
-				if (!this.filtersActive) return;
+				if (!this.filtersActive || !this.cssFiltersSupported) return;
 
 				const filters = [];
 				Object.keys(this.$root.params.filters).forEach((key) => {
@@ -337,8 +341,8 @@
 
 				const image = this.$refs.image;
 				const filterString = filters.join(' ');
-				image.style.filter = filterString;
-				image.style.webkitFilter = filterString;
+
+				image.style.cssText = vendorPrefixes.join(`filter:${filterString};`);
 			},
 			zoomIn() {
 				this.viewer.viewport.zoomBy(this.zoomFactor);
