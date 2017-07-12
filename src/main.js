@@ -52,6 +52,7 @@ export default new Vue({
 		messages: {},
 		options,
 		params: {},
+		paramsTimer: null,
 	},
 	computed: {
 		canvases() {
@@ -182,33 +183,36 @@ export default new Vue({
 
 			if (!window.history) return;
 
-			const storedParams = {};
-			Object.keys(this.params).forEach((key) => {
-				const param = this.params[key];
-				if (
-					param === null
-					|| (key === 'pages' && param.length < 2 && param[0] < 2)
-					|| (typeof param === 'object' && !Object.keys(param).length)
-				) {
-					delete storedParams[key];
+			clearTimeout(this.paramsTimeout);
+			this.paramsTimeout = setTimeout(() => {
+				const storedParams = {};
+				Object.keys(this.params).forEach((key) => {
+					const param = this.params[key];
+					if (
+						param === null
+						|| (key === 'pages' && param.length < 2 && param[0] < 2)
+						|| (typeof param === 'object' && !Object.keys(param).length)
+					) {
+						delete storedParams[key];
+					} else {
+						storedParams[key] = this.params[key];
+					}
+				});
+
+				const regex = /([?&])tify=.*?(&|$)/;
+				const tifyParams = `tify=${JSON.stringify(storedParams)}`;
+				const uri = window.location.href;
+				const newUrl = uri.match(regex)
+					? uri.replace(regex, `$1${tifyParams}$2`)
+					: `${uri}${uri.indexOf('?') < 0 ? '?' : '&'}${tifyParams}`;
+
+				if (params.pages) {
+					this.error = '';
+					window.history.pushState({}, '', newUrl);
 				} else {
-					storedParams[key] = this.params[key];
+					window.history.replaceState({}, '', newUrl);
 				}
-			});
-
-			const regex = /([?&])tify=.*?(&|$)/;
-			const tifyParams = `tify=${JSON.stringify(storedParams)}`;
-			const uri = window.location.href;
-			const newUrl = uri.match(regex)
-				? uri.replace(regex, `$1${tifyParams}$2`)
-				: `${uri}${uri.indexOf('?') < 0 ? '?' : '&'}${tifyParams}`;
-
-			if (params.pages) {
-				this.error = '';
-				window.history.pushState({}, '', newUrl);
-			} else {
-				window.history.replaceState({}, '', newUrl);
-			}
+			}, 100);
 		},
 	},
 	created() {
