@@ -1,11 +1,11 @@
-$MD-icon-path-name: '~material-design-icons-iconfont/dist/fonts/MaterialIcons-Regular';
-
-@font-face {
-	font-family: 'Material Icons';
-	font-style: normal;
-	font-weight: 400;
-	src: url('#{$MD-icon-path-name}.woff2') format('woff2'),
-		url('#{$MD-icon-path-name}.woff') format('woff'),
+@if ($MD-icon-path-name) {
+	@font-face {
+		font-family: 'Material Icons';
+		font-style: normal;
+		font-weight: 400;
+		src: url('#{$MD-icon-path-name}.woff2') format('woff2'),
+			url('#{$MD-icon-path-name}.woff') format('woff'),
+	}
 }
 
 .tify-icon {
