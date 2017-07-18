@@ -110,7 +110,7 @@
 </template>
 
 <script>
-	import openSeadragon from 'openseadragon';
+	import OpenSeadragon from 'openseadragon';
 
 	const vendorPrefixes = ['-webkit-', '-moz-', '-o-', '-ms-'];
 
@@ -197,11 +197,11 @@
 				}
 
 				// https://openseadragon.github.io/examples/tilesource-iiif/
-				this.viewer = openSeadragon({
+				this.viewer = OpenSeadragon({
 					animationTime: .4,
 					id: 'tify-scan_image',
-					// TODO: This should be re-evaluted on resize
-					immediateRender: this.$root.isMobile(),
+					immediateRender: true,
+					preload: !this.$root.isMobile(),
 					preserveImageSizeOnResize: true,
 					preserveViewport: true,
 					showNavigationControl: false,
@@ -249,17 +249,20 @@
 					if (this.$root.params.zoom !== null) {
 						this.viewer.viewport.zoomTo(this.$root.params.zoom, null, true);
 					}
-				});
 
+					const tileSourcesLength = this.viewer.world.getItemCount();
+					let loadedImagesCount = 0;
+					for (let i = 0; i < tileSourcesLength; i += 1) {
+						// eslint-disable-next-line no-loop-func
+						this.viewer.world.getItemAt(i).addHandler('fully-loaded-change', () => {
+							loadedImagesCount += 1;
+							if (loadedImagesCount === tileSourcesLength) this.$root.loading = 0;
+						});
+					}
+				});
 
 				this.viewer.addHandler('tile-load-failed', (error) => {
 					this.$root.error = `Error loading image for page ${this.$root.params.page}: ${error.message}`;
-				});
-
-				// TODO: Loading is regarded as complete once the first tile has been downloaded.
-				// OpenSeadragon will probably get a new 'fully-loaded' event with the next release.
-				this.viewer.addHandler('tile-loaded', () => {
-					this.$root.loading = 0;
 				});
 			},
 			loadImageInfo(resetView = false) {
