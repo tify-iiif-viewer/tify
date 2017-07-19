@@ -118,8 +118,6 @@
 		data() {
 			return {
 				filtersVisible: false,
-				isReset: false,
-				isResetting: false,
 				tileSources: {},
 				viewer: null,
 				zoomFactor: 1.5,
@@ -149,6 +147,10 @@
 				if (!this.viewer) return true;
 				return this.viewer.viewport.getZoom() >= this.viewer.viewport.getMaxZoom();
 			},
+			isReset() {
+				const params = this.$root.params;
+				return (params.panX === null && params.panY === null && params.zoom === null);
+			},
 		},
 		watch: {
 			// eslint-disable-next-line func-names
@@ -162,35 +164,54 @@
 				this.filtersVisible = false;
 			},
 			initViewer(resetView) {
-				this.$root.loading += 1;
-
-				const currentTileSources = [];
-				this.$root.params.pages.forEach((page) => {
-					if (page > 0) currentTileSources.push(this.tileSources[page]);
-				});
-
 				// TODO: All tile sources could be added at once (sequence mode)
 				// This requires the correct resolution to be present in the manifest, which is
 				// currently loaded from the info file since the former is unreliable.
 				const tileSources = [];
-				const initialWidth = currentTileSources[0].width;
-				let totalWidth = (this.$root.params.pages[0] < 1 ? 1 : 0);
-				currentTileSources.forEach((tileSource) => {
+				let initialWidth = 0;
+				let tileSourceIndex;
+				let totalWidth = 0;
+				this.$root.params.pages.forEach((page, index) => {
+					let opacity = 1;
+					if (page < 1) {
+						opacity = 0;
+						tileSourceIndex = (index > 0 ? this.$root.pageCount : 1);
+					} else {
+						tileSourceIndex = page;
+					}
+
+					const tileSource = this.tileSources[tileSourceIndex];
+					if (!initialWidth) initialWidth = tileSource.width;
 					const width = tileSource.width / initialWidth;
+
 					tileSources.push({
+						opacity,
 						tileSource,
 						width,
 						x: totalWidth,
 					});
+
 					totalWidth += width + .01;
 				});
 
 				if (this.viewer) {
-					if (resetView) {
-						this.viewer.addOnceHandler('open', () => {
+					this.viewer.addOnceHandler('open', () => {
+						if (this.isReset || resetView) {
 							this.resetView();
-						});
-					}
+						} else {
+							this.viewer.viewport.applyConstraints(true);
+
+							// Move upper left corner into viewport if required
+							const bounds = this.viewer.viewport.getBounds();
+							if (bounds.x <= 0 && bounds.y <= 0) return;
+
+							const offsetX = (this.$root.params.pages[0] ? 0 : 1);
+							this.viewer.viewport.panTo({
+								x: (bounds.x > 0 ? (bounds.width / 2) + offsetX : this.$root.params.panX),
+								y: (bounds.y > 0 ? bounds.height / 2 : this.$root.params.panY),
+							});
+						}
+					});
 
 					this.viewer.open(tileSources);
 					return;
@@ -213,19 +234,24 @@
 				this.viewer.gestureSettingsMouse.clickToZoom = false;
 
 				this.viewer.addHandler('animation-finish', () => {
-					if (this.isResetting) {
-						this.isReset = true;
-						this.isResetting = false;
-					} else {
-						this.isReset = false;
-						const center = this.viewer.viewport.getCenter();
-						this.$root.updateParams({
-							// 3 decimals are sufficient, keeping URL short
-							panX: Math.round(center.x * 1e3) / 1e3,
-							panY: Math.round(center.y * 1e3) / 1e3,
-							zoom: Math.round(this.viewer.viewport.getZoom() * 1e3) / 1e3,
-						});
-					}
+					// Don't set params if viewport is reset.
+					// There may be some tiny deviation from the target values.
+					const homeBounds = this.viewer.viewport.getHomeBounds();
+					const currentBounds = this.viewer.viewport.getBounds();
+					if (
+						Math.abs(homeBounds.height - currentBounds.height) < 1e-9
+						&& Math.abs(homeBounds.width - currentBounds.width) < 1e-9
+						&& Math.abs(homeBounds.x - currentBounds.x) < 1e-9
+						&& Math.abs(homeBounds.y - currentBounds.y) < 1e-9
+					) return;
+
+					const center = this.viewer.viewport.getCenter();
+					this.$root.updateParams({
+						// 3 decimals are sufficient, keeping URL short
+						panX: Math.round(center.x * 1e3) / 1e3,
+						panY: Math.round(center.y * 1e3) / 1e3,
+						zoom: Math.round(this.viewer.viewport.getZoom() * 1e3) / 1e3,
+					});
 				});
 
 				// Required for touchscreens:
@@ -250,15 +276,33 @@
 						this.viewer.viewport.zoomTo(this.$root.params.zoom, null, true);
 					}
 
+					// Check if all visible tiles have been loaded
 					const tileSourcesLength = this.viewer.world.getItemCount();
-					let loadedImagesCount = 0;
 					for (let i = 0; i < tileSourcesLength; i += 1) {
-						// eslint-disable-next-line no-loop-func
-						this.viewer.world.getItemAt(i).addHandler('fully-loaded-change', () => {
-							loadedImagesCount += 1;
-							if (loadedImagesCount === tileSourcesLength) this.$root.loading = 0;
+						this.$root.loading += 1;
+
+						const image = this.viewer.world.getItemAt(i);
+						image.addHandler('fully-loaded-change', (event) => {
+							if (event.fullyLoaded) {
+								const loading = this.$root.loading - 1;
+								this.$root.loading = Math.max(0, loading);
+							} else {
+								this.$root.loading += 1;
+							}
 						});
 					}
+
+					// Decrease loading counter for each invisible image
+					// Before the first tile is loaded, `needsDraw` always returns true
+					this.viewer.addOnceHandler('tile-drawn', () => {
+						for (let i = 0; i < tileSourcesLength; i += 1) {
+							const image = this.viewer.world.getItemAt(i);
+							if (!image.needsDraw()) {
+								const loading = this.$root.loading - 1;
+								this.$root.loading = Math.max(0, loading);
+							}
+						}
+					});
 				});
 
 				this.viewer.addHandler('tile-load-failed', (error) => {
@@ -315,14 +359,12 @@
 				this.$root.updateParams({ filters: {} });
 			},
 			resetView() {
+				this.viewer.viewport.goHome();
 				this.$root.updateParams({
 					panX: null,
 					panY: null,
 					zoom: null,
 				});
-
-				this.isResetting = true;
-				this.viewer.viewport.goHome();
 			},
 			rotateRight() {
 				const viewport = this.viewer.viewport;
@@ -361,8 +403,6 @@
 			},
 		},
 		mounted() {
-			const params = this.$root.params;
-			this.isReset = (params.panX === null && params.panY === null && params.zoom === null);
 			this.loadImageInfo();
 			this.updateFilterStyle();
 		},
