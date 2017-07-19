@@ -136,6 +136,7 @@
 	require('@/../openseadragon/src/viewport');
 	require('@/../openseadragon/src/world');
 
+	const gapBetweenPages = .01;
 	const vendorPrefixes = ['-webkit-', '-moz-', '-o-', '-ms-'];
 
 	export default {
@@ -188,6 +189,8 @@
 				this.filtersVisible = false;
 			},
 			initViewer(resetView) {
+				const params = this.$root.params;
+
 				// TODO: All tile sources could be added at once (sequence mode)
 				// This requires the correct resolution to be present in the manifest, which is
 				// currently loaded from the info file since the former is unreliable.
@@ -195,7 +198,7 @@
 				let initialWidth = 0;
 				let tileSourceIndex;
 				let totalWidth = 0;
-				this.$root.params.pages.forEach((page, index) => {
+				params.pages.forEach((page, index) => {
 					let opacity = 1;
 					if (page < 1) {
 						opacity = 0;
@@ -215,7 +218,7 @@
 						x: totalWidth,
 					});
 
-					totalWidth += width + .01;
+					totalWidth += width + gapBetweenPages;
 				});
 
 				if (this.viewer) {
@@ -229,10 +232,10 @@
 							const bounds = this.viewer.viewport.getBounds();
 							if (bounds.x <= 0 && bounds.y <= 0) return;
 
-							const offsetX = (this.$root.params.pages[0] ? 0 : 1);
+							const offsetX = (params.pages[0] ? 0 : 1) - gapBetweenPages;
 							this.viewer.viewport.panTo({
-								x: (bounds.x > 0 ? (bounds.width / 2) + offsetX : this.$root.params.panX),
-								y: (bounds.y > 0 ? bounds.height / 2 : this.$root.params.panY),
+								x: (bounds.x > 0 ? (bounds.width / 2) + offsetX : params.panX),
+								y: (bounds.y > 0 ? (bounds.height / 2) - gapBetweenPages : params.panY),
 							});
 						}
 					});
@@ -285,19 +288,19 @@
 				});
 
 				this.viewer.addHandler('open', () => {
-					if (this.$root.params.panX !== null && this.$root.params.panY !== null) {
+					if (params.panX !== null && params.panY !== null) {
 						this.viewer.viewport.panTo({
-							x: this.$root.params.panX,
-							y: this.$root.params.panY,
+							x: params.panX,
+							y: params.panY,
 						}, true);
 					}
 
-					if (this.$root.params.rotation !== null) {
-						this.viewer.viewport.setRotation(this.$root.params.rotation);
+					if (params.rotation !== null) {
+						this.viewer.viewport.setRotation(params.rotation);
 					}
 
-					if (this.$root.params.zoom !== null) {
-						this.viewer.viewport.zoomTo(this.$root.params.zoom, null, true);
+					if (params.zoom !== null) {
+						this.viewer.viewport.zoomTo(params.zoom, null, true);
 					}
 
 					// Check if all visible tiles have been loaded
