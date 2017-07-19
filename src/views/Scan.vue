@@ -262,7 +262,7 @@
 				});
 
 				this.viewer.addHandler('tile-load-failed', (error) => {
-					this.$root.error = `Error loading image for page ${this.$root.params.page}: ${error.message}`;
+					this.$root.error = `Error loading image: ${error.message}`;
 				});
 			},
 			loadImageInfo(resetView = false) {
