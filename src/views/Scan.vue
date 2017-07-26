@@ -321,6 +321,8 @@
 					this.viewer.addOnceHandler('tile-drawn', () => {
 						for (let i = 0; i < tileSourcesLength; i += 1) {
 							const image = this.viewer.world.getItemAt(i);
+							if (!image) return;
+
 							if (!image.needsDraw()) {
 								const loading = this.$root.loading - 1;
 								this.$root.loading = Math.max(0, loading);
