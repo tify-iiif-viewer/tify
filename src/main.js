@@ -27,6 +27,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const options = Object.assign({
 	container: '#tify',
+	immediateRender: true,
 	language: 'en',
 	manifestUrl: null,
 	stylesheetUrl,

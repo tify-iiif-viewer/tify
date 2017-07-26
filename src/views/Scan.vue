@@ -245,7 +245,7 @@
 				this.viewer = OpenSeadragon({
 					animationTime: .4,
 					id: 'tify-scan_image',
-					immediateRender: true,
+					immediateRender: this.$root.options.immediateRender,
 					preload: !this.$root.isMobile(),
 					preserveImageSizeOnResize: true,
 					preserveViewport: true,
