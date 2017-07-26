@@ -49,7 +49,7 @@ export default new Vue({
 		loading: 0,
 		manifest: null,
 		manifestUrl: '',
-		messages: {},
+		messages: null,
 		options,
 		params: {},
 		paramsTimer: null,
@@ -107,7 +107,7 @@ export default new Vue({
 		},
 		iiifFormat(value) {
 			// http://iiif.io/api/presentation/2.1/#language-of-property-values
-			const filterHtml = this.$root.$options.filters.filterHtml;
+			const filterHtml = this.$options.filters.filterHtml;
 
 			const isArray = Array.isArray(value);
 			if (typeof value === 'object' && !isArray) {
@@ -117,7 +117,7 @@ export default new Vue({
 
 			if (!isArray) return [filterHtml(value)];
 
-			const language = this.$root.options.language;
+			const language = this.options.language;
 			const displayedValues = [];
 			const translation = {};
 			value.forEach((item) => {

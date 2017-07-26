@@ -6,11 +6,11 @@ Scenario('Navigate TOC', (I) => {
 
 	I.click('View');
 	I.click('Contents');
-	I.see('Table of contents');
+	I.see('Table of Contents');
 	I.see('Titelseite', '.tify-toc_structure.-current');
 
 	I.click('.tify-toc_toggle + .tify-toc_link');
-	I.dontSee('Table of contents');
+	I.dontSee('Table of Contents');
 
 	I.resizeWindow(1600, 900);
 	I.click('Contents');

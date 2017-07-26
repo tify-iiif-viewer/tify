@@ -1,6 +1,6 @@
 <template>
 	<section class="tify-toc">
-		<h2 class="tify-sr-only">{{ 'Table of contents'|trans }}</h2>
+		<h2 class="tify-sr-only">{{ 'Table of Contents'|trans }}</h2>
 
 		<toc-list
 			v-if="isInited"
