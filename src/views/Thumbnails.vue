@@ -46,11 +46,6 @@
 				touchTimer: null,
 			};
 		},
-		computed: {
-			apiVersion() {
-				return (this.$root.manifest['@context'] === 'http://iiif.io/api/presentation/1/context.json' ? 1 : 2);
-			},
-		},
 		watch: {
 			// eslint-disable-next-line func-names
 			'$root.params.pages': function (pages) {
@@ -123,7 +118,12 @@
 				for (let i = startPage - 1; i < endPage; i += 1) {
 					const resource = this.$root.canvases[i].images[0].resource;
 					if (resource.service) {
-						const quality = (this.apiVersion === 1 ? 'native' : 'default');
+						const quality = (
+							resource.service['@context'] === 'http://iiif.io/api/image/2/context.json'
+								? 'default'
+								: 'native'
+						);
+
 						this.items.push({
 							label: this.$root.canvases[i].label,
 							imgUrl: `${resource.service['@id']}/full/${this.thumbnailWidth},/0/${quality}.jpg`,

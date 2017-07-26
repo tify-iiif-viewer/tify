@@ -149,9 +149,6 @@
 			};
 		},
 		computed: {
-			apiVersion() {
-				return (this.$root.manifest['@context'] === 'http://iiif.io/api/presentation/1/context.json' ? 1 : 2);
-			},
 			cssFiltersSupported() {
 				// https://raw.githubusercontent.com/Modernizr/Modernizr/master/feature-detects/css/filters.js
 				const el = document.createElement('a');
@@ -364,16 +361,7 @@
 				if (infoPromises.length) {
 					Promise.all(infoPromises).then((responses) => {
 						responses.forEach((response) => {
-							const info = response.data;
-							this.tileSources[response.page] = {
-								'@context': `http://iiif.io/api/image/${this.apiVersion}/context.json`,
-								'@id': info['@id'],
-								height: info.height,
-								width: info.width,
-								profile: [`http://iiif.io/api/image/${this.apiVersion}/level2.json`],
-								protocol: 'http://iiif.io/api/image',
-								tiles: info.tiles,
-							};
+							this.tileSources[response.page] = response.data;
 						});
 						this.initViewer(resetView);
 					});
