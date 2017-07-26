@@ -143,6 +143,7 @@
 		data() {
 			return {
 				filtersVisible: false,
+				loadingInterval: null,
 				tileSources: {},
 				viewer: null,
 				zoomFactor: 1.5,
@@ -217,6 +218,21 @@
 
 					totalWidth += width + gapBetweenPages;
 				});
+
+				// TODO: An interval instead of a proper event handler? Abomination! That's because
+				// neither getFullyLoaded() nor the fully-loaded-change event are working for images
+				// that are not currently within canvas bounds. OpenSeadragon, get your shit
+				// together, and add a global fully-loaded event, not just for each TiledImage.
+				this.loadingInterval = setInterval(() => {
+					const tileSourcesLength = this.viewer.world.getItemCount();
+					let loading = 0;
+					for (let i = 0; i < tileSourcesLength; i += 1) {
+						const image = this.viewer.world.getItemAt(i);
+						// eslint-disable-next-line no-underscore-dangle
+						if (image && image._tilesLoading) loading = 1;
+					}
+					this.$root.loading = loading;
+				}, 200);
 
 				if (this.viewer) {
 					this.viewer.addOnceHandler('open', () => {
@@ -299,36 +315,6 @@
 					if (params.zoom !== null) {
 						this.viewer.viewport.zoomTo(params.zoom, null, true);
 					}
-
-					// Check if all visible tiles have been loaded
-					const tileSourcesLength = this.viewer.world.getItemCount();
-					for (let i = 0; i < tileSourcesLength; i += 1) {
-						this.$root.loading += 1;
-
-						const image = this.viewer.world.getItemAt(i);
-						image.addHandler('fully-loaded-change', (event) => {
-							if (event.fullyLoaded) {
-								const loading = this.$root.loading - 1;
-								this.$root.loading = Math.max(0, loading);
-							} else {
-								this.$root.loading += 1;
-							}
-						});
-					}
-
-					// Decrease loading counter for each invisible image
-					// Before the first tile is loaded, `needsDraw` always returns true
-					this.viewer.addOnceHandler('tile-drawn', () => {
-						for (let i = 0; i < tileSourcesLength; i += 1) {
-							const image = this.viewer.world.getItemAt(i);
-							if (!image) return;
-
-							if (!image.needsDraw()) {
-								const loading = this.$root.loading - 1;
-								this.$root.loading = Math.max(0, loading);
-							}
-						}
-					});
 				});
 
 				this.viewer.addHandler('tile-load-failed', (error) => {
@@ -336,6 +322,8 @@
 				});
 			},
 			loadImageInfo(resetView = false) {
+				clearInterval(this.loadingInterval);
+
 				const infoPromises = [];
 				this.$root.params.pages.forEach((page) => {
 					if (page < 1 || this.tileSources[page]) return;
