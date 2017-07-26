@@ -123,10 +123,10 @@
 								? 'default'
 								: 'native'
 						);
-
+						const id = resource.service['@id'];
 						this.items.push({
 							label: this.$root.canvases[i].label,
-							imgUrl: `${resource.service['@id']}/full/${this.thumbnailWidth},/0/${quality}.jpg`,
+							imgUrl: `${id}${id.slice(-1) === '/' ? '' : '/'}full/${this.thumbnailWidth},/0/${quality}.jpg`,
 							page: i + 1,
 						});
 					} else {

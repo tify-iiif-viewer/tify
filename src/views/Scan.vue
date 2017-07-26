@@ -340,7 +340,8 @@
 
 					const resource = this.$root.canvases[page - 1].images[0].resource;
 					if (resource.service) {
-						const infoUrl = `${resource.service['@id']}/info.json`;
+						const id = resource.service['@id'];
+						const infoUrl = `${id}${id.slice(-1) === '/' ? '' : '/'}info.json`;
 						infoPromises.push(this.$http.get(infoUrl).then((response) => {
 							response.page = page;
 							return response;
