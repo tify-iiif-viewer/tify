@@ -283,6 +283,11 @@
 
 			const sections = [];
 			this.structures.forEach((structure) => {
+				if (!structure.canvases) {
+					sections.push({ firstPage: 1, lastPage: this.$root.pageCount });
+					return;
+				}
+
 				const firstCanvasId = structure.canvases[0];
 				const firstPage = this.$root.canvases.findIndex(canvas => canvas['@id'] === firstCanvasId) + 1;
 				const lastCanvasId = structure.canvases[structure.canvases.length - 1];

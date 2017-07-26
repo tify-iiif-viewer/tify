@@ -96,21 +96,26 @@
 
 			structures.forEach((structure) => {
 				const struct = structure;
-				const structLastIndex = struct.canvases.length - 1;
 
 				if (
 					(!this.parentStructure && !struct.within)
 					|| (this.parentStructure && struct.within === this.parentStructure['@id'])
 				) {
-					struct.firstPage = this.$root.canvases.findIndex(
-						canvas => canvas['@id'] === struct.canvases[0],
-					) + 1;
+					if (struct.canvases) {
+						struct.firstPage = this.$root.canvases.findIndex(
+							canvas => canvas['@id'] === struct.canvases[0],
+						) + 1;
 
-					struct.lastPage = this.$root.canvases.findIndex(
-						canvas => canvas['@id'] === struct.canvases[structLastIndex],
-					) + 1;
+						struct.lastPage = this.$root.canvases.findIndex(
+							canvas => canvas['@id'] === struct.canvases[struct.canvases.length - 1],
+						) + 1;
 
-					struct.pageLabel = this.$root.canvases[struct.firstPage - 1].label;
+						struct.pageLabel = this.$root.canvases[struct.firstPage - 1].label;
+					} else {
+						struct.firstPage = 1;
+						struct.lastPage = this.$root.pageCount;
+						struct.pageLabel = this.$root.canvases[0].label;
+					}
 
 					const childStructures = [];
 					this.$root.manifest.structures.forEach((struct2) => {
