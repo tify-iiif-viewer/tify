@@ -95,16 +95,29 @@
 				<td>{{ license }}</td>
 			</tr>
 		</table>
+		<p v-if="bugs && bugs.url">
+			{{ 'Found a bug?'|trans }}
+			<a :href="bugs.url">{{ 'Please let us know.'|trans }}</a>
+		</p>
 	</section>
 </template>
 
 <script>
-	import { author, description, homepage, license, repository, version } from '../../package.json';
+	import {
+		author,
+		bugs,
+		description,
+		homepage,
+		license,
+		repository,
+		version,
+	} from '../../package.json';
 
 	export default {
 		data() {
 			return {
 				author,
+				bugs,
 				description,
 				homepage,
 				license,
