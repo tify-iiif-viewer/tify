@@ -4,6 +4,6 @@
 			@content;
 		}
 	} @else {
-		@warn "Undefined breakpoint: `#{$name}`";
+		@error "Undefined breakpoint: #{$name}";
 	}
 }
