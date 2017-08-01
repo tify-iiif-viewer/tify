@@ -1,7 +1,3 @@
-.tify-page-select {
-
-}
-
 .tify-page-select_button {
 	@extend %button;
 	border-radius: inherit;
@@ -10,6 +6,15 @@
 	min-width: ($grid * 3);
 	padding: ($grid / 4) ($grid / 2);
 	position: relative;
+
+	// Limit width on tiny screens to prevent buttons from breaking
+	@include respond-to(tiny) {
+		max-width: ($grid * 2);
+		min-width: ($grid * 2);
+		overflow: hidden;
+		padding: ($grid / 4);
+		white-space: nowrap;
+	}
 }
 
 .tify-page-select_dropdown {
