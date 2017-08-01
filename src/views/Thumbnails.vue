@@ -100,7 +100,17 @@
 			},
 			init() {
 				this.determineDimensions();
-				window.addEventListener('resize', () => { this.isInited = false; });
+
+				// Redraw thumbnails when the window is resized
+				let resizeTimeout;
+				window.addEventListener('resize', () => {
+					clearTimeout(resizeTimeout);
+					resizeTimeout = setTimeout(() => {
+						this.init();
+						this.scrollToCurrentPage(false);
+					}, 250);
+				});
+
 				this.isInited = true;
 			},
 			redrawThumbnails() {
