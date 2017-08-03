@@ -4,9 +4,11 @@
 	color: $text-color;
 	display: flex;
 	flex-direction: column;
-	font: #{$font-size} / #{$grid} $font-family;
+	font-family: $font-family;
+	font-size: $font-size;
 	height: 100%;
 	left: 0;
+	line-height: $grid;
 	overflow: hidden;
 	position: absolute;
 	right: 0;
