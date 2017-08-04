@@ -154,12 +154,10 @@ export default new Vue({
 		isValidPagesArray(pages) {
 			if (!Array.isArray(pages)) return false;
 
-			const length = pages.length;
-
 			// Check for duplicates
-			if ((new Set(pages)).size !== length) return false;
+			if ((new Set(pages)).size !== pages.length) return false;
 
-			for (let i = 0; i < length; i += 1) {
+			for (let i = 0; i < pages.length; i += 1) {
 				if (
 					isNaN(pages[i])
 					|| (i > 0 && pages[i] > 0 && pages[i] <= pages[i - 1])

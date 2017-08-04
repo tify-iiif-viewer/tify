@@ -190,10 +190,9 @@
 		computed: {
 			customPageViewActive() {
 				const pages = this.$root.params.pages;
-				const length = pages.length;
 				return (
-					length > 2
-					|| (length === 2 && (pages[0] % 2 > 0 || pages[1] !== pages[0] + 1) && pages[1] > 0)
+					pages.length > 2
+					|| (pages.length === 2 && (pages[0] % 2 > 0 || pages[1] !== pages[0] + 1) && pages[1] > 0)
 				);
 			},
 			isLastPage() {
