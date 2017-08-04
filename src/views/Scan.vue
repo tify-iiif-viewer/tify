@@ -143,7 +143,7 @@
 		data() {
 			return {
 				filtersVisible: false,
-				loadingInterval: null,
+				loadingTimeout: null,
 				tileSources: {},
 				viewer: null,
 				zoomFactor: 1.5,
@@ -183,6 +183,22 @@
 			},
 		},
 		methods: {
+			checkIfLoading() {
+				const tileSourcesLength = this.viewer.world.getItemCount();
+				let loading = 0;
+				for (let i = 0; i < tileSourcesLength; i += 1) {
+					const image = this.viewer.world.getItemAt(i);
+					// eslint-disable-next-line no-underscore-dangle
+					if (image && image._tilesLoading) loading = 1;
+				}
+				this.$root.loading = loading;
+
+				// TODO: A timeout instead of a proper event handler? Abomination! That's because
+				// neither getFullyLoaded() nor the fully-loaded-change event are working for images
+				// that are not currently within canvas bounds. OpenSeadragon, get your shit
+				// together, and add a global fully-loaded event, not just for each TiledImage.
+				this.loadingTimeout = setTimeout(this.checkIfLoading, 200);
+			},
 			closeFilters() {
 				this.filtersVisible = false;
 			},
@@ -206,6 +222,9 @@
 					}
 
 					const tileSource = this.tileSources[tileSourceIndex];
+
+					if (!tileSource) return;
+
 					if (!initialWidth) initialWidth = tileSource.width;
 					const width = tileSource.width / initialWidth;
 
@@ -218,21 +237,6 @@
 
 					totalWidth += width + gapBetweenPages;
 				});
-
-				// TODO: An interval instead of a proper event handler? Abomination! That's because
-				// neither getFullyLoaded() nor the fully-loaded-change event are working for images
-				// that are not currently within canvas bounds. OpenSeadragon, get your shit
-				// together, and add a global fully-loaded event, not just for each TiledImage.
-				this.loadingInterval = setInterval(() => {
-					const tileSourcesLength = this.viewer.world.getItemCount();
-					let loading = 0;
-					for (let i = 0; i < tileSourcesLength; i += 1) {
-						const image = this.viewer.world.getItemAt(i);
-						// eslint-disable-next-line no-underscore-dangle
-						if (image && image._tilesLoading) loading = 1;
-					}
-					this.$root.loading = loading;
-				}, 200);
 
 				if (this.viewer) {
 					this.viewer.addOnceHandler('open', () => {
@@ -320,9 +324,11 @@
 				this.viewer.addHandler('tile-load-failed', (error) => {
 					this.$root.error = `Error loading image: ${error.message}`;
 				});
+
+				this.checkIfLoading();
 			},
 			loadImageInfo(resetView = false) {
-				clearInterval(this.loadingInterval);
+				clearTimeout(this.loadingTimeout);
 
 				const infoPromises = [];
 				this.$root.params.pages.forEach((page) => {
@@ -336,7 +342,14 @@
 							response.page = page;
 							return response;
 						}, (error) => {
-							const status = (error.response ? error.response.statusText : error.message);
+							let status;
+							if (error.response) {
+								status = error.response.data && error.response.data.error
+									? error.response.data.error
+									: error.response.statusText;
+							} else {
+								status = error.message;
+							}
 							this.$root.error = `Error loading info file for page ${page}: ${status}`;
 						}));
 					} else {
@@ -352,7 +365,7 @@
 				if (infoPromises.length) {
 					Promise.all(infoPromises).then((responses) => {
 						responses.forEach((response) => {
-							this.tileSources[response.page] = response.data;
+							if (response) this.tileSources[response.page] = response.data;
 						});
 						this.initViewer(resetView);
 					});
