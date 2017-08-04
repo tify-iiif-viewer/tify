@@ -18,7 +18,7 @@
 				:title="'Reset view'|trans"
 				@click="resetView"
 			>
-				<i class="tify-icon">settings_overscan</i>
+				<i class="tify-icon">crop_3_2</i>
 				<span class="tify-sr-only">{{ 'Reset view'|trans }}</span>
 			</button>
 			<button
