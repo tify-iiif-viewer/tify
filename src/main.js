@@ -256,12 +256,14 @@ export default new Vue({
 			this.error = `Error loading IIIF manifest: ${status}`;
 		});
 
-		const translationUrl = `${base}/translations/${this.options.language}.json`;
-		this.$http.get(translationUrl).then((response) => {
-			this.messages = response.data;
-		}, (error) => {
-			const status = (error.response ? error.response.statusText : error.message);
-			this.error = `Error loading translation ${this.options.language}: ${status}`;
-		});
+		if (this.options.language !== 'en') {
+			const translationUrl = `${base}/translations/${this.options.language}.json`;
+			this.$http.get(translationUrl).then((response) => {
+				this.messages = response.data;
+			}, (error) => {
+				const status = (error.response ? error.response.statusText : error.message);
+				this.error = `Error loading translation ${this.options.language}: ${status}`;
+			});
+		}
 	},
 });
