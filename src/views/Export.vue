@@ -2,6 +2,16 @@
 	<section class="tify-export">
 		<h2 class="tify-sr-only">{{ 'Export'|trans }}</h2>
 
+		<h3>{{ 'Images in Original Resolution'|trans }}</h3>
+		<ul class="tify-export_links">
+			<li v-for="page in $root.params.pages" v-if="page">
+				<!-- NOTE: The download attribute is only honored for same-origin URLs -->
+				<a :href="imageUrls[page]" :download="`${page}.jpg`">
+					{{ 'Page'|trans }} {{page}} : {{ $root.canvases[page - 1].label }}
+				</a>
+			</li>
+		</ul>
+
 		<template v-if="$root.manifest.rendering">
 			<h3>{{ 'Renderings'|trans }}</h3>
 			<ul class="tify-export_links">
@@ -66,6 +76,28 @@
 				literatureItems: [],
 				otherItems: [],
 			};
+		},
+		computed: {
+			imageUrls() {
+				const imageUrls = {};
+				this.$root.params.pages.forEach((page) => {
+					if (!page) return;
+
+					const resource = this.$root.canvases[page - 1].images[0].resource;
+					if (resource.service) {
+						const quality = (
+							resource.service['@context'] === 'http://iiif.io/api/image/2/context.json'
+								? 'default'
+								: 'native'
+						);
+						const id = resource.service['@id'];
+						imageUrls[page] = `${id}${id.slice(-1) === '/' ? '' : '/'}full/full/0/${quality}.jpg`;
+					} else {
+						imageUrls[page] = resource['@id'];
+					}
+				});
+				return imageUrls;
+			},
 		},
 		created() {
 			const seeAlso = this.$root.manifest.seeAlso;
