@@ -1,20 +1,23 @@
-var path = require('path');
-var utils = require('./utils');
-var webpack = require('webpack');
-var config = require('../config');
-var merge = require('webpack-merge');
-var baseWebpackConfig = require('./webpack.base.conf');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable import/no-unresolved */
 
-var package = require('../package.json');
+const path = require('path');
+const utils = require('./utils');
+const webpack = require('webpack');
+const config = require('../config');
+const merge = require('webpack-merge');
+const baseWebpackConfig = require('./webpack.base.conf');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 
-var env = process.env.NODE_ENV === 'testing'
+const pkg = require('../package.json');
+
+const env = process.env.NODE_ENV === 'testing'
 	? require('../config/test.env')
 	: config.build.env;
 
-var webpackConfig = merge(baseWebpackConfig, {
+const webpackConfig = merge(baseWebpackConfig, {
 	module: {
 		rules: utils.styleLoaders({
 			sourceMap: config.build.productionSourceMap,
@@ -33,10 +36,11 @@ var webpackConfig = merge(baseWebpackConfig, {
 			'process.env': env,
 		}),
 		new webpack.BannerPlugin(
-			'TIFY v' + package.version + '\n'
-			+ '(c) ' + new Date().getFullYear() + ' ' + package.author + '\n'
-			+ package.license + '\n'
-			+ package.homepage
+			// eslint-disable-next-line prefer-template
+			`TIFY v${pkg.version}\n`
+			+ `(c) ${new Date().getFullYear()} ${pkg.author}\n`
+			+ `${pkg.license}\n`
+			+ pkg.homepage,
 		),
 		new webpack.optimize.UglifyJsPlugin({
 			compress: {
@@ -63,26 +67,22 @@ var webpackConfig = merge(baseWebpackConfig, {
 });
 
 if (config.build.productionGzip) {
-	var CompressionWebpackPlugin = require('compression-webpack-plugin');
+	const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
 	webpackConfig.plugins.push(
 		new CompressionWebpackPlugin({
 			asset: '[path].gz[query]',
 			algorithm: 'gzip',
-			test: new RegExp(
-				'\\.(' +
-				config.build.productionGzipExtensions.join('|') +
-				')$'
-			),
+			test: new RegExp(`\\.(${config.build.productionGzipExtensions.join('|')})$`),
 			threshold: 10240,
 			minRatio: 0.8,
-		})
+		}),
 	);
-};
+}
 
 if (config.build.bundleAnalyzerReport) {
-	var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+	const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 	webpackConfig.plugins.push(new BundleAnalyzerPlugin());
-};
+}
 
 module.exports = webpackConfig;
