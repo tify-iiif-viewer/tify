@@ -16,7 +16,9 @@
 			<h3>{{ 'Renderings'|trans }}</h3>
 			<ul class="tify-export_links">
 				<li v-for="item in $root.manifest.rendering">
-					<a :href="item['@id']">{{ item.label|trans }}</a>
+					<a :href="item['@id']">
+						{{ item.label|trans }}
+					</a>
 				</li>
 			</ul>
 		</template>
@@ -25,19 +27,26 @@
 			<h3>{{ 'Literature Management'|trans }}</h3>
 			<ul class="tify-export_links">
 				<li v-for="item in literatureItems">
-					<a :href="item['@id']" download>{{ item.label }}</a>
+					<a :href="item['@id']" download>
+						{{ item.label }}
+					</a>
 				</li>
 			</ul>
 		</template>
 
-		<template v-if="otherItems.length">
-			<h3>{{ 'Other Formats'|trans }}</h3>
-			<ul class="tify-export_links">
-				<li v-for="item in otherItems">
-					<a :href="item['@id']" download>{{ item.label || item['@id'] }}</a>
-				</li>
-			</ul>
-		</template>
+		<h3>{{ 'Other Formats'|trans }}</h3>
+		<ul class="tify-export_links">
+			<li>
+				<a :href="$root.manifestUrl" download="manifest.json">
+					{{ 'IIIF manifest'|trans }}
+				</a>
+			</li>
+			<li v-for="item in otherItems">
+				<a :href="item['@id']" download>
+					{{ item.label || item['@id'] }}
+				</a>
+			</li>
+		</ul>
 	</section>
 </template>
 

@@ -71,8 +71,6 @@
 			</a>
 			<img v-else class="tify-info_logo" :src="logoId" alt="">
 		</section>
-
-		<p class="tify-info_manifest"><a :href="$root.manifestUrl">{{ 'Manifest URL'|trans }}</a></p>
 	</section>
 </template>
 
