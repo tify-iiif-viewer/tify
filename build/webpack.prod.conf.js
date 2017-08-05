@@ -36,11 +36,10 @@ const webpackConfig = merge(baseWebpackConfig, {
 			'process.env': env,
 		}),
 		new webpack.BannerPlugin(
-			// eslint-disable-next-line prefer-template
 			`TIFY v${pkg.version}\n`
 			+ `(c) ${new Date().getFullYear()} ${pkg.author}\n`
 			+ `${pkg.license}\n`
-			+ pkg.homepage,
+			+ `${pkg.homepage}` // eslint-disable-line comma-dangle
 		),
 		new webpack.optimize.UglifyJsPlugin({
 			compress: {
@@ -76,7 +75,7 @@ if (config.build.productionGzip) {
 			test: new RegExp(`\\.(${config.build.productionGzipExtensions.join('|')})$`),
 			threshold: 10240,
 			minRatio: 0.8,
-		}),
+		}) // eslint-disable-line comma-dangle
 	);
 }
 

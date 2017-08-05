@@ -26,9 +26,9 @@ module.exports = () => {
 	for (let i = 0; i < versionRequirements.length; i += 1) {
 		const mod = versionRequirements[i];
 		if (!semver.satisfies(mod.currentVersion, mod.versionRequirement)) {
-			warnings.push(`${mod.name}: ${
-				chalk.red(mod.currentVersion)} should be ${
-				chalk.green(mod.versionRequirement)}`,
+			warnings.push(
+				`${mod.name}: ${chalk.red(mod.currentVersion)} should be`
+				+ ` ${chalk.green(mod.versionRequirement)}` // eslint-disable-line comma-dangle
 			);
 		}
 	}
