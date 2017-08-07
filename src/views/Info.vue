@@ -2,17 +2,21 @@
 	<section class="tify-info">
 		<h2 class="tify-sr-only">{{ 'Info'|trans }}</h2>
 
-		<section v-if="manifest.label" class="tify-info_section">
+		<div v-if="manifest.label" class="tify-info_section -title">
 			<h3 class="tify-info_heading">{{ 'Title'|trans }}</h3>
-			<div v-for="label in $root.iiifFormat(manifest.label)">{{ label }}</div>
-		</section>
+			<div v-for="label in $root.iiifFormat(manifest.label)">
+				{{ label }}
+			</div>
+		</div>
 
-		<section v-if="manifest.metadata" class="tify-info_section">
+		<div v-if="manifest.metadata" class="tify-info_section -metadata">
 			<h3>{{ 'Metadata'|trans }}</h3>
 			<table class="tify-info_list">
 				<tr class="tify-info_row" v-for="item, index in manifest.metadata">
 					<th class="tify-info_label">
-						<div v-for="label in $root.iiifFormat(item.label)">{{ label|cleanLabel|trans }}</div>
+						<div v-for="label in $root.iiifFormat(item.label)">
+							{{ label|cleanLabel|trans }}
+						</div>
 					</th>
 					<td class="tify-info_text">
 						<div
@@ -21,7 +25,7 @@
 							:class="{ '-collapsed': infoItems && infoItems[index].collapsed }"
 							:style="infoItems && infoItems[index].collapsed ? collapsedStyle : null"
 						>
-							<div v-for="value in $root.iiifFormat(item.value)" v-html="value"></div>
+							<div v-for="value in $root.iiifFormat(item.value)" v-html="value"/>
 						</div>
 
 						<button
@@ -31,38 +35,46 @@
 							@click="toggleItem(index)"
 						>
 							<template v-if="!infoItems || infoItems[index].collapsed">
-								<i class="tify-icon">expand_more</i> {{ 'Show all'|trans }}
+								<i class="tify-icon">expand_more</i>
+								{{ 'Show all'|trans }}
 							</template>
 							<template v-else>
-								<i class="tify-icon">expand_less</i> {{ 'Collapse'|trans }}
+								<i class="tify-icon">expand_less</i>
+								{{ 'Collapse'|trans }}
 							</template>
 						</button>
 					</td>
 				</tr>
 			</table>
-		</section>
+		</div>
 
-		<section v-if="manifest.description" class="tify-info_section">
+		<div v-if="manifest.description" class="tify-info_section -description">
 			<h3>{{ 'Description'|trans }}</h3>
-			<div v-for="description in $root.iiifFormat(manifest.description)" v-html="description"></div>
-		</section>
+			<div v-for="description in $root.iiifFormat(manifest.description)" v-html="description"/>
+		</div>
 
-		<section v-if="manifest.attribution" class="tify-info_section">
+		<div v-if="manifest.attribution" class="tify-info_section -attribution">
 			<h3>{{ 'Attribution'|trans }}</h3>
-			<div v-for="attribution in $root.iiifFormat(manifest.attribution)">{{ attribution }}</div>
-		</section>
+			<div v-for="attribution in $root.iiifFormat(manifest.attribution)">
+				{{ attribution }}
+			</div>
+		</div>
 
-		<section v-if="manifest.license" class="tify-info_section">
+		<div v-if="manifest.license" class="tify-info_section -license">
 			<h3>{{ 'License'|trans }}</h3>
-			<div><a :href="manifest.license">{{ manifest.license }}</a></div>
-		</section>
+			<div>
+				<a :href="manifest.license">{{ manifest.license }}</a>
+			</div>
+		</div>
 
-		<section v-if="manifest.related" class="tify-info_section">
+		<div v-if="manifest.related" class="tify-info_section -related">
 			<h3>{{ 'Related'|trans }}</h3>
-			<div><a :href="manifest.related">{{ manifest.related }}</a></div>
-		</section>
+			<div>
+				<a :href="manifest.related">{{ manifest.related }}</a>
+			</div>
+		</div>
 
-		<section v-if="manifest.logo" class="tify-info_section">
+		<div v-if="manifest.logo" class="tify-info_section -logo">
 			<a
 				v-if="logoId && manifest.logo.service && manifest.logo.service['@id']"
 				:href="manifest.logo.service['@id']"
@@ -70,7 +82,7 @@
 				<img class="tify-info_logo" :src="logoId" alt="">
 			</a>
 			<img v-else class="tify-info_logo" :src="logoId" alt="">
-		</section>
+		</div>
 	</section>
 </template>
 

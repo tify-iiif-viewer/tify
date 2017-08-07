@@ -2,7 +2,7 @@
 	<section class="tify-fulltext">
 		<h2 class="tify-sr-only">{{ 'Fulltext'|trans }}</h2>
 
-		<div v-if="fulltexts.length">
+		<div v-if="fulltexts.length" class="tify-fulltext_texts">
 			<template v-for="text, index in fulltexts">
 				<hr v-if="index > 0" class="tify-fulltext_separator">
 				<div v-html="text" class="tify-fulltext_text"/>

@@ -29,7 +29,7 @@
 			<button class="tify-app_error-close" @click="$root.error = ''">
 				<i class="tify-icon">close</i>
 			</button>
-			<span v-html="$root.error"></span>
+			<span v-html="$root.error"/>
 		</div>
 	</div>
 </template>

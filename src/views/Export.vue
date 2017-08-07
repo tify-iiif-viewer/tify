@@ -2,17 +2,19 @@
 	<section class="tify-export">
 		<h2 class="tify-sr-only">{{ 'Export'|trans }}</h2>
 
-		<h3>{{ 'Images in Original Resolution'|trans }}</h3>
-		<ul class="tify-export_links">
-			<li v-for="page in $root.params.pages" v-if="page">
-				<!-- NOTE: The download attribute is only honored for same-origin URLs -->
-				<a :href="imageUrls[page]" :download="`${page}.jpg`">
-					{{ 'Page'|trans }} {{page}} : {{ $root.canvases[page - 1].label }}
-				</a>
-			</li>
-		</ul>
+		<div class="tify-export_section -links">
+			<h3>{{ 'Images in Original Resolution'|trans }}</h3>
+			<ul class="tify-export_links">
+				<li v-for="page in $root.params.pages" v-if="page">
+					<!-- NOTE: The download attribute is only honored for same-origin URLs -->
+					<a :href="imageUrls[page]" :download="`${page}.jpg`">
+						{{ 'Page'|trans }} {{page}} : {{ $root.canvases[page - 1].label }}
+					</a>
+				</li>
+			</ul>
+		</div>
 
-		<template v-if="$root.manifest.rendering">
+		<div v-if="$root.manifest.rendering" class="tify-export_section -renderings">
 			<h3>{{ 'Renderings'|trans }}</h3>
 			<ul class="tify-export_links">
 				<li v-for="item in $root.manifest.rendering">
@@ -21,9 +23,9 @@
 					</a>
 				</li>
 			</ul>
-		</template>
+		</div>
 
-		<template v-if="literatureItems.length">
+		<div v-if="literatureItems.length" class="tify-export_section -literature">
 			<h3>{{ 'Literature Management'|trans }}</h3>
 			<ul class="tify-export_links">
 				<li v-for="item in literatureItems">
@@ -32,21 +34,23 @@
 					</a>
 				</li>
 			</ul>
-		</template>
+		</div>
 
-		<h3>{{ 'Other Formats'|trans }}</h3>
-		<ul class="tify-export_links">
-			<li>
-				<a :href="$root.manifestUrl" download="manifest.json">
-					{{ 'IIIF manifest'|trans }}
-				</a>
-			</li>
-			<li v-for="item in otherItems">
-				<a :href="item['@id']" download>
-					{{ item.label || item['@id'] }}
-				</a>
-			</li>
-		</ul>
+		<div class="tify-export_section -other">
+			<h3>{{ 'Other Formats'|trans }}</h3>
+			<ul class="tify-export_links">
+				<li>
+					<a :href="$root.manifestUrl" download="manifest.json">
+						{{ 'IIIF manifest'|trans }}
+					</a>
+				</li>
+				<li v-for="item in otherItems">
+					<a :href="item['@id']" download>
+						{{ item.label || item['@id'] }}
+					</a>
+				</li>
+			</ul>
+		</div>
 	</section>
 </template>
 
