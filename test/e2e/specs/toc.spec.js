@@ -25,4 +25,14 @@ Scenario('Navigate TOC', (I) => {
 
 	I.click('.tify-toc > .tify-toc_list > :last-child .tify-toc_link');
 	I.see('Einband', '.tify-toc_structure.-current');
+
+	I.click('Expand all');
+	I.click('Expand all'); // Multiple clicks should not toggle all children again
+	I.see('Auflösung von Gleichungen 3ten Grades');
+	I.see('Recursionsformeln');
+
+	I.click('Collapse all');
+	I.click('Collapse all'); // Multiple clicks should not toggle all children again
+	I.dontSee('Auflösung von Gleichungen 3ten Grades');
+	I.dontSee('Recursionsformeln');
 });

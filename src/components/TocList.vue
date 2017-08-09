@@ -5,16 +5,16 @@
 			class="tify-toc_structure"
 			:data-level="level"
 			:class="{
-				'-current': checkIfPageInStructure(structure),
-				'-children-visible': checkIfChildStructuresVisible(structure),
+				'-current': structure.current,
+				'-expanded': structure.expanded,
 			}"
 		>
 			<button
 				v-if="structure.childStructures"
 				class="tify-toc_toggle"
-				@click="toggleChildStructures(index)"
+				@click="toggleChildren(index)"
 			>
-				<template v-if="checkIfChildStructuresVisible(structure)">
+				<template v-if="structure.expanded">
 					<i class="tify-icon">remove</i>
 					<span class="tify-sr-only">Hide children</span>
 				</template>
@@ -43,7 +43,8 @@
 
 			<toc-list
 				v-if="structure.childStructures"
-				v-show="checkIfChildStructuresVisible(structure)"
+				v-show="structure.expanded"
+				ref="children"
 				:level="level + 1"
 				:parentStructure="structure"
 				:structures="structure.childStructures"
@@ -65,67 +66,106 @@
 				workingStructures: [],
 			};
 		},
+		watch: {
+			// eslint-disable-next-line func-names
+			'$root.params.pages': function () {
+				if (!this.structures) return;
+
+				const structuresLength = this.workingStructures.length;
+				for (let i = 0; i < structuresLength; i += 1) {
+					const structure = this.workingStructures[i];
+
+					if (this.checkIfPagesInStructure(structure)) {
+						structure.current = true;
+						if (structure.childStructures) structure.expanded = true;
+					} else {
+						structure.current = false;
+						structure.expanded = false;
+					}
+
+					this.$set(this.workingStructures, i, structure);
+				}
+			},
+		},
 		methods: {
-			checkIfPageInStructure(structure) {
-				const pages = this.$root.params.pages;
-				const length = pages.length;
-				for (let i = 0; i < length; i += 1) {
+			checkIfPagesInStructure(structure, pages = this.$root.params.pages) {
+				for (let i = 0; i < pages.length; i += 1) {
 					if (pages[i] >= structure.firstPage && pages[i] <= structure.lastPage) {
 						return true;
 					}
 				}
 				return false;
 			},
-			checkIfChildStructuresVisible(structure) {
-				if (!structure.childStructures) return false;
-				if ('childStructuresVisible' in structure) return structure.childStructuresVisible;
-				return this.checkIfPageInStructure(structure);
-			},
 			setPage(page) {
 				this.$root.setPage(page);
 				if (this.$root.isMobile()) this.$root.updateParams({ view: 'scan' });
 			},
-			toggleChildStructures(index) {
-				const struct = this.workingStructures[index];
-				this.$set(struct, 'childStructuresVisible', !this.checkIfChildStructuresVisible(struct));
+			toggleAllChildren(expanded = null) {
+				if (!this.$refs.children) return;
+
+				const structuresLength = this.workingStructures.length;
+				for (let i = 0; i < structuresLength; i += 1) {
+					this.toggleChildren(i, expanded);
+				}
+
+				this.$refs.children.forEach((child) => {
+					child.toggleAllChildren(expanded);
+				});
+			},
+			toggleChildren(index, expanded = null) {
+				const structure = this.workingStructures[index];
+				if (!structure.childStructures) return;
+
+				structure.expanded = (expanded !== null ? expanded : !structure.expanded);
+				this.$set(this.workingStructures, index, structure);
 			},
 		},
 		created() {
-			// Child instances are using the prop, while the top-most ancestor uses the manifest
-			const structures = this.structures || this.$root.manifest.structures;
-
-			structures.forEach((structure) => {
-				const struct = structure;
+			for (let i = 0; i < this.structures.length; i += 1) {
+				const structure = this.structures[i];
 
 				if (
-					(!this.parentStructure && !struct.within)
-					|| (this.parentStructure && struct.within === this.parentStructure['@id'])
+					(!this.parentStructure && !structure.within)
+					|| (this.parentStructure && structure.within === this.parentStructure['@id'])
 				) {
-					if (struct.canvases) {
-						struct.firstPage = this.$root.canvases.findIndex(
-							canvas => canvas['@id'] === struct.canvases[0],
+					if (structure.canvases) {
+						const firstCanvas = structure.canvases[0];
+						structure.firstPage = this.$root.canvases.findIndex(
+							canvas => canvas['@id'] === firstCanvas,
 						) + 1;
 
-						struct.lastPage = this.$root.canvases.findIndex(
-							canvas => canvas['@id'] === struct.canvases[struct.canvases.length - 1],
+						const lastCanvas = structure.canvases[structure.canvases.length - 1];
+						structure.lastPage = this.$root.canvases.findIndex(
+							canvas => canvas['@id'] === lastCanvas,
 						) + 1;
 
-						struct.pageLabel = this.$root.canvases[struct.firstPage - 1].label;
+						structure.pageLabel = this.$root.canvases[structure.firstPage - 1].label;
 					} else {
-						struct.firstPage = 1;
-						struct.lastPage = this.$root.pageCount;
-						struct.pageLabel = this.$root.canvases[0].label;
+						structure.firstPage = 1;
+						structure.lastPage = this.$root.pageCount;
+						structure.pageLabel = this.$root.canvases[0].label;
 					}
 
-					const childStructures = [];
-					this.$root.manifest.structures.forEach((struct2) => {
-						if (struct2.within === struct['@id']) childStructures.push(struct2);
-					});
-					if (childStructures.length) struct.childStructures = childStructures;
+					structure.current = this.checkIfPagesInStructure(structure);
 
-					this.workingStructures.push(struct);
+					const childStructures = [];
+					for (let j = 0; j < this.$root.manifest.structures.length; j += 1) {
+						const structure2 = this.$root.manifest.structures[j];
+						if (structure2.within === structure['@id']) {
+							childStructures.push(structure2);
+						}
+					}
+
+					if (childStructures.length) {
+						structure.childStructures = childStructures;
+						structure.expanded = structure.current;
+					} else {
+						structure.expanded = false;
+					}
+
+					this.workingStructures.push(structure);
 				}
-			});
+			}
 		},
 	};
 </script>

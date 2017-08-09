@@ -18,6 +18,10 @@
 	padding-right: .2em;
 }
 
+.tify-toc_header {
+	margin: 0 0 ($grid / 2);
+}
+
 .tify-toc_link {
 	@include transition(background);
 	border-radius: $br;
@@ -52,7 +56,7 @@
 	padding: 0;
 
 	& & {
-		// Vertical line on the left, connecting all items
+		// Vertical connector to the left
 		margin: ($grid / 4) 0 0 ($grid * 1.25);
 	}
 }
@@ -73,8 +77,8 @@
 		box-shadow: (-$grid * .75 + 1px) 0 white, (-$grid) 0 $brand-color-light;
 	}
 
-	&.-children-visible {
-		// Vertical line on the left, connecting all items
+	&.-expanded {
+		// Vertical connector to the left
 		&::after {
 			border-left: 1px solid $brand-color-light;
 			content: '';
@@ -110,12 +114,20 @@
 	}
 }
 
-.tify-toc_toggle {
+.tify-toc_toggle-all {
 	@extend %button;
 	box-shadow: $card-shadow;
 	border-radius: $br;
+	padding: 0 ($grid / 4);
+}
+
+.tify-toc_toggle {
+	@extend %button;
+	border-radius: $br;
+	box-shadow: $card-shadow;
 	float: left;
 	margin: 0 ($grid / 4) 0 0;
+	padding: 0 ($grid / 4);
 	padding: 0;
 
 	// White overlay so vertical line does not touch button
