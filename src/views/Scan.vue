@@ -171,8 +171,15 @@
 				return this.viewer.viewport.getZoom() >= this.viewer.viewport.getMaxZoom();
 			},
 			isReset() {
-				const params = this.$root.params;
-				return (params.panX === null && params.panY === null && params.zoom === null);
+				// There may be some tiny deviation from the target values
+				const homeBounds = this.viewer.viewport.getHomeBounds();
+				const currentBounds = this.viewer.viewport.getBounds();
+				return (
+					Math.abs(homeBounds.height - currentBounds.height) < 1e-9
+					&& Math.abs(homeBounds.width - currentBounds.width) < 1e-9
+					&& Math.abs(homeBounds.x - currentBounds.x) < 1e-9
+					&& Math.abs(homeBounds.y - currentBounds.y) < 1e-9
+				);
 			},
 		},
 		watch: {
@@ -249,10 +256,10 @@
 							const bounds = this.viewer.viewport.getBounds();
 							if (bounds.x <= 0 && bounds.y <= 0) return;
 
-							const offsetX = (params.pages[0] ? 0 : 1) - gapBetweenPages;
+							const offsetX = (params.pages[0] ? 0 : 1);
 							this.viewer.viewport.panTo({
 								x: (bounds.x > 0 ? (bounds.width / 2) + offsetX : params.panX),
-								y: (bounds.y > 0 ? (bounds.height / 2) - gapBetweenPages : params.panY),
+								y: (bounds.y > 0 ? (bounds.height / 2) : params.panY),
 							});
 						}
 					});
@@ -278,16 +285,10 @@
 				this.viewer.gestureSettingsMouse.clickToZoom = false;
 
 				this.viewer.addHandler('animation-finish', () => {
-					// Don't set params if viewport is reset.
-					// There may be some tiny deviation from the target values.
-					const homeBounds = this.viewer.viewport.getHomeBounds();
-					const currentBounds = this.viewer.viewport.getBounds();
-					if (
-						Math.abs(homeBounds.height - currentBounds.height) < 1e-9
-						&& Math.abs(homeBounds.width - currentBounds.width) < 1e-9
-						&& Math.abs(homeBounds.x - currentBounds.x) < 1e-9
-						&& Math.abs(homeBounds.y - currentBounds.y) < 1e-9
-					) return;
+					if (this.isReset) {
+						this.removeScanParams();
+						return;
+					}
 
 					const center = this.viewer.viewport.getCenter();
 					this.$root.updateParams({
@@ -305,19 +306,18 @@
 				});
 
 				this.viewer.addHandler('open', () => {
-					if (params.panX !== null && params.panY !== null) {
+					if (params.panX !== null && params.panY !== null && params.zoom !== null) {
 						this.viewer.viewport.panTo({
 							x: params.panX,
 							y: params.panY,
 						}, true);
+						this.viewer.viewport.zoomTo(params.zoom, null, true);
+					} else {
+						this.viewer.viewport.goHome();
 					}
 
 					if (params.rotation !== null) {
 						this.viewer.viewport.setRotation(params.rotation);
-					}
-
-					if (params.zoom !== null) {
-						this.viewer.viewport.zoomTo(params.zoom, null, true);
 					}
 				});
 
@@ -377,13 +377,16 @@
 				this.$refs.image.style.cssText = '';
 				this.$root.updateParams({ filters: {} });
 			},
-			resetView() {
-				this.viewer.viewport.goHome();
+			removeScanParams() {
 				this.$root.updateParams({
 					panX: null,
 					panY: null,
 					zoom: null,
 				});
+			},
+			resetView() {
+				this.viewer.viewport.goHome();
+				this.removeScanParams();
 			},
 			rotateRight() {
 				const viewport = this.viewer.viewport;
