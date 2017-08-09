@@ -2,7 +2,7 @@
 	<section class="tify-toc">
 		<h2 class="tify-sr-only">{{ 'Table of Contents'|trans }}</h2>
 
-		<div class="tify-toc_header">
+		<div v-if="hasChildStructures" class="tify-toc_header">
 			<button class="tify-toc_toggle-all" @click="$refs.children.toggleAllChildren(true)">
 				{{ 'Expand all' }}
 			</button>
@@ -38,6 +38,11 @@
 			return {
 				isInited: false,
 			};
+		},
+		computed: {
+			hasChildStructures() {
+				return this.$root.manifest.structures.some(structure => !!structure.within);
+			},
 		},
 		methods: {
 			init() {
