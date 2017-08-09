@@ -8,7 +8,7 @@
 .tify-toc {
 	@extend %panel;
 	overflow-y: auto;
-	padding: ($grid / 2) ($grid / 2) ($grid / 2) $grid;
+	padding: ($grid / 2);
 	position: relative;
 	z-index: 0;
 }
@@ -19,7 +19,7 @@
 }
 
 .tify-toc_header {
-	margin: 0 0 ($grid / 2);
+	margin: 0 ($grid / 2) ($grid / 2);
 }
 
 .tify-toc_link {
@@ -52,7 +52,7 @@
 }
 
 .tify-toc_list {
-	margin: 0;
+	margin: 0 0 0 ($grid / 2);
 	padding: 0;
 
 	& & {
