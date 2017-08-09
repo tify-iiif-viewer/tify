@@ -6,7 +6,7 @@ describe('filter-html', () => {
 		const html = `
 			<h1 id="remove tag">
 				<a href="keep tag and attr" class="remove this">
-					<b>label</b>
+					<b data-remove>label</b>
 				</a>
 			</h1>
 			<p>

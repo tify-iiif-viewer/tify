@@ -10,7 +10,7 @@ Vue.filter('filterHtml', (html) => {
 	let filteredHtml = striptags(html, allowedTags);
 
 	// Iterate over all opening (including self-closing) HTML tags
-	const htmlTagsRegex = /<(\w+)((\s+[\w]+(\s*=\s*(?:".*?"|'.*?'|.*?|[\^'">\s]+))?)+\s*|\s*)>/g;
+	const htmlTagsRegex = /<(\w+)((\s+.+?(\s*=\s*(?:".*?"|'.*?'|.*?|[\^'">\s]+))?)+\s*|\s*)>/g;
 	filteredHtml = filteredHtml.replace(htmlTagsRegex, (match, tag, attributes) => {
 		if (!attributes) return `<${tag}>`;
 
