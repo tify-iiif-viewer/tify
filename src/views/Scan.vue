@@ -190,22 +190,6 @@
 			},
 		},
 		methods: {
-			checkIfLoading() {
-				const tileSourcesLength = this.viewer.world.getItemCount();
-				let loading = 0;
-				for (let i = 0; i < tileSourcesLength; i += 1) {
-					const image = this.viewer.world.getItemAt(i);
-					// eslint-disable-next-line no-underscore-dangle
-					if (image && image._tilesLoading) loading = 1;
-				}
-				this.$root.loading = loading;
-
-				// TODO: A timeout instead of a proper event handler? Abomination! That's because
-				// neither getFullyLoaded() nor the fully-loaded-change event are working for images
-				// that are not currently within canvas bounds. OpenSeadragon, get your shit
-				// together, and add a global fully-loaded event, not just for each TiledImage.
-				this.loadingTimeout = setTimeout(this.checkIfLoading, 200);
-			},
 			closeFilters() {
 				this.filtersVisible = false;
 			},
@@ -306,7 +290,9 @@
 				});
 
 				this.viewer.addHandler('open', () => {
-					if (params.panX !== null && params.panY !== null && params.zoom !== null) {
+					this.startLoadingWatch();
+
+					if (params.panX !== null && params.panY !== null) {
 						this.viewer.viewport.panTo({
 							x: params.panX,
 							y: params.panY,
@@ -324,11 +310,9 @@
 				this.viewer.addHandler('tile-load-failed', (error) => {
 					this.$root.error = `Error loading image: ${error.message}`;
 				});
-
-				this.checkIfLoading();
 			},
 			loadImageInfo(resetView = false) {
-				clearTimeout(this.loadingTimeout);
+				this.stopLoadingWatch();
 
 				const infoPromises = [];
 				this.$root.params.pages.forEach((page) => {
@@ -403,6 +387,25 @@
 				}
 				this.$root.updateParams({ filters: this.$root.params.filters });
 				this.updateFilterStyle();
+			},
+			startLoadingWatch() {
+				const tileSourcesLength = this.viewer.world.getItemCount();
+				let loading = 0;
+				for (let i = 0; i < tileSourcesLength; i += 1) {
+					const image = this.viewer.world.getItemAt(i);
+					// eslint-disable-next-line no-underscore-dangle
+					if (image && image._tilesLoading) loading = 1;
+				}
+				this.$root.loading = loading;
+
+				// TODO: A timeout instead of a proper event handler? Abomination! That's because
+				// neither getFullyLoaded() nor the fully-loaded-change event are working for images
+				// that are not currently within canvas bounds. OpenSeadragon, get your shit
+				// together, and add a global fully-loaded event, not just for each TiledImage.
+				this.loadingTimeout = setTimeout(this.startLoadingWatch, 200);
+			},
+			stopLoadingWatch() {
+				clearTimeout(this.loadingTimeout);
 			},
 			updateFilterStyle() {
 				if (!this.filtersActive || !this.cssFiltersSupported) return;
