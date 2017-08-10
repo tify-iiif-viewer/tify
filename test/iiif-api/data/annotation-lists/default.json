@@ -1,0 +1,381 @@
+{
+	"@context": "http://iiif.io/api/presentation/2/context.json",
+	"@id": "https://wellcomelibrary.org/iiif/b18035723/contentAsText/7",
+	"@type": "sc:AnnotationList",
+	"resources": [
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t0",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "Alles höhere Leben - ob Tier oder"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=116,171,701,31"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t1",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "Pflanze - entsteht aus der Vereini¬"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=118,223,695,30"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t2",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "gung von männlichen und weib¬"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=118,274,696,40"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t3",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "lichen Keimzellen. Die tierische"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=119,325,694,31"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t4",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "Samenzelle (links oben) entspricht"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=118,375,695,40"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t5",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "dem Pollenkorn - man sieht solche"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=118,427,695,32"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t6",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "aus dem Staubblatt der Blüte links"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=119,478,694,32"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t7",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "unten austreten. Die Eizelle"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=117,530,696,30"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t8",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "(rechts oben) läßt sich noch im"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=121,581,693,39"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t9",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "Fruchtknoten, der amunterenEnde"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=119,634,694,35"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t10",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "des Stempels im Blütenboden"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=119,685,695,39"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t11",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "sitzt, und im Keimfleck des Hüh¬"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=117,735,696,35"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t12",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "nereies, der auf der Dotterkugel"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=117,786,697,40"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t13",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "ruht,wiedererkennen. Samen-und"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=118,838,697,35"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t14",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "Eizelle sind 100 fach^vergrößert."
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=116,890,693,42"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t15",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "kleinere Samenzelle mit dem winzigen „Kopf\" und dem schlängelnden"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=119,1069,1741,53"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t16",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "„Sdhwanz\", das blieb noch lange Zeit ungeklärt. Und wie gar aus"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=120,1127,1738,53"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t17",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "dem winzigen Schleimklümpchen „Ei\", mit dem sich nun auch noch"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=121,1186,1739,51"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t18",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "die Samenzelle verbunden hat, ein ausgewachsenes Lebewesen erste¬"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=120,1245,1739,52"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t19",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "hen kann, in dem sich das Erbgut entfaltet — das schien so wunder¬"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=119,1303,1740,52"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t20",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "bar, daß man meinte, es müsse wohl für immer ein unlösbares Rätsel"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=119,1362,1741,49"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t21",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "bleiben. Und doch — man kann den Geheimnissen des Erbguts schon"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=119,1419,1740,53"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t22",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "näher kommen."
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=120,1478,383,40"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t23",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "Von Meerscliweinchen"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=585,1753,803,45"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t24",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "und schwarzen und weißen Kugeln"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=356,1842,1268,53"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t25",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "Peter, der Bub meines Nachbarn, ist dem Problem auf die ein¬"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=178,2095,1684,51"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t26",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "fachste Weise zu Leibe gerückt. Letzthin, als er mir über den Garten¬"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=124,2153,1738,53"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t27",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "zaun hinweg ein paar frisch ausgegrabene Käfer zur Begutachtung"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=121,2213,1745,55"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t28",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "vorlegte, sprachen wir auch davon, wie sich wohl die Eigenschaften"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=122,2270,1744,57"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t29",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "und Merkmale von den Tiereltern auf die Tierkinder vererben könn¬"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=123,2329,1742,46"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t30",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "ten. Ich riet ihm, die zwei Meerschweindien, die er am Geburts¬"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=123,2389,1742,52"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t31",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "tag zum Geschenk erhalten hatte, auf die Frage der Vererbung hin"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=122,2446,1747,57"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t32",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "einmal genau zu beobachten. Sie schienen mir für einen solchen Ver-"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=123,2503,1744,55"
+		},
+		{
+			"@id": "https://wellcomelibrary.org/iiif/b18035723/annos/contentAsText/a7t33",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"format": "text/plain",
+				"chars": "5"
+			},
+			"on": "https://wellcomelibrary.org/iiif/b18035723/canvas/c7#xywh=978,2627,24,40"
+		}
+	]
+}

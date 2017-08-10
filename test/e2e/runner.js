@@ -1,17 +1,20 @@
 process.env.NODE_ENV = 'dev';
-var server = require('../../build/dev-server.js');
+const server = require('../../build/dev-server.js');
+const iiifApi = require('../iiif-api/server.js');
 
 server.ready.then(() => {
-	var spawn = require('cross-spawn');
-	var runner = spawn('./node_modules/.bin/codeceptjs', ['run'], { stdio: 'inherit' });
+	const spawn = require('cross-spawn');
+	const runner = spawn('./node_modules/.bin/codeceptjs', ['run'], { stdio: 'inherit' });
 
-	runner.on('exit', function (code) {
+	runner.on('exit', (code) => {
 		server.close();
+		iiifApi.close();
 		process.exit(code);
 	});
 
-	runner.on('error', function (err) {
+	runner.on('error', (err) => {
 		server.close();
+		iiifApi.close();
 		throw err;
 	});
 });

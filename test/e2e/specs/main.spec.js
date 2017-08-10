@@ -1,7 +1,7 @@
-Feature('main');
+Feature('Main');
 
 Scenario('Change page', (I) => {
-	I.amOnPage('http://localhost:8080/?manifestUrl=https://gdzstaging.sub.uni-goettingen.de/iiif/presentation/HANS_DE_7_w042081/manifest&tify={"pages":[15]}');
+	I.amOnPage('http://localhost:8080/?manifestUrl=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify={"pages":[15]}');
 	I.waitForElement('.tify-app_main');
 
 	I.see('15 : 7r', '.tify-page-select_button');
