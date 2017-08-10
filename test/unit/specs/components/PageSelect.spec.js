@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import PageSelect from '@/components/PageSelect';
 
-import manifest from '../../fixtures/manifest.json';
+import manifest from '../../../iiif-api/data/manifests/gdz-PPN857449303.json';
 
 describe('PageSelect', () => {
 	const vm = new Vue(PageSelect);
+	vm.$root.manifest = manifest;
 	vm.$root.canvases = manifest.sequences[0].canvases;
 	vm.$root.params = { pages: [1] };
 

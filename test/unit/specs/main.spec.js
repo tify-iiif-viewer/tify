@@ -1,13 +1,9 @@
 import vm from '@/main';
 
+import manifest from '../../iiif-api/data/manifests/gdz-PPN857449303.json';
+
 describe('main', () => {
-	vm.manifest = {
-		sequences: [
-			{
-				canvases: [1, 2, 3, 4, 5],
-			},
-		],
-	};
+	vm.$root.manifest = manifest;
 
 	it('should get default params', () => {
 		const params = vm.getParams();
