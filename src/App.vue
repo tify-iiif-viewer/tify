@@ -62,13 +62,13 @@
 		},
 		computed: {
 			hasExport() {
-				return (this.$root.manifest.rendering || this.$root.manifest.seeAlso);
+				return !!(this.$root.manifest.rendering || this.$root.manifest.seeAlso);
 			},
 			hasOtherContent() {
 				return this.$root.canvases.some(canvas => 'otherContent' in canvas);
 			},
 			hasToc() {
-				return (this.$root.manifest.structures && this.$root.manifest.structures.length);
+				return !!(this.$root.manifest.structures && this.$root.manifest.structures.length);
 			},
 		},
 		methods: {
