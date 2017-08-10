@@ -70,7 +70,7 @@
 		<div v-if="manifest.related" class="tify-info_section -related">
 			<h3>{{ 'Related'|trans }}</h3>
 			<div>
-				<a :href="manifest.related">{{ manifest.related }}</a>
+				<a :href="related">{{ related }}</a>
 			</div>
 		</div>
 
@@ -105,6 +105,11 @@
 			},
 			manifest() {
 				return this.$root.manifest;
+			},
+			related() {
+				if (typeof this.manifest.related === 'string') return this.manifest.related;
+
+				return this.manifest.related['@id'];
 			},
 		},
 		filters: {
