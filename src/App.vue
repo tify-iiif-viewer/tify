@@ -2,7 +2,6 @@
 	<div class="tify-app">
 		<app-header
 			v-if="$root.manifest"
-			:exportEnabled="hasExport"
 			:fulltextEnabled="hasOtherContent"
 			:tocEnabled="hasToc"
 		/>
@@ -13,7 +12,7 @@
 			<toc v-if="hasToc" v-show="$root.params.view === 'toc'"/>
 			<thumbnails v-show="$root.params.view === 'thumbnails'"/>
 			<info v-show="$root.params.view === 'info'"/>
-			<export v-if="hasExport" v-show="$root.params.view === 'export'"/>
+			<export v-show="$root.params.view === 'export'"/>
 			<help v-show="$root.params.view === 'help'"/>
 		</div>
 
@@ -61,9 +60,6 @@
 			};
 		},
 		computed: {
-			hasExport() {
-				return !!(this.$root.manifest.rendering || this.$root.manifest.seeAlso);
-			},
 			hasOtherContent() {
 				return this.$root.canvases.some(canvas => 'otherContent' in canvas);
 			},

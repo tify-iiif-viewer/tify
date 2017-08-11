@@ -146,7 +146,6 @@
 					{{ 'Info'|trans }}
 				</button>
 				<button
-					v-if="exportEnabled"
 					class="tify-header_button"
 					:class="{ '-active': $root.params.view === 'export' }"
 					@click="toggleView('export')"
@@ -177,7 +176,6 @@
 			PageSelect,
 		},
 		props: [
-			'exportEnabled',
 			'fulltextEnabled',
 			'tocEnabled',
 		],
