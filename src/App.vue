@@ -91,8 +91,9 @@
 				if (event.key === 'q' || event.key === ',') {
 					if (pages[0] > 1) this.$root.setPage(pages[0] - 1);
 				} else if (event.key === 'e' || event.key === '.') {
-					if (pages[pages.length - 1] < this.$root.pageCount) {
-						this.$root.setPage(pages[0] + 1);
+					const lastVisiblePage = pages[pages.length - 1];
+					if (lastVisiblePage < this.$root.pageCount) {
+						this.$root.setPage(lastVisiblePage + 1);
 					}
 				} else if (event.key === 'Q') {
 					this.$root.setPage(1);
