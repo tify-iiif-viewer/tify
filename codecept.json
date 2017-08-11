@@ -6,7 +6,8 @@
     "Nightmare": {
       "url": "http://localhost:8080",
       "show": false,
-      "restart": false
+      "restart": false,
+      "waitForAction": 100
     }
   },
   "include": {},
