@@ -10,8 +10,8 @@
 				@click="zoomIn"
 			>
 				<i class="tify-icon">zoom_in</i>
-				<span class="tify-sr-only">{{ 'Zoom in'|trans }}</span
-			></button>
+				<span class="tify-sr-only">{{ 'Zoom in'|trans }}</span>
+			</button>
 			<button
 				class="tify-scan_button"
 				:disabled="isReset"
@@ -105,7 +105,7 @@
 			</div>
 		</div>
 
-		<div class="tify-scan_image" id="tify-scan_image" ref="image"></div>
+		<div class="tify-scan_image" id="tify-scan_image" ref="image"/>
 	</section>
 </template>
 
@@ -120,6 +120,7 @@
 	require('@/../openseadragon/src/eventsource');
 
 	require('@/../openseadragon/src/tilesource');
+
 	require('@/../openseadragon/src/iiiftilesource');
 
 	require('@/../openseadragon/src/drawer');
