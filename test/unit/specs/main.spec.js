@@ -4,6 +4,7 @@ import manifest from '../../iiif-api/data/manifests/gdz-PPN857449303.json';
 
 describe('main', () => {
 	vm.$root.manifest = manifest;
+	vm.$root.params = { filters: {}, pages: [1] };
 
 	it('should get default params', () => {
 		const params = vm.getParams();
