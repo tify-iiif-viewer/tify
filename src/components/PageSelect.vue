@@ -117,7 +117,7 @@
 				}
 			},
 		},
-		created() {
+		mounted() {
 			this.updateFilteredCanvases();
 		},
 	};
