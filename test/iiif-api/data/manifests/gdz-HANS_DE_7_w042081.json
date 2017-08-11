@@ -58,7 +58,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000001",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000001",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -86,7 +86,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000002",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000002",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -114,7 +114,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000003",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000003",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -142,7 +142,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000004",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000004",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -170,7 +170,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000005",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000005",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -198,7 +198,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000006",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000006",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -226,7 +226,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000007",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000007",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -254,7 +254,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000008",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000008",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -282,7 +282,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000009",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000009",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -310,7 +310,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000010",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000010",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -338,7 +338,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000011",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000011",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -366,7 +366,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000012",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000012",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -394,7 +394,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000013",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000013",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -422,7 +422,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000014",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000014",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -450,7 +450,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000015",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000015",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -478,7 +478,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000016",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000016",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -506,7 +506,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000017",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000017",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -534,7 +534,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000018",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000018",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -562,7 +562,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000019",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000019",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -590,7 +590,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000020",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000020",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -618,7 +618,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000021",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000021",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -646,7 +646,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000022",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000022",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -674,7 +674,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000023",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000023",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -702,7 +702,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000024",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000024",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -730,7 +730,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000025",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000025",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -758,7 +758,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000026",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000026",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -786,7 +786,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000027",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000027",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -814,7 +814,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000028",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000028",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -842,7 +842,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000029",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000029",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -870,7 +870,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000030",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000030",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -898,7 +898,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000031",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000031",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -926,7 +926,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000032",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000032",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -954,7 +954,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000033",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000033",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -982,7 +982,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000034",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000034",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1010,7 +1010,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000035",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000035",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1038,7 +1038,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000036",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000036",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1066,7 +1066,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000037",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000037",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1094,7 +1094,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000038",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000038",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1122,7 +1122,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000039",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000039",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1150,7 +1150,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000040",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000040",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1178,7 +1178,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000041",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000041",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1206,7 +1206,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000042",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000042",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1234,7 +1234,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000043",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000043",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1262,7 +1262,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000044",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000044",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1290,7 +1290,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000045",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000045",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1318,7 +1318,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000046",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000046",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1346,7 +1346,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000047",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000047",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1374,7 +1374,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000048",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000048",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1402,7 +1402,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000049",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000049",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1430,7 +1430,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000050",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000050",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1458,7 +1458,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000051",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000051",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1486,7 +1486,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000052",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000052",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1514,7 +1514,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000053",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000053",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1542,7 +1542,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000054",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000054",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1570,7 +1570,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000055",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000055",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1598,7 +1598,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000056",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000056",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1626,7 +1626,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000057",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000057",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1654,7 +1654,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000058",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000058",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1682,7 +1682,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000059",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000059",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1710,7 +1710,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000060",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000060",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1738,7 +1738,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000061",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000061",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1766,7 +1766,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000062",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000062",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1794,7 +1794,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000063",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000063",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1822,7 +1822,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000064",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000064",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1850,7 +1850,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000065",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000065",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1878,7 +1878,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000066",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000066",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1906,7 +1906,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000067",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000067",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1934,7 +1934,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000068",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000068",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
@@ -1962,7 +1962,7 @@
 								"format": "image\/jpeg",
 								"service": {
 									"@context": "http:\/\/iiif.io\/api\/image\/2\/context.json",
-									"@id": "http://localhost:8081/image/gdz:HANS_DE_7_w042081:00000069",
+									"@id": "http://localhost:8081/info/gdz:HANS_DE_7_w042081:00000069",
 									"profile": "http:\/\/iiif.io\/api\/image\/2\/level1.json"
 								},
 								"height": 400,
