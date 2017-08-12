@@ -306,8 +306,6 @@
 			window.addEventListener('keydown', (event) => {
 				if (['INPUT', 'SELECT', 'TEXTAREA'].indexOf(event.target.nodeName) > -1) return;
 
-				const pages = this.$root.params.pages;
-
 				switch (event.key) {
 				case 'Backspace':
 					// switchViewSmall is visible, i.e. screen is small
@@ -334,19 +332,27 @@
 				case 'b':
 					this.toggleDoublePage();
 					break;
+				default:
+				}
+
+				if (this.customPageViewActive) return;
+
+				const pages = this.$root.params.pages;
+
+				switch (event.key) {
 				case 'q':
 				case ',':
 					if (pages[0] > 1) this.goToPreviousPage();
 					break;
 				case 'e':
 				case '.':
-					if (pages[pages.length - 1] < this.$root.pageCount) this.goToNextPage();
+					if (!this.isLastPage) this.goToNextPage();
 					break;
 				case 'Q':
 					if (pages[0] > 1) this.goToFirstPage();
 					break;
 				case 'E':
-					if (pages[pages.length - 1] < this.$root.pageCount) this.goToLastPage();
+					if (!this.isLastPage) this.goToLastPage();
 					break;
 				default:
 				}
