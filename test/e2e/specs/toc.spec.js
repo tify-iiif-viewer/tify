@@ -35,4 +35,7 @@ Scenario('Navigate TOC', (I) => {
 	I.click('Collapse all'); // Multiple clicks should not toggle all children again
 	I.dontSee('Auflösung von Gleichungen 3ten Grades');
 	I.dontSee('Recursionsformeln');
+
+	// Browser may be "restarted" between tests, but window size is not reset.
+	I.resizeWindow(800, 600);
 });
