@@ -11,17 +11,17 @@
 				<page-select class="tify-header_button"/>
 
 				<button
-					class="tify-header_button"
+					class="tify-header_button -double-page"
 					:class="{
 						'-active': $root.params.pages.length > 1,
 						'-warning': customPageViewActive,
 					}"
-					:title="'Double page view'|trans"
+					:title="'Toggle double-page'|trans"
 					@click="toggleDouble"
 				>
 					<i v-if="customPageViewActive" class="tify-icon">view_module</i>
 					<i v-else class="tify-icon">import_contacts</i>
-					<span class="tify-sr-only">{{ 'Double page view'|trans }}</span>
+					<span class="tify-sr-only">{{ 'Toggle double-page'|trans }}</span>
 				</button>
 			</div>
 

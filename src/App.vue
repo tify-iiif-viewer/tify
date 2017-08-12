@@ -95,8 +95,13 @@
 				} else if (event.key === 'E') {
 					this.$root.setPage(this.$root.pageCount);
 				} else if (event.key === 'x') {
-					const pageSelect = this.$el.getElementsByClassName('tify-page-select_button')[0];
+					// TODO: This should be rewritten
+					const pageSelect = this.$el.querySelector('.tify-page-select_button');
 					if (pageSelect) pageSelect.click();
+				} else if (event.key === '2') {
+					// TODO: This should be rewritten
+					const doublePageToggle = this.$el.querySelector('.tify-header_button.-double-page');
+					if (doublePageToggle) doublePageToggle.click();
 				} else {
 					this.forwardToScan(event);
 				}

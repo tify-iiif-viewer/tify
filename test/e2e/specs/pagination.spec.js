@@ -27,6 +27,9 @@ Scenario('Change page via buttons', (I) => {
 	I.click('Previous section');
 	I.click('Previous section');
 	I.see('16 : 7v');
+
+	I.click('Toggle double-page');
+	I.see('Toggle double-page', '.-active');
 });
 
 Scenario('Change page via keyboard', (I) => {
@@ -40,7 +43,7 @@ Scenario('Change page via keyboard', (I) => {
 	I.pressKey('e');
 	I.see('15 : 7r', currentPage);
 
-	I.click('Double page view');
+	I.pressKey('2');
 	I.see('14 : 6v', currentPage);
 
 	I.pressKey('q');
@@ -59,7 +62,7 @@ Scenario('Change page via keyboard', (I) => {
 	I.reallyPressKey('E');
 	I.see('68 : -', currentPage);
 
-	I.click('Double page view');
+	I.pressKey('2');
 	I.see('68 : -', currentPage);
 
 	I.reallyPressKey('Q');

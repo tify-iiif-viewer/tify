@@ -34,6 +34,10 @@
 					<td><code>X</code></td>
 				</tr>
 				<tr>
+					<th>{{ 'Toggle double-page'|trans }}</th>
+					<td><code>2</code></td>
+				</tr>
+				<tr>
 					<th>{{ 'Zoom in'|trans }}</th>
 					<td>
 						<code>&#8679;</code> + <code>W</code>
