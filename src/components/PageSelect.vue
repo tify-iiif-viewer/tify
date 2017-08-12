@@ -71,6 +71,12 @@
 			highlightIndex() {
 				this.$nextTick(() => this.updateScroll());
 			},
+			isOpen() {
+				if (this.isOpen) return;
+
+				this.filter = '';
+				this.highlightIndex = this.$root.params.pages[0] - 1;
+			},
 		},
 		methods: {
 			setPage(page) {
@@ -89,8 +95,6 @@
 			},
 			closeDropdown() {
 				this.isOpen = false;
-				this.filter = '';
-				this.highlightIndex = this.$root.params.pages[0] - 1;
 			},
 			updateFilteredCanvases() {
 				const filteredCanvases = [];
