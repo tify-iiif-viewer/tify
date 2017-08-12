@@ -36,7 +36,7 @@
 						>
 							<template v-if="!infoItems || infoItems[index].collapsed">
 								<i class="tify-icon">expand_more</i>
-								{{ 'Show all'|trans }}
+								{{ 'Expand'|trans }}
 							</template>
 							<template v-else>
 								<i class="tify-icon">expand_less</i>
