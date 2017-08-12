@@ -12,15 +12,16 @@
 			<button
 				v-if="structure.childStructures"
 				class="tify-toc_toggle"
+				:title="$options.filters.trans(structure.expanded ? 'Collapse' : 'Expand')"
 				@click="toggleChildren(index)"
 			>
 				<template v-if="structure.expanded">
 					<i class="tify-icon">remove</i>
-					<span class="tify-sr-only">Hide children</span>
+					<span class="tify-sr-only">{{ 'Collapse'|trans }}</span>
 				</template>
 				<template v-else>
 					<i class="tify-icon">add</i>
-					<span class="tify-sr-only">Show children</span>
+					<span class="tify-sr-only">{{ 'Expand'|trans }}</span>
 				</template>
 			</button>
 

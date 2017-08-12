@@ -4,10 +4,10 @@
 
 		<div v-if="hasChildStructures" class="tify-toc_header">
 			<button class="tify-toc_toggle-all" @click="$refs.children.toggleAllChildren(true)">
-				{{ 'Expand all' }}
+				{{ 'Expand all'|trans }}
 			</button>
 			<button class="tify-toc_toggle-all" @click="$refs.children.toggleAllChildren(false)">
-				{{ 'Collapse all' }}
+				{{ 'Collapse all'|trans }}
 			</button>
 		</div>
 
