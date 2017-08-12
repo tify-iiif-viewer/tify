@@ -54,11 +54,6 @@
 			Toc,
 			Fulltext,
 		},
-		data() {
-			return {
-				params: {},
-			};
-		},
 		computed: {
 			hasOtherContent() {
 				return this.$root.canvases.some(canvas => 'otherContent' in canvas);
