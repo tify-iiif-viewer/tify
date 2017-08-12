@@ -56,7 +56,7 @@
 	padding: 0;
 
 	& & {
-		// Vertical connector to the left
+		// Make space for vertical connector to the left
 		margin: ($grid / 4) 0 0 ($grid * 1.25);
 	}
 }
@@ -74,7 +74,8 @@
 
 	&.-current {
 		// Bold vertical marker
-		box-shadow: (-$grid * .75 + 1px) 0 white, (-$grid) 0 $brand-color-light;
+		// 1px spead radius to fix a thin blue line appearing below the marker on Firefox
+		box-shadow: (-$grid * .75 + 1px + 1px) 0 0 1px white, (-$grid) 0 $brand-color-light;
 	}
 
 	&.-expanded {
