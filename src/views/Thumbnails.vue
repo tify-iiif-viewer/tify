@@ -106,6 +106,11 @@
 				window.addEventListener('resize', () => {
 					clearTimeout(resizeTimeout);
 					resizeTimeout = setTimeout(() => {
+						if (this.$root.params.view !== 'thumbnails') {
+							this.isInited = false;
+							return;
+						}
+
 						this.init();
 						this.scrollToCurrentPage(false);
 					}, 250);
