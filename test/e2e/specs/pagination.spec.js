@@ -43,8 +43,9 @@ Scenario('Change page via keyboard', (I) => {
 	I.pressKey('e');
 	I.see('15 : 7r', currentPage);
 
-	I.pressKey('2');
+	I.pressKey('b');
 	I.see('14 : 6v', currentPage);
+	I.see('Toggle double-page', '.-active');
 
 	I.pressKey('q');
 	I.see('12 : 5v', currentPage);
@@ -62,8 +63,9 @@ Scenario('Change page via keyboard', (I) => {
 	I.reallyPressKey('E');
 	I.see('68 : -', currentPage);
 
-	I.pressKey('2');
+	I.pressKey('b');
 	I.see('68 : -', currentPage);
+	I.dontSee('Toggle double-page', '.-active');
 
 	I.reallyPressKey('Q');
 	I.see('1 : -', currentPage);

@@ -8,6 +8,7 @@ module.exports = () => {
 		// I.pressKey(['shift', 'x']) is not working
 		reallyPressKey(caseSensitiveKey) {
 			this.executeScript((key) => {
+				window.dispatchEvent(new KeyboardEvent('keydown', { key }));
 				window.dispatchEvent(new KeyboardEvent('keyup', { key }));
 			}, caseSensitiveKey);
 		},

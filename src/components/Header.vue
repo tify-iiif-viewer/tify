@@ -11,13 +11,13 @@
 				<page-select class="tify-header_button"/>
 
 				<button
-					class="tify-header_button -double-page"
+					class="tify-header_button"
 					:class="{
 						'-active': $root.params.pages.length > 1,
 						'-warning': customPageViewActive,
 					}"
 					:title="'Toggle double-page'|trans"
-					@click="toggleDouble"
+					@click="toggleDoublePage"
 				>
 					<i v-if="customPageViewActive" class="tify-icon">view_module</i>
 					<i v-else class="tify-icon">import_contacts</i>
@@ -30,7 +30,7 @@
 					class="tify-header_button"
 					:disabled="customPageViewActive || $root.params.pages[0] < 2"
 					:title="'First page'|trans"
-					@click="$root.setPage(1)"
+					@click="goToFirstPage"
 				>
 					<i class="tify-icon">first_page</i>
 					<span class="tify-sr-only">{{ 'First page'|trans }}</span>
@@ -41,7 +41,7 @@
 					class="tify-header_button"
 					:disabled="customPageViewActive || $root.params.pages[0] < 2"
 					:title="'Previous section'|trans"
-					@click="goToPreviousSection()"
+					@click="goToPreviousSection"
 				>
 					<i class="tify-icon">skip_previous</i>
 					<span class="tify-sr-only">{{ 'Previous section'|trans }}</span>
@@ -72,7 +72,7 @@
 					class="tify-header_button"
 					:disabled="customPageViewActive || isLastSection"
 					:title="'Next section'|trans"
-					@click="goToNextSection()"
+					@click="goToNextSection"
 				>
 					<i class="tify-icon">skip_next</i>
 					<span class="tify-sr-only">{{ 'Next section'|trans }}</span>
@@ -82,7 +82,7 @@
 					class="tify-header_button"
 					:disabled="customPageViewActive || isLastPage"
 					:title="'Last page'|trans"
-					@click="$root.setPage($root.pageCount)"
+					@click="goToLastPage"
 				>
 					<i class="tify-icon">last_page</i>
 					<span class="tify-sr-only">{{ 'Last page'|trans }}</span>
@@ -91,7 +91,7 @@
 		</div>
 
 		<div class="tify-header_column -views">
-			<div class="tify-header_button-group -small">
+			<div class="tify-header_button-group -small" ref="switchViewSmall">
 				<button
 					class="tify-header_toggle-controls"
 					v-click-outside="closeControlsPopup"
@@ -102,7 +102,10 @@
 				</button>
 			</div>
 
-			<div class="tify-header_button-group -large" :class="{ '-visible': controlsVisible }">
+			<div
+				class="tify-header_button-group -large"
+				:class="{ '-visible': controlsVisible }"
+			>
 				<button
 					class="tify-header_button -scan"
 					:class="{ '-active': $root.params.view === 'scan' }"
@@ -215,6 +218,12 @@
 			closeControlsPopup() {
 				this.controlsVisible = false;
 			},
+			goToFirstPage() {
+				this.$root.setPage(1);
+			},
+			goToLastPage() {
+				this.$root.setPage(this.$root.pageCount);
+			},
 			goToNextPage() {
 				const pages = this.$root.params.pages;
 				let page = pages[0] + 1;
@@ -251,7 +260,7 @@
 			toggleControlsPopup() {
 				this.controlsVisible = !this.controlsVisible;
 			},
-			toggleDouble() {
+			toggleDoublePage() {
 				const pages = this.$root.params.pages;
 				let newPages;
 				if (pages.length > 1) {
@@ -292,6 +301,56 @@
 				sections.push({ firstPage, lastPage });
 			});
 			this.sections = sections;
+		},
+		mounted() {
+			window.addEventListener('keydown', (event) => {
+				if (['INPUT', 'SELECT', 'TEXTAREA'].indexOf(event.target.nodeName) > -1) return;
+
+				const pages = this.$root.params.pages;
+
+				switch (event.key) {
+				case 'Backspace':
+					// switchViewSmall is visible, i.e. screen is small
+					if (this.$refs.switchViewSmall.offsetParent) this.toggleView('scan');
+					break;
+				case '1':
+					if (this.fulltextEnabled) this.toggleView('fulltext');
+					break;
+				case '2':
+					this.toggleView('thumbnails');
+					break;
+				case '3':
+					if (this.tocEnabled) this.toggleView('toc');
+					break;
+				case '4':
+					this.toggleView('info');
+					break;
+				case '5':
+					this.toggleView('export');
+					break;
+				case '6':
+					this.toggleView('help');
+					break;
+				case 'b':
+					this.toggleDoublePage();
+					break;
+				case 'q':
+				case ',':
+					if (pages[0] > 1) this.goToPreviousPage();
+					break;
+				case 'e':
+				case '.':
+					if (pages[pages.length - 1] < this.$root.pageCount) this.goToNextPage();
+					break;
+				case 'Q':
+					if (pages[0] > 1) this.goToFirstPage();
+					break;
+				case 'E':
+					if (pages[pages.length - 1] < this.$root.pageCount) this.goToLastPage();
+					break;
+				default:
+				}
+			});
 		},
 	};
 </script>

@@ -62,55 +62,6 @@
 				return !!(this.$root.manifest.structures && this.$root.manifest.structures.length);
 			},
 		},
-		methods: {
-			forwardToScan(event) {
-				if (event.target.className.indexOf('openseadragon') === 0) return;
-				if (['INPUT', 'SELECT', 'TEXTAREA'].indexOf(event.target.nodeName) > -1) return;
-
-				const canvas = this.$el.getElementsByClassName('openseadragon-canvas')[0];
-				if (!canvas) return;
-
-				const canvasEvent = new event.constructor(event.type, event);
-
-				// Chrome fix: OpenSeadragon evaluates keyCode
-				Object.defineProperty(canvasEvent, 'keyCode', { get() { return event.keyCode; } });
-
-				canvas.dispatchEvent(canvasEvent);
-			},
-		},
-		mounted() {
-			window.addEventListener('keyup', (event) => {
-				if (['INPUT', 'SELECT', 'TEXTAREA'].indexOf(event.target.nodeName) > -1) return;
-
-				const pages = this.$root.params.pages;
-				if (event.key === 'q' || event.key === ',') {
-					if (pages[0] > 1) this.$root.setPage(pages[0] - 1);
-				} else if (event.key === 'e' || event.key === '.') {
-					const lastVisiblePage = pages[pages.length - 1];
-					if (lastVisiblePage < this.$root.pageCount) {
-						this.$root.setPage(lastVisiblePage + 1);
-					}
-				} else if (event.key === 'Q') {
-					this.$root.setPage(1);
-				} else if (event.key === 'E') {
-					this.$root.setPage(this.$root.pageCount);
-				} else if (event.key === 'x') {
-					// TODO: This should be rewritten
-					const pageSelect = this.$el.querySelector('.tify-page-select_button');
-					if (pageSelect) pageSelect.click();
-				} else if (event.key === '2') {
-					// TODO: This should be rewritten
-					const doublePageToggle = this.$el.querySelector('.tify-header_button.-double-page');
-					if (doublePageToggle) doublePageToggle.click();
-				} else {
-					this.forwardToScan(event);
-				}
-			});
-
-			window.addEventListener('keydown', this.forwardToScan);
-
-			window.addEventListener('keypress', this.forwardToScan);
-		},
 	};
 </script>
 

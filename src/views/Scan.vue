@@ -15,11 +15,11 @@
 			<button
 				class="tify-scan_button"
 				:disabled="isReset"
-				:title="'Reset view'|trans"
+				:title="'Reset'|trans"
 				@click="resetView"
 			>
 				<i class="tify-icon">crop_3_2</i>
-				<span class="tify-sr-only">{{ 'Reset view'|trans }}</span>
+				<span class="tify-sr-only">{{ 'Reset'|trans }}</span>
 			</button>
 			<button
 				class="tify-scan_button"
@@ -34,11 +34,11 @@
 			<button
 				class="tify-scan_button"
 				:class="{ '-active': $root.params.rotation }"
-				:title="'Rotate view'|trans"
+				:title="'Rotate'|trans"
 				@click="rotateRight"
 			>
 				<i class="tify-icon">rotate_right</i>
-				<span class="tify-sr-only">{{ 'Rotate view'|trans }}</span>
+				<span class="tify-sr-only">{{ 'Rotate'|trans }}</span>
 			</button>
 
 			<div
@@ -358,6 +358,26 @@
 					this.initViewer(resetView);
 				}
 			},
+			propagateKeyEvent(event) {
+				if (event.target.className.indexOf('openseadragon') === 0) return;
+
+				if (['INPUT', 'SELECT', 'TEXTAREA'].indexOf(event.target.nodeName) > -1) return;
+
+				const canvas = this.$refs.image.querySelector('.openseadragon-canvas');
+
+				if (!canvas) return;
+
+				const canvasEvent = new event.constructor(event.type, event);
+
+				// Chrome fix: OpenSeadragon evaluates keyCode
+				Object.defineProperty(canvasEvent, 'keyCode', {
+					get() {
+						return event.keyCode;
+					},
+				});
+
+				canvas.dispatchEvent(canvasEvent);
+			},
 			resetFilters() {
 				this.$refs.image.style.cssText = '';
 				this.$root.updateParams({ filters: {} });
@@ -431,6 +451,8 @@
 		mounted() {
 			this.loadImageInfo();
 			this.updateFilterStyle();
+
+			window.addEventListener('keypress', this.propagateKeyEvent);
 		},
 	};
 </script>

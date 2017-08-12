@@ -123,6 +123,15 @@
 		},
 		mounted() {
 			this.updateFilteredCanvases();
+
+			window.addEventListener('keydown', (event) => {
+				if (['INPUT', 'SELECT', 'TEXTAREA'].indexOf(event.target.nodeName) > -1) return;
+
+				if (event.key === 'x') {
+					this.toggleDropdown();
+					event.preventDefault();
+				}
+			});
 		},
 	};
 </script>

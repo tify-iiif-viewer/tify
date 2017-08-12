@@ -4,6 +4,60 @@
 
 		<div class="tify-help_section -keys">
 			<h3>{{ 'Key Bindings'|trans }}</h3>
+
+			<h4>{{ 'View'|trans }}</h4>
+			<table>
+				<tr>
+					<th>
+						{{ 'Fulltext'|trans }}
+						<small v-html="$options.filters.trans('(if&nbsp;available)')"/>
+					</th>
+					<td>
+						<code>{{ '1' }}</code>
+					</td>
+				</tr>
+				<tr>
+					<th>{{ 'Pages'|trans }}</th>
+					<td>
+						<code>{{ '2' }}</code>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						{{ 'Table of Contents'|trans }}
+						<small v-html="$options.filters.trans('(if&nbsp;available)')"/>
+					</th>
+					<td>
+						<code>{{ '3' }}</code>
+					</td>
+				</tr>
+				<tr>
+					<th>{{ 'Info'|trans }}</th>
+					<td>
+						<code>{{ '4' }}</code>
+					</td>
+				</tr>
+				<tr>
+					<th>{{ 'Export'|trans }}</th>
+					<td>
+						<code>{{ '5' }}</code>
+					</td>
+				</tr>
+				<tr>
+					<th>{{ 'Help'|trans }}</th>
+					<td>
+						<code>{{ '6' }}</code>
+					</td>
+				</tr>
+				<tr>
+					<th>{{ 'Scan'|trans }}</th>
+					<td>
+						<code>{{ 'Backspace'|trans }}</code>
+					</td>
+				</tr>
+			</table>
+
+			<h4>{{ 'Changing Pages'|trans }}</h4>
 			<table>
 				<tr>
 					<th>{{ 'Previous page'|trans }}</th>
@@ -35,8 +89,12 @@
 				</tr>
 				<tr>
 					<th>{{ 'Toggle double-page'|trans }}</th>
-					<td><code>2</code></td>
+					<td><code>B</code></td>
 				</tr>
+			</table>
+
+			<h4>{{ 'Scan' }}</h4>
+			<table>
 				<tr>
 					<th>{{ 'Zoom in'|trans }}</th>
 					<td>
@@ -66,7 +124,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>{{ 'Reset view'|trans }}</th>
+					<th>{{ 'Reset'|trans }}</th>
 					<td><code>0</code></td>
 				</tr>
 			</table>
