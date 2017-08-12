@@ -57,7 +57,7 @@
 				</tr>
 			</table>
 
-			<h4>{{ 'Changing Pages'|trans }}</h4>
+			<h4>{{ 'Turning Pages'|trans }}</h4>
 			<table>
 				<tr>
 					<th>{{ 'Previous page'|trans }}</th>
