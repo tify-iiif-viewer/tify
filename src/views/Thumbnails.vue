@@ -126,10 +126,7 @@
 				const lastPage = startPage + this.itemsPerRow + visiblePagesCount;
 				const endPage = Math.min(this.$root.canvases.length, lastPage);
 
-				const rowsBefore = Math.floor(startPage / this.itemsPerRow);
-				this.container.style.paddingTop = `${(rowsBefore * this.itemHeight)}px`;
-
-				this.items = [];
+				const items = [];
 				for (let i = startPage - 1; i < endPage; i += 1) {
 					const resource = this.$root.canvases[i].images[0].resource;
 					if (resource.service) {
@@ -139,19 +136,25 @@
 								: 'native'
 						);
 						const id = resource.service['@id'];
-						this.items.push({
+						items.push({
 							label: this.$root.canvases[i].label,
 							imgUrl: `${id}${id.slice(-1) === '/' ? '' : '/'}full/${this.thumbnailWidth},/0/${quality}.jpg`,
 							page: i + 1,
 						});
 					} else {
-						this.items.push({
+						items.push({
 							label: this.$root.canvases[i].label,
 							imgUrl: resource['@id'],
 							page: i + 1,
 						});
 					}
 				}
+				this.items = items;
+
+				this.$nextTick(() => {
+					const rowsBefore = Math.floor(startPage / this.itemsPerRow);
+					this.container.style.paddingTop = `${(rowsBefore * this.itemHeight)}px`;
+				});
 			},
 			scrollToCurrentPage(animated = true) {
 				const rowsBefore = Math.floor((this.$root.params.pages[0] - 1) / this.itemsPerRow);
