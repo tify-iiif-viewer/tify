@@ -20,7 +20,7 @@ Scenario('Navigate TOC', (I) => {
 	I.click('.tify-toc_structure[data-level="1"]:last-of-type .tify-toc_link');
 	I.see('Ferrarische Methode (Louis Ferrari)', '.tify-toc_structure.-current');
 
-	I.click('Hide children');
+	I.click('Collapse');
 	I.dontSee('Ferrarische Methode (Louis Ferrari)');
 
 	I.click('.tify-toc > .tify-toc_list > :last-child .tify-toc_link');
