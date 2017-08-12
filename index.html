@@ -8,7 +8,8 @@
 <body>
 	<div id="tify"></div>
 	<script>
-		var language = window.location.search.match(/(\?|&)language\=([^&]*)/)[2];
+		var matches = window.location.search.match(/(\?|&)language\=([^&]*)/);
+		var language = (matches && matches.length === 3 ? matches[2] : null);
 		if (language) {
 			tifyOptions = {
 				language: language,
