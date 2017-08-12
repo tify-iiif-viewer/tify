@@ -1,6 +1,6 @@
 {
   "name": "tify",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "description": "TIFY is a slim and fast IIIF document viewer.",
   "homepage": "https://github.com/subugoe/tify",
   "repository": {
