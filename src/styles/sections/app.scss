@@ -43,8 +43,7 @@
 	}
 
 	h4 {
-		color: $text-color-light;
-		font-size: 1.125em;
+		font-size: 1em;
 		font-weight: bold;
 		margin: 0 0 ($grid / 2);
 	}
@@ -71,6 +70,7 @@
 
 	table {
 		border: 0;
+		border-collapse: collapse;
 		margin: (-$grid / 4) -.25em ($grid - $grid / 4);
 	}
 
