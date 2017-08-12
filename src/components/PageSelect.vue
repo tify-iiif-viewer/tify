@@ -24,9 +24,9 @@
 					ref="search"
 					v-model="filter"
 					@keyup.enter="(filteredCanvases[highlightIndex]) && setPage(filteredCanvases[highlightIndex].page)"
-					@keydown.esc="filter ? filter = '' : closeDropdown()"
-					@keydown.up="(highlightIndex > 0) && (highlightIndex -= 1)"
-					@keydown.down="(highlightIndex < filteredCanvases.length - 1) && (highlightIndex += 1)"
+					@keydown.esc.prevent="filter ? filter = '' : closeDropdown()"
+					@keydown.up.prevent="(highlightIndex > 0) && (highlightIndex -= 1)"
+					@keydown.down.prevent="(highlightIndex < filteredCanvases.length - 1) && (highlightIndex += 1)"
 				>
 			</div>
 			<ol class="tify-page-select_list" ref="list">
