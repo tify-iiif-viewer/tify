@@ -24,7 +24,7 @@
 					ref="search"
 					v-model="filter"
 					@keyup.enter="(filteredCanvases[highlightIndex]) && setPage(filteredCanvases[highlightIndex].page)"
-					@keyup.esc="filter ? filter = '' : isOpen = false"
+					@keydown.esc="filter ? filter = '' : closeDropdown()"
 					@keydown.up="(highlightIndex > 0) && (highlightIndex -= 1)"
 					@keydown.down="(highlightIndex < filteredCanvases.length - 1) && (highlightIndex += 1)"
 				>
