@@ -358,13 +358,12 @@
 					this.initViewer(resetView);
 				}
 			},
-			propagateKeyEvent(event) {
+			propagateKeyPress(event) {
 				if (event.target.className.indexOf('openseadragon') === 0) return;
 
 				if (['INPUT', 'SELECT', 'TEXTAREA'].indexOf(event.target.nodeName) > -1) return;
 
 				const canvas = this.$refs.image.querySelector('.openseadragon-canvas');
-
 				if (!canvas) return;
 
 				const canvasEvent = new event.constructor(event.type, event);
@@ -452,7 +451,7 @@
 			this.loadImageInfo();
 			this.updateFilterStyle();
 
-			window.addEventListener('keypress', this.propagateKeyEvent);
+			window.addEventListener('keypress', this.propagateKeyPress);
 		},
 	};
 </script>

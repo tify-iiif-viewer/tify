@@ -100,8 +100,6 @@
 					<td>
 						<code>&#8679;</code> + <code>W</code>
 						{{ 'or'|trans }}
-						<code>&#8679;</code> + <code>&uarr;</code>
-						{{ 'or'|trans }}
 						<code>+</code>
 					</td>
 				</tr>
@@ -110,8 +108,6 @@
 					<td>
 						<code>&#8679;</code> + <code>S</code>
 						{{ 'or'|trans }}
-						<code>&#8679;</code> + <code>&darr;</code>
-						{{ 'or'|trans }}
 						<code>-</code>
 					</td>
 				</tr>
@@ -119,8 +115,6 @@
 					<th>{{ 'Pan'|trans }}</th>
 					<td>
 						<code>W</code> <code>S</code> <code>A</code> <code>D</code>
-						{{ 'or'|trans }}
-						<code>&uarr;</code> <code>&darr;</code> <code>&larr;</code> <code>&rarr;</code>
 					</td>
 				</tr>
 				<tr>
