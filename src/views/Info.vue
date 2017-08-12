@@ -15,7 +15,7 @@
 				<tr class="tify-info_row" v-for="item, index in manifest.metadata">
 					<th class="tify-info_label">
 						<div v-for="label in $root.iiifFormat(item.label)">
-							{{ label|cleanLabel|trans }}
+							{{ label|cleanLabel }}
 						</div>
 					</th>
 					<td class="tify-info_text">

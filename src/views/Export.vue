@@ -19,7 +19,7 @@
 			<ul class="tify-export_links">
 				<li v-for="item in $root.manifest.rendering">
 					<a :href="item['@id']">
-						{{ item.label|trans }}
+						{{ item.label }}
 					</a>
 				</li>
 			</ul>
