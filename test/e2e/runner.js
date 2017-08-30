@@ -1,4 +1,4 @@
-process.env.NODE_ENV = 'dev';
+process.env.NODE_ENV = 'development';
 const server = require('../../build/dev-server.js');
 const iiifApi = require('../iiif-api/server.js');
 
