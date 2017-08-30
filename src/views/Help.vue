@@ -126,14 +126,14 @@
 
 		<div class="tify-help_section -selection">
 			<h3>{{ 'Selecting Multiple Pages'|trans }}</h3>
-			<p v-html="this.$root.$options.filters.trans(
+			<p v-html="$root.$options.filters.trans(
 				'Open the pages view and use <code>Ctrl</code> + <code>Click</code> (or long press if you are using a touch screen) to select multiple pages.'
 			)"/>
 		</div>
 
 		<div class="tify-help_section -about">
 			<h3>{{ 'About'|trans }}</h3>
-			<p>{{ description|trans }}</p>
+			<p v-html="$root.$options.filters.trans('TIFY is a fast and mobile-friendly IIIF document viewer.')"/>
 			<table>
 				<tr>
 					<th>{{ 'Version'|trans }}</th>
@@ -143,48 +143,36 @@
 					<th>{{ 'Author'|trans }}</th>
 					<td v-html="linkMailAdresses(author)"/>
 				</tr>
-				<tr v-if="homepage !== repository.url">
-					<th>{{ 'Homepage'|trans }}</th>
-					<td>{{ homepage }}</td>
-				</tr>
-				<tr>
-					<th>{{ 'Source'|trans }}</th>
-					<td><a :href="repository.url">GitHub</a></td>
-				</tr>
 				<tr>
 					<th>{{ 'License'|trans }}</th>
 					<td>{{ license }}</td>
 				</tr>
+				<tr>
+					<th>{{ 'Source'|trans }}</th>
+					<td><a :href="repositoryUrl">GitHub</a></td>
+				</tr>
 			</table>
-			<p v-if="bugs && bugs.url">
+			<p v-if="bugsUrl">
 				{{ 'Found a bug?'|trans }}
-				<a :href="bugs.url">{{ 'Please let us know.'|trans }}</a>
+				<a :href="bugsUrl">{{ 'Please let us know.'|trans }}</a>
+			</p>
+			<p v-if="homepage">
+				<a :href="homepage">{{ 'Website'|trans }}</a>
 			</p>
 		</div>
 	</section>
 </template>
 
 <script>
-	import {
-		author,
-		bugs,
-		description,
-		homepage,
-		license,
-		repository,
-		version,
-	} from '../../package.json';
-
 	export default {
 		data() {
 			return {
-				author,
-				bugs,
-				description,
-				homepage,
-				license,
-				repository,
-				version,
+				author: process.env.AUTHOR_NAME,
+				bugsUrl: process.env.BUGS_URL,
+				homepage: process.env.HOMEPAGE,
+				license: process.env.LICENSE,
+				repositoryUrl: process.env.REPOSITORY_URL,
+				version: process.env.VERSION,
 			};
 		},
 
