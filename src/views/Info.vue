@@ -53,12 +53,6 @@
 			<div v-for="description in $root.iiifFormat(manifest.description)" v-html="description"/>
 		</div>
 
-		<div v-if="manifest.attribution" class="tify-info_section -attribution">
-			<h3>{{ 'Attribution'|trans }}</h3>
-			<div v-for="attribution in $root.iiifFormat(manifest.attribution)">
-				{{ attribution }}
-			</div>
-		</div>
 
 		<div v-if="manifest.license" class="tify-info_section -license">
 			<h3>{{ 'License'|trans }}</h3>
@@ -68,9 +62,31 @@
 		</div>
 
 		<div v-if="manifest.related" class="tify-info_section -related">
-			<h3>{{ 'Related'|trans }}</h3>
-			<div>
-				<a :href="related">{{ related }}</a>
+			<h3>{{ 'Related Resources'|trans }}</h3>
+			<template v-if="manifest.related instanceof Array" class="tify-info_list">
+				<div v-for="item in $root.iiifFormat(manifest.related)">
+					<a v-if="typeof manifest.related === 'string'" :href="item">
+						{{ item }}
+					</a>
+					<a v-else :href="item['@id']">
+						{{ item['label'] || item['@id'] }}
+					</a>
+				</div>
+			</template>
+			<div v-else-if="typeof manifest.related === 'string'">
+				<a :href="manifest.related">{{ manifest.related }}</a>
+			</div>
+			<div v-else>
+				<a :href="manifest.related['@id']">
+					{{ manifest.related['label'] || manifest.related['@id'] }}
+				</a>
+			</div>
+		</div>
+
+		<div v-if="manifest.attribution" class="tify-info_section -attribution">
+			<h3>{{ 'Attribution'|trans }}</h3>
+			<div v-for="attribution in $root.iiifFormat(manifest.attribution)">
+				{{ attribution }}
 			</div>
 		</div>
 
@@ -105,11 +121,6 @@
 			},
 			manifest() {
 				return this.$root.manifest;
-			},
-			related() {
-				if (typeof this.manifest.related === 'string') return this.manifest.related;
-
-				return this.manifest.related['@id'];
 			},
 		},
 		filters: {

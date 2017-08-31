@@ -110,7 +110,7 @@ export default new Vue({
 			// http://iiif.io/api/presentation/2.1/#language-of-property-values
 			const filterHtml = this.$options.filters.filterHtml;
 
-			const isArray = Array.isArray(value);
+			const isArray = value instanceof Array;
 			if (typeof value === 'object' && !isArray) {
 				if (value['@value']) return [filterHtml(value['@value'])];
 				return ['(Invalid value)'];
@@ -122,7 +122,9 @@ export default new Vue({
 			const displayedValues = [];
 			const translation = {};
 			value.forEach((item) => {
-				if (item && typeof item !== 'object') {
+				if (typeof item === 'string' || (item['@id'] && item.label)) {
+					displayedValues.push(item);
+				} else if (item && typeof item !== 'object') {
 					displayedValues.push(filterHtml(item));
 				} else if (item['@language'] && item['@value']) {
 					if (!translation.fallback) translation.fallback = item['@value'];
