@@ -67,11 +67,15 @@
 			</div>
 		</div>
 
-		<div v-if="manifest.related" class="tify-info_section -related">
+		<div v-if="$root.manifest.related && $root.manifest.related.length > 0" class="tify-info_section -related">
 			<h3>{{ 'Related'|trans }}</h3>
-			<div>
-				<a :href="related">{{ related }}</a>
-			</div>
+			<ul class="tify-related_links">
+				<li v-for="item in $root.manifest.related">
+					<a :href="item['@id']">
+						{{ item['label'] }}
+					</a>
+				</li>
+			</ul>
 		</div>
 
 		<div v-if="manifest.logo" class="tify-info_section -logo">
