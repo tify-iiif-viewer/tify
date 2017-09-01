@@ -211,7 +211,7 @@
 				return this.$root.manifest.structures;
 			},
 			titles() {
-				return this.$root.iiifFormat(this.$root.manifest.label);
+				return this.$root.iiifConvertToArray(this.$root.manifest.label);
 			},
 		},
 		methods: {

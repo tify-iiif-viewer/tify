@@ -106,17 +106,22 @@ export default new Vue({
 			const match = RegExp(`[?&]${name}=([^&]*)`).exec(window.location.search);
 			return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
 		},
-		iiifFormat(value) {
+		iiifConvertToArray(value) {
 			// http://iiif.io/api/presentation/2.1/#language-of-property-values
 			const filterHtml = this.$options.filters.filterHtml;
 
-			const isArray = value instanceof Array;
-			if (typeof value === 'object' && !isArray) {
-				if (value['@value']) return [filterHtml(value['@value'])];
-				return ['(Invalid value)'];
-			}
+			if (!(value instanceof Array)) {
+				if (typeof value === 'object') {
+					if (value['@value']) return [filterHtml(value['@value'])];
+					if (value['@id']) {
+						const id = filterHtml(value['@id']);
+						return [{ '@id': id, label: (value.label ? filterHtml(value.label) : id) }];
+					}
+					return ['(Invalid value)'];
+				}
 
-			if (!isArray) return [filterHtml(value)];
+				return [filterHtml(value)];
+			}
 
 			const language = this.options.language;
 			const displayedValues = [];

@@ -4,7 +4,7 @@
 
 		<div v-if="manifest.label" class="tify-info_section -title">
 			<h3 class="tify-info_heading">{{ 'Title'|trans }}</h3>
-			<div v-for="label in $root.iiifFormat(manifest.label)">
+			<div v-for="label in $root.iiifConvertToArray(manifest.label)">
 				{{ label }}
 			</div>
 		</div>
@@ -14,7 +14,7 @@
 			<table class="tify-info_list">
 				<tr class="tify-info_row" v-for="item, index in manifest.metadata">
 					<th class="tify-info_label">
-						<div v-for="label in $root.iiifFormat(item.label)">
+						<div v-for="label in $root.iiifConvertToArray(item.label)">
 							{{ label|cleanLabel }}
 						</div>
 					</th>
@@ -25,7 +25,7 @@
 							:class="{ '-collapsed': infoItems && infoItems[index].collapsed }"
 							:style="infoItems && infoItems[index].collapsed ? collapsedStyle : null"
 						>
-							<div v-for="value in $root.iiifFormat(item.value)" v-html="value"/>
+							<div v-for="value in $root.iiifConvertToArray(item.value)" v-html="value"/>
 						</div>
 
 						<button
@@ -50,44 +50,37 @@
 
 		<div v-if="manifest.description" class="tify-info_section -description">
 			<h3>{{ 'Description'|trans }}</h3>
-			<div v-for="description in $root.iiifFormat(manifest.description)" v-html="description"/>
+			<div v-for="description in $root.iiifConvertToArray(manifest.description)" v-html="description"/>
 		</div>
 
 
 		<div v-if="manifest.license" class="tify-info_section -license">
 			<h3>{{ 'License'|trans }}</h3>
-			<div>
-				<a :href="manifest.license">{{ manifest.license }}</a>
+			<div v-for="item in $root.iiifConvertToArray(manifest.license)">
+				<a v-if="typeof item === 'string'" :href="item">
+					{{ item }}
+				</a>
+				<a v-else :href="item['@id']">
+					{{ item['label'] || item['@id'] }}
+				</a>
 			</div>
 		</div>
 
 		<div v-if="manifest.related" class="tify-info_section -related">
 			<h3>{{ 'Related Resources'|trans }}</h3>
-			<template v-if="manifest.related instanceof Array" class="tify-info_list">
-				<div v-for="item in $root.iiifFormat(manifest.related)">
-					<a v-if="typeof item === 'string'" :href="item">
-						{{ item }}
-					</a>
-					<a v-else :href="item['@id']">
-						{{ item['label'] || item['@id'] }}
-					</a>
-				</div>
-			</template>
-			<div v-else-if="typeof manifest.related === 'string'">
-				<a :href="manifest.related">{{ manifest.related }}</a>
-			</div>
-			<div v-else>
-				<a :href="manifest.related['@id']">
-					{{ manifest.related['label'] || manifest.related['@id'] }}
+			<div v-for="item in $root.iiifConvertToArray(manifest.related)">
+				<a v-if="typeof item === 'string'" :href="item">
+					{{ item }}
+				</a>
+				<a v-else :href="item['@id']">
+					{{ item['label'] || item['@id'] }}
 				</a>
 			</div>
 		</div>
 
 		<div v-if="manifest.attribution" class="tify-info_section -attribution">
 			<h3>{{ 'Attribution'|trans }}</h3>
-			<div v-for="attribution in $root.iiifFormat(manifest.attribution)">
-				{{ attribution }}
-			</div>
+			<div v-for="item in $root.iiifConvertToArray(manifest.attribution)" v-html="item"/>
 		</div>
 
 		<div v-if="manifest.logo" class="tify-info_section -logo">
@@ -116,6 +109,10 @@
 			};
 		},
 		computed: {
+			licenses() {
+				if (typeof this.manifest.license === 'string') return [this.manifest.license];
+				return this.manifest.license;
+			},
 			logoId() {
 				return (this.manifest.logo['@id'] ? this.manifest.logo['@id'] : this.manifest.logo);
 			},
