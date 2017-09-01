@@ -65,7 +65,7 @@
 			<h3>{{ 'Related Resources'|trans }}</h3>
 			<template v-if="manifest.related instanceof Array" class="tify-info_list">
 				<div v-for="item in $root.iiifFormat(manifest.related)">
-					<a v-if="typeof manifest.related === 'string'" :href="item">
+					<a v-if="typeof item === 'string'" :href="item">
 						{{ item }}
 					</a>
 					<a v-else :href="item['@id']">
