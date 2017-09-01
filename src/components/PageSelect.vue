@@ -7,7 +7,9 @@
 			@click="toggleDropdown"
 		>
 			<span class="tify-sr-only">{{ 'Current page'|trans }}</span>
-			{{ $root.params.pages[0] || 1 }} : {{ $root.canvases[$root.params.pages[0] ? $root.params.pages[0] - 1 : 0].label }}
+			{{ $root.params.pages[0] || 1 }}
+			:
+			{{ $root.iiifConvertToArray($root.canvases[$root.params.pages[0] ? $root.params.pages[0] - 1 : 0].label)[0] }}
 		</button>
 
 		<div
@@ -38,7 +40,9 @@
 					}"
 					@click="setPage(canvas.page)"
 				>
-					{{ canvas.page }} : {{ canvas.label }}
+					{{ canvas.page }}
+					:
+					{{ $root.iiifConvertToArray(canvas.label)[0] }}
 				</li>
 			</ol>
 		</div>
@@ -61,7 +65,8 @@
 				const page = (pages[0] === 0 && pages.length > 1 ? 1 : pages[0]);
 				const physLabel = this.$options.filters.trans('Physical page');
 				const logLabel = this.$options.filters.trans('Logical page');
-				return `${physLabel}: ${page}\n${logLabel}: ${this.$root.canvases[page - 1].label}`;
+				return `${physLabel}: ${page}\n`
+					+ `${logLabel}: ${this.$root.iiifConvertToArray(this.$root.canvases[page - 1].label)[0]}`;
 			},
 		},
 		watch: {
@@ -101,7 +106,8 @@
 				const filter = this.filter.toLowerCase();
 				let highlightIndex = -1;
 				this.$root.canvases.forEach((canvas, index) => {
-					const labelMatchesFilter = canvas.label.toLowerCase().indexOf(filter) > -1;
+					const label = this.$root.iiifConvertToArray(canvas.label)[0];
+					const labelMatchesFilter = label.toLowerCase().indexOf(filter) > -1;
 					const pageMatchesFilter = (index + 1).toFixed().indexOf(filter) > -1;
 					if (labelMatchesFilter || pageMatchesFilter) {
 						const item = canvas;

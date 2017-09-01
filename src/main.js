@@ -134,7 +134,8 @@ export default new Vue({
 				} else if (item['@language'] && item['@value']) {
 					if (!translation.fallback) translation.fallback = item['@value'];
 
-					if (item['@language'] === 'en') {
+					if (item['@language'].indexOf('en') === 0) {
+						// Language is en or en-US or en-GB
 						translation.en = item['@value'];
 					} else if (item['@language'] === language) {
 						translation.preferred = item['@value'];
@@ -256,7 +257,7 @@ export default new Vue({
 			});
 
 			if (this.options.title) {
-				window.document.title = `${this.manifest.label} | ${this.options.title}`;
+				window.document.title = `${this.iiifConvertToArray(this.manifest.label)[0]} | ${this.options.title}`;
 			}
 		}, (error) => {
 			const status = (error.response ? error.response.statusText : error.message);
