@@ -130,34 +130,47 @@
 			},
 		},
 		methods: {
+			init() {
+				this.isInited = true;
+
+				if (!this.manifest.metadata) return;
+
+				const button = this.$refs.buttons[0];
+				const buttonStyle = window.getComputedStyle(button);
+				const buttonHeight = button.offsetHeight + parseInt(buttonStyle.marginTop, 10);
+
+				const itemLineHeight = parseInt(window.getComputedStyle(this.$refs.items[0]).lineHeight, 10);
+				const itemMaxHeight = itemLineHeight * itemMaxLines;
+
+				this.collapsedStyle = `max-height: ${itemMaxHeight}px; overflow: hidden`;
+
+				const infoItems = [];
+				for (let i = 0; i < Object.keys(this.manifest.metadata).length; i += 1) {
+					const element = this.$refs.items[i];
+					const collapsedHeight = itemMaxHeight + buttonHeight;
+					const limitHeight = (element.offsetHeight > collapsedHeight + itemHeightMinDelta);
+					const infoItem = {
+						collapsed: limitHeight,
+						limitHeight,
+					};
+					infoItems.push(infoItem);
+				}
+				this.infoItems = infoItems;
+			},
 			toggleItem(index) {
 				this.infoItems[index].collapsed = !this.infoItems[index].collapsed;
 			},
 		},
+		watch: {
+			// eslint-disable-next-line func-names
+			'$root.params.view': function (view) {
+				if (view === 'info') {
+					if (!this.isInited) this.init();
+				}
+			},
+		},
 		mounted() {
-			if (!this.manifest.metadata) return;
-
-			const button = this.$refs.buttons[0];
-			const buttonStyle = window.getComputedStyle(button);
-			const buttonHeight = button.offsetHeight + parseInt(buttonStyle.marginTop, 10);
-
-			const itemLineHeight = parseInt(window.getComputedStyle(this.$refs.items[0]).lineHeight, 10);
-			const itemMaxHeight = itemLineHeight * itemMaxLines;
-
-			this.collapsedStyle = `max-height: ${itemMaxHeight}px; overflow: hidden`;
-
-			const infoItems = [];
-			for (let i = 0; i < Object.keys(this.manifest.metadata).length; i += 1) {
-				const element = this.$refs.items[i];
-				const collapsedHeight = itemMaxHeight + buttonHeight;
-				const limitHeight = (element.offsetHeight > collapsedHeight + itemHeightMinDelta);
-				const infoItem = {
-					collapsed: limitHeight,
-					limitHeight,
-				};
-				infoItems.push(infoItem);
-			}
-			this.infoItems = infoItems;
+			if (this.$root.params.view === 'info') this.init();
 		},
 	};
 </script>

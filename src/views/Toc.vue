@@ -46,9 +46,6 @@
 		},
 		methods: {
 			init() {
-				// TOC is expensive, so render it only when required
-				if (this.$root.params.view !== 'toc') return;
-
 				this.isInited = true;
 				this.$nextTick(() => this.updateScrollPos(currentSelector, false));
 			},
@@ -59,12 +56,13 @@
 				this.$nextTick(() => this.updateScrollPos(currentSelector));
 			},
 			// eslint-disable-next-line func-names
-			'$root.params.view': function () {
-				this.init();
+			'$root.params.view': function (view) {
+				if (view === 'toc') this.init();
 			},
 		},
 		mounted() {
-			this.init();
+			// TOC is expensive, so render it only when required
+			if (this.$root.params.view === 'toc') this.init();
 		},
 	};
 </script>

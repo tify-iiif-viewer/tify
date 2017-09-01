@@ -64,12 +64,11 @@
 				});
 			},
 			// eslint-disable-next-line func-names
-			'$root.params.view': function () {
-				if (this.$root.params.view !== 'thumbnails') return;
-
-				if (!this.isInited) this.init();
-
-				this.scrollToCurrentPage(false);
+			'$root.params.view': function (view) {
+				if (view === 'thumbnails') {
+					if (!this.isInited) this.init();
+					this.scrollToCurrentPage(false);
+				}
 			},
 		},
 		methods: {
@@ -200,6 +199,7 @@
 		},
 		mounted() {
 			this.style.flex = this.$el.style.flex;
+
 			// Thumbnails are expensive, so render them only when required
 			if (this.$root.params.view === 'thumbnails') {
 				this.init();

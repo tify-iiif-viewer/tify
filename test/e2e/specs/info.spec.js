@@ -1,6 +1,6 @@
 Feature('Info');
 
-Scenario('Display metadata', (I) => {
+Scenario('Display related metadata', (I) => {
 	I.amOnPage('http://localhost:8080/?manifestUrl=http://localhost:8081/manifest/wellcome-b18035723.json');
 	I.waitForElement('.tify-app_main');
 
@@ -13,4 +13,11 @@ Scenario('Display metadata', (I) => {
 	I.see('Related Resources');
 	I.see('https://digital.ub.uni-leipzig.de/object/viewid/0000000001');
 	I.see('https://iiif.ub.uni-leipzig.de/0000000001/manifest.json');
+});
+
+Scenario('Collapse long metadata values', (I) => {
+	I.amOnPage('http://localhost:8080/?manifestUrl=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
+	I.waitForElement('.tify-app_main');
+	I.click('Info');
+	I.see('Expand', 'button');
 });
