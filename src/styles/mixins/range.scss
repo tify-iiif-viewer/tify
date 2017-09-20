@@ -3,16 +3,21 @@
 // Author: Darlan Rod https://github.com/darlanrod
 // MIT License
 
-$track-color: $text-color-light;
+// NOTE: Styles with different vendor prefixes must not be grouped
 
-$thumb-radius: ($grid / 2);
+$track-color: $border-color;
+$track-focus-color: $grey-light;
+
+$thumb-color: linear-gradient(to bottom, tint($link-color, 10), shade($link-color, 10));
+$thumb-focus-color: linear-gradient(to bottom, shade($link-color, 10), shade($link-color, 30));
+
+$thumb-radius: $br;
 $thumb-height: $grid;
-$thumb-width: $grid;
+$thumb-width: ($grid / 2);
 
-$track-height: ($grid / 2);
+$track-height: ($grid / 4);
 
 $track-radius: ($grid / 8);
-$contrast: 25%;
 
 @mixin range_track {
 	cursor: pointer;
@@ -22,8 +27,8 @@ $contrast: 25%;
 }
 
 @mixin range_thumb {
-	background: #fff;
-	border: $border-width solid $border-color;
+	background: $thumb-color;
+	border: 0;
 	border-radius: $thumb-radius;
 	box-shadow: $card-shadow;
 	cursor: pointer;
@@ -33,30 +38,15 @@ $contrast: 25%;
 
 @mixin range {
 	-webkit-appearance: none;
-	margin: $thumb-height / 2 0;
+	margin: ($grid / 4) 0 (-$grid / 4);
 	width: 100%;
-
-	&:focus {
-		outline: 0;
-
-		&::-webkit-slider-runnable-track {
-			background: lighten($track-color, $contrast);
-		}
-
-		&::-ms-fill-lower {
-			background: $track-color;
-		}
-
-		&::-ms-fill-upper {
-			background: lighten($track-color, $contrast);
-		}
-	}
 
 	&::-webkit-slider-runnable-track {
 		@include range_track;
 		background: $track-color;
-		border: $border-width solid $border-color;
 		border-radius: $track-radius;
+		box-shadow: $shade-inset;
+		margin: 0;
 	}
 
 	&::-webkit-slider-thumb {
@@ -68,7 +58,7 @@ $contrast: 25%;
 	&::-moz-range-track {
 		@include range_track;
 		background: $track-color;
-		border: $border-width solid $border-color;
+		border: 0;
 		border-radius: $track-radius;
 	}
 
@@ -82,22 +72,53 @@ $contrast: 25%;
 		border-color: transparent;
 		border-width: ($thumb-height / 2) 0;
 		color: transparent;
+		margin: (-$grid / 4) 0;
 	}
 
 	&::-ms-fill-lower {
-		background: darken($track-color, $contrast);
-		border: $border-width solid $border-color;
+		background: $track-color;
 		border-radius: $track-radius * 2;
 	}
 
 	&::-ms-fill-upper {
 		background: $track-color;
-		border: $border-width solid $border-color;
 		border-radius: $track-radius * 2;
 	}
 
 	&::-ms-thumb {
 		@include range_thumb;
 		margin-top: 0;
+	}
+
+	&:focus {
+		outline: 0;
+
+		&::-webkit-slider-runnable-track {
+			background: $track-focus-color;
+		}
+
+		&::-webkit-slider-thumb {
+			background: $thumb-focus-color;
+		}
+
+		&::-moz-range-track {
+			background: $track-focus-color;
+		}
+
+		&::-moz-range-thumb {
+			background: $thumb-focus-color;
+		}
+
+		&::-ms-fill-lower {
+			background: $track-focus-color;
+		}
+
+		&::-ms-fill-upper {
+			background: $track-focus-color;
+		}
+
+		&::-ms-thumb {
+			background: $thumb-focus-color;
+		}
 	}
 }

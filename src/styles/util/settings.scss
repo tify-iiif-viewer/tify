@@ -27,7 +27,7 @@ $brand-color-lighter: tint($brand-color, 92) !default;
 // Shades
 $grey: #666 !default;
 $grey-dark: #333 !default;
-$grey-light: #e7e7e7 !default;
+$grey-light: #ccc !default;
 $shade: rgba(black, .24) !default;
 $shade-dark: rgba(black, .6) !default;
 $shade-light: rgba(black, .08) !default;
@@ -35,7 +35,7 @@ $shine: rgba(white, .9) !default;
 $shine-light: rgba(white, .6) !default;
 
 // Semantic colors
-$border-color: $grey-light !default;
+$border-color: #e7e7e7 !default;
 $highlight-color: rgba(lighten($brand-color, 50), .3) !default;
 $link-color: $brand-color !default;
 $text-color: $grey-dark !default;
@@ -43,8 +43,8 @@ $text-color-light: tint($text-color, 30) !default;
 $warning-color: adjust-hue($brand-color, 180) !default;
 
 // Combined values
-$card-shadow: 0 0 1px $shade-light, 0 .5px 3px $shade !default;
+$card-shadow: 0 0 .5px $shade-light, 0 .5px 3px $shade !default;
 $drop-shadow: 0 0 ($grid / 4) rgba(black, .5) !default;
-$header-bg: $grey-light !default;
+$header-bg: #e7e7e7 !default;
 $shade-inset: 0 -1px $shade !default;
 $shine-inset: 0 1px $shine !default;
