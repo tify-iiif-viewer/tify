@@ -18,7 +18,7 @@
 				:title="'Reset'|trans"
 				@click="resetView"
 			>
-				<i class="tify-icon">crop_3_2</i>
+				<i class="tify-icon">aspect_ratio</i>
 				<span class="tify-sr-only">{{ 'Reset'|trans }}</span>
 			</button>
 			<button
