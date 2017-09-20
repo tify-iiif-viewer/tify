@@ -54,9 +54,9 @@
 		</div>
 
 
-		<div v-if="manifest.license" class="tify-info_section -license">
+		<div v-if="license.length" class="tify-info_section -license">
 			<h3>{{ 'License'|trans }}</h3>
-			<div v-for="item in $root.iiifConvertToArray(manifest.license)">
+			<div v-for="item in license">
 				<a v-if="typeof item === 'string'" :href="item">
 					{{ item }}
 				</a>
@@ -66,9 +66,9 @@
 			</div>
 		</div>
 
-		<div v-if="manifest.related" class="tify-info_section -related">
+		<div v-if="related.length" class="tify-info_section -related">
 			<h3>{{ 'Related Resources'|trans }}</h3>
-			<div v-for="item in $root.iiifConvertToArray(manifest.related)">
+			<div v-for="item in related">
 				<a v-if="typeof item === 'string'" :href="item">
 					{{ item }}
 				</a>
@@ -109,15 +109,17 @@
 			};
 		},
 		computed: {
-			licenses() {
-				if (typeof this.manifest.license === 'string') return [this.manifest.license];
-				return this.manifest.license;
+			license() {
+				return this.manifest.license ? this.$root.iiifConvertToArray(this.manifest.license) : [];
 			},
 			logoId() {
 				return (this.manifest.logo['@id'] ? this.manifest.logo['@id'] : this.manifest.logo);
 			},
 			manifest() {
 				return this.$root.manifest;
+			},
+			related() {
+				return this.manifest.related ? this.$root.iiifConvertToArray(this.manifest.related) : [];
 			},
 		},
 		filters: {
