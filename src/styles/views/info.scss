@@ -14,6 +14,7 @@
 
 .tify-info_section {
 	margin-bottom: $grid;
+	word-break: break-word;
 }
 
 .tify-info_toggle {
@@ -27,7 +28,6 @@
 
 .tify-info_value {
 	position: relative;
-	word-break: break-word;
 
 	&.-collapsed {
 		&::after {
