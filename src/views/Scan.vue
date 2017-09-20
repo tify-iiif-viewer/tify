@@ -66,7 +66,7 @@
 						<input
 							class="tify-scan_range"
 							id="tify-scan_brightness"
-							max="3"
+							max="2"
 							min=".5"
 							step=".01"
 							type="range"
@@ -83,12 +83,29 @@
 						<input
 							class="tify-scan_range"
 							id="tify-scan_contrast"
-							max="3"
+							max="2"
 							min=".5"
 							step=".01"
 							type="range"
 							:value="$root.params.filters.contrast || 1"
 							@input="setFilter('contrast', $event)"
+						>
+					</p>
+					<p>
+						<label for="tify-scan_saturation">
+							<i class="tify-icon -light">palette</i>
+							{{ 'Saturation:'|trans }}
+							{{ Math.round($root.params.filters.hasOwnProperty('saturate') ? $root.params.filters.saturate * 100 : 100)}}&nbsp;%
+						</label>
+						<input
+							class="tify-scan_range"
+							id="tify-scan_saturation"
+							max="3"
+							min="0"
+							step=".01"
+							type="range"
+							:value="$root.params.filters.hasOwnProperty('saturate') ? $root.params.filters.saturate : 1"
+							@input="setFilter('saturate', $event)"
 						>
 					</p>
 					<p>
