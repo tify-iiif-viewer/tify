@@ -98,17 +98,21 @@
 		padding: ($grid / 4) .25em;
 		text-align: left;
 		vertical-align: top;
+		width: 8em;
 
 		@include respond-to(large) {
 			display: block;
+			width: auto;
 		}
 
 		@include respond-to(medium) {
 			display: table-cell;
+			width: 8em;
 		}
 
 		@include respond-to(tiny) {
 			display: block;
+			width: auto;
 		}
 	}
 
