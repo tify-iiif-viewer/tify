@@ -24,7 +24,7 @@
 				</tr>
 				<tr>
 					<th>
-						{{ 'Table of Contents'|trans }}
+						{{ 'Contents'|trans }}
 						<small v-html="$options.filters.trans('(if&nbsp;available)')"/>
 					</th>
 					<td>
