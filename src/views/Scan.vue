@@ -345,14 +345,12 @@
 							return response;
 						}, (error) => {
 							let status;
-							if (error.response) {
-								status = error.response.data && error.response.data.error
-									? error.response.data.error
-									: error.response.statusText;
-							} else {
+							if (error.response && error.response.statusText) {
+								status = error.response.statusText;
+							} else if (error.message) {
 								status = error.message;
 							}
-							this.$root.error = `Error loading info file for page ${page}: ${status}`;
+							this.$root.error = `Error loading info file for page ${page}${status ? `: ${status}` : ''}`;
 						}));
 					} else {
 						this.tileSources[page] = {
