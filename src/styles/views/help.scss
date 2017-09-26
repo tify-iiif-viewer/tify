@@ -3,3 +3,16 @@
 	overflow-y: auto;
 	padding: ($grid / 2);
 }
+
+.tify-help_section {
+	&.-keys {
+		th {
+			display: table-cell !important;
+			width: 11em !important;
+		}
+
+		td {
+			display: table-cell !important;
+		}
+	}
+}
