@@ -8,49 +8,67 @@
 }
 
 .tify-thumbnails_item {
-	@include transition(opacity);
-	background: $grey;
+	@include transition(filter);
+	background: $grey-dark;
 	box-shadow: $drop-shadow;
 	cursor: pointer;
 	display: block;
 	float: left;
-	height: ($grid * 4.75);
+	height: ($grid * 5.5);
 	margin: ($grid / 8);
 	overflow: hidden;
 	position: relative;
 	width: $thumbnail-width;
 
 	@include hover {
-		opacity: .7;
+		filter: brightness(1.2);
 	}
 
 	img {
 		display: block;
+		max-height: ($grid * 4.5);
+		margin: auto;
 		pointer-events: none;
-		width: 100%;
+		max-width: 100%;
 	}
 
 	&.-current {
-		background: $brand-color-light;
 		outline: ($grid / 4) solid $brand-color-light;
-
-		img {
-			opacity: .6;
-		}
 	}
 }
 
 .tify-thumbnails_page-number {
+	@include transition(background);
 	background: $shade-dark;
 	bottom: 0;
 	color: white;
 	display: block;
 	font-size: $font-size-small;
 	font-weight: bold;
-	max-height: ($grid * 2);
+	height: $grid;
+	overflow: hidden;
 	padding: 0 ($grid / 4);
 	position: absolute;
 	text-align: center;
+	text-overflow: ellipsis;
 	text-shadow: $shade-inset;
+	white-space: nowrap;
 	width: 100%;
+
+	@at-root {
+		.tify-thumbnails_item {
+
+			&.-current {
+				.tify-thumbnails_page-number {
+					background: $link-color;
+				}
+			}
+
+			@include hover {
+				.tify-thumbnails_page-number {
+					background: $link-color;
+				}
+			}
+		}
+	}
 }
