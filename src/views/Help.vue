@@ -137,27 +137,27 @@
 			<table>
 				<tr>
 					<th>{{ 'Version'|trans }}</th>
-					<td>{{ version }}</td>
+					<td>{{ env.VERSION }}</td>
 				</tr>
 				<tr>
 					<th>{{ 'Author'|trans }}</th>
-					<td v-html="linkMailAdresses(author)"/>
+					<td><a :href="`mailto:${env.AUTHOR_EMAIL}`">{{env.AUTHOR_NAME}}</a></td>
 				</tr>
 				<tr>
 					<th>{{ 'License'|trans }}</th>
-					<td>{{ license }}</td>
+					<td>{{ env.LICENSE }}</td>
 				</tr>
 				<tr>
 					<th>{{ 'Source'|trans }}</th>
-					<td><a :href="repositoryUrl">GitHub</a></td>
+					<td><a :href="env.REPOSITORY_URL">GitHub</a></td>
 				</tr>
 			</table>
-			<p v-if="bugsUrl">
+			<p v-if="env.BUGS_URL">
 				{{ 'Found a bug?'|trans }}
-				<a :href="bugsUrl">{{ 'Please let us know.'|trans }}</a>
+				<a :href="env.BUGS_URL">{{ 'Please let us know.'|trans }}</a>
 			</p>
-			<p v-if="homepage">
-				<a :href="homepage">{{ 'Website'|trans }}</a>
+			<p v-if="env.HOMEPAGE">
+				<a :href="env.HOMEPAGE">{{ 'Website'|trans }}</a>
 			</p>
 		</div>
 	</section>
@@ -167,20 +167,8 @@
 	export default {
 		data() {
 			return {
-				author: process.env.AUTHOR_NAME,
-				bugsUrl: process.env.BUGS_URL,
-				homepage: process.env.HOMEPAGE,
-				license: process.env.LICENSE,
-				repositoryUrl: process.env.REPOSITORY_URL,
-				version: process.env.VERSION,
+				env: process.env,
 			};
-		},
-
-		methods: {
-			linkMailAdresses(string) {
-				const stringWithLinks = string.replace(/(.*?)<?([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)>?(\s*)/gi, '<a href="mailto:$2">$1</a>$3');
-				return stringWithLinks;
-			},
 		},
 	};
 </script>
