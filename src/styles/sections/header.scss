@@ -30,7 +30,9 @@
 }
 
 .tify-header_button-group {
-	@extend %button-group;
+	border-radius: $br;
+	box-shadow: $card-shadow;
+	display: flex;
 	margin: ($grid / 8);
 	position: relative;
 
@@ -59,6 +61,20 @@
 
 .tify-header_button {
 	@extend %button;
+	box-shadow: none;
+
+	& + & {
+		@include separator(0, 0, 0, 1);
+		z-index: 0;
+	}
+
+	&:first-child {
+		border-radius: $br 0 0 $br;
+	}
+
+	&:last-child {
+		border-radius: 0 $br $br 0;
+	}
 
 	&.-active {
 		@extend %button-active;
@@ -123,14 +139,5 @@
 
 	@include respond-to(small) {
 		font-size: 1rem;
-	}
-}
-
-.tify-header_toggle-controls {
-	@extend %button;
-	display: none;
-
-	@include respond-to(large) {
-		display: block;
 	}
 }

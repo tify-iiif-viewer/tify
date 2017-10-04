@@ -1,6 +1,7 @@
 .tify-page-select_button {
 	@extend %button;
 	border-radius: inherit;
+	box-shadow: none;
 	display: block;
 	margin: (-$grid / 4);
 	min-width: ($grid * 3);

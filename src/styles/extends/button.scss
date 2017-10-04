@@ -1,7 +1,8 @@
 %button {
 	background: linear-gradient(to bottom, white, shade(white, 5));
 	border: 0;
-	border-radius: 0;
+	border-radius: $br;
+	box-shadow: $card-shadow;
 	color: $text-color;
 	cursor: pointer;
 	display: inline-block;
@@ -41,6 +42,13 @@
 	@include hover {
 		background: linear-gradient(to bottom, shade($link-color, 10), shade($link-color, 30));
 	}
+}
+
+%button-small {
+	@extend %button;
+	font-size: $font-size-small;
+	margin: ($grid / 4) 0 0;
+	padding: 0 ($grid / 4);
 }
 
 %button-warning {

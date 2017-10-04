@@ -18,12 +18,7 @@
 }
 
 .tify-info_toggle {
-	@extend %button;
-	box-shadow: $card-shadow;
-	border-radius: $br;
-	font-size: $font-size-small;
-	margin: ($grid / 4) 0 0;
-	padding: ($grid / 8) ($grid / 4);
+	@extend %button-small;
 }
 
 .tify-info_value {

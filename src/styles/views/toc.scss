@@ -116,10 +116,7 @@
 }
 
 .tify-toc_toggle-all {
-	@extend %button;
-	box-shadow: $card-shadow;
-	border-radius: $br;
-	padding: 0 ($grid / 4);
+	@extend %button-small;
 }
 
 .tify-toc_toggle {

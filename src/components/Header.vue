@@ -93,7 +93,7 @@
 		<div class="tify-header_column -views">
 			<div class="tify-header_button-group -small" ref="switchViewSmall">
 				<button
-					class="tify-header_toggle-controls"
+					class="tify-header_button"
 					v-click-outside="closeControlsPopup"
 					@click="toggleControlsPopup"
 				>
