@@ -1,31 +1,13 @@
-// TODO: Get import-glob-loader working with Webpack
-
-@import 'functions/shade';
-@import 'functions/tint';
+@import 'functions/*';
 
 @import 'util/settings';
 
-@import 'mixins/dropdown';
-@import 'mixins/hover';
-@import 'mixins/range';
-@import 'mixins/respond-to';
-@import 'mixins/separator';
-@import 'mixins/transition';
+@import 'mixins/*';
 
-@import 'common/icon';
-@import 'common/sr-only';
+@import 'common/**/*';
 
-@import 'extends/button';
-@import 'extends/panel';
+@import 'extends/*';
 
-@import 'sections/app';
-@import 'sections/header';
-@import 'sections/page-select';
+@import 'sections/*';
 
-@import 'views/export';
-@import 'views/fulltext';
-@import 'views/help';
-@import 'views/info';
-@import 'views/scan';
-@import 'views/thumbnails';
-@import 'views/toc';
+@import 'views/*';

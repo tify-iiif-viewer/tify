@@ -32,6 +32,9 @@ exports.cssLoaders = (options) => {
 					sourceMap: options.sourceMap,
 				}),
 			});
+			loaders.push({
+				loader: 'import-glob-loader',
+			});
 		}
 
 		// Extract CSS when that option is specified;
@@ -50,11 +53,8 @@ exports.cssLoaders = (options) => {
 	return {
 		css: generateLoaders(),
 		postcss: generateLoaders(),
-		less: generateLoaders('less'),
 		sass: generateLoaders('sass', { indentedSyntax: true }),
 		scss: generateLoaders('sass'),
-		stylus: generateLoaders('stylus'),
-		styl: generateLoaders('stylus'),
 	};
 };
 
