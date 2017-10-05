@@ -61,6 +61,7 @@
 
 .tify-header_button {
 	@extend %button;
+	border-radius: 0;
 	box-shadow: none;
 
 	& + & {
@@ -74,6 +75,10 @@
 
 	&:last-child {
 		border-radius: 0 $br $br 0;
+	}
+
+	&:only-child {
+		border-radius: $br;
 	}
 
 	&.-active {
