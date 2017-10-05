@@ -1,5 +1,4 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable no-console */
+/* eslint-disable import/no-extraneous-dependencies, no-console */
 
 require('./check-versions')();
 
@@ -14,7 +13,7 @@ const path = require('path');
 const express = require('express');
 const webpack = require('webpack');
 const proxyMiddleware = require('http-proxy-middleware');
-const webpackConfig = process.env.NODE_ENV === 'testing'
+const webpackConfig = (process.env.NODE_ENV === 'testing' || process.env.NODE_ENV === 'production')
 	? require('./webpack.prod.conf')
 	: require('./webpack.dev.conf');
 
@@ -35,17 +34,24 @@ const devMiddleware = require('webpack-dev-middleware')(compiler, {
 });
 
 const hotMiddleware = require('webpack-hot-middleware')(compiler, {
-	log: () => {},
+	log: false,
+	heartbeat: 2000,
 });
-// force page reload when html-webpack-plugin template changes;
-compiler.plugin('compilation', (compilation) => {
-	compilation.plugin('html-webpack-plugin-after-emit', (data, cb) => {
-		hotMiddleware.publish({ action: 'reload' });
-		cb();
-	});
-});
+// force page reload when html-webpack-plugin template changes
+// currently disabled until this is resolved:
+// https://github.com/jantimon/html-webpack-plugin/issues/680
+// compiler.plugin('compilation', (compilation) => {
+// 	compilation.plugin('html-webpack-plugin-after-emit', (data, cb) => {
+// 		hotMiddleware.publish({ action: 'reload' });
+// 		cb();
+// 	});
+// });
 
-// proxy api requests;
+// enable hot-reload and state-preserving;
+// compilation error display;
+app.use(hotMiddleware);
+
+// proxy api requests
 Object.keys(proxyTable).forEach((context) => {
 	let options = proxyTable[context];
 	if (typeof options === 'string') {
@@ -54,30 +60,30 @@ Object.keys(proxyTable).forEach((context) => {
 	app.use(proxyMiddleware(options.filter || context, options));
 });
 
-// handle fallback for HTML5 history API;
+// handle fallback for HTML5 history API
 app.use(require('connect-history-api-fallback')());
 
-// serve webpack bundle output;
+// serve webpack bundle output
 app.use(devMiddleware);
 
-// enable hot-reload and state-preserving;
-// compilation error display;
-app.use(hotMiddleware);
-
-// serve pure static assets;
+// serve pure static assets
 const staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory);
 app.use(staticPath, express.static('./static'));
 
 const uri = `http://localhost:${port}`;
 
 let resolveFunc;
-const readyPromise = new Promise((resolve) => { resolveFunc = resolve; });
+const readyPromise = new Promise((resolve) => {
+	resolveFunc = resolve;
+});
 
 console.log('> Starting dev server...');
 devMiddleware.waitUntilValid(() => {
 	console.log(`> Listening at ${uri}\n`);
 	// when env is testing, don't need open it
-	if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') opn(uri);
+	if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') {
+		opn(uri);
+	}
 	resolveFunc();
 });
 
@@ -85,5 +91,7 @@ const server = app.listen(port);
 
 module.exports = {
 	ready: readyPromise,
-	close: () => { server.close(); },
+	close: () => {
+		server.close();
+	},
 };

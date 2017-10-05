@@ -1,5 +1,7 @@
 module.exports = {
 	NODE_ENV: '"production"',
+
+	// Used in "export" panel
 	AUTHOR_NAME: `"${process.env.npm_package_author_name}"`,
 	AUTHOR_EMAIL: `"${process.env.npm_package_author_email}"`,
 	BUGS_URL: `"${process.env.npm_package_bugs_url}"`,

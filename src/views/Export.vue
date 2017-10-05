@@ -96,7 +96,7 @@
 				this.$root.params.pages.forEach((page) => {
 					if (!page) return;
 
-					const resource = this.$root.canvases[page - 1].images[0].resource;
+					const { resource } = this.$root.canvases[page - 1].images[0];
 					if (resource.service) {
 						const quality = (
 							resource.service['@context'] === 'http://iiif.io/api/image/2/context.json'
@@ -113,7 +113,7 @@
 			},
 		},
 		created() {
-			const seeAlso = this.$root.manifest.seeAlso;
+			const { seeAlso } = this.$root.manifest;
 			if (!seeAlso) return;
 
 			// Create clone

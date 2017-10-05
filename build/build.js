@@ -1,4 +1,4 @@
-/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable import/no-extraneous-dependencies, no-console */
 
 require('./check-versions')();
 
@@ -28,8 +28,12 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), (err) =>
 			chunkModules: false,
 		})}\n\n`);
 
-		// eslint-disable-next-line no-console
-		console.log(chalk.cyan('	Build complete.\n'));
+		if (stats.hasErrors()) {
+			console.log(chalk.red('  Build failed with errors.\n'));
+			process.exit(1);
+		}
+
+		console.log(chalk.cyan('  Build complete.\n'));
 	});
 });
 

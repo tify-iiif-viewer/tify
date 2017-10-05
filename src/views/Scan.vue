@@ -212,7 +212,7 @@
 				this.filtersVisible = false;
 			},
 			initViewer(resetView) {
-				const params = this.$root.params;
+				const { params } = this.$root;
 
 				// TODO: All tile sources could be added at once (sequence mode)
 				// This requires the correct resolution to be present in the manifest, which is
@@ -336,7 +336,7 @@
 				this.$root.params.pages.forEach((page) => {
 					if (page < 1 || this.tileSources[page]) return;
 
-					const resource = this.$root.canvases[page - 1].images[0].resource;
+					const { resource } = this.$root.canvases[page - 1].images[0];
 					if (resource.service) {
 						const id = resource.service['@id'];
 						const infoUrl = `${id}${id.slice(-1) === '/' ? '' : '/'}info.json`;
@@ -408,7 +408,7 @@
 				this.removeScanParams();
 			},
 			rotateRight() {
-				const viewport = this.viewer.viewport;
+				const { viewport } = this.viewer;
 				const degrees = (viewport.getRotation() + 90) % 360;
 				viewport.setRotation(degrees);
 				this.$root.updateParams({ rotation: degrees || null });
@@ -450,7 +450,7 @@
 					filters.push(`${key}(${this.$root.params.filters[key]})`);
 				});
 
-				const image = this.$refs.image;
+				const { image } = this.$refs;
 				const filterString = filters.join(' ');
 
 				image.style.cssText = vendorPrefixes.join(`filter:${filterString};`);

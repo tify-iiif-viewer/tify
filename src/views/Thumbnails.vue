@@ -127,7 +127,7 @@
 
 				const items = [];
 				for (let i = startPage - 1; i < endPage; i += 1) {
-					const resource = this.$root.canvases[i].images[0].resource;
+					const { resource } = this.$root.canvases[i].images[0];
 					if (resource.service) {
 						const quality = (
 							resource.service['@context'] === 'http://iiif.io/api/image/2/context.json'

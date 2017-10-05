@@ -61,7 +61,7 @@
 		},
 		computed: {
 			pageTitleAttr() {
-				const pages = this.$root.params.pages;
+				const { pages } = this.$root.params;
 				const page = (pages[0] === 0 && pages.length > 1 ? 1 : pages[0]);
 				const physLabel = this.$options.filters.trans('Physical page');
 				const logLabel = this.$options.filters.trans('Logical page');
@@ -120,9 +120,9 @@
 				this.filteredCanvases = filteredCanvases;
 			},
 			updateScroll() {
-				const list = this.$refs.list;
+				const { list } = this.$refs;
 				if (list.children[this.highlightIndex]) {
-					const offsetTop = list.children[this.highlightIndex].offsetTop;
+					const { offsetTop } = list.children[this.highlightIndex];
 					list.scrollTop = offsetTop - ((list.offsetHeight / 2) - list.children[0].offsetHeight);
 				}
 			},

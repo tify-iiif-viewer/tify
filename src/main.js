@@ -86,6 +86,7 @@ export default new Vue({
 
 			let pages;
 			if (this.isValidPagesArray(params.pages)) {
+				// eslint-disable-next-line prefer-destructuring
 				pages = params.pages;
 			} else {
 				if (params.pages) this.error = 'Invalid pages, reset to first page';
@@ -108,7 +109,7 @@ export default new Vue({
 		},
 		iiifConvertToArray(value) {
 			// http://iiif.io/api/presentation/2.1/#language-of-property-values
-			const filterHtml = this.$options.filters.filterHtml;
+			const { filterHtml } = this.$options.filters;
 
 			if (!(value instanceof Array)) {
 				if (typeof value === 'object') {
@@ -123,7 +124,7 @@ export default new Vue({
 				return [filterHtml(value)];
 			}
 
-			const language = this.options.language;
+			const { language } = this.options;
 			const displayedValues = [];
 			const translation = {};
 			value.forEach((item) => {
@@ -167,6 +168,7 @@ export default new Vue({
 
 			for (let i = 0; i < pages.length; i += 1) {
 				if (
+					// eslint-disable-next-line no-restricted-globals
 					isNaN(pages[i])
 					|| (i > 0 && pages[i] > 0 && pages[i] <= pages[i - 1])
 					|| pages[i] < 0
@@ -177,7 +179,7 @@ export default new Vue({
 			return true;
 		},
 		setPage(page) {
-			const pages = this.params.pages;
+			const { pages } = this.params;
 			if (pages[0] % 2 < 1 && (pages[1] === pages[0] + 1 || pages[1] === 0)) {
 				const newPage = (page % 2 > 0 ? page - 1 : page);
 				this.updateParams({ pages: [newPage, newPage === this.pageCount ? 0 : newPage + 1] });

@@ -1,5 +1,6 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable import/no-unresolved */
+/* eslint-disable import/no-extraneous-dependencies, import/no-unresolved */
+
+// NOTE: HtmlWebpackPlugin removed since we don't need an index.html in production.
 
 const path = require('path');
 const utils = require('./utils');
@@ -35,12 +36,14 @@ const webpackConfig = merge(baseWebpackConfig, {
 		new webpack.DefinePlugin({
 			'process.env': env,
 		}),
+		// TIFY-specific: Prepend copyright notice to each compiled file
 		new webpack.BannerPlugin(
 			`TIFY v${pkg.version}\n`
 			+ `(c) ${new Date().getFullYear()} ${pkg.author}\n`
 			+ `${pkg.license}\n`
 			+ `${pkg.homepage}` // eslint-disable-line comma-dangle
 		),
+		// UglifyJs do not support ES6+, you can also use babel-minify for better treeshaking: https://github.com/babel/minify
 		new webpack.optimize.UglifyJsPlugin({
 			compress: {
 				warnings: false,
@@ -53,7 +56,11 @@ const webpackConfig = merge(baseWebpackConfig, {
 		}),
 		// Compress extracted CSS. We are using this plugin so that possible
 		// duplicated CSS from different components can be deduped.
-		new OptimizeCSSPlugin(),
+		new OptimizeCSSPlugin({
+			cssProcessorOptions: {
+				safe: true, // TODO: Is this required?
+			},
+		}),
 		// copy custom static assets
 		new CopyWebpackPlugin([
 			{

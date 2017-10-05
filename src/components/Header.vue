@@ -190,19 +190,19 @@
 		},
 		computed: {
 			customPageViewActive() {
-				const pages = this.$root.params.pages;
+				const { pages } = this.$root.params;
 				return (
 					pages.length > 2
 					|| (pages.length === 2 && (pages[0] % 2 > 0 || pages[1] !== pages[0] + 1) && pages[1] > 0)
 				);
 			},
 			isLastPage() {
-				const pages = this.$root.params.pages;
+				const { pages } = this.$root.params;
 				const count = this.$root.pageCount;
 				return pages[0] >= count || pages[pages.length - 1] >= count;
 			},
 			isLastSection() {
-				const pages = this.$root.params.pages;
+				const { pages } = this.$root.params;
 				const lastIndex = pages.length - 1;
 				const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
 				return page >= this.sections[this.sections.length - 1].firstPage;
@@ -225,13 +225,13 @@
 				this.$root.setPage(this.$root.pageCount);
 			},
 			goToNextPage() {
-				const pages = this.$root.params.pages;
+				const { pages } = this.$root.params;
 				let page = pages[0] + 1;
 				if (pages.length > 1 && page % 2 > 0 && page < this.$root.pageCount) page += 1;
 				this.$root.setPage(page);
 			},
 			goToNextSection() {
-				const pages = this.$root.params.pages;
+				const { pages } = this.$root.params;
 				const lastIndex = pages.length - 1;
 				const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
 				let sectionIndex = 0;
@@ -242,13 +242,13 @@
 				this.$root.setPage(this.sections[sectionIndex].firstPage);
 			},
 			goToPreviousPage() {
-				const pages = this.$root.params.pages;
+				const { pages } = this.$root.params;
 				let page = pages[0] - 1;
 				if (pages.length > 1 && page % 2 > 0 && page > 0) page -= 1;
 				this.$root.setPage(page);
 			},
 			goToPreviousSection() {
-				const pages = this.$root.params.pages;
+				const { pages } = this.$root.params;
 				const page = pages[0] ? pages[0] : pages[1];
 				let sectionIndex = this.sections.length - 1;
 				while (
@@ -261,7 +261,7 @@
 				this.controlsVisible = !this.controlsVisible;
 			},
 			toggleDoublePage() {
-				const pages = this.$root.params.pages;
+				const { pages } = this.$root.params;
 				let newPages;
 				if (pages.length > 1) {
 					// There are already multiple pages shown; switch back to single page
@@ -337,7 +337,7 @@
 
 				if (this.customPageViewActive) return;
 
-				const pages = this.$root.params.pages;
+				const { pages } = this.$root.params;
 
 				switch (event.key) {
 				case 'q':

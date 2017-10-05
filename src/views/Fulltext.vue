@@ -45,7 +45,7 @@
 
 					const annotationListUrl = canvas.otherContent[0]['@id'];
 					this.$http.get(annotationListUrl).then((response) => {
-						const resources = response.data.resources;
+						const { resources } = response.data;
 						if (!Array.isArray(resources)) return;
 
 						resources.forEach((resource, index) => {
