@@ -1,3 +1,4 @@
+// Based on template version 1.1.3
 // See http://vuejs-templates.github.io/webpack for documentation
 const path = require('path');
 
@@ -34,4 +35,3 @@ module.exports = {
 		cssSourceMap: false,
 	},
 };
-
