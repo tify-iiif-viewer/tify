@@ -6,7 +6,7 @@
 			<template v-for="page, index in this.$root.params.pages" v-if="page">
 				<hr v-if="index && page > 1" class="tify-fulltext_separator">
 				<template v-for="text in fulltexts[page]">
-					 <div class="tify-fulltext_text" v-html="text"/>
+					<div class="tify-fulltext_text" v-html="text"/>
 				</template>
 			</template>
 		</div>
