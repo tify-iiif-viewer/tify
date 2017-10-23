@@ -134,6 +134,8 @@
 
 				if (!this.manifest.metadata) return;
 
+				if (!this.$refs.buttons) return;
+
 				const button = this.$refs.buttons[0];
 				const buttonStyle = window.getComputedStyle(button);
 				const buttonHeight = button.offsetHeight + parseInt(buttonStyle.marginTop, 10);
