@@ -13,6 +13,34 @@ if (!window.Promise) window.Promise = require('promise-polyfill');
 
 Vue.prototype.$http = require('axios');
 
+if (window.tifyOptions) {
+	if (typeof window.tifyOptions !== 'object') {
+		throw new Error('tifyOptions must be an object');
+	}
+
+	Object.keys(window.tifyOptions).forEach((key) => {
+		if (key === 'container') {
+			if (typeof window.tifyOptions[key] !== 'string' && !(window.tifyOptions[key] instanceof HTMLElement)) {
+				throw new Error(`TIFY option ${key} must be a string or an HTMLElement`);
+			}
+		} else if (key === 'immediateRender') {
+			if (typeof window.tifyOptions[key] !== 'boolean') {
+				throw new Error(`TIFY option "${key}" must be boolean`);
+			}
+		} else if (key === 'language' || key === 'title') {
+			if (typeof window.tifyOptions[key] !== 'string') {
+				throw new Error(`TIFY option "${key}" must be a string`);
+			}
+		} else if (key === 'manifest' || key === 'stylesheet') {
+			if (typeof window.tifyOptions[key] !== 'string' && window.tifyOptions[key] !== null) {
+				throw new Error(`TIFY option "${key}" must be a string (URL) or null`);
+			}
+		} else {
+			throw new Error(`Unknown TIFY option: "${key}"`);
+		}
+	});
+}
+
 // In production mode, load the stylesheet by adding a <link> to <head>
 // In dev mode, the stylesheet is inlined for hot reload
 // TODO: We cannot be sure that TIFY was loaded in a script tag, add a base option
@@ -29,16 +57,16 @@ const options = Object.assign({
 	container: '#tify',
 	immediateRender: true,
 	language: 'en',
-	manifestUrl: null,
-	stylesheetUrl,
+	manifest: null,
+	stylesheet: stylesheetUrl,
 	title: 'TIFY',
 }, window.tifyOptions);
 
-const container = document.createElement('div');
-const el = document.querySelector(options.container);
-if (el) {
-	el.appendChild(container);
-} else if (process.env.NODE_ENV !== 'testing') {
+const container = typeof options.container === 'string'
+	? document.querySelector(options.container)
+	: options.container;
+
+if (!container && process.env.NODE_ENV !== 'testing') {
 	throw new Error('TIFY container element not found');
 }
 
@@ -238,15 +266,15 @@ export default new Vue({
 			return Promise.reject(error);
 		});
 
-		if (this.options.stylesheetUrl) this.appendStylesheet(this.options.stylesheetUrl);
+		if (this.options.stylesheet) this.appendStylesheet(this.options.stylesheet);
 
 		// Manifest URL in tifyOptions trumps query param
-		this.manifestUrl = this.options.manifestUrl || this.getQueryParam('manifestUrl');
+		this.manifestUrl = this.options.manifest || this.getQueryParam('manifest');
 		if (!this.manifestUrl) {
-			this.error = 'Missing query parameter or option: manifestUrl';
+			this.error = 'Missing query parameter or option: manifest';
 			return;
-		} else if (this.options.manifestUrl && this.params.manifestUrl) {
-			this.error = 'Setting manifestUrl via query parameter is disabled';
+		} else if (this.options.manifest && this.params.manifest) {
+			this.error = 'Setting manifest via query parameter is disabled';
 		}
 
 		this.$http.get(this.manifestUrl).then((response) => {

@@ -1,7 +1,7 @@
 Feature('TOC');
 
 Scenario('Navigate TOC', (I) => {
-	I.amOnPage('http://localhost:8080/?manifestUrl=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
+	I.amOnPage('http://localhost:8080/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
 	I.waitForElement('.tify-app_main');
 
 	I.click('View');

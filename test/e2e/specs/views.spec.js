@@ -3,7 +3,7 @@ Feature('Views');
 Scenario('Change view via buttons', (I) => {
 	I.resizeWindow(1600, 900);
 
-	I.amOnPage('http://localhost:8080/?manifestUrl=http://localhost:8081/manifest/wellcome-b18035723.json');
+	I.amOnPage('http://localhost:8080/?manifest=http://localhost:8081/manifest/wellcome-b18035723.json');
 	I.waitForElement('.tify-app_main');
 
 	I.see('Info', '.-active');
@@ -35,7 +35,7 @@ Scenario('Change view via buttons', (I) => {
 Scenario('Change view via keyboard', (I) => {
 	I.resizeWindow(1600, 900);
 
-	I.amOnPage('http://localhost:8080/?manifestUrl=http://localhost:8081/manifest/wellcome-b18035723.json');
+	I.amOnPage('http://localhost:8080/?manifest=http://localhost:8081/manifest/wellcome-b18035723.json');
 	I.waitForElement('.tify-app_main');
 
 	I.pressKey('1');
