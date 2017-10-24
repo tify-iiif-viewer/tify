@@ -1,6 +1,6 @@
 {
   "name": "tify",
-  "version": "0.15.1",
+  "version": "0.15.2",
   "description": "TIFY is a slim and fast IIIF document viewer.",
   "homepage": "https://github.com/subugoe/tify",
   "repository": {
@@ -13,15 +13,16 @@
   "author": "Tobias Schäfer / SUB Göttingen <tschaefer@sub.uni-goettingen.de>",
   "license": "AGPL-3.0",
   "scripts": {
-    "build": "node build/build.js",
-    "dev": "node build/dev-server.js",
-    "e2e": "node test/e2e/runner.js",
-    "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
     "postinstall": "rm -rf openseadragon && git clone https://github.com/openseadragon/openseadragon.git && cd openseadragon && git checkout tags/v2.3.1",
+    "dev": "node build/dev-server.js",
+    "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
+    "build": "node build/build.js",
     "test": "npm run unit && npm run e2e",
-    "unit-watch": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
-    "version": "npm run build && git add dist"
+    "unit-watch": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js",
+    "e2e": "node test/e2e/runner.js",
+    "update-gh-pages": "git checkout gh-pages && git rebase master && git push -f origin gh-pages && git checkout master",
+    "preversion": "echo v$npm_package_version"
   },
   "dependencies": {
     "axios": "^0.17.0",
