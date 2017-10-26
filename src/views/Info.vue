@@ -79,7 +79,7 @@
 		</div>
 
 		<div v-if="manifest.attribution" class="tify-info_section -attribution">
-			<h3>{{ 'Attribution'|trans }}</h3>
+			<h3>{{ 'Provided by'|trans }}</h3>
 			<div v-for="item in $root.iiifConvertToArray(manifest.attribution)" v-html="item"/>
 		</div>
 
