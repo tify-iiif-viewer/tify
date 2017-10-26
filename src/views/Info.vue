@@ -11,14 +11,13 @@
 
 		<div v-if="manifest.metadata" class="tify-info_section -metadata">
 			<h3>{{ 'Metadata'|trans }}</h3>
-			<table class="tify-info_list">
-				<tr class="tify-info_row" v-for="item, index in manifest.metadata">
-					<th class="tify-info_label">
+				<template v-for="item, index in manifest.metadata">
+					<h4>
 						<div v-for="label in $root.iiifConvertToArray(item.label)">
 							{{ label|cleanLabel }}
 						</div>
-					</th>
-					<td class="tify-info_text">
+					</h4>
+					<div class="tify-info_content">
 						<div
 							class="tify-info_value"
 							ref="items"
@@ -43,8 +42,8 @@
 								{{ 'Collapse'|trans }}
 							</template>
 						</button>
-					</td>
-				</tr>
+					</div>
+				</template>
 			</table>
 		</div>
 

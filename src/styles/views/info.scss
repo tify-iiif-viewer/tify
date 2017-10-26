@@ -2,6 +2,15 @@
 	@extend %panel;
 	overflow-y: auto;
 	padding: ($grid / 2);
+
+	h4 {
+		color: $text-color-light;
+		margin: 0;
+
+		&:nth-of-type(n+2) {
+			margin-top: ($grid / 2);
+		}
+	}
 }
 
 .tify-info_logo {
@@ -21,7 +30,7 @@
 	@extend %button-small;
 }
 
-.tify-info_value {
+.tify-info_content {
 	position: relative;
 
 	&.-collapsed {
