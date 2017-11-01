@@ -28,7 +28,7 @@
 			<div class="tify-header_button-group">
 				<button
 					class="tify-header_button"
-					:disabled="customPageViewActive || $root.params.pages[0] < 2"
+					:disabled="customPageViewActive || isFirstPage"
 					:title="'First page'|trans"
 					@click="goToFirstPage"
 				>
@@ -39,7 +39,7 @@
 				<button
 					v-if="structures && structures.length"
 					class="tify-header_button"
-					:disabled="customPageViewActive || $root.params.pages[0] < 2"
+					:disabled="customPageViewActive || isFirstPage"
 					:title="'Previous section'|trans"
 					@click="goToPreviousSection"
 				>
@@ -49,7 +49,7 @@
 
 				<button
 					class="tify-header_button"
-					:disabled="customPageViewActive || $root.params.pages[0] < 2"
+					:disabled="customPageViewActive || isFirstPage"
 					:title="'Previous page'|trans"
 					@click="goToPreviousPage"
 				>
@@ -193,18 +193,6 @@
 			};
 		},
 		computed: {
-			customPageViewActive() {
-				const { pages } = this.$root.params;
-				return (
-					pages.length > 2
-					|| (pages.length === 2 && (pages[0] % 2 > 0 || pages[1] !== pages[0] + 1) && pages[1] > 0)
-				);
-			},
-			isLastPage() {
-				const { pages } = this.$root.params;
-				const count = this.$root.pageCount;
-				return pages[0] >= count || pages[pages.length - 1] >= count;
-			},
 			isLastSection() {
 				const { pages } = this.$root.params;
 				const lastIndex = pages.length - 1;
