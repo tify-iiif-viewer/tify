@@ -269,7 +269,11 @@ export default new Vue({
 		if (this.options.stylesheet) this.appendStylesheet(this.options.stylesheet);
 
 		// Manifest URL in tifyOptions trumps query param
-		this.manifestUrl = this.options.manifest || this.getQueryParam('manifest');
+		// Support `manifestUrl` for backward compatibility if `manifest` is not set
+		this.manifestUrl = this.options.manifest
+			|| this.getQueryParam('manifest')
+			|| this.getQueryParam('manifestUrl');
+
 		if (!this.manifestUrl) {
 			this.error = 'Missing query parameter or option: manifest';
 			return;
