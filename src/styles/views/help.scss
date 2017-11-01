@@ -5,14 +5,13 @@
 }
 
 .tify-help_section {
-	&.-keys {
-		th {
-			display: table-cell !important;
-			width: 11em !important;
+	&.-about {
+		dd {
+			width: calc(100% - 6em);
 		}
 
-		td {
-			display: table-cell !important;
+		dt {
+			width: 6em;
 		}
 	}
 }

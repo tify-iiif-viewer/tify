@@ -68,69 +68,30 @@
 		cursor: pointer;
 	}
 
-	table {
-		border: 0;
-		border-collapse: collapse;
-		margin: (-$grid / 4) -.25em ($grid - $grid / 4);
-		width: 100%;
-	}
+	dl {
+		margin: 0 0 $grid;
 
-	td {
-		padding: ($grid / 4) .25em;
-
-		@include respond-to(large) {
+		&::after {
+			clear: both;
+			content: '';
 			display: block;
-			margin-top: (-$grid / 2);
-		}
-
-		@include respond-to(medium) {
-			display: table-cell;
-			margin-top: 0;
-		}
-
-		@include respond-to(tiny) {
-			display: block;
-			margin-top: (-$grid / 2);
 		}
 	}
 
-	th {
+	dd {
+		float: left;
+		margin: 0 0 ($grid / 2);
+		width: calc(100% - 10em);
+	}
+
+	dt {
+		clear: left;
 		color: $text-color-light;
-		padding: ($grid / 4) .25em;
-		text-align: left;
-		vertical-align: top;
-		width: 8em;
-
-		@include respond-to(large) {
-			display: block;
-			width: auto;
-		}
-
-		@include respond-to(medium) {
-			display: table-cell;
-			width: 8em;
-		}
-
-		@include respond-to(tiny) {
-			display: block;
-			width: auto;
-		}
-	}
-
-	tr {
-		border: 0;
-
-		@include respond-to(large) {
-			display: block;
-		}
-
-		@include respond-to(medium) {
-			display: table-row;
-		}
-
-		@include respond-to(tiny) {
-			display: block;
-		}
+		float: left;
+		font-weight: bold;
+		margin: 0 0 ($grid / 2);
+		padding: 0 .5em 0 0;
+		width: 10em;
 	}
 }
 

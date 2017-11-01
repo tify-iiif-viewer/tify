@@ -6,122 +6,128 @@
 			<h3>{{ 'Key Bindings'|trans }}</h3>
 
 			<h4>{{ 'View'|trans }}</h4>
-			<table>
-				<tr>
-					<th>
-						{{ 'Fulltext'|trans }}
-						<small v-html="$options.filters.trans('(if&nbsp;available)')"/>
-					</th>
-					<td>
-						<code>{{ '1' }}</code>
-					</td>
-				</tr>
-				<tr>
-					<th>{{ 'Pages'|trans }}</th>
-					<td>
-						<code>{{ '2' }}</code>
-					</td>
-				</tr>
-				<tr>
-					<th>
-						{{ 'Contents'|trans }}
-						<small v-html="$options.filters.trans('(if&nbsp;available)')"/>
-					</th>
-					<td>
-						<code>{{ '3' }}</code>
-					</td>
-				</tr>
-				<tr>
-					<th>{{ 'Info'|trans }}</th>
-					<td>
-						<code>{{ '4' }}</code>
-					</td>
-				</tr>
-				<tr>
-					<th>{{ 'Export'|trans }}</th>
-					<td>
-						<code>{{ '5' }}</code>
-					</td>
-				</tr>
-				<tr>
-					<th>{{ 'Help'|trans }}</th>
-					<td>
-						<code>{{ '6' }}</code>
-					</td>
-				</tr>
-				<tr>
-					<th>{{ 'Scan'|trans }}</th>
-					<td>
-						<code>{{ 'Backspace'|trans }}</code>
-					</td>
-				</tr>
-			</table>
+			<dl>
+				<dt>
+					{{ 'Fulltext'|trans }}
+					<small v-html="$options.filters.trans('(if&nbsp;available)')"/>
+				</dt>
+				<dd>
+					<code>{{ '1' }}</code>
+				</dd>
+				<dt>
+					{{ 'Pages'|trans }}
+				</dt>
+				<dd>
+					<code>{{ '2' }}</code>
+				</dd>
+				<dt>
+					{{ 'Contents'|trans }}
+					<small v-html="$options.filters.trans('(if&nbsp;available)')"/>
+				</dt>
+				<dd>
+					<code>{{ '3' }}</code>
+				</dd>
+				<dt>
+					{{ 'Info'|trans }}
+				</dt>
+				<dd>
+					<code>{{ '4' }}</code>
+				</dd>
+				<dt>
+					{{ 'Export'|trans }}
+				</dt>
+				<dd>
+					<code>{{ '5' }}</code>
+				</dd>
+				<dt>
+					{{ 'Help'|trans }}
+				</dt>
+				<dd>
+					<code>{{ '6' }}</code>
+				</dd>
+				<dt>
+					{{ 'Scan'|trans }}
+				</dt>
+				<dd>
+					<code>{{ 'Backspace'|trans }}</code>
+				</dd>
+			</dl>
 
 			<h4>{{ 'Turning Pages'|trans }}</h4>
-			<table>
-				<tr>
-					<th>{{ 'Previous page'|trans }}</th>
-					<td>
-						<code>Q</code>
-						{{ 'or'|trans }}
-						<code>,</code>
-					</td>
-				</tr>
-				<tr>
-					<th>{{ 'Next page'|trans }}</th>
-					<td>
-						<code>E</code>
-						{{ 'or'|trans }}
-						<code>.</code>
-					</td>
-				</tr>
-				<tr>
-					<th>{{ 'First page'|trans }}</th>
-					<td><code>&#8679;</code> + <code>Q</code></td>
-				</tr>
-				<tr>
-					<th>{{ 'Last page'|trans }}</th>
-					<td><code>&#8679;</code> + <code>E</code></td>
-				</tr>
-				<tr>
-					<th>{{ 'Jump to page'|trans }}</th>
-					<td><code>X</code></td>
-				</tr>
-				<tr>
-					<th>{{ 'Toggle double-page'|trans }}</th>
-					<td><code>B</code></td>
-				</tr>
-			</table>
+			<dl>
+				<dt>
+					{{ 'Previous page'|trans }}
+				</dt>
+				<dd>
+					<code>Q</code>
+					{{ 'or'|trans }}
+					<code>,</code>
+				</dd>
+				<dt>
+					{{ 'Next page'|trans }}
+				</dt>
+				<dd>
+					<code>E</code>
+					{{ 'or'|trans }}
+					<code>.</code>
+				</dd>
+				<dt>
+					{{ 'First page'|trans }}
+				</dt>
+				<dd>
+					<code>&#8679;</code> + <code>Q</code>
+				</dd>
+				<dt>
+					{{ 'Last page'|trans }}
+				</dt>
+				<dd>
+					<code>&#8679;</code> + <code>E</code>
+				</dd>
+				<dt>
+					{{ 'Jump to page'|trans }}
+				</dt>
+				<dd>
+					<code>X</code>
+				</dd>
+				<dt>
+					{{ 'Toggle double-page'|trans }}
+				</dt>
+				<dd>
+					<code>B</code>
+				</dd>
+			</dl>
 
 			<h4>{{ 'Scan' }}</h4>
-			<table>
-				<tr>
-					<th>{{ 'Zoom in'|trans }}</th>
-					<td>
-						<code>&#8679;</code> + <code>W</code>
-						{{ 'or'|trans }}
-						<code>+</code>
-					</td>
-				</tr>
-				<tr>
-					<th>{{ 'Zoom out'|trans }}</th>
-					<td>
-						<code>&#8679;</code> + <code>S</code>
-						{{ 'or'|trans }}
-						<code>-</code>
-					</td>
-				</tr>
-				<tr>
-					<th>{{ 'Pan'|trans }}</th>
-					<td>
-						<code>W</code> <code>S</code> <code>A</code> <code>D</code>
-					</td>
-				</tr>
-				<tr>
-					<th>{{ 'Reset'|trans }}</th>
-					<td><code>0</code></td>
-				</tr>
-			</table>
+			<dl>
+				<dt>
+					{{ 'Zoom in'|trans }}
+				</dt>
+				<dd>
+					<code>&#8679;</code> + <code>W</code>
+					{{ 'or'|trans }}
+					<code>+</code>
+				</dd>
+				<dt>
+					{{ 'Zoom out'|trans }}
+				</dt>
+				<dd>
+					<code>&#8679;</code> + <code>S</code>
+					{{ 'or'|trans }}
+					<code>-</code>
+				</dd>
+				<dt>
+					{{ 'Pan'|trans }}
+				</dt>
+				<dd>
+					<code>W</code> <code>S</code> <code>A</code> <code>D</code>
+				</dd>
+				<dt>
+					{{ 'Reset'|trans }}
+				</dt>
+				<dd>
+					<code>0</code>
+				</dd>
+			</dl>
 		</div>
 
 		<div class="tify-help_section -selection">
@@ -134,24 +140,16 @@
 		<div class="tify-help_section -about">
 			<h3>{{ 'About'|trans }}</h3>
 			<p v-html="$root.$options.filters.trans('TIFY is a fast and mobile-friendly IIIF document viewer.')"/>
-			<table>
-				<tr>
-					<th>{{ 'Version'|trans }}</th>
-					<td>{{ env.VERSION }}</td>
-				</tr>
-				<tr>
-					<th>{{ 'Author'|trans }}</th>
-					<td><a :href="`mailto:${env.AUTHOR_EMAIL}`">{{env.AUTHOR_NAME}}</a></td>
-				</tr>
-				<tr>
-					<th>{{ 'License'|trans }}</th>
-					<td>{{ env.LICENSE }}</td>
-				</tr>
-				<tr>
-					<th>{{ 'Source'|trans }}</th>
-					<td><a :href="env.REPOSITORY_URL">GitHub</a></td>
-				</tr>
-			</table>
+			<dl>
+				<dt>{{ 'Version'|trans }}</dt>
+				<dd>{{ env.VERSION }}</dd>
+				<dt>{{ 'Author'|trans }}</dt>
+				<dd><a :href="`mailto:${env.AUTHOR_EMAIL}`">{{env.AUTHOR_NAME}}</a></dd>
+				<dt>{{ 'License'|trans }}</dt>
+				<dd>{{ env.LICENSE }}</dd>
+				<dt>{{ 'Source'|trans }}</dt>
+				<dd><a :href="env.REPOSITORY_URL">GitHub</a></dd>
+			</dl>
 			<p v-if="env.BUGS_URL">
 				{{ 'Found a bug?'|trans }}
 				<a :href="env.BUGS_URL">{{ 'Please let us know.'|trans }}</a>
