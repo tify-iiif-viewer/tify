@@ -166,7 +166,6 @@
 					{{ 'Help'|trans }}
 				</button>
 			</div>
-			</div>
 		</div>
 	</header>
 </template>
