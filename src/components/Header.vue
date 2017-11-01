@@ -174,10 +174,15 @@
 <script>
 	import PageSelect from '@/components/PageSelect';
 
+	import pagination from '@/mixins/pagination';
+
 	export default {
 		components: {
 			PageSelect,
 		},
+		mixins: [
+			pagination,
+		],
 		props: [
 			'fulltextEnabled',
 			'tocEnabled',
@@ -218,18 +223,6 @@
 			closeControlsPopup() {
 				this.controlsVisible = false;
 			},
-			goToFirstPage() {
-				this.$root.setPage(1);
-			},
-			goToLastPage() {
-				this.$root.setPage(this.$root.pageCount);
-			},
-			goToNextPage() {
-				const { pages } = this.$root.params;
-				let page = pages[0] + 1;
-				if (pages.length > 1 && page % 2 > 0 && page < this.$root.pageCount) page += 1;
-				this.$root.setPage(page);
-			},
 			goToNextSection() {
 				const { pages } = this.$root.params;
 				const lastIndex = pages.length - 1;
@@ -240,12 +233,6 @@
 					|| (page && page >= this.sections[sectionIndex].firstPage)
 				) sectionIndex += 1;
 				this.$root.setPage(this.sections[sectionIndex].firstPage);
-			},
-			goToPreviousPage() {
-				const { pages } = this.$root.params;
-				let page = pages[0] - 1;
-				if (pages.length > 1 && page % 2 > 0 && page > 0) page -= 1;
-				this.$root.setPage(page);
 			},
 			goToPreviousSection() {
 				const { pages } = this.$root.params;
