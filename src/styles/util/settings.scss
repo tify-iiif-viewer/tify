@@ -35,7 +35,7 @@ $shine: rgba(white, .9) !default;
 $shine-light: rgba(white, .6) !default;
 
 // Semantic colors
-$border-color: #e7e7e7 !default;
+$border-color: $shade !default;
 $highlight-color: rgba(lighten($brand-color, 50), .3) !default;
 $link-color: $brand-color !default;
 $text-color: $grey-dark !default;
