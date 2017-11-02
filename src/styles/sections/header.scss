@@ -20,13 +20,6 @@
 			margin-bottom: (-$grid / 4);
 		}
 	}
-
-	&.-pagination {
-		@include respond-to(small) {
-			order: 9;
-			width: 100%;
-		}
-	}
 }
 
 .tify-header_button-group {
@@ -36,7 +29,31 @@
 	margin: ($grid / 8);
 	position: relative;
 
-	&.-large {
+	&.-pagination {
+		@include respond-to(small) {
+			display: none;
+		}
+	}
+
+	&.-popup {
+		display: none;
+		margin: $br (-$br) (-$br);
+		overflow: hidden;
+
+		@include respond-to(small) {
+			display: flex;
+		}
+	}
+
+	&.-toggle {
+		display: none;
+
+		@include respond-to(large) {
+			display: block;
+		}
+	}
+
+	&.-view {
 		@include respond-to(large) {
 			@include dropdown(right);
 			box-shadow: none;
@@ -47,14 +64,6 @@
 			&.-visible {
 				display: block;
 			}
-		}
-	}
-
-	&.-small {
-		display: none;
-
-		@include respond-to(large) {
-			display: block;
 		}
 	}
 }
@@ -109,7 +118,13 @@
 		@extend %button-warning;
 	}
 
-	.tify-header_button-group.-large & {
+	.tify-header_button-group.-popup & {
+		+ .tify-header_button {
+			@include separator(0, 0, 0, 1);
+		}
+	}
+
+	.tify-header_button-group.-view & {
 		@include respond-to(large) {
 			background: white;
 			border-radius: 0;

@@ -1,6 +1,6 @@
 <template>
 	<header class="tify-header">
-		<div class="tify-header_column">
+		<div class="tify-header_column -title">
 			<h1 class="tify-header_title" :title="titles.join(', ')">
 				{{ titles.join(', ') }}
 			</h1>
@@ -25,7 +25,7 @@
 				</button>
 			</div>
 
-			<div class="tify-header_button-group">
+			<div class="tify-header_button-group -pagination">
 				<button
 					class="tify-header_button"
 					:disabled="customPageViewActive || isFirstPage"
@@ -91,7 +91,7 @@
 		</div>
 
 		<div class="tify-header_column -views">
-			<div class="tify-header_button-group -small" ref="switchViewSmall">
+			<div class="tify-header_button-group -toggle" ref="switchViewSmall">
 				<button
 					class="tify-header_button"
 					v-click-outside="closeControlsPopup"
@@ -103,7 +103,7 @@
 			</div>
 
 			<div
-				class="tify-header_button-group -large"
+				class="tify-header_button-group -view"
 				:class="{ '-visible': controlsVisible }"
 			>
 				<button
@@ -114,6 +114,7 @@
 					<i class="tify-icon">photo</i>
 					{{ 'Scan'|trans }}
 				</button>
+
 				<button
 					v-if="fulltextEnabled"
 					class="tify-header_button"
@@ -123,6 +124,7 @@
 					<i class="tify-icon">subject</i>
 					{{ 'Fulltext'|trans }}
 				</button>
+
 				<button
 					class="tify-header_button"
 					:class="{ '-active': $root.params.view === 'thumbnails' }"
@@ -131,6 +133,7 @@
 					<i class="tify-icon">view_module</i>
 					{{ 'Pages'|trans }}
 				</button>
+
 				<button
 					v-if="tocEnabled"
 					class="tify-header_button"
@@ -140,6 +143,7 @@
 					<i class="tify-icon">toc</i>
 					{{ 'Contents'|trans }}
 				</button>
+
 				<button
 					class="tify-header_button"
 					:class="{ '-active': $root.params.view === 'info' }"
@@ -148,6 +152,7 @@
 					<i class="tify-icon">info_outline</i>
 					{{ 'Info'|trans }}
 				</button>
+
 				<button
 					class="tify-header_button"
 					:class="{ '-active': $root.params.view === 'export' }"
@@ -156,6 +161,7 @@
 					<i class="tify-icon">file_download</i>
 					{{ 'Export'|trans }}
 				</button>
+
 				<button
 					class="tify-header_button -help"
 					:class="{ '-active': $root.params.view === 'help' }"
@@ -165,6 +171,70 @@
 					<i class="tify-icon">help_outline</i>
 					{{ 'Help'|trans }}
 				</button>
+
+				<div class="tify-header_button-group -popup">
+					<button
+						class="tify-header_button"
+						:disabled="customPageViewActive || isFirstPage"
+						:title="'First page'|trans"
+						@click="goToFirstPage"
+					>
+						<i class="tify-icon">first_page</i>
+						<span class="tify-sr-only">{{ 'First page'|trans }}</span>
+					</button>
+
+					<button
+						v-if="structures && structures.length"
+						class="tify-header_button"
+						:disabled="customPageViewActive || isFirstPage"
+						:title="'Previous section'|trans"
+						@click="goToPreviousSection"
+					>
+						<i class="tify-icon">skip_previous</i>
+						<span class="tify-sr-only">{{ 'Previous section'|trans }}</span>
+					</button>
+
+					<button
+						class="tify-header_button"
+						:disabled="customPageViewActive || isFirstPage"
+						:title="'Previous page'|trans"
+						@click="goToPreviousPage"
+					>
+						<i class="tify-icon">navigate_before</i>
+						<span class="tify-sr-only">{{ 'Previous page'|trans }}</span>
+					</button>
+
+					<button
+						class="tify-header_button"
+						:disabled="customPageViewActive || isLastPage"
+						:title="'Next page'|trans"
+						@click="goToNextPage"
+					>
+						<i class="tify-icon">navigate_next</i>
+						<span class="tify-sr-only">{{ 'Next page'|trans }}</span>
+					</button>
+
+					<button
+						v-if="structures && structures.length"
+						class="tify-header_button"
+						:disabled="customPageViewActive || isLastSection"
+						:title="'Next section'|trans"
+						@click="goToNextSection"
+					>
+						<i class="tify-icon">skip_next</i>
+						<span class="tify-sr-only">{{ 'Next section'|trans }}</span>
+					</button>
+
+					<button
+						class="tify-header_button"
+						:disabled="customPageViewActive || isLastPage"
+						:title="'Last page'|trans"
+						@click="goToLastPage"
+					>
+						<i class="tify-icon">last_page</i>
+						<span class="tify-sr-only">{{ 'Last page'|trans }}</span>
+					</button>
+				</div>
 			</div>
 		</div>
 	</header>
