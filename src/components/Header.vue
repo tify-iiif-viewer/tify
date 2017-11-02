@@ -348,7 +348,12 @@
 		},
 		mounted() {
 			window.addEventListener('keydown', (event) => {
-				if (['INPUT', 'SELECT', 'TEXTAREA'].indexOf(event.target.nodeName) > -1) return;
+				if (
+					event.altKey
+					|| event.ctrlKey
+					|| event.metaKey
+					|| ['INPUT', 'SELECT', 'TEXTAREA'].indexOf(event.target.nodeName) > -1
+				) return;
 
 				switch (event.key) {
 				case 'Backspace':
