@@ -126,16 +126,18 @@
 	box-shadow: $card-shadow;
 	float: left;
 	margin: 0 ($grid / 4) 0 0;
-	padding: 0 ($grid / 4);
 	padding: 0;
+	position: relative;
 
 	// White overlay so vertical line does not touch button
 	&::after {
 		content: '';
 		border-bottom: ($grid / 4) solid #fff;
-		left: 0;
+		bottom: (-$grid / 4);
+		left: ($grid / 2);
+		pointer-events: none;
 		position: absolute;
-		width: 100%;
+		width: 1px;
 		z-index: -1;
 	}
 }
