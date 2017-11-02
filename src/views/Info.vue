@@ -56,12 +56,22 @@
 		<div v-if="license.length" class="tify-info_section -license">
 			<h3>{{ 'License'|trans }}</h3>
 			<div v-for="item in license">
-				<a v-if="typeof item === 'string'" :href="item">
-					{{ item }}
-				</a>
-				<a v-else :href="item['@id']">
-					{{ item['label'] || item['@id'] }}
-				</a>
+				<template v-if="typeof item === 'string'">
+					<a v-if="isUrl(item)" :href="item">
+						{{ item }}
+					</a>
+					<template v-else>
+						{{ item }}
+					</template>
+				</template>
+				<template v-else :href="item['@id']">
+					<a v-if="isUrl(item['@id'])" :href="item">
+						{{ item['label'] || item['@id'] }}
+					</a>
+					<template v-else>
+						{{ item['label'] || item['@id'] }}
+					</template>
+				</template>
 			</div>
 		</div>
 
@@ -156,6 +166,10 @@
 					infoItems.push(infoItem);
 				}
 				this.infoItems = infoItems;
+			},
+			isUrl(string) {
+				// Poor man's URL check
+				return /^https?:\/\//.test(string);
 			},
 			toggleItem(index) {
 				this.infoItems[index].collapsed = !this.infoItems[index].collapsed;
