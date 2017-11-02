@@ -28,6 +28,7 @@
 
 .tify-info_toggle {
 	@extend %button-small;
+	margin: ($grid / 4) 0 0;
 }
 
 .tify-info_content {

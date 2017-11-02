@@ -47,7 +47,6 @@
 %button-small {
 	@extend %button;
 	font-size: $font-size-small;
-	margin: ($grid / 4) 0 0;
 	padding: 0 ($grid / 4);
 }
 

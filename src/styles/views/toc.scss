@@ -117,6 +117,7 @@
 
 .tify-toc_toggle-all {
 	@extend %button-small;
+	margin: ($grid / 4) 0 0;
 }
 
 .tify-toc_toggle {
