@@ -94,6 +94,45 @@
 	}
 }
 
+.tify-scan_page-button {
+	@extend %button;
+	background: rgba(#fff, .3);
+	border: 0;
+	box-shadow: $card-shadow;
+	height: ($grid * 2.5);
+	margin-top: (-$grid * 1.25);
+	padding: 0;
+	position: absolute;
+	text-shadow: none;
+	top: 50%;
+	width: ($grid * 1.25);
+	z-index: 9;
+
+	// Move buttons to bottom depending on screen height so buttons in the
+	// top-left corner are not overlapped
+	@media (max-height: 479px) {
+		top: 75%;
+	}
+
+	&.-previous {
+		border-radius: 0 ($grid * 1.25) ($grid * 1.25) 0;
+		left: 0;
+		text-align: left;
+	}
+
+	&.-next {
+		border-radius: ($grid * 1.25) 0 0 ($grid * 1.25);
+		right: 0;
+		text-align: right;
+	}
+
+	// Fixing button dimensions in Firefox
+	&::-moz-focus-inner {
+		border-style: none;
+		padding: 0;
+	}
+}
+
 .tify-scan_range {
 	@include range;
 }

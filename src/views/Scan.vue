@@ -2,6 +2,25 @@
 	<section class="tify-scan">
 		<h2 class="tify-sr-only">{{ 'Scan'|trans }}</h2>
 
+		<button
+			v-if="!customPageViewActive && !isFirstPage"
+			class="tify-scan_page-button -previous"
+			:title="'Previous page'|trans"
+			@click="goToPreviousPage"
+		>
+			<i class="tify-icon">navigate_before</i>
+			<span class="tify-sr-only">{{ 'Previous page'|trans }}</span>
+		</button>
+		<button
+			v-if="!customPageViewActive && !isLastPage"
+			class="tify-scan_page-button -next"
+			:title="'Next page'|trans"
+			@click="goToNextPage"
+		>
+			<i class="tify-icon">navigate_next</i>
+			<span class="tify-sr-only">{{ 'Next page'|trans }}</span>
+		</button>
+
 		<div class="tify-scan_buttons" v-if="viewer">
 			<button
 				class="tify-scan_button"
@@ -129,6 +148,8 @@
 <script>
 	import OpenSeadragon from '@/../openseadragon/src/openseadragon';
 
+	import pagination from '@/mixins/pagination';
+
 	// TODO: Is there another way to make OpenSeadragon available to imports below?
 	window.OpenSeadragon = OpenSeadragon;
 
@@ -158,6 +179,9 @@
 	const vendorPrefixes = ['-webkit-', '-moz-', '-o-', '-ms-'];
 
 	export default {
+		mixins: [
+			pagination,
+		],
 		data() {
 			return {
 				filtersVisible: false,
