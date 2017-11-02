@@ -3,7 +3,7 @@
 		<h2 class="tify-sr-only">{{ 'Export'|trans }}</h2>
 
 		<div class="tify-export_section -links">
-			<h3>{{ 'Images in Original Resolution'|trans }}</h3>
+			<h3>{{ 'Download Individual Images'|trans }}</h3>
 			<ul class="tify-export_links">
 				<li v-for="page in $root.params.pages" v-if="page">
 					<!-- NOTE: The download attribute is only honored for same-origin URLs -->
