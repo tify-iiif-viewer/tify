@@ -30,30 +30,36 @@
 	display: block;
 	overflow: hidden;
 	position: relative;
+	text-decoration: none;
 
 	@include hover {
 		background: $brand-color-lighter;
 
-		> * {
+		// Chapter name and page number
+		> span {
 			background: $brand-color-lighter;
 		}
 	}
 
-	// Dotted line below
-	&::after {
-		bottom: 6px;
-		content: '';
-		left: .2em;
-		min-width: 4em;
-		border-bottom: 1px dotted;
-		position: absolute;
-		right: .2em;;
+	&.-dots {
+		// Dotted line below
+		&::after {
+			bottom: 6px;
+			content: '';
+			left: .2em;
+			min-width: 4em;
+			border-bottom: 1px dotted;
+			position: absolute;
+			right: .2em;;
+		}
 	}
 }
 
 .tify-toc_list {
 	margin: 0 0 0 ($grid / 2);
 	padding: 0;
+	position: relative;
+	z-index: 0;
 
 	& & {
 		// Make space for vertical connector to the left

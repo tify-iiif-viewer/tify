@@ -26,6 +26,21 @@
 					</a>
 				</li>
 			</ul>
+
+			<div class="tify-export_container" v-if="hasPerChapterPdfLinks">
+				<button class="tify-export_toggle" @click="perChapterPdfsShown = !perChapterPdfsShown">
+					<template v-if="!perChapterPdfsShown">{{ 'Download PDFs per chapter'|trans }}</template>
+					<template v-else>{{ 'Close chapter list' }}</template>
+				</button>
+				<div class="tify-export_toc" v-show="perChapterPdfsShown">
+					<toc-list
+						purpose="pdf"
+						ref="children"
+						:level="0"
+						:structures="$root.manifest.structures"
+					/>
+				</div>
+			</div>
 		</div>
 
 		<div v-if="literatureItems.length" class="tify-export_section -literature">
@@ -58,6 +73,8 @@
 </template>
 
 <script>
+	import TocList from '@/components/TocList';
+
 	const itemCriteria = [
 		{
 			label: 'BibTex',
@@ -87,13 +104,24 @@
 	];
 
 	export default {
+		components: {
+			TocList,
+		},
 		data() {
 			return {
 				literatureItems: [],
 				otherItems: [],
+				perChapterPdfsShown: false,
 			};
 		},
 		computed: {
+			hasPerChapterPdfLinks() {
+				const root = this.$root;
+				if (!root.manifest.structures || !root.manifest.structures[0].rendering) return false;
+
+				const renderings = root.iiifConvertToArray(root.manifest.structures[0].rendering);
+				return renderings.some(rendering => rendering.format && rendering.format === 'application/pdf');
+			},
 			imageUrls() {
 				const imageUrls = {};
 				this.$root.params.pages.forEach((page) => {

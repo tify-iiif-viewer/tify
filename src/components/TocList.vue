@@ -26,7 +26,25 @@
 			</button>
 
 			<a
+				v-if="purpose === 'pdf'"
 				class="tify-toc_link"
+				download
+				:href="$root.iiifConvertToArray(structure.rendering)[0]['@id']"
+			>
+				<i class="tify-badge">
+					PDF
+				</i>
+				<template v-if="structure.label.trim()">
+					{{ structure.label }}
+				</template>
+				<template v-else>
+					&mdash;
+				</template>
+				({{ structure.pageCount }}&nbsp;{{ (structure.pageCount === 1 ? 'page' : 'pages')|trans }})
+			</a>
+			<a
+				v-else
+				class="tify-toc_link -dots"
 				@click="setPage(structure.firstPage)"
 			>
 				<span class="tify-toc_chapter">
@@ -48,6 +66,7 @@
 				ref="children"
 				:level="level + 1"
 				:parentStructure="structure"
+				:purpose="purpose"
 				:structures="structure.childStructures"
 			/>
 		</li>
@@ -61,6 +80,7 @@
 			'level',
 			'structures',
 			'parentStructure',
+			'purpose',
 		],
 		data() {
 			return {
@@ -143,6 +163,7 @@
 						structure.pageLabel = this.$root.canvases[0].label;
 					}
 
+					structure.pageCount = (structure.lastPage - structure.firstPage) + 1;
 					structure.current = this.checkIfPagesInStructure(structure);
 
 					const childStructures = [];
