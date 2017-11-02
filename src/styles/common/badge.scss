@@ -1,0 +1,12 @@
+.tify-badge {
+	background: $link-color;
+	border-radius: $br;
+	color: #fff;
+	display: inline-block;
+	font-size: .6875em;
+	font-style: normal;
+	font-weight: bold;
+	line-height: 1;
+	padding: ($grid / 8);
+	vertical-align: middle;
+}
