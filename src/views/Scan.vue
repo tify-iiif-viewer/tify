@@ -65,6 +65,7 @@
 				v-if="cssFiltersSupported"
 				class="tify-scan_filters"
 				:class="{ '-open': filtersVisible }"
+				@keydown.esc.prevent="filtersVisible = false"
 			>
 				<button
 					class="tify-scan_button"
