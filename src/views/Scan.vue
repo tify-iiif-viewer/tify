@@ -65,7 +65,6 @@
 				v-if="cssFiltersSupported"
 				class="tify-scan_filters"
 				:class="{ '-open': filtersVisible }"
-				@keydown.esc.prevent="filtersVisible = false"
 			>
 				<button
 					class="tify-scan_button"
@@ -88,6 +87,7 @@
 							id="tify-scan_brightness"
 							max="2"
 							min=".5"
+							ref="firstSlider"
 							step=".01"
 							type="range"
 							:value="$root.params.filters.brightness || 1"
@@ -149,6 +149,7 @@
 <script>
 	import OpenSeadragon from '@/../openseadragon/src/openseadragon';
 
+	import keyboard from '@/mixins/keyboard';
 	import pagination from '@/mixins/pagination';
 
 	// TODO: Is there another way to make OpenSeadragon available to imports below?
@@ -181,6 +182,7 @@
 
 	export default {
 		mixins: [
+			keyboard,
 			pagination,
 		],
 		data() {
@@ -401,8 +403,6 @@
 			propagateKeyPress(event) {
 				if (event.target.className.indexOf('openseadragon') === 0) return;
 
-				if (['INPUT', 'SELECT', 'TEXTAREA'].indexOf(event.target.nodeName) > -1) return;
-
 				const canvas = this.$refs.image.querySelector('.openseadragon-canvas');
 				if (!canvas) return;
 
@@ -491,7 +491,34 @@
 			this.loadImageInfo();
 			this.updateFilterStyle();
 
-			window.addEventListener('keypress', this.propagateKeyPress);
+			window.addEventListener('keydown', (event) => {
+				if (event.key === 'Escape') {
+					this.filtersVisible = false;
+				}
+			});
+
+			window.addEventListener('keypress', (event) => {
+				if (this.preventKeyboardEvent(event)) return;
+
+				switch (event.key) {
+				case 'y':
+				case 'z':
+					// NOTE: Same physical key for QUERTY and QUERTZ keyboards
+					this.rotateRight();
+					break;
+				case 'c':
+					this.filtersVisible = !this.filtersVisible;
+					if (this.filtersVisible) {
+						this.$nextTick(() => {
+							this.$refs.firstSlider.focus();
+						});
+					}
+					break;
+				default:
+					// Send to OpenSeadragon
+					this.propagateKeyPress(event);
+				}
+			});
 		},
 	};
 </script>
