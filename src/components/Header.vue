@@ -243,6 +243,7 @@
 <script>
 	import PageSelect from '@/components/PageSelect';
 
+	import keyboard from '@/mixins/keyboard';
 	import pagination from '@/mixins/pagination';
 
 	export default {
@@ -250,6 +251,7 @@
 			PageSelect,
 		},
 		mixins: [
+			keyboard,
 			pagination,
 		],
 		props: [
@@ -348,12 +350,12 @@
 		},
 		mounted() {
 			window.addEventListener('keydown', (event) => {
-				if (
-					event.altKey
-					|| event.ctrlKey
-					|| event.metaKey
-					|| ['INPUT', 'SELECT', 'TEXTAREA'].indexOf(event.target.nodeName) > -1
-				) return;
+				if (this.preventKeyboardEvent(event)) return;
+
+				if (event.key === 'Escape') {
+					this.controlsVisible = false;
+					return;
+				}
 
 				switch (event.key) {
 				case 'Backspace':

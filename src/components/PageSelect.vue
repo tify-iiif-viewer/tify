@@ -50,7 +50,12 @@
 </template>
 
 <script>
+	import keyboard from '@/mixins/keyboard';
+
 	export default {
+		mixins: [
+			keyboard,
+		],
 		data() {
 			return {
 				filter: '',
@@ -131,7 +136,12 @@
 			this.updateFilteredCanvases();
 
 			window.addEventListener('keydown', (event) => {
-				if (['INPUT', 'SELECT', 'TEXTAREA'].indexOf(event.target.nodeName) > -1) return;
+				if (this.preventKeyboardEvent(event)) return;
+
+				if (event.key === 'Escape') {
+					this.closeDropdown();
+					return;
+				}
 
 				if (event.key === 'x') {
 					this.toggleDropdown();
