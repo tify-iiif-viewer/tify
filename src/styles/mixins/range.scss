@@ -6,10 +6,11 @@
 // NOTE: Styles with different vendor prefixes must not be grouped
 
 $track-color: $border-color;
-$track-focus-color: $grey-light;
+$track-focus-color: $brand-color-light;
 
-$thumb-color: linear-gradient(to bottom, tint($link-color, 10), shade($link-color, 10));
-$thumb-focus-color: linear-gradient(to bottom, shade($link-color, 10), shade($link-color, 30));
+$thumb-color: linear-gradient(to bottom, tint($link-color, 20), $link-color);
+$thumb-focus-color: linear-gradient(to bottom, $link-color, shade($link-color, 20));
+$thumb-focus-shadow: 0 0 0 ($grid / 4) $highlight-color;
 
 $thumb-radius: $br;
 $thumb-height: $grid;
@@ -17,7 +18,7 @@ $thumb-width: ($grid / 2);
 
 $track-height: ($grid / 4);
 
-$track-radius: ($grid / 8);
+$track-radius: $br;
 
 @mixin range_track {
 	cursor: pointer;
@@ -99,6 +100,7 @@ $track-radius: ($grid / 8);
 
 		&::-webkit-slider-thumb {
 			background: $thumb-focus-color;
+			box-shadow: $thumb-focus-shadow;
 		}
 
 		&::-moz-range-track {
@@ -107,6 +109,7 @@ $track-radius: ($grid / 8);
 
 		&::-moz-range-thumb {
 			background: $thumb-focus-color;
+			box-shadow: $thumb-focus-shadow;
 		}
 
 		&::-ms-fill-lower {
@@ -119,6 +122,7 @@ $track-radius: ($grid / 8);
 
 		&::-ms-thumb {
 			background: $thumb-focus-color;
+			box-shadow: $thumb-focus-shadow;
 		}
 	}
 }
