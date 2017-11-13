@@ -66,12 +66,16 @@ const container = typeof options.container === 'string'
 	? document.querySelector(options.container)
 	: options.container;
 
-if (!container && process.env.NODE_ENV !== 'testing') {
+const el = document.createElement('div');
+
+if (container) {
+	container.appendChild(el);
+} else if (process.env.NODE_ENV !== 'testing') {
 	throw new Error('TIFY container element not found');
 }
 
 export default new Vue({
-	el: container,
+	el,
 	render: h => h(App),
 	data: {
 		error: '',
