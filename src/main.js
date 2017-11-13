@@ -187,10 +187,7 @@ export default new Vue({
 			return displayedValues;
 		},
 		isMobile() {
-			const width = window.innerWidth
-				|| document.documentElement.clientWidth
-				|| document.body.clientWidth;
-			return width < 1024;
+			return (this.$root.$el.offsetWidth < 1024);
 		},
 		isValidPagesArray(pages) {
 			if (!Array.isArray(pages)) return false;
