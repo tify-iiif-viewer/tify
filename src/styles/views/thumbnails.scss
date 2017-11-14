@@ -21,6 +21,7 @@
 	width: $thumbnail-width;
 
 	@include hover {
+		background: mix($grey-dark, $link-color);
 		filter: brightness(1.2);
 	}
 
@@ -39,7 +40,6 @@
 
 .tify-thumbnails_page-number {
 	@include transition(background);
-	background: $shade-dark;
 	bottom: 0;
 	color: white;
 	display: block;
@@ -59,12 +59,6 @@
 		.tify-thumbnails_item {
 
 			&.-current {
-				.tify-thumbnails_page-number {
-					background: $link-color;
-				}
-			}
-
-			@include hover {
 				.tify-thumbnails_page-number {
 					background: $link-color;
 				}
