@@ -171,11 +171,17 @@
 					const pages = this.$root.params.pages.slice(0);
 					const index = pages.indexOf(page);
 					if (index < 0) {
+						// Page is not yet visible
 						pages.push(page);
 						pages.sort((a, b) => (a - b));
+
+						// Double-page view was active, remove dummy "0" page
+						if (pages[0] === 0) pages.shift();
 					} else if (pages.length > 1) {
+						// Page is visible, but not the only visible page
 						pages.splice(index, 1);
 					}
+
 					this.$root.updateParams({ pages });
 					return;
 				}
