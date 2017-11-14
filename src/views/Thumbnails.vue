@@ -6,10 +6,10 @@
 			<a
 				v-for="item in items"
 				class="tify-thumbnails_item"
-				href="javascript:"
+				href=""
 				:class="{ '-current': $root.params.pages.indexOf(item.page) > -1 }"
 				:key="item.page"
-				@click="setPageAndSwitchView(item.page, $event.ctrlKey)"
+				@click.prevent="setPageAndSwitchView(item.page, $event.ctrlKey)"
 				@touchstart="touchStartTogglePage(item.page)"
 				@touchend="touchEnd"
 			>
