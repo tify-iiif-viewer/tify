@@ -16,11 +16,11 @@
 				@click="toggleChildren(index)"
 			>
 				<template v-if="structure.expanded">
-					<i class="tify-icon">remove</i>
+					<icon name="remove"/>
 					<span class="tify-sr-only">{{ 'Collapse'|trans }}</span>
 				</template>
 				<template v-else>
-					<i class="tify-icon">add</i>
+					<icon name="add"/>
 					<span class="tify-sr-only">{{ 'Expand'|trans }}</span>
 				</template>
 			</button>

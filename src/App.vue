@@ -26,7 +26,7 @@
 
 		<div v-if="$root.error" class="tify-app_error">
 			<button class="tify-app_error-close" @click="$root.error = ''">
-				<i class="tify-icon">close</i>
+				<icon name="close"/>
 			</button>
 			<span v-html="$root.error"/>
 		</div>

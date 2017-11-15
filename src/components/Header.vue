@@ -19,8 +19,8 @@
 					:title="'Toggle double-page'|trans"
 					@click="toggleDoublePage"
 				>
-					<i v-if="customPageViewActive" class="tify-icon">view_module</i>
-					<i v-else class="tify-icon">import_contacts</i>
+					<icon v-if="customPageViewActive" name="view_module"/>
+					<icon v-else name="import_contacts"/>
 					<span class="tify-sr-only">{{ 'Toggle double-page'|trans }}</span>
 				</button>
 			</div>
@@ -32,7 +32,7 @@
 					:title="'First page'|trans"
 					@click="goToFirstPage"
 				>
-					<i class="tify-icon">first_page</i>
+					<icon name="first_page"/>
 					<span class="tify-sr-only">{{ 'First page'|trans }}</span>
 				</button>
 
@@ -43,7 +43,7 @@
 					:title="'Previous section'|trans"
 					@click="goToPreviousSection"
 				>
-					<i class="tify-icon">skip_previous</i>
+					<icon name="skip_previous"/>
 					<span class="tify-sr-only">{{ 'Previous section'|trans }}</span>
 				</button>
 
@@ -53,7 +53,7 @@
 					:title="'Previous page'|trans"
 					@click="goToPreviousPage"
 				>
-					<i class="tify-icon">navigate_before</i>
+					<icon name="navigate_before"/>
 					<span class="tify-sr-only">{{ 'Previous page'|trans }}</span>
 				</button>
 
@@ -63,7 +63,7 @@
 					:title="'Next page'|trans"
 					@click="goToNextPage"
 				>
-					<i class="tify-icon">navigate_next</i>
+					<icon name="navigate_next"/>
 					<span class="tify-sr-only">{{ 'Next page'|trans }}</span>
 				</button>
 
@@ -74,7 +74,7 @@
 					:title="'Next section'|trans"
 					@click="goToNextSection"
 				>
-					<i class="tify-icon">skip_next</i>
+					<icon name="skip_next"/>
 					<span class="tify-sr-only">{{ 'Next section'|trans }}</span>
 				</button>
 
@@ -84,7 +84,7 @@
 					:title="'Last page'|trans"
 					@click="goToLastPage"
 				>
-					<i class="tify-icon">last_page</i>
+					<icon name="last_page"/>
 					<span class="tify-sr-only">{{ 'Last page'|trans }}</span>
 				</button>
 			</div>
@@ -97,7 +97,7 @@
 					v-click-outside="closeControlsPopup"
 					@click="toggleControlsPopup"
 				>
-					<i class="tify-icon">menu</i>
+					<icon name="menu"/>
 					{{ 'View'|trans }}
 				</button>
 			</div>
@@ -111,7 +111,7 @@
 					:class="{ '-active': $root.params.view === 'scan' }"
 					@click="toggleView('scan')"
 				>
-					<i class="tify-icon">photo</i>
+					<icon name="photo"/>
 					{{ 'Scan'|trans }}
 				</button>
 
@@ -121,7 +121,7 @@
 					:class="{ '-active': $root.params.view === 'fulltext' }"
 					@click="toggleView('fulltext')"
 				>
-					<i class="tify-icon">subject</i>
+					<icon name="subject"/>
 					{{ 'Fulltext'|trans }}
 				</button>
 
@@ -130,7 +130,7 @@
 					:class="{ '-active': $root.params.view === 'thumbnails' }"
 					@click="toggleView('thumbnails')"
 				>
-					<i class="tify-icon">view_module</i>
+					<icon name="view_module"/>
 					{{ 'Pages'|trans }}
 				</button>
 
@@ -140,7 +140,7 @@
 					:class="{ '-active': $root.params.view === 'toc' }"
 					@click="toggleView('toc')"
 				>
-					<i class="tify-icon">toc</i>
+					<icon name="toc"/>
 					{{ 'Contents'|trans }}
 				</button>
 
@@ -149,7 +149,7 @@
 					:class="{ '-active': $root.params.view === 'info' }"
 					@click="toggleView('info')"
 				>
-					<i class="tify-icon">info_outline</i>
+					<icon name="info_outline"/>
 					{{ 'Info'|trans }}
 				</button>
 
@@ -158,7 +158,7 @@
 					:class="{ '-active': $root.params.view === 'export' }"
 					@click="toggleView('export')"
 				>
-					<i class="tify-icon">file_download</i>
+					<icon name="file_download"/>
 					{{ 'Export'|trans }}
 				</button>
 
@@ -168,7 +168,7 @@
 					:title="$options.filters.trans('Help')"
 					@click="toggleView('help')"
 				>
-					<i class="tify-icon">help_outline</i>
+					<icon name="help_outline"/>
 					{{ 'Help'|trans }}
 				</button>
 
@@ -179,7 +179,7 @@
 						:title="'First page'|trans"
 						@click="goToFirstPage"
 					>
-						<i class="tify-icon">first_page</i>
+						<icon name="first_page"/>
 						<span class="tify-sr-only">{{ 'First page'|trans }}</span>
 					</button>
 
@@ -190,7 +190,7 @@
 						:title="'Previous section'|trans"
 						@click="goToPreviousSection"
 					>
-						<i class="tify-icon">skip_previous</i>
+						<icon name="skip_previous"/>
 						<span class="tify-sr-only">{{ 'Previous section'|trans }}</span>
 					</button>
 
@@ -200,7 +200,7 @@
 						:title="'Previous page'|trans"
 						@click="goToPreviousPage"
 					>
-						<i class="tify-icon">navigate_before</i>
+						<icon name="navigate_before"/>
 						<span class="tify-sr-only">{{ 'Previous page'|trans }}</span>
 					</button>
 
@@ -210,7 +210,7 @@
 						:title="'Next page'|trans"
 						@click="goToNextPage"
 					>
-						<i class="tify-icon">navigate_next</i>
+						<icon name="navigate_next"/>
 						<span class="tify-sr-only">{{ 'Next page'|trans }}</span>
 					</button>
 
@@ -221,7 +221,7 @@
 						:title="'Next section'|trans"
 						@click="goToNextSection"
 					>
-						<i class="tify-icon">skip_next</i>
+						<icon name="skip_next"/>
 						<span class="tify-sr-only">{{ 'Next section'|trans }}</span>
 					</button>
 
@@ -231,7 +231,7 @@
 						:title="'Last page'|trans"
 						@click="goToLastPage"
 					>
-						<i class="tify-icon">last_page</i>
+						<icon name="last_page"/>
 						<span class="tify-sr-only">{{ 'Last page'|trans }}</span>
 					</button>
 				</div>

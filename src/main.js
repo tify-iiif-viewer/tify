@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import App from '@/App';
 
+import Icon from '@/components/Icon';
+
 import '@/directives/click-outside';
 
 import '@/filters/filter-html';
@@ -10,6 +12,9 @@ import '@/polyfills/findIndex';
 
 // Polyfill Promise for IE 11
 if (!window.Promise) window.Promise = require('promise-polyfill');
+
+// Make <icon/> globally available
+Vue.component('Icon', Icon);
 
 Vue.prototype.$http = require('axios');
 
