@@ -139,7 +139,7 @@
 
 		<div class="tify-help_section -about">
 			<h3>{{ 'About'|trans }}</h3>
-			<p v-html="$root.$options.filters.trans('TIFY is a fast and mobile-friendly IIIF document viewer.')"/>
+			<p v-html="$root.$options.filters.trans('TIFY is a slim and mobile-friendly IIIF document viewer.')"/>
 			<dl>
 				<dt>{{ 'Version'|trans }}</dt>
 				<dd>{{ env.VERSION }}</dd>
