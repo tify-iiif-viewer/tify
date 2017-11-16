@@ -8,6 +8,9 @@
       "show": false,
       "restart": true,
       "waitForAction": 100
+    },
+    "NightmareHelper": {
+      "require": "./test/e2e/NightmareHelper.js"
     }
   },
   "include": {

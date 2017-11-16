@@ -12,11 +12,6 @@ Vue.filter('trans', (string) => {
 	if (app.options.language !== 'en') {
 		// eslint-disable-next-line no-console
 		console.warn(`Missing translation for "${string}"`);
-
-		// To easily check for missing translations in E2E tests
-		if (process.env.NODE_ENV === 'development') {
-			return `${string} [missing translation]`;
-		}
 	}
 
 	return string;

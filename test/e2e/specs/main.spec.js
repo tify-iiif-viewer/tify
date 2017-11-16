@@ -5,6 +5,4 @@ Scenario('Start the app', (I) => {
 	I.waitForElement('.tify-app_main');
 
 	I.seeElement('#tify > .tify-app');
-
-	I.dontSeeInSource('[missing translation]');
 });
