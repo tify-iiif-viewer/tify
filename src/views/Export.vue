@@ -18,12 +18,19 @@
 			<h3>{{ 'Renderings'|trans }}</h3>
 			<ul class="tify-export_links">
 				<li v-for="item in $root.manifest.rendering">
-					<i class="tify-badge" v-if="/\.pdf$/i.test(item['@id'])">
-						PDF
-					</i>
-					<a :href="item['@id']">
-						{{ item.label }}
-					</a>
+					<template v-if="/\.pdf$/i.test(item['@id'])">
+						<i class="tify-badge" v-if="/\.pdf$/i.test(item['@id'])">
+							PDF
+						</i>
+						<a :href="item['@id']" download>
+							{{ item.label }}
+						</a>
+					</template>
+					<template v-else>
+						<a :href="item['@id']">
+							{{ item.label }}
+						</a>
+					</template>
 				</li>
 			</ul>
 
