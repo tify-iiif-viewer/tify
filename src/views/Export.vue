@@ -124,7 +124,12 @@
 		computed: {
 			hasPerChapterPdfLinks() {
 				const root = this.$root;
-				if (!root.manifest.structures || !root.manifest.structures[0].rendering) return false;
+
+				if (
+					!Array.isArray(root.manifest.structures)
+					|| !root.manifest.structures[0]
+					|| !root.manifest.structures[0].rendering
+				) return false;
 
 				const renderings = root.iiifConvertToArray(root.manifest.structures[0].rendering);
 				return renderings.some(rendering => rendering.format && rendering.format === 'application/pdf');
