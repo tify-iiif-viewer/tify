@@ -78,11 +78,11 @@
 		z-index: 0;
 	}
 
-	&:first-child {
+	&:first-of-type {
 		border-radius: $br 0 0 $br;
 	}
 
-	&:last-child {
+	&:last-of-type {
 		border-radius: 0 $br $br 0;
 	}
 
