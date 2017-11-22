@@ -1,8 +1,6 @@
 
 // This is the webpack config used for unit tests
 
-/* eslint-disable import/no-extraneous-dependencies */
-
 const utils = require('./utils');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
@@ -16,7 +14,7 @@ const webpackConfig = merge(baseConfig, {
 	devtool: '#inline-source-map',
 	resolveLoader: {
 		alias: {
-			// necessary to to make lang="scss" work in test when using vue-loader's ?inject option
+			// Necessary to make lang="scss" work in test when using vue-loader's ?inject option
 			// see discussion at https://github.com/vuejs/vue-loader/issues/724
 			'scss-loader': 'sass-loader',
 		},

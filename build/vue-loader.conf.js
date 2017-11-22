@@ -1,22 +1,19 @@
-/* eslint-disable import/no-extraneous-dependencies */
-
 const utils = require('./utils');
 const config = require('../config');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
+const sourceMapEnabled = isProduction
+	? config.build.productionSourceMap
+	: config.dev.cssSourceMap;
+
 module.exports = {
 	loaders: utils.cssLoaders({
-		sourceMap: isProduction
-			? config.build.productionSourceMap
-			: config.dev.cssSourceMap,
+		sourceMap: sourceMapEnabled,
 		extract: isProduction,
 	}),
-	// https://github.com/vuejs-templates/webpack/issues/421#issuecomment-284322065
-	postcss: [
-		require('postcss-import')(),
-		require('autoprefixer')(),
-	],
+	cssSourceMap: sourceMapEnabled,
+	cacheBusting: config.dev.cacheBusting,
 	transformToRequire: {
 		video: 'src',
 		source: 'src',

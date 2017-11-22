@@ -1,8 +1,7 @@
-/* eslint-disable import/no-extraneous-dependencies */
-
 const path = require('path');
 const config = require('../config');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const pkg = require('../package.json');
 
 exports.assetsPath = (_path) => {
 	const assetsSubDirectory = process.env.NODE_ENV === 'production'
@@ -22,9 +21,16 @@ exports.cssLoaders = (options) => {
 		},
 	};
 
-	// generate loader string to be used with extract text plugin;
+	const postcssLoader = {
+		loader: 'postcss-loader',
+		options: {
+			sourceMap: options.sourceMap,
+		},
+	};
+
+	// Generate loader string to be used with extract text plugin;
 	function generateLoaders(loader, loaderOptions) {
-		const loaders = [cssLoader];
+		const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader];
 		if (loader) {
 			loaders.push({
 				loader: `${loader}-loader`,
@@ -32,6 +38,7 @@ exports.cssLoaders = (options) => {
 					sourceMap: options.sourceMap,
 				}),
 			});
+			// Enable glob imports in SCSS
 			loaders.push({
 				loader: 'import-glob-loader',
 			});
@@ -53,7 +60,6 @@ exports.cssLoaders = (options) => {
 	return {
 		css: generateLoaders(),
 		postcss: generateLoaders(),
-		sass: generateLoaders('sass', { indentedSyntax: true }),
 		scss: generateLoaders('sass'),
 	};
 };
@@ -71,4 +77,23 @@ exports.styleLoaders = (options) => {
 		});
 	}
 	return output;
+};
+
+exports.createNotifierCallback = () => {
+	const notifier = require('node-notifier');
+
+	return (severity, errors) => {
+		if (severity !== 'error') {
+			return;
+		}
+		const error = errors[0];
+
+		const filename = error.file.split('!').pop();
+		notifier.notify({
+			title: pkg.name,
+			message: `${severity}: ${error.name}`,
+			subtitle: filename || '',
+			icon: path.join(__dirname, 'logo.png'),
+		});
+	};
 };

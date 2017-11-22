@@ -1,7 +1,7 @@
 {
-  "tests": "./test/e2e/specs/*.js",
+  "tests": "./specs/*.js",
   "timeout": 10000,
-  "output": "./test/e2e/output",
+  "output": "./output",
   "helpers": {
     "Nightmare": {
       "url": "http://localhost:8080",
@@ -10,13 +10,10 @@
       "waitForAction": 100
     },
     "NightmareHelper": {
-      "require": "./test/e2e/NightmareHelper.js"
+      "require": "./NightmareHelper.js"
     }
   },
   "include": {
-    "I": "./test/e2e/steps_file.js"
-  },
-  "bootstrap": false,
-  "mocha": {},
-  "name": "tify"
+    "I": "./steps_file.js"
+  }
 }
