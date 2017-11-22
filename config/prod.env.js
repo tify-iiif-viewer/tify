@@ -7,6 +7,6 @@ module.exports = {
 	BUGS_URL: `"${process.env.npm_package_bugs_url}"`,
 	HOMEPAGE: `"${process.env.npm_package_homepage}"`,
 	LICENSE: `"${process.env.npm_package_license}"`,
-	REPOSITORY_URL: `"${process.env.npm_package_repository_url.replace(/^git\+/, '')}"`,
+	REPOSITORY_URL: `"${process.env.npm_package_repository_url.replace(/^git\+/, '').replace(/\.git$/, '')}"`,
 	VERSION: `"${process.env.npm_package_version}"`,
 };
