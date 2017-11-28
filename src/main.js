@@ -311,6 +311,7 @@ export default new Vue({
 			}, (error) => {
 				const status = (error.response ? error.response.statusText : error.message);
 				this.error = `Error loading translation ${this.options.language}: ${status}`;
+				console.warn(this.error); // eslint-disable-line no-console
 			});
 		}
 	},
