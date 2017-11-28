@@ -35,7 +35,7 @@
 				class="tify-scan_button"
 				:disabled="isReset"
 				:title="'Reset'|trans"
-				@click="resetView"
+				@click="resetView($event)"
 			>
 				<icon name="aspect_ratio"/>
 				<span class="tify-sr-only">{{ 'Reset'|trans }}</span>
@@ -54,7 +54,7 @@
 				class="tify-scan_button"
 				:class="{ '-active': $root.params.rotation }"
 				:title="'Rotate'|trans"
-				@click="rotateRight"
+				@click="rotateRight($event)"
 			>
 				<icon name="rotate_right"/>
 				<span class="tify-sr-only">{{ 'Rotate'|trans }}</span>
@@ -69,11 +69,11 @@
 				<button
 					class="tify-scan_button"
 					:class="{ '-active': filtersActive }"
-					:title="'Toggle image adjustments'|trans"
+					:title="'Toggle image filters'|trans"
 					@click="filtersVisible = !filtersVisible"
 				>
 					<icon name="tune"/>
-					<span class="tify-sr-only">{{ 'Toggle image adjustments'|trans }}</span>
+					<span class="tify-sr-only">{{ 'Toggle image filters'|trans }}</span>
 				</button>
 				<div class="tify-scan_filter-popup" v-show="filtersVisible">
 					<p>
@@ -115,7 +115,7 @@
 						<label for="tify-scan_saturation">
 							<icon name="palette" class="-light"/>
 							{{ 'Saturation:'|trans }}
-							{{ Math.round($root.params.filters.hasOwnProperty('saturate') ? $root.params.filters.saturate * 100 : 100)}}&nbsp;%
+							{{ Math.round($root.params.filters.saturate * 100 || 100)}}&nbsp;%
 						</label>
 						<input
 							class="tify-scan_range"
@@ -124,7 +124,7 @@
 							min="0"
 							step=".01"
 							type="range"
-							:value="$root.params.filters.hasOwnProperty('saturate') ? $root.params.filters.saturate : 1"
+							:value="$root.params.filters.saturate || 1"
 							@input="setFilter('saturate', $event)"
 						>
 					</p>
@@ -428,13 +428,20 @@
 					zoom: null,
 				});
 			},
-			resetView() {
+			resetView(event) {
+				if (event && event.shiftKey) {
+					// Rotation has to be reset before pan and zoom
+					this.viewer.viewport.setRotation(0);
+					this.$root.updateParams({ rotation: null });
+					if (this.filtersActive) this.resetFilters();
+				}
+
 				this.viewer.viewport.goHome();
 				this.removeScanParams();
 			},
-			rotateRight() {
+			rotateRight(event) {
 				const { viewport } = this.viewer;
-				const degrees = (viewport.getRotation() + 90) % 360;
+				const degrees = (event && event.shiftKey) ? 0 : (viewport.getRotation() + 90) % 360;
 				viewport.setRotation(degrees);
 				this.$root.updateParams({ rotation: degrees || null });
 			},
@@ -449,9 +456,8 @@
 				this.updateFilterStyle();
 			},
 			startLoadingWatch() {
-				const tileSourcesLength = this.viewer.world.getItemCount();
 				let loading = 0;
-				for (let i = 0; i < tileSourcesLength; i += 1) {
+				for (let i = this.viewer.world.getItemCount() - 1; i >= 0; i -= 1) {
 					const image = this.viewer.world.getItemAt(i);
 					// eslint-disable-next-line no-underscore-dangle
 					if (image && image._tilesLoading) loading = 1;
@@ -495,18 +501,29 @@
 				if (event.key === 'Escape') {
 					this.filtersVisible = false;
 				}
+
+				// Reset pan, zoom, rotation and filters
+				const zeroKeyCodes = [
+					45, // Insert (Shift+Numpad0)
+					48, // 0
+					96, // Numpad0
+				];
+
+				if (event.shiftKey && zeroKeyCodes.indexOf(event.keyCode) > -1) {
+					this.resetView(event);
+				}
 			});
 
 			window.addEventListener('keypress', (event) => {
 				if (this.preventKeyboardEvent(event)) return;
 
 				switch (event.key) {
-				case 'y':
-				case 'z':
+				case 'r':
+				case 'R':
 					// NOTE: Same physical key for QUERTY and QUERTZ keyboards
-					this.rotateRight();
+					this.rotateRight(event);
 					break;
-				case 'c':
+				case 'f':
 					this.filtersVisible = !this.filtersVisible;
 					if (this.filtersVisible) {
 						this.$nextTick(() => {
@@ -514,6 +531,10 @@
 						});
 					}
 					break;
+				case 'F': {
+					this.resetFilters();
+					break;
+				}
 				default:
 					// Send to OpenSeadragon
 					this.propagateKeyPress(event);
