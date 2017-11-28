@@ -2,7 +2,7 @@
 	<section class="tify-thumbnails" @scroll="redrawThumbnails">
 		<h2 class="tify-sr-only">{{ 'Pages'|trans }}</h2>
 
-		<div class="tify-thumbnails_list">
+		<div class="tify-thumbnails_list" ref="container">
 			<a
 				v-for="item in items"
 				class="tify-thumbnails_item"
@@ -33,11 +33,8 @@
 		],
 		data() {
 			return {
-				container: null,
-				isInited: false,
 				itemHeight: 0,
 				itemVMargin: 0,
-				itemWidth: 0,
 				items: [{ label: '' }], // Dummy thumbnail to get dimensions
 				itemsPerRow: 0,
 				knownImages: [],
@@ -56,7 +53,7 @@
 						return;
 					}
 
-					if (document.querySelector(currentSelector)) {
+					if (this.$refs.container.querySelector(currentSelector)) {
 						// Current page is partitially visible
 						this.updateScrollPos(currentSelector);
 					} else {
@@ -67,56 +64,45 @@
 			// eslint-disable-next-line func-names
 			'$root.params.view': function (view) {
 				if (view === 'thumbnails') {
-					if (!this.isInited) this.init();
-					this.scrollToCurrentPage(false);
+					this.updateDimensions();
 				}
 			},
 		},
 		methods: {
-			determineDimensions() {
-				this.container = this.$el.querySelector('.tify-thumbnails_list');
-
-				const itemTemplate = this.container.querySelector('.tify-thumbnails_item');
+			updateDimensions() {
+				const itemTemplate = this.$refs.container.querySelector('.tify-thumbnails_item');
 				const itemStyle = itemTemplate.currentStyle || window.getComputedStyle(itemTemplate);
 				const vMargin = parseInt(itemStyle.marginTop, 10) + parseFloat(itemStyle.marginBottom, 10);
 				this.itemHeight = itemTemplate.offsetHeight + vMargin;
 				this.itemVMargin = vMargin;
+
 				const hMargin = parseInt(itemStyle.marginLeft, 10) + parseFloat(itemStyle.marginRight, 10);
-				this.itemWidth = itemTemplate.offsetWidth + hMargin;
+				const itemWidth = itemTemplate.offsetWidth + hMargin;
 				this.thumbnailWidth = itemTemplate.offsetWidth;
+				this.itemsPerRow = Math.floor((this.$refs.container.clientWidth) / itemWidth);
 
-				this.$el.style.flex = this.style.flex;
-				this.container.style.width = '';
-
-				this.itemsPerRow = Math.floor((this.container.clientWidth) / this.itemWidth);
 				const totalRows = Math.ceil(this.$root.canvases.length / this.itemsPerRow);
 				const containerHeight = (totalRows * this.itemHeight);
-
-				this.$el.style.flex = 'none';
-				this.container.style.height = `${containerHeight}px`;
-				this.container.style.width = `${this.itemsPerRow * this.itemWidth}px`;
+				this.$refs.container.style.height = `${containerHeight}px`;
 
 				this.redrawThumbnails();
+
+				this.scrollToCurrentPage(false);
 			},
 			init() {
-				this.determineDimensions();
+				this.updateDimensions();
+				this.scrollToCurrentPage(false);
 
 				// Redraw thumbnails when the window is resized
 				let resizeTimeout;
 				window.addEventListener('resize', () => {
 					clearTimeout(resizeTimeout);
 					resizeTimeout = setTimeout(() => {
-						if (this.$root.params.view !== 'thumbnails') {
-							this.isInited = false;
-							return;
-						}
+						if (this.$root.params.view !== 'thumbnails') return;
 
-						this.init();
-						this.scrollToCurrentPage(false);
-					}, 250);
+						this.updateDimensions();
+					}, 200);
 				});
-
-				this.isInited = true;
 			},
 			redrawThumbnails() {
 				const currentPos = this.$el.scrollTop;
@@ -153,7 +139,7 @@
 
 				this.$nextTick(() => {
 					const rowsBefore = Math.floor(startPage / this.itemsPerRow);
-					this.container.style.paddingTop = `${(rowsBefore * this.itemHeight)}px`;
+					this.$refs.container.style.paddingTop = `${(rowsBefore * this.itemHeight)}px`;
 				});
 			},
 			scrollToCurrentPage(animated = true) {
@@ -210,7 +196,6 @@
 			// Thumbnails are expensive, so render them only when required
 			if (this.$root.params.view === 'thumbnails') {
 				this.init();
-				this.scrollToCurrentPage(false);
 			}
 		},
 	};

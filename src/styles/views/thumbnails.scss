@@ -1,10 +1,13 @@
 .tify-thumbnails {
 	@extend %panel;
 	min-height: 100%;
-	overflow-y: scroll;
-	padding: ($grid / 8);
+	padding: ($grid / 2);
 	position: relative;
 	user-select: none;
+}
+
+.tify-thumbnails_list {
+	margin: (-$grid / 4);
 }
 
 .tify-thumbnails_item {
@@ -12,10 +15,9 @@
 	background: $grey-dark;
 	box-shadow: $drop-shadow;
 	cursor: pointer;
-	display: block;
 	float: left;
 	height: ($grid * 5.5);
-	margin: ($grid / 8);
+	margin: ($grid / 4);
 	overflow: hidden;
 	position: relative;
 	width: $thumbnail-width;

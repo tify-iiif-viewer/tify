@@ -2,7 +2,7 @@
 	@include separator(0, 0, 0, 1);
 	background: white;
 	flex: 1;
-	min-width: 20.5em;
+	min-width: ($grid * 15);
 	overflow-y: auto;
 	position: relative;
 	transition: visibility .2s, width .2s;
