@@ -213,7 +213,8 @@ export default new Vue({
 			return displayedValues;
 		},
 		isMobile() {
-			return (this.$root.$el.offsetWidth < 1024);
+			// TODO: Update this to work with custom breakpoints
+			return (this.$root.$el.offsetWidth < this.options.breakpoints.medium);
 		},
 		isValidPagesArray(pages) {
 			if (!Array.isArray(pages)) return false;
