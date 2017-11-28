@@ -6,11 +6,29 @@
 
 .tify-help_section {
 	&.-about {
+		dl {
+			margin: 0;
+
+			&::after {
+				clear: both;
+				content: '';
+				display: block;
+			}
+		}
+
 		dd {
+			float: left;
+			margin: 0 0 ($grid / 2);
 			width: calc(100% - 6em);
 		}
 
 		dt {
+			clear: left;
+			color: $text-color-light;
+			float: left;
+			font-weight: bold;
+			margin: 0 0 ($grid / 2);
+			padding: 0 .5em 0 0;
 			width: 6em;
 		}
 	}
