@@ -128,7 +128,6 @@
 		.tify-app.-large & {
 			background: white;
 			border-radius: 0;
-			box-shadow: none;
 			display: block;
 			text-align: left;
 			width: 100%;
@@ -143,6 +142,12 @@
 					background: $shade-light;
 				}
 			}
+		}
+	}
+
+	.tify-header_button-group.-view > & {
+		.tify-app.-large & {
+			box-shadow: none;
 		}
 	}
 }
