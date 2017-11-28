@@ -14,7 +14,7 @@
 				@touchend="touchEnd"
 			>
 				<img alt="" :src="item.imgUrl">
-				<span class="tify-thumbnails_page-number">
+				<span class="tify-thumbnails_page">
 					{{ item.page }} : {{ item.label }}
 				</span>
 			</a>

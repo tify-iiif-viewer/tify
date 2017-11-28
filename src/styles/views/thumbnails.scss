@@ -38,7 +38,7 @@
 	}
 }
 
-.tify-thumbnails_page-number {
+.tify-thumbnails_page {
 	@include transition(background);
 	bottom: 0;
 	color: white;
@@ -59,7 +59,7 @@
 		.tify-thumbnails_item {
 
 			&.-current {
-				.tify-thumbnails_page-number {
+				.tify-thumbnails_page {
 					background: $link-color;
 				}
 			}
