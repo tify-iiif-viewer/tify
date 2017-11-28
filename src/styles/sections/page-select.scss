@@ -9,7 +9,7 @@
 	position: relative;
 
 	// Limit width on tiny screens to prevent buttons from breaking
-	@include respond-to(tiny) {
+	.tify-app.-tiny & {
 		max-width: ($grid * 2);
 		min-width: ($grid * 2);
 		overflow: hidden;
@@ -22,7 +22,7 @@
 	@include dropdown;
 	margin-top: ($grid / 2);
 
-	@include respond-to(small) {
+	.tify-app.-small & {
 		left: 0;
 	}
 }

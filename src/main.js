@@ -24,23 +24,35 @@ if (window.tifyOptions) {
 	}
 
 	Object.keys(window.tifyOptions).forEach((key) => {
-		if (key === 'container') {
+		switch (key) {
+		case 'breakpoints':
+			if (typeof breakpoints !== 'object') {
+				throw new Error(`TIFY option ${key} must be an object (keys: breakpoint names, values: widths in px)`);
+			}
+			break;
+		case 'container':
 			if (typeof window.tifyOptions[key] !== 'string' && !(window.tifyOptions[key] instanceof HTMLElement)) {
 				throw new Error(`TIFY option ${key} must be a string or an HTMLElement`);
 			}
-		} else if (key === 'immediateRender') {
+			break;
+		case 'immediateRender':
 			if (typeof window.tifyOptions[key] !== 'boolean') {
 				throw new Error(`TIFY option "${key}" must be boolean`);
 			}
-		} else if (key === 'language' || key === 'title') {
+			break;
+		case 'language':
+		case 'title':
 			if (typeof window.tifyOptions[key] !== 'string') {
 				throw new Error(`TIFY option "${key}" must be a string`);
 			}
-		} else if (key === 'manifest' || key === 'stylesheet') {
+			break;
+		case 'manifest':
+		case 'stylesheet':
 			if (typeof window.tifyOptions[key] !== 'string' && window.tifyOptions[key] !== null) {
 				throw new Error(`TIFY option "${key}" must be a string (URL) or null`);
 			}
-		} else {
+			break;
+		default:
 			throw new Error(`Unknown TIFY option: "${key}"`);
 		}
 	});
@@ -62,6 +74,12 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const options = Object.assign({
+	breakpoints: {
+		large: 1300,
+		medium: 1000,
+		small: 700,
+		tiny: 359,
+	},
 	container: '#tify',
 	immediateRender: true,
 	language: 'en',
@@ -224,6 +242,15 @@ export default new Vue({
 			}
 			this.updateParams({ pages: [page] });
 		},
+		updateBreakpoint() {
+			Object.keys(this.options.breakpoints).forEach((breakpoint) => {
+				if (this.$el.clientWidth <= this.options.breakpoints[breakpoint]) {
+					this.$el.classList.add(`-${breakpoint}`);
+				} else {
+					this.$el.classList.remove(`-${breakpoint}`);
+				}
+			});
+		},
 		updateParams(params) {
 			Object.assign(this.params, params);
 
@@ -261,7 +288,7 @@ export default new Vue({
 			}, 100);
 		},
 	},
-	created() {
+	mounted() {
 		this.$http.interceptors.request.use((request) => {
 			this.loading += 1;
 			return request;
@@ -290,6 +317,13 @@ export default new Vue({
 			this.error = 'Setting manifest via query parameter is disabled';
 		}
 
+		// Set current breakpoint as classes on container element for use in CSS
+		window.addEventListener('resize', () => {
+			this.updateBreakpoint();
+		});
+		this.updateBreakpoint();
+
+		// Load manifest
 		this.$http.get(this.manifestUrl).then((response) => {
 			this.manifest = response.data;
 
@@ -307,6 +341,7 @@ export default new Vue({
 			this.error = `Error loading IIIF manifest: ${status}`;
 		});
 
+		// Load translation
 		if (this.options.language !== 'en') {
 			const translationUrl = `${base}/translations/${this.options.language}.json`;
 			this.$http.get(translationUrl).then((response) => {

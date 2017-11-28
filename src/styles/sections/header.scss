@@ -16,7 +16,7 @@
 	&:first-child {
 		flex: 1;
 
-		@include respond-to(small) {
+		.tify-app.-small & {
 			margin-bottom: (-$grid / 4);
 		}
 	}
@@ -30,7 +30,7 @@
 	position: relative;
 
 	&.-pagination {
-		@include respond-to(small) {
+		.tify-app.-small & {
 			display: none;
 		}
 	}
@@ -40,7 +40,7 @@
 		margin: $br (-$br) (-$br);
 		overflow: hidden;
 
-		@include respond-to(small) {
+		.tify-app.-small & {
 			display: flex;
 		}
 	}
@@ -48,13 +48,13 @@
 	&.-toggle {
 		display: none;
 
-		@include respond-to(large) {
+		.tify-app.-large & {
 			display: block;
 		}
 	}
 
 	&.-view {
-		@include respond-to(large) {
+		.tify-app.-large & {
 			@include dropdown(right);
 			box-shadow: none;
 			display: none;
@@ -97,7 +97,7 @@
 	&.-help {
 		font-size: 0; // Prevent label from showing
 
-		@include respond-to(large) {
+		.tify-app.-large & {
 			font-size: inherit;
 		}
 	}
@@ -105,7 +105,7 @@
 	&.-scan {
 		display: none !important;
 
-		@include respond-to(medium) {
+		.tify-app.-medium & {
 			display: block !important;
 		}
 
@@ -125,7 +125,7 @@
 	}
 
 	.tify-header_button-group.-view & {
-		@include respond-to(large) {
+		.tify-app.-large & {
 			background: white;
 			border-radius: 0;
 			box-shadow: none;
@@ -157,7 +157,7 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 
-	@include respond-to(small) {
+	.tify-app.-small & {
 		font-size: 1rem;
 	}
 }

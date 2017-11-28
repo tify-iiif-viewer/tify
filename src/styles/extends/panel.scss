@@ -7,7 +7,7 @@
 	position: relative;
 	transition: visibility .2s, width .2s;
 
-	@include respond-to(medium) {
+	.tify-app.-medium & {
 		border: 0;
 		bottom: 0;
 		min-width: 0;

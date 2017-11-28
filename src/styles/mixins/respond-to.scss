@@ -1,9 +1,0 @@
-@mixin respond-to($name) {
-	@if map-has-key($breakpoints, $name) {
-		@media (max-width: map-get($breakpoints, $name)) {
-			@content;
-		}
-	} @else {
-		@error "Undefined breakpoint: #{$name}";
-	}
-}
