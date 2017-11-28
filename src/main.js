@@ -49,13 +49,16 @@ if (window.tifyOptions) {
 // In production mode, load the stylesheet by adding a <link> to <head>
 // In dev mode, the stylesheet is inlined for hot reload
 // TODO: We cannot be sure that TIFY was loaded in a script tag, add a base option
-let base = '.';
-let stylesheetUrl = null;
+let base;
+let stylesheetUrl;
 if (process.env.NODE_ENV === 'production') {
 	const scripts = document.getElementsByTagName('script');
 	const scriptUrl = scripts[scripts.length - 1];
 	base = scriptUrl.src.substring(0, scriptUrl.src.lastIndexOf('/'));
 	stylesheetUrl = `${base}/tify.css`;
+} else {
+	base = 'static';
+	stylesheetUrl = null;
 }
 
 const options = Object.assign({
