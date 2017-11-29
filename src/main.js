@@ -36,6 +36,7 @@ if (window.tifyOptions) {
 			}
 			break;
 		case 'immediateRender':
+		case 'init':
 			if (typeof window.tifyOptions[key] !== 'boolean') {
 				throw new Error(`TIFY option "${key}" must be boolean`);
 			}
@@ -82,26 +83,14 @@ const options = Object.assign({
 	},
 	container: '#tify',
 	immediateRender: true,
+	init: true,
 	language: 'en',
 	manifest: null,
 	stylesheet: stylesheetUrl,
 	title: 'TIFY',
 }, window.tifyOptions);
 
-const container = typeof options.container === 'string'
-	? document.querySelector(options.container)
-	: options.container;
-
-const el = document.createElement('div');
-
-if (container) {
-	container.appendChild(el);
-} else if (process.env.NODE_ENV !== 'testing') {
-	throw new Error('TIFY container element not found');
-}
-
-export default new Vue({
-	el,
+const Tify = new Vue({
 	render: h => h(App),
 	data: {
 		error: '',
@@ -355,3 +344,23 @@ export default new Vue({
 		}
 	},
 });
+
+Tify.init = () => {
+	const container = typeof options.container === 'string'
+		? document.querySelector(options.container)
+		: options.container;
+
+	if (!container) return;
+
+	const el = document.createElement('div');
+	container.appendChild(el);
+	Tify.$mount(el);
+};
+
+if (options.init) {
+	Tify.init();
+}
+
+window.Tify = Tify;
+
+export default Tify;
