@@ -34,9 +34,14 @@
 	}
 
 	h4 {
+		color: $text-color-light;
 		font-size: 1em;
-		font-weight: bold;
-		margin: 0 0 ($grid / 2);
+		font-weight: normal;
+		margin: 0;
+
+		&:nth-of-type(n+2) {
+			margin-top: ($grid / 2);
+		}
 	}
 
 	p {
