@@ -125,7 +125,7 @@ const Tify = new Vue({
 				// Nothing to do here
 			}
 
-			if (this.isMobile() && !params.view) {
+			if (process.env.NODE_ENV === 'testing' || (this.isMobile() && !params.view)) {
 				params.view = 'scan';
 			} else if (typeof params.view === 'undefined') {
 				params.view = 'info';
