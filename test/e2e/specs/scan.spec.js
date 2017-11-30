@@ -38,6 +38,7 @@ Scenario('Reset pan, zoom, rotation and filters at once', (I) => {
 	const encodedParams = encodeURIComponent(JSON.stringify(params));
 
 	I.amOnPage(`http://localhost:8080/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify=${encodedParams}`);
+	I.waitForElement('.tify-app_main');
 
 	I.see('Rotate', '.-active');
 	I.see('Toggle image filters', '.-active');
