@@ -15,7 +15,7 @@ Vue.filter('filterHtml', (html) => {
 		if (!attributes) return `<${tag}>`;
 
 		// Iterate over all attibutes and keep only allowed ones
-		const attributesRegex = /(?:([^\s]+)="(.*?)"|'(.*?)')|([^\s]+)/g;
+		const attributesRegex = /(?:([^\s]+)=(?:"(.*?)"|'(.*?)'))|([^\s]+)/g;
 		const keptAttributes = [];
 		attributes.replace(attributesRegex, (tuple, key) => {
 			if (tuple !== key && allowedAttributes[tag] && allowedAttributes[tag].indexOf(key) > -1) {

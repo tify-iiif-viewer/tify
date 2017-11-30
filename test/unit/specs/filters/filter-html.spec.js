@@ -10,7 +10,7 @@ describe('filter-html', () => {
 				</a>
 			</h1>
 			<p>
-				<img src="keep" alt="keep" id="remove" data-remove>
+				<img src='keep - single quotes' alt="keep" id="remove" data-remove>
 				<br class="keep tag remove class">
 				<i><span invalid="remove attr">keep this</span></i>
 			</p>
@@ -23,7 +23,7 @@ describe('filter-html', () => {
 				</a>
 			${''}
 			<p>
-				<img src="keep" alt="keep">
+				<img src='keep - single quotes' alt="keep">
 				<br>
 				<i><span>keep this</span></i>
 			</p>
