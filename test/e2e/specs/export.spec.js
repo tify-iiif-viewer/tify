@@ -16,6 +16,5 @@ Scenario('Display export links', (I) => {
 	I.click('Download PDFs per chapter');
 	I.see('Titelseite');
 
-	// TODO: "//" is actually missing in the original manifest
-	I.seeElement('a[href="https:gdz.sub.uni-goettingen.de/download/pdf/PPN857449303/LOG_0001.pdf"]');
+	I.seeElement('a[href="https://gdzdev.sub.uni-goettingen.de/download/pdf/PPN857449303/LOG_0001.pdf"]');
 });
