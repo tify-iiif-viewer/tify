@@ -15,7 +15,7 @@
 			v-if="isInited"
 			ref="children"
 			:level="0"
-			:structures="$root.manifest.structures"
+			:structures="structures"
 		/>
 	</section>
 </template>
@@ -24,12 +24,14 @@
 	import TocList from '@/components/TocList';
 
 	import scroll from '@/mixins/scroll';
+	import structures from '@/mixins/structures';
 
 	const currentSelector = '.tify-toc_structure.-current';
 
 	export default {
 		mixins: [
 			scroll,
+			structures,
 		],
 		components: {
 			TocList,
@@ -41,7 +43,7 @@
 		},
 		computed: {
 			hasChildStructures() {
-				return this.$root.manifest.structures.some(structure => !!structure.within);
+				return this.structures.some(structure => structure.childStructures);
 			},
 		},
 		methods: {

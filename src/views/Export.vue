@@ -19,32 +19,26 @@
 			<ul class="tify-export_links">
 				<li v-for="item in $root.manifest.rendering">
 					<template v-if="/\.pdf$/i.test(item['@id'])">
-						<i class="tify-badge" v-if="/\.pdf$/i.test(item['@id'])">
-							PDF
-						</i>
-						<a :href="item['@id']" download>
-							{{ item.label }}
-						</a>
+						<i class="tify-badge" v-if="/\.pdf$/i.test(item['@id'])">PDF</i>
+						<a :href="item['@id']" download>{{ item.label }}</a>
 					</template>
 					<template v-else>
-						<a :href="item['@id']">
-							{{ item.label }}
-						</a>
+						<a :href="item['@id']">{{ item.label }}</a>
 					</template>
 				</li>
 			</ul>
 
-			<div class="tify-export_container" v-if="hasPerChapterPdfLinks">
-				<button class="tify-export_toggle" @click="perChapterPdfsShown = !perChapterPdfsShown">
-					<template v-if="!perChapterPdfsShown">{{ 'Download PDFs per chapter'|trans }}</template>
-					<template v-else>{{ 'Close chapter list' }}</template>
+			<div class="tify-export_container" v-if="hasElementPdfLinks">
+				<button class="tify-export_toggle" @click="perElementPdfLinksVisible = !perElementPdfLinksVisible">
+					<template v-if="!perElementPdfLinksVisible">{{ 'PDFs for each element'|trans }}</template>
+					<template v-else>{{ 'Close PDF list' }}</template>
 				</button>
-				<div class="tify-export_toc" v-show="perChapterPdfsShown">
+				<div class="tify-export_toc" v-show="perElementPdfLinksVisible">
 					<toc-list
 						purpose="pdf"
 						ref="children"
 						:level="0"
-						:structures="$root.manifest.structures"
+						:structures="structures"
 					/>
 				</div>
 			</div>
@@ -82,6 +76,8 @@
 <script>
 	import TocList from '@/components/TocList';
 
+	import structures from '@/mixins/structures';
+
 	const itemCriteria = [
 		{
 			label: 'BibTex',
@@ -114,24 +110,27 @@
 		components: {
 			TocList,
 		},
+		mixins: [
+			structures,
+		],
 		data() {
 			return {
 				literatureItems: [],
 				otherItems: [],
-				perChapterPdfsShown: false,
+				perElementPdfLinksVisible: false,
 			};
 		},
 		computed: {
-			hasPerChapterPdfLinks() {
-				const root = this.$root;
+			hasElementPdfLinks() {
+				const { manifest } = this.$root;
 
 				if (
-					!Array.isArray(root.manifest.structures)
-					|| !root.manifest.structures[0]
-					|| !root.manifest.structures[0].rendering
+					!Array.isArray(manifest.structures)
+					|| !manifest.structures[0]
+					|| !manifest.structures[0].rendering
 				) return false;
 
-				const renderings = root.iiifConvertToArray(root.manifest.structures[0].rendering);
+				const renderings = this.$root.iiifConvertToArray(manifest.structures[0].rendering);
 				return renderings.some(rendering => rendering.format && rendering.format === 'application/pdf');
 			},
 			imageUrls() {

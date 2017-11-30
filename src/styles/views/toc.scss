@@ -13,13 +13,13 @@
 	z-index: 0;
 }
 
-.tify-toc_chapter {
-	@extend %toc_row-item;
-	padding-right: .2em;
-}
-
 .tify-toc_header {
 	margin: 0 ($grid / 2) ($grid / 2);
+}
+
+.tify-toc_label {
+	@extend %toc_row-item;
+	padding-right: .2em;
 }
 
 .tify-toc_link {
@@ -35,7 +35,7 @@
 	@include hover {
 		background: $brand-color-lighter;
 
-		// Chapter name and page number
+		// Element label and page number
 		> span {
 			background: $brand-color-lighter;
 		}
@@ -67,7 +67,7 @@
 	}
 }
 
-.tify-toc_page-number {
+.tify-toc_page {
 	@extend %toc_row-item;
 	float: right;
 	padding-left: .2em;
