@@ -17,7 +17,19 @@ Scenario('Display related metadata', (I) => {
 
 Scenario('Collapse long metadata values', (I) => {
 	I.amOnPage('http://localhost:8080/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
-	I.waitForElement('.tify-app_main');
 	I.click('Info');
 	I.see('Expand', 'button');
+});
+
+Scenario('Show metadata of the current structure', (I) => {
+	I.amOnPage('http://localhost:8080/?manifest=http://localhost:8081/manifest/gdz-PPN857449303.json');
+	I.waitForElement('.tify-app_main');
+	I.click('Info');
+
+	I.see('Current Element');
+	I.see('Titelseite');
+	I.see('Weigel, Erhard', '.tify-info_section.-metadata.-structure');
+
+	I.click('Last page');
+	I.dontSee('Current Element');
 });

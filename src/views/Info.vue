@@ -9,49 +9,29 @@
 			</div>
 		</div>
 
-		<div v-if="manifest.metadata" class="tify-info_section -metadata">
+		<div v-if="manifest.metadata && manifest.metadata.length" class="tify-info_section -metadata">
 			<h3>{{ 'Metadata'|trans }}</h3>
-				<template v-for="item, index in manifest.metadata">
-					<h4>
-						<div v-for="label in $root.iiifConvertToArray(item.label)">
-							{{ label|cleanLabel }}
-						</div>
-					</h4>
-					<div class="tify-info_content">
-						<div
-							class="tify-info_value"
-							ref="items"
-							:class="{ '-collapsed': infoItems && infoItems[index].collapsed }"
-							:style="infoItems && infoItems[index].collapsed ? collapsedStyle : null"
-						>
-							<div v-for="value in $root.iiifConvertToArray(item.value)" v-html="value"/>
-						</div>
+			<metadata-list :metadata="manifest.metadata"/>
+		</div>
 
-						<button
-							v-if="!infoItems || infoItems[index].limitHeight"
-							class="tify-info_toggle"
-							ref="buttons"
-							@click="toggleItem(index)"
-						>
-							<template v-if="!infoItems || infoItems[index].collapsed">
-								<i class="tify-icon">expand_more</i>
-								{{ 'Expand'|trans }}
-							</template>
-							<template v-else>
-								<i class="tify-icon">expand_less</i>
-								{{ 'Collapse'|trans }}
-							</template>
-						</button>
-					</div>
-				</template>
-			</table>
+		<div v-if="currentStructure.label || currentStructureMetadata" class="tify-info_section -metadata -structure">
+			<h3>
+				{{ 'Current Element'|trans }}
+			</h3>
+			<p v-if="currentStructure.label" class="tify-info_structure">
+				{{ currentStructure.label }}
+			</p>
+			<metadata-list
+				v-if="currentStructureMetadata"
+				class="tify-info_section -metadata"
+				:metadata="currentStructureMetadata"
+			/>
 		</div>
 
 		<div v-if="manifest.description" class="tify-info_section -description">
 			<h3>{{ 'Description'|trans }}</h3>
 			<div v-for="description in $root.iiifConvertToArray(manifest.description)" v-html="description"/>
 		</div>
-
 
 		<div v-if="license.length" class="tify-info_section -license">
 			<h3>{{ 'License'|trans }}</h3>
@@ -107,14 +87,20 @@
 <script>
 	// TODO: Handle and display manifest.service, see http://iiif.io/api/presentation/2.1/#service
 
-	const itemMaxLines = 5;
-	const itemHeightMinDelta = 24;
+	import MetadataList from '@/components/MetadataList';
+
+	import structures from '@/mixins/structures';
 
 	export default {
+		components: {
+			MetadataList,
+		},
+		mixins: [
+			structures,
+		],
 		data() {
 			return {
 				collapsedStyle: '',
-				infoItems: null,
 			};
 		},
 		computed: {
@@ -131,48 +117,13 @@
 				return this.manifest.related ? this.$root.iiifConvertToArray(this.manifest.related) : [];
 			},
 		},
-		filters: {
-			cleanLabel(label) {
-				const cleanedLabel = label.replace('_', ' ');
-				return cleanedLabel.charAt(0).toUpperCase() + cleanedLabel.substr(1);
-			},
-		},
 		methods: {
 			init() {
 				this.isInited = true;
-
-				if (!this.manifest.metadata) return;
-
-				if (!this.$refs.buttons) return;
-
-				const button = this.$refs.buttons[0];
-				const buttonStyle = window.getComputedStyle(button);
-				const buttonHeight = button.offsetHeight + parseInt(buttonStyle.marginTop, 10);
-
-				const itemLineHeight = parseInt(window.getComputedStyle(this.$refs.items[0]).lineHeight, 10);
-				const itemMaxHeight = itemLineHeight * itemMaxLines;
-
-				this.collapsedStyle = `max-height: ${itemMaxHeight}px; overflow: hidden`;
-
-				const infoItems = [];
-				for (let i = 0; i < Object.keys(this.manifest.metadata).length; i += 1) {
-					const element = this.$refs.items[i];
-					const collapsedHeight = itemMaxHeight + buttonHeight;
-					const limitHeight = (element.offsetHeight > collapsedHeight + itemHeightMinDelta);
-					const infoItem = {
-						collapsed: limitHeight,
-						limitHeight,
-					};
-					infoItems.push(infoItem);
-				}
-				this.infoItems = infoItems;
 			},
 			isUrl(string) {
 				// Poor man's URL check
 				return /^https?:\/\//.test(string);
-			},
-			toggleItem(index) {
-				this.infoItems[index].collapsed = !this.infoItems[index].collapsed;
 			},
 		},
 		watch: {
