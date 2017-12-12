@@ -8,7 +8,9 @@
 				<li v-for="page in $root.params.pages" v-if="page">
 					<!-- NOTE: The download attribute is only honored for same-origin URLs -->
 					<a :href="imageUrls[page]" :download="`${page}.jpg`">
-						{{ 'Page'|trans }} {{page}} : {{ $root.canvases[page - 1].label }}
+						{{ 'Page'|trans }} {{page}}
+						:
+						{{ $root.iiifConvertToArray($root.canvases[page - 1].label)[0] }}
 					</a>
 				</li>
 			</ul>
