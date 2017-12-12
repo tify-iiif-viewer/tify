@@ -7,17 +7,17 @@
 			<ul>
 				<li>
 					<a :href="`https://github.com/subugoe/tify/blob/v${env.VERSION}/doc/introduction.${lang}.md`">
-						Introduction
+						{{ 'Introduction'|trans }}
 					</a>
 				</li>
 				<li>
 					<a :href="`https://github.com/subugoe/tify/blob/v${env.VERSION}/doc/viewing-multiple-pages.${lang}.md`">
-						Viewing multiple pages
+						{{ 'Viewing multiple pages'|trans }}
 					</a>
 				</li>
 				<li>
 					<a :href="`https://github.com/subugoe/tify/blob/v${env.VERSION}/doc/key-bindings.${lang}.md`">
-						Key bindings
+						{{ 'Key bindings'|trans }}
 					</a>
 				</li>
 			</ul>

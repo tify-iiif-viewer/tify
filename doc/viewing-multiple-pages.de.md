@@ -1,4 +1,4 @@
-# Mehrere Seiten anzeigen
+# Anzeige mehrerer Seiten
 
 Beliebige Seiten können nebeneinander dargestellt werden.
 

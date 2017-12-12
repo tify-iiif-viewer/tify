@@ -33,7 +33,7 @@
 			<div class="tify-export_container" v-if="hasElementPdfLinks">
 				<button class="tify-export_toggle" @click="perElementPdfLinksVisible = !perElementPdfLinksVisible">
 					<template v-if="!perElementPdfLinksVisible">{{ 'PDFs for each element'|trans }}</template>
-					<template v-else>{{ 'Close PDF list' }}</template>
+					<template v-else>{{ 'Close PDF list'|trans }}</template>
 				</button>
 				<div class="tify-export_toc" v-show="perElementPdfLinksVisible">
 					<toc-list
