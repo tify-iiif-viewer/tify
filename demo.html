@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>TIFY - A IIIF document viewer</title>
+	<title>TIFY</title>
 	<style>
 		body {
 			display: flex;
@@ -19,19 +19,26 @@
 			font-size: 1.25rem;
 			font-weight: normal;
 			margin: 0;
-			padding: .5rem;
+		}
+
+		@media (max-width: 700px) {
+			.title {
+				font-size: 1rem;
+			}
 		}
 
 		.title-link {
-			float: left;
-			margin-right: .75rem;
+			display: table-cell;
 		}
 
 		.title-logo {
 			display: block;
+			padding: .5rem
 		}
 
 		.title-text {
+			display: table-cell;
+			padding: 0 .25rem;
 			vertical-align: middle;
 		}
 
@@ -47,7 +54,7 @@
 			<img class="title-logo" src="http://tify.sub.uni-goettingen.de/static/tify-logo-white.svg" alt="TIFY" width="74" height="30">
 		</a>
 		<span class="title-text">
-			A IIIF document viewer
+			A slim and mobile-friendly IIIF document viewer
 		</span>
 	</h1>
 	<div id="tify"></div>
