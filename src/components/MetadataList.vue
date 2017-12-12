@@ -68,10 +68,11 @@
 			this.collapsedStyle = `max-height: ${itemMaxHeight}px; overflow: hidden`;
 
 			const infoItems = [];
-			for (let i = Object.keys(this.metadata).length - 1; i >= 0; i -= 1) {
+			const collapsedHeight = itemMaxHeight + buttonHeight + itemHeightMinDelta;
+			const { length } = Object.keys(this.metadata);
+			for (let i = 0; i < length; i += 1) {
 				const element = this.$refs.items[i];
-				const collapsedHeight = itemMaxHeight + buttonHeight;
-				const limitHeight = (element.offsetHeight > collapsedHeight + itemHeightMinDelta);
+				const limitHeight = (element.offsetHeight > collapsedHeight);
 				const infoItem = {
 					collapsed: limitHeight,
 					limitHeight,
