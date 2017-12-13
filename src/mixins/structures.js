@@ -67,7 +67,7 @@ module.exports = {
 			});
 
 			const { length } = this.$root.manifest.structures;
-			for (let i = 0; i < length; i += 1) {
+			for (let i = length-1; i >= 0; i -= 1) {
 				const { canvases } = this.$root.manifest.structures[i];
 				if (canvases.some(canvasId => currentCanvasIds.indexOf(canvasId) > -1)) {
 					return this.$root.manifest.structures[i];
