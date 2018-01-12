@@ -30,7 +30,7 @@
 				<dt>{{ 'Version'|trans }}</dt>
 				<dd>{{ env.VERSION }}</dd>
 				<dt>{{ 'Author'|trans }}</dt>
-				<dd><a :href="`mailto:${env.AUTHOR_EMAIL}`">{{env.AUTHOR_NAME}}</a></dd>
+				<dd>{{env.AUTHOR_NAME}}</dd>
 				<dt>{{ 'License'|trans }}</dt>
 				<dd>{{ env.LICENSE }}</dd>
 				<dt>{{ 'Source'|trans }}</dt>

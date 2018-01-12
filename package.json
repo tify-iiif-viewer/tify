@@ -10,7 +10,7 @@
   "bugs": {
     "url": "https://github.com/subugoe/tify/issues"
   },
-  "author": "Tobias Schäfer / SUB Göttingen <tschaefer@sub.uni-goettingen.de>",
+  "author": "SUB Göttingen <info@sub.uni-goettingen.de>",
   "license": "AGPL-3.0",
   "scripts": {
     "postinstall": "rm -rf openseadragon && git clone https://github.com/openseadragon/openseadragon.git && cd openseadragon && git checkout tags/v2.3.1",
