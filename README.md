@@ -41,7 +41,7 @@ The only required parameter `manifest` is a URL pointing to the manifest. It can
 - `language` (string, default `en`): The interface language. Currently, only English and German (`de`) are available.
 - `manifest` (string): A URL pointing to the IIIF manifest. If this option is not set, the URL has to be provided via a query parameter of the same name.
 - `stylesheet` (string): Use this to provide your own stylesheet, replacing TIFY's default styles. Set to `null` to prevent TIFY from loading any styles, e.g. if your site's stylesheet already includes styles for TIFY.
-- `title` (string, default: `TIFY`): By default, TIFY replaces the window title with the document title as defined by the manifest, appended by `TIFY`. Set this to any string, or `null` to disable title modification.
+- `title` (string, default: `TIFY`): By default, TIFY replaces the window title with the document title as defined by the manifest, appended by `TIFY`. Set this to any string, or `''` to disable title modification.
 
 ### Example
 
