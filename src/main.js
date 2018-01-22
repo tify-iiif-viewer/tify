@@ -42,11 +42,11 @@ if (window.tifyOptions) {
 			}
 			break;
 		case 'language':
-		case 'title':
-			if (typeof window.tifyOptions[key] !== 'string' && window.tifyOptions[key] !== null) {
+			if (typeof window.tifyOptions[key] !== 'string') {
 				throw new Error(`TIFY option "${key}" must be a string`);
 			}
 			break;
+		case 'title':
 		case 'manifest':
 		case 'stylesheet':
 			if (typeof window.tifyOptions[key] !== 'string' && window.tifyOptions[key] !== null) {
