@@ -33,3 +33,16 @@ Scenario('Show metadata of the current structure', (I) => {
 	I.click('Last page');
 	I.dontSee('Current Element');
 });
+
+Scenario('Show metadata of a nested structure', (I) => {
+	I.amOnPage('http://localhost:8080/?manifest=http://localhost:8081/manifest/gdz-DE_611_BF_5619_1801_1806.json');
+	I.waitForElement('.tify-app_main');
+	I.click('Next page');
+	I.click('Next page');
+	I.click('Next page');
+	I.click('Next page');
+
+	I.click('Info');
+	I.see('Current Element');
+	I.see('[Brief des Barons von Asch an Heyne vom 29.01./10.02.1801]', '.tify-info_section.-metadata.-structure');
+});

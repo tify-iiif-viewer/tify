@@ -54,6 +54,7 @@ module.exports = {
 
 			return topLevelStructures;
 		},
+
 		currentStructure() {
 			if (!Array.isArray(this.$root.manifest.structures)) {
 				return false;
@@ -67,20 +68,36 @@ module.exports = {
 			});
 
 			const { length } = this.$root.manifest.structures;
+			let indexOfStructureWithSmallestRange;
+			let smallestRange;
 			for (let i = 0; i < length; i += 1) {
-				const { canvases } = this.$root.manifest.structures[i];
+				const structure = this.$root.manifest.structures[i];
+				const { canvases } = structure;
 				if (canvases.some(canvasId => currentCanvasIds.indexOf(canvasId) > -1)) {
-					return this.$root.manifest.structures[i];
+					if (structure.firstPage && structure.lastPage) {
+						const currentRange = structure.lastPage - structure.firstPage;
+						if ((currentRange < smallestRange) || !smallestRange) {
+							indexOfStructureWithSmallestRange = i;
+							smallestRange = currentRange;
+							if (smallestRange === 0) break;
+						}
+					}
 				}
 			}
-			return false;
-		},
-		currentStructureMetadata() {
-			if (this.currentStructure.metadata && this.currentStructure.metadata.length) {
-				return this.currentStructure.metadata;
+			if (typeof indexOfStructureWithSmallestRange === 'number' && indexOfStructureWithSmallestRange >= 0) {
+				return this.$root.manifest.structures[indexOfStructureWithSmallestRange];
 			}
 
 			return false;
+		},
+
+		currentStructureLabel() {
+			const { label } = this.currentStructure;
+			return label;
+		},
+		currentStructureMetadata() {
+			const { metadata } = this.currentStructure;
+			return metadata;
 		},
 	},
 };
