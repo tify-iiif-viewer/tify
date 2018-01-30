@@ -14,12 +14,12 @@
 			<metadata-list :metadata="manifest.metadata"/>
 		</div>
 
-		<div v-if="currentStructure.label || currentStructureMetadata" class="tify-info_section -metadata -structure">
+		<div v-if="currentStructureLabel || currentStructureMetadata" class="tify-info_section -metadata -structure">
 			<h3>
 				{{ 'Current Element'|trans }}
 			</h3>
-			<p v-if="currentStructure.label" class="tify-info_structure">
-				{{ currentStructure.label }}
+			<p v-if="currentStructureLabel" class="tify-info_structure">
+				{{ currentStructureLabel }}
 			</p>
 			<metadata-list
 				v-if="currentStructureMetadata"
