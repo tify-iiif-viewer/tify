@@ -11,7 +11,11 @@ module.exports = {
 			for (let i = 0; i < length; i += 1) {
 				const structure = this.$root.manifest.structures[i];
 
-				structure.label = structure.label.trim() || '—'; // NOTE: That's an em dash (&mdash;)
+				if (structure.label) {
+					structure.label = this.$root.iiifConvertToArray(structure.label)[0].trim();
+				} else {
+					structure.label = '—'; // NOTE: That's an em dash (&mdash;)
+				}
 
 				if (structure.canvases) {
 					const firstCanvas = structure.canvases[0];
