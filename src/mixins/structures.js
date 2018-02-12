@@ -73,7 +73,7 @@ module.exports = {
 			for (let i = 0; i < length; i += 1) {
 				const structure = this.$root.manifest.structures[i];
 				const { canvases } = structure;
-				if (canvases.some(canvasId => currentCanvasIds.indexOf(canvasId) > -1)) {
+				if (canvases && canvases.some(canvasId => currentCanvasIds.indexOf(canvasId) > -1)) {
 					if (structure.firstPage && structure.lastPage) {
 						const currentRange = structure.lastPage - structure.firstPage;
 						if ((currentRange < smallestRange) || !smallestRange) {
