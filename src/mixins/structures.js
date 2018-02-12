@@ -11,7 +11,21 @@ module.exports = {
 			for (let i = 0; i < length; i += 1) {
 				const structure = this.$root.manifest.structures[i];
 
-				structure.label = structure.label.trim() || '—'; // NOTE: That's an em dash (&mdash;)
+				let label;
+				if (typeof structure.label === 'string') {
+					label = structure.label.trim();
+				}
+				if (Array.isArray(structure.label)) {
+					const labelWithLanguage = structure.label.find(thisLabel => thisLabel['@language'] === this.$root.options.language);
+					if (labelWithLanguage) {
+						label = labelWithLanguage['@value'];
+					}
+				}
+				if (label) {
+					structure.label = label;
+				} else {
+					structure.label = '—'; // NOTE: That's an em dash (&mdash;)
+				}
 
 				if (structure.canvases) {
 					const firstCanvas = structure.canvases[0];
