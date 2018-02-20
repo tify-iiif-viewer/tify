@@ -50,11 +50,13 @@ module.exports = {
 					}
 				}
 				if (childStructures.length) {
-					structures[i].childStructures = childStructures;
+					structures[i].childStructures = childStructures.sort((a, b) => a.firstPage - b.firstPage);
 				}
 			}
 
-			const topLevelStructures = structures.filter(structure => !structure.within);
+			const topLevelStructures = structures
+				.filter(structure => !structure.within)
+				.sort((a, b) => a.firstPage - b.firstPage);
 
 			return topLevelStructures;
 		},
