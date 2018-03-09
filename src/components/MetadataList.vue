@@ -1,44 +1,45 @@
 <template>
 	<div>
-		<template v-for="item, index in metadata">
-			<h4>
-				<div v-for="label in $root.iiifConvertToArray(item.label)">
-					{{ label|cleanLabel }}
-				</div>
-			</h4>
-			<div class="tify-info_content">
-				<div
-					class="tify-info_value"
-					ref="items"
-					:class="{ '-collapsed': infoItems && infoItems[index].collapsed }"
-					:style="infoItems && infoItems[index].collapsed ? collapsedStyle : null"
-				>
-					<div v-for="value in $root.iiifConvertToArray(item.value)" v-html="value"/>
-				</div>
+		<div v-for="(item, index) in metadata" :key="index">
+			<template>
+				<h4>
+					<div v-for="label in $root.iiifConvertToArray(item.label)">
+						{{ label|cleanLabel }}
+					</div>
+				</h4>
+				<div class="tify-info_content">
+					<div
+						class="tify-info_value"
+						:class="{ '-collapsed': infoItems && infoItems[index] && infoItems[index].isCollapsed }"
+						:style="infoItems && infoItems[index] && infoItems[index].isCollapsed ? collapsedStyle : null"
+					>
+						<div v-for="value in $root.iiifConvertToArray(item.value)" v-html="value"/>
+					</div>
 
-				<button
-					v-if="!infoItems || infoItems[index].limitHeight"
-					class="tify-info_toggle"
-					ref="buttons"
-					@click="infoItems[index].collapsed = !infoItems[index].collapsed"
-				>
-					<template v-if="!infoItems || infoItems[index].collapsed">
-						<icon name="expand_more"/>
-						{{ 'Expand'|trans }}
-					</template>
-					<template v-else>
-						<icon name="expand_less"/>
-						{{ 'Collapse'|trans }}
-					</template>
-				</button>
-			</div>
-		</template>
+					<button
+						v-if="!infoItems || (infoItems && infoItems[index] && infoItems[index].isInitiallyCollapsed)"
+						class="tify-info_toggle"
+						@click="infoItems[index].isCollapsed = !infoItems[index].isCollapsed"
+					>
+						<template v-if="!infoItems || (infoItems && infoItems[index] && infoItems[index].isCollapsed)">
+							<icon name="expand_more"/>
+							{{ 'Expand'|trans }}
+						</template>
+						<template v-else>
+							<icon name="expand_less"/>
+							{{ 'Collapse'|trans }}
+						</template>
+					</button>
+				</div>
+			</template>
+		</div>
 	</div>
 </template>
 
 <script>
 	const itemMaxLines = 5;
-	const itemHeightMinDelta = 24;
+	const lineHeight = 24; // [px] value from settings.scss
+	const maxCharsPerLine = 42; // value empirically determined (and checked against zooming in)
 
 	export default {
 		props: [
@@ -49,6 +50,11 @@
 				infoItems: null,
 			};
 		},
+		watch: {
+			metadata() {
+				this.updateInfoItems();
+			},
+		},
 		filters: {
 			cleanLabel(label) {
 				const cleanedLabel = label.replace('_', ' ');
@@ -56,30 +62,39 @@
 			},
 		},
 		mounted() {
-			if (!this.$refs.buttons) return;
+			this.updateInfoItems();
+		},
+		methods: {
+			updateInfoItems() {
+				const itemMaxHeight = itemMaxLines * lineHeight;
+				this.collapsedStyle = `max-height: ${itemMaxHeight}px; overflow: hidden`;
 
-			const button = this.$refs.buttons[0];
-			const buttonStyle = window.getComputedStyle(button);
-			const buttonHeight = button.offsetHeight + parseInt(buttonStyle.marginTop, 10);
+				const infoItems = [];
+				const { length } = Object.values(this.metadata);
+				for (let i = 0; i < length; i += 1) {
+					const item = this.metadata[i];
+					const values = this.$root.iiifConvertToArray(item.value);
 
-			const itemLineHeight = parseInt(window.getComputedStyle(this.$refs.items[0]).lineHeight, 10);
-			const itemMaxHeight = itemLineHeight * itemMaxLines;
-
-			this.collapsedStyle = `max-height: ${itemMaxHeight}px; overflow: hidden`;
-
-			const infoItems = [];
-			const collapsedHeight = itemMaxHeight + buttonHeight + itemHeightMinDelta;
-			const { length } = Object.keys(this.metadata);
-			for (let i = 0; i < length; i += 1) {
-				const element = this.$refs.items[i];
-				const limitHeight = (element.offsetHeight > collapsedHeight);
-				const infoItem = {
-					collapsed: limitHeight,
-					limitHeight,
-				};
-				infoItems.push(infoItem);
-			}
-			this.infoItems = infoItems;
+					const expectedLineNumber = values.reduce((linesSum, thisValue) => {
+						// assuming we need 1 line minimum to display each value
+						// and a fixed number of chars fits into each line
+						let nLines = Math.ceil(this.stripHtml(thisValue).length / maxCharsPerLine);
+						if (nLines < 1) nLines = 1;
+						return linesSum + nLines;
+					}, 0);
+					const limitHeight = (expectedLineNumber > itemMaxLines);
+					const infoItem = {
+						isCollapsed: limitHeight,
+						isInitiallyCollapsed: limitHeight,
+					};
+					infoItems.push(infoItem);
+				}
+				this.infoItems = infoItems;
+			},
+			stripHtml(html) {
+				const doc = new DOMParser().parseFromString(html, 'text/html');
+				return doc.body.textContent || '';
+			},
 		},
 	};
 </script>
