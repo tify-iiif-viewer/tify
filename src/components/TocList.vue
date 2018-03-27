@@ -1,13 +1,14 @@
 <template>
 	<ul class="tify-toc_list">
 		<li
-			v-for="structure, index in structures"
+			v-for="(structure, index) in structures"
 			class="tify-toc_structure"
 			:data-level="level"
 			:class="{
 				'-current': checkIfPagesInStructure(structure),
 				'-expanded': expandedStructures[index],
 			}"
+			:key="index"
 		>
 			<button
 				v-if="structure.childStructures"
@@ -99,7 +100,7 @@
 				if (doExpand) {
 					this.$set(this.expandedStructures, index, true);
 				} else {
-					this.$delete(this.expandedStructures, index);
+					this.$set(this.expandedStructures, index, false);
 				}
 			},
 		},

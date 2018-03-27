@@ -36,6 +36,11 @@ Scenario('Navigate TOC', (I) => {
 	I.dontSee('Auflösung von Gleichungen 3ten Grades');
 	I.dontSee('Recursionsformeln');
 
+	I.click('Expand all');
+	I.click('.tify-toc_toggle:first-of-type'); // collapse first collapsible
+	I.dontSee('Auflösung von Gleichungen 3ten Grades'); // child of first collapsible
+	I.see('Recursionsformeln'); // child of second collapsible
+
 	// Browser may be "restarted" between tests, but window size is not reset.
 	I.resizeWindow(800, 600);
 });
