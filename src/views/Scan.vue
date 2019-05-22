@@ -262,6 +262,25 @@
 			closeFilters() {
 				this.filtersVisible = false;
 			},
+			detectFullscreen: () => {
+				let fullscreenAPI;
+
+				switch (null) {
+				case document.msFullscreenElement:
+					fullscreenAPI = document.msFullscreenElement;
+					break;
+				case document.webkitFullscreenElement:
+					fullscreenAPI = document.webkitFullscreenElement;
+					break;
+				case document.fullscreenElement:
+					fullscreenAPI = document.fullscreenElement;
+					break;
+				default:
+					fullscreenAPI = false;
+				}
+
+				return fullscreenAPI;
+			},
 			initViewer(resetView) {
 				const { params } = this.$root;
 
