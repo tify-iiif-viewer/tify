@@ -210,7 +210,9 @@
 		data() {
 			return {
 				filtersVisible: false,
+				fullscreenActive: false,
 				loadingTimeout: null,
+				screen: document.getElementById('tify'),
 				tileSources: {},
 				viewer: null,
 				zoomFactor: 1.5,
