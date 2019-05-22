@@ -516,6 +516,28 @@
 			stopLoadingWatch() {
 				clearTimeout(this.loadingTimeout);
 			},
+			toggleFullscreen() {
+				this.fullscreenActive = !this.fullscreenActive;
+				if (this.detectFullscreen() !== null) {
+					if (document.exitFullscreen) {
+						document.exitFullscreen();
+					} else if (document.mozCancelFullScreen) { // Firefox
+						document.mozCancelFullScreen();
+					} else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+						document.webkitExitFullscreen();
+					} else if (document.msExitFullscreen) { // IE/Edge
+						document.msExitFullscreen();
+					}
+				} else if (this.screen.requestFullscreen) {
+					this.screen.requestFullscreen();
+				} else if (this.screen.mozRequestFullScreen) { // Firefox
+					this.screen.mozRequestFullScreen();
+				} else if (this.screen.webkitRequestFullscreen) { // Chrome, Safari and Opera
+					this.screen.webkitRequestFullscreen();
+				} else if (this.screen.msRequestFullscreen) { // IE/Edge
+					this.screen.msRequestFullscreen();
+				}
+			},
 			updateFilterStyle() {
 				if (!this.filtersActive || !this.cssFiltersSupported) return;
 
