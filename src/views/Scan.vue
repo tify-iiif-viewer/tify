@@ -600,6 +600,10 @@
 					this.resetFilters();
 					break;
 				}
+				case 'u':
+				case 'U':
+					this.toggleFullscreen();
+					break;
 				default:
 					// Send to OpenSeadragon
 					this.propagateKeyPress(event);
