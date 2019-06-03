@@ -212,7 +212,7 @@
 				filtersVisible: false,
 				fullscreenActive: false,
 				loadingTimeout: null,
-				screen: document.getElementById('tify'),
+				screen: this.$root.$el.parentNode,
 				tileSources: {},
 				viewer: null,
 				zoomFactor: 1.5,
