@@ -143,9 +143,9 @@
 			<template v-if="detectFullscreen !== false">
 				<template v-if="fullscreenActive">
 					<button
-							class="tify-scan_button exit_fullscreen"
-							:title="'Exit fullscreen'|trans"
-							@click="toggleFullscreen"
+						class="tify-scan_button exit_fullscreen"
+						:title="'Exit fullscreen'|trans"
+						@click="toggleFullscreen"
 					>
 						<icon name="fullscreen_exit"/>
 						<span class="tify-sr-only">{{ 'Exit fullscreen'|trans }}</span>
@@ -153,9 +153,9 @@
 				</template>
 				<template v-else>
 					<button
-							class="tify-scan_button fullscreen"
-							:title="'Fullscreen'|trans"
-							@click="toggleFullscreen"
+						class="tify-scan_button fullscreen"
+						:title="'Fullscreen'|trans"
+						@click="toggleFullscreen"
 					>
 						<icon name="fullscreen"/>
 						<span class="tify-sr-only">{{ 'Fullscreen'|trans }}</span>
