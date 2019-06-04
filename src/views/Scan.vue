@@ -140,28 +140,6 @@
 					</p>
 				</div>
 			</div>
-			<template v-if="detectFullscreen !== false">
-				<template v-if="fullscreenActive">
-					<button
-						class="tify-scan_button exit_fullscreen"
-						:title="'Exit fullscreen'|trans"
-						@click="toggleFullscreen"
-					>
-						<icon name="fullscreen_exit"/>
-						<span class="tify-sr-only">{{ 'Exit fullscreen'|trans }}</span>
-					</button>
-				</template>
-				<template v-else>
-					<button
-						class="tify-scan_button fullscreen"
-						:title="'Fullscreen'|trans"
-						@click="toggleFullscreen"
-					>
-						<icon name="fullscreen"/>
-						<span class="tify-sr-only">{{ 'Fullscreen'|trans }}</span>
-					</button>
-				</template>
-			</template>
 		</div>
 
 		<div class="tify-scan_image" id="tify-scan_image" ref="image"/>
@@ -210,9 +188,7 @@
 		data() {
 			return {
 				filtersVisible: false,
-				fullscreenActive: false,
 				loadingTimeout: null,
-				screen: this.$root.$el.parentNode,
 				tileSources: {},
 				viewer: null,
 				zoomFactor: 1.5,
@@ -261,25 +237,6 @@
 		methods: {
 			closeFilters() {
 				this.filtersVisible = false;
-			},
-			detectFullscreen: () => {
-				let fullscreenAPI;
-
-				switch (null) {
-				case document.msFullscreenElement:
-					fullscreenAPI = document.msFullscreenElement;
-					break;
-				case document.webkitFullscreenElement:
-					fullscreenAPI = document.webkitFullscreenElement;
-					break;
-				case document.fullscreenElement:
-					fullscreenAPI = document.fullscreenElement;
-					break;
-				default:
-					fullscreenAPI = false;
-				}
-
-				return fullscreenAPI;
 			},
 			initViewer(resetView) {
 				const { params } = this.$root;
@@ -516,28 +473,6 @@
 			stopLoadingWatch() {
 				clearTimeout(this.loadingTimeout);
 			},
-			toggleFullscreen() {
-				this.fullscreenActive = !this.fullscreenActive;
-				if (this.detectFullscreen() !== null) {
-					if (document.exitFullscreen) {
-						document.exitFullscreen();
-					} else if (document.mozCancelFullScreen) { // Firefox
-						document.mozCancelFullScreen();
-					} else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
-						document.webkitExitFullscreen();
-					} else if (document.msExitFullscreen) { // IE/Edge
-						document.msExitFullscreen();
-					}
-				} else if (this.screen.requestFullscreen) {
-					this.screen.requestFullscreen();
-				} else if (this.screen.mozRequestFullScreen) { // Firefox
-					this.screen.mozRequestFullScreen();
-				} else if (this.screen.webkitRequestFullscreen) { // Chrome, Safari and Opera
-					this.screen.webkitRequestFullscreen();
-				} else if (this.screen.msRequestFullscreen) { // IE/Edge
-					this.screen.msRequestFullscreen();
-				}
-			},
 			updateFilterStyle() {
 				if (!this.filtersActive || !this.cssFiltersSupported) return;
 
@@ -600,10 +535,6 @@
 					this.resetFilters();
 					break;
 				}
-				case 'u':
-				case 'U':
-					this.toggleFullscreen();
-					break;
 				default:
 					// Send to OpenSeadragon
 					this.propagateKeyPress(event);

@@ -23,6 +23,29 @@
 					<icon v-else name="import_contacts"/>
 					<span class="tify-sr-only">{{ 'Toggle double-page'|trans }}</span>
 				</button>
+
+				<template v-if="detectFullscreen !== false">
+					<template v-if="fullscreenActive">
+						<button
+							class="tify-header_button exit_fullscreen"
+							:title="'Exit fullscreen'|trans"
+							@click="toggleFullscreen"
+						>
+							<icon name="fullscreen_exit"/>
+							<span class="tify-sr-only">{{ 'Exit fullscreen'|trans }}</span>
+						</button>
+					</template>
+					<template v-else>
+						<button
+							class="tify-header_button fullscreen"
+							:title="'Fullscreen'|trans"
+							@click="toggleFullscreen"
+						>
+							<icon name="fullscreen"/>
+							<span class="tify-sr-only">{{ 'Fullscreen'|trans }}</span>
+						</button>
+					</template>
+				</template>
 			</div>
 
 			<div class="tify-header_button-group -pagination">
@@ -261,6 +284,8 @@
 		data() {
 			return {
 				controlsVisible: false,
+				fullscreenActive: false,
+				screen: this.$root.$el.parentNode,
 				sections: [],
 			};
 		},
@@ -281,6 +306,25 @@
 		methods: {
 			closeControlsPopup() {
 				this.controlsVisible = false;
+			},
+			detectFullscreen: () => {
+				let fullscreenAPI;
+
+				switch (null) {
+				case document.msFullscreenElement:
+					fullscreenAPI = document.msFullscreenElement;
+					break;
+				case document.webkitFullscreenElement:
+					fullscreenAPI = document.webkitFullscreenElement;
+					break;
+				case document.fullscreenElement:
+					fullscreenAPI = document.fullscreenElement;
+					break;
+				default:
+					fullscreenAPI = false;
+				}
+
+				return fullscreenAPI;
 			},
 			goToNextSection() {
 				const { pages } = this.$root.params;
@@ -324,6 +368,28 @@
 					newPages = [pages[0], followingPage];
 				}
 				this.$root.updateParams({ pages: newPages });
+			},
+			toggleFullscreen() {
+				this.fullscreenActive = !this.fullscreenActive;
+				if (this.detectFullscreen() !== null) {
+					if (document.exitFullscreen) {
+						document.exitFullscreen();
+					} else if (document.mozCancelFullScreen) { // Firefox
+						document.mozCancelFullScreen();
+					} else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+						document.webkitExitFullscreen();
+					} else if (document.msExitFullscreen) { // IE/Edge
+						document.msExitFullscreen();
+					}
+				} else if (this.screen.requestFullscreen) {
+					this.screen.requestFullscreen();
+				} else if (this.screen.mozRequestFullScreen) { // Firefox
+					this.screen.mozRequestFullScreen();
+				} else if (this.screen.webkitRequestFullscreen) { // Chrome, Safari and Opera
+					this.screen.webkitRequestFullscreen();
+				} else if (this.screen.msRequestFullscreen) { // IE/Edge
+					this.screen.msRequestFullscreen();
+				}
 			},
 			toggleView(name) {
 				const view = (name === this.$root.params.view && !this.$root.isMobile() ? '' : name);
@@ -404,6 +470,10 @@
 					break;
 				case 'E':
 					if (!this.isLastPage) this.goToLastPage();
+					break;
+				case 'u':
+				case 'U':
+					this.toggleFullscreen();
 					break;
 				default:
 				}
