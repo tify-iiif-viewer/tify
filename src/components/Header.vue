@@ -310,6 +310,8 @@
 			detectFullscreen: () => {
 				let fullscreenAPI;
 
+				// fullscreenAPI is set to the browser's implementation of the fullscreen API
+				// (if supported). If the fullscreen API isn't supported, fullscreenAPI is set to false.
 				switch (null) {
 				case document.msFullscreenElement:
 					fullscreenAPI = document.msFullscreenElement;
