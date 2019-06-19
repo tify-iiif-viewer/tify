@@ -37,3 +37,4 @@ TIFY can be fully keyboard-controlled.
 | Reset rotation | <kbd>&#8679;</kbd> + <kbd>R</kbd> |
 | Reset filters | <kbd>&#8679;</kbd> + </kbd>F</kbd> |
 | Reset all | <kbd>&#8679;</kbd> + <kbd>0</kbd> |
+| Fullscreen toggle | <kbd>U</kbd> |
