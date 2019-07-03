@@ -36,6 +36,6 @@ TIFY kann vollständig mit der Tastatur bedient werden.
 | Filter umschalten | <kbd>F</kbd> |
 | Position und Vergrößerung zurücksetzen | <kbd>0</kbd> |
 | Drehung zurücksetzen | <kbd>&#8679;</kbd> + <kbd>R</kbd> |
-| Filters zurücksetzen| <kbd>&#8679;</kbd> + </kbd>F</kbd> |
+| Filter zurücksetzen| <kbd>&#8679;</kbd> + <kbd>F</kbd> |
 | Alles zurücksetzen | <kbd>&#8679;</kbd> + <kbd>0</kbd> |
 | Vollbildschirm umschalten | <kbd>U</kbd> |
