@@ -27,7 +27,7 @@
     "postversion": "git push && git push --tags && npm run update-gh-pages && echo Tag v$npm_package_version created. Run \"npm publish\" to publish \"$npm_package_name\" on npmjs.com."
   },
   "dependencies": {
-    "axios": "^0.17.1",
+    "axios": "^0.18.1",
     "material-design-icons-iconfont": "^3.0.3",
     "promise-polyfill": "^6.1.0",
     "striptags": "^2.2.1",
