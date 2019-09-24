@@ -1,6 +1,6 @@
 <p>
 	<a href="https://github.com/subugoe/tify">
-		<img src="https://subugoe.github.io/tify/static/tify-logo.svg" alt="TIFY" width="148" height="60">
+		<img src="https://tify-iiif-viewer.github.io/tify/static/tify-logo.svg" alt="TIFY" width="148" height="60">
 	</a>
 </p>
 
