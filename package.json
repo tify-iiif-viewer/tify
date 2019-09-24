@@ -2,13 +2,13 @@
   "name": "tify",
   "version": "0.20.5",
   "description": "TIFY is a slim and mobile-friendly IIIF document viewer.",
-  "homepage": "https://github.com/subugoe/tify",
+  "homepage": "https://github.com/tify-iiif-viewer/tify",
   "repository": {
     "type:": "git",
-    "url": "https://github.com/subugoe/tify"
+    "url": "https://github.com/tify-iiif-viewer/tify"
   },
   "bugs": {
-    "url": "https://github.com/subugoe/tify/issues"
+    "url": "https://github.com/tify-iiif-viewer/tify/issues"
   },
   "author": "SUB Göttingen <info@sub.uni-goettingen.de>",
   "license": "AGPL-3.0",
