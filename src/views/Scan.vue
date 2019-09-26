@@ -115,7 +115,7 @@
 						<label for="tify-scan_saturation">
 							<icon name="palette" class="-light"/>
 							{{ 'Saturation:'|trans }}
-							{{ Math.round($root.params.filters.saturate * 100 || 100)}}&nbsp;%
+							{{ Math.round(saturation * 100)}}&nbsp;%
 						</label>
 						<input
 							class="tify-scan_range"
@@ -124,7 +124,7 @@
 							min="0"
 							step=".01"
 							type="range"
-							:value="$root.params.filters.saturate || 1"
+							:value="saturation"
 							@input="setFilter('saturate', $event)"
 						>
 					</p>
@@ -225,6 +225,10 @@
 					&& Math.abs(homeBounds.x - currentBounds.x) < 1e-9
 					&& Math.abs(homeBounds.y - currentBounds.y) < 1e-9
 				);
+			},
+			saturation() {
+				const saturation = this.$parent.$parent.params.filters.saturate;
+				return typeof saturation === 'number' ? saturation : 1;
 			},
 		},
 		watch: {

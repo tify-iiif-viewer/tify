@@ -23,6 +23,22 @@ Scenario('Control scan via keyboard', (I) => {
 	I.dontSee('Brightness');
 });
 
+Scenario('Use image filters', (I) => {
+	const params = {
+		filters: {
+			saturate: 0,
+		},
+	};
+	const encodedParams = encodeURIComponent(JSON.stringify(params));
+
+	I.amOnPage(`http://localhost:8080/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify=${encodedParams}`);
+	I.waitForElement('.tify-app_main');
+
+	I.click('[title="Toggle image filters"]');
+	// NOTE: Named HTML entities do not work with XPath, so we use `\u00a0` instead of `nbsp;`
+	I.seeElement('//label[@for="tify-scan_saturation"][contains(., "	0\u00a0%")]');
+});
+
 Scenario('Reset pan, zoom, rotation and filters at once', (I) => {
 	const params = {
 		filters: {
