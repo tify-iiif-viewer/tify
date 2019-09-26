@@ -23,29 +23,6 @@
 					<icon v-else name="import_contacts"/>
 					<span class="tify-sr-only">{{ 'Toggle double-page'|trans }}</span>
 				</button>
-
-				<template v-if="detectFullscreen !== false">
-					<template v-if="fullscreenActive">
-						<button
-							class="tify-header_button exit_fullscreen"
-							:title="'Exit fullscreen'|trans"
-							@click="toggleFullscreen"
-						>
-							<icon name="fullscreen_exit"/>
-							<span class="tify-sr-only">{{ 'Exit fullscreen'|trans }}</span>
-						</button>
-					</template>
-					<template v-else>
-						<button
-							class="tify-header_button fullscreen"
-							:title="'Fullscreen'|trans"
-							@click="toggleFullscreen"
-						>
-							<icon name="fullscreen"/>
-							<span class="tify-sr-only">{{ 'Fullscreen'|trans }}</span>
-						</button>
-					</template>
-				</template>
 			</div>
 
 			<div class="tify-header_button-group -pagination">
@@ -186,7 +163,7 @@
 				</button>
 
 				<button
-					class="tify-header_button -help"
+					class="tify-header_button -icon-only"
 					:class="{ '-active': $root.params.view === 'help' }"
 					:title="$options.filters.trans('Help')"
 					@click="toggleView('help')"
@@ -194,6 +171,27 @@
 					<icon name="help_outline"/>
 					{{ 'Help'|trans }}
 				</button>
+
+				<template v-if="fullscreenSupported">
+					<button
+						v-if="fullscreenActive"
+						class="tify-header_button"
+						:title="'Exit fullscreen'|trans"
+						@click="toggleFullscreen"
+					>
+						<icon name="fullscreen_exit"/>
+						<span class="tify-sr-only">{{ 'Exit fullscreen'|trans }}</span>
+					</button>
+					<button
+						v-else
+						class="tify-header_button -icon-only"
+						:title="'Fullscreen'|trans"
+						@click="toggleFullscreen"
+					>
+						<icon name="fullscreen"/>
+						{{ 'Fullscreen'|trans }}
+					</button>
+				</template>
 
 				<div class="tify-header_button-group -popup">
 					<button
@@ -290,6 +288,11 @@
 			};
 		},
 		computed: {
+			fullscreenSupported() {
+				return document.fullscreenElement === null ||
+					document.msFullscreenElement === null ||
+					document.webkitFullscreenElement === null;
+			},
 			isLastSection() {
 				const { pages } = this.$root.params;
 				const lastIndex = pages.length - 1;
@@ -372,8 +375,7 @@
 				this.$root.updateParams({ pages: newPages });
 			},
 			toggleFullscreen() {
-				this.fullscreenActive = !this.fullscreenActive;
-				if (this.detectFullscreen() !== null) {
+				if (this.fullscreenActive) {
 					if (document.exitFullscreen) {
 						document.exitFullscreen();
 					} else if (document.mozCancelFullScreen) { // Firefox
@@ -383,7 +385,10 @@
 					} else if (document.msExitFullscreen) { // IE/Edge
 						document.msExitFullscreen();
 					}
-				} else if (this.screen.requestFullscreen) {
+					return;
+				}
+
+				if (this.screen.requestFullscreen) {
 					this.screen.requestFullscreen();
 				} else if (this.screen.mozRequestFullScreen) { // Firefox
 					this.screen.mozRequestFullScreen();
@@ -392,6 +397,9 @@
 				} else if (this.screen.msRequestFullscreen) { // IE/Edge
 					this.screen.msRequestFullscreen();
 				}
+			},
+			toggleFullscreenActive() {
+				this.fullscreenActive = !this.fullscreenActive;
 			},
 			toggleView(name) {
 				const view = (name === this.$root.params.view && !this.$root.isMobile() ? '' : name);
@@ -474,11 +482,15 @@
 					if (!this.isLastPage) this.goToLastPage();
 					break;
 				case 'u':
-				case 'U':
 					this.toggleFullscreen();
 					break;
 				default:
 				}
+			});
+
+			// NOTE: Fullscreen state cannot be computed
+			['', 'moz', 'ms', 'webkit'].forEach((prefix) => {
+				document.addEventListener(`${prefix}fullscreenchange`, this.toggleFullscreenActive);
 			});
 		},
 	};

@@ -94,7 +94,7 @@
 		@extend %button-active;
 	}
 
-	&.-help {
+	&.-icon-only {
 		font-size: 0; // Prevent label from showing
 
 		.tify-app.-large & {
