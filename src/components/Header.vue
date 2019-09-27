@@ -90,8 +90,8 @@
 			</div>
 		</div>
 
-		<div class="tify-header_column -views">
-			<div class="tify-header_button-group -toggle" ref="switchViewSmall">
+		<div class="tify-header_column -controls-toggle">
+			<div class="tify-header_button-group" ref="switchViewSmall">
 				<button
 					class="tify-header_button"
 					v-click-outside="closeControlsPopup"
@@ -101,11 +101,10 @@
 					{{ 'View'|trans }}
 				</button>
 			</div>
+		</div>
 
-			<div
-				class="tify-header_button-group -view"
-				:class="{ '-visible': controlsVisible }"
-			>
+		<div class="tify-header_column -controls" :class="{ '-visible': controlsVisible }">
+			<div class="tify-header_button-group -view">
 				<button
 					class="tify-header_button -scan"
 					:class="{ '-active': $root.params.view === 'scan' }"
@@ -171,91 +170,91 @@
 					<icon name="help_outline"/>
 					{{ 'Help'|trans }}
 				</button>
+			</div>
 
-				<template v-if="fullscreenSupported">
-					<button
-						v-if="fullscreenActive"
-						class="tify-header_button"
-						:title="'Exit fullscreen'|trans"
-						@click="toggleFullscreen"
-					>
-						<icon name="fullscreen_exit"/>
-						<span class="tify-sr-only">{{ 'Exit fullscreen'|trans }}</span>
-					</button>
-					<button
-						v-else
-						class="tify-header_button -icon-only"
-						:title="'Fullscreen'|trans"
-						@click="toggleFullscreen"
-					>
-						<icon name="fullscreen"/>
-						{{ 'Fullscreen'|trans }}
-					</button>
-				</template>
+			<div class="tify-header_button-group -view" v-if="fullscreenSupported">
+				<button
+					v-if="!fullscreenActive"
+					class="tify-header_button -icon-only"
+					:title="'Fullscreen'|trans"
+					@click="toggleFullscreen"
+				>
+					<icon name="fullscreen"/>
+					{{ 'Fullscreen'|trans }}
+				</button>
+				<button
+					v-else
+					class="tify-header_button -icon-only"
+					:title="'Exit fullscreen'|trans"
+					@click="toggleFullscreen"
+				>
+					<icon name="fullscreen_exit"/>
+					{{ 'Exit fullscreen'|trans }}
+				</button>
+			</div>
 
-				<div class="tify-header_button-group -popup">
-					<button
-						class="tify-header_button"
-						:disabled="customPageViewActive || isFirstPage"
-						:title="'First page'|trans"
-						@click="goToFirstPage"
-					>
-						<icon name="first_page"/>
-						<span class="tify-sr-only">{{ 'First page'|trans }}</span>
-					</button>
+			<div class="tify-header_button-group -popup">
+				<button
+					class="tify-header_button"
+					:disabled="customPageViewActive || isFirstPage"
+					:title="'First page'|trans"
+					@click="goToFirstPage"
+				>
+					<icon name="first_page"/>
+					<span class="tify-sr-only">{{ 'First page'|trans }}</span>
+				</button>
 
-					<button
-						v-if="structures && structures.length"
-						class="tify-header_button"
-						:disabled="customPageViewActive || isFirstPage"
-						:title="'Previous section'|trans"
-						@click="goToPreviousSection"
-					>
-						<icon name="skip_previous"/>
-						<span class="tify-sr-only">{{ 'Previous section'|trans }}</span>
-					</button>
+				<button
+					v-if="structures && structures.length"
+					class="tify-header_button"
+					:disabled="customPageViewActive || isFirstPage"
+					:title="'Previous section'|trans"
+					@click="goToPreviousSection"
+				>
+					<icon name="skip_previous"/>
+					<span class="tify-sr-only">{{ 'Previous section'|trans }}</span>
+				</button>
 
-					<button
-						class="tify-header_button"
-						:disabled="customPageViewActive || isFirstPage"
-						:title="'Previous page'|trans"
-						@click="goToPreviousPage"
-					>
-						<icon name="navigate_before"/>
-						<span class="tify-sr-only">{{ 'Previous page'|trans }}</span>
-					</button>
+				<button
+					class="tify-header_button"
+					:disabled="customPageViewActive || isFirstPage"
+					:title="'Previous page'|trans"
+					@click="goToPreviousPage"
+				>
+					<icon name="navigate_before"/>
+					<span class="tify-sr-only">{{ 'Previous page'|trans }}</span>
+				</button>
 
-					<button
-						class="tify-header_button"
-						:disabled="customPageViewActive || isLastPage"
-						:title="'Next page'|trans"
-						@click="goToNextPage"
-					>
-						<icon name="navigate_next"/>
-						<span class="tify-sr-only">{{ 'Next page'|trans }}</span>
-					</button>
+				<button
+					class="tify-header_button"
+					:disabled="customPageViewActive || isLastPage"
+					:title="'Next page'|trans"
+					@click="goToNextPage"
+				>
+					<icon name="navigate_next"/>
+					<span class="tify-sr-only">{{ 'Next page'|trans }}</span>
+				</button>
 
-					<button
-						v-if="structures && structures.length"
-						class="tify-header_button"
-						:disabled="customPageViewActive || isLastSection"
-						:title="'Next section'|trans"
-						@click="goToNextSection"
-					>
-						<icon name="skip_next"/>
-						<span class="tify-sr-only">{{ 'Next section'|trans }}</span>
-					</button>
+				<button
+					v-if="structures && structures.length"
+					class="tify-header_button"
+					:disabled="customPageViewActive || isLastSection"
+					:title="'Next section'|trans"
+					@click="goToNextSection"
+				>
+					<icon name="skip_next"/>
+					<span class="tify-sr-only">{{ 'Next section'|trans }}</span>
+				</button>
 
-					<button
-						class="tify-header_button"
-						:disabled="customPageViewActive || isLastPage"
-						:title="'Last page'|trans"
-						@click="goToLastPage"
-					>
-						<icon name="last_page"/>
-						<span class="tify-sr-only">{{ 'Last page'|trans }}</span>
-					</button>
-				</div>
+				<button
+					class="tify-header_button"
+					:disabled="customPageViewActive || isLastPage"
+					:title="'Last page'|trans"
+					@click="goToLastPage"
+				>
+					<icon name="last_page"/>
+					<span class="tify-sr-only">{{ 'Last page'|trans }}</span>
+				</button>
 			</div>
 		</div>
 	</header>
@@ -459,6 +458,9 @@
 				case 'b':
 					this.toggleDoublePage();
 					break;
+				case 'f':
+					this.toggleFullscreen();
+					break;
 				default:
 				}
 
@@ -480,9 +482,6 @@
 					break;
 				case 'E':
 					if (!this.isLastPage) this.goToLastPage();
-					break;
-				case 'u':
-					this.toggleFullscreen();
 					break;
 				default:
 				}

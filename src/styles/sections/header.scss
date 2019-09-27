@@ -20,6 +20,28 @@
 			margin-bottom: (-$grid / 4);
 		}
 	}
+
+	&.-controls-toggle {
+		display: none;
+
+		.tify-app.-large & {
+			display: block;
+		}
+	}
+
+	&.-controls {
+		.tify-app.-large & {
+			@include dropdown(right);
+			box-shadow: none;
+			display: none;
+			min-width: 10em;
+			top: ($grid * 1.75);
+
+			&.-visible {
+				display: block;
+			}
+		}
+	}
 }
 
 .tify-header_button-group {
@@ -45,25 +67,11 @@
 		}
 	}
 
-	&.-toggle {
-		display: none;
-
-		.tify-app.-large & {
-			display: block;
-		}
-	}
-
 	&.-view {
 		.tify-app.-large & {
-			@include dropdown(right);
 			box-shadow: none;
-			display: none;
-			min-width: 10em;
-			top: ($grid * 1.75);
-
-			&.-visible {
-				display: block;
-			}
+			display: block;
+			margin: 0;
 		}
 	}
 }
