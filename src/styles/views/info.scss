@@ -4,24 +4,6 @@
 	padding: ($grid / 2);
 }
 
-.tify-info_logo {
-	display: block;
-	max-height: $grid * 2.5;
-	max-width: 100%;
-	height: auto;
-	width: auto;
-}
-
-.tify-info_section {
-	margin-bottom: $grid;
-	word-break: break-word;
-}
-
-.tify-info_toggle {
-	@extend %button-small;
-	margin: ($grid / 4) 0 0;
-}
-
 .tify-info_content {
 	position: relative;
 
@@ -35,4 +17,28 @@
 			width: 100%;
 		}
 	}
+}
+
+.tify-info_logo {
+	display: block;
+	max-height: ($grid * 2.5);
+	max-width: 100%;
+	height: auto;
+	width: auto;
+}
+
+.tify-info_metadata {
+	> div {
+		margin-bottom: ($grid / 2);
+	}
+}
+
+.tify-info_section {
+	margin-bottom: $grid;
+	word-break: break-word;
+}
+
+.tify-info_toggle {
+	@extend %button-small;
+	margin: ($grid / 4) 0 0;
 }

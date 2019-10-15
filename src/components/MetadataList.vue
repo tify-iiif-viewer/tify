@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="tify-info_metadata">
 		<div v-for="(item, index) in metadata" :key="index">
 			<template>
 				<h4>
