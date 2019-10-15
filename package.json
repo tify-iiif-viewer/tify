@@ -10,7 +10,10 @@
   "bugs": {
     "url": "https://github.com/tify-iiif-viewer/tify/issues"
   },
-  "author": "SUB Göttingen <info@sub.uni-goettingen.de>",
+  "author": {
+    "name": "Tobias Schäfer",
+    "url": "https://aspectis.net/"
+  },
   "license": "AGPL-3.0",
   "scripts": {
     "postinstall": "rimraf openseadragon && git clone https://github.com/openseadragon/openseadragon.git && cd openseadragon && git checkout tags/v2.4.1 && cd .. && npm run fix-openseadragon",
