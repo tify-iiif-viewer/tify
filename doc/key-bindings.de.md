@@ -13,6 +13,7 @@ TIFY kann vollständig mit der Tastatur bedient werden.
 | Export | <kbd>5</kbd> |
 | Hilfe | <kbd>6</kbd> |
 | Scan | <kbd>Rücktaste</kbd> |
+| Vollbild | <kbd>F</kbd> |
 
 ## Blättern
 
@@ -33,9 +34,9 @@ TIFY kann vollständig mit der Tastatur bedient werden.
 | Vergrößern | <kbd>&#8679;W</kbd> oder <kbd>+</kbd> |
 | Verkleinern | <kbd>&#8679;S</kbd> oder <kbd>-</kbd> |
 | Drehen (90 Grad im Uhrzeigersinn) | <kbd>R</kbd> |
-| Filter umschalten | <kbd>F</kbd> |
+| Filter umschalten | <kbd>I</kbd> |
 | Position und Vergrößerung zurücksetzen | <kbd>0</kbd> |
 | Drehung zurücksetzen | <kbd>&#8679;</kbd> + <kbd>R</kbd> |
-| Filter zurücksetzen| <kbd>&#8679;</kbd> + <kbd>F</kbd> |
+| Filter zurücksetzen| <kbd>&#8679;</kbd> + <kbd>I</kbd> |
 | Alles zurücksetzen | <kbd>&#8679;</kbd> + <kbd>0</kbd> |
 | Vollbildschirm umschalten | <kbd>U</kbd> |

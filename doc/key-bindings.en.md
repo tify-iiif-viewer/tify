@@ -13,6 +13,7 @@ TIFY can be fully keyboard-controlled.
 | Export | <kbd>5</kbd> |
 | Help | <kbd>6</kbd> |
 | Scan | <kbd>Backspace</kbd> |
+| Toggle fullscreen | <kbd>F</kbd> |
 
 ## Turning Pages
 
@@ -33,8 +34,9 @@ TIFY can be fully keyboard-controlled.
 | Zoom in | <kbd>&#8679;W</kbd> or <kbd>+</kbd> |
 | Zoom out | <kbd>&#8679;S</kbd> or <kbd>-</kbd> |
 | Rotate (90 degress clockwise) | <kbd>R</kbd> |
+| Toggle filters | <kbd>I</kbd> |
 | Reset pan and zoom | <kbd>0</kbd> |
 | Reset rotation | <kbd>&#8679;</kbd> + <kbd>R</kbd> |
-| Reset filters | <kbd>&#8679;</kbd> + </kbd>F</kbd> |
+| Reset filters | <kbd>&#8679;</kbd> + </kbd>I</kbd> |
 | Reset all | <kbd>&#8679;</kbd> + <kbd>0</kbd> |
 | Fullscreen toggle | <kbd>U</kbd> |

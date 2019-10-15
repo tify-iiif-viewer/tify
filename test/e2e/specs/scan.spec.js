@@ -12,12 +12,12 @@ Scenario('Control scan via keyboard', (I) => {
 	I.pressKey('r');
 	I.see('Rotate', ':not(.-active)');
 
-	I.pressKey('f');
+	I.pressKey('i');
 	I.see('Brightness');
-	I.pressKey('f');
+	I.pressKey('i');
 	I.dontSee('Brightness');
 
-	I.pressKey('f');
+	I.pressKey('i');
 	I.see('Brightness');
 	I.pressKey('Esc');
 	I.dontSee('Brightness');

@@ -527,7 +527,7 @@
 					// NOTE: Same physical key for QUERTY and QUERTZ keyboards
 					this.rotateRight(event);
 					break;
-				case 'f':
+				case 'i':
 					this.filtersVisible = !this.filtersVisible;
 					if (this.filtersVisible) {
 						this.$nextTick(() => {
@@ -535,7 +535,7 @@
 						});
 					}
 					break;
-				case 'F': {
+				case 'I': {
 					this.resetFilters();
 					break;
 				}
