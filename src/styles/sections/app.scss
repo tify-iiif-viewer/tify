@@ -44,6 +44,10 @@
 		}
 	}
 
+	label {
+		cursor: pointer;
+	}
+
 	p {
 		margin: 0 0 ($grid / 2);
 	}
@@ -64,8 +68,9 @@
 		}
 	}
 
-	label {
-		cursor: pointer;
+	ul {
+		margin: 0 0 $grid;
+		padding: 0 0 0 $grid;
 	}
 }
 

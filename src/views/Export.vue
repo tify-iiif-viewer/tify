@@ -4,7 +4,7 @@
 
 		<div class="tify-export_section -links">
 			<h3>{{ 'Download Individual Images'|trans }}</h3>
-			<ul class="tify-export_links">
+			<ul>
 				<li v-for="page in $root.params.pages" v-if="page">
 					<!-- NOTE: The download attribute is only honored for same-origin URLs -->
 					<a :href="imageUrls[page]" :download="`${page}.jpg`">
@@ -18,7 +18,7 @@
 
 		<div v-if="$root.manifest.rendering" class="tify-export_section -renderings">
 			<h3>{{ 'Renderings'|trans }}</h3>
-			<ul class="tify-export_links">
+			<ul>
 				<li v-for="item in $root.manifest.rendering">
 					<template v-if="/\.pdf$/i.test(item['@id'])">
 						<i class="tify-badge" v-if="/\.pdf$/i.test(item['@id'])">PDF</i>
@@ -48,7 +48,7 @@
 
 		<div v-if="literatureItems.length" class="tify-export_section -literature">
 			<h3>{{ 'Literature Management'|trans }}</h3>
-			<ul class="tify-export_links">
+			<ul>
 				<li v-for="item in literatureItems">
 					<a :href="item['@id']" download>
 						{{ item.label }}
@@ -59,7 +59,7 @@
 
 		<div class="tify-export_section -other">
 			<h3>{{ 'Other Formats'|trans }}</h3>
-			<ul class="tify-export_links">
+			<ul>
 				<li>
 					<a :href="$root.manifestUrl" download="manifest.json">
 						{{ 'IIIF manifest'|trans }}
