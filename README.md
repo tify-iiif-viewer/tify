@@ -1,12 +1,12 @@
 <p>
-	<a href="https://github.com/subugoe/tify">
-		<img src="https://tify-iiif-viewer.github.io/tify/static/tify-logo.svg" alt="TIFY" width="148" height="60">
+	<a href="https://github.com/tify-iiif-viewer/tify">
+		<img src="https://demo.tify.rocks/static/tify-logo.svg" alt="TIFY" width="148" height="60">
 	</a>
 </p>
 
 TIFY is a slim and mobile-friendly IIIF document viewer built with [Vue.js](https://github.com/vuejs/vue).
 
-[Check out the demo](http://tify.sub.uni-goettingen.de/demo.html?manifest=https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN857449303/manifest) and feel free to load your own manifests by changing the URL.
+[Check out the demo](https://demo.tify.rocks/demo.html?manifest=https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN857449303/manifest) and feel free to load your own manifests by changing the URL. [The demo is also available without HTTPS](http://demo.tify.rocks/demo.html?manifest=https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN857449303/manifest) in case you want to load a manifest from a non-SSL IIIF API.
 
 ## Embedding TIFY
 
@@ -99,3 +99,11 @@ npm run e2e
 # run all tests
 npm test
 ```
+
+---
+
+Initiated by
+
+<a href="https://www.sub.uni-goettingen.de/en/">
+	<img src="https://demo.tify.rocks/static/supporters/sub-logo.svg" width="329" height="30" alt="Göttingen State and University Library (SUB Göttingen)"/>
+</a>
