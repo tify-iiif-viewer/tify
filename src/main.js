@@ -6,7 +6,7 @@ import Icon from '@/components/Icon';
 import '@/directives/click-outside';
 
 import '@/filters/filter-html';
-import '@/filters/trans';
+import '@/filters/trans'; // eslint-disable-line import/no-cycle
 
 import '@/polyfills/findIndex';
 
@@ -74,7 +74,7 @@ if (process.env.NODE_ENV === 'production') {
 	stylesheetUrl = null;
 }
 
-const options = Object.assign({
+const options = {
 	breakpoints: {
 		large: 1300,
 		medium: 1000,
@@ -88,7 +88,8 @@ const options = Object.assign({
 	manifest: null,
 	stylesheet: stylesheetUrl,
 	title: 'TIFY',
-}, window.tifyOptions);
+	...window.tifyOptions,
+};
 
 const Tify = new Vue({
 	render: h => h(App),
@@ -303,7 +304,9 @@ const Tify = new Vue({
 		if (!this.manifestUrl) {
 			this.error = 'Missing query parameter or option: manifest';
 			return;
-		} else if (this.options.manifest && this.params.manifest) {
+		}
+
+		if (this.options.manifest && this.params.manifest) {
 			this.error = 'Setting manifest via query parameter is disabled';
 		}
 
