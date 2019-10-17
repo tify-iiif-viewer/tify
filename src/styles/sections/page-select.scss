@@ -4,9 +4,13 @@
 	box-shadow: none;
 	display: block;
 	margin: (-$grid / 4);
+	max-width: 30vw;
 	min-width: ($grid * 3);
+	overflow: hidden;
 	padding: ($grid / 4) ($grid / 2);
 	position: relative;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 
 	// Limit width on tiny screens to prevent buttons from breaking
 	.tify-app.-tiny & {
@@ -21,6 +25,7 @@
 .tify-page-select_dropdown {
 	@include dropdown;
 	margin-top: ($grid / 2);
+	max-width: 100%;
 
 	.tify-app.-small & {
 		left: 0;
