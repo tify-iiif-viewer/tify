@@ -24,9 +24,7 @@
 	"Help": "Hilfe",
 	"IIIF manifest": "IIIF-Manifest",
 	"Info": "Info",
-	"Introduction": "Einführung",
 	"Jump to page": "Zu Seite springen",
-	"Key bindings": "Tastenbelegung",
 	"Language": "Sprache",
 	"Last page": "Letzte Seite",
 	"License": "Lizenz",
@@ -36,6 +34,7 @@
 	"Metadata": "Metadaten",
 	"Next page": "Nächste Seite",
 	"Next section": "Nächster Abschnitt",
+	"Open documentation": "Dokumentation öffnen",
 	"Other Formats": "Andere Formate",
 	"Page": "Seite",
 	"page": "Seite",
@@ -63,7 +62,6 @@
 	"Toggle image filters": "Bildfilter",
 	"Version": "Version",
 	"View": "Ansicht",
-	"Viewing multiple pages": "Anzeige mehrerer Seiten",
 	"Zoom in": "Vergrößern",
 	"Zoom out": "Verkleinern"
 }

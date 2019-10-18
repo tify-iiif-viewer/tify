@@ -4,23 +4,7 @@
 
 		<div class="tify-help_section -doc">
 			<h3>{{ 'Documentation'|trans }}</h3>
-			<ul>
-				<li>
-					<a :href="`${info.DOCS_URL}/introduction.${lang}.md`">
-						{{ 'Introduction'|trans }}
-					</a>
-				</li>
-				<li>
-					<a :href="`${info.DOCS_URL}/viewing-multiple-pages.${lang}.md`">
-						{{ 'Viewing multiple pages'|trans }}
-					</a>
-				</li>
-				<li>
-					<a :href="`${info.DOCS_URL}/key-bindings.${lang}.md`">
-						{{ 'Key bindings'|trans }}
-					</a>
-				</li>
-			</ul>
+			<p><a :href="info.DOCS_URL">Open documentation</a></p>
 		</div>
 
 		<div class="tify-help_section -about">
@@ -49,9 +33,6 @@
 		computed: {
 			info() {
 				return JSON.parse(unescape(process.env.INFO));
-			},
-			lang() {
-				return this.$root.options.language;
 			},
 		},
 	};
