@@ -6,17 +6,17 @@
 			<h3>{{ 'Documentation'|trans }}</h3>
 			<ul>
 				<li>
-					<a :href="`https://github.com/subugoe/tify/blob/v${env.VERSION}/doc/introduction.${lang}.md`">
+					<a :href="`${info.DOCS_URL}/introduction.${lang}.md`">
 						{{ 'Introduction'|trans }}
 					</a>
 				</li>
 				<li>
-					<a :href="`https://github.com/subugoe/tify/blob/v${env.VERSION}/doc/viewing-multiple-pages.${lang}.md`">
+					<a :href="`${info.DOCS_URL}/viewing-multiple-pages.${lang}.md`">
 						{{ 'Viewing multiple pages'|trans }}
 					</a>
 				</li>
 				<li>
-					<a :href="`https://github.com/subugoe/tify/blob/v${env.VERSION}/doc/key-bindings.${lang}.md`">
+					<a :href="`${info.DOCS_URL}/key-bindings.${lang}.md`">
 						{{ 'Key bindings'|trans }}
 					</a>
 				</li>
@@ -27,21 +27,18 @@
 			<h3>{{ 'About TIFY'|trans }}</h3>
 			<p v-html="$root.$options.filters.trans('TIFY is a slim and mobile-friendly IIIF document viewer.')"/>
 			<dl>
-				<dt>{{ 'Version'|trans }}</dt>
-				<dd>{{ env.VERSION }}</dd>
 				<dt>{{ 'Author'|trans }}</dt>
-				<dd>{{env.AUTHOR_NAME}}</dd>
+				<dd><a :href="info.AUTHOR.url">{{info.AUTHOR.name}}</a></dd>
+				<dt>{{ 'Version'|trans }}</dt>
+				<dd>{{ info.VERSION }}</dd>
 				<dt>{{ 'License'|trans }}</dt>
-				<dd>{{ env.LICENSE }}</dd>
-				<dt>{{ 'Source'|trans }}</dt>
-				<dd><a :href="env.REPOSITORY_URL">GitHub</a></dd>
+				<dd>{{ info.LICENSE }}</dd>
 			</dl>
-			<p v-if="env.BUGS_URL">
-				{{ 'Found a bug?'|trans }}
-				<a :href="env.BUGS_URL">{{ 'Please let us know.'|trans }}</a>
+			<p>
+				<a :href="info.REPOSITORY_URL">{{ 'Source code'|trans }}</a>
 			</p>
-			<p v-if="env.HOMEPAGE">
-				<a :href="env.HOMEPAGE">{{ 'Visit the website'|trans }}</a>
+			<p>
+				<a :href="info.BUGS_URL">{{ 'Report a bug'|trans }}</a>
 			</p>
 		</div>
 	</section>
@@ -49,12 +46,10 @@
 
 <script>
 	export default {
-		data() {
-			return {
-				env: process.env,
-			};
-		},
 		computed: {
+			info() {
+				return JSON.parse(unescape(process.env.INFO));
+			},
 			lang() {
 				return this.$root.options.language;
 			},

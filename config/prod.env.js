@@ -1,12 +1,15 @@
+const env = require('../package.json');
+
+const info = {
+	VERSION: env.version,
+	AUTHOR: env.author,
+	LICENSE: env.license,
+	REPOSITORY_URL: env.repository.url,
+	BUGS_URL: env.bugs.url,
+	DOCS_URL: `${env.repository.url}/blob/v${env.version}/doc`,
+};
+
 module.exports = {
 	NODE_ENV: '"production"',
-
-	// Used in "export" panel
-	AUTHOR_NAME: `"${process.env.npm_package_author_name}"`,
-	AUTHOR_EMAIL: `"${process.env.npm_package_author_email}"`,
-	BUGS_URL: `"${process.env.npm_package_bugs_url}"`,
-	HOMEPAGE: `"${process.env.npm_package_homepage}"`,
-	LICENSE: `"${process.env.npm_package_license}"`,
-	REPOSITORY_URL: `"${process.env.npm_package_repository_url.replace(/^git\+/, '').replace(/\.git$/, '')}"`,
-	VERSION: `"${process.env.npm_package_version}"`,
+	INFO: `"${escape(JSON.stringify(info))}"`,
 };
