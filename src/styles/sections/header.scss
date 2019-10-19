@@ -58,6 +58,8 @@
 	}
 
 	&.-popup {
+		@include separator(1);
+		border-radius: 0 0 $br $br;
 		display: none;
 		margin: $br (-$br) (-$br);
 		overflow: hidden;
@@ -86,11 +88,11 @@
 		z-index: 0;
 	}
 
-	&:first-of-type {
+	&:first-child {
 		border-radius: $br 0 0 $br;
 	}
 
-	&:last-of-type {
+	&:last-child {
 		border-radius: 0 $br $br 0;
 	}
 
@@ -119,6 +121,7 @@
 
 		+ .tify-header_button {
 			border-radius: $br 0 0 $br;
+			box-shadow: none;
 		}
 	}
 
