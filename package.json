@@ -17,7 +17,7 @@
   "license": "AGPL-3.0",
   "scripts": {
     "postinstall": "rimraf openseadragon && git clone https://github.com/openseadragon/openseadragon.git && cd openseadragon && git checkout tags/v2.4.1 && cd .. && npm run fix-openseadragon",
-    "fix-openseadragon": "replace '\\}\\(this, function \\(\\) \\{' '}(window, function () {' ./openseadragon/src/openseadragon.js",
+    "fix-openseadragon": "./node_modules/.bin/replace '\\}\\(this, function \\(\\) \\{' '}(window, function () {' ./openseadragon/src/openseadragon.js",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
     "build": "node build/build.js",
