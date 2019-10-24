@@ -65,6 +65,8 @@ Below an example with all available options set.
 
 ## Build Setup
 
+You need to have npm (version 5.5.1 or above, usually comes with Node.js) and git installed.
+
 Install dependencies:
 
 ``` bash
