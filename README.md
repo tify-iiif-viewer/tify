@@ -38,7 +38,7 @@ The only required parameter `manifest` is a URL pointing to the manifest. It can
 - `container` (string or HTMLElement, default `#tify`): The HTML element TIFY is loaded into.
 - `immediateRender` (boolean, default `true`): Set this to `false` to render lower resolution tiles until the full resolution is loaded, providing the effect of blurry to sharp. Note that this increases loading times.
 - `init` (boolean, default `true`): TIFY is initialized immediately when the script is loaded. Set this to false if you prefer to initialize TIFY only by calling `window.Tify.init()`.
-- `language` (string, default `en`): The interface language. [See which languages are available apart than English](https://github.com/tify-iiif-viewer/tify/tree/master/static/translations) or add your own translation file.
+- `language` (string, default `en`): The interface language. [See which languages are available apart from English](https://github.com/tify-iiif-viewer/tify/tree/master/dist/translations) or add your own translation file.
 - `manifest` (string): A URL pointing to the IIIF manifest. If this option is not set, the URL has to be provided via a query parameter of the same name.
 - `stylesheet` (string): Use this to provide your own stylesheet, replacing TIFY's default styles. Set to `null` to prevent TIFY from loading any styles, e.g. if your site's stylesheet already includes styles for TIFY.
 - `title` (string, default: `TIFY`): By default, TIFY replaces the window title with the document title as defined by the manifest, appended by `TIFY`. Set this to any string, or `null` to disable title modification.
