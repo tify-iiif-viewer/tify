@@ -4,7 +4,7 @@
 
 		<div class="tify-help_section -doc">
 			<h3>{{ 'Documentation'|trans }}</h3>
-			<p><a :href="info.DOCS_URL">Open documentation</a></p>
+			<p><a :href="info.DOCS_URL">{{ 'Open documentation'|trans }}</a></p>
 		</div>
 
 		<div class="tify-help_section -about">
@@ -12,7 +12,7 @@
 			<p v-html="$root.$options.filters.trans('TIFY is a slim and mobile-friendly IIIF document viewer.')"/>
 			<dl>
 				<dt>{{ 'Author'|trans }}</dt>
-				<dd><a :href="info.AUTHOR.url">{{info.AUTHOR.name}}</a></dd>
+				<dd><a :href="info.AUTHOR.url">{{ info.AUTHOR.name }}</a></dd>
 				<dt>{{ 'Version'|trans }}</dt>
 				<dd>{{ info.VERSION }}</dd>
 				<dt>{{ 'License'|trans }}</dt>
