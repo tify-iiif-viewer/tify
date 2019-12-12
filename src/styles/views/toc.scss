@@ -11,6 +11,11 @@
 	padding: ($grid / 2);
 	position: relative;
 	z-index: 0;
+
+	ul {
+		margin: 0 0 0 ($grid / 2);
+		padding: 0;
+	}
 }
 
 .tify-toc_header {
@@ -56,8 +61,6 @@
 }
 
 .tify-toc_list {
-	margin: 0 0 0 ($grid / 2);
-	padding: 0;
 	position: relative;
 	z-index: 0;
 
