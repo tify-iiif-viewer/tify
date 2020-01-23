@@ -204,6 +204,11 @@ const Tify = new Vue({
 			return displayedValues;
 		},
 		isMobile() {
+			// For unit tests
+			if (process.env.NODE_ENV === 'testing' && !this.$root.$el) {
+				return true;
+			}
+
 			// TODO: Update this to work with custom breakpoints
 			return (this.$root.$el.offsetWidth < this.options.breakpoints.medium);
 		},
