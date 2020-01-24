@@ -34,6 +34,7 @@ module.exports = {
 		}],
 		'indent': [2, 'tab'],
 		// allow debugger during development
+		'no-continue': 0,
 		'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
 		'no-floating-decimal': 0,
 		'no-tabs': 0,

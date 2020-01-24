@@ -44,3 +44,16 @@ Scenario('Navigate TOC', (I) => {
 	// Browser may be "restarted" between tests, but window size is not reset.
 	I.resizeWindow(800, 600);
 });
+
+Scenario('Show TOC when there are structures without canvases', (I) => {
+	const params = {
+		view: 'toc',
+	};
+	const encodedParams = encodeURIComponent(JSON.stringify(params));
+
+	I.amOnPage(`http://localhost:8080/?manifest=http://localhost:8081/manifest/MS-ADD-08640.json&tify=${encodedParams}`);
+	I.waitForElement('.tify-app_main');
+
+	I.see('Table of Contents');
+	I.see('Elizabeth Lyttelton\'s commonplace book', '.tify-toc_structure.-current');
+});
