@@ -107,5 +107,5 @@ npm test
 Initiated by
 
 <a href="https://www.sub.uni-goettingen.de/en/">
-	<img src="https://demo.tify.rocks/static/supporters/sub-logo.svg" width="329" height="30" alt="Göttingen State and University Library (SUB Göttingen)"/>
+	<img src="https://demo.tify.rocks/supporters/sub-logo.svg" width="329" height="30" alt="Göttingen State and University Library (SUB Göttingen)"/>
 </a>
