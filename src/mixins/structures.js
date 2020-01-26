@@ -24,8 +24,14 @@ module.exports = {
 					const lastCanvas = structure.canvases[structure.canvases.length - 1];
 					structure.lastPage = this.$root.canvases.findIndex(canvas => canvas['@id'] === lastCanvas) + 1;
 
-					structure.pageLabel = this.$root.canvases[structure.firstPage - 1].label;
-				} else {
+					const firstPageCanvas = this.$root.canvases[structure.firstPage - 1];
+					if (!firstPageCanvas) {
+						// Excluding structure if its range has no canvases
+						continue;
+					}
+
+					structure.pageLabel = firstPageCanvas.label;
+				} else if (this.$root.canvases[0]) {
 					structure.firstPage = 1;
 					structure.lastPage = this.$root.pageCount;
 					structure.pageLabel = this.$root.canvases[0].label;
