@@ -38,7 +38,7 @@ const webpackConfig = merge(baseWebpackConfig, {
 		/* eslint-disable function-paren-newline */
 		new webpack.BannerPlugin(
 			`TIFY v${pkg.version}\n`
-			+ `(c) ${new Date().getFullYear()} ${pkg.author}\n`
+			+ `(c) ${new Date().getFullYear()} ${pkg.author.name} (${pkg.author.url})\n`
 			+ `${pkg.license}\n`
 			+ `${pkg.homepage}` // eslint-disable-line comma-dangle
 		),
