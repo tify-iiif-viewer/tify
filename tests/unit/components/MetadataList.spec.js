@@ -7,6 +7,6 @@ describe('Metadata List', () => {
 	it('should format a label', () => {
 		const label = 'example_label';
 		const cleanedLabel = vm.$options.filters.cleanLabel(label);
-		expect(cleanedLabel).to.equal('Example label');
+		expect(cleanedLabel).toEqual('Example label');
 	});
 });

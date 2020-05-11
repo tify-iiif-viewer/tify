@@ -1,13 +1,13 @@
-const config = require('./config');
 const fs = require('fs');
 const http = require('http');
 const url = require('url');
+const config = require('./config');
 
 const server = http.createServer().listen(config.port, config.host);
 console.log(`> Mock IIIF API listening at http://localhost:${config.port}`);
 
 server.on('request', (req, res) => {
-	const path = url.parse(req.url).path;
+	const { path } = url.parse(req.url);
 	const segments = path.split('/');
 	const action = segments[1];
 	const file = segments[2];

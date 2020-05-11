@@ -19,10 +19,10 @@ module.exports = {
 
 				if (structure.canvases) {
 					const firstCanvas = structure.canvases[0];
-					structure.firstPage = this.$root.canvases.findIndex(canvas => canvas['@id'] === firstCanvas) + 1;
+					structure.firstPage = this.$root.canvases.findIndex((canvas) => canvas['@id'] === firstCanvas) + 1;
 
 					const lastCanvas = structure.canvases[structure.canvases.length - 1];
-					structure.lastPage = this.$root.canvases.findIndex(canvas => canvas['@id'] === lastCanvas) + 1;
+					structure.lastPage = this.$root.canvases.findIndex((canvas) => canvas['@id'] === lastCanvas) + 1;
 
 					const firstPageCanvas = this.$root.canvases[structure.firstPage - 1];
 					if (!firstPageCanvas) {
@@ -61,7 +61,7 @@ module.exports = {
 			}
 
 			const topLevelStructures = structures
-				.filter(structure => !structure.within)
+				.filter((structure) => !structure.within)
 				.sort((a, b) => a.firstPage - b.firstPage);
 
 			return topLevelStructures;
@@ -85,7 +85,7 @@ module.exports = {
 			for (let i = 0; i < length; i += 1) {
 				const structure = this.$root.manifest.structures[i];
 				const { canvases } = structure;
-				if (canvases && canvases.some(canvasId => currentCanvasIds.indexOf(canvasId) > -1)) {
+				if (canvases && canvases.some((canvasId) => currentCanvasIds.indexOf(canvasId) > -1)) {
 					if (structure.firstPage && structure.lastPage) {
 						const currentRange = structure.lastPage - structure.firstPage;
 						if ((currentRange < smallestRange) || !smallestRange) {

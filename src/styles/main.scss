@@ -1,13 +1,29 @@
-@import 'functions/*';
+@import 'functions/shade.scss';
+@import 'functions/tint.scss';
 
 @import 'util/settings';
 
-@import 'mixins/*';
+@import 'mixins/dropdown';
+@import 'mixins/hover';
+@import 'mixins/range';
+@import 'mixins/separator';
+@import 'mixins/transition';
 
-@import 'common/**/*';
+@import 'common/badge';
+@import 'common/icon';
+@import 'common/sr-only';
 
-@import 'extends/*';
+@import 'extends/button';
+@import 'extends/panel';
 
-@import 'sections/*';
+@import 'sections/app';
+@import 'sections/header';
+@import 'sections/page-select';
 
-@import 'views/*';
+@import 'views/export';
+@import 'views/fulltext';
+@import 'views/help';
+@import 'views/info';
+@import 'views/scan';
+@import 'views/thumbnails';
+@import 'views/toc';

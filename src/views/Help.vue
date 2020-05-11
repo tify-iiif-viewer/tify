@@ -9,7 +9,9 @@
 
 		<div class="tify-help_section -about">
 			<h3>{{ 'About TIFY'|trans }}</h3>
-			<p v-html="$root.$options.filters.trans('TIFY is a slim and mobile-friendly IIIF document viewer.')"/>
+			<p v-html="
+				$root.$options.filters.trans('TIFY is a slim and mobile-friendly IIIF document viewer.')
+			"/>
 			<dl>
 				<dt>{{ 'Author'|trans }}</dt>
 				<dd><a :href="info.AUTHOR.url">{{ info.AUTHOR.name }}</a></dd>
@@ -29,11 +31,11 @@
 </template>
 
 <script>
-	export default {
-		computed: {
-			info() {
-				return JSON.parse(unescape(process.env.INFO));
-			},
+export default {
+	computed: {
+		info() {
+			return JSON.parse(unescape(process.env.VUE_APP_INFO));
 		},
-	};
+	},
+};
 </script>

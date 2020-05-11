@@ -3,7 +3,7 @@
 		<div v-for="(item, index) in metadata" :key="index">
 			<template>
 				<h4>
-					<div v-for="label in $root.iiifConvertToArray(item.label)">
+					<div v-bind:key="label" v-for="label in $root.iiifConvertToArray(item.label)">
 						{{ label|cleanLabel }}
 					</div>
 				</h4>
@@ -13,7 +13,7 @@
 						:class="{ '-collapsed': infoItems && infoItems[index] && infoItems[index].isCollapsed }"
 						:style="infoItems && infoItems[index] && infoItems[index].isCollapsed ? collapsedStyle : null"
 					>
-						<div v-for="value in $root.iiifConvertToArray(item.value)" v-html="value"/>
+						<div v-bind:key="value" v-for="value in $root.iiifConvertToArray(item.value)" v-html="value"/>
 					</div>
 
 					<button
@@ -37,64 +37,64 @@
 </template>
 
 <script>
-	const itemMaxLines = 5;
-	const lineHeight = 24; // [px] value from settings.scss
-	const maxCharsPerLine = 42; // value empirically determined (and checked against zooming in)
+const itemMaxLines = 5;
+const lineHeight = 24; // [px] value from settings.scss
+const maxCharsPerLine = 42; // value empirically determined (and checked against zooming in)
 
-	export default {
-		props: [
-			'metadata',
-		],
-		data() {
-			return {
-				infoItems: null,
-			};
-		},
-		watch: {
-			metadata() {
-				this.updateInfoItems();
-			},
-		},
-		filters: {
-			cleanLabel(label) {
-				const cleanedLabel = label.replace('_', ' ');
-				return cleanedLabel.charAt(0).toUpperCase() + cleanedLabel.substr(1);
-			},
-		},
-		mounted() {
+export default {
+	props: [
+		'metadata',
+	],
+	data() {
+		return {
+			infoItems: null,
+		};
+	},
+	watch: {
+		metadata() {
 			this.updateInfoItems();
 		},
-		methods: {
-			updateInfoItems() {
-				const itemMaxHeight = itemMaxLines * lineHeight;
-				this.collapsedStyle = `max-height: ${itemMaxHeight}px; overflow: hidden`;
-
-				const infoItems = [];
-				const { length } = Object.values(this.metadata);
-				for (let i = 0; i < length; i += 1) {
-					const item = this.metadata[i];
-					const values = this.$root.iiifConvertToArray(item.value);
-
-					const expectedLineNumber = values.reduce((linesSum, thisValue) => {
-						// assuming we need 1 line minimum to display each value
-						// and a fixed number of chars fits into each line
-						let nLines = Math.ceil(this.stripHtml(thisValue).length / maxCharsPerLine);
-						if (nLines < 1) nLines = 1;
-						return linesSum + nLines;
-					}, 0);
-					const limitHeight = (expectedLineNumber > itemMaxLines);
-					const infoItem = {
-						isCollapsed: limitHeight,
-						isInitiallyCollapsed: limitHeight,
-					};
-					infoItems.push(infoItem);
-				}
-				this.infoItems = infoItems;
-			},
-			stripHtml(html) {
-				const doc = new DOMParser().parseFromString(html, 'text/html');
-				return doc.body.textContent || '';
-			},
+	},
+	filters: {
+		cleanLabel(label) {
+			const cleanedLabel = label.replace('_', ' ');
+			return cleanedLabel.charAt(0).toUpperCase() + cleanedLabel.substr(1);
 		},
-	};
+	},
+	mounted() {
+		this.updateInfoItems();
+	},
+	methods: {
+		updateInfoItems() {
+			const itemMaxHeight = itemMaxLines * lineHeight;
+			this.collapsedStyle = `max-height: ${itemMaxHeight}px; overflow: hidden`;
+
+			const infoItems = [];
+			const { length } = Object.values(this.metadata);
+			for (let i = 0; i < length; i += 1) {
+				const item = this.metadata[i];
+				const values = this.$root.iiifConvertToArray(item.value);
+
+				const expectedLineNumber = values.reduce((linesSum, thisValue) => {
+					// assuming we need 1 line minimum to display each value
+					// and a fixed number of chars fits into each line
+					let nLines = Math.ceil(this.stripHtml(thisValue).length / maxCharsPerLine);
+					if (nLines < 1) nLines = 1;
+					return linesSum + nLines;
+				}, 0);
+				const limitHeight = (expectedLineNumber > itemMaxLines);
+				const infoItem = {
+					isCollapsed: limitHeight,
+					isInitiallyCollapsed: limitHeight,
+				};
+				infoItems.push(infoItem);
+			}
+			this.infoItems = infoItems;
+		},
+		stripHtml(html) {
+			const doc = new DOMParser().parseFromString(html, 'text/html');
+			return doc.body.textContent || '';
+		},
+	},
+};
 </script>
