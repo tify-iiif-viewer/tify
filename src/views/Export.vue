@@ -5,7 +5,7 @@
 		<div class="tify-export_section -links">
 			<h3>{{ 'Download Individual Images'|trans }}</h3>
 			<ul>
-				<li v-for="page in $root.params.pages" v-if="page">
+				<li :key="page" v-for="page in pages">
 					<!-- NOTE: The download attribute is only honored for same-origin URLs -->
 					<a :href="imageUrls[page]" :download="`${page}.jpg`">
 						{{ 'Page'|trans }} {{page}}
@@ -19,7 +19,7 @@
 		<div v-if="$root.manifest.rendering" class="tify-export_section -renderings">
 			<h3>{{ 'Renderings'|trans }}</h3>
 			<ul>
-				<li v-for="item in $root.manifest.rendering">
+				<li :key="item['@id']" v-for="item in $root.manifest.rendering">
 					<template v-if="/\.pdf$/i.test(item['@id'])">
 						<i class="tify-badge" v-if="/\.pdf$/i.test(item['@id'])">PDF</i>
 						<a :href="item['@id']" download>{{ item.label }}</a>
@@ -31,7 +31,8 @@
 			</ul>
 
 			<div class="tify-export_container" v-if="hasElementPdfLinks">
-				<button class="tify-export_toggle" @click="perElementPdfLinksVisible = !perElementPdfLinksVisible">
+				<button class="tify-export_toggle"
+						@click="perElementPdfLinksVisible = !perElementPdfLinksVisible">
 					<template v-if="!perElementPdfLinksVisible">{{ 'PDFs for each element'|trans }}</template>
 					<template v-else>{{ 'Close PDF list'|trans }}</template>
 				</button>
@@ -49,7 +50,7 @@
 		<div v-if="literatureItems.length" class="tify-export_section -literature">
 			<h3>{{ 'Literature Management'|trans }}</h3>
 			<ul>
-				<li v-for="item in literatureItems">
+				<li :key="item['@id']" v-for="item in literatureItems">
 					<a :href="item['@id']" download>
 						{{ item.label }}
 					</a>
@@ -65,7 +66,7 @@
 						{{ 'IIIF manifest'|trans }}
 					</a>
 				</li>
-				<li v-for="item in otherItems">
+				<li :key="item['@id']" v-for="item in otherItems">
 					<a :href="item['@id']" download>
 						{{ item.label || item['@id'] }}
 					</a>
@@ -76,112 +77,115 @@
 </template>
 
 <script>
-	import TocList from '@/components/TocList';
+import TocList from '@/components/TocList';
 
-	import structures from '@/mixins/structures';
+import structures from '@/mixins/structures';
 
-	const itemCriteria = [
-		{
-			label: 'BibTex',
-			profile: 'http://www.bibtex.org/Format/',
-			type: 'literature',
-		},
-		{
-			label: 'EndNote',
-			profile: 'http://endnote.com/',
-			type: 'literature',
-		},
-		{
-			label: 'RIS',
-			profile: 'http://referencemanager.com/sites/rm/files/m/direct_export_ris.pdf',
-			type: 'literature',
-		},
-		{
-			label: 'METS',
-			profile: 'http://www.loc.gov/standards/mets/profile_docs/mets.profile.v2-0.xsd',
-			type: 'other',
-		},
-		{
-			label: 'MODS',
-			format: 'application/mods+xml',
-			type: 'other',
-		},
-	];
+const itemCriteria = [
+	{
+		label: 'BibTex',
+		profile: 'http://www.bibtex.org/Format/',
+		type: 'literature',
+	},
+	{
+		label: 'EndNote',
+		profile: 'http://endnote.com/',
+		type: 'literature',
+	},
+	{
+		label: 'RIS',
+		profile: 'http://referencemanager.com/sites/rm/files/m/direct_export_ris.pdf',
+		type: 'literature',
+	},
+	{
+		label: 'METS',
+		profile: 'http://www.loc.gov/standards/mets/profile_docs/mets.profile.v2-0.xsd',
+		type: 'other',
+	},
+	{
+		label: 'MODS',
+		format: 'application/mods+xml',
+		type: 'other',
+	},
+];
 
-	export default {
-		components: {
-			TocList,
+export default {
+	components: {
+		TocList,
+	},
+	mixins: [
+		structures,
+	],
+	data() {
+		return {
+			literatureItems: [],
+			otherItems: [],
+			perElementPdfLinksVisible: false,
+		};
+	},
+	computed: {
+		pages() {
+			return this.$root.params.pages.filter((page) => page !== undefined);
 		},
-		mixins: [
-			structures,
-		],
-		data() {
-			return {
-				literatureItems: [],
-				otherItems: [],
-				perElementPdfLinksVisible: false,
-			};
-		},
-		computed: {
-			hasElementPdfLinks() {
-				const { manifest } = this.$root;
+		hasElementPdfLinks() {
+			const { manifest } = this.$root;
 
-				if (
-					!Array.isArray(manifest.structures)
+			if (
+				!Array.isArray(manifest.structures)
 					|| !manifest.structures[0]
 					|| !manifest.structures[0].rendering
-				) return false;
+			) return false;
 
-				const renderings = this.$root.iiifConvertToArray(manifest.structures[0].rendering);
-				return renderings.some(rendering => rendering.format && rendering.format === 'application/pdf');
-			},
-			imageUrls() {
-				const imageUrls = {};
-				this.$root.params.pages.forEach((page) => {
-					if (!page) return;
-
-					const { resource } = this.$root.canvases[page - 1].images[0];
-					if (resource.service) {
-						const quality = (
-							resource.service['@context'] === 'http://iiif.io/api/image/2/context.json'
-								? 'default'
-								: 'native'
-						);
-						const id = resource.service['@id'];
-						imageUrls[page] = `${id}${id.slice(-1) === '/' ? '' : '/'}full/full/0/${quality}.jpg`;
-					} else {
-						imageUrls[page] = resource['@id'];
-					}
-				});
-				return imageUrls;
-			},
+			const renderings = this.$root.iiifConvertToArray(manifest.structures[0].rendering);
+			return renderings.some((rendering) => rendering.format && rendering.format === 'application/pdf');
 		},
-		created() {
-			const { seeAlso } = this.$root.manifest;
-			if (!seeAlso) return;
+		imageUrls() {
+			const imageUrls = {};
+			this.$root.params.pages.forEach((page) => {
+				if (!page) return;
 
-			// Create clone
-			const items = JSON.parse(JSON.stringify(Array.isArray(seeAlso) ? seeAlso : [seeAlso]));
-			items.forEach((item) => {
-				const currentItem = (typeof item === 'object' ? item : { '@id': item });
-				let isLiterature = false;
-				itemCriteria.some((criterion) => {
-					const formatsMatch = (item.format && criterion.format === item.format);
-					const profilesMatch = (item.profile && criterion.profile === item.profile);
-					if (formatsMatch || profilesMatch) {
-						currentItem.label = criterion.label;
-						if (criterion.type === 'literature') isLiterature = true;
-						return true;
-					}
-					return false;
-				});
-
-				if (isLiterature) {
-					this.literatureItems.push(currentItem);
+				const { resource } = this.$root.canvases[page - 1].images[0];
+				if (resource.service) {
+					const quality = (
+						resource.service['@context'] === 'http://iiif.io/api/image/2/context.json'
+							? 'default'
+							: 'native'
+					);
+					const id = resource.service['@id'];
+					imageUrls[page] = `${id}${id.slice(-1) === '/' ? '' : '/'}full/full/0/${quality}.jpg`;
 				} else {
-					this.otherItems.push(currentItem);
+					imageUrls[page] = resource['@id'];
 				}
 			});
+			return imageUrls;
 		},
-	};
+	},
+	created() {
+		const { seeAlso } = this.$root.manifest;
+		if (!seeAlso) return;
+
+		// Create clone
+		const items = JSON.parse(JSON.stringify(Array.isArray(seeAlso) ? seeAlso : [seeAlso]));
+		items.forEach((item) => {
+			const currentItem = (typeof item === 'object' ? item : { '@id': item });
+			let isLiterature = false;
+			itemCriteria.some((criterion) => {
+				const formatsMatch = (item.format && criterion.format === item.format);
+				const profilesMatch = (item.profile && criterion.profile === item.profile);
+				if (formatsMatch || profilesMatch) {
+					currentItem.label = criterion.label;
+					if (criterion.type === 'literature') isLiterature = true;
+					return true;
+				}
+				return false;
+			});
+
+			if (isLiterature) {
+				this.literatureItems.push(currentItem);
+			} else {
+				this.otherItems.push(currentItem);
+			}
+		});
+	},
+};
 </script>

@@ -29,6 +29,6 @@ describe('filter-html', () => {
 			</p>
 		`;
 
-		expect(Vue.options.filters.filterHtml(html)).to.equal(filteredHtml);
+		expect(Vue.options.filters.filterHtml(html)).toEqual(filteredHtml);
 	});
 });

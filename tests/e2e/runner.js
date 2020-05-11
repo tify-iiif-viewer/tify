@@ -1,4 +1,4 @@
-process.env.NODE_ENV = 'testing';
+process.env.NODE_ENV = 'test';
 
 const webpack = require('webpack');
 const DevServer = require('webpack-dev-server');
@@ -19,7 +19,7 @@ devConfigPromise.then((devConfig) => {
 	let opts = process.argv.slice(2);
 	opts = opts.concat(['run']);
 	if (opts.indexOf('--config') === -1) {
-		opts = opts.concat(['--config', 'test/e2e/codecept.json']);
+		opts = opts.concat(['--config', 'tests/e2e/codecept.json']);
 	}
 
 	const spawn = require('cross-spawn');

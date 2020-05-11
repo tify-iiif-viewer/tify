@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import App from '@/App';
+import App from '@/App'; // eslint-disable-line import/no-cycle
 
 import Icon from '@/components/Icon';
 
@@ -92,7 +92,7 @@ const options = {
 };
 
 const Tify = new Vue({
-	render: h => h(App),
+	render: (h) => h(App),
 	data: {
 		error: '',
 		loading: 0,
@@ -205,7 +205,7 @@ const Tify = new Vue({
 		},
 		isMobile() {
 			// For unit tests
-			if (process.env.NODE_ENV === 'testing' && !this.$root.$el) {
+			if (process.env.NODE_ENV === 'test' && !this.$root.$el) {
 				return true;
 			}
 

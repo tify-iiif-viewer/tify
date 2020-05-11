@@ -34,35 +34,35 @@
 </template>
 
 <script>
-	import AppHeader from '@/components/Header';
-	import Export from '@/views/Export';
-	import Fulltext from '@/views/Fulltext';
-	import Help from '@/views/Help';
-	import Info from '@/views/Info';
-	import Scan from '@/views/Scan';
-	import Thumbnails from '@/views/Thumbnails';
-	import Toc from '@/views/Toc';
+import AppHeader from '@/components/Header';
+import Export from '@/views/Export';
+import Fulltext from '@/views/Fulltext';
+import Help from '@/views/Help';
+import Info from '@/views/Info';
+import Scan from '@/views/Scan';
+import Thumbnails from '@/views/Thumbnails';
+import Toc from '@/views/Toc';
 
-	export default {
-		components: {
-			AppHeader,
-			Export,
-			Help,
-			Info,
-			Scan,
-			Thumbnails,
-			Toc,
-			Fulltext,
+export default {
+	components: {
+		AppHeader,
+		Export,
+		Help,
+		Info,
+		Scan,
+		Thumbnails,
+		Toc,
+		Fulltext,
+	},
+	computed: {
+		hasOtherContent() {
+			return this.$root.canvases.some((canvas) => 'otherContent' in canvas);
 		},
-		computed: {
-			hasOtherContent() {
-				return this.$root.canvases.some(canvas => 'otherContent' in canvas);
-			},
-			hasToc() {
-				return !!(this.$root.manifest.structures && this.$root.manifest.structures.length);
-			},
+		hasToc() {
+			return !!(this.$root.manifest.structures && this.$root.manifest.structures.length);
 		},
-	};
+	},
+};
 </script>
 
 <style src="@/styles/main.scss" lang="scss"></style>

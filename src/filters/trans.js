@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import app from '@/main';
+import app from '@/main'; // eslint-disable-line import/no-cycle
 
 // Translate strings, use default (i.e. English) if not translated
 // Translations are located in @/translations/<lang>.js

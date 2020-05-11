@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import PageSelect from '@/components/PageSelect';
 
-import manifest from '../../../iiif-api/data/manifests/gdz-PPN857449303.json';
+import manifest from '../../iiif-api/data/manifests/gdz-PPN857449303.json';
 
 describe('PageSelect', () => {
 	const vm = new Vue(PageSelect);
@@ -9,13 +9,13 @@ describe('PageSelect', () => {
 	vm.$root.canvases = manifest.sequences[0].canvases;
 	vm.$root.params = { pages: [1] };
 
-	vm.$root.iiifConvertToArray = value => [value];
+	vm.$root.iiifConvertToArray = (value) => [value];
 
 	it('should filter and update canvases', () => {
 		vm.filter = '5';
 		vm.updateFilteredCanvases();
 
-		expect(vm.highlightIndex).to.equal(0);
-		expect(vm.filteredCanvases.length).to.equal(4); // Should contain pages 5, 15, 25, 35
+		expect(vm.highlightIndex).toEqual(0);
+		expect(vm.filteredCanvases.length).toEqual(4); // Should contain pages 5, 15, 25, 35
 	});
 });
