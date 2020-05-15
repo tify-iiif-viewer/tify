@@ -125,7 +125,7 @@ export default {
 	},
 	computed: {
 		pages() {
-			return this.$root.params.pages.filter((page) => page !== undefined);
+			return this.$root.params.pages.filter((page) => page > 0);
 		},
 		hasElementPdfLinks() {
 			const { manifest } = this.$root;
