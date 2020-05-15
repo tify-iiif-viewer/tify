@@ -36,7 +36,7 @@ Scenario('Use image filters', (I) => {
 
 	I.click('[title="Toggle image filters"]');
 	// NOTE: Named HTML entities do not work with XPath, so we use `\u00a0` instead of `nbsp;`
-	I.seeElement('//label[@for="tify-scan_saturation"][contains(., "	0\u00a0%")]');
+	I.seeElement('//label[@for="tify-scan_saturation"][contains(., "0 %")]');
 });
 
 Scenario('Reset pan, zoom, rotation and filters at once', (I) => {

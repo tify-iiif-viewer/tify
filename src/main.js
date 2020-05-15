@@ -70,7 +70,7 @@ if (process.env.NODE_ENV === 'production') {
 	base = scriptUrl.src.substring(0, scriptUrl.src.lastIndexOf('/'));
 	stylesheetUrl = `${base}/tify.css`;
 } else {
-	base = 'static';
+	base = '';
 	stylesheetUrl = null;
 }
 
