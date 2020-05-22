@@ -1,7 +1,5 @@
 const { setHeadlessWhen } = require('@codeceptjs/configure');
 
-// turn on headless mode when running with HEADLESS=true environment variable
-// HEADLESS=true npx codecept run
 setHeadlessWhen(process.env.HEADLESS);
 
 exports.config = {
@@ -9,13 +7,10 @@ exports.config = {
 	timeout: 10000,
 	output: './output',
 	helpers: {
-		Nightmare: {
-			url: 'http://localhost:8080',
-			show: true,
-			waitForAction: 100,
-		},
-		NightmareHelper: {
-			require: './NightmareHelper.js',
+		WebDriverIO: {
+			url: 'http://localhost:8888',
+			browser: 'chrome',
+			windowSize: '1600x900',
 		},
 	},
 	include: {
@@ -30,6 +25,22 @@ exports.config = {
 		},
 		screenshotOnFail: {
 			enabled: true,
+		},
+		wdio: {
+			enabled: true,
+			services: ['selenium-standalone'],
+		},
+	},
+	multiple: {
+		basic: {
+			browsers: ['firefox', 'chrome'],
+		},
+		smoke: {
+			grep: '@smoke',
+			browsers: [
+				{ browser: 'firefox' },
+				{ browser: 'chrome' },
+			],
 		},
 	},
 };

@@ -1,24 +1,22 @@
 Feature('TOC');
 
 Scenario('Navigate TOC', (I) => {
-	I.amOnPage('http://localhost:8080/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
+	I.amOnPage('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
 	I.waitForElement('.tify-app_main');
 
-	I.click('View');
 	I.click('Contents');
 	I.see('Table of Contents');
 	I.see('Titelseite', '.tify-toc_structure.-current');
 
-	I.click('.tify-toc_toggle + .tify-toc_link');
-	I.dontSee('Table of Contents');
+	I.click('.tify-toc_structure[data-level="0"]:nth-child(3) .tify-toc_toggle');
 
-	I.resizeWindow(1600, 900);
-	I.click('Contents');
-	I.see('Huddesche Methode', '.tify-toc_structure.-current');
+	I.click('.tify-toc_structure[data-level="0"].-expanded .tify-toc_structure[data-level="1"]:first-child .tify-toc_toggle');
+
+	I.see('Huddesche Methode', '.tify-toc_label');
 
 	// "Kurze Nachrichten"
-	I.click('.tify-toc_structure[data-level="1"]:last-of-type .tify-toc_link');
-	I.see('Ferrarische Methode (Louis Ferrari)', '.tify-toc_structure.-current');
+	I.click('.tify-toc_structure[data-level="1"]:last-of-type .tify-toc_toggle');
+	I.see('Ferrarische Methode (Louis Ferrari)', '.tify-toc_label');
 
 	I.click('Collapse');
 	I.dontSee('Ferrarische Methode (Louis Ferrari)');
@@ -41,9 +39,7 @@ Scenario('Navigate TOC', (I) => {
 	I.dontSee('Auflösung von Gleichungen 3ten Grades'); // child of first collapsible
 	I.see('Recursionsformeln'); // child of second collapsible
 
-	// Browser may be "restarted" between tests, but window size is not reset.
-	I.resizeWindow(800, 600);
-});
+}).tag('@smoke');
 
 Scenario('Show TOC when there are structures without canvases', (I) => {
 	const params = {
@@ -51,9 +47,9 @@ Scenario('Show TOC when there are structures without canvases', (I) => {
 	};
 	const encodedParams = encodeURIComponent(JSON.stringify(params));
 
-	I.amOnPage(`http://localhost:8080/?manifest=http://localhost:8081/manifest/MS-ADD-08640.json&tify=${encodedParams}`);
+	I.amOnPage(`/?manifest=http://localhost:8081/manifest/MS-ADD-08640.json&tify=${encodedParams}`);
 	I.waitForElement('.tify-app_main');
 
 	I.see('Table of Contents');
 	I.see('Elizabeth Lyttelton\'s commonplace book', '.tify-toc_structure.-current');
-});
+}).tag('@smoke');

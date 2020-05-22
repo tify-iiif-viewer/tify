@@ -59,8 +59,6 @@ if (window.tifyOptions) {
 	});
 }
 
-// In production mode, load the stylesheet by adding a <link> to <head>
-// In dev mode, the stylesheet is inlined for hot reload
 // TODO: We cannot be sure that TIFY was loaded in a script tag, add a base option
 let base;
 let stylesheetUrl;

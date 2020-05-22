@@ -44,4 +44,7 @@ module.exports = {
 		},
 	},
 	productionSourceMap: false,
+	devServer: {
+		port: process.env.NODE_ENV === 'test' ? 8888 : 8080,
+	},
 };

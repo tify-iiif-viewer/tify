@@ -3,7 +3,7 @@ Feature('Pagination');
 const currentPage = '.tify-page-select_button';
 
 Scenario('Change page via buttons', (I) => {
-	I.amOnPage('http://localhost:8080/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify={"pages":[15]}');
+	I.amOnPage('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify={"pages":[15]}');
 	I.waitForElement('.tify-app_main');
 
 	I.see('15 : 7r', currentPage);
@@ -30,10 +30,10 @@ Scenario('Change page via buttons', (I) => {
 
 	I.click('Toggle double-page');
 	I.see('Toggle double-page', '.-active');
-});
+}).tag('@smoke');
 
 Scenario('Change page via keyboard', (I) => {
-	I.amOnPage('http://localhost:8080/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify={"pages":[15]}');
+	I.amOnPage('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify={"pages":[15]}');
 	I.waitForElement('.tify-app_main');
 
 	I.see('15 : 7r', currentPage);

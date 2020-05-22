@@ -1,13 +1,10 @@
 Feature('Views');
 
 Scenario('Change view via buttons', (I) => {
-	I.resizeWindow(1600, 900);
-
-	I.amOnPage('http://localhost:8080/?manifest=http://localhost:8081/manifest/wellcome-b18035723.json');
+	I.amOnPage('/?manifest=http://localhost:8081/manifest/wellcome-b18035723.json');
 	I.waitForElement('.tify-app_main');
 
-	// TODO: Why is Info not active?
-	// I.see('Info', '.-active');
+	I.see('Info', '.-active');
 
 	I.click('Fulltext');
 	I.see('Fulltext', '.-active');
@@ -26,17 +23,12 @@ Scenario('Change view via buttons', (I) => {
 
 	I.click('Help');
 	I.see('Help', '.-active');
-
-	I.resizeWindow(800, 600);
-
-	I.click('Scan');
-	I.see('Scan', '.-active');
-});
+}).tag('@smoke');
 
 Scenario('Change view via keyboard', (I) => {
 	I.resizeWindow(1600, 900);
 
-	I.amOnPage('http://localhost:8080/?manifest=http://localhost:8081/manifest/wellcome-b18035723.json');
+	I.amOnPage('/?manifest=http://localhost:8081/manifest/wellcome-b18035723.json');
 	I.waitForElement('.tify-app_main');
 
 	I.pressKey('1');
@@ -56,10 +48,4 @@ Scenario('Change view via keyboard', (I) => {
 
 	I.pressKey('6');
 	I.see('Help', '.-active');
-
-	I.resizeWindow(800, 600);
-	I.wait(1); // TODO: Why is this needed?
-
-	I.pressKey('Backspace');
-	I.see('Scan', '.-active');
 });
