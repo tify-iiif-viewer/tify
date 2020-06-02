@@ -147,6 +147,7 @@
 </template>
 
 <script>
+import httpClient from '@/services/http-client';
 import OpenSeadragon from '@/../openseadragon/src/openseadragon';
 
 import keyboard from '@/mixins/keyboard';
@@ -371,7 +372,7 @@ export default {
 				if (resource.service) {
 					const id = resource.service['@id'];
 					const infoUrl = `${id}${id.slice(-1) === '/' ? '' : '/'}info.json`;
-					infoPromises.push(this.$http.get(infoUrl).then((response) => ({ ...response, page }), (error) => {
+					infoPromises.push(httpClient.get(infoUrl).then((response) => ({ ...response, page }), (error) => {
 						let status;
 						if (error.response && error.response.statusText) {
 							status = error.response.statusText;

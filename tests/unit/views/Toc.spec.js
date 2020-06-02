@@ -7,7 +7,7 @@ import manifestForPages from '../../iiif-api/data/manifests/gdz-DE_611_BF_5619_1
 describe('Toc', () => {
 	it('should select label from multi-lanuage labels', () => {
 		const vm = new Vue(Toc);
-		vm.$root.iiifConvertToArray = (value) => {
+		vm.$root.convertValueToArray = (value) => {
 			// NOTE - function will be called on structure.label data,
 			// which are (for this manifest) either strings or arrays of objects with 'value' property
 			if (Array.isArray(value)) {
@@ -25,7 +25,7 @@ describe('Toc', () => {
 
 	it('should be ordered by logical page number', () => {
 		const vm = new Vue(Toc);
-		vm.$root.iiifConvertToArray = (value) => [value];
+		vm.$root.convertValueToArray = (value) => [value];
 		vm.$root.manifest = manifestForPages;
 		vm.$root.canvases = manifestForPages.sequences[0].canvases;
 

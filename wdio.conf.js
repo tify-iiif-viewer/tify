@@ -1,4 +1,4 @@
-
+/* eslint-disable */
 exports.config = {
 	capabilities: [{
 		browserName: 'chrome',

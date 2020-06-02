@@ -10,7 +10,7 @@
 					<a :href="imageUrls[page]" :download="`${page}.jpg`">
 						{{ 'Page'|trans }} {{page}}
 						:
-						{{ $root.iiifConvertToArray($root.canvases[page - 1].label)[0] }}
+						{{ getLabels($root.canvases[page - 1].label)[0] }}
 					</a>
 				</li>
 			</ul>
@@ -123,6 +123,11 @@ export default {
 			perElementPdfLinksVisible: false,
 		};
 	},
+	methods: {
+		getLabels(value) {
+			return this.$root.convertValueToArray(value);
+		},
+	},
 	computed: {
 		pages() {
 			return this.$root.params.pages.filter((page) => page > 0);
@@ -136,7 +141,7 @@ export default {
 					|| !manifest.structures[0].rendering
 			) return false;
 
-			const renderings = this.$root.iiifConvertToArray(manifest.structures[0].rendering);
+			const renderings = this.$root.convertValueToArray(manifest.structures[0].rendering);
 			return renderings.some((rendering) => rendering.format && rendering.format === 'application/pdf');
 		},
 		imageUrls() {

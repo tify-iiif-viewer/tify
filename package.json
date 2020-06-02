@@ -11,6 +11,7 @@
     "serve-test-api": "node tests/iiif-api/server.js",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "lint-fix": "vue-cli-service lint --fix",
     "e2e": "npm run e2e-all",
     "e2e-all": "node tests/e2e/runner.js",
     "e2e-chrome": "node tests/e2e/runner.js chrome",

@@ -30,7 +30,7 @@
 				v-if="purpose === 'pdf'"
 				class="tify-toc_link"
 				download
-				:href="$root.iiifConvertToArray(structure.rendering)[0]['@id']"
+				:href="getLabels(structure.rendering)[0]['@id']"
 			>
 				<i class="tify-badge">PDF</i>
 				{{ structure.label }}
@@ -102,6 +102,9 @@ export default {
 			} else {
 				this.$set(this.expandedStructures, index, false);
 			}
+		},
+		getLabels(value) {
+			return this.$root.convertValueToArray(value);
 		},
 	},
 };

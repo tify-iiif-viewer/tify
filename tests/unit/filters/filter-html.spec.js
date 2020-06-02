@@ -1,5 +1,4 @@
-import Vue from 'vue';
-import '@/filters/filter-html';
+import app from '@/main';
 
 describe('filter-html', () => {
 	it('should filter HTML', () => {
@@ -29,6 +28,6 @@ describe('filter-html', () => {
 			</p>
 		`;
 
-		expect(Vue.options.filters.filterHtml(html)).toEqual(filteredHtml);
+		expect(app.filterHtml(html)).toEqual(filteredHtml);
 	});
 });

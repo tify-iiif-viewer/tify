@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import httpClient from '@/services/http-client';
+
 export default {
 	data() {
 		return {
@@ -43,14 +45,14 @@ export default {
 				this.$set(this.fulltexts, page, []);
 
 				const annotationListUrl = canvas.otherContent[0]['@id'];
-				this.$http.get(annotationListUrl).then((response) => {
+				httpClient.get(annotationListUrl).then((response) => {
 					const { resources } = response.data;
 					if (!Array.isArray(resources)) return;
 
 					resources.forEach((resource, index) => {
 						const res = resource.resource;
 						if (res && res.chars) {
-							const text = this.$options.filters.filterHtml(res.chars);
+							const text = this.$root.filterHtml(res.chars);
 							if (text) this.fulltextAvailable = true;
 							this.$set(this.fulltexts[page], index, text);
 						} else if (res['@id']) {
@@ -64,8 +66,8 @@ export default {
 			});
 		},
 		loadRemoteFulltext(page, index, url) {
-			this.$http.get(url).then((response2) => {
-				const text = this.$options.filters.filterHtml(response2.data);
+			httpClient.get(url).then((response2) => {
+				const text = this.$root.filterHtml(response2.data);
 				if (text) this.fulltextAvailable = true;
 				this.$set(this.fulltexts[page], index, text);
 			}, (error) => {

@@ -9,7 +9,7 @@
 			<span class="tify-sr-only">{{ 'Current page'|trans }}</span>
 			{{ $root.params.pages[0] || 1 }}
 			:
-			{{ $root.iiifConvertToArray(
+			{{ getLabels(
 				$root.canvases[$root.params.pages[0] ? $root.params.pages[0] - 1 : 0].label
 			)[0] }}
 		</button>
@@ -45,7 +45,7 @@
 				>
 					{{ canvas.page }}
 					:
-					{{ $root.iiifConvertToArray(canvas.label)[0] }}
+					{{ getLabels(canvas.label)[0] }}
 				</li>
 			</ol>
 		</div>
@@ -74,7 +74,7 @@ export default {
 			const physLabel = this.$options.filters.trans('Physical page');
 			const logLabel = this.$options.filters.trans('Logical page');
 			return `${physLabel}: ${page}\n`
-					+ `${logLabel}: ${this.$root.iiifConvertToArray(this.$root.canvases[page - 1].label)[0]}`;
+					+ `${logLabel}: ${this.$root.convertValueToArray(this.$root.canvases[page - 1].label)[0]}`;
 		},
 	},
 	watch: {
@@ -114,7 +114,7 @@ export default {
 			const filter = this.filter.toLowerCase();
 			let highlightIndex = -1;
 			this.$root.canvases.forEach((canvas, index) => {
-				const label = this.$root.iiifConvertToArray(canvas.label)[0];
+				const label = this.$root.convertValueToArray(canvas.label)[0];
 				const labelMatchesFilter = label.toLowerCase().indexOf(filter) > -1;
 				const pageMatchesFilter = (index + 1).toFixed().indexOf(filter) > -1;
 				if (labelMatchesFilter || pageMatchesFilter) {
@@ -133,6 +133,9 @@ export default {
 				const { offsetTop } = list.children[this.highlightIndex];
 				list.scrollTop = offsetTop - ((list.offsetHeight / 2) - list.children[0].offsetHeight);
 			}
+		},
+		getLabels(value) {
+			return this.$root.convertValueToArray(value);
 		},
 	},
 	mounted() {

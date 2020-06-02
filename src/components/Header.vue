@@ -302,7 +302,7 @@ export default {
 			return this.$root.manifest.structures;
 		},
 		titles() {
-			return this.$root.iiifConvertToArray(this.$root.manifest.label);
+			return this.$root.convertValueToArray(this.$root.manifest.label);
 		},
 	},
 	methods: {
@@ -337,8 +337,11 @@ export default {
 			let sectionIndex = 0;
 			while (
 				page >= this.sections[sectionIndex].firstPage
-					|| (page && page >= this.sections[sectionIndex].firstPage)
-			) sectionIndex += 1;
+				// eslint-disable-next-line no-unmodified-loop-condition
+				|| (page && page >= this.sections[sectionIndex].firstPage)
+			) {
+				sectionIndex += 1;
+			}
 			this.$root.setPage(this.sections[sectionIndex].firstPage);
 		},
 		goToPreviousSection() {
@@ -347,7 +350,8 @@ export default {
 			let sectionIndex = this.sections.length - 1;
 			while (
 				page <= this.sections[sectionIndex].firstPage
-					|| (page && page <= this.sections[sectionIndex].firstPage)
+				// eslint-disable-next-line no-unmodified-loop-condition
+				|| (page && page <= this.sections[sectionIndex].firstPage)
 			) sectionIndex -= 1;
 			this.$root.setPage(this.sections[sectionIndex].firstPage);
 		},

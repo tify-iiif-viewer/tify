@@ -1,18 +1,19 @@
-module.exports = {
+
+const structures = {
 	computed: {
 		structures() {
 			if (!this.$root.manifest.structures) {
 				return [];
 			}
 
-			const structures = [];
+			const structuresMapped = [];
 			const structuresThatAreChildren = [];
 			const { length } = this.$root.manifest.structures;
 			for (let i = 0; i < length; i += 1) {
 				const structure = this.$root.manifest.structures[i];
 
 				if (structure.label) {
-					structure.label = this.$root.iiifConvertToArray(structure.label)[0].trim();
+					structure.label = this.$root.convertValueToArray(structure.label)[0].trim();
 				} else {
 					structure.label = '—'; // NOTE: That's an em dash (&mdash;)
 				}
@@ -43,7 +44,7 @@ module.exports = {
 					structuresThatAreChildren.push(structure);
 				}
 
-				structures.push(structure);
+				structuresMapped.push(structure);
 			}
 
 			const structuresThatAreChildrenLength = structuresThatAreChildren.length;
@@ -51,16 +52,16 @@ module.exports = {
 				const childStructures = [];
 				for (let j = 0; j < structuresThatAreChildrenLength; j += 1) {
 					const childStructure = structuresThatAreChildren[j];
-					if (childStructure.within === structures[i]['@id']) {
+					if (childStructure.within === structuresMapped[i]['@id']) {
 						childStructures.push(childStructure);
 					}
 				}
 				if (childStructures.length) {
-					structures[i].childStructures = childStructures.sort((a, b) => a.firstPage - b.firstPage);
+					structuresMapped[i].childStructures = childStructures.sort((a, b) => a.firstPage - b.firstPage);
 				}
 			}
 
-			const topLevelStructures = structures
+			const topLevelStructures = structuresMapped
 				.filter((structure) => !structure.within)
 				.sort((a, b) => a.firstPage - b.firstPage);
 
@@ -113,3 +114,5 @@ module.exports = {
 		},
 	},
 };
+
+export default structures;

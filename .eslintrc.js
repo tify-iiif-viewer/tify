@@ -28,7 +28,7 @@ module.exports = {
 				'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
 				'no-floating-decimal': 0,
 				'no-tabs': 0,
-				'max-len': ["error", { "code": 120 }],
+				'max-len': ["error", { "code": 140 }],
 				'vue/no-template-key': 'off',
 		},
 		overrides: [

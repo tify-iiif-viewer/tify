@@ -9,7 +9,7 @@ describe('PageSelect', () => {
 	vm.$root.canvases = manifest.sequences[0].canvases;
 	vm.$root.params = { pages: [1] };
 
-	vm.$root.iiifConvertToArray = (value) => [value];
+	vm.$root.convertValueToArray = (value) => [value];
 
 	it('should filter and update canvases', () => {
 		vm.filter = '5';

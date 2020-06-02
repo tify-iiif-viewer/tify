@@ -123,13 +123,13 @@ export default {
 					);
 					const id = resource.service['@id'];
 					items.push({
-						label: this.$root.iiifConvertToArray(this.$root.canvases[i].label)[0],
+						label: this.$root.convertValueToArray(this.$root.canvases[i].label)[0],
 						imgUrl: `${id}${id.slice(-1) === '/' ? '' : '/'}full/${this.thumbnailWidth},/0/${quality}.jpg`,
 						page: i + 1,
 					});
 				} else {
 					items.push({
-						label: this.$root.iiifConvertToArray(this.$root.canvases[i].label)[0],
+						label: this.$root.convertValueToArray(this.$root.canvases[i].label)[0],
 						imgUrl: resource['@id'],
 						page: i + 1,
 					});

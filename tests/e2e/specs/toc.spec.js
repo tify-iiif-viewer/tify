@@ -38,7 +38,6 @@ Scenario('Navigate TOC', (I) => {
 	I.click('.tify-toc_toggle:first-of-type'); // collapse first collapsible
 	I.dontSee('Auflösung von Gleichungen 3ten Grades'); // child of first collapsible
 	I.see('Recursionsformeln'); // child of second collapsible
-
 }).tag('@smoke');
 
 Scenario('Show TOC when there are structures without canvases', (I) => {

@@ -3,7 +3,7 @@
 		<div v-for="(item, index) in metadata" :key="index">
 			<template>
 				<h4>
-					<div v-bind:key="label" v-for="label in $root.iiifConvertToArray(item.label)">
+					<div v-bind:key="label" v-for="label in getLabels(item.label)">
 						{{ label|cleanLabel }}
 					</div>
 				</h4>
@@ -13,7 +13,7 @@
 						:class="{ '-collapsed': infoItems && infoItems[index] && infoItems[index].isCollapsed }"
 						:style="infoItems && infoItems[index] && infoItems[index].isCollapsed ? collapsedStyle : null"
 					>
-						<div v-bind:key="value" v-for="value in $root.iiifConvertToArray(item.value)" v-html="value"/>
+						<div v-bind:key="value" v-for="value in getLabels(item.value)" v-html="value"/>
 					</div>
 
 					<button
@@ -73,7 +73,7 @@ export default {
 			const { length } = Object.values(this.metadata);
 			for (let i = 0; i < length; i += 1) {
 				const item = this.metadata[i];
-				const values = this.$root.iiifConvertToArray(item.value);
+				const values = this.$root.convertValueToArray(item.value);
 
 				const expectedLineNumber = values.reduce((linesSum, thisValue) => {
 					// assuming we need 1 line minimum to display each value
@@ -94,6 +94,9 @@ export default {
 		stripHtml(html) {
 			const doc = new DOMParser().parseFromString(html, 'text/html');
 			return doc.body.textContent || '';
+		},
+		getLabels(value) {
+			return this.$root.convertValueToArray(value);
 		},
 	},
 };
