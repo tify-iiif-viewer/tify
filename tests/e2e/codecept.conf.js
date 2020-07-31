@@ -11,6 +11,11 @@ exports.config = {
 			url: 'http://localhost:8888',
 			browser: 'chrome',
 			windowSize: '1600x900',
+			desiredCapabilities: {
+				chromeOptions: {
+					args: ['--disable-gpu', '--no-sandbox'],
+				},
+			},
 		},
 	},
 	include: {
@@ -29,18 +34,6 @@ exports.config = {
 		wdio: {
 			enabled: true,
 			services: ['selenium-standalone'],
-		},
-	},
-	multiple: {
-		basic: {
-			browsers: ['firefox', 'chrome'],
-		},
-		smoke: {
-			grep: '@smoke',
-			browsers: [
-				{ browser: 'firefox' },
-				{ browser: 'chrome' },
-			],
 		},
 	},
 };
