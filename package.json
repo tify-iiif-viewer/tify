@@ -2,10 +2,7 @@
   "name": "tify",
   "version": "0.23.1",
   "description": "TIFY is a slim and mobile-friendly IIIF document viewer.",
-  "author": {
-    "name": "Tobias Schäfer",
-    "url": "https://aspectis.net/"
-  },
+  "contributors": "https://github.com/tify-iiif-viewer/tify/graphs/contributors",
   "scripts": {
     "serve": "vue-cli-service serve",
     "serve-mock-api": "node tests/iiif-api/server.js",
