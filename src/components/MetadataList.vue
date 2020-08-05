@@ -3,7 +3,7 @@
 		<div v-for="(item, index) in metadata" :key="index">
 			<template>
 				<h4>
-					<div v-bind:key="label" v-for="label in getLabels(item.label)">
+					<div v-bind:key="index" v-for="(label, index) in getLabels(item.label)">
 						{{ label|cleanLabel }}
 					</div>
 				</h4>

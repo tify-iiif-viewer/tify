@@ -8,9 +8,7 @@
 				<li :key="page" v-for="page in pages">
 					<!-- NOTE: The download attribute is only honored for same-origin URLs -->
 					<a :href="imageUrls[page]" :download="`${page}.jpg`">
-						{{ 'Page'|trans }} {{page}}
-						:
-						{{ getLabels($root.canvases[page - 1].label)[0] }}
+						{{ 'Page'|trans }} {{page}} : {{ getLabels($root.canvases[page - 1].label)[0] }}
 					</a>
 				</li>
 			</ul>
@@ -31,8 +29,10 @@
 			</ul>
 
 			<div class="tify-export_container" v-if="hasElementPdfLinks">
-				<button class="tify-export_toggle"
-						@click="perElementPdfLinksVisible = !perElementPdfLinksVisible">
+				<button
+						class="tify-export_toggle"
+						@click="perElementPdfLinksVisible = !perElementPdfLinksVisible"
+				>
 					<template v-if="!perElementPdfLinksVisible">{{ 'PDFs for each element'|trans }}</template>
 					<template v-else>{{ 'Close PDF list'|trans }}</template>
 				</button>

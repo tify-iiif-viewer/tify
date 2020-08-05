@@ -7,11 +7,7 @@
 			@click="toggleDropdown"
 		>
 			<span class="tify-sr-only">{{ 'Current page'|trans }}</span>
-			{{ $root.params.pages[0] || 1 }}
-			:
-			{{ getLabels(
-				$root.canvases[$root.params.pages[0] ? $root.params.pages[0] - 1 : 0].label
-			)[0] }}
+			{{ getCurrentPage() }}
 		</button>
 
 		<div
@@ -136,6 +132,11 @@ export default {
 		},
 		getLabels(value) {
 			return this.$root.convertValueToArray(value);
+		},
+		getCurrentPage() {
+			const page = this.$root.params.pages[0] || 1;
+			const label = this.getLabels(this.$root.canvases[this.$root.params.pages[0] ? this.$root.params.pages[0] - 1 : 0].label)[0];
+			return `${page} : ${label}`;
 		},
 	},
 	mounted() {
