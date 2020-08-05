@@ -7,7 +7,7 @@ exports.config = {
 	timeout: 10000,
 	output: './output',
 	helpers: {
-		WebDriverIO: {
+		WebDriver: {
 			url: 'http://localhost:8888',
 			browser: 'chrome',
 			windowSize: '1600x900',
