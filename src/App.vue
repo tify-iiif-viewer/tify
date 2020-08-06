@@ -41,7 +41,6 @@ import Export from '@/views/Export';
 import Fulltext from '@/views/Fulltext';
 import Help from '@/views/Help';
 import Info from '@/views/Info';
-
 import Scan from '@/views/Scan';
 import Thumbnails from '@/views/Thumbnails';
 import Toc from '@/views/Toc';
@@ -92,6 +91,7 @@ export default {
 
 		if (this.$root.options.manifest && this.$root.params.manifest) {
 			this.$root.error = 'Setting manifest via query parameter is disabled';
+			return;
 		}
 
 		// Load manifest
@@ -106,9 +106,8 @@ export default {
 			});
 
 			if (this.$root.options.title) {
-				window.document.title = `${
-					this.$root.convertValueToArray(this.$root.manifest.label)[0]} | ${this.$root.options.title
-				}`;
+				window.document.title = `${this.$root.convertValueToArray(this.$root.manifest.label)[0]}`
+					+ ` | ${this.$root.options.title}`;
 			}
 		}, (error) => {
 			const status = (error.response ? error.response.statusText : error.message);

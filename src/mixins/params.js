@@ -35,7 +35,6 @@ export default {
 				zoom: parseFloat(params.zoom) || null,
 			};
 		},
-
 		setPage(page) {
 			const { pages } = this.params;
 			if (pages[0] % 2 < 1 && (pages[1] === pages[0] + 1 || pages[1] === 0)) {
@@ -45,12 +44,10 @@ export default {
 			}
 			this.updateParams({ pages: [page] });
 		},
-
 		getQueryParam(name) {
 			const match = RegExp(`[?&]${name}=([^&]*)`).exec(window.location.search);
 			return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
 		},
-
 		isValidPagesArray(pages) {
 			if (!Array.isArray(pages)) return false;
 
@@ -69,7 +66,6 @@ export default {
 
 			return true;
 		},
-
 		updateParams(params) {
 			Object.assign(this.params, params);
 

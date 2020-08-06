@@ -16,7 +16,6 @@
     "preversion": "rimraf node_modules && npm install && npm run test",
     "test": "npm run unit && npm run e2e",
     "unit": "vue-cli-service test:unit",
-    "unit-watch": "vue-cli-service test:unit --watch",
     "update-gh-pages": "git checkout gh-pages && git rebase master && git push -f origin gh-pages && git checkout master",
     "version": "npm run build && git add dist"
   },

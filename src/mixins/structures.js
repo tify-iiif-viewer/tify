@@ -6,7 +6,7 @@ const structures = {
 				return [];
 			}
 
-			const structuresMapped = [];
+			const mappedStructures = [];
 			const structuresThatAreChildren = [];
 			const { length } = this.$root.manifest.structures;
 			for (let i = 0; i < length; i += 1) {
@@ -44,7 +44,7 @@ const structures = {
 					structuresThatAreChildren.push(structure);
 				}
 
-				structuresMapped.push(structure);
+				mappedStructures.push(structure);
 			}
 
 			const structuresThatAreChildrenLength = structuresThatAreChildren.length;
@@ -52,16 +52,16 @@ const structures = {
 				const childStructures = [];
 				for (let j = 0; j < structuresThatAreChildrenLength; j += 1) {
 					const childStructure = structuresThatAreChildren[j];
-					if (childStructure.within === structuresMapped[i]['@id']) {
+					if (childStructure.within === mappedStructures[i]['@id']) {
 						childStructures.push(childStructure);
 					}
 				}
 				if (childStructures.length) {
-					structuresMapped[i].childStructures = childStructures.sort((a, b) => a.firstPage - b.firstPage);
+					mappedStructures[i].childStructures = childStructures.sort((a, b) => a.firstPage - b.firstPage);
 				}
 			}
 
-			const topLevelStructures = structuresMapped
+			const topLevelStructures = mappedStructures
 				.filter((structure) => !structure.within)
 				.sort((a, b) => a.firstPage - b.firstPage);
 
