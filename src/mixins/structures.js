@@ -1,4 +1,3 @@
-
 const structures = {
 	computed: {
 		structures() {
