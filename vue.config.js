@@ -1,4 +1,6 @@
 const BannerPlugin = require('webpack/lib/BannerPlugin.js');
+const globImporter = require('node-sass-glob-importer');
+
 const env = require('./package.json');
 
 const info = {
@@ -32,6 +34,13 @@ module.exports = {
 	css: {
 		extract: {
 			filename: '[name].css',
+		},
+		loaderOptions: {
+			scss: {
+				sassOptions: {
+					importer: globImporter(),
+				},
+			},
 		},
 	},
 	filenameHashing: false,
