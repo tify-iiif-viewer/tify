@@ -135,7 +135,8 @@ export default {
 		},
 		getCurrentPage() {
 			const page = this.$root.params.pages[0] || 1;
-			const label = this.getLabels(this.$root.canvases[this.$root.params.pages[0] ? this.$root.params.pages[0] - 1 : 0].label)[0];
+			const canvasIndex = this.$root.params.pages[0] ? this.$root.params.pages[0] - 1 : 0;
+			const label = this.getLabels(this.$root.canvases[canvasIndex].label)[0];
 			return `${page} : ${label}`;
 		},
 	},

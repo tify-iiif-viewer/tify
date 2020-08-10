@@ -335,7 +335,9 @@ export default {
 			const lastIndex = pages.length - 1;
 			const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
 			let sectionIndex = 0;
-			while (page >= this.sections[sectionIndex].firstPage || (page && page >= this.sections[sectionIndex].firstPage)) {
+			while (
+				page >= this.sections[sectionIndex].firstPage || (page && page >= this.sections[sectionIndex].firstPage)
+			) {
 				sectionIndex += 1;
 			}
 			this.$root.setPage(this.sections[sectionIndex].firstPage);
@@ -344,7 +346,9 @@ export default {
 			const { pages } = this.$root.params;
 			const page = pages[0] ? pages[0] : pages[1];
 			let sectionIndex = this.sections.length - 1;
-			while (page <= this.sections[sectionIndex].firstPage || (page && page <= this.sections[sectionIndex].firstPage)) {
+			while (
+				page <= this.sections[sectionIndex].firstPage || (page && page <= this.sections[sectionIndex].firstPage)
+			) {
 				sectionIndex -= 1;
 			}
 			this.$root.setPage(this.sections[sectionIndex].firstPage);
