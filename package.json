@@ -3,30 +3,33 @@
   "version": "0.23.1",
   "description": "TIFY is a slim and mobile-friendly IIIF document viewer.",
   "homepage": "https://github.com/tify-iiif-viewer/tify",
+  "repository": {
+    "type:": "git",
+    "url": "https://github.com/tify-iiif-viewer/tify"
+  },
   "bugs": {
     "url": "https://github.com/tify-iiif-viewer/tify/issues"
   },
-  "repository": {
-    "url": "https://github.com/tify-iiif-viewer/tify",
-    "type:": "git"
+  "author": {
+    "name": "Tobias Schäfer",
+    "url": "https://aspectis.net/"
   },
   "license": "AGPL-3.0",
-  "contributors": "https://github.com/tify-iiif-viewer/tify/graphs/contributors",
   "scripts": {
     "build": "vue-cli-service build",
     "e2e": "node tests/e2e/runner.js chrome",
     "fix-openseadragon": "replace \"\\}\\(this, function \\(\\) \\{\" \"}(window, function () {\" ./openseadragon/src/openseadragon.js",
     "lint": "vue-cli-service lint",
     "lint-fix": "vue-cli-service lint --fix",
+    "postversion": "git push && git push --tags && npm run update-gh-pages && echo Tag v$npm_package_version created. Run \"npm publish\" to publish \"$npm_package_name\" on npmjs.com.",
     "prepare": "rimraf openseadragon && git clone https://github.com/openseadragon/openseadragon.git && cd openseadragon && git checkout tags/v2.4.1 && cd .. && npm run fix-openseadragon",
+    "preversion": "rimraf node_modules && npm install && npm run test",
     "serve": "vue-cli-service serve",
     "serve-mock-api": "node tests/iiif-api/server.js",
     "test": "npm run unit && npm run e2e",
     "unit": "vue-cli-service test:unit",
     "update-gh-pages": "git checkout gh-pages && git rebase master && git push -f origin gh-pages && git checkout master",
-    "preversion": "rimraf node_modules && npm install && npm run test",
-    "version": "npm run build && git add dist",
-    "postversion": "git push && git push --tags && npm run update-gh-pages && echo Tag v$npm_package_version created. Run \"npm publish\" to publish \"$npm_package_name\" on npmjs.com."
+    "version": "npm run build && git add dist"
   },
   "devDependencies": {
     "@codeceptjs/configure": "^0.5.2",
@@ -56,5 +59,13 @@
     "striptags": "^2.2.1",
     "vue": "^2.6.11",
     "vue-template-compiler": "^2.6.11"
-  }
+  },
+  "engines": {
+    "node": ">= 8.9.0",
+    "npm": ">= 5.5.1"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
 }

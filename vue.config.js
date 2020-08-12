@@ -5,11 +5,11 @@ const env = require('./package.json');
 
 const info = {
 	VERSION: env.version,
+	AUTHOR: env.author,
 	LICENSE: env.license,
 	REPOSITORY_URL: env.repository.url,
 	BUGS_URL: env.bugs.url,
-	DOCS_URL: `${env.repository.url}/blob/main/README.md`,
-	CONTRIBUTORS: env.contributors,
+	DOCS_URL: `${env.repository.url}/blob/v${env.version}/doc`,
 };
 
 process.env.VUE_APP_INFO = escape(JSON.stringify(info));
@@ -24,10 +24,12 @@ module.exports = {
 		},
 		plugins: [
 			// TIFY-specific: Prepend copyright notice to each compiled file
+			/* eslint-disable function-paren-newline */
 			new BannerPlugin(
 				`TIFY v${env.version}\n`
-				+ `${env.license}\n`
-				+ `${env.homepage}`,
+							+ `(c) ${new Date().getFullYear()} ${env.author.name} (${env.author.url})\n`
+							+ `${env.license}\n`
+							+ `${env.homepage}` // eslint-disable-line comma-dangle
 			),
 		],
 	},
