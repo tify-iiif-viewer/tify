@@ -76,7 +76,7 @@ npm install
 Run in development mode with hot reload on `localhost:8080`:
 
 ``` bash
-npm run dev
+npm run serve
 ```
 
 In development mode, the manifest URL must be provided via query parameter, e.g. `http://localhost:8080/?manifest=https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN857449303/manifest`.
