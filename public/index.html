@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>TIFY</title>
+	</head>
+	<body>
+		<div id="tify"></div>
+		<script>
+			var matches = window.location.search.match(/(\?|&)language\=([^&]*)/);
+			var language = (matches && matches.length === 3 ? matches[2] : null);
+			if (language) {
+				tifyOptions = {
+					language: language,
+				};
+			}
+		</script>
+	</body>
+</html>

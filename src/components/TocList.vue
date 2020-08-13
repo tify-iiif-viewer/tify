@@ -30,7 +30,7 @@
 				v-if="purpose === 'pdf'"
 				class="tify-toc_link"
 				download
-				:href="$root.iiifConvertToArray(structure.rendering)[0]['@id']"
+				:href="getLabels(structure.rendering)[0]['@id']"
 			>
 				<i class="tify-badge">PDF</i>
 				{{ structure.label }}
@@ -59,50 +59,53 @@
 </template>
 
 <script>
-	export default {
-		name: 'toc-list',
-		props: [
-			'level',
-			'structures',
-			'parentStructure',
-			'purpose',
-		],
-		data() {
-			return {
-				expandedStructures: [],
-			};
+export default {
+	name: 'toc-list',
+	props: [
+		'level',
+		'structures',
+		'parentStructure',
+		'purpose',
+	],
+	data() {
+		return {
+			expandedStructures: [],
+		};
+	},
+	methods: {
+		checkIfPagesInStructure(structure) {
+			const { pages } = this.$root.params;
+			return pages.some((page) => page >= structure.firstPage && page <= structure.lastPage);
 		},
-		methods: {
-			checkIfPagesInStructure(structure) {
-				const { pages } = this.$root.params;
-				return pages.some(page => page >= structure.firstPage && page <= structure.lastPage);
-			},
-			setPage(page) {
-				this.$root.setPage(page);
-				if (this.$root.isMobile()) this.$root.updateParams({ view: 'scan' });
-			},
-			toggleAllChildren(expanded = null) {
-				if (!this.$refs.children) return;
-
-				for (let i = this.structures.length - 1; i >= 0; i -= 1) {
-					this.toggleChildren(i, expanded);
-				}
-
-				this.$refs.children.forEach((child) => {
-					child.toggleAllChildren(expanded);
-				});
-			},
-			toggleChildren(index, expanded = null) {
-				const structure = this.structures[index];
-				if (!structure.childStructures) return;
-
-				const doExpand = (expanded !== null ? expanded : !this.expandedStructures[index]);
-				if (doExpand) {
-					this.$set(this.expandedStructures, index, true);
-				} else {
-					this.$set(this.expandedStructures, index, false);
-				}
-			},
+		setPage(page) {
+			this.$root.setPage(page);
+			if (this.$root.isMobile()) this.$root.updateParams({ view: 'scan' });
 		},
-	};
+		toggleAllChildren(expanded = null) {
+			if (!this.$refs.children) return;
+
+			for (let i = this.structures.length - 1; i >= 0; i -= 1) {
+				this.toggleChildren(i, expanded);
+			}
+
+			this.$refs.children.forEach((child) => {
+				child.toggleAllChildren(expanded);
+			});
+		},
+		toggleChildren(index, expanded = null) {
+			const structure = this.structures[index];
+			if (!structure.childStructures) return;
+
+			const doExpand = (expanded !== null ? expanded : !this.expandedStructures[index]);
+			if (doExpand) {
+				this.$set(this.expandedStructures, index, true);
+			} else {
+				this.$set(this.expandedStructures, index, false);
+			}
+		},
+		getLabels(value) {
+			return this.$root.convertValueToArray(value);
+		},
+	},
+};
 </script>

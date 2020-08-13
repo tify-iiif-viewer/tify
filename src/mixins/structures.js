@@ -1,28 +1,28 @@
-module.exports = {
+const structures = {
 	computed: {
 		structures() {
 			if (!this.$root.manifest.structures) {
 				return [];
 			}
 
-			const structures = [];
+			const mappedStructures = [];
 			const structuresThatAreChildren = [];
 			const { length } = this.$root.manifest.structures;
 			for (let i = 0; i < length; i += 1) {
 				const structure = this.$root.manifest.structures[i];
 
 				if (structure.label) {
-					structure.label = this.$root.iiifConvertToArray(structure.label)[0].trim();
+					structure.label = this.$root.convertValueToArray(structure.label)[0].trim();
 				} else {
 					structure.label = '—'; // NOTE: That's an em dash (&mdash;)
 				}
 
 				if (structure.canvases) {
 					const firstCanvas = structure.canvases[0];
-					structure.firstPage = this.$root.canvases.findIndex(canvas => canvas['@id'] === firstCanvas) + 1;
+					structure.firstPage = this.$root.canvases.findIndex((canvas) => canvas['@id'] === firstCanvas) + 1;
 
 					const lastCanvas = structure.canvases[structure.canvases.length - 1];
-					structure.lastPage = this.$root.canvases.findIndex(canvas => canvas['@id'] === lastCanvas) + 1;
+					structure.lastPage = this.$root.canvases.findIndex((canvas) => canvas['@id'] === lastCanvas) + 1;
 
 					const firstPageCanvas = this.$root.canvases[structure.firstPage - 1];
 					if (!firstPageCanvas) {
@@ -43,7 +43,7 @@ module.exports = {
 					structuresThatAreChildren.push(structure);
 				}
 
-				structures.push(structure);
+				mappedStructures.push(structure);
 			}
 
 			const structuresThatAreChildrenLength = structuresThatAreChildren.length;
@@ -51,17 +51,17 @@ module.exports = {
 				const childStructures = [];
 				for (let j = 0; j < structuresThatAreChildrenLength; j += 1) {
 					const childStructure = structuresThatAreChildren[j];
-					if (childStructure.within === structures[i]['@id']) {
+					if (childStructure.within === mappedStructures[i]['@id']) {
 						childStructures.push(childStructure);
 					}
 				}
 				if (childStructures.length) {
-					structures[i].childStructures = childStructures.sort((a, b) => a.firstPage - b.firstPage);
+					mappedStructures[i].childStructures = childStructures.sort((a, b) => a.firstPage - b.firstPage);
 				}
 			}
 
-			const topLevelStructures = structures
-				.filter(structure => !structure.within)
+			const topLevelStructures = mappedStructures
+				.filter((structure) => !structure.within)
 				.sort((a, b) => a.firstPage - b.firstPage);
 
 			return topLevelStructures;
@@ -85,7 +85,7 @@ module.exports = {
 			for (let i = 0; i < length; i += 1) {
 				const structure = this.$root.manifest.structures[i];
 				const { canvases } = structure;
-				if (canvases && canvases.some(canvasId => currentCanvasIds.indexOf(canvasId) > -1)) {
+				if (canvases && canvases.some((canvasId) => currentCanvasIds.indexOf(canvasId) > -1)) {
 					if (structure.firstPage && structure.lastPage) {
 						const currentRange = structure.lastPage - structure.firstPage;
 						if ((currentRange < smallestRange) || !smallestRange) {
@@ -113,3 +113,5 @@ module.exports = {
 		},
 	},
 };
+
+export default structures;

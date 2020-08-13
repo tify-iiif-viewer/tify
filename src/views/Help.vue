@@ -29,11 +29,11 @@
 </template>
 
 <script>
-	export default {
-		computed: {
-			info() {
-				return JSON.parse(unescape(process.env.INFO));
-			},
+export default {
+	computed: {
+		info() {
+			return JSON.parse(unescape(process.env.VUE_APP_INFO));
 		},
-	};
+	},
+};
 </script>
