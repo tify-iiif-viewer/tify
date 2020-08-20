@@ -1,4 +1,13 @@
 export default {
+	computed: {
+		customPageViewActive() {
+			const { pages } = this.params;
+			return (
+				pages.length > 2
+				|| (pages.length === 2 && (pages[0] % 2 > 0 || pages[1] !== pages[0] + 1) && pages[1] > 0)
+			);
+		},
+	},
 	methods: {
 		getParams() {
 			let params = {};

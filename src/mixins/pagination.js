@@ -1,12 +1,5 @@
 module.exports = {
 	computed: {
-		customPageViewActive() {
-			const { pages } = this.$root.params;
-			return (
-				pages.length > 2
-				|| (pages.length === 2 && (pages[0] % 2 > 0 || pages[1] !== pages[0] + 1) && pages[1] > 0)
-			);
-		},
 		isFirstPage() {
 			return this.$root.params.pages[0] < 2;
 		},

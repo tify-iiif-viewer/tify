@@ -3,7 +3,7 @@
 		<h2 class="tify-sr-only">{{ 'Scan'|trans }}</h2>
 
 		<button
-			v-if="!customPageViewActive && !isFirstPage"
+			v-if="!$root.customPageViewActive && !isFirstPage"
 			class="tify-scan_page-button -previous"
 			:title="'Previous page'|trans"
 			@click="goToPreviousPage"
@@ -12,7 +12,7 @@
 			<span class="tify-sr-only">{{ 'Previous page'|trans }}</span>
 		</button>
 		<button
-			v-if="!customPageViewActive && !isLastPage"
+			v-if="!$root.customPageViewActive && !isLastPage"
 			class="tify-scan_page-button -next"
 			:title="'Next page'|trans"
 			@click="goToNextPage"
