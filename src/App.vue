@@ -96,18 +96,25 @@ export default {
 
 		// Load manifest
 		httpClient.get(this.$root.manifestUrl).then((response) => {
-			this.$root.manifest = response.data;
+			const manifest = response.data;
+			const manifestValid = this.$root.validateManifest(manifest);
 
-			// Merging user-set query params with defaults
-			this.$root.params = this.$root.getParams();
+			if (manifestValid) {
+				this.$root.manifest = manifest;
 
-			window.addEventListener('popstate', () => {
+				// Merging user-set query params with defaults
 				this.$root.params = this.$root.getParams();
-			});
 
-			if (this.$root.options.title) {
-				window.document.title = `${this.$root.convertValueToArray(this.$root.manifest.label)[0]}`
-					+ ` | ${this.$root.options.title}`;
+				window.addEventListener('popstate', () => {
+					this.$root.params = this.$root.getParams();
+				});
+
+				if (this.$root.options.title) {
+					window.document.title = `${this.$root.convertValueToArray(this.$root.manifest.label)[0]}`
+							+ ` | ${this.$root.options.title}`;
+				}
+			} else {
+				this.$root.error = 'Please provide a valid IIIF Presentation API 2.x Manifest';
 			}
 		}, (error) => {
 			const status = (error.response ? error.response.statusText : error.message);
