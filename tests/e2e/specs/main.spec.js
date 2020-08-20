@@ -6,6 +6,13 @@ describe('Main', () => {
 			.get('#tify > .tify-app');
 	});
 
+	it('Validate manifest', () => {
+		cy.visit('/?manifest=http://localhost:8081/manifest/gdz-PPN497825848-00000001-info.json');
+		cy
+			.get('.tify-app')
+			.contains('Please provide a valid IIIF Presentation API 2.x Manifest');
+	});
+
 	// TODO: Test disabled because it fails, despite working fine in the browser
 	// it('Toggle fullscreen via mouse', (I) => {
 	// 	cy.visit('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
