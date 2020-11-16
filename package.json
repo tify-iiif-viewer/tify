@@ -10,10 +10,6 @@
   "bugs": {
     "url": "https://github.com/tify-iiif-viewer/tify/issues"
   },
-  "author": {
-    "name": "Tobias Schäfer",
-    "url": "https://aspectis.net/"
-  },
   "license": "AGPL-3.0",
   "scripts": {
     "build": "vue-cli-service build",
@@ -28,7 +24,7 @@
     "serve-mock-api": "node tests/iiif-api/server.js",
     "test": "npm run unit && npm run e2e",
     "unit": "vue-cli-service test:unit",
-    "update-gh-pages": "git checkout gh-pages && git rebase master && git push -f origin gh-pages && git checkout master",
+    "update-gh-pages": "git checkout gh-pages && git rebase main && git push -f origin gh-pages && git checkout main",
     "version": "npm run build && git add dist"
   },
   "devDependencies": {

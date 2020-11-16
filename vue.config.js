@@ -5,10 +5,9 @@ const env = require('./package.json');
 
 const info = {
 	VERSION: env.version,
-	AUTHOR: env.author,
 	LICENSE: env.license,
 	REPOSITORY_URL: env.repository.url,
-	BUGS_URL: env.bugs.url,
+	CONTRIBUTORS_URL: "https://github.com/tify-iiif-viewer/tify/blob/main/CONTRIBUTORS.md",
 	DOCS_URL: `${env.repository.url}/blob/v${env.version}/doc`,
 };
 
@@ -27,7 +26,7 @@ module.exports = {
 			/* eslint-disable function-paren-newline */
 			new BannerPlugin(
 				`TIFY v${env.version}\n`
-							+ `(c) ${new Date().getFullYear()} ${env.author.name} (${env.author.url})\n`
+							+ `(c) 2017-${new Date().getFullYear()} Göttingen State and University Library (https://www.uni-goettingen.de/en/)\n`
 							+ `${env.license}\n`
 							+ `${env.homepage}` // eslint-disable-line comma-dangle
 			),

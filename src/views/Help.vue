@@ -2,27 +2,26 @@
 	<section class="tify-help">
 		<h2 class="tify-sr-only">{{ 'Help'|trans }}</h2>
 
-		<div class="tify-help_section -doc">
-			<h3>{{ 'Documentation'|trans }}</h3>
-			<p><a :href="info.DOCS_URL">{{ 'Open documentation'|trans }}</a></p>
-		</div>
-
 		<div class="tify-help_section -about">
 			<h3>{{ 'About TIFY'|trans }}</h3>
-			<p v-html="$root.$options.filters.trans('TIFY is a slim and mobile-friendly IIIF document viewer.')"/>
+			<p>TIFY is a slim and mobile-friendly IIIF document viewer,
+				released under the GNU Affero General Public License 3.0.</p>
 			<dl>
-				<dt>{{ 'Author'|trans }}</dt>
-				<dd><a :href="info.AUTHOR.url">{{ info.AUTHOR.name }}</a></dd>
 				<dt>{{ 'Version'|trans }}</dt>
 				<dd>{{ info.VERSION }}</dd>
-				<dt>{{ 'License'|trans }}</dt>
-				<dd>{{ info.LICENSE }}</dd>
 			</dl>
+			<p>
+				<a :href="info.DOCS_URL">{{ 'Open documentation'|trans }}</a>
+			</p>
 			<p>
 				<a :href="info.REPOSITORY_URL">{{ 'Source code'|trans }}</a>
 			</p>
 			<p>
-				<a :href="info.BUGS_URL">{{ 'Report a bug'|trans }}</a>
+				<a :href="info.CONTRIBUTORS_URL">Contributors</a>
+			</p>
+			<p>
+				Copyright © 2017-2020 <a href="https://www.uni-goettingen.de/en/">Göttingen University</a> /
+				<a href="https://www.sub.uni-goettingen.de/en/">Göttingen State and University Library</a>
 			</p>
 		</div>
 	</section>
