@@ -1,64 +1,72 @@
-Feature('Scan');
+describe('Scan', () => {
+	it('Use image filters', () => {
+		const params = {
+			filters: {
+				saturate: 0,
+			},
+		};
+		const encodedParams = encodeURIComponent(JSON.stringify(params));
 
-Scenario('Use image filters', (I) => {
-	const params = {
-		filters: {
-			saturate: 0,
-		},
-	};
-	const encodedParams = encodeURIComponent(JSON.stringify(params));
+		cy.visit(`/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify=${encodedParams}`);
+		cy
+			.get('.tify-app_main')
+			.get('[title="Toggle image filters"]')
+			.click()
+			.xpath('//label[@for="tify-scan_saturation"][contains(., "0 %")]')
+			.should('be.visible');
+	});
 
-	I.amOnPage(`/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify=${encodedParams}`);
-	I.waitForElement('.tify-app_main');
+	it('Reset pan, zoom, rotation and filters at once', () => {
+		const params = {
+			filters: {
+				brightness: 1.1,
+				contrast: 0.9,
+				saturate: 1.1,
+			},
+			panX: .5,
+			panY: .5,
+			rotation: 90,
+			zoom: 2,
+		};
+		const encodedParams = encodeURIComponent(JSON.stringify(params));
 
-	I.click('[title="Toggle image filters"]');
-	I.seeElement('//label[@for="tify-scan_saturation"][contains(., "0 %")]');
-}).tag('@smoke');
+		cy.visit(`/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify=${encodedParams}`);
+		cy
+			.get('.tify-app_main')
+			.then(() => {
+				cy.contains('.tify-scan_button.-active', 'Rotate');
+				cy.contains('.tify-scan_button.-active', 'Toggle image filters');
+			});
 
-Scenario('Reset pan, zoom, rotation and filters at once', (I) => {
-	const params = {
-		filters: {
-			brightness: 1.1,
-			contrast: 0.9,
-			saturate: 1.1,
-		},
-		panX: .5,
-		panY: .5,
-		rotation: 90,
-		zoom: 2,
-	};
-	const encodedParams = encodeURIComponent(JSON.stringify(params));
+		cy.get('body').type('{shift}0');
+		cy.url().should('include', '/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify={%22view%22:%22info%22}');
+	});
 
-	I.amOnPage(`/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify=${encodedParams}`);
-	I.waitForElement('.tify-app_main');
+	it('Control scan via keyboard', () => {
+		cy.visit('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
+		cy
+			.get('.tify-app_main')
+			.then(() => {
+				cy.wait(1000);
+				cy.get('body').type('r');
+				cy.contains('.tify-scan_button.-active', 'Rotate').should('be.visible');
 
-	I.see('Rotate', '.-active');
-	I.see('Toggle image filters', '.-active');
+				cy.get('body').type('r');
+				cy.get('body').type('r');
+				cy.get('body').type('r');
+				cy.contains('.tify-scan_button:not(.-active)', 'Rotate').should('be.visible');
 
-	// TODO: Test disabled until Nightmare supports modifier keys
-	// I.pressKey(['Shift', '0']);
-	// I.seeCurrentUrlEquals('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify={"view":"info"}');
-}).tag('@smoke');
+				cy.get('body')
+					.type('i')
+					.contains('Brightness').should('be.visible')
+					.type('i')
+					.contains('Brightness').should('not.be.visible');
 
-Scenario('Control scan via keyboard', (I) => {
-	I.amOnPage('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
-	I.waitForElement('.tify-app_main');
-
-	I.pressKey('r');
-	I.see('Rotate', '.-active');
-
-	I.pressKey('r');
-	I.pressKey('r');
-	I.pressKey('r');
-	I.see('Rotate', ':not(.-active)');
-
-	I.pressKey('i');
-	I.see('Brightness');
-	I.pressKey('i');
-	I.dontSee('Brightness');
-
-	I.pressKey('i');
-	I.see('Brightness');
-	I.pressKey('Escape');
-	I.dontSee('Brightness');
+				cy.get('body')
+					.type('i')
+					.contains('Brightness').should('be.visible')
+					.type('{esc}')
+					.contains('Brightness').should('not.be.visible');
+			});
+	});
 });

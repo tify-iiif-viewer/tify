@@ -1,75 +1,74 @@
-Feature('Pagination');
+describe('Pagination', () => {
+	const currentPage = '.tify-page-select_button';
 
-const currentPage = '.tify-page-select_button';
+	it('Change page via buttons', () => {
+		cy.visit('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify={"pages":[15]}');
+		cy
+			.get('.tify-app_main')
+			.then(() => {
+				cy.contains(currentPage, '15 : 7r');
 
-Scenario('Change page via buttons', (I) => {
-	I.amOnPage('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify={"pages":[15]}');
-	I.waitForElement('.tify-app_main');
+				cy.contains('First page').click();
+				cy.contains(currentPage, '1 :  -');
 
-	I.see('15 : 7r', currentPage);
+				cy.contains('Next page').click().click();
+				cy.contains(currentPage, '3 : 1r');
 
-	I.click('First page');
-	I.see('1 : -', currentPage);
+				cy.contains('Next section').click().click();
+				cy.contains(currentPage, '7 : 3r');
 
-	I.click('Next page');
-	I.click('Next page');
-	I.see('3 : 1r', currentPage);
+				cy.contains('Last page').click();
+				cy.contains(currentPage, '69 :  -');
 
-	I.click('Next section');
-	I.click('Next section');
-	I.see('7 : 3r', currentPage);
+				cy.contains('Previous section').click().click().click().click();
+				cy.contains('16 : 7v');
 
-	I.click('Last page');
-	I.see('69 : -', currentPage);
+				cy.contains('Toggle double-page').click();
+				cy.contains('.-active', 'Toggle double-page');
+			});
+	});
 
-	I.click('Previous section');
-	I.click('Previous section');
-	I.click('Previous section');
-	I.click('Previous section');
-	I.see('16 : 7v');
+	it('Change page via keyboard', () => {
+		cy.visit('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify={"pages":[15]}');
+		cy
+			.get('.tify-app_main')
+			.then(() => {
+				cy.contains(currentPage, '15 : 7r');
 
-	I.click('Toggle double-page');
-	I.see('Toggle double-page', '.-active');
-}).tag('@smoke');
+				cy.get('body').type('q');
+				cy.contains(currentPage, '14 : 6v');
+				cy.get('body').type('e');
+				cy.contains(currentPage, '15 : 7r');
 
-Scenario('Change page via keyboard', (I) => {
-	I.amOnPage('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify={"pages":[15]}');
-	I.waitForElement('.tify-app_main');
+				cy.get('body').type('b');
+				cy.contains(currentPage, '14 : 6v');
+				cy.contains('.-active', 'Toggle double-page');
 
-	I.see('15 : 7r', currentPage);
+				cy.get('body').type('q');
+				cy.contains(currentPage, '12 : 5v');
+				cy.get('body').type(',');
+				cy.contains(currentPage, '10 : 4v');
 
-	I.pressKey('q');
-	I.see('14 : 6v', currentPage);
-	I.pressKey('e');
-	I.see('15 : 7r', currentPage);
+				cy.get('body').type('e');
+				cy.contains(currentPage, '12 : 5v');
+				cy.get('body').type('.');
+				cy.contains(currentPage, '14 : 6v');
 
-	I.pressKey('b');
-	I.see('14 : 6v', currentPage);
-	I.see('Toggle double-page', '.-active');
+				cy.get('body').type('Q');
+				cy.contains(currentPage, '1 :  -');
 
-	I.pressKey('q');
-	I.see('12 : 5v', currentPage);
-	I.pressKey(',');
-	I.see('10 : 4v', currentPage);
+				cy.get('body').type('E');
+				cy.contains(currentPage, '68 :  -');
 
-	I.pressKey('e');
-	I.see('12 : 5v', currentPage);
-	I.pressKey('.');
-	I.see('14 : 6v', currentPage);
+				cy.get('body').type('b');
+				cy.contains(currentPage, '68 :  -');
+				cy.contains('.-active', 'Toggle double-page').should('not.be.visible');
 
-	I.reallyPressKey('Q');
-	I.see('1 : -', currentPage);
+				cy.get('body').type('Q');
+				cy.contains(currentPage, '1 :  -');
 
-	I.reallyPressKey('E');
-	I.see('68 : -', currentPage);
-
-	I.pressKey('b');
-	I.see('68 : -', currentPage);
-	I.dontSee('Toggle double-page', '.-active');
-
-	I.reallyPressKey('Q');
-	I.see('1 : -', currentPage);
-
-	I.reallyPressKey('E');
-	I.see('69 : -', currentPage);
+				cy.get('body').type('E');
+				cy.contains(currentPage, '69 :  -');
+			});
+	});
 });

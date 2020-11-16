@@ -1,54 +1,65 @@
-Feature('TOC');
+describe('TOC', () => {
+	it('Navigate TOC', () => {
+		cy.visit('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
+		cy
+			.get('.tify-app_main')
+			.then(() => {
+				cy.contains('Contents').click();
+				cy.contains('Table of Contents');
 
-Scenario('Navigate TOC', (I) => {
-	I.amOnPage('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
-	I.waitForElement('.tify-app_main');
+				cy.get('.tify-toc_structure.-current').contains('Titelseite');
+				cy.get('.tify-toc_structure[data-level="0"]:nth-child(3) > .tify-toc_toggle').click();
+				cy.get('.tify-toc_structure[data-level="0"].-expanded .tify-toc_structure[data-level="1"]:first-child > .tify-toc_toggle').click();
+				cy.get('.tify-toc_label').contains('Huddesche Methode');
 
-	I.click('Contents');
-	I.see('Table of Contents');
-	I.see('Titelseite', '.tify-toc_structure.-current');
+				// "Kurze Nachrichten"
+				cy.get('.tify-toc_structure[data-level="1"]:last-of-type > .tify-toc_toggle').click();
+				cy.get('.tify-toc_label').contains('Ferrarische Methode (Louis Ferrari)');
 
-	I.click('.tify-toc_structure[data-level="0"]:nth-child(3) .tify-toc_toggle');
+				cy.contains('Collapse').click().then(() => {
+					cy.contains('Ferrarische Methode (Louis Ferrari)').should('not.be.visible');
+				});
 
-	I.click('.tify-toc_structure[data-level="0"].-expanded .tify-toc_structure[data-level="1"]:first-child .tify-toc_toggle');
+				cy.get('.tify-toc > .tify-toc_list > :last-child .tify-toc_link').click().then(() => {
+					cy.get('.tify-toc_structure.-current').contains('Einband');
+				});
 
-	I.see('Huddesche Methode', '.tify-toc_label');
+				cy.contains('Expand all').click().click().then(() => {
+					// Multiple clicks should not toggle all children again
+					cy.contains('Auflösung von Gleichungen 3ten Grades').should('be.visible');
+					cy.contains('Recursionsformeln').should('be.visible');
+				});
 
-	// "Kurze Nachrichten"
-	I.click('.tify-toc_structure[data-level="1"]:last-of-type .tify-toc_toggle');
-	I.see('Ferrarische Methode (Louis Ferrari)', '.tify-toc_label');
+				cy.contains('Collapse all').click().click().then(() => {
+					// Multiple clicks should not toggle all children again
+					cy.contains('Auflösung von Gleichungen 3ten Grades').should('not.be.visible');
+					cy.contains('Recursionsformeln').should('not.be.visible');
+				});
 
-	I.click('Collapse');
-	I.dontSee('Ferrarische Methode (Louis Ferrari)');
+				cy
+					.contains('Expand all')
+					.click()
+					.get('.tify-toc_structure[data-level="0"].-expanded:nth-child(3) > .tify-toc_toggle:first-of-type') // collapse first collapsible
+					.click()
+					.then(() => {
+						cy.contains('Auflösung von Gleichungen 3ten Grades').should('not.be.visible'); // child of first collapsible
+						cy.contains('Recursionsformeln').should('be.visible'); // child of second collapsible
+					});
+			});
+	});
 
-	I.click('.tify-toc > .tify-toc_list > :last-child .tify-toc_link');
-	I.see('Einband', '.tify-toc_structure.-current');
+	it('Show TOC when there are structures without canvases', () => {
+		const params = {
+			view: 'toc',
+		};
+		const encodedParams = encodeURIComponent(JSON.stringify(params));
 
-	I.click('Expand all');
-	I.click('Expand all'); // Multiple clicks should not toggle all children again
-	I.see('Auflösung von Gleichungen 3ten Grades');
-	I.see('Recursionsformeln');
-
-	I.click('Collapse all');
-	I.click('Collapse all'); // Multiple clicks should not toggle all children again
-	I.dontSee('Auflösung von Gleichungen 3ten Grades');
-	I.dontSee('Recursionsformeln');
-
-	I.click('Expand all');
-	I.click('.tify-toc_toggle:first-of-type'); // collapse first collapsible
-	I.dontSee('Auflösung von Gleichungen 3ten Grades'); // child of first collapsible
-	I.see('Recursionsformeln'); // child of second collapsible
-}).tag('@smoke');
-
-Scenario('Show TOC when there are structures without canvases', (I) => {
-	const params = {
-		view: 'toc',
-	};
-	const encodedParams = encodeURIComponent(JSON.stringify(params));
-
-	I.amOnPage(`/?manifest=http://localhost:8081/manifest/MS-ADD-08640.json&tify=${encodedParams}`);
-	I.waitForElement('.tify-app_main');
-
-	I.see('Table of Contents');
-	I.see('Elizabeth Lyttelton\'s commonplace book', '.tify-toc_structure.-current');
-}).tag('@smoke');
+		cy.visit(`/?manifest=http://localhost:8081/manifest/MS-ADD-08640.json&tify=${encodedParams}`);
+		cy
+			.get('.tify-app_main')
+			.then(() => {
+				cy.contains('Table of Contents').should('be.visible');
+				cy.get('.tify-toc_structure.-current').contains('Elizabeth Lyttelton\'s commonplace book');
+			});
+	});
+});

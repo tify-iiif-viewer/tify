@@ -1,18 +1,19 @@
-Feature('Export');
+describe('Export', () => {
+	it('Display export links', () => {
+		cy.visit('/?manifest=http://localhost:8081/manifest/gdz-PPN857449303.json');
+		cy
+			.get('.tify-app_main')
+			.then(() => {
+				cy.contains('Export').click();
+				cy.contains('Download Individual Images').should('be.visible');
+				cy.contains('Page 1').should('be.visible');
+				cy.contains('Next page').click();
+				cy.contains('Page 2').should('be.visible');
 
-Scenario('Display export links', (I) => {
-	I.amOnPage('/?manifest=http://localhost:8081/manifest/gdz-PPN857449303.json');
-	I.waitForElement('.tify-app_main');
+				cy.contains('PDFs for each element').click();
+				cy.contains('Titelseite').should('be.visible');
 
-	I.click('Export');
-	I.see('Download Individual Images');
-	I.see('Page 1 : -');
-
-	I.click('Next page');
-	I.see('Page 2 : -');
-
-	I.click('PDFs for each element');
-	I.see('Titelseite');
-
-	I.seeElement('a[href="https://gdzdev.sub.uni-goettingen.de/download/pdf/PPN857449303/LOG_0001.pdf"]');
-}).tag('@smoke');
+				cy.get('a[href="https://gdzdev.sub.uni-goettingen.de/download/pdf/PPN857449303/LOG_0001.pdf"]');
+			});
+	});
+});

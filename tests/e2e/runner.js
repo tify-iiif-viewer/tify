@@ -9,22 +9,16 @@ service
 	.run('serve')
 	.then(({ server }) => {
 		const opts = process.argv.slice(2);
-		const config = ['--config', 'tests/e2e/codecept.conf.js'];
-		let runOpts = [];
+		let args = ['test:e2e'];
 
-		if (opts.length === 0) {
-			runOpts = ['run-multiple', ...config, 'basic:chrome', 'smoke:firefox'];
-		} else {
-			runOpts = ['run', ...config];
-			opts.forEach((opt) => {
-				if (opt === 'firefox') {
-					runOpts = [...runOpts, '--override', '{ "helpers": {"WebDriverIO": {"browser": "firefox"}}}'];
-				}
-			});
-		}
+		opts.forEach((opt) => {
+			if (opt === '--headless') {
+				args = [...args, '--headless'];
+			}
+		});
 
 		const spawn = require('cross-spawn');
-		const runner = spawn('./node_modules/.bin/codeceptjs', runOpts, { stdio: 'inherit' });
+		const runner = spawn('./node_modules/.bin/vue-cli-service', args, { stdio: 'inherit' });
 
 		const iiifApi = require('../iiif-api/server.js');
 
