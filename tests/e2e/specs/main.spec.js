@@ -1,48 +1,56 @@
-Feature('Main');
+describe('Main', () => {
+	it('Start the app', () => {
+		cy.visit('/?manifest=http://localhost:8081/manifest/gdz-PPN857449303.json&language=de');
+		cy
+			.get('.tify-app_main')
+			.get('#tify > .tify-app');
+	});
 
-Scenario('Start the app', (I) => {
-	I.amOnPage('/?manifest=http://localhost:8081/manifest/gdz-PPN857449303.json&language=de');
-	I.waitForElement('.tify-app_main');
+	// TODO: Test disabled because it fails, despite working fine in the browser
+	// it('Toggle fullscreen via mouse', (I) => {
+	// 	cy.visit('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
+	//
+	// 	cy
+	// 		.get('.tify-app_main')
+	// 		.then(() => {
+	// 			cy.contains('button', 'Fullscreen');
+	// 			cy.contains('button', 'Exit fullscreen').should('not.be.visible');
+	//
+	// 			cy.contains('Fullscreen').click();
+	// 			cy.contains('button', 'Exit fullscreen');
+	// 			cy.contains('Exit fullscreen').click();
+	// 			cy.contains('button', 'Fullscreen');
+	//
+	// 			cy.contains('Fullscreen').click();
+	// 			cy.contains('button', 'Exit fullscreen');
+	// 			cy.get('body').type('Esc');
+	// 			cy.contains('button', 'Fullscreen');
+	// 		});
+	// });
 
-	I.seeElement('#tify > .tify-app');
-}).tag('@smoke');
-
-// TODO: Test disabled because it fails, despite working fine in the browser
-// Scenario('Toggle fullscreen via keyboard', (I) => {
-// 	I.amOnPage('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
-//
-// 	I.waitForElement('.tify-app_main');
-// 	I.see('Fullscreen', 'button');
-// 	I.dontSee('Exit fullscreen', 'button');
-//
-// 	I.pressKey('f');
-// 	I.waitForElement('.tify-header_button[title="Exit fullscreen"]');
-// 	I.see('Exit fullscreen', '.tify-header_button');
-// 	I.pressKey('f');
-// 	I.see('Fullscreen', 'button');
-//
-// 	// TODO: Escape does not get triggered, may work after CodeceptJS updating to Webdriver@5
-// 	I.pressKey('f');
-// 	I.see('Exit fullscreen', 'button');
-// 	I.pressKey('Escape');
-// 	I.see('Fullscreen', 'button');
-// });
-
-// TODO: Test disabled because it fails, despite working fine in the browser
-// Scenario('Toggle fullscreen via mouse', (I) => {
-// 	I.amOnPage('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
-// 	I.resizeWindow(1600, 900);
-// 	I.waitForElement('.tify-app_main');
-// 	I.see('Fullscreen', 'button');
-// 	I.dontSee('Exit fullscreen', 'button');
-//
-// 	I.click('Fullscreen');
-// 	I.see('Exit fullscreen', 'button');
-// 	I.click('Exit fullscreen');
-// 	I.see('Fullscreen', 'button');
-//
-// 	I.click('Fullscreen');
-// 	I.see('Exit fullscreen', 'button');
-// 	I.pressKey('Esc');
-// 	I.see('Fullscreen', 'button');
-// });
+	// TODO: Test disabled because it fails, despite working fine in the browser
+	// it('Toggle fullscreen via keyboard', () => {
+	// 	cy.visit('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
+	//
+	// 	cy
+	// 		.get('.tify-app_main')
+	// 		.then(() => {
+	// 			cy.contains('button', 'Fullscreen');
+	// 			cy.contains('button', 'Exit fullscreen').should('not.be.visible');
+	//
+	// 			cy.get('body').type('f')
+	// 			.get('.tify-header_button[title="Exit fullscreen"]')
+	// 				.then(() => {
+	// 					cy.contains('.tify-header_button', 'Exit fullscreen');
+	// 					cy.get('body').type('f');
+	// 					cy.contains('button', 'Fullscreen');
+	//
+	// 					// TODO: Escape does not get triggered, may work after CodeceptJS updating to Webdriver@5
+	// 					cy.get('body').type('f');
+	// 					cy.contains('button', 'Exit fullscreen');
+	// 					cy.get('body').type('{esc}');
+	// 					cy.contains('button', 'Fullscreen');
+	// 				});
+	// 		});
+	// });
+});

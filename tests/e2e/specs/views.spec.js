@@ -1,51 +1,40 @@
-Feature('Views');
+describe('Views', () => {
+	it('Change view via buttons', () => {
+		cy.visit('/?manifest=http://localhost:8081/manifest/wellcome-b18035723.json');
+		cy.get('.tify-app_main');
 
-Scenario('Change view via buttons', (I) => {
-	I.amOnPage('/?manifest=http://localhost:8081/manifest/wellcome-b18035723.json');
-	I.waitForElement('.tify-app_main');
+		cy.get('.-active').contains('Info');
 
-	I.see('Info', '.-active');
+		cy.contains('Fulltext').click();
+		cy.get('.-active').contains('Fulltext');
 
-	I.click('Fulltext');
-	I.see('Fulltext', '.-active');
+		cy.contains('Pages').click();
+		cy.get('.-active').contains('Pages');
 
-	I.click('Pages');
-	I.see('Pages', '.-active');
+		cy.contains('Contents').click();
+		cy.get('.-active').contains('Contents');
 
-	I.click('Contents');
-	I.see('Contents', '.-active');
+		cy.contains('Info').click();
+		cy.get('.-active').contains('Info');
 
-	I.click('Info');
-	I.see('Info', '.-active');
+		cy.contains('Export').click();
+		cy.get('.-active').contains('Export');
 
-	I.click('Export');
-	I.see('Export', '.-active');
+		cy.contains('Help').click();
+		cy.get('.-active').contains('Help');
+	});
 
-	I.click('Help');
-	I.see('Help', '.-active');
-}).tag('@smoke');
-
-Scenario('Change view via keyboard', (I) => {
-	I.resizeWindow(1600, 900);
-
-	I.amOnPage('/?manifest=http://localhost:8081/manifest/wellcome-b18035723.json');
-	I.waitForElement('.tify-app_main');
-
-	I.pressKey('1');
-	I.see('Fulltext', '.-active');
-
-	I.pressKey('2');
-	I.see('Pages', '.-active');
-
-	I.pressKey('3');
-	I.see('Contents', '.-active');
-
-	I.pressKey('4');
-	I.see('Info', '.-active');
-
-	I.pressKey('5');
-	I.see('Export', '.-active');
-
-	I.pressKey('6');
-	I.see('Help', '.-active');
+	it('Change view via keyboard', () => {
+		cy.visit('/?manifest=http://localhost:8081/manifest/wellcome-b18035723.json');
+		cy
+			.get('.tify-app_main')
+			.then(() => {
+				cy.get('body').type('1').get('.-active').contains('Fulltext')
+				cy.get('body').type('2').get('.-active').contains('Pages')
+				cy.get('body').type('3').get('.-active').contains('Contents')
+				cy.get('body').type('4').get('.-active').contains('Info')
+				cy.get('body').type('5').get('.-active').contains('Export')
+				cy.get('body').type('6').get('.-active').contains('Help');
+			});
+	});
 });
