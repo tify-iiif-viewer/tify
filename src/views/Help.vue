@@ -4,23 +4,28 @@
 
 		<div class="tify-help_section -about">
 			<h3>{{ 'About TIFY'|trans }}</h3>
-			<p>TIFY is a slim and mobile-friendly IIIF document viewer,
-				released under the GNU Affero General Public License 3.0.</p>
-			<dl>
-				<dt>{{ 'Version'|trans }}</dt>
-				<dd>{{ info.VERSION }}</dd>
-			</dl>
 			<p>
-				<a :href="info.DOCS_URL">{{ 'Open documentation'|trans }}</a>
+				TIFY is a slim and mobile-friendly IIIF document viewer,
+				released under the GNU Affero General Public License 3.0.
 			</p>
 			<p>
-				<a :href="info.REPOSITORY_URL">{{ 'Source code'|trans }}</a>
+				Version {{ info.VERSION }}
 			</p>
+			<ul>
+				<li>
+					<a :href="info.DOCS_URL">Documentation</a>
+				</li>
+				<li>
+					<a :href="info.REPOSITORY_URL">Source code</a>
+				</li>
+				<li>
+					<a :href="info.CONTRIBUTORS_URL">Contributors</a>
+				</li>
+			</ul>
 			<p>
-				<a :href="info.CONTRIBUTORS_URL">Contributors</a>
-			</p>
-			<p>
-				Copyright © 2017-2020 <a href="https://www.uni-goettingen.de/en/">Göttingen University</a> /
+				Copyright &copy; 2017&ndash;2020
+				<a href="https://www.uni-goettingen.de/en/">Göttingen University</a>
+				/
 				<a href="https://www.sub.uni-goettingen.de/en/">Göttingen State and University Library</a>
 			</p>
 		</div>
