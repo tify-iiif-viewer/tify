@@ -23,13 +23,13 @@ module.exports = {
 			filename: '[name].js',
 		},
 		plugins: [
-			// TIFY-specific: Prepend copyright notice to each compiled file
-			/* eslint-disable function-paren-newline */
+			// Prepend copyright notice to each compiled file
 			new BannerPlugin(
-				`TIFY v${env.version}\n`
-							+ `(c) 2017-${new Date().getFullYear()} Göttingen State and University Library (https://www.uni-goettingen.de/en/)\n`
-							+ `${env.license}\n`
-							+ `${env.homepage}` // eslint-disable-line comma-dangle
+				`TIFY v${env.version}`
+					+ `\n(c) 2017-${new Date().getFullYear()}`
+					+ ' Göttingen State and University Library (https://www.sub.uni-goettingen.de/en/)'
+					+ `\n${env.license}`
+					+ `\n${env.homepage}` // eslint-disable-line comma-dangle
 			),
 		],
 	},
