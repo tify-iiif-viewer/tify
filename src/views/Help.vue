@@ -23,6 +23,9 @@
 				</li>
 			</ul>
 			<p>
+				<a :href="info.BUGS_URL">Report a bug</a>
+			</p>
+			<p>
 				Copyright &copy; 2017&ndash;2020
 				<a href="https://www.uni-goettingen.de/en/">Göttingen University</a>
 				/

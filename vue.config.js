@@ -6,9 +6,10 @@ const env = require('./package.json');
 const info = {
 	VERSION: env.version,
 	LICENSE: env.license,
-	REPOSITORY_URL: env.repository.url,
-	CONTRIBUTORS_URL: "https://github.com/tify-iiif-viewer/tify/blob/main/CONTRIBUTORS.md",
+	BUGS_URL: env.bugs.url,
+	CONTRIBUTORS_URL: 'https://github.com/tify-iiif-viewer/tify/blob/main/CONTRIBUTORS.md',
 	DOCS_URL: `${env.repository.url}/blob/v${env.version}/doc`,
+	REPOSITORY_URL: env.repository.url,
 };
 
 process.env.VUE_APP_INFO = escape(JSON.stringify(info));
