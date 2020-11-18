@@ -15,6 +15,11 @@ const info = {
 process.env.VUE_APP_INFO = escape(JSON.stringify(info));
 
 module.exports = {
+	chainWebpack: config => {
+		config.module.rule('eslint')
+			.use('eslint-loader')
+			.options({ fix: true })
+	},
 	configureWebpack: {
 		optimization: {
 			splitChunks: false,
