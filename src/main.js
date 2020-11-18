@@ -58,10 +58,15 @@ if (window.tifyOptions) {
 }
 
 // TODO: We cannot be sure that TIFY was loaded in a script tag, add a base option
+let base;
 let stylesheetUrl;
 if (process.env.NODE_ENV === 'production') {
-	stylesheetUrl = '/tify.css';
+	const scripts = document.getElementsByTagName('script');
+	const scriptUrl = scripts[scripts.length - 1];
+	base = scriptUrl.src.substring(0, scriptUrl.src.lastIndexOf('/'));
+	stylesheetUrl = `${base}/tify.css`;
 } else {
+	base = 'public';
 	stylesheetUrl = null;
 }
 
