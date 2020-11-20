@@ -116,7 +116,7 @@ export default {
 
 		// Load translation
 		if (this.$root.options.language !== 'en') {
-			const translationUrl = `/translations/${this.$root.options.language}.json`;
+			const translationUrl = `${this.$root.base}/translations/${this.$root.options.language}.json`;
 			httpClient.get(translationUrl).then((response) => {
 				this.$root.messages = response.data;
 			}, (error) => {
