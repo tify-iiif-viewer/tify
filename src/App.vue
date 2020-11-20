@@ -118,7 +118,7 @@ export default {
 		if (this.$root.options.language !== 'en') {
 			const translationUrl = `/translations/${this.$root.options.language}.json`;
 			httpClient.get(translationUrl).then((response) => {
-				this.messages = response.data;
+				this.$root.messages = response.data;
 			}, (error) => {
 				const status = (error.response ? error.response.statusText : error.message);
 				this.$root.error = `Error loading translation ${this.$root.options.language}: ${status}`;
