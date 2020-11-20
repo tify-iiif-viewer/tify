@@ -66,7 +66,7 @@ if (process.env.NODE_ENV === 'production') {
 	base = scriptUrl.src.substring(0, scriptUrl.src.lastIndexOf('/'));
 	stylesheetUrl = `${base}/tify.css`;
 } else {
-	base = 'public';
+	base = '';
 	stylesheetUrl = null;
 }
 
@@ -90,6 +90,7 @@ const options = {
 const Tify = new Vue({
 	render: (h) => h(App),
 	data: {
+		base,
 		error: '',
 		loading: 0,
 		manifest: null,
