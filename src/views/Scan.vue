@@ -163,6 +163,7 @@ require('@/../openseadragon/src/eventsource');
 require('@/../openseadragon/src/tilesource');
 
 require('@/../openseadragon/src/iiiftilesource');
+require('@/../openseadragon/src/imagetilesource');
 
 require('@/../openseadragon/src/drawer');
 require('@/../openseadragon/src/imageloader');
