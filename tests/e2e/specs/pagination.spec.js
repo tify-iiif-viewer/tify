@@ -20,7 +20,8 @@ describe('Pagination', () => {
 				cy.contains('Last page').click();
 				cy.contains(currentPage, '69 :  -');
 
-				cy.contains('Previous section').click().click().click().click();
+				cy.contains('Previous section').click().click().click()
+					.click();
 				cy.contains('16 : 7v');
 
 				cy.contains('Toggle double-page').click();

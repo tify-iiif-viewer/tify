@@ -9,6 +9,7 @@ describe('TOC', () => {
 
 				cy.get('.tify-toc_structure.-current').contains('Titelseite');
 				cy.get('.tify-toc_structure[data-level="0"]:nth-child(3) > .tify-toc_toggle').click();
+				// eslint-disable-next-line max-len
 				cy.get('.tify-toc_structure[data-level="0"].-expanded .tify-toc_structure[data-level="1"]:first-child > .tify-toc_toggle').click();
 				cy.get('.tify-toc_label').contains('Huddesche Methode');
 
@@ -39,9 +40,12 @@ describe('TOC', () => {
 				cy
 					.contains('Expand all')
 					.click()
-					.get('.tify-toc_structure[data-level="0"].-expanded:nth-child(3) > .tify-toc_toggle:first-of-type') // collapse first collapsible
+					.get(
+						'.tify-toc_structure[data-level="0"].-expanded:nth-child(3) > .tify-toc_toggle:first-of-type',
+					) // collapse first collapsible
 					.click()
 					.then(() => {
+						// eslint-disable-next-line max-len
 						cy.contains('Auflösung von Gleichungen 3ten Grades').should('not.be.visible'); // child of first collapsible
 						cy.contains('Recursionsformeln').should('be.visible'); // child of second collapsible
 					});

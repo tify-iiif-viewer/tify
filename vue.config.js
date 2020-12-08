@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 const BannerPlugin = require('webpack/lib/BannerPlugin.js');
 const globImporter = require('node-sass-glob-importer');
 
@@ -15,10 +16,10 @@ const info = {
 process.env.VUE_APP_INFO = escape(JSON.stringify(info));
 
 module.exports = {
-	chainWebpack: config => {
+	chainWebpack: (config) => {
 		config.module.rule('eslint')
 			.use('eslint-loader')
-			.options({ fix: true })
+			.options({ fix: true });
 	},
 	configureWebpack: {
 		optimization: {

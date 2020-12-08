@@ -29,11 +29,11 @@ describe('Views', () => {
 		cy
 			.get('.tify-app_main')
 			.then(() => {
-				cy.get('body').type('1').get('.-active').contains('Fulltext')
-				cy.get('body').type('2').get('.-active').contains('Pages')
-				cy.get('body').type('3').get('.-active').contains('Contents')
-				cy.get('body').type('4').get('.-active').contains('Info')
-				cy.get('body').type('5').get('.-active').contains('Export')
+				cy.get('body').type('1').get('.-active').contains('Fulltext');
+				cy.get('body').type('2').get('.-active').contains('Pages');
+				cy.get('body').type('3').get('.-active').contains('Contents');
+				cy.get('body').type('4').get('.-active').contains('Info');
+				cy.get('body').type('5').get('.-active').contains('Export');
 				cy.get('body').type('6').get('.-active').contains('Help');
 			});
 	});
