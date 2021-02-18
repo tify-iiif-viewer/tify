@@ -26,7 +26,7 @@
 				<a :href="info.BUGS_URL">Report a bug</a>
 			</p>
 			<p>
-				Copyright &copy; 2017&ndash;2020
+				Copyright &copy; 2017&ndash;{{ new Date().getFullYear() }}
 				<a href="https://www.uni-goettingen.de/en/">Göttingen University</a>
 				/
 				<a href="https://www.sub.uni-goettingen.de/en/">Göttingen State and University Library</a>
