@@ -7,7 +7,7 @@
 			<ul>
 				<li :key="page" v-for="page in pages">
 					<!-- NOTE: The download attribute is only honored for same-origin URLs -->
-					<a :href="imageUrls[page]" :download="`${page}.jpg`">
+					<a :href="imageUrls[page]" :download="`${page}.${root.options.tileFormat}`">
 						{{ 'Page'|trans }} {{page}} : {{ getLabels($root.canvases[page - 1].label)[0] }}
 					</a>
 				</li>
