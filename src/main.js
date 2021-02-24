@@ -40,6 +40,7 @@ if (window.tifyOptions) {
 			}
 			break;
 		case 'language':
+		case 'tileFormat':
 			if (typeof window.tifyOptions[key] !== 'string') {
 				throw new Error(`TIFY option "${key}" must be a string`);
 			}
@@ -84,6 +85,7 @@ const options = {
 	manifest: null,
 	stylesheet: stylesheetUrl,
 	title: 'TIFY',
+	tileFormat: 'jpg',
 	...window.tifyOptions,
 };
 

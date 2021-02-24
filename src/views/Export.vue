@@ -145,8 +145,9 @@ export default {
 			return renderings.some((rendering) => rendering.format && rendering.format === 'application/pdf');
 		},
 		imageUrls() {
+			const { params, options } = this.$root;
 			const imageUrls = {};
-			this.$root.params.pages.forEach((page) => {
+			params.pages.forEach((page) => {
 				if (!page) return;
 
 				const { resource } = this.$root.canvases[page - 1].images[0];
@@ -157,7 +158,8 @@ export default {
 							: 'native'
 					);
 					const id = resource.service['@id'];
-					imageUrls[page] = `${id}${id.slice(-1) === '/' ? '' : '/'}full/full/0/${quality}.jpg`;
+					const sep = id.slice(-1) === '/' ? '' : '/';
+					imageUrls[page] = `${id}${sep}full/full/0/${quality}.${options.tileFormat}`;
 				} else {
 					imageUrls[page] = resource['@id'];
 				}
