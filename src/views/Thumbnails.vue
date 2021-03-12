@@ -105,6 +105,7 @@ export default {
 			});
 		},
 		redrawThumbnails() {
+			const { options } = this.$root;
 			const currentPos = this.$el.scrollTop;
 			const startPage = (Math.floor(currentPos / this.itemHeight) * this.itemsPerRow) + 1;
 			const visibleRowsCount = Math.ceil(this.$el.offsetHeight / this.itemHeight);
@@ -122,9 +123,10 @@ export default {
 							: 'native'
 					);
 					const id = resource.service['@id'];
+					const sep = id.slice(-1) === '/' ? '' : '/';
 					items.push({
 						label: this.$root.convertValueToArray(this.$root.canvases[i].label)[0],
-						imgUrl: `${id}${id.slice(-1) === '/' ? '' : '/'}full/${this.thumbnailWidth},/0/${quality}.jpg`,
+						imgUrl: `${id}${sep}full/${this.thumbnailWidth},/0/${quality}.${options.tileFormat}`,
 						page: i + 1,
 					});
 				} else {

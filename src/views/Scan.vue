@@ -245,7 +245,7 @@ export default {
 			this.filtersVisible = false;
 		},
 		initViewer(resetView) {
-			const { params } = this.$root;
+			const { params, options } = this.$root;
 
 			// TODO: All tile sources could be added at once (sequence mode)
 			// This requires the correct resolution to be present in the manifest, which is
@@ -269,6 +269,8 @@ export default {
 
 				if (!initialWidth) initialWidth = tileSource.width;
 				const width = tileSource.width / initialWidth;
+
+				tileSource.tileFormat = options.tileFormat;
 
 				tileSources.push({
 					opacity,
