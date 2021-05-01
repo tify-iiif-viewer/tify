@@ -3,16 +3,12 @@ const globImporter = require('node-sass-glob-importer');
 
 const env = require('./package.json');
 
-const info = {
-	VERSION: env.version,
-	LICENSE: env.license,
-	BUGS_URL: env.bugs.url,
-	CONTRIBUTORS_URL: 'https://github.com/tify-iiif-viewer/tify/blob/main/CONTRIBUTORS.md',
-	DOCS_URL: `${env.repository.url}/blob/v${env.version}/doc`,
-	REPOSITORY_URL: env.repository.url,
-};
-
-process.env.VUE_APP_INFO = escape(JSON.stringify(info));
+process.env.VUE_APP_VERSION = env.version;
+process.env.VUE_APP_LICENSE = env.license;
+process.env.VUE_APP_BUGS_URL = env.bugs.url;
+process.env.VUE_APP_CONTRIBUTORS_URL = 'https://github.com/tify-iiif-viewer/tify/blob/main/CONTRIBUTORS.md';
+process.env.VUE_APP_DOCS_URL = `${env.repository.url}/blob/v${env.version}/doc`;
+process.env.VUE_APP_REPOSITORY_URL = env.repository.url;
 
 module.exports = {
 	chainWebpack: config => {
