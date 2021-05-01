@@ -29,7 +29,7 @@ The required HTML code looks something like this:
 
 ``` html
 <div id="tify"></div>
-<script src="tify.js"></script>
+<script src="tify-0.24.2.js"></script>
 ```
 
 The only required parameter `manifest` is a URL pointing to the manifest. It can be set either as a query parameter or with the `tifyOptions` object, whereby the latter takes precedence.
@@ -60,7 +60,7 @@ Below an example with all available options set.
 		title: null,
 	}
 </script>
-<script src="tify.js"></script>
+<script src="tify-0.24.2.js"></script>
 ```
 
 ## Build Setup
