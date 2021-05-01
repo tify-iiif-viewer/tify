@@ -64,7 +64,7 @@ if (process.env.NODE_ENV === 'production') {
 	const scripts = document.getElementsByTagName('script');
 	const scriptUrl = scripts[scripts.length - 1];
 	base = scriptUrl.src.substring(0, scriptUrl.src.lastIndexOf('/'));
-	stylesheetUrl = `${base}/tify.css`;
+	stylesheetUrl = `${base}/tify-${process.env.VUE_APP_VERSION}.css`;
 } else {
 	base = '';
 	stylesheetUrl = null;

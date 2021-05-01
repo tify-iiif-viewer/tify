@@ -11,17 +11,17 @@ process.env.VUE_APP_DOCS_URL = `${env.repository.url}/blob/v${env.version}/doc`;
 process.env.VUE_APP_REPOSITORY_URL = env.repository.url;
 
 module.exports = {
-	chainWebpack: config => {
+	chainWebpack: (config) => {
 		config.module.rule('eslint')
 			.use('eslint-loader')
-			.options({ fix: true })
+			.options({ fix: true });
 	},
 	configureWebpack: {
 		optimization: {
 			splitChunks: false,
 		},
 		output: {
-			filename: '[name].js',
+			filename: `[name]-${env.version}.js`,
 		},
 		plugins: [
 			// Prepend copyright notice to each compiled file
@@ -36,7 +36,7 @@ module.exports = {
 	},
 	css: {
 		extract: {
-			filename: '[name].css',
+			filename: `[name]-${env.version}.css`,
 		},
 		loaderOptions: {
 			scss: {
