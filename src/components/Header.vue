@@ -408,7 +408,9 @@ export default {
 		},
 	},
 	created() {
-		if (!this.structures) return;
+		if (!this.structures) {
+			return;
+		}
 
 		const sections = [];
 		this.structures.forEach((structure) => {
@@ -427,7 +429,9 @@ export default {
 	},
 	mounted() {
 		window.addEventListener('keydown', (event) => {
-			if (this.preventKeyboardEvent(event)) return;
+			if (this.preventKeyboardEvent(event)) {
+				return;
+			}
 
 			if (event.key === 'Escape') {
 				this.controlsVisible = false;
@@ -437,16 +441,25 @@ export default {
 			switch (event.key) {
 			case 'Backspace':
 				// switchViewSmall is visible, i.e. screen is small
-				if (this.$refs.switchViewSmall.offsetParent) this.toggleView('scan');
+				if (this.$refs.switchViewSmall.offsetParent) {
+					this.toggleView('scan');
+				}
+
 				break;
 			case '1':
-				if (this.fulltextEnabled) this.toggleView('fulltext');
+				if (this.fulltextEnabled) {
+					this.toggleView('fulltext');
+				}
+
 				break;
 			case '2':
 				this.toggleView('thumbnails');
 				break;
 			case '3':
-				if (this.tocEnabled) this.toggleView('toc');
+				if (this.tocEnabled) {
+					this.toggleView('toc');
+				}
+
 				break;
 			case '4':
 				this.toggleView('info');
@@ -466,24 +479,38 @@ export default {
 			default:
 			}
 
-			if (this.customPageViewActive) return;
+			if (this.customPageViewActive) {
+				return;
+			}
 
 			const { pages } = this.$root.params;
 
 			switch (event.key) {
 			case 'q':
 			case ',':
-				if (pages[0] > 1) this.goToPreviousPage();
+				if (pages[0] > 1) {
+					this.goToPreviousPage();
+				}
+
 				break;
 			case 'e':
 			case '.':
-				if (!this.isLastPage) this.goToNextPage();
+				if (!this.isLastPage) {
+					this.goToNextPage();
+				}
+
 				break;
 			case 'Q':
-				if (pages[0] > 1) this.goToFirstPage();
+				if (pages[0] > 1) {
+					this.goToFirstPage();
+				}
+
 				break;
 			case 'E':
-				if (!this.isLastPage) this.goToLastPage();
+				if (!this.isLastPage) {
+					this.goToLastPage();
+				}
+
 				break;
 			default:
 			}

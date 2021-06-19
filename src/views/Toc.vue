@@ -59,12 +59,16 @@ export default {
 		},
 		// eslint-disable-next-line func-names
 		'$root.params.view': function (view) {
-			if (view === 'toc') this.init();
+			if (view === 'toc') {
+				this.init();
+			}
 		},
 	},
 	mounted() {
 		// TOC is expensive, so render it only when required
-		if (this.$root.params.view === 'toc') this.init();
+		if (this.$root.params.view === 'toc') {
+			this.init();
+		}
 	},
 };
 </script>

@@ -116,7 +116,9 @@ Tify.init = () => {
 		? document.querySelector(options.container)
 		: options.container;
 
-	if (!container) return;
+	if (!container) {
+		return;
+	}
 
 	const el = document.createElement('div');
 	container.appendChild(el);

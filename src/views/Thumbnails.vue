@@ -98,7 +98,9 @@ export default {
 			window.addEventListener('resize', () => {
 				clearTimeout(resizeTimeout);
 				resizeTimeout = setTimeout(() => {
-					if (this.$root.params.view !== 'thumbnails') return;
+					if (this.$root.params.view !== 'thumbnails') {
+						return;
+					}
 
 					this.updateDimensions();
 				}, 200);
@@ -162,7 +164,9 @@ export default {
 					pages.sort((a, b) => (a - b));
 
 					// Double-page view was active, remove dummy "0" page
-					if (pages[0] === 0) pages.shift();
+					if (pages[0] === 0) {
+						pages.shift();
+					}
 				} else if (pages.length > 1) {
 					// Page is visible, but not the only visible page
 					pages.splice(index, 1);
@@ -173,7 +177,9 @@ export default {
 			}
 
 			this.$root.setPage(page);
-			if (this.$root.isMobile()) this.$root.updateParams({ view: 'scan' });
+			if (this.$root.isMobile()) {
+				this.$root.updateParams({ view: 'scan' });
+			}
 		},
 		touchStartTogglePage(page) {
 			this.lastScrollTop = this.$el.scrollTop;
