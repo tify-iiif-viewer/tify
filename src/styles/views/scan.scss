@@ -10,7 +10,7 @@
 	display: flex;
 	flex-direction: column;
 	float: left;
-	margin: ($grid / 4);
+	margin: g(.25);
 	position: relative;
 	z-index: 9;
 }
@@ -21,12 +21,12 @@
 	border-radius: $br;
 	color: #fff;
 	cursor: pointer;
-	height: ($grid * 1.5);
+	height: g(1.5);
 	outline: 0;
 	padding: 0;
 	position: relative;
 	text-shadow: 0 0 1px $shade-dark, 0 0 2px $shade-dark;
-	width: ($grid * 1.5);
+	width: g(1.5);
 
 	@include hover {
 		background: $shade;
@@ -50,14 +50,14 @@
 	&.-active {
 		&::after {
 			background: $brand-color;
-			box-shadow: 0 0 ($grid / 4) $brand-color-light;
+			box-shadow: 0 0 g(.25) $brand-color-light;
 			content: '';
 			border-radius: 50%;
 			display: block;
 			height: .5em;
 			position: absolute;
-			right: ($grid / 4);
-			top: ($grid / 4);
+			right: g(.25);
+			top: g(.25);
 			width: .5em;
 		}
 	}
@@ -69,16 +69,16 @@
 
 .tify-scan_filter-popup {
 	@include dropdown(left, right);
-	left: ($grid * 2);
-	padding: ($grid / 2);
-	top: (-$grid * .75 - $br);
-	width: ($grid * 10);
+	left: g(2);
+	padding: g(.5);
+	top: (g(-.75) - $br);
+	width: g(10);
 
 	> p {
 		margin: 0;
 
 		+ p {
-			margin-top: ($grid / 2);
+			margin-top: g(.5);
 		}
 	}
 }
@@ -99,13 +99,13 @@
 	background: rgba(#fff, .3);
 	border: 0;
 	box-shadow: $card-shadow;
-	height: ($grid * 2.5);
-	margin-top: (-$grid * 1.25);
+	height: g(2.5);
+	margin-top: g(-1.25);
 	padding: 0;
 	position: absolute;
 	text-shadow: none;
 	top: 50%;
-	width: ($grid * 1.25);
+	width: g(1.25);
 	z-index: 9;
 
 	// Move buttons to bottom depending on screen height so buttons in the
@@ -115,13 +115,13 @@
 	}
 
 	&.-previous {
-		border-radius: 0 ($grid * 1.25) ($grid * 1.25) 0;
+		border-radius: 0 g(1.25) g(1.25) 0;
 		left: 0;
 		text-align: left;
 	}
 
 	&.-next {
-		border-radius: ($grid * 1.25) 0 0 ($grid * 1.25);
+		border-radius: g(1.25) 0 0 g(1.25);
 		right: 0;
 		text-align: right;
 	}

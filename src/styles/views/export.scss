@@ -1,20 +1,20 @@
 .tify-export {
 	@extend %panel;
-	padding: ($grid / 2);
+	padding: g(.5);
 }
 
 .tify-export_container {
-	margin: (-$grid / 2) 0 $grid;
+	margin: g(.5) 0 g();
 }
 
 .tify-export_toc {
 	border: $border-width solid $border-color;
 	border-radius: $br;
-	margin: ($grid / 2) 0 0;
-	padding: ($grid / 2);
+	margin: g(.5) 0 0;
+	padding: g(.5);
 
 	ul {
-		margin: 0 0 0 ($grid / 2);
+		margin: 0 0 0 g(.5);
 		padding: 0;
 	}
 }

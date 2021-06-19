@@ -1,0 +1,3 @@
+@function g($factor: 1) {
+	@return $grid * $factor;
+}

@@ -1,13 +1,13 @@
 .tify-thumbnails {
 	@extend %panel;
 	min-height: 100%;
-	padding: ($grid / 2);
+	padding: g(.5);
 	position: relative;
 	user-select: none;
 }
 
 .tify-thumbnails_list {
-	margin: (-$grid / 4);
+	margin: g(-.25);
 }
 
 .tify-thumbnails_item {
@@ -16,8 +16,8 @@
 	box-shadow: $drop-shadow;
 	cursor: pointer;
 	float: left;
-	height: ($grid * 5.5);
-	margin: ($grid / 4);
+	height: g(5.5);
+	margin: g(.25);
 	overflow: hidden;
 	position: relative;
 	width: $thumbnail-width;
@@ -29,14 +29,14 @@
 
 	img {
 		display: block;
-		max-height: ($grid * 4.5);
+		max-height: g(4.5);
 		margin: auto;
 		pointer-events: none;
 		max-width: 100%;
 	}
 
 	&.-current {
-		outline: ($grid / 4) solid $brand-color-light;
+		outline: g(.25) solid $brand-color-light;
 	}
 }
 
@@ -47,9 +47,9 @@
 	display: block;
 	font-size: $font-size-small;
 	font-weight: bold;
-	height: $grid;
+	height: g();
 	overflow: hidden;
-	padding: 0 ($grid / 4);
+	padding: 0 g(.25);
 	position: absolute;
 	text-align: center;
 	text-overflow: ellipsis;

@@ -1,7 +1,7 @@
 .tify-info {
 	@extend %panel;
 	overflow-y: auto;
-	padding: ($grid / 2);
+	padding: g(.5);
 }
 
 .tify-info_content {
@@ -21,7 +21,7 @@
 
 .tify-info_logo {
 	display: block;
-	max-height: ($grid * 2.5);
+	max-height: g(2.5);
 	max-width: 100%;
 	height: auto;
 	width: auto;
@@ -29,16 +29,16 @@
 
 .tify-info_metadata {
 	> div {
-		margin-bottom: ($grid / 2);
+		margin-bottom: g(.5);
 	}
 }
 
 .tify-info_section {
-	margin-bottom: $grid;
+	margin-bottom: g();
 	word-break: break-word;
 }
 
 .tify-info_toggle {
 	@extend %button-small;
-	margin: ($grid / 4) 0 0;
+	margin: g(.25) 0 0;
 }

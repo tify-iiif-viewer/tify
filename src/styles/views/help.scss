@@ -1,11 +1,11 @@
 .tify-help {
 	@extend %panel;
 	overflow-y: auto;
-	padding: ($grid / 2);
+	padding: g(.5);
 }
 
 .tify-help_section {
-	margin-bottom: $grid;
+	margin-bottom: g();
 
 	&.-about {
 		dl {
@@ -20,7 +20,7 @@
 
 		dd {
 			float: left;
-			margin: 0 0 ($grid / 2);
+			margin: 0 0 g(.5);
 			width: calc(100% - 6em);
 		}
 
@@ -29,7 +29,7 @@
 			color: $text-color-light;
 			float: left;
 			font-weight: bold;
-			margin: 0 0 ($grid / 2);
+			margin: 0 0 g(.5);
 			padding: 0 .5em 0 0;
 			width: 6em;
 		}
