@@ -81,7 +81,9 @@ export default {
 			this.$nextTick(() => this.updateScroll());
 		},
 		isOpen() {
-			if (this.isOpen) return;
+			if (this.isOpen) {
+				return;
+			}
 
 			this.filter = '';
 			this.highlightIndex = this.$root.params.pages[0] - 1;
@@ -91,7 +93,9 @@ export default {
 		setPage(page) {
 			this.closeDropdown();
 			this.$root.setPage(page);
-			if (this.$root.isMobile()) this.$root.updateParams({ view: 'scan' });
+			if (this.$root.isMobile()) {
+				this.$root.updateParams({ view: 'scan' });
+			}
 		},
 		toggleDropdown() {
 			this.isOpen = !this.isOpen;
@@ -116,7 +120,10 @@ export default {
 				if (labelMatchesFilter || pageMatchesFilter) {
 					const item = canvas;
 					item.page = index + 1;
-					if (item.page === this.$root.params.pages[0]) highlightIndex = filteredCanvases.length;
+					if (item.page === this.$root.params.pages[0]) {
+						highlightIndex = filteredCanvases.length;
+					}
+
 					filteredCanvases.push(item);
 				}
 			});
@@ -144,7 +151,9 @@ export default {
 		this.updateFilteredCanvases();
 
 		window.addEventListener('keydown', (event) => {
-			if (this.preventKeyboardEvent(event)) return;
+			if (this.preventKeyboardEvent(event)) {
+				return;
+			}
 
 			if (event.key === 'Escape') {
 				this.closeDropdown();

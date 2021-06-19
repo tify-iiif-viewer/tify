@@ -91,7 +91,9 @@ const structures = {
 						if ((currentRange < smallestRange) || !smallestRange) {
 							indexOfStructureWithSmallestRange = i;
 							smallestRange = currentRange;
-							if (smallestRange === 0) break;
+							if (smallestRange === 0) {
+								break;
+							}
 						}
 					}
 				}

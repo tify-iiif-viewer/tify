@@ -79,7 +79,10 @@ export default {
 					// assuming we need 1 line minimum to display each value
 					// and a fixed number of chars fits into each line
 					let nLines = Math.ceil(this.stripHtml(thisValue).length / maxCharsPerLine);
-					if (nLines < 1) nLines = 1;
+					if (nLines < 1) {
+						nLines = 1;
+					}
+
 					return linesSum + nLines;
 				}, 0);
 				const limitHeight = (expectedLineNumber > itemMaxLines);
