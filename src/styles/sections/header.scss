@@ -4,7 +4,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
-	padding: ($grid / 8);
+	padding: g(.125);
 }
 
 .tify-header_column {
@@ -17,7 +17,7 @@
 		flex: 1;
 
 		.tify-app.-small & {
-			margin-bottom: (-$grid / 4);
+			margin-bottom: g(-.25);
 		}
 	}
 
@@ -35,7 +35,7 @@
 			box-shadow: none;
 			display: none;
 			min-width: 10em;
-			top: ($grid * 1.75);
+			top: g(1.75);
 
 			&.-visible {
 				display: block;
@@ -48,7 +48,7 @@
 	border-radius: $br;
 	box-shadow: $card-shadow;
 	display: flex;
-	margin: ($grid / 8);
+	margin: g(.125);
 	position: relative;
 
 	&.-pagination {
@@ -166,8 +166,8 @@
 .tify-header_title {
 	font-size: 1.25rem;
 	font-weight: normal;
-	line-height: ($grid * 1.25);
-	margin: ($grid / 4) ($grid / 8);
+	line-height: g(1.25);
+	margin: g(.25) g(.125);
 	overflow: hidden;
 	padding: 0;
 	text-overflow: ellipsis;
