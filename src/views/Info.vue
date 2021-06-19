@@ -100,11 +100,6 @@ export default {
 	mixins: [
 		structures,
 	],
-	data() {
-		return {
-			collapsedStyle: '',
-		};
-	},
 	computed: {
 		license() {
 			return this.manifest.license ? this.getLabels(this.manifest.license) : [];
