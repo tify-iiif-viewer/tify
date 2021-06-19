@@ -39,7 +39,6 @@
     "babel-eslint": "^10.1.0",
     "core-js": "^3.14.0",
     "cross-spawn": "^7.0.3",
-    "cypress-xpath": "^1.6.2",
     "eslint": "^7.29.0",
     "eslint-plugin-cypress": "^2.11.3",
     "eslint-plugin-import": "^2.23.4",
