@@ -2,7 +2,7 @@
 	<div class="tify-info_metadata">
 		<div v-for="(item, index) in metadata" :key="index">
 			<h4>
-				<div v-bind:key="index" v-for="(label, index) in getLabels(item.label)">
+				<div v-bind:key="index" v-for="(label, index) in $root.convertValueToArray(item.label)">
 					{{ label|cleanLabel }}
 				</div>
 			</h4>
@@ -12,7 +12,7 @@
 				ref="contents"
 			>
 				<div class="tify-info_value">
-					<div v-bind:key="value" v-for="value in getLabels(item.value)" v-html="value"/>
+					<div v-bind:key="value" v-for="value in $root.convertValueToArray(item.value)" v-html="value"/>
 				</div>
 
 				<button
@@ -46,7 +46,7 @@ export default {
 	},
 	watch: {
 		metadata() {
-			this.$nextTick(() => this.updateInfoItems());
+			this.updateInfoItems();
 		},
 	},
 	filters: {
@@ -60,31 +60,30 @@ export default {
 	},
 	methods: {
 		updateInfoItems() {
-			this.$refs.contents.forEach((content, index) => {
-				const fullHeight = content.offsetHeight;
+			this.$nextTick(() => {
+				if (!this.$refs.contents) {
+					return;
+				}
 
-				this.$set(this.infoItems, index, {
-					collapsed: true,
-					exceedsHeight: true,
-				});
-
-				this.$nextTick(() => {
-					const collapsedHeight = content.offsetHeight;
-					const shouldBeCollapsed = fullHeight >= collapsedHeight;
+				this.$refs.contents.forEach((content, index) => {
+					const fullHeight = content.offsetHeight;
 
 					this.$set(this.infoItems, index, {
-						collapsed: shouldBeCollapsed,
-						exceedsHeight: shouldBeCollapsed,
+						collapsed: true,
+						exceedsHeight: true,
+					});
+
+					this.$nextTick(() => {
+						const collapsedHeight = content.offsetHeight;
+						const shouldBeCollapsed = fullHeight >= collapsedHeight;
+
+						this.$set(this.infoItems, index, {
+							collapsed: shouldBeCollapsed,
+							exceedsHeight: shouldBeCollapsed,
+						});
 					});
 				});
 			});
-		},
-		stripHtml(html) {
-			const doc = new DOMParser().parseFromString(html, 'text/html');
-			return doc.body.textContent || '';
-		},
-		getLabels(value) {
-			return this.$root.convertValueToArray(value);
 		},
 	},
 };
