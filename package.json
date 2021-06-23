@@ -45,7 +45,6 @@
     "material-design-icons-iconfont": "^6.1.0",
     "node-sass-glob-importer": "^5.3.2",
     "promise-polyfill": "^8.2.0",
-    "replace": "^1.2.1",
     "sass": "^1.35.1",
     "sass-loader": "^10.1.1",
     "striptags": "^3.2.0",
