@@ -7,7 +7,7 @@ const url = 'https://github.com/openseadragon/openseadragon.git';
 process.cwd(__dirname);
 
 if (!fs.existsSync('openseadragon')) {
-	exec(`git clone ${url}; cd openseadragon; git checkout tags/${tag}`, (error) => {
+	exec(`git clone ${url} && cd openseadragon && git checkout tags/${tag}`, (error) => {
 		if (error) {
 			console.log(error.message);
 		}
@@ -23,7 +23,7 @@ if (!fs.existsSync('openseadragon')) {
 			return;
 		}
 
-		exec(`cd openseadragon; git checkout master; git pull; git checkout tags/${tag}`, (error2) => {
+		exec(`cd openseadragon && git checkout master && git pull && git checkout tags/${tag}`, (error2) => {
 			if (error2) {
 				console.log(error2.message);
 			}
