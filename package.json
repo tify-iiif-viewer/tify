@@ -14,11 +14,10 @@
   "scripts": {
     "build": "vue-cli-service build",
     "e2e": "node tests/e2e/runner.js --headless",
-    "fix-openseadragon": "replace \"\\}\\(this, function \\(\\) \\{\" \"}(window, function () {\" ./openseadragon/src/openseadragon.js",
     "lint": "vue-cli-service lint",
     "lint-fix": "vue-cli-service lint --fix",
     "postversion": "git push && git push --tags && npm run update-gh-pages && echo Tag v$npm_package_version created. Run \"npm publish\" to publish \"$npm_package_name\" on npmjs.com.",
-    "prepare": "rimraf openseadragon && git clone https://github.com/openseadragon/openseadragon.git && cd openseadragon && git checkout tags/v2.4.1 && cd .. && npm run fix-openseadragon",
+    "prepare": "node get-openseadragon.js v2.4.2",
     "preversion": "rimraf node_modules && npm install && npm run test",
     "serve": "vue-cli-service serve",
     "serve-mock-api": "node tests/iiif-api/server.js",
