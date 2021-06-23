@@ -1,4 +1,5 @@
-const BannerPlugin = require('webpack/lib/BannerPlugin.js');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const BannerPlugin = require('webpack/lib/BannerPlugin');
 const globImporter = require('node-sass-glob-importer');
 
 const env = require('./package.json');
@@ -21,7 +22,7 @@ module.exports = {
 			splitChunks: false,
 		},
 		output: {
-			filename: `[name]-${env.version}.js`,
+			filename: `tify-${env.version}.js`,
 		},
 		plugins: [
 			// Prepend copyright notice to each compiled file
@@ -30,13 +31,13 @@ module.exports = {
 					+ `\n(c) 2017-${new Date().getFullYear()}`
 					+ ' Göttingen State and University Library (https://www.sub.uni-goettingen.de/en/)'
 					+ `\n${env.license}`
-					+ `\n${env.homepage}` // eslint-disable-line comma-dangle
+					+ `\n${env.homepage}`,
 			),
 		],
 	},
 	css: {
 		extract: {
-			filename: `[name]-${env.version}.css`,
+			filename: `tify-${env.version}.css`,
 		},
 		loaderOptions: {
 			scss: {
@@ -44,13 +45,6 @@ module.exports = {
 					importer: globImporter(),
 				},
 			},
-		},
-	},
-	filenameHashing: false,
-	pages: {
-		tify: {
-			entry: 'src/main.js',
-			filename: 'index.html',
 		},
 	},
 	productionSourceMap: false,
