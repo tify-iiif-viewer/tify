@@ -1,3 +1,5 @@
+$info-content-max-height: g(6.5);
+
 .tify-info {
 	@extend %panel;
 	overflow-y: auto;
@@ -8,14 +10,7 @@
 	position: relative;
 
 	&.-collapsed {
-		&::after {
-			background: linear-gradient(rgba(#fff, 0), rgba(#fff, 1));
-			bottom: 0;
-			content: '';
-			height: 40%;
-			position: absolute;
-			width: 100%;
-		}
+		max-height: $info-content-max-height;
 	}
 }
 
@@ -40,5 +35,26 @@
 
 .tify-info_toggle {
 	@extend %button-small;
-	margin: g(.25) 0 0;
+	margin: g(.5) 0;
+	position: relative;
+}
+
+.tify-info_value {
+	> div:last-child > :last-child {
+		margin-bottom: 0;
+	}
+
+	.tify-info_content.-collapsed & {
+		max-height: $info-content-max-height - g(2); // 2 = button height
+		overflow: hidden;
+
+		&::after {
+			background: linear-gradient(rgba(#fff, 0), rgba(#fff, 1));
+			bottom: g(2); // 2 = button height
+			content: '';
+			height: g(2);
+			position: absolute;
+			width: 100%;
+		}
+	}
 }
