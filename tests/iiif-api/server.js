@@ -1,7 +1,7 @@
 const fs = require('fs');
 const http = require('http');
 const url = require('url');
-const config = require('./config');
+const config = require('./config.json');
 
 const server = http.createServer().listen(config.port, config.host);
 console.log(`> Mock IIIF API listening at http://localhost:${config.port}`);
