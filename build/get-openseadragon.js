@@ -4,7 +4,7 @@ const { exec } = require('child_process');
 const tag = process.argv[2];
 const url = 'https://github.com/openseadragon/openseadragon.git';
 
-process.cwd(__dirname);
+process.cwd(`${__dirname}/..`);
 
 if (!fs.existsSync('openseadragon')) {
 	exec(`git clone ${url} && cd openseadragon && git checkout tags/${tag}`, (error) => {
@@ -23,7 +23,7 @@ if (!fs.existsSync('openseadragon')) {
 			return;
 		}
 
-		exec(`cd openseadragon && git checkout master && git pull && git checkout tags/${tag}`, (error2) => {
+		exec(`cd openseadragon && git checkout master -f && git pull && git checkout tags/${tag}`, (error2) => {
 			if (error2) {
 				console.log(error2.message);
 			}
