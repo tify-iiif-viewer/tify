@@ -71,7 +71,10 @@ export default {
 		});
 
 		httpClient.interceptors.response.use((response) => {
-			if (this.$root.loading > 0) this.$root.loading -= 1;
+			if (this.$root.loading > 0) {
+				this.$root.loading -= 1;
+			}
+
 			return response;
 		}, (error) => {
 			this.$root.loading = 0;

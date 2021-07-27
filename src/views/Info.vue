@@ -100,11 +100,6 @@ export default {
 	mixins: [
 		structures,
 	],
-	data() {
-		return {
-			collapsedStyle: '',
-		};
-	},
 	computed: {
 		license() {
 			return this.manifest.license ? this.getLabels(this.manifest.license) : [];
@@ -135,12 +130,16 @@ export default {
 		// eslint-disable-next-line func-names
 		'$root.params.view': function (view) {
 			if (view === 'info') {
-				if (!this.isInited) this.init();
+				if (!this.isInited) {
+					this.init();
+				}
 			}
 		},
 	},
 	mounted() {
-		if (this.$root.params.view === 'info') this.init();
+		if (this.$root.params.view === 'info') {
+			this.init();
+		}
 	},
 };
 </script>

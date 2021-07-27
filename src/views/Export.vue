@@ -169,7 +169,9 @@ export default {
 	},
 	created() {
 		const { seeAlso } = this.$root.manifest;
-		if (!seeAlso) return;
+		if (!seeAlso) {
+			return;
+		}
 
 		// Create clone
 		const items = JSON.parse(JSON.stringify(Array.isArray(seeAlso) ? seeAlso : [seeAlso]));
@@ -181,7 +183,10 @@ export default {
 				const profilesMatch = (item.profile && criterion.profile === item.profile);
 				if (formatsMatch || profilesMatch) {
 					currentItem.label = criterion.label;
-					if (criterion.type === 'literature') isLiterature = true;
+					if (criterion.type === 'literature') {
+						isLiterature = true;
+					}
+
 					return true;
 				}
 				return false;

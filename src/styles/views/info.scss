@@ -1,27 +1,22 @@
+$info-content-max-height: g(6.5);
+
 .tify-info {
 	@extend %panel;
 	overflow-y: auto;
-	padding: ($grid / 2);
+	padding: g(.5);
 }
 
 .tify-info_content {
 	position: relative;
 
 	&.-collapsed {
-		&::after {
-			background: linear-gradient(rgba(#fff, 0), rgba(#fff, 1));
-			bottom: 0;
-			content: '';
-			height: 40%;
-			position: absolute;
-			width: 100%;
-		}
+		max-height: $info-content-max-height;
 	}
 }
 
 .tify-info_logo {
 	display: block;
-	max-height: ($grid * 2.5);
+	max-height: g(2.5);
 	max-width: 100%;
 	height: auto;
 	width: auto;
@@ -29,16 +24,37 @@
 
 .tify-info_metadata {
 	> div {
-		margin-bottom: ($grid / 2);
+		margin-bottom: g(.5);
 	}
 }
 
 .tify-info_section {
-	margin-bottom: $grid;
+	margin-bottom: g();
 	word-break: break-word;
 }
 
 .tify-info_toggle {
 	@extend %button-small;
-	margin: ($grid / 4) 0 0;
+	margin: g(.5) 0;
+	position: relative;
+}
+
+.tify-info_value {
+	> div:last-child > :last-child {
+		margin-bottom: 0;
+	}
+
+	.tify-info_content.-collapsed & {
+		max-height: $info-content-max-height - g(2); // 2 = button height
+		overflow: hidden;
+
+		&::after {
+			background: linear-gradient(rgba(#fff, 0), rgba(#fff, 1));
+			bottom: g(2); // 2 = button height
+			content: '';
+			height: g(2);
+			position: absolute;
+			width: 100%;
+		}
+	}
 }

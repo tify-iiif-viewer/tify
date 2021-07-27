@@ -8,7 +8,10 @@ export default {
 
 			if (!(value instanceof Array)) {
 				if (typeof value === 'object') {
-					if (value['@value']) return [filterHtml(value['@value'])];
+					if (value['@value']) {
+						return [filterHtml(value['@value'])];
+					}
+
 					if (value['@id']) {
 						const id = filterHtml(value['@id']);
 						return [{ '@id': id, label: (value.label ? filterHtml(value.label) : id) }];
@@ -27,7 +30,9 @@ export default {
 				} else if (item && typeof item !== 'object') {
 					displayedValues.push(filterHtml(item));
 				} else if (item['@language'] && item['@value']) {
-					if (!translation.fallback) translation.fallback = item['@value'];
+					if (!translation.fallback) {
+						translation.fallback = item['@value'];
+					}
 
 					if (item['@language'].indexOf('en') === 0) {
 						// Language is en or en-US or en-GB
@@ -44,7 +49,9 @@ export default {
 				|| translation.fallback
 				|| null
 			);
-			if (translatedValue) displayedValues.push(filterHtml(translatedValue));
+			if (translatedValue) {
+				displayedValues.push(filterHtml(translatedValue));
+			}
 
 			return displayedValues;
 		},
@@ -59,9 +66,11 @@ export default {
 			// Iterate over all opening (including self-closing) HTML tags
 			const htmlTagsRegex = /<(\w+)((\s+.+?(\s*=\s*(?:".*?"|'.*?'|.*?|[\^'">\s]+))?)+\s*|\s*)>/g;
 			filteredHtml = filteredHtml.replace(htmlTagsRegex, (match, tag, attributes) => {
-				if (!attributes) return `<${tag}>`;
+				if (!attributes) {
+					return `<${tag}>`;
+				}
 
-				// Iterate over all attibutes and keep only allowed ones
+				// Iterate over all attributes and keep only allowed ones
 				const attributesRegex = /(?:([^\s]+)=(?:"(.*?)"|'(.*?)'))|([^\s]+)/g;
 				const keptAttributes = [];
 				attributes.replace(attributesRegex, (tuple, key) => {

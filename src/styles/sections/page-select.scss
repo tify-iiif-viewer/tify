@@ -3,28 +3,28 @@
 	border-radius: inherit;
 	box-shadow: none;
 	display: block;
-	margin: (-$grid / 4);
+	margin: g(-.25);
 	max-width: 30vw;
-	min-width: ($grid * 3);
+	min-width: g(3);
 	overflow: hidden;
-	padding: ($grid / 4) ($grid / 2);
+	padding: g(.25) g(.5);
 	position: relative;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 
 	// Limit width on tiny screens to prevent buttons from breaking
 	.tify-app.-tiny & {
-		max-width: ($grid * 2);
-		min-width: ($grid * 2);
+		max-width: g(2);
+		min-width: g(2);
 		overflow: hidden;
-		padding: ($grid / 4);
+		padding: g(.25);
 		white-space: nowrap;
 	}
 }
 
 .tify-page-select_dropdown {
 	@include dropdown;
-	margin-top: ($grid / 2);
+	margin-top: g(.5);
 	max-width: 100%;
 
 	.tify-app.-small & {
@@ -34,7 +34,7 @@
 
 .tify-page-select_filter {
 	background: white;
-	padding: ($grid / 4);
+	padding: g(.25);
 }
 
 .tify-page-select_input {
@@ -45,7 +45,7 @@
 	background: white;
 	list-style: none;
 	margin: 0;
-	max-height: ($grid * 11);
+	max-height: g(11);
 	min-width: 100%;
 	overflow-y: scroll;
 	padding: 0;
@@ -53,7 +53,7 @@
 
 	> li {
 		border-top: $border-width solid $border-color;
-		padding: ($grid / 8) .5em;
+		padding: g(.125) .5em;
 		user-select: none;
 		white-space: nowrap;
 

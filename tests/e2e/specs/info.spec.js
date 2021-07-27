@@ -38,9 +38,16 @@ describe('Info', () => {
 		cy
 			.get('.tify-app_main')
 			.then(() => {
-				cy.contains('Next page').click().click().click().click();
+				cy.contains('Next page')
+					.click()
+					.click()
+					.click()
+					.click();
 				cy.contains('Current Element').should('be.visible');
-				cy.contains('.tify-info_section.-metadata.-structure', '[Brief des Barons von Asch an Heyne vom 29.01./10.02.1801]');
+				cy.contains(
+					'.tify-info_section.-metadata.-structure',
+					'[Brief des Barons von Asch an Heyne vom 29.01./10.02.1801]',
+				);
 			});
 	});
 });

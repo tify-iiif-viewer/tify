@@ -26,7 +26,9 @@ export default {
 		},
 	},
 	mounted() {
-		if (this.options.stylesheet) this.appendStylesheet(this.options.stylesheet);
+		if (this.options.stylesheet) {
+			this.appendStylesheet(this.options.stylesheet);
+		}
 
 		// Set current breakpoint as classes on container element for use in CSS
 		window.addEventListener('resize', () => {

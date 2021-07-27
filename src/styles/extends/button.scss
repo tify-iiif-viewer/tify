@@ -8,7 +8,7 @@
 	display: inline-block;
 	font: inherit;
 	outline: 0;
-	padding: ($grid / 4);
+	padding: g(.25);
 	text-align: center;
 	text-shadow: 0 1px $shine;
 	user-select: none;
@@ -47,7 +47,7 @@
 %button-small {
 	@extend %button;
 	font-size: $font-size-small;
-	padding: 0 ($grid / 4);
+	padding: 0 g(.25);
 }
 
 %button-warning {

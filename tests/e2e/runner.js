@@ -20,7 +20,7 @@ service
 		const spawn = require('cross-spawn');
 		const runner = spawn('./node_modules/.bin/vue-cli-service', args, { stdio: 'inherit' });
 
-		const iiifApi = require('../iiif-api/server.js');
+		const iiifApi = require('../iiif-api/server');
 
 		runner.on('exit', (code) => {
 			server.close();

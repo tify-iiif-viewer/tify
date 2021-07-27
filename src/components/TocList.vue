@@ -79,10 +79,14 @@ export default {
 		},
 		setPage(page) {
 			this.$root.setPage(page);
-			if (this.$root.isMobile()) this.$root.updateParams({ view: 'scan' });
+			if (this.$root.isMobile()) {
+				this.$root.updateParams({ view: 'scan' });
+			}
 		},
 		toggleAllChildren(expanded = null) {
-			if (!this.$refs.children) return;
+			if (!this.$refs.children) {
+				return;
+			}
 
 			for (let i = this.structures.length - 1; i >= 0; i -= 1) {
 				this.toggleChildren(i, expanded);
@@ -94,7 +98,9 @@ export default {
 		},
 		toggleChildren(index, expanded = null) {
 			const structure = this.structures[index];
-			if (!structure.childStructures) return;
+			if (!structure.childStructures) {
+				return;
+			}
 
 			const doExpand = (expanded !== null ? expanded : !this.expandedStructures[index]);
 			if (doExpand) {

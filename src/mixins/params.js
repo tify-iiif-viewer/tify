@@ -21,7 +21,10 @@ export default {
 				// eslint-disable-next-line prefer-destructuring
 				pages = params.pages;
 			} else {
-				if (params.pages) this.$root.error = 'Invalid pages, reset to first page';
+				if (params.pages) {
+					this.$root.error = 'Invalid pages, reset to first page';
+				}
+
 				pages = [1];
 			}
 
@@ -49,10 +52,14 @@ export default {
 			return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
 		},
 		isValidPagesArray(pages) {
-			if (!Array.isArray(pages)) return false;
+			if (!Array.isArray(pages)) {
+				return false;
+			}
 
 			// Check for duplicates
-			if ((new Set(pages)).size !== pages.length) return false;
+			if ((new Set(pages)).size !== pages.length) {
+				return false;
+			}
 
 			for (let i = 0; i < pages.length; i += 1) {
 				if (
@@ -69,7 +76,9 @@ export default {
 		updateParams(params) {
 			Object.assign(this.params, params);
 
-			if (!window.history) return;
+			if (!window.history) {
+				return;
+			}
 
 			clearTimeout(this.paramsTimeout);
 			this.paramsTimeout = setTimeout(() => {

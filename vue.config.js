@@ -1,31 +1,28 @@
-const BannerPlugin = require('webpack/lib/BannerPlugin.js');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const BannerPlugin = require('webpack/lib/BannerPlugin');
 const globImporter = require('node-sass-glob-importer');
 
 const env = require('./package.json');
 
-const info = {
-	VERSION: env.version,
-	LICENSE: env.license,
-	BUGS_URL: env.bugs.url,
-	CONTRIBUTORS_URL: 'https://github.com/tify-iiif-viewer/tify/blob/main/CONTRIBUTORS.md',
-	DOCS_URL: `${env.repository.url}/blob/v${env.version}/doc`,
-	REPOSITORY_URL: env.repository.url,
-};
-
-process.env.VUE_APP_INFO = escape(JSON.stringify(info));
+process.env.VUE_APP_VERSION = env.version;
+process.env.VUE_APP_LICENSE = env.license;
+process.env.VUE_APP_BUGS_URL = env.bugs.url;
+process.env.VUE_APP_CONTRIBUTORS_URL = 'https://github.com/tify-iiif-viewer/tify/blob/main/CONTRIBUTORS.md';
+process.env.VUE_APP_DOCS_URL = `${env.repository.url}/blob/v${env.version}/doc`;
+process.env.VUE_APP_REPOSITORY_URL = env.repository.url;
 
 module.exports = {
-	chainWebpack: config => {
+	chainWebpack: (config) => {
 		config.module.rule('eslint')
 			.use('eslint-loader')
-			.options({ fix: true })
+			.options({ fix: true });
 	},
 	configureWebpack: {
 		optimization: {
 			splitChunks: false,
 		},
 		output: {
-			filename: '[name].js',
+			filename: `tify-${env.version}.js`,
 		},
 		plugins: [
 			// Prepend copyright notice to each compiled file
@@ -34,13 +31,13 @@ module.exports = {
 					+ `\n(c) 2017-${new Date().getFullYear()}`
 					+ ' Göttingen State and University Library (https://www.sub.uni-goettingen.de/en/)'
 					+ `\n${env.license}`
-					+ `\n${env.homepage}` // eslint-disable-line comma-dangle
+					+ `\n${env.homepage}`,
 			),
 		],
 	},
 	css: {
 		extract: {
-			filename: '[name].css',
+			filename: `tify-${env.version}.css`,
 		},
 		loaderOptions: {
 			scss: {
@@ -48,13 +45,6 @@ module.exports = {
 					importer: globImporter(),
 				},
 			},
-		},
-	},
-	filenameHashing: false,
-	pages: {
-		tify: {
-			entry: 'src/main.js',
-			filename: 'index.html',
 		},
 	},
 	productionSourceMap: false,

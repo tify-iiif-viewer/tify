@@ -8,7 +8,7 @@
 	font-size: $font-size;
 	height: 100%;
 	left: 0;
-	line-height: $grid;
+	line-height: g();
 	overflow: hidden;
 	position: absolute;
 	right: 0;
@@ -29,8 +29,8 @@
 		border-bottom: 1px solid $shade;
 		font-size: 1.125em;
 		font-weight: normal;
-		padding: 0 0 ($grid * .25 - 1px);
-		margin: 0 0 ($grid * .75);
+		padding: 0 0 (g(.25) - 1px);
+		margin: 0 0 g(.75);
 	}
 
 	h4 {
@@ -40,7 +40,7 @@
 		margin: 0;
 
 		&:nth-of-type(n+2) {
-			margin-top: ($grid / 2);
+			margin-top: g(.5);
 		}
 	}
 
@@ -49,7 +49,7 @@
 	}
 
 	p {
-		margin: 0 0 ($grid / 2);
+		margin: 0 0 g(.5);
 	}
 
 	[type=text],
@@ -60,7 +60,7 @@
 		border: $border-width solid $shade;
 		border-radius: $br;
 		font: inherit;
-		padding: ($grid / 4 - $border-width) .5em;
+		padding: (g(.25) - $border-width) .5em;
 
 		&:focus {
 			border-color: $brand-color;
@@ -69,8 +69,8 @@
 	}
 
 	ul {
-		margin: 0 0 $grid;
-		padding: 0 0 0 $grid;
+		margin: 0 0 g();
+		padding: 0 0 0 g();
 	}
 }
 
@@ -81,7 +81,7 @@
 	color: white;
 	font-weight: bold;
 	max-width: 90%;
-	padding: ($grid / 4);
+	padding: g(.25);
 	position: absolute;
 }
 
@@ -91,8 +91,8 @@
 	color: white;
 	cursor: pointer;
 	float: left;
-	margin: (-$grid / 4) 0 (-$grid / 4) (-$grid / 4);
-	padding: ($grid / 4);
+	margin: g(-.25) 0 g(-.25) g(-.25);
+	padding: g(.25);
 
 	@include hover {
 		background: $shade-light;
@@ -103,20 +103,20 @@
 	animation: fadeIn .5s forwards .5s, spin 1.2s infinite ease-in-out;
 	background: $brand-color-light;
 	border-radius: $br;
-	bottom: $grid / 2;
-	height: ($grid * 1.5);
-	left: $grid / 2;
+	bottom: g(.5);
+	height: g(1.5);
+	left: g(.5);
 	opacity: 0;
 	pointer-events: none;
 	position: absolute;
-	width: ($grid * 1.5);
+	width: g(1.5);
 
 	&.-centered {
-		height: ($grid * 2);
+		height: g(2);
 		left: 50%;
-		margin: -$grid;
+		margin: g(-1);
 		top: 50%;
-		width: ($grid * 2);
+		width: g(2);
 	}
 
 	@keyframes fadeIn {

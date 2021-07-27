@@ -3,7 +3,7 @@
 	border: $br solid #fff;
 	border-radius: $br;
 	filter: drop-shadow($drop-shadow);
-	margin: ($grid / 4) 0;
+	margin: g(.25) 0;
 	min-width: 6em;
 	overflow: visible;
 	position: absolute;
@@ -18,7 +18,7 @@
 	@if ($position == left) {
 		left: 0;
 	} @else if ($position == right) {
-		right: ($grid / 4);
+		right: g(.25);
 	}
 
 	// Wedge
@@ -26,22 +26,22 @@
 		position: absolute;
 		content: '';
 		background: white;
-		width: ($grid / 2);
-		height: ($grid / 2);
+		width: g(.5);
+		height: g(.5);
 		transform: rotate(45deg);
 		z-index: -1;
 
 		@if ($alignment == bottom) {
-			top: (-$grid / 4);
+			top: g(-.25);
 
 			@if ($position == left) {
-				left: $grid;
+				left: g();
 			} @else if ($position == right) {
-				right: $grid;
+				right: g();
 			}
 		} @else if ($alignment == right) {
-			left: (-$grid / 4);
-			top: $grid;
+			left: g(-.25);
+			top: g();
 		}
 	}
 }

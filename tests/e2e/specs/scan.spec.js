@@ -12,8 +12,8 @@ describe('Scan', () => {
 			.get('.tify-app_main')
 			.get('[title="Toggle image filters"]')
 			.click()
-			.xpath('//label[@for="tify-scan_saturation"][contains(., "0 %")]')
-			.should('be.visible');
+			.get('label[for=tify-scan_saturation]')
+			.contains('Saturation: 0');
 	});
 
 	it('Reset pan, zoom, rotation and filters at once', () => {

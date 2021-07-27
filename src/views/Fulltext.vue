@@ -37,23 +37,32 @@ export default {
 			this.fulltexts = [];
 
 			this.$root.params.pages.forEach((page) => {
-				if (page < 1 || this.fulltexts[page]) return;
+				if (page < 1 || this.fulltexts[page]) {
+					return;
+				}
 
 				const canvas = this.$root.canvases[page - 1];
-				if (!('otherContent' in canvas)) return;
+				if (!('otherContent' in canvas)) {
+					return;
+				}
 
 				this.$set(this.fulltexts, page, []);
 
 				const annotationListUrl = canvas.otherContent[0]['@id'];
 				httpClient.get(annotationListUrl).then((response) => {
 					const { resources } = response.data;
-					if (!Array.isArray(resources)) return;
+					if (!Array.isArray(resources)) {
+						return;
+					}
 
 					resources.forEach((resource, index) => {
 						const res = resource.resource;
 						if (res && res.chars) {
 							const text = this.$root.filterHtml(res.chars);
-							if (text) this.fulltextAvailable = true;
+							if (text) {
+								this.fulltextAvailable = true;
+							}
+
 							this.$set(this.fulltexts[page], index, text);
 						} else if (res['@id']) {
 							this.loadRemoteFulltext(page, index, res['@id']);
@@ -68,7 +77,10 @@ export default {
 		loadRemoteFulltext(page, index, url) {
 			httpClient.get(url).then((response2) => {
 				const text = this.$root.filterHtml(response2.data);
-				if (text) this.fulltextAvailable = true;
+				if (text) {
+					this.fulltextAvailable = true;
+				}
+
 				this.$set(this.fulltexts[page], index, text);
 			}, (error) => {
 				const status = (error.response ? error.response.statusText : error.message);

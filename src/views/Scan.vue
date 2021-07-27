@@ -210,11 +210,17 @@ export default {
 			return (Object.keys(this.$root.params.filters).length > 0);
 		},
 		isMinZoom() {
-			if (!this.viewer) return true;
+			if (!this.viewer) {
+				return true;
+			}
+
 			return this.viewer.viewport.getZoom() <= this.viewer.viewport.getMinZoom();
 		},
 		isMaxZoom() {
-			if (!this.viewer) return true;
+			if (!this.viewer) {
+				return true;
+			}
+
 			return this.viewer.viewport.getZoom() >= this.viewer.viewport.getMaxZoom();
 		},
 		isReset() {
@@ -265,9 +271,14 @@ export default {
 
 				const tileSource = this.tileSources[tileSourceIndex];
 
-				if (!tileSource) return;
+				if (!tileSource) {
+					return;
+				}
 
-				if (!initialWidth) initialWidth = tileSource.width;
+				if (!initialWidth) {
+					initialWidth = tileSource.width;
+				}
+
 				const width = tileSource.width / initialWidth;
 
 				tileSource.tileFormat = options.tileFormat;
@@ -291,7 +302,9 @@ export default {
 
 						// Move upper left corner into viewport if required
 						const bounds = this.viewer.viewport.getBounds();
-						if (bounds.x <= 0 && bounds.y <= 0) return;
+						if (bounds.x <= 0 && bounds.y <= 0) {
+							return;
+						}
 
 						const offsetX = (params.pages[0] ? 0 : 1);
 						this.viewer.viewport.panTo({
@@ -369,7 +382,9 @@ export default {
 
 			const infoPromises = [];
 			this.$root.params.pages.forEach((page) => {
-				if (page < 1 || this.tileSources[page]) return;
+				if (page < 1 || this.tileSources[page]) {
+					return;
+				}
 
 				const { resource } = this.$root.canvases[page - 1].images[0];
 				if (resource.service) {
@@ -397,7 +412,9 @@ export default {
 			if (infoPromises.length) {
 				Promise.all(infoPromises).then((responses) => {
 					responses.forEach((response) => {
-						if (response) this.tileSources[response.page] = response.data;
+						if (response) {
+							this.tileSources[response.page] = response.data;
+						}
 					});
 					this.initViewer(resetView);
 				});
@@ -406,10 +423,14 @@ export default {
 			}
 		},
 		propagateKeyPress(event) {
-			if (event.target.className.indexOf('openseadragon') === 0) return;
+			if (event.target.className.indexOf('openseadragon') === 0) {
+				return;
+			}
 
 			const canvas = this.$refs.image.querySelector('.openseadragon-canvas');
-			if (!canvas) return;
+			if (!canvas) {
+				return;
+			}
 
 			const canvasEvent = new event.constructor(event.type, event);
 
@@ -438,7 +459,9 @@ export default {
 				// Rotation has to be reset before pan and zoom
 				this.viewer.viewport.setRotation(0);
 				this.$root.updateParams({ rotation: null });
-				if (this.filtersActive) this.resetFilters();
+				if (this.filtersActive) {
+					this.resetFilters();
+				}
 			}
 
 			this.viewer.viewport.goHome();
@@ -465,7 +488,9 @@ export default {
 			for (let i = this.viewer.world.getItemCount() - 1; i >= 0; i -= 1) {
 				const image = this.viewer.world.getItemAt(i);
 				// eslint-disable-next-line no-underscore-dangle
-				if (image && image._tilesLoading) loading = 1;
+				if (image && image._tilesLoading) {
+					loading = 1;
+				}
 			}
 			this.$root.loading = loading;
 
@@ -479,7 +504,9 @@ export default {
 			clearTimeout(this.loadingTimeout);
 		},
 		updateFilterStyle() {
-			if (!this.filtersActive || !this.cssFiltersSupported) return;
+			if (!this.filtersActive || !this.cssFiltersSupported) {
+				return;
+			}
 
 			const filters = [];
 			Object.keys(this.$root.params.filters).forEach((key) => {
@@ -520,7 +547,9 @@ export default {
 		});
 
 		window.addEventListener('keypress', (event) => {
-			if (this.preventKeyboardEvent(event)) return;
+			if (this.preventKeyboardEvent(event)) {
+				return;
+			}
 
 			switch (event.key) {
 			case 'r':

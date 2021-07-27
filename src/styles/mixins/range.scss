@@ -10,13 +10,13 @@ $track-focus-color: $brand-color-light;
 
 $thumb-color: linear-gradient(to bottom, tint($link-color, 20), $link-color);
 $thumb-focus-color: linear-gradient(to bottom, $link-color, shade($link-color, 20));
-$thumb-focus-shadow: 0 0 0 ($grid / 4) $highlight-color;
+$thumb-focus-shadow: 0 0 0 g(.25) $highlight-color;
 
 $thumb-radius: $br;
-$thumb-height: $grid;
-$thumb-width: ($grid / 2);
+$thumb-height: g();
+$thumb-width: g(.5);
 
-$track-height: ($grid / 4);
+$track-height: g(.25);
 
 $track-radius: $br;
 
@@ -39,7 +39,7 @@ $track-radius: $br;
 
 @mixin range {
 	-webkit-appearance: none;
-	margin: ($grid / 4) 0 (-$grid / 4);
+	margin: g(.25) 0 g(-.25);
 	width: 100%;
 
 	&::-webkit-slider-runnable-track {
@@ -53,7 +53,7 @@ $track-radius: $br;
 	&::-webkit-slider-thumb {
 		@include range_thumb;
 		-webkit-appearance: none;
-		margin-top: ((-$border-width * 2 + $track-height) / 2) - ($thumb-height / 2);
+		margin-top: ((-$border-width * 2 + $track-height) * .5) - ($thumb-height * .5);
 	}
 
 	&::-moz-range-track {
@@ -71,9 +71,9 @@ $track-radius: $br;
 		@include range_track;
 		background: transparent;
 		border-color: transparent;
-		border-width: ($thumb-height / 2) 0;
+		border-width: ($thumb-height * .5) 0;
 		color: transparent;
-		margin: (-$grid / 4) 0;
+		margin: g(-.25) 0;
 	}
 
 	&::-ms-fill-lower {

@@ -2,7 +2,10 @@ module.exports = {
 	methods: {
 		updateScrollPos(selector, animated = true) {
 			const elements = this.$el.querySelectorAll(selector);
-			if (!elements.length) return;
+			if (!elements.length) {
+				return;
+			}
+
 			let topCurrentElement = elements[0];
 			const bottomCurrentElement = elements[elements.length - 1];
 			Array.prototype.forEach.call(
@@ -40,7 +43,10 @@ module.exports = {
 
 			setTimeout(() => {
 				el.scrollTop += perTick;
-				if (el.scrollTop === to) return;
+				if (el.scrollTop === to) {
+					return;
+				}
+
 				this.scrollTo(el, to, duration - 10);
 			}, 10);
 		},
