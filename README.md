@@ -1,6 +1,6 @@
 <p>
 	<a href="https://github.com/tify-iiif-viewer/tify">
-		<img src="https://demo.tify.rocks/public/tify-logo.svg" alt="TIFY" width="148" height="60">
+		<img src="https://demo.tify.rocks/public/img/tify-logo.svg" alt="TIFY" width="148" height="60">
 	</a>
 </p>
 
