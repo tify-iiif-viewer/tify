@@ -3,6 +3,7 @@ node_modules/
 npm-debug.log
 openseadragon/
 tests/e2e/output
+tests/e2e/screenshots
 tests/e2e/videos
 tests/unit/coverage
 
