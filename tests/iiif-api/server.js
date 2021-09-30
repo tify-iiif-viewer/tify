@@ -4,7 +4,7 @@ const url = require('url');
 const config = require('./config.json');
 
 const server = http.createServer().listen(config.port, config.host);
-console.log(`> Mock IIIF API listening at http://localhost:${config.port}`);
+console.log(`  Mock IIIF API listening at http://localhost:${config.port}`);
 
 server.on('request', (req, res) => {
 	const { path } = url.parse(req.url);

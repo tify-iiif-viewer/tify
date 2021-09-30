@@ -1,36 +1,23 @@
-process.env.NODE_ENV = 'test';
-process.env.HEADLESS = true;
+const opts = process.argv.slice(2);
+let args = ['test:e2e'];
 
-const Service = require('@vue/cli-service');
+opts.forEach((opt) => {
+	if (opt === '--headless') {
+		args = [...args, '--headless'];
+	}
+});
 
-const service = new Service(process.cwd());
-service.init('production');
-service
-	.run('serve')
-	.then(({ server }) => {
-		const opts = process.argv.slice(2);
-		let args = ['test:e2e'];
+const spawn = require('cross-spawn');
+const iiifApi = require('../iiif-api/server');
 
-		opts.forEach((opt) => {
-			if (opt === '--headless') {
-				args = [...args, '--headless'];
-			}
-		});
+const runner = spawn('./node_modules/.bin/vue-cli-service', args, { stdio: 'inherit' });
 
-		const spawn = require('cross-spawn');
-		const runner = spawn('./node_modules/.bin/vue-cli-service', args, { stdio: 'inherit' });
+runner.on('exit', (code) => {
+	iiifApi.close();
+	process.exit(code);
+});
 
-		const iiifApi = require('../iiif-api/server');
-
-		runner.on('exit', (code) => {
-			server.close();
-			iiifApi.close();
-			process.exit(code);
-		});
-
-		runner.on('error', (err) => {
-			server.close();
-			iiifApi.close();
-			throw err;
-		});
-	});
+runner.on('error', (err) => {
+	iiifApi.close();
+	throw err;
+});
