@@ -117,7 +117,7 @@ export default {
 							+ ` | ${this.$root.options.title}`;
 				}
 			} else {
-				this.$root.error = 'Please provide a valid IIIF Presentation API 2.x Manifest';
+				this.$root.error = 'Please provide a valid IIIF Presentation API 2.x manifest';
 			}
 		}, (error) => {
 			const status = (error.response ? error.response.statusText : error.message);
