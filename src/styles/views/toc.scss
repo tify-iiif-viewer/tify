@@ -19,7 +19,7 @@
 }
 
 .tify-toc_header {
-	margin: 0 g(.5) g(.5);
+	margin: 0 g(.25) g(.5);
 }
 
 .tify-toc_label {
@@ -83,7 +83,7 @@
 
 	&.-current {
 		// Bold vertical marker
-		// 1px spead radius to fix a thin blue line appearing below the marker on Firefox
+		// 1px spread to fix a thin blue line appearing below the marker on Firefox
 		box-shadow: (g(-.75) + 1px + 1px) 0 0 1px white, g(-1) 0 $brand-color-light;
 	}
 
@@ -126,7 +126,7 @@
 
 .tify-toc_toggle-all {
 	@extend %button-small;
-	margin: g(.25) 0 0;
+	margin: g(.25);
 }
 
 .tify-toc_toggle {
