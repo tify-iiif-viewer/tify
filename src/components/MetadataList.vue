@@ -3,7 +3,7 @@
 		<div v-for="(item, index) in metadata" :key="index">
 			<h4>
 				<div v-bind:key="index" v-for="(label, index) in $root.convertValueToArray(item.label)">
-					{{ label|cleanLabel }}
+					{{ cleanLabel(label) }}
 				</div>
 			</h4>
 			<div
@@ -22,11 +22,11 @@
 				>
 					<template v-if="infoItems[index].collapsed">
 						<icon name="expand_more"/>
-						{{ 'Expand'|trans }}
+						{{ $root.translate('Expand') }}
 					</template>
 					<template v-else>
 						<icon name="expand_less"/>
-						{{ 'Collapse'|trans }}
+						{{ $root.translate('Collapse') }}
 					</template>
 				</button>
 			</div>
@@ -49,16 +49,14 @@ export default {
 			this.updateInfoItems();
 		},
 	},
-	filters: {
-		cleanLabel(label) {
-			const cleanedLabel = label.replace('_', ' ');
-			return cleanedLabel.charAt(0).toUpperCase() + cleanedLabel.substr(1);
-		},
-	},
 	mounted() {
 		this.updateInfoItems();
 	},
 	methods: {
+		cleanLabel(label) {
+			const cleanedLabel = label.replace('_', ' ');
+			return cleanedLabel.charAt(0).toUpperCase() + cleanedLabel.substr(1);
+		},
 		updateInfoItems() {
 			this.$nextTick(() => {
 				if (!this.$refs.contents) {

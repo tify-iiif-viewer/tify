@@ -13,15 +13,15 @@
 				<button
 					class="tify-header_button"
 					:class="{
-						'-active': $root.params.pages.length > 1,
+						'-active': $root.options.pages.length > 1,
 						'-warning': customPageViewActive,
 					}"
-					:title="'Toggle double-page'|trans"
+					:title="$root.translate('Toggle double-page')"
 					@click="toggleDoublePage"
 				>
 					<icon v-if="customPageViewActive" name="view_module"/>
 					<icon v-else name="import_contacts"/>
-					<span class="tify-sr-only">{{ 'Toggle double-page'|trans }}</span>
+					<span class="tify-sr-only">{{ $root.translate('Toggle double-page') }}</span>
 				</button>
 			</div>
 
@@ -29,63 +29,63 @@
 				<button
 					class="tify-header_button"
 					:disabled="customPageViewActive || isFirstPage"
-					:title="'First page'|trans"
+					:title="$root.translate('First page')"
 					@click="goToFirstPage"
 				>
 					<icon name="first_page"/>
-					<span class="tify-sr-only">{{ 'First page'|trans }}</span>
+					<span class="tify-sr-only">{{ $root.translate('First page') }}</span>
 				</button>
 
 				<button
 					v-if="structures && structures.length"
 					class="tify-header_button"
 					:disabled="customPageViewActive || isFirstPage"
-					:title="'Previous section'|trans"
+					:title="$root.translate('Previous section')"
 					@click="goToPreviousSection"
 				>
 					<icon name="skip_previous"/>
-					<span class="tify-sr-only">{{ 'Previous section'|trans }}</span>
+					<span class="tify-sr-only">{{ $root.translate('Previous section') }}</span>
 				</button>
 
 				<button
 					class="tify-header_button"
 					:disabled="customPageViewActive || isFirstPage"
-					:title="'Previous page'|trans"
+					:title="$root.translate('Previous page')"
 					@click="goToPreviousPage"
 				>
 					<icon name="navigate_before"/>
-					<span class="tify-sr-only">{{ 'Previous page'|trans }}</span>
+					<span class="tify-sr-only">{{ $root.translate('Previous page') }}</span>
 				</button>
 
 				<button
 					class="tify-header_button"
 					:disabled="customPageViewActive || isLastPage"
-					:title="'Next page'|trans"
+					:title="$root.translate('Next page')"
 					@click="goToNextPage"
 				>
 					<icon name="navigate_next"/>
-					<span class="tify-sr-only">{{ 'Next page'|trans }}</span>
+					<span class="tify-sr-only">{{ $root.translate('Next page') }}</span>
 				</button>
 
 				<button
 					v-if="structures && structures.length"
 					class="tify-header_button"
 					:disabled="customPageViewActive || isLastSection"
-					:title="'Next section'|trans"
+					:title="$root.translate('Next section')"
 					@click="goToNextSection"
 				>
 					<icon name="skip_next"/>
-					<span class="tify-sr-only">{{ 'Next section'|trans }}</span>
+					<span class="tify-sr-only">{{ $root.translate('Next section') }}</span>
 				</button>
 
 				<button
 					class="tify-header_button"
 					:disabled="customPageViewActive || isLastPage"
-					:title="'Last page'|trans"
+					:title="$root.translate('Last page')"
 					@click="goToLastPage"
 				>
 					<icon name="last_page"/>
-					<span class="tify-sr-only">{{ 'Last page'|trans }}</span>
+					<span class="tify-sr-only">{{ $root.translate('Last page') }}</span>
 				</button>
 			</div>
 		</div>
@@ -98,7 +98,7 @@
 					@click="toggleControlsPopup"
 				>
 					<icon name="menu"/>
-					{{ 'View'|trans }}
+					{{ $root.translate('View') }}
 				</button>
 			</div>
 		</div>
@@ -107,68 +107,68 @@
 			<div class="tify-header_button-group -view">
 				<button
 					class="tify-header_button -scan"
-					:class="{ '-active': $root.params.view === 'scan' }"
+					:class="{ '-active': $root.options.view === 'scan' }"
 					@click="toggleView('scan')"
 				>
 					<icon name="photo"/>
-					{{ 'Scan'|trans }}
+					{{ $root.translate('Scan') }}
 				</button>
 
 				<button
 					v-if="fulltextEnabled"
 					class="tify-header_button"
-					:class="{ '-active': $root.params.view === 'fulltext' }"
+					:class="{ '-active': $root.options.view === 'fulltext' }"
 					@click="toggleView('fulltext')"
 				>
 					<icon name="subject"/>
-					{{ 'Fulltext'|trans }}
+					{{ $root.translate('Fulltext') }}
 				</button>
 
 				<button
 					class="tify-header_button"
-					:class="{ '-active': $root.params.view === 'thumbnails' }"
+					:class="{ '-active': $root.options.view === 'thumbnails' }"
 					@click="toggleView('thumbnails')"
 				>
 					<icon name="view_module"/>
-					{{ 'Pages'|trans }}
+					{{ $root.translate('Pages') }}
 				</button>
 
 				<button
 					v-if="tocEnabled"
 					class="tify-header_button"
-					:class="{ '-active': $root.params.view === 'toc' }"
+					:class="{ '-active': $root.options.view === 'toc' }"
 					@click="toggleView('toc')"
 				>
 					<icon name="toc"/>
-					{{ 'Contents'|trans }}
+					{{ $root.translate('Contents') }}
 				</button>
 
 				<button
 					class="tify-header_button"
-					:class="{ '-active': $root.params.view === 'info' }"
+					:class="{ '-active': $root.options.view === 'info' }"
 					@click="toggleView('info')"
 				>
 					<icon name="info_outline"/>
-					{{ 'Info'|trans }}
+					{{ $root.translate('Info') }}
 				</button>
 
 				<button
 					class="tify-header_button"
-					:class="{ '-active': $root.params.view === 'export' }"
+					:class="{ '-active': $root.options.view === 'export' }"
 					@click="toggleView('export')"
 				>
 					<icon name="file_download"/>
-					{{ 'Export'|trans }}
+					{{ $root.translate('Export') }}
 				</button>
 
 				<button
 					class="tify-header_button -icon-only"
-					:class="{ '-active': $root.params.view === 'help' }"
-					:title="$options.filters.trans('Help')"
+					:class="{ '-active': $root.options.view === 'help' }"
+					:title="$root.translate('Help')"
 					@click="toggleView('help')"
 				>
 					<icon name="help_outline"/>
-					{{ 'Help'|trans }}
+					{{ $root.translate('Help') }}
 				</button>
 			</div>
 
@@ -176,20 +176,20 @@
 				<button
 					v-if="!fullscreenActive"
 					class="tify-header_button -icon-only"
-					:title="'Fullscreen'|trans"
+					:title="$root.translate('Fullscreen')"
 					@click="toggleFullscreen"
 				>
 					<icon name="fullscreen"/>
-					{{ 'Fullscreen'|trans }}
+					{{ $root.translate('Fullscreen') }}
 				</button>
 				<button
 					v-else
 					class="tify-header_button -icon-only"
-					:title="'Exit fullscreen'|trans"
+					:title="$root.translate('Exit fullscreen')"
 					@click="toggleFullscreen"
 				>
 					<icon name="fullscreen_exit"/>
-					{{ 'Exit fullscreen'|trans }}
+					{{ $root.translate('Exit fullscreen') }}
 				</button>
 			</div>
 
@@ -197,63 +197,63 @@
 				<button
 					class="tify-header_button"
 					:disabled="customPageViewActive || isFirstPage"
-					:title="'First page'|trans"
+					:title="$root.translate('First page')"
 					@click="goToFirstPage"
 				>
 					<icon name="first_page"/>
-					<span class="tify-sr-only">{{ 'First page'|trans }}</span>
+					<span class="tify-sr-only">{{ $root.translate('First page') }}</span>
 				</button>
 
 				<button
 					v-if="structures && structures.length"
 					class="tify-header_button"
 					:disabled="customPageViewActive || isFirstPage"
-					:title="'Previous section'|trans"
+					:title="$root.translate('Previous section')"
 					@click="goToPreviousSection"
 				>
 					<icon name="skip_previous"/>
-					<span class="tify-sr-only">{{ 'Previous section'|trans }}</span>
+					<span class="tify-sr-only">{{ $root.translate('Previous section') }}</span>
 				</button>
 
 				<button
 					class="tify-header_button"
 					:disabled="customPageViewActive || isFirstPage"
-					:title="'Previous page'|trans"
+					:title="$root.translate('Previous page')"
 					@click="goToPreviousPage"
 				>
 					<icon name="navigate_before"/>
-					<span class="tify-sr-only">{{ 'Previous page'|trans }}</span>
+					<span class="tify-sr-only">{{ $root.translate('Previous page') }}</span>
 				</button>
 
 				<button
 					class="tify-header_button"
 					:disabled="customPageViewActive || isLastPage"
-					:title="'Next page'|trans"
+					:title="$root.translate('Next page')"
 					@click="goToNextPage"
 				>
 					<icon name="navigate_next"/>
-					<span class="tify-sr-only">{{ 'Next page'|trans }}</span>
+					<span class="tify-sr-only">{{ $root.translate('Next page') }}</span>
 				</button>
 
 				<button
 					v-if="structures && structures.length"
 					class="tify-header_button"
 					:disabled="customPageViewActive || isLastSection"
-					:title="'Next section'|trans"
+					:title="$root.translate('Next section')"
 					@click="goToNextSection"
 				>
 					<icon name="skip_next"/>
-					<span class="tify-sr-only">{{ 'Next section'|trans }}</span>
+					<span class="tify-sr-only">{{ $root.translate('Next section') }}</span>
 				</button>
 
 				<button
 					class="tify-header_button"
 					:disabled="customPageViewActive || isLastPage"
-					:title="'Last page'|trans"
+					:title="$root.translate('Last page')"
 					@click="goToLastPage"
 				>
 					<icon name="last_page"/>
-					<span class="tify-sr-only">{{ 'Last page'|trans }}</span>
+					<span class="tify-sr-only">{{ $root.translate('Last page') }}</span>
 				</button>
 			</div>
 		</div>
@@ -293,7 +293,7 @@ export default {
 					|| document.webkitFullscreenElement === null;
 		},
 		isLastSection() {
-			const { pages } = this.$root.params;
+			const { pages } = this.$root.options;
 			const lastIndex = pages.length - 1;
 			const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
 			return page >= this.sections[this.sections.length - 1].firstPage;
@@ -331,7 +331,7 @@ export default {
 			return fullscreenAPI;
 		},
 		goToNextSection() {
-			const { pages } = this.$root.params;
+			const { pages } = this.$root.options;
 			const lastIndex = pages.length - 1;
 			const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
 			let sectionIndex = 0;
@@ -343,7 +343,7 @@ export default {
 			this.$root.setPage(this.sections[sectionIndex].firstPage);
 		},
 		goToPreviousSection() {
-			const { pages } = this.$root.params;
+			const { pages } = this.$root.options;
 			const page = pages[0] ? pages[0] : pages[1];
 			let sectionIndex = this.sections.length - 1;
 			while (
@@ -356,10 +356,10 @@ export default {
 		toggleControlsPopup() {
 			this.controlsVisible = !this.controlsVisible;
 		},
-		toggleDoublePage() {
-			const { pages } = this.$root.params;
+		toggleDoublePage(force) {
+			const { pages } = this.$root.options;
 			let newPages;
-			if (pages.length > 1) {
+			if ((pages.length > 1 && force !== true) || force === false) {
 				// There are already multiple pages shown; switch back to single page
 				newPages = [pages[0] < 1 ? 1 : pages[0]];
 			} else if (pages[0] < 2) {
@@ -373,10 +373,12 @@ export default {
 				const followingPage = (pages[0] < this.$root.pageCount ? pages[0] + 1 : 0);
 				newPages = [pages[0], followingPage];
 			}
-			this.$root.updateParams({ pages: newPages });
+
+			this.$root.updateOptions({ pages: newPages });
+			return newPages;
 		},
-		toggleFullscreen() {
-			if (this.fullscreenActive) {
+		toggleFullscreen(force) {
+			if ((this.fullscreenActive && force !== true) || force === false) {
 				if (document.exitFullscreen) {
 					document.exitFullscreen();
 				} else if (document.mozCancelFullScreen) { // Firefox
@@ -386,7 +388,8 @@ export default {
 				} else if (document.msExitFullscreen) { // IE/Edge
 					document.msExitFullscreen();
 				}
-				return;
+
+				return false;
 			}
 
 			if (this.screen.requestFullscreen) {
@@ -398,16 +401,26 @@ export default {
 			} else if (this.screen.msRequestFullscreen) { // IE/Edge
 				this.screen.msRequestFullscreen();
 			}
+
+			return true;
 		},
 		toggleFullscreenActive() {
 			this.fullscreenActive = !this.fullscreenActive;
 		},
-		toggleView(name) {
-			const view = (name === this.$root.params.view && !this.$root.isMobile() ? '' : name);
-			this.$root.updateParams({ view });
+		toggleView(name, force) {
+			const view = (name === this.$root.options.view && !this.$root.isMobile() && force !== true)
+					|| force === false
+				? ''
+				: name;
+			this.$root.updateOptions({ view });
+			return view;
 		},
 	},
 	created() {
+		this.$root.expose(this.toggleView);
+		this.$root.expose(this.toggleDoublePage);
+		this.$root.expose(this.toggleFullscreen);
+
 		if (!this.structures) {
 			return;
 		}
@@ -483,7 +496,7 @@ export default {
 				return;
 			}
 
-			const { pages } = this.$root.params;
+			const { pages } = this.$root.options;
 
 			switch (event.key) {
 			case 'q':

@@ -73,7 +73,7 @@ const structures = {
 			}
 
 			const currentCanvasIds = [];
-			this.$root.params.pages.forEach((page) => {
+			this.$root.options.pages.forEach((page) => {
 				if (page) {
 					currentCanvasIds.push(this.$root.canvases[page - 1]['@id']);
 				}

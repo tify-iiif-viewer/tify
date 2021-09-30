@@ -6,7 +6,7 @@
 			v-click-outside="closeDropdown"
 			@click="toggleDropdown"
 		>
-			<span class="tify-sr-only">{{ 'Current page'|trans }}</span>
+			<span class="tify-sr-only">{{ $root.translate('Current page') }}</span>
 			{{ getCurrentPage() }}
 		</button>
 
@@ -34,14 +34,12 @@
 					:key="index"
 					v-for="(canvas, index) in filteredCanvases"
 					:class="{
-						'-current': $root.params.pages.indexOf(canvas.page) > -1,
+						'-current': $root.options.pages.indexOf(canvas.page) > -1,
 						'-highlighted': highlightIndex === index,
 					}"
 					@click="setPage(canvas.page)"
 				>
-					{{ canvas.page }}
-					:
-					{{ getLabels(canvas.label)[0] }}
+					{{ $root.getPageLabel(canvas.page, $root.convertValueToArray(canvas.label)[0]) }}
 				</li>
 			</ol>
 		</div>
@@ -65,10 +63,10 @@ export default {
 	},
 	computed: {
 		pageTitleAttr() {
-			const { pages } = this.$root.params;
+			const { pages } = this.$root.options;
 			const page = (pages[0] === 0 && pages.length > 1 ? 1 : pages[0]);
-			const physLabel = this.$options.filters.trans('Physical page');
-			const logLabel = this.$options.filters.trans('Logical page');
+			const physLabel = this.$root.translate('Physical page');
+			const logLabel = this.$root.translate('Logical page');
 			return `${physLabel}: ${page}\n`
 					+ `${logLabel}: ${this.$root.convertValueToArray(this.$root.canvases[page - 1].label)[0]}`;
 		},
@@ -86,15 +84,30 @@ export default {
 			}
 
 			this.filter = '';
-			this.highlightIndex = this.$root.params.pages[0] - 1;
+			this.highlightIndex = this.$root.options.pages[0] - 1;
 		},
 	},
 	methods: {
+		onKeydown(event) {
+			if (this.preventKeyboardEvent(event)) {
+				return;
+			}
+
+			if (event.key === 'Escape') {
+				this.closeDropdown();
+				return;
+			}
+
+			if (event.key === 'x') {
+				this.toggleDropdown();
+				event.preventDefault();
+			}
+		},
 		setPage(page) {
 			this.closeDropdown();
 			this.$root.setPage(page);
 			if (this.$root.isMobile()) {
-				this.$root.updateParams({ view: 'scan' });
+				this.$root.updateOptions({ view: 'scan' });
 			}
 		},
 		toggleDropdown() {
@@ -120,7 +133,7 @@ export default {
 				if (labelMatchesFilter || pageMatchesFilter) {
 					const item = canvas;
 					item.page = index + 1;
-					if (item.page === this.$root.params.pages[0]) {
+					if (item.page === this.$root.options.pages[0]) {
 						highlightIndex = filteredCanvases.length;
 					}
 
@@ -137,34 +150,19 @@ export default {
 				list.scrollTop = offsetTop - ((list.offsetHeight / 2) - list.children[0].offsetHeight);
 			}
 		},
-		getLabels(value) {
-			return this.$root.convertValueToArray(value);
-		},
 		getCurrentPage() {
-			const page = this.$root.params.pages[0] || 1;
-			const canvasIndex = this.$root.params.pages[0] ? this.$root.params.pages[0] - 1 : 0;
-			const label = this.getLabels(this.$root.canvases[canvasIndex].label)[0];
+			const page = this.$root.options.pages[0] || 1;
+			const canvasIndex = this.$root.options.pages[0] ? this.$root.options.pages[0] - 1 : 0;
+			const label = this.$root.convertValueToArray(this.$root.canvases[canvasIndex].label)[0];
 			return `${page} : ${label}`;
 		},
 	},
 	mounted() {
 		this.updateFilteredCanvases();
-
-		window.addEventListener('keydown', (event) => {
-			if (this.preventKeyboardEvent(event)) {
-				return;
-			}
-
-			if (event.key === 'Escape') {
-				this.closeDropdown();
-				return;
-			}
-
-			if (event.key === 'x') {
-				this.toggleDropdown();
-				event.preventDefault();
-			}
-		});
+		window.addEventListener('keydown', this.onKeydown);
+	},
+	beforeDestroy() {
+		window.removeEventListener('keydown', this.onKeydown);
 	},
 };
 </script>

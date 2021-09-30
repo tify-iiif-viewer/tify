@@ -1,63 +1,63 @@
 <template>
 	<section class="tify-scan">
-		<h2 class="tify-sr-only">{{ 'Scan'|trans }}</h2>
+		<h2 class="tify-sr-only">{{ $root.translate('Scan') }}</h2>
 
 		<button
 			v-if="!customPageViewActive && !isFirstPage"
 			class="tify-scan_page-button -previous"
-			:title="'Previous page'|trans"
+			:title="$root.translate('Previous page')"
 			@click="goToPreviousPage"
 		>
 			<icon name="navigate_before"/>
-			<span class="tify-sr-only">{{ 'Previous page'|trans }}</span>
+			<span class="tify-sr-only">{{ $root.translate('Previous page') }}</span>
 		</button>
 		<button
 			v-if="!customPageViewActive && !isLastPage"
 			class="tify-scan_page-button -next"
-			:title="'Next page'|trans"
+			:title="$root.translate('Next page')"
 			@click="goToNextPage"
 		>
 			<icon name="navigate_next"/>
-			<span class="tify-sr-only">{{ 'Next page'|trans }}</span>
+			<span class="tify-sr-only">{{ $root.translate('Next page') }}</span>
 		</button>
 
 		<div class="tify-scan_buttons" v-if="viewer">
 			<button
 				class="tify-scan_button"
 				:disabled="isMaxZoom"
-				:title="'Zoom in'|trans"
+				:title="$root.translate('Zoom in')"
 				@click="zoomIn"
 			>
 				<icon name="zoom_in"/>
-				<span class="tify-sr-only">{{ 'Zoom in'|trans }}</span>
+				<span class="tify-sr-only">{{ $root.translate('Zoom in') }}</span>
 			</button>
 			<button
 				class="tify-scan_button"
 				:disabled="isReset"
-				:title="'Reset'|trans"
-				@click="resetView($event)"
+				:title="$root.translate('Reset')"
+				@click="resetViewer(!!$event.shiftKey)"
 			>
 				<icon name="aspect_ratio"/>
-				<span class="tify-sr-only">{{ 'Reset'|trans }}</span>
+				<span class="tify-sr-only">{{ $root.translate('Reset') }}</span>
 			</button>
 			<button
 				class="tify-scan_button"
 				:disabled="isMinZoom"
-				:title="'Zoom out'|trans"
+				:title="$root.translate('Zoom out')"
 				@click="zoomOut"
 			>
 				<icon name="zoom_out"/>
-				<span class="tify-sr-only">{{ 'Zoom out'|trans }}</span>
+				<span class="tify-sr-only">{{ $root.translate('Zoom out') }}</span>
 			</button>
 
 			<button
 				class="tify-scan_button"
-				:class="{ '-active': $root.params.rotation }"
-				:title="'Rotate'|trans"
+				:class="{ '-active': $root.options.rotation }"
+				:title="$root.translate('Rotate')"
 				@click="rotateRight($event)"
 			>
 				<icon name="rotate_right"/>
-				<span class="tify-sr-only">{{ 'Rotate'|trans }}</span>
+				<span class="tify-sr-only">{{ $root.translate('Rotate') }}</span>
 			</button>
 
 			<div
@@ -69,18 +69,18 @@
 				<button
 					class="tify-scan_button"
 					:class="{ '-active': filtersActive }"
-					:title="'Toggle image filters'|trans"
+					:title="$root.translate('Toggle image filters')"
 					@click="filtersVisible = !filtersVisible"
 				>
 					<icon name="tune"/>
-					<span class="tify-sr-only">{{ 'Toggle image filters'|trans }}</span>
+					<span class="tify-sr-only">{{ $root.translate('Toggle image filters') }}</span>
 				</button>
 				<div class="tify-scan_filter-popup" v-show="filtersVisible">
 					<p>
 						<label for="tify-scan_brightness">
 							<icon name="wb_sunny" class="-light"/>
-							{{ 'Brightness:'|trans }}
-							{{ Math.round(($root.params.filters.brightness || 1) * 100) }}&nbsp;%
+							{{ $root.translate('Brightness:') }}
+							{{ Math.round(($root.options.filters.brightness || 1) * 100) }}&nbsp;%
 						</label>
 						<input
 							class="tify-scan_range"
@@ -90,15 +90,15 @@
 							ref="firstSlider"
 							step=".01"
 							type="range"
-							:value="$root.params.filters.brightness || 1"
+							:value="$root.options.filters.brightness || 1"
 							@input="setFilter('brightness', $event)"
 						>
 					</p>
 					<p>
 						<label for="tify-scan_contrast">
 							<icon name="brightness_medium" class="-light"/>
-							{{ 'Contrast:'|trans }}
-							{{ Math.round(($root.params.filters.contrast || 1) * 100) }}&nbsp;%
+							{{ $root.translate('Contrast:') }}
+							{{ Math.round(($root.options.filters.contrast || 1) * 100) }}&nbsp;%
 						</label>
 						<input
 							class="tify-scan_range"
@@ -107,14 +107,14 @@
 							min=".5"
 							step=".01"
 							type="range"
-							:value="$root.params.filters.contrast || 1"
+							:value="$root.options.filters.contrast || 1"
 							@input="setFilter('contrast', $event)"
 						>
 					</p>
 					<p>
 						<label for="tify-scan_saturation">
 							<icon name="palette" class="-light"/>
-							{{ 'Saturation:'|trans }}
+							{{ $root.translate('Saturation:') }}
 							{{ Math.round(saturation * 100)}}&nbsp;%
 						</label>
 						<input
@@ -135,25 +135,24 @@
 							@click="resetFilters"
 						>
 							<icon name="settings_backup_restore"/>
-							{{ 'Reset'|trans }}
+							{{ $root.translate('Reset') }}
 						</button>
 					</p>
 				</div>
 			</div>
 		</div>
 
-		<div class="tify-scan_image" id="tify-scan_image" ref="image"/>
+		<div class="tify-scan_image" ref="image"/>
 	</section>
 </template>
 
 <script>
-import httpClient from '@/services/http-client';
 import OpenSeadragon from '@/../openseadragon/src/openseadragon';
 
 import keyboard from '@/mixins/keyboard';
 import pagination from '@/mixins/pagination';
 
-// TODO: Is there another way to make OpenSeadragon available to imports below?
+// TODO: Is there a better way to make OpenSeadragon available to imports below?
 window.OpenSeadragon = OpenSeadragon;
 
 // Custom-build OpenSeadragon. Order is important!
@@ -202,12 +201,12 @@ export default {
 			const el = document.createElement('a');
 			el.style.cssText = vendorPrefixes.join('filter:blur(2px);');
 			// https://github.com/Modernizr/Modernizr/issues/615
-			// documentMode is needed for false positives in oldIE, please see issue above
+			// documentMode is needed for false positives in old IE, see issue above
 			return !!el.style.length
 					&& ((document.documentMode === undefined || document.documentMode > 9));
 		},
 		filtersActive() {
-			return (Object.keys(this.$root.params.filters).length > 0);
+			return (Object.keys(this.$root.options.filters).length > 0);
 		},
 		isMinZoom() {
 			if (!this.viewer) {
@@ -235,32 +234,34 @@ export default {
 			);
 		},
 		saturation() {
-			const saturation = this.$parent.$parent.params.filters.saturate;
+			const saturation = this.$parent.$parent.options.filters.saturate;
 			return typeof saturation === 'number' ? saturation : 1;
 		},
 	},
 	watch: {
 		// eslint-disable-next-line func-names
-		'$root.params.pages': function (newValue, oldValue) {
-			const resetView = newValue.length !== oldValue.length;
-			this.loadImageInfo(resetView);
+		'$root.options.pages': function (newValue, oldValue) {
+			const resetViewer = newValue.length !== oldValue.length;
+			this.loadImageInfo(resetViewer);
 		},
 	},
 	methods: {
 		closeFilters() {
 			this.filtersVisible = false;
 		},
-		initViewer(resetView) {
-			const { params } = this.$root;
+		initViewer(resetViewer) {
+			const { options } = this.$root;
 
-			// TODO: All tile sources could be added at once (sequence mode)
-			// This requires the correct resolution to be present in the manifest, which is
-			// currently loaded from the info file since the former is unreliable.
+			// TODO: All tile sources could be added at once (sequence mode), but
+			// this required the correct resolution to be present in the manifest,
+			// which is currently loaded from the info file since the former is
+			// unreliable.
 			const tileSources = [];
 			let initialWidth = 0;
 			let tileSourceIndex;
 			let totalWidth = 0;
-			params.pages.forEach((page, index) => {
+
+			options.pages.forEach((page, index) => {
 				let opacity = 1;
 				if (page < 1) {
 					opacity = 0;
@@ -293,8 +294,8 @@ export default {
 
 			if (this.viewer) {
 				this.viewer.addOnceHandler('open', () => {
-					if (this.isReset || resetView) {
-						this.resetView();
+					if (this.isReset || resetViewer) {
+						this.resetViewer();
 					} else {
 						this.viewer.viewport.applyConstraints(true);
 
@@ -304,10 +305,10 @@ export default {
 							return;
 						}
 
-						const offsetX = (params.pages[0] ? 0 : 1);
+						const offsetX = (options.pages[0] ? 0 : 1);
 						this.viewer.viewport.panTo({
-							x: (bounds.x > 0 ? (bounds.width / 2) + offsetX : params.panX),
-							y: (bounds.y > 0 ? (bounds.height / 2) : params.panY),
+							x: (bounds.x > 0 ? (bounds.width / 2) + offsetX : options.panX),
+							y: (bounds.y > 0 ? (bounds.height / 2) : options.panY),
 						});
 					}
 				});
@@ -319,8 +320,8 @@ export default {
 			// https://openseadragon.github.io/examples/tilesource-iiif/
 			this.viewer = OpenSeadragon({
 				animationTime: .4,
-				id: 'tify-scan_image',
-				immediateRender: this.$root.options.immediateRender,
+				element: this.$refs.image,
+				immediateRender: true,
 				preload: !this.$root.isMobile(),
 				preserveImageSizeOnResize: true,
 				preserveViewport: true,
@@ -328,18 +329,19 @@ export default {
 				showZoomControl: false,
 				tileSources,
 				visibilityRatio: .2,
+				...this.$root.options.openSeadragon,
 			});
 
 			this.viewer.gestureSettingsMouse.clickToZoom = false;
 
 			this.viewer.addHandler('animation-finish', () => {
 				if (this.isReset) {
-					this.removeScanParams();
+					this.removeScanOptions();
 					return;
 				}
 
 				const center = this.viewer.viewport.getCenter();
-				this.$root.updateParams({
+				this.$root.updateOptions({
 					// 3 decimals are sufficient, keeping URL short
 					panX: Math.round(center.x * 1e3) / 1e3,
 					panY: Math.round(center.y * 1e3) / 1e3,
@@ -356,30 +358,33 @@ export default {
 			this.viewer.addHandler('open', () => {
 				this.startLoadingWatch();
 
-				if (params.panX !== null && params.panY !== null) {
+				if (options.panX !== null && options.panY !== null) {
 					this.viewer.viewport.panTo({
-						x: params.panX,
-						y: params.panY,
+						x: options.panX,
+						y: options.panY,
 					}, true);
-					this.viewer.viewport.zoomTo(params.zoom, null, true);
+					this.viewer.viewport.zoomTo(options.zoom, null, true);
 				} else {
 					this.viewer.viewport.goHome();
 				}
 
-				if (params.rotation !== null) {
-					this.viewer.viewport.setRotation(params.rotation);
+				if (options.rotation !== null) {
+					this.viewer.viewport.setRotation(options.rotation);
 				}
 			});
 
 			this.viewer.addHandler('tile-load-failed', (error) => {
 				this.$root.error = `Error loading image: ${error.message}`;
 			});
+
+			this.$root.expose(this.viewer, 'viewer');
+			this.$root.expose(this.resetViewer);
 		},
-		loadImageInfo(resetView = false) {
+		loadImageInfo(resetViewer = false) {
 			this.stopLoadingWatch();
 
 			const infoPromises = [];
-			this.$root.params.pages.forEach((page) => {
+			this.$root.options.pages.forEach((page) => {
 				if (page < 1 || this.tileSources[page]) {
 					return;
 				}
@@ -388,7 +393,7 @@ export default {
 				if (resource.service) {
 					const id = resource.service['@id'];
 					const infoUrl = `${id}${id.slice(-1) === '/' ? '' : '/'}info.json`;
-					infoPromises.push(httpClient.get(infoUrl).then((response) => ({ ...response, page }), (error) => {
+					infoPromises.push(this.$http.get(infoUrl).then((response) => ({ ...response, page }), (error) => {
 						let status;
 						if (error.response && error.response.statusText) {
 							status = error.response.statusText;
@@ -414,120 +419,13 @@ export default {
 							this.tileSources[response.page] = response.data;
 						}
 					});
-					this.initViewer(resetView);
+					this.initViewer(resetViewer);
 				});
 			} else {
-				this.initViewer(resetView);
+				this.initViewer(resetViewer);
 			}
 		},
-		propagateKeyPress(event) {
-			if (event.target.className.indexOf('openseadragon') === 0) {
-				return;
-			}
-
-			const canvas = this.$refs.image.querySelector('.openseadragon-canvas');
-			if (!canvas) {
-				return;
-			}
-
-			const canvasEvent = new event.constructor(event.type, event);
-
-			// Chrome fix: OpenSeadragon evaluates keyCode
-			Object.defineProperty(canvasEvent, 'keyCode', {
-				get() {
-					return event.keyCode;
-				},
-			});
-
-			canvas.dispatchEvent(canvasEvent);
-		},
-		resetFilters() {
-			this.$refs.image.style.cssText = '';
-			this.$root.updateParams({ filters: {} });
-		},
-		removeScanParams() {
-			this.$root.updateParams({
-				panX: null,
-				panY: null,
-				zoom: null,
-			});
-		},
-		resetView(event) {
-			if (event && event.shiftKey) {
-				// Rotation has to be reset before pan and zoom
-				this.viewer.viewport.setRotation(0);
-				this.$root.updateParams({ rotation: null });
-				if (this.filtersActive) {
-					this.resetFilters();
-				}
-			}
-
-			this.viewer.viewport.goHome();
-			this.removeScanParams();
-		},
-		rotateRight(event) {
-			const { viewport } = this.viewer;
-			const degrees = (event && event.shiftKey) ? 0 : (viewport.getRotation() + 90) % 360;
-			viewport.setRotation(degrees);
-			this.$root.updateParams({ rotation: degrees || null });
-		},
-		setFilter(name, event) {
-			const value = event.target.valueAsNumber;
-			if (value === 1) {
-				this.$delete(this.$root.params.filters, name);
-			} else {
-				this.$set(this.$root.params.filters, name, value);
-			}
-			this.$root.updateParams({ filters: this.$root.params.filters });
-			this.updateFilterStyle();
-		},
-		startLoadingWatch() {
-			let loading = 0;
-			for (let i = this.viewer.world.getItemCount() - 1; i >= 0; i -= 1) {
-				const image = this.viewer.world.getItemAt(i);
-				// eslint-disable-next-line no-underscore-dangle
-				if (image && image._tilesLoading) {
-					loading = 1;
-				}
-			}
-			this.$root.loading = loading;
-
-			// TODO: A timeout instead of a proper event handler? Abomination! That's because
-			// neither getFullyLoaded() nor the fully-loaded-change event are working for images
-			// that are not currently within canvas bounds. OpenSeadragon, get your shit
-			// together, and add a global fully-loaded event, not just for each TiledImage.
-			this.loadingTimeout = setTimeout(this.startLoadingWatch, 200);
-		},
-		stopLoadingWatch() {
-			clearTimeout(this.loadingTimeout);
-		},
-		updateFilterStyle() {
-			if (!this.filtersActive || !this.cssFiltersSupported) {
-				return;
-			}
-
-			const filters = [];
-			Object.keys(this.$root.params.filters).forEach((key) => {
-				filters.push(`${key}(${this.$root.params.filters[key]})`);
-			});
-
-			const { image } = this.$refs;
-			const filterString = filters.join(' ');
-
-			image.style.cssText = vendorPrefixes.join(`filter:${filterString};`);
-		},
-		zoomIn() {
-			this.viewer.viewport.zoomBy(this.zoomFactor);
-		},
-		zoomOut() {
-			this.viewer.viewport.zoomBy(1 / this.zoomFactor);
-		},
-	},
-	mounted() {
-		this.loadImageInfo();
-		this.updateFilterStyle();
-
-		window.addEventListener('keydown', (event) => {
+		onKeydown(event) {
 			if (event.key === 'Escape') {
 				this.filtersVisible = false;
 			}
@@ -540,11 +438,10 @@ export default {
 			];
 
 			if (event.shiftKey && zeroKeyCodes.indexOf(event.keyCode) > -1) {
-				this.resetView(event);
+				this.resetViewer(event);
 			}
-		});
-
-		window.addEventListener('keypress', (event) => {
+		},
+		onKeypress(event) {
 			if (this.preventKeyboardEvent(event)) {
 				return;
 			}
@@ -568,10 +465,124 @@ export default {
 				break;
 			}
 			default:
-				// Send to OpenSeadragon
-				this.propagateKeyPress(event);
+				// Send keypress event to OpenSeadragon
+				this.propagateKeypress(event);
 			}
-		});
+		},
+		propagateKeypress(event) {
+			if (event.target.className.indexOf('openseadragon') === 0) {
+				return;
+			}
+
+			const canvas = this.$refs.image.querySelector('.openseadragon-canvas');
+			if (!canvas) {
+				return;
+			}
+
+			const canvasEvent = new event.constructor(event.type, event);
+
+			// Chrome fix: OpenSeadragon evaluates keyCode
+			Object.defineProperty(canvasEvent, 'keyCode', {
+				get() {
+					return event.keyCode;
+				},
+			});
+
+			canvas.dispatchEvent(canvasEvent);
+		},
+		resetFilters() {
+			this.$refs.image.style.cssText = '';
+			this.$root.updateOptions({ filters: {} });
+		},
+		removeScanOptions() {
+			this.$root.updateOptions({
+				panX: null,
+				panY: null,
+				zoom: null,
+			});
+		},
+		resetViewer(includingFiltersAndRotation) {
+			if (includingFiltersAndRotation) {
+				// Rotation has to be reset before pan and zoom
+				this.viewer.viewport.setRotation(0);
+				this.$root.updateOptions({ rotation: null });
+				if (this.filtersActive) {
+					this.resetFilters();
+				}
+			}
+
+			this.viewer.viewport.goHome();
+			this.removeScanOptions();
+		},
+		rotateRight(event) {
+			const { viewport } = this.viewer;
+			const degrees = (event && event.shiftKey) ? 0 : (viewport.getRotation() + 90) % 360;
+			viewport.setRotation(degrees);
+			this.$root.updateOptions({ rotation: degrees || null });
+		},
+		setFilter(name, event) {
+			const value = event.target.valueAsNumber;
+			if (value === 1) {
+				this.$delete(this.$root.options.filters, name);
+			} else {
+				this.$set(this.$root.options.filters, name, value);
+			}
+			this.$root.updateOptions({ filters: this.$root.options.filters });
+			this.updateFilterStyle();
+		},
+		startLoadingWatch() {
+			let loading = 0;
+			for (let i = this.viewer.world.getItemCount() - 1; i >= 0; i -= 1) {
+				const image = this.viewer.world.getItemAt(i);
+				// eslint-disable-next-line no-underscore-dangle
+				if (image && image._tilesLoading) {
+					loading = 1;
+				}
+			}
+			this.$root.loading = loading;
+
+			// TODO: A timeout instead of a proper event handler? Abomination!
+			// That's because neither getFullyLoaded() nor the fully-loaded-change
+			// event are working for images that are not currently within canvas
+			// bounds. OpenSeadragon, get your shit together, and add a global
+			// fully-loaded event, not just for each TiledImage.
+			this.loadingTimeout = setTimeout(this.startLoadingWatch, 200);
+		},
+		stopLoadingWatch() {
+			clearTimeout(this.loadingTimeout);
+		},
+		updateFilterStyle() {
+			if (!this.filtersActive || !this.cssFiltersSupported) {
+				return;
+			}
+
+			const filters = [];
+			Object.keys(this.$root.options.filters).forEach((key) => {
+				filters.push(`${key}(${this.$root.options.filters[key]})`);
+			});
+
+			const { image } = this.$refs;
+			const filterString = filters.join(' ');
+
+			image.style.cssText = vendorPrefixes.join(`filter:${filterString};`);
+		},
+		zoomIn() {
+			this.viewer.viewport.zoomBy(this.zoomFactor);
+		},
+		zoomOut() {
+			this.viewer.viewport.zoomBy(1 / this.zoomFactor);
+		},
+	},
+	mounted() {
+		this.loadImageInfo();
+		this.updateFilterStyle();
+
+		window.addEventListener('keydown', this.onKeydown);
+		window.addEventListener('keypress', this.onKeypress);
+	},
+	beforeDestroy() {
+		window.removeEventListener('keydown', this.onKeydown);
+		window.removeEventListener('keypress', this.onKeypress);
 	},
 };
 </script>

@@ -7,7 +7,7 @@ describe('PageSelect', () => {
 	const vm = new Vue(PageSelect);
 	vm.$root.manifest = manifest;
 	vm.$root.canvases = manifest.sequences[0].canvases;
-	vm.$root.params = { pages: [1] };
+	vm.$root.options = { pages: [1] };
 
 	vm.$root.convertValueToArray = (value) => [value];
 

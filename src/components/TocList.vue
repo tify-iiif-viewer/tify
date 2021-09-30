@@ -13,16 +13,16 @@
 			<button
 				v-if="structure.childStructures"
 				class="tify-toc_toggle"
-				:title="$options.filters.trans(expandedStructures[index] ? 'Collapse' : 'Expand')"
+				:title="$root.translate(expandedStructures[index] ? 'Collapse' : 'Expand')"
 				@click="toggleChildren(index)"
 			>
 				<template v-if="expandedStructures[index]">
 					<icon name="remove"/>
-					<span class="tify-sr-only">{{ 'Collapse'|trans }}</span>
+					<span class="tify-sr-only">{{ $root.translate('Collapse') }}</span>
 				</template>
 				<template v-else>
 					<icon name="add"/>
-					<span class="tify-sr-only">{{ 'Expand'|trans }}</span>
+					<span class="tify-sr-only">{{ $root.translate('Expand') }}</span>
 				</template>
 			</button>
 
@@ -30,11 +30,11 @@
 				v-if="purpose === 'pdf'"
 				class="tify-toc_link"
 				download
-				:href="getLabels(structure.rendering)[0]['@id']"
+				:href="$root.convertValueToArray(structure.rendering)[0]['@id']"
 			>
 				<i class="tify-badge">PDF</i>
 				{{ structure.label }}
-				({{ structure.pageCount }}&nbsp;{{ (structure.pageCount === 1 ? 'page' : 'pages')|trans }})
+				({{ structure.pageCount }}&nbsp;{{ $root.translate(structure.pageCount === 1 ? 'page' : 'pages') }})
 			</a>
 			<a
 				v-else
@@ -74,13 +74,13 @@ export default {
 	},
 	methods: {
 		checkIfPagesInStructure(structure) {
-			const { pages } = this.$root.params;
+			const { pages } = this.$root.options;
 			return pages.some((page) => page >= structure.firstPage && page <= structure.lastPage);
 		},
 		setPage(page) {
 			this.$root.setPage(page);
 			if (this.$root.isMobile()) {
-				this.$root.updateParams({ view: 'scan' });
+				this.$root.updateOptions({ view: 'scan' });
 			}
 		},
 		toggleAllChildren(expanded = null) {
@@ -108,9 +108,6 @@ export default {
 			} else {
 				this.$set(this.expandedStructures, index, false);
 			}
-		},
-		getLabels(value) {
-			return this.$root.convertValueToArray(value);
 		},
 	},
 };

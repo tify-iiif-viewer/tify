@@ -1,13 +1,13 @@
 <template>
 	<section class="tify-toc">
-		<h2 class="tify-sr-only">{{ 'Table of Contents'|trans }}</h2>
+		<h2 class="tify-sr-only">{{ $root.translate('Table of Contents') }}</h2>
 
 		<div v-if="hasChildStructures" class="tify-toc_header">
 			<button class="tify-toc_toggle-all" @click="$refs.children.toggleAllChildren(true)">
-				{{ 'Expand all'|trans }}
+				{{ $root.translate('Expand all') }}
 			</button>
 			<button class="tify-toc_toggle-all" @click="$refs.children.toggleAllChildren(false)">
-				{{ 'Collapse all'|trans }}
+				{{ $root.translate('Collapse all') }}
 			</button>
 		</div>
 
@@ -54,11 +54,11 @@ export default {
 	},
 	watch: {
 		// eslint-disable-next-line func-names
-		'$root.params.pages': function () {
+		'$root.options.pages': function () {
 			this.$nextTick(() => this.updateScrollPos(currentSelector));
 		},
 		// eslint-disable-next-line func-names
-		'$root.params.view': function (view) {
+		'$root.options.view': function (view) {
 			if (view === 'toc') {
 				this.init();
 			}
@@ -66,7 +66,7 @@ export default {
 	},
 	mounted() {
 		// TOC is expensive, so render it only when required
-		if (this.$root.params.view === 'toc') {
+		if (this.$root.options.view === 'toc') {
 			this.init();
 		}
 	},

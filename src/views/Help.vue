@@ -1,36 +1,30 @@
 <template>
 	<section class="tify-help">
-		<h2 class="tify-sr-only">{{ 'Help'|trans }}</h2>
+		<h2 class="tify-sr-only">{{ $root.translate('Help') }}</h2>
 
 		<div class="tify-help_section -about">
-			<h3>{{ 'About TIFY'|trans }}</h3>
+			<h3>{{ $root.translate('About TIFY') }}</h3>
 			<p>
-				TIFY is a slim and mobile-friendly IIIF document viewer,
-				released under the GNU Affero General Public License 3.0.
+				{{ $root.translate(infoText) }}
 			</p>
 			<p>
-				Version {{ env.VUE_APP_VERSION }}
+				{{ $root.translate('Version') }} {{ env.VUE_APP_VERSION }}
 			</p>
 			<ul>
 				<li>
-					<a :href="env.VUE_APP_DOCS_URL">Documentation</a>
+					<a :href="env.VUE_APP_DOCS_URL">{{ $root.translate('Documentation') }}</a>
 				</li>
 				<li>
-					<a :href="env.VUE_APP_REPOSITORY_URL">Source code</a>
+					<a :href="env.VUE_APP_REPOSITORY_URL">{{ $root.translate('Source code') }}</a>
 				</li>
 				<li>
-					<a :href="env.VUE_APP_CONTRIBUTORS_URL">Contributors</a>
+					<a :href="env.VUE_APP_CONTRIBUTORS_URL">{{ $root.translate('Contributors') }}</a>
 				</li>
 			</ul>
 			<p>
-				<a :href="env.VUE_APP_BUGS_URL">Report a bug</a>
+				<a :href="env.VUE_APP_BUGS_URL">{{ $root.translate('Report a bug') }}</a>
 			</p>
-			<p>
-				Copyright &copy; 2017&ndash;2021
-				<a href="https://www.uni-goettingen.de/en/">Göttingen University</a>
-				/
-				<a href="https://www.sub.uni-goettingen.de/en/">Göttingen State and University Library</a>
-			</p>
+			<p v-html="$root.translate(copyright)"/>
 		</div>
 	</section>
 </template>
@@ -38,8 +32,17 @@
 <script>
 export default {
 	computed: {
+		copyright() {
+			return 'Copyright &copy; 2017&ndash;2021'
+				+ ' <a href="https://www.uni-goettingen.de/en/">Göttingen University</a>'
+				+ ' / <a href="https://www.sub.uni-goettingen.de/en/">Göttingen State and University Library</a>';
+		},
 		env() {
 			return process.env;
+		},
+		infoText() {
+			return 'TIFY is a slim and mobile-friendly IIIF document viewer'
+				+ ', released under the GNU Affero General Public License 3.0.';
 		},
 	},
 };

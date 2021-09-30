@@ -1,21 +1,23 @@
 <template>
 	<section class="tify-export">
-		<h2 class="tify-sr-only">{{ 'Export'|trans }}</h2>
+		<h2 class="tify-sr-only">{{ $root.translate('Export') }}</h2>
 
 		<div class="tify-export_section -links">
-			<h3>{{ 'Download Individual Images'|trans }}</h3>
+			<h3>{{ $root.translate('Download Individual Images') }}</h3>
 			<ul>
 				<li :key="page" v-for="page in pages">
 					<!-- NOTE: The download attribute is only honored for same-origin URLs -->
 					<a :href="imageUrls[page]" :download="`${page}.jpg`">
-						{{ 'Page'|trans }} {{page}} : {{ getLabels($root.canvases[page - 1].label)[0] }}
+						{{ $root.translate('Page') }} {{page}}
+						:
+						{{ $root.convertValueToArray($root.canvases[page - 1].label)[0] }}
 					</a>
 				</li>
 			</ul>
 		</div>
 
 		<div v-if="$root.manifest.rendering" class="tify-export_section -renderings">
-			<h3>{{ 'Renderings'|trans }}</h3>
+			<h3>{{ $root.translate('Renderings') }}</h3>
 			<ul>
 				<li :key="item['@id']" v-for="item in $root.manifest.rendering">
 					<template v-if="/\.pdf$/i.test(item['@id'])">
@@ -35,8 +37,12 @@
 						class="tify-export_toggle"
 						@click="perElementPdfLinksVisible = !perElementPdfLinksVisible"
 				>
-					<template v-if="!perElementPdfLinksVisible">{{ 'PDFs for each element'|trans }}</template>
-					<template v-else>{{ 'Close PDF list'|trans }}</template>
+					<template v-if="!perElementPdfLinksVisible">
+						{{ $root.translate('PDFs for each element') }}
+					</template>
+					<template v-else>
+						{{ $root.translate('Close PDF list') }}
+					</template>
 				</button>
 				<div class="tify-export_toc" v-show="perElementPdfLinksVisible">
 					<toc-list
@@ -50,7 +56,7 @@
 		</div>
 
 		<div v-if="literatureItems.length" class="tify-export_section -literature">
-			<h3>{{ 'Literature Management'|trans }}</h3>
+			<h3>{{ $root.translate('Literature Management') }}</h3>
 			<ul>
 				<li :key="item['@id']" v-for="item in literatureItems">
 					<a :href="item['@id']" download>
@@ -61,11 +67,11 @@
 		</div>
 
 		<div class="tify-export_section -other">
-			<h3>{{ 'Other Formats'|trans }}</h3>
+			<h3>{{ $root.translate('Other Formats') }}</h3>
 			<ul>
 				<li>
 					<a :href="$root.manifestUrl" download="manifest.json">
-						{{ 'IIIF manifest'|trans }}
+						{{ $root.translate('IIIF manifest') }}
 					</a>
 				</li>
 				<li :key="item['@id']" v-for="item in otherItems">
@@ -125,14 +131,9 @@ export default {
 			perElementPdfLinksVisible: false,
 		};
 	},
-	methods: {
-		getLabels(value) {
-			return this.$root.convertValueToArray(value);
-		},
-	},
 	computed: {
 		pages() {
-			return this.$root.params.pages.filter((page) => page > 0);
+			return this.$root.options.pages.filter((page) => page > 0);
 		},
 		hasElementPdfLinks() {
 			const { manifest } = this.$root;
@@ -148,7 +149,7 @@ export default {
 		},
 		imageUrls() {
 			const imageUrls = {};
-			this.$root.params.pages.forEach((page) => {
+			this.$root.options.pages.forEach((page) => {
 				if (!page) {
 					return;
 				}

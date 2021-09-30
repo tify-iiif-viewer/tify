@@ -1,13 +1,13 @@
 <template>
 	<section class="tify-thumbnails" @scroll="redrawThumbnails">
-		<h2 class="tify-sr-only">{{ 'Pages'|trans }}</h2>
+		<h2 class="tify-sr-only">{{ $root.translate('Pages') }}</h2>
 
 		<div class="tify-thumbnails_list" ref="container">
 			<a
 				v-for="item in items"
 				class="tify-thumbnails_item"
 				href=""
-				:class="{ '-current': $root.params.pages.indexOf(item.page) > -1 }"
+				:class="{ '-current': $root.options.pages.indexOf(item.page) > -1 }"
 				:key="item.page"
 				@click.prevent="setPageAndSwitchView(item.page, $event.ctrlKey)"
 				@touchstart="touchStartTogglePage(item.page)"
@@ -15,7 +15,7 @@
 			>
 				<img alt="" :src="item.imgUrl">
 				<span class="tify-thumbnails_page">
-					{{ item.page }} : {{ item.label }}
+					{{ $root.getPageLabel(item.page, item.label) }}
 				</span>
 			</a>
 		</div>
@@ -39,14 +39,15 @@ export default {
 			itemsPerRow: 0,
 			knownImages: [],
 			lastScrollTop: 0,
+			resizeTimeout: null,
 			style: {},
 			thumbnailWidth: 0,
-			touchTimer: null,
+			touchTimeout: null,
 		};
 	},
 	watch: {
 		// eslint-disable-next-line func-names
-		'$root.params.pages': function (pages) {
+		'$root.options.pages': function (pages) {
 			this.$nextTick(() => {
 				const currentSelector = '.tify-thumbnails_item.-current';
 				if (pages.length > 2 || (pages.length > 1 && pages[1] !== pages[0] + 1)) {
@@ -62,13 +63,31 @@ export default {
 			});
 		},
 		// eslint-disable-next-line func-names
-		'$root.params.view': function (view) {
+		'$root.options.view': function (view) {
 			if (view === 'thumbnails') {
 				this.updateDimensions();
 			}
 		},
 	},
 	methods: {
+		init() {
+			this.updateDimensions();
+			this.scrollToCurrentPage(false);
+
+			// Redraw thumbnails when the window is resized
+			window.addEventListener('resize', this.onResize);
+		},
+		onResize() {
+			clearTimeout(this.resizeTimeout);
+
+			this.resizeTimeout = setTimeout(() => {
+				if (this.$root.options.view !== 'thumbnails') {
+					return;
+				}
+
+				this.updateDimensions();
+			}, 200);
+		},
 		updateDimensions() {
 			const itemTemplate = this.$refs.container.querySelector('.tify-thumbnails_item');
 			const itemStyle = itemTemplate.currentStyle || window.getComputedStyle(itemTemplate);
@@ -88,23 +107,6 @@ export default {
 			this.redrawThumbnails();
 
 			this.scrollToCurrentPage(false);
-		},
-		init() {
-			this.updateDimensions();
-			this.scrollToCurrentPage(false);
-
-			// Redraw thumbnails when the window is resized
-			let resizeTimeout;
-			window.addEventListener('resize', () => {
-				clearTimeout(resizeTimeout);
-				resizeTimeout = setTimeout(() => {
-					if (this.$root.params.view !== 'thumbnails') {
-						return;
-					}
-
-					this.updateDimensions();
-				}, 200);
-			});
 		},
 		redrawThumbnails() {
 			const currentPos = this.$el.scrollTop;
@@ -145,7 +147,7 @@ export default {
 			});
 		},
 		scrollToCurrentPage(animated = true) {
-			const rowsBefore = Math.floor((this.$root.params.pages[0] - 1) / this.itemsPerRow);
+			const rowsBefore = Math.floor((this.$root.options.pages[0] - 1) / this.itemsPerRow);
 			const scrollPos = (rowsBefore * this.itemHeight) + (this.itemVMargin - 50);
 			if (animated) {
 				this.scrollTo(this.$el, scrollPos);
@@ -156,7 +158,7 @@ export default {
 		setPageAndSwitchView(page, multiple = false) {
 			if (multiple) {
 				// Using slice to get a clone instead of a reference
-				const pages = this.$root.params.pages.slice(0);
+				const pages = this.$root.options.pages.slice(0);
 				const index = pages.indexOf(page);
 				if (index < 0) {
 					// Page is not yet visible
@@ -172,18 +174,18 @@ export default {
 					pages.splice(index, 1);
 				}
 
-				this.$root.updateParams({ pages });
+				this.$root.updateOptions({ pages });
 				return;
 			}
 
 			this.$root.setPage(page);
 			if (this.$root.isMobile()) {
-				this.$root.updateParams({ view: 'scan' });
+				this.$root.updateOptions({ view: 'scan' });
 			}
 		},
 		touchStartTogglePage(page) {
 			this.lastScrollTop = this.$el.scrollTop;
-			this.touchTimer = setTimeout(
+			this.touchTimeout = setTimeout(
 				() => {
 					if (this.$el.scrollTop === this.lastScrollTop) {
 						this.setPageAndSwitchView(page, true);
@@ -193,16 +195,19 @@ export default {
 			);
 		},
 		touchEnd() {
-			clearTimeout(this.touchTimer);
+			clearTimeout(this.touchTimeout);
 		},
 	},
 	mounted() {
 		this.style.flex = this.$el.style.flex;
 
 		// Thumbnails are expensive, so render them only when required
-		if (this.$root.params.view === 'thumbnails') {
+		if (this.$root.options.view === 'thumbnails') {
 			this.init();
 		}
+	},
+	beforeDestroy() {
+		window.removeEventListener('resize', this.onResize);
 	},
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
 	<section class="tify-fulltext">
-		<h2 class="tify-sr-only">{{ 'Fulltext'|trans }}</h2>
+		<h2 class="tify-sr-only">{{ $root.translate('Fulltext') }}</h2>
 
 		<div v-if="fulltextAvailable" class="tify-fulltext_texts">
 			<template v-for="(page, index) in pages">
@@ -10,14 +10,12 @@
 			</template>
 		</div>
 		<div v-else class="tify-fulltext_none">
-			{{ 'Fulltext not available for this page'|trans }}
+			{{ $root.translate('Fulltext not available for this page') }}
 		</div>
 	</section>
 </template>
 
 <script>
-import httpClient from '@/services/http-client';
-
 export default {
 	data() {
 		return {
@@ -27,7 +25,7 @@ export default {
 	},
 	watch: {
 		// eslint-disable-next-line func-names
-		'$root.params.pages': function () {
+		'$root.options.pages': function () {
 			this.loadFulltexts();
 		},
 	},
@@ -36,7 +34,7 @@ export default {
 			this.fulltextAvailable = false;
 			this.fulltexts = [];
 
-			this.$root.params.pages.forEach((page) => {
+			this.$root.options.pages.forEach((page) => {
 				if (page < 1 || this.fulltexts[page]) {
 					return;
 				}
@@ -49,7 +47,7 @@ export default {
 				this.$set(this.fulltexts, page, []);
 
 				const annotationListUrl = canvas.otherContent[0]['@id'];
-				httpClient.get(annotationListUrl).then((response) => {
+				this.$http.get(annotationListUrl).then((response) => {
 					const { resources } = response.data;
 					if (!Array.isArray(resources)) {
 						return;
@@ -75,7 +73,7 @@ export default {
 			});
 		},
 		loadRemoteFulltext(page, index, url) {
-			httpClient.get(url).then((response2) => {
+			this.$http.get(url).then((response2) => {
 				const text = this.$root.filterHtml(response2.data);
 				if (text) {
 					this.fulltextAvailable = true;
@@ -93,7 +91,7 @@ export default {
 	},
 	computed: {
 		pages() {
-			return this.$root.params.pages.filter((page) => !!(page));
+			return this.$root.options.pages.filter((page) => !!(page));
 		},
 	},
 };

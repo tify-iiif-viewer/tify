@@ -10,6 +10,8 @@ export default {
 			return (this.$root.$el.offsetWidth < this.$root.$data.options.breakpoints.medium);
 		},
 		updateBreakpoint() {
+			// TODO: Add class if container height is below 480px and use in scan.scss
+
 			Object.keys(this.options.breakpoints).forEach((breakpoint) => {
 				if (this.$el.clientWidth <= this.options.breakpoints[breakpoint]) {
 					this.$el.classList.add(`-${breakpoint}`);
@@ -18,22 +20,13 @@ export default {
 				}
 			});
 		},
-		appendStylesheet(url) {
-			const link = document.createElement('link');
-			link.href = url;
-			link.rel = 'stylesheet';
-			document.head.appendChild(link);
-		},
 	},
 	mounted() {
-		if (this.options.stylesheet) {
-			this.appendStylesheet(this.options.stylesheet);
-		}
-
 		// Set current breakpoint as classes on container element for use in CSS
-		window.addEventListener('resize', () => {
-			this.updateBreakpoint();
-		});
 		this.updateBreakpoint();
+		window.addEventListener('resize', this.updateBreakpoint);
+	},
+	beforeDestroy() {
+		window.removeEventListener('resize', this.updateBreakpoint);
 	},
 };

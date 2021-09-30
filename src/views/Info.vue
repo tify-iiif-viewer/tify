@@ -1,22 +1,22 @@
 <template>
 	<section class="tify-info">
-		<h2 class="tify-sr-only">{{ 'Info'|trans }}</h2>
+		<h2 class="tify-sr-only">{{ $root.translate('Info') }}</h2>
 
 		<div v-if="manifest.label" class="tify-info_section -title">
-			<h3 class="tify-info_heading">{{ 'Title'|trans }}</h3>
-			<div :key="label" v-for="label in getLabels(manifest.label)">
+			<h3 class="tify-info_heading">{{ $root.translate('Title') }}</h3>
+			<div :key="label" v-for="label in $root.convertValueToArray(manifest.label)">
 				{{ label }}
 			</div>
 		</div>
 
 		<div v-if="manifest.metadata && manifest.metadata.length" class="tify-info_section -metadata">
-			<h3>{{ 'Metadata'|trans }}</h3>
+			<h3>{{ $root.translate('Metadata') }}</h3>
 			<metadata-list :metadata="manifest.metadata"/>
 		</div>
 
 		<div v-if="currentStructureLabel || currentStructureMetadata" class="tify-info_section -metadata -structure">
 			<h3>
-				{{ 'Current Element'|trans }}
+				{{ $root.translate('Current Element') }}
 			</h3>
 			<p v-if="currentStructureLabel" class="tify-info_structure">
 				{{ currentStructureLabel }}
@@ -29,15 +29,15 @@
 		</div>
 
 		<div v-if="manifest.description" class="tify-info_section -description">
-			<h3>{{ 'Description'|trans }}</h3>
+			<h3>{{ $root.translate('Description') }}</h3>
 			<div
 				:key="index"
-				v-for="(description, index) in getLabels(manifest.description)"
+				v-for="(description, index) in $root.convertValueToArray(manifest.description)"
 				v-html="description"/>
 		</div>
 
 		<div v-if="license.length" class="tify-info_section -license">
-			<h3>{{ 'License'|trans }}</h3>
+			<h3>{{ $root.translate('License') }}</h3>
 			<div :key="index" v-for="(item, index)  in license">
 				<template v-if="typeof item === 'string'">
 					<a v-if="isUrl(item)" :href="item">
@@ -59,7 +59,7 @@
 		</div>
 
 		<div v-if="related.length" class="tify-info_section -related">
-			<h3>{{ 'Related Resources'|trans }}</h3>
+			<h3>{{ $root.translate('Related Resources') }}</h3>
 			<div :key="index" v-for="(item, index)  in related">
 				<a v-if="typeof item === 'string'" :href="item">
 					{{ item }}
@@ -71,8 +71,8 @@
 		</div>
 
 		<div v-if="manifest.attribution" class="tify-info_section -attribution">
-			<h3>{{ 'Provided by'|trans }}</h3>
-			<div :key="index" v-for="(item, index) in getLabels(manifest.attribution)" v-html="item"/>
+			<h3>{{ $root.translate('Provided by') }}</h3>
+			<div :key="index" v-for="(item, index) in $root.convertValueToArray(manifest.attribution)" v-html="item"/>
 		</div>
 
 		<div v-if="manifest.logo" class="tify-info_section -logo">
@@ -102,7 +102,7 @@ export default {
 	],
 	computed: {
 		license() {
-			return this.manifest.license ? this.getLabels(this.manifest.license) : [];
+			return this.manifest.license ? this.$root.convertValueToArray(this.manifest.license) : [];
 		},
 		logoId() {
 			return (this.manifest.logo['@id'] ? this.manifest.logo['@id'] : this.manifest.logo);
@@ -111,7 +111,7 @@ export default {
 			return this.$root.manifest;
 		},
 		related() {
-			return this.manifest.related ? this.getLabels(this.manifest.related) : [];
+			return this.manifest.related ? this.$root.convertValueToArray(this.manifest.related) : [];
 		},
 	},
 	methods: {
@@ -122,13 +122,10 @@ export default {
 			// Poor man's URL check
 			return /^https?:\/\//.test(string);
 		},
-		getLabels(value) {
-			return this.$root.convertValueToArray(value);
-		},
 	},
 	watch: {
 		// eslint-disable-next-line func-names
-		'$root.params.view': function (view) {
+		'$root.options.view': function (view) {
 			if (view === 'info') {
 				if (!this.isInited) {
 					this.init();
@@ -137,7 +134,7 @@ export default {
 		},
 	},
 	mounted() {
-		if (this.$root.params.view === 'info') {
+		if (this.$root.options.view === 'info') {
 			this.init();
 		}
 	},

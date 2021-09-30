@@ -1,51 +1,62 @@
 export default {
+	data() {
+		return {
+			urlUpdateTimeout: null,
+		};
+	},
+	mounted() {
+		this.expose(this.setPage);
+	},
 	methods: {
-		getParams() {
+		updateOptionsFromUrlQuery() {
 			let params = {};
+
 			try {
-				params = JSON.parse(this.getQueryParam('tify')) || {};
+				params = JSON.parse(this.getQueryParam(this.$root.options.urlQueryKey)) || {};
 			} catch (e) {
 				// Nothing to do here
 			}
 
 			// NOTE: params.view can be an empty string (showing only the scan on large screens)
-			if (this.$root.isMobile() && !params.view) {
+			if (params.view === '' && this.$root.isMobile()) {
 				params.view = 'scan';
-			} else if (typeof params.view === 'undefined') {
-				params.view = 'info';
 			}
 
-			let pages;
-
-			if (this.isValidPagesArray(params.pages)) {
-				// eslint-disable-next-line prefer-destructuring
-				pages = params.pages;
-			} else {
-				if (params.pages) {
-					this.$root.error = 'Invalid pages, reset to first page';
-				}
-
-				pages = [1];
+			if (params.pages && !this.isValidPagesArray(params.pages)) {
+				this.$root.error = 'Invalid pages, reset to first page';
+				params.pages = [1];
 			}
 
-			return {
-				filters: params.filters || {},
-				pages,
-				panX: parseFloat(params.panX) || null,
-				panY: parseFloat(params.panY) || null,
-				rotation: parseInt(params.rotation, 10) || null,
-				view: params.view,
-				zoom: parseFloat(params.zoom) || null,
-			};
+			this.options.filters = params.filters || this.options.filters;
+			this.options.pages = params.pages || this.options.pages;
+			this.options.panX = parseFloat(params.panX) || this.options.panX;
+			this.options.panY = parseFloat(params.panY) || this.options.panY;
+			this.options.rotation = parseInt(params.rotation, 10) || this.options.rotation;
+			this.options.view = params.view || params.view === ''
+				? params.view
+				: this.options.view;
+			this.options.zoom = parseFloat(params.zoom) || this.options.zoom;
 		},
-		setPage(page) {
-			const { pages } = this.params;
-			if (pages[0] % 2 < 1 && (pages[1] === pages[0] + 1 || pages[1] === 0)) {
-				const newPage = (page % 2 > 0 ? page - 1 : page);
-				this.updateParams({ pages: [newPage, newPage === this.pageCount ? 0 : newPage + 1] });
-				return;
+		setPage(pageOrPages) {
+			let pages = pageOrPages;
+			if (!Array.isArray(pageOrPages)) {
+				pages = [pageOrPages];
 			}
-			this.updateParams({ pages: [page] });
+
+			if (!this.isValidPagesArray(pages)) {
+				throw new RangeError('Invalid pages');
+			}
+
+			if (pages.length === 1
+				&& this.options.pages[0] % 2 < 1
+				&& (this.options.pages[1] === this.options.pages[0] + 1 || this.options.pages[1] === 0)
+			) {
+				const p = pages[0] % 2 > 0 ? pages[0] - 1 : pages[0];
+				pages = [p, p === this.pageCount ? 0 : p + 1];
+			}
+
+			this.updateOptions({ pages });
+			return pages;
 		},
 		getQueryParam(name) {
 			const match = RegExp(`[?&]${name}=([^&]*)`).exec(window.location.search);
@@ -56,15 +67,13 @@ export default {
 				return false;
 			}
 
-			// Check for duplicates
+			// Checking for duplicates
 			if ((new Set(pages)).size !== pages.length) {
 				return false;
 			}
 
-			for (let i = 0; i < pages.length; i += 1) {
-				if (
-					// eslint-disable-next-line no-restricted-globals
-					isNaN(pages[i])
+			for (let i = 0, len = pages.length; i < len; i += 1) {
+				if (!Number.isInteger(pages[i])
 					|| (i > 0 && pages[i] > 0 && pages[i] <= pages[i - 1])
 					|| pages[i] < 0
 					|| pages[i] > this.pageCount
@@ -73,43 +82,46 @@ export default {
 
 			return true;
 		},
-		updateParams(params) {
-			Object.assign(this.params, params);
+		updateOptions(options) {
+			Object.assign(this.options, options);
 
 			if (!window.history) {
 				return;
 			}
 
-			clearTimeout(this.paramsTimeout);
-			this.paramsTimeout = setTimeout(() => {
-				const storedParams = {};
-				Object.keys(this.params).forEach((key) => {
-					const param = this.params[key];
-					if (
-						param === null
-						|| (key === 'pages' && param.length < 2 && param[0] < 2)
-						|| (typeof param === 'object' && !Object.keys(param).length)
-					) {
-						delete storedParams[key];
+			if (this.$root.options.urlQueryKey) {
+				clearTimeout(this.urlUpdateTimeout);
+
+				this.urlUpdateTimeout = setTimeout(() => {
+					const storedOptions = {};
+					this.options.paramsStoredInUrlQuery.forEach((key) => {
+						const param = this.options[key];
+						if (
+							param === null
+							|| (key === 'pages' && param.length < 2 && param[0] < 2)
+							|| (typeof param === 'object' && !Object.keys(param).length)
+						) {
+							delete storedOptions[key];
+						} else {
+							storedOptions[key] = this.options[key];
+						}
+					});
+
+					const regex = new RegExp(`([?&])${this.$root.options.urlQueryKey}=.*?(&|$)`);
+					const query = `${this.$root.options.urlQueryKey}=${JSON.stringify(storedOptions)}`;
+					const uri = window.location.href;
+					const newUrl = uri.match(regex)
+						? uri.replace(regex, `$1${query}$2`)
+						: `${uri}${uri.indexOf('?') < 0 ? '?' : '&'}${query}`;
+
+					if (options.pages) {
+						this.error = '';
+						window.history.pushState({}, '', newUrl);
 					} else {
-						storedParams[key] = this.params[key];
+						window.history.replaceState({}, '', newUrl);
 					}
-				});
-
-				const regex = /([?&])tify=.*?(&|$)/;
-				const tifyParams = `tify=${JSON.stringify(storedParams)}`;
-				const uri = window.location.href;
-				const newUrl = uri.match(regex)
-					? uri.replace(regex, `$1${tifyParams}$2`)
-					: `${uri}${uri.indexOf('?') < 0 ? '?' : '&'}${tifyParams}`;
-
-				if (params.pages) {
-					this.error = '';
-					window.history.pushState({}, '', newUrl);
-				} else {
-					window.history.replaceState({}, '', newUrl);
-				}
-			}, 100);
+				}, 100);
+			}
 		},
 	},
 };

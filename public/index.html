@@ -1,20 +1,28 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>TIFY</title>
-	</head>
-	<body>
-		<div id="tify"></div>
-		<script>
-			var matches = window.location.search.match(/(\?|&)language\=([^&]*)/);
-			var language = (matches && matches.length === 3 ? matches[2] : null);
-			if (language) {
-				tifyOptions = {
-					language: language,
-				};
-			}
-		</script>
-	</body>
-</html>
+<html lang="en">
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIFY</title>
+
+<div id="tify" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;"></div>
+<script>
+	window.addEventListener('load', function () {
+		const options = {
+			container: '#tify',
+			urlQueryKey: 'tify',
+		};
+
+		const matches = window.location.search.match(/(\?|&)language\=([^&]*)/);
+		const language = matches && matches.length === 3 ? matches[2] : null;
+
+		if (language) {
+			options.language = language;
+		}
+
+		window.tify = new Tify(options);
+
+		console.log('%cHi there! Glad you want to learn more about TIFY. Check out https://github.com/tify-iiif-viewer/tify or have at look at the current instance:', 'color: #09f')
+		console.log(tify);
+	})
+</script>
