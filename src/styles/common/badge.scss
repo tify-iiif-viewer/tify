@@ -2,11 +2,15 @@
 	background: $link-color;
 	border-radius: $br;
 	color: #fff;
-	display: inline-block;
+	float: left;
 	font-size: .6875em;
 	font-style: normal;
 	font-weight: bold;
 	line-height: 1;
+	margin: 5px .5em 0 0;
 	padding: g(.125);
-	vertical-align: middle;
+
+	.tify-toc_link & {
+		margin-top: 2px;
+	}
 }

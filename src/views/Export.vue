@@ -19,8 +19,10 @@
 			<ul>
 				<li :key="item['@id']" v-for="item in $root.manifest.rendering">
 					<template v-if="/\.pdf$/i.test(item['@id'])">
-						<i class="tify-badge" v-if="/\.pdf$/i.test(item['@id'])">PDF</i>
-						<a :href="item['@id']" download>{{ item.label }}</a>
+						<a :href="item['@id']" download>
+							<i class="tify-badge" v-if="/\.pdf$/i.test(item['@id'])">PDF</i>
+							{{ item.label }}
+						</a>
 					</template>
 					<template v-else>
 						<a :href="item['@id']">{{ item.label }}</a>
