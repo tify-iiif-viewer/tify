@@ -18,9 +18,9 @@
 	const tify = new Tify()
 	```
 - Renamed or changed options:
-	- `manifest` has been renamed to `manifestUrl` with unchanged behavior.
-	- `title` has been replaced by `titleAffix`, which now includes the separator (`|`).
-- Removed options:
-	- `immediateRender` (use `viewer.immediateRender` instead if needed)
+	- `immediateRender` has been replaced with `viewer.immediateRender`.
+	- `manifest` has been renamed to `manifestUrl`.
+	- `title` has been replaced with `titleAffix`, which now includes the separator characters (` | `).
+- Removed options (ignored if set):
 	- `init`
 	- `stylesheet`
