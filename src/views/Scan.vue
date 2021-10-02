@@ -581,6 +581,8 @@ export default {
 		window.addEventListener('keypress', this.onKeypress);
 	},
 	beforeDestroy() {
+		this.viewer.destroy();
+
 		window.removeEventListener('keydown', this.onKeydown);
 		window.removeEventListener('keypress', this.onKeypress);
 	},
