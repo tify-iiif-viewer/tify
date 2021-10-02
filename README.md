@@ -82,59 +82,63 @@ new Tify({
 
 With the exception of `mount`, all API functions are only available after TIFY has been mounted.
 
-There is no API function to replace the manifest; just create a new instance.
+There is no API function to load a new manifest; just replace the instance.
 
-### `mount`
+- ### `destroy`
 
-Mounts TIFY into the `container` element.
+	Destroys the current instance and removes event listeners. If you are using TIFY in an SPA, this should be called every time a page containing TIFY is unmounted to avoid memory leaks.
 
-Parameters:
-- `container` (string or HTMLElement): CSS selector pointing to a single HTML node or the node itself.
+- ### `mount`
 
-### `resetViewer`
+	Mounts TIFY.
 
-Resets the viewer display options.
+	Parameters:
+	- `container` (string or HTMLElement): CSS selector pointing to a single HTML node or the node itself into which TIFY is mounted.
 
-Parameters:
-- `includingFiltersAndRotation` (boolean): By default, only pan and zoom are reset. Set to `true` to also reset image filters and rotation.
+- ### `resetViewer`
 
-### `setPage`
+	Resets the viewer display options.
 
-Changes the active page or pages.
+	Parameters:
+	- `includingFiltersAndRotation` (boolean): By default, only pan and zoom are reset. Set to `true` to also reset image filters and rotation.
 
-Parameters:
-- `pageOrPages` (number or array of numbers): Provide a number to display a single page or an array of numbers to display multiple pages at once. If the number (or any of the numbers in the array) is smaller than `1` or greater than the number of pages in the document, the command is ignored.
+- ### `setPage`
 
-Returns an array of the current pages or `false` if `pageOrPages` is invalid.
+	Changes the active page or pages.
 
-### `setLanguage`
+	Parameters:
+	- `pageOrPages` (1-based integer or array thereof): Provide a number to display a single page or an array of numbers to display multiple pages at once. If the number (or any of the numbers in the array) is smaller than `1` or greater than the number of pages in the document, the command is ignored.
 
-Changes the frontend language and loads the associated translation.
+	Returns an array of the current pages or `false` if `pageOrPages` is invalid.
 
-Parameters:
-- `language` (string, default `en`): The language code to load.  A JSON file containing the translations for this language must be present in `public/translations`. Strings with missing translation are displayed in English.
+- ### `setLanguage`
 
-### `toggleDoublePage`
+	Changes the frontend language and loads the associated translation.
 
-Switches from single to double page (“book view”) and vice versa.
+	Parameters:
+	- `language` (string, default `en`): The language code to load.  A JSON file containing the translations for this language must be present in `public/translations`. Strings with missing translation are displayed in English.
 
-Parameters:
-- `force` (boolean, default `false`): Double page is forced on (`true`) or off (`false`).
+- ### `toggleDoublePage`
 
-### `toggleFullscreen`
+	Switches from single to double page (“book view”) and vice versa.
 
-Toggles fullscreen mode.
+	Parameters:
+	- `force` (boolean, default `false`): Double page is forced on (`true`) or off (`false`).
 
-Parameters:
-- `force` (boolean, default `false`): Fullscreen is forced on (`true`) or off (`false`).
+- ### `toggleFullscreen`
 
-### `toggleView`
+	Toggles fullscreen mode.
 
-Changes the active view.
+	Parameters:
+	- `force` (boolean, default `false`): Fullscreen is forced on (`true`) or off (`false`).
 
-Parameters:
-- `name` (string): The name of view to toggle; `export`, `fulltext`, `help`, `info`, `scan` (only has effect on mobile), `thumbnails`, or `toc`.
-- `force` (boolean, default `undefined`): Force the view on (`true`) or off (`false`).
+- ### `toggleView`
+
+	Changes the active view.
+
+	Parameters:
+	- `name` (string): The name of view to toggle; `export`, `fulltext`, `help`, `info`, `scan` (only has effect on mobile), `thumbnails`, or `toc`.
+	- `force` (boolean, default `undefined`): Force the view on (`true`) or off (`false`).
 
 
 ### OpenSeadragon API
