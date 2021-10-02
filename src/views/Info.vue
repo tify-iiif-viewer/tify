@@ -70,6 +70,11 @@
 			</div>
 		</div>
 
+		<div class="tify-info_section -manifest">
+			<h3>{{ $root.translate('IIIF Manifest URL') }}</h3>
+			<a :href="this.$root.manifestUrl">{{ this.$root.manifestUrl }}</a>
+		</div>
+
 		<div v-if="manifest.attribution" class="tify-info_section -attribution">
 			<h3>{{ $root.translate('Provided by') }}</h3>
 			<div :key="index" v-for="(item, index) in $root.convertValueToArray(manifest.attribution)" v-html="item"/>
