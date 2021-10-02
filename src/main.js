@@ -76,9 +76,9 @@ window.Tify = function Tify(options = {}) {
 			};
 		},
 		mixins: [
-			uiMixin,
-			paramsMixin,
 			iiifMixin,
+			paramsMixin,
+			uiMixin,
 		],
 		computed: {
 			canvases() {
@@ -125,6 +125,11 @@ window.Tify = function Tify(options = {}) {
 		containerEl.innerHTML = '';
 		containerEl.appendChild(el);
 		this.app.$mount(el);
+	};
+
+	// TODO: Add test
+	this.destroy = () => {
+		this.app.$destroy();
 	};
 
 	if (this.options.container) {
