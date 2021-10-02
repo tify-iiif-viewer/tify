@@ -71,7 +71,7 @@
 		</div>
 
 		<div class="tify-info_section -manifest">
-			<h3>{{ $root.translate('IIIF Manifest URL') }}</h3>
+			<h3>{{ $root.translate('IIIF Manifest') }}</h3>
 			<a :href="this.$root.manifestUrl">{{ this.$root.manifestUrl }}</a>
 		</div>
 
