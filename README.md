@@ -6,7 +6,7 @@
 
 TIFY is a slim and mobile-friendly IIIF document viewer built with [Vue.js](https://vuejs.org/).
 
-[Check out the demo](https://demo.tify.rocks/demo.html?manifest=https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN857449303/manifest) and feel free to load your own manifests by changing the URL.
+[Check out the website for usage examples.](https://tify.rocks/)
 
 ## Embedding TIFY
 
@@ -19,24 +19,22 @@ npm install tify
 To embed TIFY into your website:
 
 1. Copy the contents of the `dist` directory to your server.
-2. Add an HTML element serving as the container, which should have the following CSS applied:
-	- `position: relative` or `position: absolute`
-	- `width` and `height`
+2. Add an HTML element serving as the container with CSS `width` and `height` applied.
 3. Include the TIFY JavaScript and CSS files.
 4. Create a TIFY instance.
 
 The required HTML looks something like this:
 
 ``` html
-<link rel="stylesheet" href="tify-0.24.2.css">
+<link rel="stylesheet" href="tify-0.25.0.css">
 ⋮
-<div id="tify" style="position: relative; width: 100%; height: 640px"></div>
-<script src="tify-0.24.2.js"></script>
+<div id="tify" style="width: 100%; height: 640px"></div>
+<script src="tify-0.25.0.js"></script>
 <script>
-	new Tify({
-		container: '#tify',
-		manifestUrl: 'https://example.org/iiif-manifest.json',
-	})
+  new Tify({
+    container: '#tify',
+    manifestUrl: 'https://example.org/iiif-manifest.json',
+  })
 </script>
 ```
 
@@ -48,12 +46,12 @@ If you are are upgrading from any previous version, please have a look at the [u
 
 TIFY takes an options object as its only parameter. While optional, you usually want to set the `container` and the `manifestUrl`.
 
-- `container` (string or HTMLElement or null, default `null`): The HTML element into which TIFY is mounted. If set to `null`, TIFY is not mounted at all until `mount(_container_)` is called (see _API_ below).
+- `container` (string or HTMLElement or null, default `null`): The HTML element into which TIFY is mounted. If set to `null`, TIFY is not mounted at all until `mount()` is called (see [_API_](#api) below).
 - `language` (string, default `en`): The interface language, matching the translation filename without extension. [See which translations are available](https://github.com/tify-iiif-viewer/tify/tree/main/dist/translations) or add your own.
 - `manifestUrl` (string): The URL of the IIIF manifest. If not set, the URL has to be provided via query parameter `manifest`, e.g. `https://example.org/?manifest=https://example.org/iiif-manifest.json`.
 - `viewer` (object): An object with options for OpenSeadragon, TIFY’s image rendering component. [See its documentation](https://openseadragon.github.io/docs/OpenSeadragon.html#.Options) for all available options.
 - `pageLabelFormat` (string, default `P : L`): Defines how page labels are displayed in the page selector and thumbnails view. The placeholder `P` is replaced by the physical page number (consecutive numbers starting at `1`) while `L` is replaced by the logical page label, which can be any string as set in the manifest.
-- `pages` (array of 1-based integers, default `[1]`): An array of pages to display initially. Page numbers are physical numbers, starting at 1. This setting can be overridden by setting `pages` via URL query if `urlQueryKey` is set.
+- `pages` (array of 1-based integers, default `[1]`): The page(s) to display initially. Page numbers are physical numbers, starting at 1. This setting can be overridden by setting `pages` via URL query if `urlQueryKey` is set.
 - `paramsStoredInUrlQuery` (array of strings, default `['filters', 'pages', 'panX', 'panY', 'rotation', 'view', 'zoom']`): An array of parameter keys to be stored in the URL query on change. Only has effect if `urlQueryKey` is set.
 - `titleAffix` (string): If set, TIFY replaces the window title with the document title as defined in the manifest, appended by this string, e.g. ` | TIFY`.
 - `translationsDirUrl` (string): The URL of the directory where TIFY finds its translations. TIFY tries to determine this URL automatically from its `<script>` element, but there may be cases where this fails, or you might want to load your own translation.
@@ -64,23 +62,27 @@ An example with most available options set to non-default values:
 
 ``` js
 new Tify({
-	container: '#tify',
-	language: 'de',
-	manifestUrl: 'https://example.org/iiif-manifest.json',
-	openSeadragon: {
-		immediateRender: false,
-	},
-	pageLabelFormat: 'P (L)',
-	pages: [2, 3],
-	paramsStoredInUrlQuery: ['pages'],
-	titleAffix: ' | TIFY',
-	translationsDirUrl: '/translations/tify',
-	urlQueryKey: 'tify',
-	view: '',
+  container: '#tify',
+  language: 'de',
+  manifestUrl: 'https://example.org/iiif-manifest.json',
+  pageLabelFormat: 'P (L)',
+  pages: [2, 3],
+  paramsStoredInUrlQuery: ['pages'],
+  titleAffix: ' | TIFY',
+  translationsDirUrl: '/translations/tify',
+  urlQueryKey: 'tify',
+  view: '',
+  viewer: {
+    immediateRender: false,
+  },
 })
 ```
 
 ## API
+
+With the exception of `mount`, all API functions are only available after TIFY has been mounted.
+
+There is no API function to replace the manifest; just create a new instance.
 
 ### `mount`
 
@@ -147,8 +149,6 @@ tify.mount('#tify')
 tify.setPage([1, 12, 13])
 tify.toggleView('thumbnails')
 ```
-
-With the exception of `mount`, all API functions are only available after TIFY has been mounted.
 
 ## Build Setup
 
