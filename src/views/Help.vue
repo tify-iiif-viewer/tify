@@ -4,9 +4,7 @@
 
 		<div class="tify-help_section -about">
 			<h3>{{ $root.translate('About TIFY') }}</h3>
-			<p>
-				{{ $root.translate(info) }}
-			</p>
+			<p v-html="info"/>
 			<p>
 				{{ $root.translate('Version') }} {{ env.VUE_APP_VERSION }}
 			</p>
@@ -24,7 +22,7 @@
 			<p>
 				<a :href="env.VUE_APP_BUGS_URL">{{ $root.translate('Report a bug') }}</a>
 			</p>
-			<p v-html="$root.translate(copyright)"/>
+			<p v-html="copyright"/>
 		</div>
 	</section>
 </template>
@@ -33,20 +31,20 @@
 export default {
 	computed: {
 		copyright() {
-			return this.$root.language === 'en'
+			return this.$root.options.language === 'en'
 				? 'Copyright &copy; 2017&ndash;2021'
 					+ ' <a href="https://www.uni-goettingen.de/en/">Göttingen University</a>'
 					+ ' / <a href="https://www.sub.uni-goettingen.de/en/">Göttingen State and University Library</a>'
-				: '$copyright';
+				: this.$root.translate('$copyright');
 		},
 		env() {
 			return process.env;
 		},
 		info() {
-			return this.$root.language === 'en'
+			return this.$root.options.language === 'en'
 				? 'TIFY is a slim and mobile-friendly IIIF document viewer'
 					+ ', released under the GNU Affero General Public License 3.0.'
-				: '$info';
+				: this.$root.translate('$info');
 		},
 	},
 };
