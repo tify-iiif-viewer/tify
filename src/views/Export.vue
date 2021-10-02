@@ -69,11 +69,6 @@
 		<div class="tify-export_section -other">
 			<h3>{{ $root.translate('Other Formats') }}</h3>
 			<ul>
-				<li>
-					<a :href="$root.manifestUrl" download="manifest.json">
-						{{ $root.translate('IIIF manifest') }}
-					</a>
-				</li>
 				<li :key="item['@id']" v-for="item in otherItems">
 					<a :href="item['@id']" download>
 						{{ item.label || item['@id'] }}
