@@ -7,6 +7,9 @@ export default {
 	mounted() {
 		this.expose(this.setPage);
 	},
+	beforeDestroy() {
+		clearTimeout(this.urlUpdateTimeout);
+	},
 	methods: {
 		updateOptionsFromUrlQuery() {
 			let params = {};
