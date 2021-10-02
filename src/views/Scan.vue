@@ -329,7 +329,7 @@ export default {
 				showZoomControl: false,
 				tileSources,
 				visibilityRatio: .2,
-				...this.$root.options.openSeadragon,
+				...this.$root.options.viewer,
 			});
 
 			this.viewer.gestureSettingsMouse.clickToZoom = false;

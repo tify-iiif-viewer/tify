@@ -29,7 +29,7 @@ window.Tify = function Tify(options = {}) {
 		filters: {},
 		language: 'en',
 		manifestUrl: '',
-		openSeadragon: {},
+		viewer: {},
 		pageLabelFormat: 'P : L',
 		pages: [1],
 		panX: null,
