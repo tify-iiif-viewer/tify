@@ -85,7 +85,7 @@ export default {
 			return filteredHtml;
 		},
 		checkManifest(manifest) {
-			return manifest && manifest['@context'] && manifest['@context'].includes('presentation');
+			return manifest && manifest['@context'];
 		},
 	},
 };

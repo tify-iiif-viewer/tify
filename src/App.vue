@@ -101,9 +101,7 @@ export default {
 		loadManifest(manifestUrl) {
 			this.$http.get(manifestUrl).then((response) => {
 				const manifest = response.data;
-				const manifestValid = this.$root.checkManifest(manifest);
-
-				if (manifestValid) {
+				if (this.$root.checkManifest(manifest)) {
 					this.$root.manifest = manifest;
 
 					// Merging user-set query params with defaults
