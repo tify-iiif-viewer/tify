@@ -24,3 +24,5 @@
 - Removed options (ignored if set):
 	- `init`
 	- `stylesheet`
+
+To achieve the same results as in versions lower than 0.25 at least the parameter `urlQueryKey: 'tify'` has to be set to keep the URL handling.

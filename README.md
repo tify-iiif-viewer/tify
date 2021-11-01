@@ -54,7 +54,7 @@ TIFY takes an options object as its only parameter. While optional, you usually 
 - `pages` (array of 1-based integers, default `[1]`): The page(s) to display initially. Page numbers are physical numbers, starting at 1. This setting can be overridden by setting `pages` via URL query if `urlQueryKey` is set.
 - `paramsStoredInUrlQuery` (array of strings, default `['filters', 'pages', 'panX', 'panY', 'rotation', 'view', 'zoom']`): An array of parameter keys to be stored in the URL query on change. Only has effect if `urlQueryKey` is set.
 - `titleAffix` (string): If set, TIFY replaces the window title with the document title as defined in the manifest, appended by this string, e.g. ` | TIFY`.
-- `translationsDirUrl` (string): The URL of the directory where TIFY finds its translations. TIFY tries to determine this URL automatically from its `<script>` element, but there may be cases where this fails, or you might want to load your own translation.
+- `translationsDirUrl` (string): The URL of the directory where TIFY finds its translations. TIFY tries to determine this URL automatically from its `<script>` element, but there may be cases where this fails, or you might want to load your own translation. The URL must not contain a trailing slash.
 - `urlQueryKey` (string, only use characters `A…Z a…z 0…9 - _ . ~`): Read parameters from the URL query and reflect any changes, using the key provided. This also works with multiple concurrent instances, but each instance must use a unique key.
 - `view` (string): The initially displayed view (panel).
 
