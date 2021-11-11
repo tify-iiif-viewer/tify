@@ -7,7 +7,7 @@
 			<ul>
 				<li :key="page" v-for="page in pages">
 					<!-- NOTE: The download attribute is only honored for same-origin URLs -->
-					<a :href="imageUrls[page]" :download="`${page}.jpg`">
+					<a :href="imageUrls[page]" :download="`${page}.${$root.options.tileFormat}`">
 						{{ 'Page'|trans }} {{page}} : {{ getLabels($root.canvases[page - 1].label)[0] }}
 					</a>
 				</li>
@@ -145,11 +145,10 @@ export default {
 			return renderings.some((rendering) => rendering.format && rendering.format === 'application/pdf');
 		},
 		imageUrls() {
+			const { params, options } = this.$root;
 			const imageUrls = {};
-			this.$root.params.pages.forEach((page) => {
-				if (!page) {
-					return;
-				}
+			params.pages.forEach((page) => {
+				if (!page) return;
 
 				const { resource } = this.$root.canvases[page - 1].images[0];
 				if (resource.service) {
@@ -159,7 +158,8 @@ export default {
 							: 'native'
 					);
 					const id = resource.service['@id'];
-					imageUrls[page] = `${id}${id.slice(-1) === '/' ? '' : '/'}full/full/0/${quality}.jpg`;
+					const sep = id.slice(-1) === '/' ? '' : '/';
+					imageUrls[page] = `${id}${sep}full/full/0/${quality}.${options.tileFormat}`;
 				} else {
 					imageUrls[page] = resource['@id'];
 				}
