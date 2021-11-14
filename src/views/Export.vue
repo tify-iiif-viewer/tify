@@ -66,7 +66,7 @@
 			</ul>
 		</div>
 
-		<div class="tify-export_section -other">
+		<div v-if="otherItems.length" class="tify-export_section -other">
 			<h3>{{ $root.translate('Other Formats') }}</h3>
 			<ul>
 				<li :key="item['@id']" v-for="item in otherItems">
