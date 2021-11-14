@@ -34,7 +34,11 @@ window.Tify = function Tify(options = {}) {
 		pages: [1],
 		panX: null,
 		panY: null,
-		paramsStoredInUrlQuery: [
+		rotation: null,
+		titleAffix: '',
+		translationsDirUrl: '/translations',
+		urlQueryKey: '',
+		urlQueryParams: [
 			'filters',
 			'pages',
 			'panX',
@@ -43,10 +47,6 @@ window.Tify = function Tify(options = {}) {
 			'view',
 			'zoom',
 		],
-		rotation: null,
-		titleAffix: '',
-		translationsDirUrl: '/translations',
-		urlQueryKey: '',
 		view: 'info',
 		zoom: null,
 	};
