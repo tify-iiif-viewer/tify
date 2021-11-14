@@ -68,7 +68,8 @@ export default {
 					});
 				}, (error) => {
 					const status = (error.response ? error.response.statusText : error.message);
-					this.$root.error = `Error loading other content: ${status}`;
+					// eslint-disable-next-line no-console
+					console.warn(`Could not load annotations: ${status}`);
 				});
 			});
 		},
@@ -82,7 +83,8 @@ export default {
 				this.$set(this.fulltexts[page], index, text);
 			}, (error) => {
 				const status = (error.response ? error.response.statusText : error.message);
-				this.$root.error = `Error loading fulltext: ${status}`;
+				// eslint-disable-next-line no-console
+				console.warn(`Could not load fulltext: ${status}`);
 			});
 		},
 	},
