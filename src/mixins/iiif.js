@@ -84,9 +84,8 @@ export default {
 
 			return filteredHtml;
 		},
-		checkManifest(manifest) {
-			return manifest && manifest['@context']
-			&& manifest['@context'].includes('iiif.io/api/presentation/');
+		isManifest(manifest) {
+			return manifest && Array.isArray(manifest.sequences);
 		},
 	},
 };
