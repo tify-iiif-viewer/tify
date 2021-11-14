@@ -36,7 +36,7 @@ window.Tify = function Tify(options = {}) {
 		panY: null,
 		rotation: null,
 		titleAffix: '',
-		translationsDirUrl: '/translations',
+		translationsDirUrl: '',
 		urlQueryKey: '',
 		urlQueryParams: [
 			'filters',
@@ -52,6 +52,7 @@ window.Tify = function Tify(options = {}) {
 	};
 
 	this.options = { ...defaultOptions, ...options };
+
 	if (!this.options.translationsDirUrl) {
 		const scripts = document.getElementsByTagName('script');
 		const tifyScript = [...scripts].find((script) => script.src.includes('/tify'));
@@ -71,8 +72,8 @@ window.Tify = function Tify(options = {}) {
 				loading: 0,
 				manifest: null,
 				manifestUrl: '',
-				messages: null,
 				options: instance.options,
+				translation: null,
 			};
 		},
 		mixins: [
@@ -96,8 +97,8 @@ window.Tify = function Tify(options = {}) {
 				return this.options.pageLabelFormat.replace('P', number).replace('L', label);
 			},
 			translate(string) {
-				if (this.messages && this.messages[string]) {
-					return this.messages[string];
+				if (this.translation && this.translation[string]) {
+					return this.translation[string];
 				}
 
 				if (process.env.NODE_ENV !== 'production' && this.options.language !== 'en') {

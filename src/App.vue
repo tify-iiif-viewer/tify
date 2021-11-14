@@ -21,7 +21,7 @@
 			class="tify-app_loading"
 			:class="{'-centered' : !$root.manifest}"
 		>
-			<span class="tify-sr-only" v-if="$root.messages">
+			<span class="tify-sr-only" v-if="$root.options.language === 'en' || $root.translation">
 				{{ $root.translate('Loading') }}
 			</span>
 		</div>
@@ -124,13 +124,13 @@ export default {
 			this.$root.options.language = language;
 
 			if (language === 'en') {
-				this.$root.messages = null;
+				this.$root.translation = null;
 				return;
 			}
 
 			const translationUrl = `${this.$root.options.translationsDirUrl}/${language}.json`;
 			this.$http.get(translationUrl).then((response) => {
-				this.$root.messages = response.data;
+				this.$root.translation = response.data;
 			}, (error) => {
 				const status = (error.response ? error.response.statusText : error.message);
 				this.$root.error = `Error loading translation ${language}: ${status}`;
