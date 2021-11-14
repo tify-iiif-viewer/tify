@@ -11,7 +11,7 @@
 
 		<div v-if="manifest.metadata && manifest.metadata.length" class="tify-info_section -metadata">
 			<h3>{{ $root.translate('Metadata') }}</h3>
-			<metadata-list :metadata="manifest.metadata"/>
+			<metadata-list v-if="$root.options.view === 'info'" :metadata="manifest.metadata"/>
 		</div>
 
 		<div v-if="currentStructureLabel || currentStructureMetadata" class="tify-info_section -metadata -structure">
@@ -22,7 +22,7 @@
 				{{ currentStructureLabel }}
 			</p>
 			<metadata-list
-				v-if="currentStructureMetadata"
+				v-if="$root.options.view === 'info' && currentStructureMetadata"
 				class="tify-info_section -metadata"
 				:metadata="currentStructureMetadata"
 			/>
@@ -120,28 +120,10 @@ export default {
 		},
 	},
 	methods: {
-		init() {
-			this.isInited = true;
-		},
 		isUrl(string) {
 			// Poor man's URL check
 			return /^https?:\/\//.test(string);
 		},
-	},
-	watch: {
-		// eslint-disable-next-line func-names
-		'$root.options.view': function (view) {
-			if (view === 'info') {
-				if (!this.isInited) {
-					this.init();
-				}
-			}
-		},
-	},
-	mounted() {
-		if (this.$root.options.view === 'info') {
-			this.init();
-		}
 	},
 };
 </script>
