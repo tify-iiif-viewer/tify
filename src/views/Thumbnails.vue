@@ -33,6 +33,7 @@ export default {
 	],
 	data() {
 		return {
+			isInited: false,
 			itemHeight: 0,
 			itemVMargin: 0,
 			items: [{ label: '' }], // Dummy thumbnail to get dimensions
@@ -65,7 +66,7 @@ export default {
 		// eslint-disable-next-line func-names
 		'$root.options.view': function (view) {
 			if (view === 'thumbnails') {
-				this.updateDimensions();
+				this.init();
 			}
 		},
 	},
@@ -74,8 +75,12 @@ export default {
 			this.updateDimensions();
 			this.scrollToCurrentPage(false);
 
-			// Redraw thumbnails when the window is resized
-			window.addEventListener('resize', this.onResize);
+			if (!this.isInited) {
+				// Redraw thumbnails when the window is resized
+				window.addEventListener('resize', this.onResize);
+
+				this.isInited = true;
+			}
 		},
 		onResize() {
 			clearTimeout(this.resizeTimeout);
