@@ -1,5 +1,26 @@
 module.exports = {
 	methods: {
+		scrollTo(element, to, animationDuration = 120) {
+			const el = element;
+			const duration = (animationDuration === true ? 120 : animationDuration);
+
+			if (!duration || duration < 0) {
+				el.scrollTop = to;
+				return;
+			}
+
+			const difference = to - element.scrollTop;
+			const perTick = difference / duration / .1;
+
+			setTimeout(() => {
+				el.scrollTop += perTick;
+				if (el.scrollTop === to) {
+					return;
+				}
+
+				this.scrollTo(el, to, duration - 10);
+			}, 10);
+		},
 		updateScrollPos(selector, animated = true) {
 			const elements = this.$el.querySelectorAll(selector);
 			if (!elements.length) {
@@ -28,27 +49,6 @@ module.exports = {
 				const targetPos = (bottomCurrentElementRect.bottom - listRect.bottom) + this.$el.scrollTop;
 				this.scrollTo(this.$el, targetPos + 50, animated);
 			}
-		},
-		scrollTo(element, to, animationDuration = 120) {
-			const el = element;
-			const duration = (animationDuration === true ? 120 : animationDuration);
-
-			if (!duration || duration < 0) {
-				el.scrollTop = to;
-				return;
-			}
-
-			const difference = to - element.scrollTop;
-			const perTick = difference / duration / .1;
-
-			setTimeout(() => {
-				el.scrollTop += perTick;
-				if (el.scrollTop === to) {
-					return;
-				}
-
-				this.scrollTo(el, to, duration - 10);
-			}, 10);
 		},
 	},
 };

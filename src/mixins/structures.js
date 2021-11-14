@@ -1,5 +1,50 @@
 const structures = {
 	computed: {
+		currentStructure() {
+			if (!Array.isArray(this.$root.manifest.structures)) {
+				return false;
+			}
+
+			const currentCanvasIds = [];
+			this.$root.options.pages.forEach((page) => {
+				if (page) {
+					currentCanvasIds.push(this.$root.canvases[page - 1]['@id']);
+				}
+			});
+
+			const { length } = this.$root.manifest.structures;
+			let indexOfStructureWithSmallestRange;
+			let smallestRange;
+			for (let i = 0; i < length; i += 1) {
+				const structure = this.$root.manifest.structures[i];
+				const { canvases } = structure;
+				if (canvases && canvases.some((canvasId) => currentCanvasIds.indexOf(canvasId) > -1)) {
+					if (structure.firstPage && structure.lastPage) {
+						const currentRange = structure.lastPage - structure.firstPage;
+						if ((currentRange < smallestRange) || !smallestRange) {
+							indexOfStructureWithSmallestRange = i;
+							smallestRange = currentRange;
+							if (smallestRange === 0) {
+								break;
+							}
+						}
+					}
+				}
+			}
+			if (typeof indexOfStructureWithSmallestRange === 'number' && indexOfStructureWithSmallestRange >= 0) {
+				return this.$root.manifest.structures[indexOfStructureWithSmallestRange];
+			}
+
+			return false;
+		},
+		currentStructureLabel() {
+			const { label } = this.currentStructure;
+			return label;
+		},
+		currentStructureMetadata() {
+			const { metadata } = this.currentStructure;
+			return metadata;
+		},
 		structures() {
 			if (!this.$root.manifest.structures) {
 				return [];
@@ -65,53 +110,6 @@ const structures = {
 				.sort((a, b) => a.firstPage - b.firstPage);
 
 			return topLevelStructures;
-		},
-
-		currentStructure() {
-			if (!Array.isArray(this.$root.manifest.structures)) {
-				return false;
-			}
-
-			const currentCanvasIds = [];
-			this.$root.options.pages.forEach((page) => {
-				if (page) {
-					currentCanvasIds.push(this.$root.canvases[page - 1]['@id']);
-				}
-			});
-
-			const { length } = this.$root.manifest.structures;
-			let indexOfStructureWithSmallestRange;
-			let smallestRange;
-			for (let i = 0; i < length; i += 1) {
-				const structure = this.$root.manifest.structures[i];
-				const { canvases } = structure;
-				if (canvases && canvases.some((canvasId) => currentCanvasIds.indexOf(canvasId) > -1)) {
-					if (structure.firstPage && structure.lastPage) {
-						const currentRange = structure.lastPage - structure.firstPage;
-						if ((currentRange < smallestRange) || !smallestRange) {
-							indexOfStructureWithSmallestRange = i;
-							smallestRange = currentRange;
-							if (smallestRange === 0) {
-								break;
-							}
-						}
-					}
-				}
-			}
-			if (typeof indexOfStructureWithSmallestRange === 'number' && indexOfStructureWithSmallestRange >= 0) {
-				return this.$root.manifest.structures[indexOfStructureWithSmallestRange];
-			}
-
-			return false;
-		},
-
-		currentStructureLabel() {
-			const { label } = this.currentStructure;
-			return label;
-		},
-		currentStructureMetadata() {
-			const { metadata } = this.currentStructure;
-			return metadata;
 		},
 	},
 };

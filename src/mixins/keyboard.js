@@ -5,10 +5,9 @@ module.exports = {
 				return true;
 			}
 
-			if (
-				['INPUT', 'SELECT', 'TEXTAREA'].indexOf(event.target.nodeName) > -1
-				&& event.target.type !== 'range'
-			) return true;
+			if (['INPUT', 'SELECT', 'TEXTAREA'].includes(event.target.nodeName) && event.target.type !== 'range') {
+				return true;
+			}
 
 			return false;
 		},

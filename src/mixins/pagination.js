@@ -2,10 +2,8 @@ module.exports = {
 	computed: {
 		customPageViewActive() {
 			const { pages } = this.$root.options;
-			return (
-				pages.length > 2
-				|| (pages.length === 2 && (pages[0] % 2 > 0 || pages[1] !== pages[0] + 1) && pages[1] > 0)
-			);
+			return pages.length > 2
+				|| (pages.length === 2 && (pages[0] % 2 > 0 || pages[1] !== pages[0] + 1) && pages[1] > 0);
 		},
 		isFirstPage() {
 			return this.$root.options.pages[0] < 2;
@@ -20,9 +18,6 @@ module.exports = {
 		goToFirstPage() {
 			this.$root.setPage(1);
 		},
-		goToLastPage() {
-			this.$root.setPage(this.$root.pageCount);
-		},
 		goToNextPage() {
 			const { pages } = this.$root.options;
 			let page = pages[0] + 1;
@@ -31,6 +26,9 @@ module.exports = {
 			}
 
 			this.$root.setPage(page);
+		},
+		goToLastPage() {
+			this.$root.setPage(this.$root.pageCount);
 		},
 		goToPreviousPage() {
 			const { pages } = this.$root.options;
