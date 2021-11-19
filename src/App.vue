@@ -90,7 +90,7 @@ export default {
 		}
 
 		if (this.$root.options.manifestUrl && this.$root.options.manifest) {
-			this.$root.error = '"Manifest URL set via "option, ignoring query parameter "manifest"';
+			this.$root.error = 'Manifest URL is set via option, ignoring query parameter "manifest"';
 			return;
 		}
 
