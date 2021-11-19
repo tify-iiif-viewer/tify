@@ -13,7 +13,7 @@ describe('Scan', () => {
 			.get('[title="Toggle image filters"]')
 			.click()
 			.get('label[for=tify-scan_saturation]')
-			.contains('Saturation: 0');
+			.contains('Saturation 0');
 	});
 
 	it('Reset pan, zoom, rotation and filters at once', () => {

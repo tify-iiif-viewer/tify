@@ -74,6 +74,14 @@
 	top: (g(-.75) - $br);
 	width: g(10);
 
+	label {
+		// "100 %"
+		> b {
+			float: right;
+			font-size: $font-size-small;
+		}
+	}
+
 	> p {
 		margin: 0;
 

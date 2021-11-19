@@ -79,8 +79,8 @@
 					<p>
 						<label for="tify-scan_brightness">
 							<icon-white-balance-sunny decorative/>
-							{{ $root.translate('Brightness:') }}
-							{{ Math.round(($root.options.filters.brightness || 1) * 100) }}&nbsp;%
+							{{ $root.translate('Brightness') }}
+							<b>{{ Math.round(($root.options.filters.brightness || 1) * 100) }}&nbsp;%</b>
 						</label>
 						<input
 							class="tify-scan_range"
@@ -97,8 +97,8 @@
 					<p>
 						<label for="tify-scan_contrast">
 							<icon-brightness-6 decorative/>
-							{{ $root.translate('Contrast:') }}
-							{{ Math.round(($root.options.filters.contrast || 1) * 100) }}&nbsp;%
+							{{ $root.translate('Contrast') }}
+							<b>{{ Math.round(($root.options.filters.contrast || 1) * 100) }}&nbsp;%</b>
 						</label>
 						<input
 							class="tify-scan_range"
@@ -114,8 +114,8 @@
 					<p>
 						<label for="tify-scan_saturation">
 							<icon-palette decorative/>
-							{{ $root.translate('Saturation:') }}
-							{{ Math.round(saturation * 100)}}&nbsp;%
+							{{ $root.translate('Saturation') }}
+							<b>{{ Math.round(saturation * 100)}}&nbsp;%</b>
 						</label>
 						<input
 							class="tify-scan_range"
