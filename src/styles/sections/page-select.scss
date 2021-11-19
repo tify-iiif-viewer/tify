@@ -55,7 +55,6 @@
 		border-top: $border-width solid $border-color;
 		padding: g(.125) .5em;
 		user-select: none;
-		white-space: nowrap;
 
 		@include hover {
 			background: $shade-light;
