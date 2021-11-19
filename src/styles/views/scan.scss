@@ -21,11 +21,11 @@
 	border-radius: $br;
 	color: #fff;
 	cursor: pointer;
+	filter: drop-shadow(0 0 2px $shade-dark);
 	height: g(1.5);
 	outline: 0;
 	padding: 0;
 	position: relative;
-	text-shadow: 0 0 1px $shade-dark, 0 0 2px $shade-dark;
 	width: g(1.5);
 
 	@include hover {

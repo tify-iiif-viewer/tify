@@ -3,8 +3,6 @@ import Axios from 'axios';
 
 import App from '@/App';
 
-import Icon from '@/components/Icon';
-
 import iiifMixin from '@/mixins/iiif';
 import paramsMixin from '@/mixins/params';
 import uiMixin from '@/mixins/ui';
@@ -13,9 +11,6 @@ import '@/directives/click-outside';
 import '@/polyfills/findIndex';
 
 Vue.prototype.$http = Axios;
-
-// Make <icon/> globally available
-Vue.component('Icon', Icon);
 
 window.Tify = function Tify(options = {}) {
 	const defaultOptions = {

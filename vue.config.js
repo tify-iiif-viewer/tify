@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const BannerPlugin = require('webpack/lib/BannerPlugin');
 const globImporter = require('node-sass-glob-importer');
+const VueAutomaticImportPlugin = require('vue-automatic-import-loader/lib/plugin');
 
 const env = require('./package.json');
 
@@ -33,6 +34,18 @@ module.exports = {
 					+ `\n${env.license}`
 					+ `\n${env.homepage}`,
 			),
+			new VueAutomaticImportPlugin({
+				match(originalTag, { kebabTag, camelTag }) {
+					if (kebabTag.startsWith('icon-')) {
+						return [
+							camelTag,
+							`import ${camelTag} from 'vue-material-design-icons/${camelTag.replace('Icon', '')}'`,
+						];
+					}
+
+					return null;
+				},
+			}),
 		],
 	},
 	css: {

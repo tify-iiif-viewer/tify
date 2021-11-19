@@ -8,7 +8,7 @@
 			:title="$root.translate('Previous page')"
 			@click="goToPreviousPage"
 		>
-			<icon name="navigate_before"/>
+			<icon-chevron-left decorative/>
 			<span class="tify-sr-only">{{ $root.translate('Previous page') }}</span>
 		</button>
 		<button
@@ -17,7 +17,7 @@
 			:title="$root.translate('Next page')"
 			@click="goToNextPage"
 		>
-			<icon name="navigate_next"/>
+			<icon-chevron-right decorative/>
 			<span class="tify-sr-only">{{ $root.translate('Next page') }}</span>
 		</button>
 
@@ -28,7 +28,7 @@
 				:title="$root.translate('Zoom in')"
 				@click="zoomIn"
 			>
-				<icon name="zoom_in"/>
+				<icon-magnify-plus decorative/>
 				<span class="tify-sr-only">{{ $root.translate('Zoom in') }}</span>
 			</button>
 			<button
@@ -37,7 +37,7 @@
 				:title="$root.translate('Reset')"
 				@click="resetViewer(!!$event.shiftKey)"
 			>
-				<icon name="aspect_ratio"/>
+				<icon-aspect-ratio decorative/>
 				<span class="tify-sr-only">{{ $root.translate('Reset') }}</span>
 			</button>
 			<button
@@ -46,7 +46,7 @@
 				:title="$root.translate('Zoom out')"
 				@click="zoomOut"
 			>
-				<icon name="zoom_out"/>
+				<icon-magnify-minus decorative/>
 				<span class="tify-sr-only">{{ $root.translate('Zoom out') }}</span>
 			</button>
 
@@ -56,7 +56,7 @@
 				:title="$root.translate('Rotate')"
 				@click="rotateRight($event)"
 			>
-				<icon name="rotate_right"/>
+				<icon-rotate-right decorative/>
 				<span class="tify-sr-only">{{ $root.translate('Rotate') }}</span>
 			</button>
 
@@ -72,13 +72,13 @@
 					:title="$root.translate('Toggle image filters')"
 					@click="filtersVisible = !filtersVisible"
 				>
-					<icon name="tune"/>
+					<icon-tune decorative/>
 					<span class="tify-sr-only">{{ $root.translate('Toggle image filters') }}</span>
 				</button>
 				<div class="tify-scan_filter-popup" v-show="filtersVisible">
 					<p>
 						<label for="tify-scan_brightness">
-							<icon name="wb_sunny" class="-light"/>
+							<icon-white-balance-sunny decorative/>
 							{{ $root.translate('Brightness:') }}
 							{{ Math.round(($root.options.filters.brightness || 1) * 100) }}&nbsp;%
 						</label>
@@ -96,7 +96,7 @@
 					</p>
 					<p>
 						<label for="tify-scan_contrast">
-							<icon name="brightness_medium" class="-light"/>
+							<icon-brightness-6 decorative/>
 							{{ $root.translate('Contrast:') }}
 							{{ Math.round(($root.options.filters.contrast || 1) * 100) }}&nbsp;%
 						</label>
@@ -113,7 +113,7 @@
 					</p>
 					<p>
 						<label for="tify-scan_saturation">
-							<icon name="palette" class="-light"/>
+							<icon-palette decorative/>
 							{{ $root.translate('Saturation:') }}
 							{{ Math.round(saturation * 100)}}&nbsp;%
 						</label>
@@ -134,7 +134,7 @@
 							:disabled="!filtersActive"
 							@click="resetFilters"
 						>
-							<icon name="settings_backup_restore"/>
+							<icon-backup-restore decorative/>
 							{{ $root.translate('Reset') }}
 						</button>
 					</p>

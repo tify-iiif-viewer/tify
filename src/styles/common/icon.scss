@@ -1,35 +1,4 @@
-@if ($MD-icon-path-name) {
-	@font-face {
-		font-family: 'Material Icons';
-		font-style: normal;
-		font-weight: 400;
-		src: url('#{$MD-icon-path-name}.woff2') format('woff2'),
-			url('#{$MD-icon-path-name}.woff') format('woff'),
-	}
-}
-
-.tify-icon {
-	direction: ltr;
-	display: inline-block;
-	font-family: 'Material Icons';
-	font-size: 24px;
-	font-style: normal;
-	font-weight: normal;
-	letter-spacing: normal;
-	line-height: 1;
-	overflow: hidden;
-	text-transform: none;
+.tify-app .material-design-icon__svg {
+	fill: currentColor;
 	vertical-align: top;
-	white-space: nowrap;
-	width: 1em;
-	word-wrap: normal;
-
-	-webkit-font-smoothing: antialiased; // WebKit browsers
-	text-rendering: optimizeLegibility; // Chrome and Safari
-	-moz-osx-font-smoothing: grayscale; // Firefox
-	font-feature-settings: 'liga'; // IE
-
-	&.-light {
-		opacity: .8;
-	}
 }

@@ -19,8 +19,8 @@
 					:title="$root.translate('Toggle double-page')"
 					@click="toggleDoublePage"
 				>
-					<icon v-if="customPageViewActive" name="view_module"/>
-					<icon v-else name="import_contacts"/>
+					<icon-view-module v-if="customPageViewActive" decorative/>
+					<icon-book-open-blank-variant v-else decorative/>
 					<span class="tify-sr-only">{{ $root.translate('Toggle double-page') }}</span>
 				</button>
 			</div>
@@ -32,7 +32,7 @@
 					:title="$root.translate('First page')"
 					@click="goToFirstPage"
 				>
-					<icon name="first_page"/>
+					<icon-page-first decorative/>
 					<span class="tify-sr-only">{{ $root.translate('First page') }}</span>
 				</button>
 
@@ -43,7 +43,7 @@
 					:title="$root.translate('Previous section')"
 					@click="goToPreviousSection"
 				>
-					<icon name="skip_previous"/>
+					<icon-skip-previous decorative/>
 					<span class="tify-sr-only">{{ $root.translate('Previous section') }}</span>
 				</button>
 
@@ -53,7 +53,7 @@
 					:title="$root.translate('Previous page')"
 					@click="goToPreviousPage"
 				>
-					<icon name="navigate_before"/>
+					<icon-chevron-left decorative/>
 					<span class="tify-sr-only">{{ $root.translate('Previous page') }}</span>
 				</button>
 
@@ -63,7 +63,7 @@
 					:title="$root.translate('Next page')"
 					@click="goToNextPage"
 				>
-					<icon name="navigate_next"/>
+					<icon-chevron-right decorative/>
 					<span class="tify-sr-only">{{ $root.translate('Next page') }}</span>
 				</button>
 
@@ -74,7 +74,7 @@
 					:title="$root.translate('Next section')"
 					@click="goToNextSection"
 				>
-					<icon name="skip_next"/>
+					<icon-skip-next decorative/>
 					<span class="tify-sr-only">{{ $root.translate('Next section') }}</span>
 				</button>
 
@@ -84,7 +84,7 @@
 					:title="$root.translate('Last page')"
 					@click="goToLastPage"
 				>
-					<icon name="last_page"/>
+					<icon-page-last decorative/>
 					<span class="tify-sr-only">{{ $root.translate('Last page') }}</span>
 				</button>
 			</div>
@@ -97,7 +97,7 @@
 					v-click-outside="closeControlsPopup"
 					@click="toggleControlsPopup"
 				>
-					<icon name="menu"/>
+					<icon-menu decorative/>
 					{{ $root.translate('View') }}
 				</button>
 			</div>
@@ -110,7 +110,7 @@
 					:class="{ '-active': $root.options.view === 'scan' }"
 					@click="toggleView('scan')"
 				>
-					<icon name="photo"/>
+					<icon-image decorative/>
 					{{ $root.translate('Scan') }}
 				</button>
 
@@ -120,7 +120,7 @@
 					:class="{ '-active': $root.options.view === 'fulltext' }"
 					@click="toggleView('fulltext')"
 				>
-					<icon name="subject"/>
+					<icon-text-long decorative/>
 					{{ $root.translate('Fulltext') }}
 				</button>
 
@@ -129,7 +129,7 @@
 					:class="{ '-active': $root.options.view === 'thumbnails' }"
 					@click="toggleView('thumbnails')"
 				>
-					<icon name="view_module"/>
+					<icon-view-module decorative/>
 					{{ $root.translate('Pages') }}
 				</button>
 
@@ -139,7 +139,7 @@
 					:class="{ '-active': $root.options.view === 'toc' }"
 					@click="toggleView('toc')"
 				>
-					<icon name="toc"/>
+					<icon-table-of-contents decorative/>
 					{{ $root.translate('Contents') }}
 				</button>
 
@@ -148,7 +148,7 @@
 					:class="{ '-active': $root.options.view === 'info' }"
 					@click="toggleView('info')"
 				>
-					<icon name="info_outline"/>
+					<icon-information-outline decorative/>
 					{{ $root.translate('Info') }}
 				</button>
 
@@ -157,7 +157,7 @@
 					:class="{ '-active': $root.options.view === 'export' }"
 					@click="toggleView('export')"
 				>
-					<icon name="file_download"/>
+					<icon-download decorative/>
 					{{ $root.translate('Export') }}
 				</button>
 
@@ -167,7 +167,7 @@
 					:title="$root.translate('Help')"
 					@click="toggleView('help')"
 				>
-					<icon name="help_outline"/>
+					<icon-help-circle-outline decorative/>
 					{{ $root.translate('Help') }}
 				</button>
 			</div>
@@ -179,7 +179,7 @@
 					:title="$root.translate('Fullscreen')"
 					@click="toggleFullscreen"
 				>
-					<icon name="fullscreen"/>
+					<icon-fullscreen decorative/>
 					{{ $root.translate('Fullscreen') }}
 				</button>
 				<button
@@ -188,7 +188,7 @@
 					:title="$root.translate('Exit fullscreen')"
 					@click="toggleFullscreen"
 				>
-					<icon name="fullscreen_exit"/>
+					<icon-fullscreen-exit decorative/>
 					{{ $root.translate('Exit fullscreen') }}
 				</button>
 			</div>
@@ -200,7 +200,7 @@
 					:title="$root.translate('First page')"
 					@click="goToFirstPage"
 				>
-					<icon name="first_page"/>
+					<icon-page-first decorative/>
 					<span class="tify-sr-only">{{ $root.translate('First page') }}</span>
 				</button>
 
@@ -211,7 +211,7 @@
 					:title="$root.translate('Previous section')"
 					@click="goToPreviousSection"
 				>
-					<icon name="skip_previous"/>
+					<icon-skip-previous decorative/>
 					<span class="tify-sr-only">{{ $root.translate('Previous section') }}</span>
 				</button>
 
@@ -221,7 +221,7 @@
 					:title="$root.translate('Previous page')"
 					@click="goToPreviousPage"
 				>
-					<icon name="navigate_before"/>
+					<icon-chevron-left decorative/>
 					<span class="tify-sr-only">{{ $root.translate('Previous page') }}</span>
 				</button>
 
@@ -231,7 +231,7 @@
 					:title="$root.translate('Next page')"
 					@click="goToNextPage"
 				>
-					<icon name="navigate_next"/>
+					<icon-chevron-right decorative/>
 					<span class="tify-sr-only">{{ $root.translate('Next page') }}</span>
 				</button>
 
@@ -242,7 +242,7 @@
 					:title="$root.translate('Next section')"
 					@click="goToNextSection"
 				>
-					<icon name="skip_next"/>
+					<icon-skip-next decorative/>
 					<span class="tify-sr-only">{{ $root.translate('Next section') }}</span>
 				</button>
 
@@ -252,7 +252,7 @@
 					:title="$root.translate('Last page')"
 					@click="goToLastPage"
 				>
-					<icon name="last_page"/>
+					<icon-page-last decorative/>
 					<span class="tify-sr-only">{{ $root.translate('Last page') }}</span>
 				</button>
 			</div>
@@ -487,6 +487,7 @@ export default {
 				this.toggleDoublePage();
 				break;
 			case 'f':
+				// TODO: This is stolen by OpenSeadragon!
 				this.toggleFullscreen();
 				break;
 			default:
