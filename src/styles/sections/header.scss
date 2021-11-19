@@ -82,6 +82,7 @@
 	@extend %button;
 	border-radius: 0;
 	box-shadow: none;
+	margin: 0; // Safari fix
 
 	& + & {
 		@include separator(0, 0, 0, 1);
