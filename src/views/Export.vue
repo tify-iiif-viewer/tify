@@ -16,19 +16,12 @@
 			</ul>
 		</div>
 
-		<div v-if="$root.manifest.rendering" class="tify-export_section -renderings">
+		<div v-if="this.$root.manifest.rendering" class="tify-export_section -renderings">
 			<h3>{{ $root.translate('Renderings') }}</h3>
 			<ul>
-				<li :key="item['@id']" v-for="item in $root.manifest.rendering">
-					<template v-if="/\.pdf$/i.test(item['@id'])">
-						<a :href="item['@id']" download>
-							<i class="tify-badge" v-if="/\.pdf$/i.test(item['@id'])">PDF</i>
-							{{ item.label }}
-						</a>
-					</template>
-					<template v-else>
-						<a :href="item['@id']">{{ item.label }}</a>
-					</template>
+				<li :key="item['@id']" v-for="item in renderings">
+					<i class="tify-badge" v-if="/\.pdf$/i.test(item['@id'])">PDF</i>
+					<a :href="item['@id']">{{ item.label }}</a>
 				</li>
 			</ul>
 
@@ -163,6 +156,9 @@ export default {
 				}
 			});
 			return imageUrls;
+		},
+		renderings() {
+			return this.$root.convertValueToArray(this.$root.manifest.rendering);
 		},
 	},
 	created() {
