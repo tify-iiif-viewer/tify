@@ -8,9 +8,7 @@ describe('Scan', () => {
 		const encodedParams = encodeURIComponent(JSON.stringify(params));
 
 		cy.visit(`/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify=${encodedParams}`);
-		cy
-			.get('.tify-app_main')
-			.get('[title="Toggle image filters"]')
+		cy.get('[title="Toggle image filters"]')
 			.click()
 			.get('label[for=tify-scan_saturation]')
 			.contains('Saturation 0');
@@ -31,42 +29,35 @@ describe('Scan', () => {
 		const encodedParams = encodeURIComponent(JSON.stringify(params));
 
 		cy.visit(`/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify=${encodedParams}`);
-		cy
-			.get('.tify-app_main')
-			.then(() => {
-				cy.contains('.tify-scan_button.-active', 'Rotate');
-				cy.contains('.tify-scan_button.-active', 'Toggle image filters');
-			});
+		cy.get('.tify-app_main').then(() => {
+			cy.contains('.tify-scan_button.-active', 'Rotate');
+			cy.contains('.tify-scan_button.-active', 'Toggle image filters');
+		});
 
-		cy.get('body').type('{shift}0');
-		cy.url().should('include', '/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify={%22view%22:%22info%22}');
+		cy.get('.tify-app_main').type('{shift}0');
+		cy.url().should('include', '/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify={%22view%22:%22%22}');
 	});
 
 	it('Control scan via keyboard', () => {
 		cy.visit('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
-		cy
-			.get('.tify-app_main')
-			.then(() => {
-				cy.wait(1000);
-				cy.get('body').type('r');
-				cy.contains('.tify-scan_button.-active', 'Rotate').should('be.visible');
+		cy.get('.tify-app_main').then(() => {
+			cy.get('.tify-app_main').type('r');
+			cy.contains('.tify-scan_button.-active', 'Rotate').should('be.visible');
 
-				cy.get('body').type('r');
-				cy.get('body').type('r');
-				cy.get('body').type('r');
-				cy.contains('.tify-scan_button:not(.-active)', 'Rotate').should('be.visible');
+			cy.get('.tify-app_main').type('r');
+			cy.get('.tify-app_main').type('r');
+			cy.get('.tify-app_main').type('r');
+			cy.contains('.tify-scan_button:not(.-active)', 'Rotate').should('be.visible');
 
-				cy.get('body')
-					.type('i')
-					.contains('Brightness').should('be.visible')
-					.type('i')
-					.contains('Brightness').should('not.be.visible');
+			cy.get('.tify-app_main').type('i')
+				.contains('Brightness').should('be.visible')
+				.type('i')
+				.contains('Brightness').should('not.be.visible');
 
-				cy.get('body')
-					.type('i')
-					.contains('Brightness').should('be.visible')
-					.type('{esc}')
-					.contains('Brightness').should('not.be.visible');
-			});
+			cy.get('.tify-app_main').type('i')
+				.contains('Brightness').should('be.visible')
+				.type('{esc}')
+				.contains('Brightness').should('not.be.visible');
+		});
 	});
 });

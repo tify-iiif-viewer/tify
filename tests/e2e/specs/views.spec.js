@@ -3,6 +3,7 @@ describe('Views', () => {
 		cy.visit('/?manifest=http://localhost:8081/manifest/wellcome-b18035723.json');
 		cy.get('.tify-app_main');
 
+		cy.contains('Info').click();
 		cy.get('.-active').contains('Info');
 
 		cy.contains('Fulltext').click();
@@ -26,15 +27,13 @@ describe('Views', () => {
 
 	it('Change view via keyboard', () => {
 		cy.visit('/?manifest=http://localhost:8081/manifest/wellcome-b18035723.json');
-		cy
-			.get('.tify-app_main')
-			.then(() => {
-				cy.get('body').type('1').get('.-active').contains('Fulltext')
-				cy.get('body').type('2').get('.-active').contains('Pages')
-				cy.get('body').type('3').get('.-active').contains('Contents')
-				cy.get('body').type('4').get('.-active').contains('Info')
-				cy.get('body').type('5').get('.-active').contains('Export')
-				cy.get('body').type('6').get('.-active').contains('Help');
-			});
+		cy.get('.tify-app_main').then(() => {
+			cy.get('.tify-app_main').type('1').get('.-active').contains('Fulltext');
+			cy.get('.tify-app_main').type('2').get('.-active').contains('Pages');
+			cy.get('.tify-app_main').type('3').get('.-active').contains('Contents');
+			cy.get('.tify-app_main').type('4').get('.-active').contains('Info');
+			cy.get('.tify-app_main').type('5').get('.-active').contains('Export');
+			cy.get('.tify-app_main').type('6').get('.-active').contains('Help');
+		});
 	});
 });
