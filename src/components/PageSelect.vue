@@ -88,6 +88,15 @@ export default {
 		},
 	},
 	methods: {
+		closeDropdown() {
+			this.isOpen = false;
+		},
+		getCurrentPage() {
+			const page = this.$root.options.pages[0] || 1;
+			const canvasIndex = this.$root.options.pages[0] ? this.$root.options.pages[0] - 1 : 0;
+			const label = this.$root.convertValueToArray(this.$root.canvases[canvasIndex].label)[0];
+			return `${page} : ${label}`;
+		},
 		onKeydown(event) {
 			if (this.preventKeyboardEvent(event)) {
 				return;
@@ -119,9 +128,6 @@ export default {
 				});
 			}
 		},
-		closeDropdown() {
-			this.isOpen = false;
-		},
 		updateFilteredCanvases() {
 			const filteredCanvases = [];
 			const filter = this.filter.toLowerCase();
@@ -150,19 +156,13 @@ export default {
 				list.scrollTop = offsetTop - ((list.offsetHeight / 2) - list.children[0].offsetHeight);
 			}
 		},
-		getCurrentPage() {
-			const page = this.$root.options.pages[0] || 1;
-			const canvasIndex = this.$root.options.pages[0] ? this.$root.options.pages[0] - 1 : 0;
-			const label = this.$root.convertValueToArray(this.$root.canvases[canvasIndex].label)[0];
-			return `${page} : ${label}`;
-		},
 	},
 	mounted() {
 		this.updateFilteredCanvases();
-		window.addEventListener('keydown', this.onKeydown);
+		this.$root.$el.addEventListener('keydown', this.onKeydown);
 	},
 	beforeDestroy() {
-		window.removeEventListener('keydown', this.onKeydown);
+		this.$root.$el.removeEventListener('keydown', this.onKeydown);
 	},
 };
 </script>

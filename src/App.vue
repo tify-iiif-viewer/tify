@@ -1,5 +1,6 @@
 <template>
-	<div class="tify-app">
+	<!-- NOTE: Root element must be focusable for global keyboard events to work -->
+	<div class="tify-app" tabindex="-1">
 		<app-header
 			v-if="$root.manifest"
 			:fulltextEnabled="hasOtherContent"
@@ -99,6 +100,8 @@ export default {
 	},
 	methods: {
 		loadManifest(manifestUrl) {
+			this.$root.manifest = null;
+
 			this.$http.get(manifestUrl).then((response) => {
 				const manifest = response.data;
 				if (this.$root.isManifest(manifest)) {
@@ -110,7 +113,7 @@ export default {
 
 					if (this.$root.options.title) {
 						window.document.title = this.$root.convertValueToArray(this.$root.manifest.label)[0]
-								+ this.$root.options.titleAffix;
+							+ this.$root.options.titleAffix;
 					}
 				} else {
 					this.$root.error = 'Please provide a valid IIIF Presentation API 2.x manifest';

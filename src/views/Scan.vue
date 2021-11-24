@@ -332,6 +332,10 @@ export default {
 				...this.$root.options.viewer,
 			});
 
+			// Disable OpenSeadragons built-in key handler which interferes with
+			// TIFY's keyboard shortcuts
+			this.viewer.innerTracker.keyHandler = null;
+
 			this.viewer.gestureSettingsMouse.clickToZoom = false;
 
 			this.viewer.addHandler('animation-finish', () => {
@@ -358,12 +362,17 @@ export default {
 			this.viewer.addHandler('open', () => {
 				this.startLoadingWatch();
 
-				if (options.panX !== null && options.panY !== null) {
-					this.viewer.viewport.panTo({
-						x: options.panX,
-						y: options.panY,
-					}, true);
-					this.viewer.viewport.zoomTo(options.zoom, null, true);
+				if (options.panX !== null || options.panY !== null || options.zoom) {
+					if (options.panX !== null || options.panY !== null) {
+						this.viewer.viewport.panTo({
+							x: options.panX,
+							y: options.panY,
+						}, true);
+					}
+
+					if (options.zoom) {
+						this.viewer.viewport.zoomTo(options.zoom, null, true);
+					}
 				} else {
 					this.viewer.viewport.goHome();
 				}
@@ -437,8 +446,12 @@ export default {
 				96, // Numpad0
 			];
 
-			if (event.shiftKey && zeroKeyCodes.indexOf(event.keyCode) > -1) {
-				this.resetViewer(event);
+			if (zeroKeyCodes.indexOf(event.keyCode) > -1) {
+				if (event.shiftKey) {
+					this.resetViewer(event);
+				} else {
+					this.viewer.viewport.goHome();
+				}
 			}
 		},
 		onKeypress(event) {
@@ -460,35 +473,38 @@ export default {
 					});
 				}
 				break;
-			case 'I': {
+			case 'I':
 				this.resetFilters();
 				break;
-			}
+
+			// Restore some keyboard events for OpenSeadragon
+			// https://github.com/openseadragon/openseadragon/blob/master/src/viewer.js#L2680-L2725
+			case '+':
+			case '=':
+			case 'W':
+				this.viewer.viewport.zoomBy(1.1);
+				this.viewer.viewport.applyConstraints();
+				break;
+			case '-':
+			case '_':
+			case 'S':
+				this.viewer.viewport.zoomBy(.9);
+				this.viewer.viewport.applyConstraints();
+				break;
+			case 'w':
+				this.viewer.innerTracker.keyDownHandler({ keyCode: 38 }); // up arrow
+				break;
+			case 's':
+				this.viewer.innerTracker.keyDownHandler({ keyCode: 40 }); // down arrow
+				break;
+			case 'a':
+				this.viewer.innerTracker.keyDownHandler({ keyCode: 37 }); // down arrow
+				break;
+			case 'd':
+				this.viewer.innerTracker.keyDownHandler({ keyCode: 39 }); // right arrow
+				break;
 			default:
-				// Send keypress event to OpenSeadragon
-				this.propagateKeypress(event);
 			}
-		},
-		propagateKeypress(event) {
-			if (event.target.className.indexOf('openseadragon') === 0) {
-				return;
-			}
-
-			const canvas = this.$refs.image.querySelector('.openseadragon-canvas');
-			if (!canvas) {
-				return;
-			}
-
-			const canvasEvent = new event.constructor(event.type, event);
-
-			// Chrome fix: OpenSeadragon evaluates keyCode
-			Object.defineProperty(canvasEvent, 'keyCode', {
-				get() {
-					return event.keyCode;
-				},
-			});
-
-			canvas.dispatchEvent(canvasEvent);
 		},
 		resetFilters() {
 			this.$refs.image.style.cssText = '';
@@ -577,14 +593,14 @@ export default {
 		this.loadImageInfo();
 		this.updateFilterStyle();
 
-		window.addEventListener('keydown', this.onKeydown);
-		window.addEventListener('keypress', this.onKeypress);
+		this.$root.$el.addEventListener('keydown', this.onKeydown);
+		this.$root.$el.addEventListener('keypress', this.onKeypress);
 	},
 	beforeDestroy() {
 		this.viewer.destroy();
 
-		window.removeEventListener('keydown', this.onKeydown);
-		window.removeEventListener('keypress', this.onKeypress);
+		this.$root.$el.removeEventListener('keydown', this.onKeydown);
+		this.$root.$el.removeEventListener('keypress', this.onKeypress);
 	},
 };
 </script>

@@ -353,6 +353,87 @@ export default {
 			}
 			this.$root.setPage(this.sections[sectionIndex].firstPage);
 		},
+		onKeyDown(event) {
+			if (this.preventKeyboardEvent(event)) {
+				return;
+			}
+
+			if (event.key === 'Escape') {
+				this.controlsVisible = false;
+				return;
+			}
+
+			switch (event.key) {
+			case 'Backspace':
+				// switchViewSmall is visible, i.e. screen is small
+				if (this.$refs.switchViewSmall.offsetParent) {
+					this.toggleView('scan');
+				}
+				break;
+			case '1':
+				if (this.fulltextEnabled) {
+					this.toggleView('fulltext');
+				}
+				break;
+			case '2':
+				this.toggleView('thumbnails');
+				break;
+			case '3':
+				if (this.tocEnabled) {
+					this.toggleView('toc');
+				}
+				break;
+			case '4':
+				this.toggleView('info');
+				break;
+			case '5':
+				this.toggleView('export');
+				break;
+			case '6':
+				this.toggleView('help');
+				break;
+			case 'b':
+				this.toggleDoublePage();
+				break;
+			case 'f':
+				// TODO: This is stolen by OpenSeadragon!
+				this.toggleFullscreen();
+				break;
+			default:
+			}
+
+			if (this.customPageViewActive) {
+				return;
+			}
+
+			const { pages } = this.$root.options;
+
+			switch (event.key) {
+			case 'q':
+			case ',':
+				if (pages[0] > 1) {
+					this.goToPreviousPage();
+				}
+				break;
+			case 'e':
+			case '.':
+				if (!this.isLastPage) {
+					this.goToNextPage();
+				}
+				break;
+			case 'Q':
+				if (pages[0] > 1) {
+					this.goToFirstPage();
+				}
+				break;
+			case 'E':
+				if (!this.isLastPage) {
+					this.goToLastPage();
+				}
+				break;
+			default:
+			}
+		},
 		toggleControlsPopup() {
 			this.controlsVisible = !this.controlsVisible;
 		},
@@ -441,99 +522,16 @@ export default {
 		this.sections = sections;
 	},
 	mounted() {
-		window.addEventListener('keydown', (event) => {
-			if (this.preventKeyboardEvent(event)) {
-				return;
-			}
-
-			if (event.key === 'Escape') {
-				this.controlsVisible = false;
-				return;
-			}
-
-			switch (event.key) {
-			case 'Backspace':
-				// switchViewSmall is visible, i.e. screen is small
-				if (this.$refs.switchViewSmall.offsetParent) {
-					this.toggleView('scan');
-				}
-
-				break;
-			case '1':
-				if (this.fulltextEnabled) {
-					this.toggleView('fulltext');
-				}
-
-				break;
-			case '2':
-				this.toggleView('thumbnails');
-				break;
-			case '3':
-				if (this.tocEnabled) {
-					this.toggleView('toc');
-				}
-
-				break;
-			case '4':
-				this.toggleView('info');
-				break;
-			case '5':
-				this.toggleView('export');
-				break;
-			case '6':
-				this.toggleView('help');
-				break;
-			case 'b':
-				this.toggleDoublePage();
-				break;
-			case 'f':
-				// TODO: This is stolen by OpenSeadragon!
-				this.toggleFullscreen();
-				break;
-			default:
-			}
-
-			if (this.customPageViewActive) {
-				return;
-			}
-
-			const { pages } = this.$root.options;
-
-			switch (event.key) {
-			case 'q':
-			case ',':
-				if (pages[0] > 1) {
-					this.goToPreviousPage();
-				}
-
-				break;
-			case 'e':
-			case '.':
-				if (!this.isLastPage) {
-					this.goToNextPage();
-				}
-
-				break;
-			case 'Q':
-				if (pages[0] > 1) {
-					this.goToFirstPage();
-				}
-
-				break;
-			case 'E':
-				if (!this.isLastPage) {
-					this.goToLastPage();
-				}
-
-				break;
-			default:
-			}
-		});
+		this.$root.$el.addEventListener('keydown', this.onKeyDown);
 
 		// NOTE: Fullscreen state cannot be computed
-		['', 'moz', 'ms', 'webkit'].forEach((prefix) => {
+		const vendorPrefixes = ['', 'moz', 'ms', 'webkit'];
+		vendorPrefixes.forEach((prefix) => {
 			document.addEventListener(`${prefix}fullscreenchange`, this.toggleFullscreenActive);
 		});
+	},
+	beforeDestroy() {
+		this.$root.$el.removeEventListener('keydown', this.onKeyDown);
 	},
 };
 </script>
