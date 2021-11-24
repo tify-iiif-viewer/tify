@@ -20,7 +20,8 @@
 - Renamed or changed options:
 	- `immediateRender` has been replaced with `viewer.immediateRender`.
 	- `manifest` has been renamed to `manifestUrl`.
-	- `title` has been replaced with `titleAffix`, which now includes the separator characters (` | `).
+	- `title` has been replaced with `titleAffix`, which now includes the separator characters (default ` | `).
+	- `view` is now by default an empty string instead of `info`, meaning TIFY only displays the scan.
 - Removed options (ignored if set):
 	- `init`
 	- `stylesheet`

@@ -42,7 +42,7 @@ window.Tify = function Tify(options = {}) {
 			'view',
 			'zoom',
 		],
-		view: 'info',
+		view: '',
 		zoom: null,
 	};
 
