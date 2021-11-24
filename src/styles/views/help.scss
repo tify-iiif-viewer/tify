@@ -4,34 +4,7 @@
 	padding: g(.5);
 }
 
-.tify-help_section {
-	margin-bottom: g();
-
-	&.-about {
-		dl {
-			margin: 0;
-
-			&::after {
-				clear: both;
-				content: '';
-				display: block;
-			}
-		}
-
-		dd {
-			float: left;
-			margin: 0 0 g(.5);
-			width: calc(100% - 6em);
-		}
-
-		dt {
-			clear: left;
-			color: $text-color-light;
-			float: left;
-			font-weight: bold;
-			margin: 0 0 g(.5);
-			padding: 0 .5em 0 0;
-			width: 6em;
-		}
-	}
+.tify-help_footer {
+	font-size: $font-size-small;
+	margin-top: g();
 }

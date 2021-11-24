@@ -1,29 +1,29 @@
 <template>
 	<section class="tify-help">
 		<h2 class="tify-sr-only">{{ $root.translate('Help') }}</h2>
-
-		<div class="tify-help_section -about">
-			<h3>{{ $root.translate('About TIFY') }}</h3>
-			<p v-html="info"/>
+		<h3>{{ $root.translate('About TIFY') }}</h3>
+		<p v-html="info"/>
+		<ul>
+			<li>
+				<a :href="env.VUE_APP_DOCS_URL">{{ $root.translate('User guide') }}</a>
+			</li>
+			<li>
+				<a :href="env.VUE_APP_REPOSITORY_URL">{{ $root.translate('Source code') }}</a>
+			</li>
+			<li>
+				<a :href="env.VUE_APP_CONTRIBUTORS_URL">{{ $root.translate('Contributors') }}</a>
+			</li>
+			<li>
+				<a :href="env.VUE_APP_BUGS_URL">{{ $root.translate('Report a bug') }}</a>
+			</li>
+		</ul>
+		<footer class="tify-help_footer">
 			<p>
 				{{ $root.translate('Version') }} {{ env.VUE_APP_VERSION }}
+				<br>
+				<span v-html="copyright"/>
 			</p>
-			<ul>
-				<li>
-					<a :href="env.VUE_APP_DOCS_URL">{{ $root.translate('Documentation') }}</a>
-				</li>
-				<li>
-					<a :href="env.VUE_APP_REPOSITORY_URL">{{ $root.translate('Source code') }}</a>
-				</li>
-				<li>
-					<a :href="env.VUE_APP_CONTRIBUTORS_URL">{{ $root.translate('Contributors') }}</a>
-				</li>
-			</ul>
-			<p>
-				<a :href="env.VUE_APP_BUGS_URL">{{ $root.translate('Report a bug') }}</a>
-			</p>
-			<p v-html="copyright"/>
-		</div>
+		</footer>
 	</section>
 </template>
 
