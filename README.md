@@ -26,8 +26,8 @@ To embed TIFY into your website:
 The required HTML looks something like this:
 
 ``` xml
-<script src="tify-0.25.0.js"></script>
-<link rel="stylesheet" href="tify-0.25.0.css">
+<script src="tify.js?v0.25.0"></script>
+<link rel="stylesheet" href="tify.css?v0.25.0">
 ⋮
 <div id="tify" style="width: 100%; height: 640px"></div>
 <script>
@@ -37,6 +37,8 @@ The required HTML looks something like this:
   })
 </script>
 ```
+
+> If you are loading TIFY’s JavaScript via `<script>` and the stylesheet via `<link>`, like in the example above, add a query parameter with the current version, e.g. `?v0.25.0`, to avoid issues with browser caching.
 
 ## Upgrading
 
