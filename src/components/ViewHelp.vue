@@ -28,20 +28,18 @@
 export default {
 	computed: {
 		copyright() {
-			return this.$root.options.language === 'en'
-				? 'Copyright &copy; 2017&ndash;2021'
+			const copyright = 'Copyright &copy; 2017&ndash;2021'
 					+ ' <a href="https://www.uni-goettingen.de/en/">Göttingen University</a>'
-					+ ' / <a href="https://www.sub.uni-goettingen.de/en/">Göttingen State and University Library</a>'
-				: this.$root.translate('$copyright');
+					+ ' / <a href="https://www.sub.uni-goettingen.de/en/">Göttingen State and University Library</a>';
+			return this.$root.translate('$copyright', copyright);
 		},
 		env() {
 			return process.env;
 		},
 		info() {
-			return this.$root.options.language === 'en'
-				? 'TIFY is a slim and mobile-friendly IIIF document viewer'
-					+ ', released under the GNU Affero General Public License 3.0.'
-				: this.$root.translate('$info');
+			const info = 'TIFY is a slim and mobile-friendly IIIF document viewer'
+				+ ', released under the GNU Affero General Public License 3.0.';
+			return this.$root.translate('$info', info);
 		},
 	},
 };

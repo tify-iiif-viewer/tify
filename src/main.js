@@ -91,7 +91,7 @@ window.Tify = function Tify(options = {}) {
 			getPageLabel(number, label) {
 				return this.options.pageLabelFormat.replace('P', number).replace('L', label);
 			},
-			translate(string) {
+			translate(string, fallback) {
 				if (this.translation && this.translation[string]) {
 					return this.translation[string];
 				}
@@ -101,7 +101,7 @@ window.Tify = function Tify(options = {}) {
 					console.warn(`Missing translation for "${string}"`);
 				}
 
-				return string;
+				return fallback || string;
 			},
 		},
 	});
