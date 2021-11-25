@@ -39,6 +39,7 @@
 			<a
 				v-else
 				class="tify-toc_link -dots"
+				href="javascript:;"
 				@click="setPage(structure.firstPage)"
 			>
 				<span class="tify-toc_label">{{ structure.label }}</span>

@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Toc from '@/views/Toc';
+import Toc from '@/components/ViewToc';
 
 import manifestForLabels from '../../iiif-api/data/manifests/bsb00026283.json';
 import manifestForPages from '../../iiif-api/data/manifests/gdz-DE_611_BF_5619_1801_1806.json';

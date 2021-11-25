@@ -18,11 +18,8 @@
 			</li>
 		</ul>
 		<footer class="tify-help_footer">
-			<p>
-				{{ $root.translate('Version') }} {{ env.VUE_APP_VERSION }}
-				<br>
-				<span v-html="copyright"/>
-			</p>
+			<p>{{ $root.translate('Version') }} {{ env.VUE_APP_VERSION }}</p>
+			<p v-html="copyright"/>
 		</footer>
 	</section>
 </template>

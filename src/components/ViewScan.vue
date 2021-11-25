@@ -77,56 +77,53 @@
 				</button>
 				<div class="tify-scan_filter-popup" v-show="filtersVisible">
 					<p>
-						<label for="tify-scan_brightness">
+						<label>
 							<icon-white-balance-sunny decorative/>
 							{{ $root.translate('Brightness') }}
 							<b>{{ Math.round(($root.options.filters.brightness || 1) * 100) }}&nbsp;%</b>
+							<input
+								class="tify-scan_range"
+								max="2"
+								min=".5"
+								ref="firstSlider"
+								step=".01"
+								type="range"
+								:value="$root.options.filters.brightness || 1"
+								@input="setFilter('brightness', $event)"
+							>
 						</label>
-						<input
-							class="tify-scan_range"
-							id="tify-scan_brightness"
-							max="2"
-							min=".5"
-							ref="firstSlider"
-							step=".01"
-							type="range"
-							:value="$root.options.filters.brightness || 1"
-							@input="setFilter('brightness', $event)"
-						>
 					</p>
 					<p>
-						<label for="tify-scan_contrast">
+						<label>
 							<icon-brightness-6 decorative/>
 							{{ $root.translate('Contrast') }}
 							<b>{{ Math.round(($root.options.filters.contrast || 1) * 100) }}&nbsp;%</b>
+							<input
+								class="tify-scan_range"
+								max="2"
+								min=".5"
+								step=".01"
+								type="range"
+								:value="$root.options.filters.contrast || 1"
+								@input="setFilter('contrast', $event)"
+							>
 						</label>
-						<input
-							class="tify-scan_range"
-							id="tify-scan_contrast"
-							max="2"
-							min=".5"
-							step=".01"
-							type="range"
-							:value="$root.options.filters.contrast || 1"
-							@input="setFilter('contrast', $event)"
-						>
 					</p>
 					<p>
-						<label for="tify-scan_saturation">
+						<label>
 							<icon-palette decorative/>
 							{{ $root.translate('Saturation') }}
 							<b>{{ Math.round(saturation * 100)}}&nbsp;%</b>
+							<input
+								class="tify-scan_range"
+								max="3"
+								min="0"
+								step=".01"
+								type="range"
+								:value="saturation"
+								@input="setFilter('saturate', $event)"
+							>
 						</label>
-						<input
-							class="tify-scan_range"
-							id="tify-scan_saturation"
-							max="3"
-							min="0"
-							step=".01"
-							type="range"
-							:value="saturation"
-							@input="setFilter('saturate', $event)"
-						>
 					</p>
 					<p>
 						<button

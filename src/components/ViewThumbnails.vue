@@ -6,7 +6,7 @@
 			<a
 				v-for="item in items"
 				class="tify-thumbnails_item"
-				href=""
+				href="javascript:;"
 				:class="{ '-current': $root.options.pages.indexOf(item.page) > -1 }"
 				:key="item.page"
 				@click.prevent="setPageAndSwitchView(item.page, $event.ctrlKey)"

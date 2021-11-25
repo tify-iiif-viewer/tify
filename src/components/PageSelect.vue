@@ -17,8 +17,8 @@
 			@click.stop
 		>
 			<div class="tify-page-select_filter">
-				<label class="tify-sr-only">{{'Filter pages'}}</label>
 				<input
+					:aria-label="$root.translate('Filter pages')"
 					type="text"
 					class="tify-page-select_input"
 					ref="search"
@@ -37,9 +37,10 @@
 						'-current': $root.options.pages.indexOf(canvas.page) > -1,
 						'-highlighted': highlightIndex === index,
 					}"
-					@click="setPage(canvas.page)"
 				>
-					{{ $root.getPageLabel(canvas.page, $root.convertValueToArray(canvas.label)[0]) }}
+					<a href="javascript:;" @click="setPage(canvas.page)">
+						{{ $root.getPageLabel(canvas.page, $root.convertValueToArray(canvas.label)[0]) }}
+					</a>
 				</li>
 			</ol>
 		</div>

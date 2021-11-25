@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Info from '@/views/Info';
+import Info from '@/components/ViewInfo';
 
 describe('Info', () => {
 	const vm = new Vue(Info);

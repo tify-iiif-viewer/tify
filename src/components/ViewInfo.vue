@@ -47,8 +47,8 @@
 						{{ item }}
 					</template>
 				</template>
-				<template v-else :href="item['@id']">
-					<a v-if="isUrl(item['@id'])" :href="item">
+				<template v-else>
+					<a v-if="isUrl(item['@id'])" :href="item['@id']">
 						{{ item['label'] || item['@id'] }}
 					</a>
 					<template v-else>
@@ -85,9 +85,9 @@
 				v-if="logoId && manifest.logo.service && manifest.logo.service['@id']"
 				:href="manifest.logo.service['@id']"
 			>
-				<img class="tify-info_logo" :src="logoId" alt="">
+				<img class="tify-info_logo" :src="logoId" :alt="$root.translate('Logo')">
 			</a>
-			<img v-else class="tify-info_logo" :src="logoId" alt="">
+			<img v-else class="tify-info_logo" :src="logoId" :alt="$root.translate('Logo')">
 		</div>
 	</section>
 </template>

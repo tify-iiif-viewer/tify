@@ -10,7 +10,7 @@ describe('Scan', () => {
 		cy.visit(`/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify=${encodedParams}`);
 		cy.get('[title="Toggle image filters"]')
 			.click()
-			.get('label[for=tify-scan_saturation]')
+			.get('.tify-scan_filter-popup')
 			.contains('Saturation 0');
 	});
 
