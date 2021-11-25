@@ -31,6 +31,13 @@ module.exports = {
 		'no-tabs': 0,
 		'max-len': ['error', { code: 120 }],
 		'vue/no-template-key': 'off',
+		'vuejs-accessibility/label-has-for': [2, {
+			components: ['label'],
+			required: {
+				some: ['nesting', 'id'],
+			},
+			allowChildren: false,
+		}],
 	},
 	overrides: [
 		{
