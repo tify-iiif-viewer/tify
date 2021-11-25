@@ -22,8 +22,8 @@
 			class="tify-app_loading"
 			:class="{'-centered' : !$root.manifest}"
 		>
-			<span class="tify-sr-only" v-if="$root.options.language === 'en' || $root.translation">
-				{{ $root.translate('Loading') }}
+			<span class="tify-sr-only">
+				{{ $root.translation ? $root.translate('Loading') : 'Loading' }}
 			</span>
 		</div>
 
