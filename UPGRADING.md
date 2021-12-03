@@ -2,8 +2,7 @@
 
 ## Upgrading to v0.25.0 from any prior release
 
-- `dist` filenames now include the current version of TIFY. Change `<script src="tify.js"></script>` to  `<script src="tify-0.25.0.js"></script>`.
-- The stylesheet is no longer loaded automatically. Add `<link rel="stylesheet" href="tify-0.25.0.css">` to the `<head>` of your HTML.
+- The stylesheet is no longer loaded automatically. Add `<link rel="stylesheet" href="tify.css?0.25.0">` to the `<head>` of your HTML.
 - TIFY is now a class and must be instantiated, taking an options object as the only parameter instead of setting options globally via `tifyOptions`. To get the previous behavior, set `container`, `manifestUrl` (if not set via URL query), and `urlQueryKey`:
 	``` js
 	new Tify({
