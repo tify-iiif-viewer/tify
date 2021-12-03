@@ -41,6 +41,7 @@ describe('Scan', () => {
 	it('Control scan via keyboard', () => {
 		cy.visit('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
 		cy.get('.tify-app_main').then(() => {
+			cy.wait(500);
 			cy.get('.tify-app_main').type('r');
 			cy.contains('.tify-scan_button.-active', 'Rotate').should('be.visible');
 
