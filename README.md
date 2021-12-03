@@ -82,7 +82,21 @@ new Tify({
 
 ## API
 
-With the exception of `mount`, all API functions are only available after TIFY has been mounted.
+With the exception of `mount` and `destroy`, all API functions are only available after TIFY has been mounted and the manifest has been loaded. Then the promise `ready` is fulfilled.
+
+The API can be used like this:
+
+``` js
+const tify = new Tify({ manifestUrl: 'https://example.org/iiif-manifest.json' })
+
+tify.mount('#tify')
+
+tify.ready.then(() => {
+	tify.setPage([1, 12, 13])
+	tify.setView('thumbnails')
+	tify.viewer.viewport.zoomTo(2)
+})
+```
 
 There is no API function to load a new manifest; just replace the instance.
 

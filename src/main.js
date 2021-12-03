@@ -57,6 +57,11 @@ window.Tify = function Tify(options = {}) {
 		}
 	}
 
+	let readyPromise = null;
+	this.ready = new Promise((resolve, reject) => {
+		readyPromise = { resolve, reject };
+	});
+
 	const instance = this;
 	this.app = new Vue({
 		render: (h) => h(App),
@@ -68,6 +73,7 @@ window.Tify = function Tify(options = {}) {
 				manifest: null,
 				manifestUrl: '',
 				options: instance.options,
+				readyPromise,
 				translation: null,
 			};
 		},

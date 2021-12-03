@@ -115,12 +115,16 @@ export default {
 						window.document.title = this.$root.convertValueToArray(this.$root.manifest.label)[0]
 							+ this.$root.options.titleAffix;
 					}
+
+					this.$nextTick(() => this.$root.readyPromise.resolve());
 				} else {
 					this.$root.error = 'Please provide a valid IIIF Presentation API 2.x manifest';
+					this.$root.readyPromise.reject(this.$root.error);
 				}
 			}, (error) => {
 				const status = (error.response ? error.response.statusText : error.message);
 				this.$root.error = `Error loading IIIF manifest: ${status}`;
+				this.$root.readyPromise.reject(this.$root.error);
 			});
 		},
 		setLanguage(language) {
