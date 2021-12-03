@@ -26,7 +26,7 @@ module.exports = {
 			splitChunks: false,
 		},
 		output: {
-			filename: '[name].js',
+			filename: 'tify.js',
 		},
 		plugins: [
 			// Prepend copyright notice to each compiled file
@@ -53,7 +53,7 @@ module.exports = {
 	},
 	css: {
 		extract: {
-			filename: '[name].css',
+			filename: 'tify.css',
 		},
 		loaderOptions: {
 			scss: {
