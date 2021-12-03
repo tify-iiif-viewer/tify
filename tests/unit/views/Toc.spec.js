@@ -5,7 +5,7 @@ import manifestForLabels from '../../iiif-api/data/manifests/bsb00026283.json';
 import manifestForPages from '../../iiif-api/data/manifests/gdz-DE_611_BF_5619_1801_1806.json';
 
 describe('Toc', () => {
-	it('should select label from multi-lanuage labels', () => {
+	it('should select a label in the current language', () => {
 		const vm = new Vue(Toc);
 		vm.$root.convertValueToArray = (value) => {
 			// NOTE - function will be called on structure.label data,
