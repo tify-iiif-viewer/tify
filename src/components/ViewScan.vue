@@ -8,7 +8,7 @@
 			:title="$root.translate('Previous page')"
 			@click="goToPreviousPage"
 		>
-			<icon-chevron-left decorative/>
+			<icon-chevron-left/>
 			<span class="tify-sr-only">{{ $root.translate('Previous page') }}</span>
 		</button>
 		<button
@@ -17,7 +17,7 @@
 			:title="$root.translate('Next page')"
 			@click="goToNextPage"
 		>
-			<icon-chevron-right decorative/>
+			<icon-chevron-right/>
 			<span class="tify-sr-only">{{ $root.translate('Next page') }}</span>
 		</button>
 
@@ -28,7 +28,7 @@
 				:title="$root.translate('Zoom in')"
 				@click="zoomIn"
 			>
-				<icon-magnify-plus decorative/>
+				<icon-magnify-plus/>
 				<span class="tify-sr-only">{{ $root.translate('Zoom in') }}</span>
 			</button>
 			<button
@@ -37,7 +37,7 @@
 				:title="$root.translate('Reset')"
 				@click="resetViewer(!!$event.shiftKey)"
 			>
-				<icon-aspect-ratio decorative/>
+				<icon-aspect-ratio/>
 				<span class="tify-sr-only">{{ $root.translate('Reset') }}</span>
 			</button>
 			<button
@@ -46,7 +46,7 @@
 				:title="$root.translate('Zoom out')"
 				@click="zoomOut"
 			>
-				<icon-magnify-minus decorative/>
+				<icon-magnify-minus/>
 				<span class="tify-sr-only">{{ $root.translate('Zoom out') }}</span>
 			</button>
 
@@ -56,7 +56,7 @@
 				:title="$root.translate('Rotate')"
 				@click="rotateRight($event)"
 			>
-				<icon-rotate-right decorative/>
+				<icon-rotate-right/>
 				<span class="tify-sr-only">{{ $root.translate('Rotate') }}</span>
 			</button>
 
@@ -72,13 +72,13 @@
 					:title="$root.translate('Toggle image filters')"
 					@click="filtersVisible = !filtersVisible"
 				>
-					<icon-tune decorative/>
+					<icon-tune/>
 					<span class="tify-sr-only">{{ $root.translate('Toggle image filters') }}</span>
 				</button>
 				<div class="tify-scan_filter-popup" v-show="filtersVisible">
 					<p>
 						<label>
-							<icon-white-balance-sunny decorative/>
+							<icon-white-balance-sunny/>
 							{{ $root.translate('Brightness') }}
 							<b>{{ Math.round(($root.options.filters.brightness || 1) * 100) }}&nbsp;%</b>
 							<input
@@ -95,7 +95,7 @@
 					</p>
 					<p>
 						<label>
-							<icon-brightness-6 decorative/>
+							<icon-brightness-6/>
 							{{ $root.translate('Contrast') }}
 							<b>{{ Math.round(($root.options.filters.contrast || 1) * 100) }}&nbsp;%</b>
 							<input
@@ -111,7 +111,7 @@
 					</p>
 					<p>
 						<label>
-							<icon-palette decorative/>
+							<icon-palette/>
 							{{ $root.translate('Saturation') }}
 							<b>{{ Math.round(saturation * 100)}}&nbsp;%</b>
 							<input
@@ -131,7 +131,7 @@
 							:disabled="!filtersActive"
 							@click="resetFilters"
 						>
-							<icon-backup-restore decorative/>
+							<icon-backup-restore/>
 							{{ $root.translate('Reset') }}
 						</button>
 					</p>

@@ -21,11 +21,11 @@
 					@click="infoItems[index].collapsed = !infoItems[index].collapsed"
 				>
 					<template v-if="infoItems[index].collapsed">
-						<icon-chevron-down decorative/>
+						<icon-chevron-down/>
 						{{ $root.translate('Expand') }}
 					</template>
 					<template v-else>
-						<icon-chevron-up decorative/>
+						<icon-chevron-up/>
 						{{ $root.translate('Collapse') }}
 					</template>
 				</button>

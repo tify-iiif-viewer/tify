@@ -19,8 +19,8 @@
 					:title="$root.translate('Toggle double-page')"
 					@click="toggleDoublePage"
 				>
-					<icon-view-module v-if="customPageViewActive" decorative/>
-					<icon-book-open-blank-variant v-else decorative/>
+					<icon-view-module v-if="customPageViewActive"/>
+					<icon-book-open-blank-variant v-else/>
 					<span class="tify-sr-only">{{ $root.translate('Toggle double-page') }}</span>
 				</button>
 			</div>
@@ -32,7 +32,7 @@
 					:title="$root.translate('First page')"
 					@click="goToFirstPage"
 				>
-					<icon-page-first decorative/>
+					<icon-page-first/>
 					<span class="tify-sr-only">{{ $root.translate('First page') }}</span>
 				</button>
 
@@ -43,7 +43,7 @@
 					:title="$root.translate('Previous section')"
 					@click="goToPreviousSection"
 				>
-					<icon-skip-previous decorative/>
+					<icon-skip-previous/>
 					<span class="tify-sr-only">{{ $root.translate('Previous section') }}</span>
 				</button>
 
@@ -53,7 +53,7 @@
 					:title="$root.translate('Previous page')"
 					@click="goToPreviousPage"
 				>
-					<icon-chevron-left decorative/>
+					<icon-chevron-left/>
 					<span class="tify-sr-only">{{ $root.translate('Previous page') }}</span>
 				</button>
 
@@ -63,7 +63,7 @@
 					:title="$root.translate('Next page')"
 					@click="goToNextPage"
 				>
-					<icon-chevron-right decorative/>
+					<icon-chevron-right/>
 					<span class="tify-sr-only">{{ $root.translate('Next page') }}</span>
 				</button>
 
@@ -74,7 +74,7 @@
 					:title="$root.translate('Next section')"
 					@click="goToNextSection"
 				>
-					<icon-skip-next decorative/>
+					<icon-skip-next/>
 					<span class="tify-sr-only">{{ $root.translate('Next section') }}</span>
 				</button>
 
@@ -84,7 +84,7 @@
 					:title="$root.translate('Last page')"
 					@click="goToLastPage"
 				>
-					<icon-page-last decorative/>
+					<icon-page-last/>
 					<span class="tify-sr-only">{{ $root.translate('Last page') }}</span>
 				</button>
 			</div>
@@ -97,7 +97,7 @@
 					v-click-outside="closeControlsPopup"
 					@click="toggleControlsPopup"
 				>
-					<icon-menu decorative/>
+					<icon-menu/>
 					{{ $root.translate('View') }}
 				</button>
 			</div>
@@ -110,7 +110,7 @@
 					:class="{ '-active': $root.options.view === 'scan' }"
 					@click="toggleView('scan')"
 				>
-					<icon-image decorative/>
+					<icon-image/>
 					{{ $root.translate('Scan') }}
 				</button>
 
@@ -120,7 +120,7 @@
 					:class="{ '-active': $root.options.view === 'fulltext' }"
 					@click="toggleView('fulltext')"
 				>
-					<icon-text-long decorative/>
+					<icon-text-long/>
 					{{ $root.translate('Fulltext') }}
 				</button>
 
@@ -129,7 +129,7 @@
 					:class="{ '-active': $root.options.view === 'thumbnails' }"
 					@click="toggleView('thumbnails')"
 				>
-					<icon-view-module decorative/>
+					<icon-view-module/>
 					{{ $root.translate('Pages') }}
 				</button>
 
@@ -139,7 +139,7 @@
 					:class="{ '-active': $root.options.view === 'toc' }"
 					@click="toggleView('toc')"
 				>
-					<icon-table-of-contents decorative/>
+					<icon-table-of-contents/>
 					{{ $root.translate('Contents') }}
 				</button>
 
@@ -148,7 +148,7 @@
 					:class="{ '-active': $root.options.view === 'info' }"
 					@click="toggleView('info')"
 				>
-					<icon-information-outline decorative/>
+					<icon-information-outline/>
 					{{ $root.translate('Info') }}
 				</button>
 
@@ -157,7 +157,7 @@
 					:class="{ '-active': $root.options.view === 'export' }"
 					@click="toggleView('export')"
 				>
-					<icon-download decorative/>
+					<icon-download/>
 					{{ $root.translate('Export') }}
 				</button>
 
@@ -167,7 +167,7 @@
 					:title="$root.translate('Help')"
 					@click="toggleView('help')"
 				>
-					<icon-help-circle-outline decorative/>
+					<icon-help-circle-outline/>
 					{{ $root.translate('Help') }}
 				</button>
 			</div>
@@ -179,7 +179,7 @@
 					:title="$root.translate('Fullscreen')"
 					@click="toggleFullscreen"
 				>
-					<icon-fullscreen decorative/>
+					<icon-fullscreen/>
 					{{ $root.translate('Fullscreen') }}
 				</button>
 				<button
@@ -188,7 +188,7 @@
 					:title="$root.translate('Exit fullscreen')"
 					@click="toggleFullscreen"
 				>
-					<icon-fullscreen-exit decorative/>
+					<icon-fullscreen-exit/>
 					{{ $root.translate('Exit fullscreen') }}
 				</button>
 			</div>
@@ -200,7 +200,7 @@
 					:title="$root.translate('First page')"
 					@click="goToFirstPage"
 				>
-					<icon-page-first decorative/>
+					<icon-page-first/>
 					<span class="tify-sr-only">{{ $root.translate('First page') }}</span>
 				</button>
 
@@ -211,7 +211,7 @@
 					:title="$root.translate('Previous section')"
 					@click="goToPreviousSection"
 				>
-					<icon-skip-previous decorative/>
+					<icon-skip-previous/>
 					<span class="tify-sr-only">{{ $root.translate('Previous section') }}</span>
 				</button>
 
@@ -221,7 +221,7 @@
 					:title="$root.translate('Previous page')"
 					@click="goToPreviousPage"
 				>
-					<icon-chevron-left decorative/>
+					<icon-chevron-left/>
 					<span class="tify-sr-only">{{ $root.translate('Previous page') }}</span>
 				</button>
 
@@ -231,7 +231,7 @@
 					:title="$root.translate('Next page')"
 					@click="goToNextPage"
 				>
-					<icon-chevron-right decorative/>
+					<icon-chevron-right/>
 					<span class="tify-sr-only">{{ $root.translate('Next page') }}</span>
 				</button>
 
@@ -242,7 +242,7 @@
 					:title="$root.translate('Next section')"
 					@click="goToNextSection"
 				>
-					<icon-skip-next decorative/>
+					<icon-skip-next/>
 					<span class="tify-sr-only">{{ $root.translate('Next section') }}</span>
 				</button>
 
@@ -252,7 +252,7 @@
 					:title="$root.translate('Last page')"
 					@click="goToLastPage"
 				>
-					<icon-page-last decorative/>
+					<icon-page-last/>
 					<span class="tify-sr-only">{{ $root.translate('Last page') }}</span>
 				</button>
 			</div>
