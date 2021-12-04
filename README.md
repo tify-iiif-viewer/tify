@@ -150,7 +150,7 @@ There is no API function to load a new manifest; just replace the instance.
 
 - ### `toggleFullscreen`
 
-	Toggles fullscreen mode.
+	Toggles fullscreen mode. For security reasons, most browsers require a user interaction to enter fullscreen mode; a button calling this function via `onclick` works, but trying to do so automatically does probably not.
 
 	#### Parameters
 
