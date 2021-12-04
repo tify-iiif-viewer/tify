@@ -84,9 +84,9 @@ new Tify({
 
 ## API
 
-With the exception of `mount` and `destroy`, all API functions are only available after TIFY has been mounted and the manifest has been loaded. Then the promise `ready` is fulfilled.
+With the exception of `mount` and `destroy`, all API functions are only available after TIFY has been mounted and the manifest has been loaded. Then the `ready` promise is fulfilled.
 
-The API can be used like this:
+Use the API like this:
 
 ``` js
 const tify = new Tify({ manifestUrl: 'https://example.org/iiif-manifest.json' })
@@ -169,7 +169,7 @@ There is no API function to load a new manifest; just replace the instance.
 
 ### OpenSeadragon API
 
-The object `viewer` exposes the full [OpenSeadragon API](https://openseadragon.github.io/docs/OpenSeadragon.html). If you want to control the scan view programmatically, the [methods of `viewer.viewport`](https://openseadragon.github.io/docs/OpenSeadragon.Viewport.html) are probably of interest.
+The `viewer` object exposes the full [OpenSeadragon API](https://openseadragon.github.io/docs/OpenSeadragon.html). If you want to control the scan view programmatically, the [methods of `viewer.viewport`](https://openseadragon.github.io/docs/OpenSeadragon.Viewport.html) are probably of interest.
 
 ## Build Setup
 
