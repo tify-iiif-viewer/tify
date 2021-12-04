@@ -140,6 +140,14 @@ There is no API function to load a new manifest; just replace the instance.
 
 	- `language` (string, default `en`): The language code to load.  A JSON file containing the translations for this language must be present in `public/translations`. Strings with missing translation are displayed in English.
 
+- ### `setView`
+
+	Changes the active view (panel).
+
+	#### Parameters
+
+	- `name` (string): The view’s name; `export`, `fulltext`, `help`, `info`, `scan`, `thumbnails`, `toc`, or an empty string (same as `scan`).
+
 - ### `toggleDoublePage`
 
 	Switches from single to double page (“book view”) and vice versa.
@@ -156,29 +164,10 @@ There is no API function to load a new manifest; just replace the instance.
 
 	- `force` (boolean, default `false`): Fullscreen is forced on (`true`) or off (`false`).
 
-- ### `toggleView`
-
-	Changes the active view.
-
-	#### Parameters
-
-	- `name` (string): The name of view to toggle; `export`, `fulltext`, `help`, `info`, `scan` (only has effect on mobile), `thumbnails`, or `toc`.
-	- `force` (boolean, default `undefined`): Force the view on (`true`) or off (`false`).
-
 
 ### OpenSeadragon API
 
 The object `viewer` exposes the full [OpenSeadragon API](https://openseadragon.github.io/docs/OpenSeadragon.html). If you want to control the scan view programmatically, the [methods of `viewer.viewport`](https://openseadragon.github.io/docs/OpenSeadragon.Viewport.html) are probably of interest.
-
-### API Usage Example
-
-``` js
-const tify = new Tify({ manifestUrl: 'https://example.org/iiif-manifest.json' })
-tify.mount('#tify')
-tify.setPage([1, 12, 13])
-tify.toggleView('thumbnails')
-tify.viewer.viewport.zoomTo(2)
-```
 
 ## Build Setup
 

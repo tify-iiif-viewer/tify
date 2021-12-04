@@ -434,6 +434,9 @@ export default {
 			default:
 			}
 		},
+		setView(name) {
+			this.$root.updateOptions({ view: name });
+		},
 		toggleControlsPopup() {
 			this.controlsVisible = !this.controlsVisible;
 		},
@@ -488,9 +491,8 @@ export default {
 		toggleFullscreenActive() {
 			this.fullscreenActive = !this.fullscreenActive;
 		},
-		toggleView(name, force) {
-			const view = (name === this.$root.options.view && !this.$root.isMobile() && force !== true)
-					|| force === false
+		toggleView(name) {
+			const view = name === this.$root.options.view && !this.$root.isMobile()
 				? ''
 				: name;
 			this.$root.updateOptions({ view });
@@ -498,7 +500,7 @@ export default {
 		},
 	},
 	created() {
-		this.$root.expose(this.toggleView);
+		this.$root.expose(this.setView);
 		this.$root.expose(this.toggleDoublePage);
 		this.$root.expose(this.toggleFullscreen);
 
