@@ -261,10 +261,10 @@
 </template>
 
 <script>
-import PageSelect from '@/components/PageSelect';
+import PageSelect from './PageSelect';
 
-import keyboard from '@/mixins/keyboard';
-import pagination from '@/mixins/pagination';
+import keyboard from '../mixins/keyboard';
+import pagination from '../mixins/pagination';
 
 export default {
 	components: {

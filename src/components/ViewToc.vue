@@ -21,10 +21,10 @@
 </template>
 
 <script>
-import TocList from '@/components/TocList';
+import TocList from './TocList';
 
-import scroll from '@/mixins/scroll';
-import structures from '@/mixins/structures';
+import scroll from '../mixins/scroll';
+import structures from '../mixins/structures';
 
 const currentSelector = '.tify-toc_structure.-current';
 

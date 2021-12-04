@@ -73,9 +73,9 @@
 </template>
 
 <script>
-import TocList from '@/components/TocList';
+import TocList from './TocList';
 
-import structures from '@/mixins/structures';
+import structures from '../mixins/structures';
 
 const itemCriteria = [
 	{

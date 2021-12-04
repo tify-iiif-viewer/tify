@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import keyboard from '@/mixins/keyboard';
+import keyboard from '../mixins/keyboard';
 
 export default {
 	mixins: [

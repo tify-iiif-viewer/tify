@@ -94,9 +94,9 @@
 
 <script>
 // TODO: Handle and display manifest.service, see http://iiif.io/api/presentation/2.1/#service
-import MetadataList from '@/components/MetadataList';
+import MetadataList from './MetadataList';
 
-import structures from '@/mixins/structures';
+import structures from '../mixins/structures';
 
 export default {
 	components: {

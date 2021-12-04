@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import scroll from '@/mixins/scroll';
+import scroll from '../mixins/scroll';
 
 const longTouchDuration = 750;
 

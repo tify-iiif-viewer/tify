@@ -1,14 +1,14 @@
 import Vue from 'vue';
 import Axios from 'axios';
 
-import App from '@/App';
+import App from './App';
 
-import iiifMixin from '@/mixins/iiif';
-import paramsMixin from '@/mixins/params';
-import uiMixin from '@/mixins/ui';
+import iiifMixin from './mixins/iiif';
+import paramsMixin from './mixins/params';
+import uiMixin from './mixins/ui';
 
-import '@/directives/click-outside';
-import '@/polyfills/findIndex';
+import './directives/click-outside';
+import './polyfills/findIndex';
 
 Vue.prototype.$http = Axios;
 

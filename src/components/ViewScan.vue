@@ -144,36 +144,37 @@
 </template>
 
 <script>
-import OpenSeadragon from '@/../openseadragon/src/openseadragon';
+// eslint-disable-next-line import/no-relative-packages
+import OpenSeadragon from '../../openseadragon/src/openseadragon';
 
-import keyboard from '@/mixins/keyboard';
-import pagination from '@/mixins/pagination';
+import keyboard from '../mixins/keyboard';
+import pagination from '../mixins/pagination';
 
 // TODO: Is there a better way to make OpenSeadragon available to imports below?
 window.OpenSeadragon = OpenSeadragon;
 
 // Custom-build OpenSeadragon. Order is important!
-require('@/../openseadragon/src/controldock');
-require('@/../openseadragon/src/eventsource');
+require('../../openseadragon/src/controldock');
+require('../../openseadragon/src/eventsource');
 
-require('@/../openseadragon/src/tilesource');
+require('../../openseadragon/src/tilesource');
 
-require('@/../openseadragon/src/iiiftilesource');
-require('@/../openseadragon/src/imagetilesource');
+require('../../openseadragon/src/iiiftilesource');
+require('../../openseadragon/src/imagetilesource');
 
-require('@/../openseadragon/src/drawer');
-require('@/../openseadragon/src/imageloader');
-require('@/../openseadragon/src/mousetracker');
-require('@/../openseadragon/src/placement');
-require('@/../openseadragon/src/point');
-require('@/../openseadragon/src/spring');
-require('@/../openseadragon/src/tile');
-require('@/../openseadragon/src/tilecache');
-require('@/../openseadragon/src/tiledimage');
-require('@/../openseadragon/src/rectangle');
-require('@/../openseadragon/src/viewer');
-require('@/../openseadragon/src/viewport');
-require('@/../openseadragon/src/world');
+require('../../openseadragon/src/drawer');
+require('../../openseadragon/src/imageloader');
+require('../../openseadragon/src/mousetracker');
+require('../../openseadragon/src/placement');
+require('../../openseadragon/src/point');
+require('../../openseadragon/src/spring');
+require('../../openseadragon/src/tile');
+require('../../openseadragon/src/tilecache');
+require('../../openseadragon/src/tiledimage');
+require('../../openseadragon/src/rectangle');
+require('../../openseadragon/src/viewer');
+require('../../openseadragon/src/viewport');
+require('../../openseadragon/src/world');
 
 const gapBetweenPages = .01;
 const vendorPrefixes = ['-webkit-', '-moz-', '-o-', '-ms-'];

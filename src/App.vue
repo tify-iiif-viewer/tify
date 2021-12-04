@@ -37,14 +37,14 @@
 </template>
 
 <script>
-import AppHeader from '@/components/AppHeader';
-import ViewExport from '@/components/ViewExport';
-import ViewFulltext from '@/components/ViewFulltext';
-import ViewHelp from '@/components/ViewHelp';
-import ViewInfo from '@/components/ViewInfo';
-import ViewScan from '@/components/ViewScan';
-import ViewThumbnails from '@/components/ViewThumbnails';
-import ViewToc from '@/components/ViewToc';
+import AppHeader from './components/AppHeader';
+import ViewExport from './components/ViewExport';
+import ViewFulltext from './components/ViewFulltext';
+import ViewHelp from './components/ViewHelp';
+import ViewInfo from './components/ViewInfo';
+import ViewScan from './components/ViewScan';
+import ViewThumbnails from './components/ViewThumbnails';
+import ViewToc from './components/ViewToc';
 
 export default {
 	components: {
@@ -151,4 +151,4 @@ export default {
 };
 </script>
 
-<style src="@/styles/main.scss" lang="scss"></style>
+<style src="./styles/main.scss" lang="scss"></style>
