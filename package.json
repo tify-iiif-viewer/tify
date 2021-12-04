@@ -11,6 +11,7 @@
     "url": "https://github.com/tify-iiif-viewer/tify/issues"
   },
   "license": "AGPL-3.0",
+  "main": "dist/tify.js",
   "scripts": {
     "build": "vue-cli-service build",
     "e2e": "node tests/e2e/runner.js --headless",

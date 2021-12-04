@@ -40,6 +40,8 @@ The required HTML looks something like this:
 
 > If you are loading TIFY’s JavaScript via `<script>` and the stylesheet via `<link>`, like in the example above, add a query parameter with the current version, e.g. `?v0.25.0`, to avoid issues with browser caching.
 
+When creating a web application, you can also use `import 'tify'`.
+
 ## Upgrading
 
 If you are are upgrading from any previous version, please have a look at the [upgrading guidelines](UPGRADING.md).
