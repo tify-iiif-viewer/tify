@@ -35,7 +35,11 @@ describe('Info', () => {
 		cy.visit('/?manifest=http://localhost:8081/manifest/gdz-DE_611_BF_5619_1801_1806.json');
 		cy.contains('Info').click();
 		cy.get('.tify-app_main').then(() => {
-			cy.contains('Next page').click().click().click().click();
+			cy.contains('Next page')
+				.click()
+				.click()
+				.click()
+				.click();
 			cy.contains('Current Element').should('be.visible');
 			cy.contains(
 				'.tify-info_section.-metadata.-structure',

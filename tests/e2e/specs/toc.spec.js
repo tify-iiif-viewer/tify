@@ -7,7 +7,10 @@ describe('TOC', () => {
 
 			cy.get('.tify-toc_structure.-current').contains('Titelseite');
 			cy.get('.tify-toc_structure[data-level="0"]:nth-child(3) > .tify-toc_toggle').click();
-			cy.get('.tify-toc_structure[data-level="0"].-expanded .tify-toc_structure[data-level="1"]:first-child > .tify-toc_toggle').click();
+			cy.get(
+				'.tify-toc_structure[data-level="0"].-expanded'
+					+ ' .tify-toc_structure[data-level="1"]:first-child > .tify-toc_toggle',
+			).click();
 			cy.get('.tify-toc_label').contains('Huddesche Methode');
 
 			// "Kurze Nachrichten"

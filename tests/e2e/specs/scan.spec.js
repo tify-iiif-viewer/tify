@@ -35,13 +35,16 @@ describe('Scan', () => {
 		});
 
 		cy.get('.tify-app_main').type('{shift}0');
-		cy.url().should('include', '/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify={%22view%22:%22%22}');
+		cy.url().should(
+			'include',
+			'/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify={%22view%22:%22%22}',
+		);
 	});
 
 	it('Control scan via keyboard', () => {
 		cy.visit('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
 		cy.get('.tify-app_main').then(() => {
-			cy.wait(500);
+			cy.wait(500); // eslint-disable-line cypress/no-unnecessary-waiting
 			cy.get('.tify-app_main').type('r');
 			cy.contains('.tify-scan_button.-active', 'Rotate').should('be.visible');
 
@@ -53,12 +56,14 @@ describe('Scan', () => {
 			cy.get('.tify-app_main').type('i')
 				.contains('Brightness').should('be.visible')
 				.type('i')
-				.contains('Brightness').should('not.be.visible');
+				.contains('Brightness')
+				.should('not.be.visible');
 
 			cy.get('.tify-app_main').type('i')
 				.contains('Brightness').should('be.visible')
 				.type('{esc}')
-				.contains('Brightness').should('not.be.visible');
+				.contains('Brightness')
+				.should('not.be.visible');
 		});
 	});
 });
