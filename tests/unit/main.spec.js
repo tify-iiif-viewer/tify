@@ -29,7 +29,7 @@ describe('main', () => {
 	});
 });
 
-describe('filter-html', () => {
+describe('filter html', () => {
 	it('should filter HTML', () => {
 		const html = `
 			<h1 id="remove tag">
@@ -58,5 +58,11 @@ describe('filter-html', () => {
 		`;
 
 		expect(app.filterHtml(html)).toEqual(filteredHtml);
+	});
+});
+
+describe('get page label', () => {
+	it('should get the page label', () => {
+		expect(app.getPageLabel(1, 'label')).toEqual('1 : label');
 	});
 });
