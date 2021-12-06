@@ -1,12 +1,12 @@
-<p>
+<h1 style="border: 0; padding: 0">
 	<a href="https://github.com/tify-iiif-viewer/tify">
-		<img src="https://demo.tify.rocks/public/img/tify-logo.svg" alt="TIFY" width="148" height="60">
+		<img src="https://tify.rocks/img/tify-logo.svg" alt="TIFY" width="148" height="60">
 	</a>
-</p>
+</h1>
 
 TIFY is a slim and mobile-friendly IIIF document viewer built with [Vue.js](https://vuejs.org/).
 
-[Check out the website for usage examples.](https://tify.rocks/)
+Continue reading to learn how to integrate TIFY into your website or application and about its options and API, [check out the website for usage examples](https://tify.rocks/), or [have a look at the user guide](docs/user-guide.en.md).
 
 ## Embedding TIFY
 
@@ -16,39 +16,57 @@ TIFY is available as an [npm package](https://www.npmjs.com/package/tify):
 npm install tify
 ```
 
-To embed TIFY into your website:
+Embed TIFY into your website in three easy steps:
 
-1. Copy the contents of the `dist` directory to your server.
-2. Include the TIFY JavaScript and CSS files.
-3. Add an HTML element and set its `width` and `height`.
-4. Create a TIFY instance.
+1. Include both the JavaScript and the stylesheet.
 
-The required HTML looks something like this:
+	- Either download TIFY and copy the contents of the `dist` directory to your server:
 
-``` xml
-<script src="tify.js?v0.25.0"></script>
-<link rel="stylesheet" href="tify.css?v0.25.0">
-⋮
-<div id="tify" style="width: 100%; height: 640px"></div>
-<script>
-  new Tify({
-    container: '#tify',
-    manifestUrl: 'https://example.org/iiif-manifest.json',
-  })
-</script>
-```
+		``` xml
+		<script src="tify.js?v0.25.0"></script>
+		<link rel="stylesheet" href="tify.css?v0.25.0">
+		```
 
-> If you are loading TIFY’s JavaScript via `<script>` and the stylesheet via `<link>`, like in the example above, add a query parameter with the current version, e.g. `?v0.25.0`, to avoid issues with browser caching.
+		> To avoid issues with browser caching, add a query parameter with the current version, e.g. `?v0.25.0`.
 
-When creating a web application, you can also use `import 'tify'`.
+	- Or use [jsDelivr](https://www.jsdelivr.com/):
+
+		``` xml
+		<script src="https://cdn.jsdelivr.net/npm/tify@0.25.0/dist/tify.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tify@0.25.0/dist/tify.css">
+		```
+
+	- Or `import` TIFY into your web application:
+
+		``` js
+		import 'tify'
+		import 'tify/dist/tify.css'
+		```
+
+2. Add an HTML block element with an `id` and set its `width` and `height`.
+
+	``` xml
+	<div id="tify" style="width: 100%; height: 640px"></div>
+	```
+
+3. Create a TIFY instance.
+
+	``` xml
+	<script>
+	new Tify({
+		container: '#tify',
+		manifestUrl: 'https://example.org/iiif-manifest.json',
+	})
+	</script>
+	```
 
 ## Upgrading
 
-If you are are upgrading from any previous version, please have a look at the [upgrading guidelines](UPGRADING.md).
+If you are are upgrading from any previous version, [have a look at the upgrading guidelines](UPGRADING.md).
 
 ## Options
 
-TIFY takes an options object as its only parameter. While optional, you usually want to set the `container` and the `manifestUrl`.
+TIFY takes an options object as its only parameter. While optional, you usually want to set `container` and `manifestUrl`.
 
 - `container` (string or HTMLElement or null, default `null`): The HTML element into which TIFY is mounted. If set to `null`, TIFY is not mounted at all until `mount` is called (see [_API_](#api) below).
 - `language` (string, default `en`): The interface language, matching the translation filename without extension. [See which translations are available](https://github.com/tify-iiif-viewer/tify/tree/main/dist/translations) or add your own.
@@ -57,7 +75,7 @@ TIFY takes an options object as its only parameter. While optional, you usually 
 - `pageLabelFormat` (string, default `P : L`): Defines how page labels are displayed in the page selector and in the thumbnails view. The placeholder `P` is replaced by the physical page number (consecutive numbers starting at `1`) while `L` is replaced by the logical page label, which can be any string, defined by the manifest.
 - `pages` (array of 1-based integers, default `[1]`): The page(s) to display initially. Page numbers are physical numbers, starting at 1. This setting can be overridden by setting `pages` via URL query if `urlQueryKey` is set.
 - `titleAffix` (string): If set, TIFY replaces the window title with the document title from the manifest, appended by this string, e.g. ` | TIFY`.
-- `translationsDirUrl` (string): The URL of the directory where TIFY finds its translations (without trailing `/`). TIFY tries to determine this URL automatically from its `<script>` element, but if TIFY was loaded in another way, or if you want to load you own translation, this option must be set.
+- `translationsDirUrl` (string): The URL of the directory where TIFY finds its translations, without trailing `/`. TIFY tries to determine this URL automatically from its `<script>` element, but if TIFY was loaded in another way, or if you want to load you own translation, this option must be set.
 - `urlQueryKey` (string, only use characters `A…Z a…z 0…9 - _ . ~`): Read parameters from the URL query and reflect any changes, using the key provided. This also works with multiple concurrent instances, but each instance must use a unique key.
 - `urlQueryParams` (array of strings, default `['filters', 'pages', 'panX', 'panY', 'rotation', 'view', 'zoom']`): An array of parameter keys to be stored in the URL query on change. Only has effect if `urlQueryKey` is set.
 - `view` (string, default empty): The initially displayed view (panel); `scan` (only has effect on mobile), `fulltext`, `thumbnails`, `toc`, `info`, or `help`.
@@ -197,7 +215,7 @@ npm run build
 
 The production build will be stored in `dist`.
 
-## Running Tests
+### Running Tests
 
 ``` bash
 # run unit tests
@@ -213,5 +231,5 @@ npm test
 ---
 
 <a href="https://www.sub.uni-goettingen.de/en/">
-	<img src="https://demo.tify.rocks/supporters/sub-logo.svg" width="329" height="30" alt="Göttingen State and University Library (SUB Göttingen)"/>
+	<img src="https://tify.rocks/img/sub-logo.svg" width="329" height="30" alt="Göttingen State and University Library">
 </a>
