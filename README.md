@@ -22,7 +22,7 @@ Embed TIFY into your website in three easy steps:
 
 	- Either download TIFY and copy the contents of the `dist` directory to your server:
 
-		``` xml
+		``` html
 		<script src="tify.js?v0.25.0"></script>
 		<link rel="stylesheet" href="tify.css?v0.25.0">
 		```
@@ -31,7 +31,7 @@ Embed TIFY into your website in three easy steps:
 
 	- Or use [jsDelivr](https://www.jsdelivr.com/):
 
-		``` xml
+		``` html
 		<script src="https://cdn.jsdelivr.net/npm/tify@0.25.0/dist/tify.js"></script>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tify@0.25.0/dist/tify.css">
 		```
@@ -45,13 +45,13 @@ Embed TIFY into your website in three easy steps:
 
 2. Add an HTML block element with an `id` and set its `width` and `height`.
 
-	``` xml
+	``` html
 	<div id="tify" style="width: 100%; height: 640px"></div>
 	```
 
 3. Create a TIFY instance.
 
-	``` xml
+	``` html
 	<script>
 	new Tify({
 		container: '#tify',
