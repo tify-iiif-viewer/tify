@@ -2,7 +2,7 @@
   "name": "tify",
   "version": "0.24.2",
   "description": "TIFY is a slim and mobile-friendly IIIF document viewer.",
-  "homepage": "https://github.com/tify-iiif-viewer/tify",
+  "homepage": "https://tify.rocks/",
   "repository": {
     "type:": "git",
     "url": "https://github.com/tify-iiif-viewer/tify"
@@ -17,14 +17,13 @@
     "e2e": "node tests/e2e/runner.js --headless",
     "lint": "vue-cli-service lint",
     "lint-fix": "vue-cli-service lint --fix",
-    "postversion": "git push && git push --tags && npm run update-gh-pages && echo Tag v$npm_package_version created. Run \"npm publish\" to publish \"$npm_package_name\" on npmjs.com.",
+    "postversion": "git push && git push --tags && echo Tag v$npm_package_version created. Run \"npm publish\" to publish \"$npm_package_name\" on npmjs.com.",
     "prepare": "node get-openseadragon.js v2.4.2",
     "preversion": "rimraf node_modules && npm install && npm run test",
     "serve": "vue-cli-service serve",
     "serve-mock-api": "node tests/iiif-api/server.js",
     "test": "npm run unit && npm run e2e",
     "unit": "vue-cli-service test:unit",
-    "update-gh-pages": "git checkout gh-pages && git rebase main && git push -f origin gh-pages && git checkout main",
     "version": "npm run build && git add dist"
   },
   "devDependencies": {
