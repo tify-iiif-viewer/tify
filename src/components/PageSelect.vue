@@ -25,8 +25,8 @@
 					v-model="filter"
 					@keyup.enter="(filteredCanvases[highlightIndex]) && setPage(filteredCanvases[highlightIndex].page)"
 					@keydown.esc.prevent="filter ? filter = '' : closeDropdown()"
-					@keydown.up.prevent="(highlightIndex > 0) && (highlightIndex -= 1)"
-					@keydown.down.prevent="(highlightIndex < filteredCanvases.length - 1) && (highlightIndex += 1)"
+					@keydown.up.prevent="onKeyUpArrow()"
+					@keydown.down.prevent="onKeyDownArrow()"
 				>
 			</div>
 			<ol class="tify-page-select_list" ref="list">
@@ -75,12 +75,10 @@ export default {
 	watch: {
 		filter() {
 			this.updateFilteredCanvases();
-		},
-		highlightIndex() {
 			this.$nextTick(() => this.updateScroll());
 		},
 		isOpen() {
-			if (this.isOpen) {
+			if (!this.isOpen) {
 				return;
 			}
 
@@ -111,6 +109,18 @@ export default {
 			if (event.key === 'x') {
 				this.toggleDropdown();
 				event.preventDefault();
+			}
+		},
+		onKeyDownArrow() {
+			if (this.highlightIndex < this.filteredCanvases.length - 1) {
+				this.highlightIndex += 1;
+				this.updateScroll();
+			}
+		},
+		onKeyUpArrow() {
+			if (this.highlightIndex > 0) {
+				this.highlightIndex -= 1;
+				this.updateScroll();
 			}
 		},
 		setPage(page) {
@@ -152,7 +162,7 @@ export default {
 		},
 		updateScroll() {
 			const { list } = this.$refs;
-			if (list.children[this.highlightIndex]) {
+			if (list && list.children[this.highlightIndex]) {
 				const { offsetTop } = list.children[this.highlightIndex];
 				list.scrollTop = offsetTop - ((list.offsetHeight / 2) - list.children[0].offsetHeight);
 			}

@@ -71,4 +71,11 @@ describe('Pagination', () => {
 			cy.contains(currentPage, '69 :  -');
 		});
 	});
+
+	it('Highlights the current page after a page change', () => {
+		cy.visit('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
+		cy.contains('Last page').click();
+		cy.contains('Current page').click();
+		cy.contains('.-current.-highlighted', '69 :  -');
+	});
 });
