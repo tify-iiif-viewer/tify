@@ -68,17 +68,17 @@ If you are are upgrading from any previous version, [have a look at the upgradin
 
 TIFY takes an options object as its only parameter. While optional, you usually want to set `container` and `manifestUrl`.
 
-- `container` (string or HTMLElement or null, default `null`): The HTML element into which TIFY is mounted. If set to `null`, TIFY is not mounted at all until `mount` is called (see [_API_](#api) below).
-- `language` (string, default `en`): The interface language, matching the translation filename without extension. [See which translations are available](https://github.com/tify-iiif-viewer/tify/tree/main/dist/translations) or add your own.
-- `manifestUrl` (string): The URL of the IIIF manifest. If not set, the URL has to be provided via query parameter `manifest`, e.g. `https://example.org/?manifest=https://example.org/iiif-manifest.json`.
-- `viewer` (object): An object with options for OpenSeadragon, TIFY’s image rendering component. [See its documentation](https://openseadragon.github.io/docs/OpenSeadragon.html#.Options) for all available options.
-- `pageLabelFormat` (string, default `P : L`): Defines how page labels are displayed in the page selector and in the thumbnails view. The placeholder `P` is replaced by the physical page number (consecutive numbers starting at `1`) while `L` is replaced by the logical page label, which can be any string, defined by the manifest.
-- `pages` (array of 1-based integers, default `[1]`): The page(s) to display initially. Page numbers are physical numbers, starting at 1. This setting can be overridden by setting `pages` via URL query if `urlQueryKey` is set.
-- `titleAffix` (string): If set, TIFY replaces the window title with the document title from the manifest, appended by this string, e.g. ` | TIFY`.
-- `translationsDirUrl` (string): The URL of the directory where TIFY finds its translations, without trailing `/`. TIFY tries to determine this URL automatically from its `<script>` element, but if TIFY was loaded in another way, or if you want to load you own translation, this option must be set.
-- `urlQueryKey` (string, only use characters `A…Z a…z 0…9 - _ . ~`): Read parameters from the URL query and reflect any changes, using the key provided. This also works with multiple concurrent instances, but each instance must use a unique key.
-- `urlQueryParams` (array of strings, default `['filters', 'pages', 'panX', 'panY', 'rotation', 'view', 'zoom']`): An array of parameter keys to be stored in the URL query on change. Only has effect if `urlQueryKey` is set.
-- `view` (string, default empty): The initially displayed view (panel); `scan` (only has effect on mobile), `fulltext`, `thumbnails`, `toc`, `info`, or `help`.
+- **`container`** (string or HTMLElement or null, default `null`): The HTML element into which TIFY is mounted. If set to `null`, TIFY is not mounted at all until `mount` is called (see [_API_](#api) below).
+- **`language`** (string, default `en`): The interface language, matching the translation filename without extension. [See which translations are available](https://github.com/tify-iiif-viewer/tify/tree/main/dist/translations) or add your own.
+- **`manifestUrl`** (string): The URL of the IIIF manifest. If not set, the URL has to be provided via query parameter `manifest`, e.g. `https://example.org/?manifest=https://example.org/iiif-manifest.json`.
+- **`viewer`** (object): An object with options for OpenSeadragon, TIFY’s image rendering component. [See its documentation](https://openseadragon.github.io/docs/OpenSeadragon.html#.Options) for all available options.
+- **`pageLabelFormat`** (string, default `P : L`): Defines how page labels are displayed in the page selector and in the thumbnails view. The placeholder `P` is replaced by the physical page number (consecutive numbers starting at `1`) while `L` is replaced by the logical page label, which can be any string, defined by the manifest.
+- **`pages`** (array of 1-based integers, default `[1]`): The page(s) to display initially. Page numbers are physical numbers, starting at 1. This setting can be overridden by setting `pages` via URL query if `urlQueryKey` is set.
+- **`titleAffix`** (string): If set, TIFY replaces the window title with the document title from the manifest, appended by this string, e.g. ` | TIFY`.
+- **`translationsDirUrl`** (string): The URL of the directory where TIFY finds its translations, without trailing `/`. TIFY tries to determine this URL automatically from its `<script>` element, but if TIFY was loaded in another way, or if you want to load you own translation, this option must be set.
+- **`urlQueryKey`** (string, only use characters `A…Z a…z 0…9 - _ . ~`): Read parameters from the URL query and reflect any changes, using the key provided. This also works with multiple concurrent instances, but each instance must use a unique key.
+- **`urlQueryParams`** (array of strings, default `['filters', 'pages', 'panX', 'panY', 'rotation', 'view', 'zoom']`): An array of parameter keys to be stored in the URL query on change. Only has effect if `urlQueryKey` is set.
+- **`view`** (string, default empty): The initially displayed view (panel); `scan` (only has effect on mobile), `fulltext`, `thumbnails`, `toc`, `info`, or `help`.
 
 An example with most available options set to non-default values:
 
@@ -120,13 +120,13 @@ tify.ready.then(() => {
 
 There is no API function to load a new manifest; just replace the instance.
 
-- ### `destroy`
+- ### destroy
 
 	Destroys the current instance and removes event listeners. If you are using TIFY in an SPA, this should be called every time a page containing TIFY is unmounted to avoid memory leaks.
 
 	<small>No parameters.</small>
 
-- ### `mount`
+- ### mount
 
 	Mounts TIFY.
 
@@ -134,7 +134,7 @@ There is no API function to load a new manifest; just replace the instance.
 
 	- `container` (string or HTMLElement): CSS selector pointing to a single HTML node or the node itself into which TIFY is mounted.
 
-- ### `resetViewer`
+- ### resetViewer
 
 	Resets the viewer display options.
 
@@ -142,7 +142,7 @@ There is no API function to load a new manifest; just replace the instance.
 
 	- `includingFiltersAndRotation` (boolean): By default, only pan and zoom are reset. Set to `true` to also reset image filters and rotation.
 
-- ### `setPage`
+- ### setPage
 
 	Changes the active page or pages.
 
@@ -152,7 +152,7 @@ There is no API function to load a new manifest; just replace the instance.
 
 	Returns an array of the current pages or `false` if `pageOrPages` is invalid.
 
-- ### `setLanguage`
+- ### setLanguage
 
 	Changes the frontend language and loads the associated translation.
 
@@ -160,7 +160,7 @@ There is no API function to load a new manifest; just replace the instance.
 
 	- `language` (string, default `en`): The language code to load.  A JSON file containing the translations for this language must be present in `public/translations`. Strings with missing translation are displayed in English.
 
-- ### `setView`
+- ### setView
 
 	Changes the active view (panel).
 
@@ -168,7 +168,7 @@ There is no API function to load a new manifest; just replace the instance.
 
 	- `name` (string): The view’s name; `export`, `fulltext`, `help`, `info`, `scan`, `thumbnails`, `toc`, or an empty string (same as `scan`).
 
-- ### `toggleDoublePage`
+- ### toggleDoublePage
 
 	Switches from single to double page (“book view”) and vice versa.
 
@@ -176,7 +176,7 @@ There is no API function to load a new manifest; just replace the instance.
 
 	- `force` (boolean, default `false`): Double page is forced on (`true`) or off (`false`).
 
-- ### `toggleFullscreen`
+- ### toggleFullscreen
 
 	Toggles fullscreen mode. For security reasons, most browsers require a user interaction to enter fullscreen mode; a button calling this function via `onclick` works, but trying to do so automatically does probably not.
 
