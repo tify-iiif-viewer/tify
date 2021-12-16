@@ -396,7 +396,6 @@ export default {
 				this.toggleDoublePage();
 				break;
 			case 'f':
-				// TODO: This is stolen by OpenSeadragon!
 				this.toggleFullscreen();
 				break;
 			default:
