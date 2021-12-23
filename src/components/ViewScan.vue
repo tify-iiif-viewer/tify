@@ -9,7 +9,6 @@
 			@click="goToPreviousPage"
 		>
 			<icon-chevron-left/>
-			<span class="tify-sr-only">{{ $root.translate('Previous page') }}</span>
 		</button>
 		<button
 			v-if="!customPageViewActive && !isLastPage"
@@ -18,7 +17,6 @@
 			@click="goToNextPage"
 		>
 			<icon-chevron-right/>
-			<span class="tify-sr-only">{{ $root.translate('Next page') }}</span>
 		</button>
 
 		<div class="tify-scan_buttons" v-if="viewer">
@@ -29,7 +27,6 @@
 				@click="zoomIn"
 			>
 				<icon-magnify-plus/>
-				<span class="tify-sr-only">{{ $root.translate('Zoom in') }}</span>
 			</button>
 			<button
 				class="tify-scan_button"
@@ -38,7 +35,6 @@
 				@click="resetViewer(!!$event.shiftKey)"
 			>
 				<icon-aspect-ratio/>
-				<span class="tify-sr-only">{{ $root.translate('Reset') }}</span>
 			</button>
 			<button
 				class="tify-scan_button"
@@ -47,7 +43,6 @@
 				@click="zoomOut"
 			>
 				<icon-magnify-minus/>
-				<span class="tify-sr-only">{{ $root.translate('Zoom out') }}</span>
 			</button>
 
 			<button
@@ -57,7 +52,6 @@
 				@click="rotateRight($event)"
 			>
 				<icon-rotate-right/>
-				<span class="tify-sr-only">{{ $root.translate('Rotate') }}</span>
 			</button>
 
 			<div
@@ -73,7 +67,6 @@
 					@click="filtersVisible = !filtersVisible"
 				>
 					<icon-tune/>
-					<span class="tify-sr-only">{{ $root.translate('Toggle image filters') }}</span>
 				</button>
 				<div class="tify-scan_filter-popup" v-show="filtersVisible">
 					<p>

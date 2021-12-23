@@ -26,7 +26,7 @@ describe('Info', () => {
 			cy.contains('Titelseite');
 			cy.contains('.tify-info_section.-metadata.-structure', 'Weigel, Erhard');
 
-			cy.contains('Last page').click();
+			cy.get('[title="Last page"]').first().click();
 			cy.contains('Current Element').should('not.be.visible');
 		});
 	});
@@ -35,7 +35,7 @@ describe('Info', () => {
 		cy.visit('/?manifest=http://localhost:8081/manifest/gdz-DE_611_BF_5619_1801_1806.json');
 		cy.contains('Info').click();
 		cy.get('.tify-app_main').then(() => {
-			cy.contains('Next page')
+			cy.get('[title="Next page"]').first()
 				.click()
 				.click()
 				.click()

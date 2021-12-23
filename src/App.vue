@@ -21,11 +21,8 @@
 			v-if="$root.loading"
 			class="tify-app_loading"
 			:class="{'-centered' : !$root.manifest}"
-		>
-			<span class="tify-sr-only">
-				{{ $root.translation ? $root.translate('Loading') : 'Loading' }}
-			</span>
-		</div>
+			:aria-label="$root.translation ? $root.translate('Loading') : 'Loading'"
+		/>
 
 		<div v-if="$root.error" class="tify-app_error">
 			<button class="tify-app_error-close" @click="$root.error = ''">

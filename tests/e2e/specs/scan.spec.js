@@ -30,8 +30,8 @@ describe('Scan', () => {
 
 		cy.visit(`/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify=${encodedParams}`);
 		cy.get('.tify-app_main').then(() => {
-			cy.contains('.tify-scan_button.-active', 'Rotate');
-			cy.contains('.tify-scan_button.-active', 'Toggle image filters');
+			cy.get('[title="Rotate"].-active');
+			cy.get('[title="Toggle image filters"].-active');
 		});
 
 		cy.get('.tify-app_main').type('{shift}0');
@@ -46,12 +46,12 @@ describe('Scan', () => {
 		cy.get('.tify-app_main').then(() => {
 			cy.wait(500); // eslint-disable-line cypress/no-unnecessary-waiting
 			cy.get('.tify-app_main').type('r');
-			cy.contains('.tify-scan_button.-active', 'Rotate').should('be.visible');
+			cy.get('[title="Rotate"].-active').should('be.visible');
 
 			cy.get('.tify-app_main').type('r');
 			cy.get('.tify-app_main').type('r');
 			cy.get('.tify-app_main').type('r');
-			cy.contains('.tify-scan_button:not(.-active)', 'Rotate').should('be.visible');
+			cy.get('[title="Rotate"]:not(.-active)').should('be.visible');
 
 			cy.get('.tify-app_main').type('i')
 				.contains('Brightness').should('be.visible')

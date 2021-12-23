@@ -21,7 +21,6 @@
 				>
 					<icon-view-module v-if="customPageViewActive"/>
 					<icon-book-open-blank-variant v-else/>
-					<span class="tify-sr-only">{{ $root.translate('Toggle double-page') }}</span>
 				</button>
 			</div>
 
@@ -33,7 +32,6 @@
 					@click="goToFirstPage"
 				>
 					<icon-page-first/>
-					<span class="tify-sr-only">{{ $root.translate('First page') }}</span>
 				</button>
 
 				<button
@@ -44,7 +42,6 @@
 					@click="goToPreviousSection"
 				>
 					<icon-skip-previous/>
-					<span class="tify-sr-only">{{ $root.translate('Previous section') }}</span>
 				</button>
 
 				<button
@@ -54,7 +51,6 @@
 					@click="goToPreviousPage"
 				>
 					<icon-chevron-left/>
-					<span class="tify-sr-only">{{ $root.translate('Previous page') }}</span>
 				</button>
 
 				<button
@@ -64,7 +60,6 @@
 					@click="goToNextPage"
 				>
 					<icon-chevron-right/>
-					<span class="tify-sr-only">{{ $root.translate('Next page') }}</span>
 				</button>
 
 				<button
@@ -75,7 +70,6 @@
 					@click="goToNextSection"
 				>
 					<icon-skip-next/>
-					<span class="tify-sr-only">{{ $root.translate('Next section') }}</span>
 				</button>
 
 				<button
@@ -85,7 +79,6 @@
 					@click="goToLastPage"
 				>
 					<icon-page-last/>
-					<span class="tify-sr-only">{{ $root.translate('Last page') }}</span>
 				</button>
 			</div>
 		</div>
@@ -201,7 +194,6 @@
 					@click="goToFirstPage"
 				>
 					<icon-page-first/>
-					<span class="tify-sr-only">{{ $root.translate('First page') }}</span>
 				</button>
 
 				<button
@@ -212,7 +204,6 @@
 					@click="goToPreviousSection"
 				>
 					<icon-skip-previous/>
-					<span class="tify-sr-only">{{ $root.translate('Previous section') }}</span>
 				</button>
 
 				<button
@@ -222,7 +213,6 @@
 					@click="goToPreviousPage"
 				>
 					<icon-chevron-left/>
-					<span class="tify-sr-only">{{ $root.translate('Previous page') }}</span>
 				</button>
 
 				<button
@@ -232,7 +222,6 @@
 					@click="goToNextPage"
 				>
 					<icon-chevron-right/>
-					<span class="tify-sr-only">{{ $root.translate('Next page') }}</span>
 				</button>
 
 				<button
@@ -243,7 +232,6 @@
 					@click="goToNextSection"
 				>
 					<icon-skip-next/>
-					<span class="tify-sr-only">{{ $root.translate('Next section') }}</span>
 				</button>
 
 				<button
@@ -253,7 +241,6 @@
 					@click="goToLastPage"
 				>
 					<icon-page-last/>
-					<span class="tify-sr-only">{{ $root.translate('Last page') }}</span>
 				</button>
 			</div>
 		</div>

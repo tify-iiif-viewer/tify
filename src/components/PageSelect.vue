@@ -3,10 +3,10 @@
 		<button
 			class="tify-page-select_button"
 			:title="pageTitleAttr"
+			:aria-label="$root.translate('Current page')"
 			v-click-outside="closeDropdown"
 			@click="toggleDropdown"
 		>
-			<span class="tify-sr-only">{{ $root.translate('Current page') }}</span>
 			{{ getCurrentPage() }}
 		</button>
 
