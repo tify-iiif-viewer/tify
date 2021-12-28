@@ -1,6 +1,6 @@
 @mixin dropdown($position: left, $alignment: bottom) {
-	background: #fff;
-	border: $br solid #fff;
+	background: $white;
+	border: $br solid $white;
 	border-radius: $br;
 	filter: drop-shadow($drop-shadow);
 	margin: g(.25) 0;
@@ -25,14 +25,14 @@
 	&::before {
 		position: absolute;
 		content: '';
-		background: white;
+		background: $white;
 		width: g(.5);
 		height: g(.5);
 		transform: rotate(45deg);
 		z-index: -1;
 
 		@if ($alignment == bottom) {
-			top: g(-.25);
+			top: g(-.25) - $br;
 
 			@if ($position == left) {
 				left: g();
@@ -40,7 +40,7 @@
 				right: g();
 			}
 		} @else if ($alignment == right) {
-			left: g(-.25);
+			left: g(-.25) - $br;
 			top: g();
 		}
 	}

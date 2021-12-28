@@ -1,13 +1,13 @@
 <template>
 	<!-- NOTE: Root element must be focusable for global keyboard events to work -->
-	<div class="tify-app" tabindex="-1">
+	<div class="tify" tabindex="-1">
 		<app-header
 			v-if="$root.manifest"
 			:fulltextEnabled="hasOtherContent"
 			:tocEnabled="hasToc"
 		/>
 
-		<div v-if="$root.manifest" class="tify-app_main">
+		<div v-if="$root.manifest" class="tify-main">
 			<view-scan/>
 			<view-fulltext v-if="hasOtherContent" v-show="$root.options.view === 'fulltext'"/>
 			<view-toc v-if="hasToc" v-show="$root.options.view === 'toc'"/>
@@ -19,13 +19,13 @@
 
 		<div
 			v-if="$root.loading"
-			class="tify-app_loading"
+			class="tify-loading"
 			:class="{'-centered' : !$root.manifest}"
 			:aria-label="$root.translation ? $root.translate('Loading') : 'Loading'"
 		/>
 
-		<div v-if="$root.error" class="tify-app_error">
-			<button class="tify-app_error-close" @click="$root.error = ''">
+		<div v-if="$root.error" class="tify-error">
+			<button class="tify-error-close" @click="$root.error = ''">
 				<icon-close/>
 			</button>
 			<span v-html="$root.error"/>

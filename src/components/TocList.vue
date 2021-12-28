@@ -1,8 +1,8 @@
 <template>
-	<ul class="tify-toc_list">
+	<ul class="tify-toc-list">
 		<li
 			v-for="(structure, index) in structures"
-			class="tify-toc_structure"
+			class="tify-toc-structure"
 			:data-level="level"
 			:class="{
 				'-current': checkIfPagesInStructure(structure),
@@ -12,7 +12,7 @@
 		>
 			<button
 				v-if="structure.childStructures"
-				class="tify-toc_toggle"
+				class="tify-toc-toggle"
 				:title="$root.translate(expandedStructures[index] ? 'Collapse' : 'Expand')"
 				@click="toggleChildren(index)"
 			>
@@ -26,7 +26,7 @@
 
 			<a
 				v-if="purpose === 'pdf'"
-				class="tify-toc_link"
+				class="tify-toc-link"
 				download
 				:href="$root.convertValueToArray(structure.rendering)[0]['@id']"
 			>
@@ -36,12 +36,12 @@
 			</a>
 			<a
 				v-else
-				class="tify-toc_link -dots"
+				class="tify-toc-link -dots"
 				href="javascript:;"
 				@click="setPage(structure.firstPage)"
 			>
-				<span class="tify-toc_label">{{ structure.label }}</span>
-				<span class="tify-toc_page">{{ structure.pageLabel }}</span>
+				<span class="tify-toc-label">{{ structure.label }}</span>
+				<span class="tify-toc-page">{{ structure.pageLabel }}</span>
 			</a>
 
 			<toc-list

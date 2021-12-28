@@ -1,8 +1,11 @@
 <template>
 	<section class="tify-help">
 		<h2 class="tify-sr-only">{{ $root.translate('Help') }}</h2>
+
 		<h3>{{ $root.translate('About TIFY') }}</h3>
+
 		<p v-html="info"/>
+
 		<ul>
 			<li>
 				<a :href="userGuideUrl">{{ $root.translate('User guide') }}</a>
@@ -17,7 +20,8 @@
 				<a :href="env.VUE_APP_BUGS_URL">{{ $root.translate('Report a bug') }}</a>
 			</li>
 		</ul>
-		<footer class="tify-help_footer">
+
+		<footer class="tify-help-footer">
 			<p>{{ $root.translate('Version') }} {{ env.VUE_APP_VERSION }}</p>
 			<p v-html="copyright"/>
 		</footer>

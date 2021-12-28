@@ -1,0 +1,24 @@
+.tify-error {
+	background: rgba(#d22, .8);
+	border-radius: 0 $br 0 0;
+	bottom: 0;
+	color: $white;
+	font-weight: bold;
+	max-width: 90%;
+	padding: g(.25);
+	position: absolute;
+}
+
+.tify-error-close {
+	background: 0;
+	border: 0;
+	color: $white;
+	cursor: pointer;
+	float: left;
+	margin: g(-.25) 0 g(-.25) g(-.25);
+	padding: g(.25);
+
+	@include hover {
+		background: $shade-light;
+	}
+}

@@ -1,17 +1,17 @@
 <template>
 	<header class="tify-header">
-		<div class="tify-header_column -title">
-			<h1 class="tify-header_title" :title="titles.join(', ')">
+		<div class="tify-header-column -title">
+			<h1 class="tify-header-title" :title="titles.join(', ')">
 				{{ titles.join(', ') }}
 			</h1>
 		</div>
 
-		<div class="tify-header_column -pagination">
-			<div class="tify-header_button-group">
-				<page-select class="tify-header_button"/>
+		<div class="tify-header-column -pagination">
+			<div class="tify-header-button-group">
+				<page-select class="tify-header-button"/>
 
 				<button
-					class="tify-header_button"
+					class="tify-header-button"
 					:class="{
 						'-active': $root.options.pages.length > 1,
 						'-warning': customPageViewActive,
@@ -24,9 +24,9 @@
 				</button>
 			</div>
 
-			<div class="tify-header_button-group -pagination">
+			<div class="tify-header-button-group -pagination">
 				<button
-					class="tify-header_button"
+					class="tify-header-button"
 					:disabled="customPageViewActive || isFirstPage"
 					:title="$root.translate('First page')"
 					@click="goToFirstPage"
@@ -36,7 +36,7 @@
 
 				<button
 					v-if="structures && structures.length"
-					class="tify-header_button"
+					class="tify-header-button"
 					:disabled="customPageViewActive || isFirstPage"
 					:title="$root.translate('Previous section')"
 					@click="goToPreviousSection"
@@ -45,7 +45,7 @@
 				</button>
 
 				<button
-					class="tify-header_button"
+					class="tify-header-button"
 					:disabled="customPageViewActive || isFirstPage"
 					:title="$root.translate('Previous page')"
 					@click="goToPreviousPage"
@@ -54,7 +54,7 @@
 				</button>
 
 				<button
-					class="tify-header_button"
+					class="tify-header-button"
 					:disabled="customPageViewActive || isLastPage"
 					:title="$root.translate('Next page')"
 					@click="goToNextPage"
@@ -64,7 +64,7 @@
 
 				<button
 					v-if="structures && structures.length"
-					class="tify-header_button"
+					class="tify-header-button"
 					:disabled="customPageViewActive || isLastSection"
 					:title="$root.translate('Next section')"
 					@click="goToNextSection"
@@ -73,7 +73,7 @@
 				</button>
 
 				<button
-					class="tify-header_button"
+					class="tify-header-button"
 					:disabled="customPageViewActive || isLastPage"
 					:title="$root.translate('Last page')"
 					@click="goToLastPage"
@@ -83,10 +83,10 @@
 			</div>
 		</div>
 
-		<div class="tify-header_column -controls-toggle">
-			<div class="tify-header_button-group" ref="switchViewSmall">
+		<div class="tify-header-column -controls-toggle">
+			<div class="tify-header-button-group" ref="switchViewSmall">
 				<button
-					class="tify-header_button"
+					class="tify-header-button"
 					v-click-outside="closeControlsPopup"
 					@click="toggleControlsPopup"
 				>
@@ -96,10 +96,10 @@
 			</div>
 		</div>
 
-		<div class="tify-header_column -controls" :class="{ '-visible': controlsVisible }">
-			<div class="tify-header_button-group -view">
+		<div class="tify-header-column -controls" :class="{ '-visible': controlsVisible }">
+			<div class="tify-header-button-group -view">
 				<button
-					class="tify-header_button -scan"
+					class="tify-header-button -scan"
 					:class="{ '-active': $root.options.view === 'scan' }"
 					@click="toggleView('scan')"
 				>
@@ -109,7 +109,7 @@
 
 				<button
 					v-if="fulltextEnabled"
-					class="tify-header_button"
+					class="tify-header-button"
 					:class="{ '-active': $root.options.view === 'fulltext' }"
 					@click="toggleView('fulltext')"
 				>
@@ -118,7 +118,7 @@
 				</button>
 
 				<button
-					class="tify-header_button"
+					class="tify-header-button"
 					:class="{ '-active': $root.options.view === 'thumbnails' }"
 					@click="toggleView('thumbnails')"
 				>
@@ -128,7 +128,7 @@
 
 				<button
 					v-if="tocEnabled"
-					class="tify-header_button"
+					class="tify-header-button"
 					:class="{ '-active': $root.options.view === 'toc' }"
 					@click="toggleView('toc')"
 				>
@@ -137,7 +137,7 @@
 				</button>
 
 				<button
-					class="tify-header_button"
+					class="tify-header-button"
 					:class="{ '-active': $root.options.view === 'info' }"
 					@click="toggleView('info')"
 				>
@@ -146,7 +146,7 @@
 				</button>
 
 				<button
-					class="tify-header_button"
+					class="tify-header-button"
 					:class="{ '-active': $root.options.view === 'export' }"
 					@click="toggleView('export')"
 				>
@@ -155,7 +155,7 @@
 				</button>
 
 				<button
-					class="tify-header_button -icon-only"
+					class="tify-header-button -icon-only"
 					:class="{ '-active': $root.options.view === 'help' }"
 					:title="$root.translate('Help')"
 					@click="toggleView('help')"
@@ -165,10 +165,10 @@
 				</button>
 			</div>
 
-			<div class="tify-header_button-group -view" v-if="fullscreenSupported">
+			<div class="tify-header-button-group -view" v-if="fullscreenSupported">
 				<button
 					v-if="!fullscreenActive"
-					class="tify-header_button -icon-only"
+					class="tify-header-button -icon-only"
 					:title="$root.translate('Fullscreen')"
 					@click="toggleFullscreen"
 				>
@@ -177,7 +177,7 @@
 				</button>
 				<button
 					v-else
-					class="tify-header_button -icon-only"
+					class="tify-header-button -icon-only"
 					:title="$root.translate('Exit fullscreen')"
 					@click="toggleFullscreen"
 				>
@@ -186,9 +186,9 @@
 				</button>
 			</div>
 
-			<div class="tify-header_button-group -popup">
+			<div class="tify-header-button-group -popup">
 				<button
-					class="tify-header_button"
+					class="tify-header-button"
 					:disabled="customPageViewActive || isFirstPage"
 					:title="$root.translate('First page')"
 					@click="goToFirstPage"
@@ -198,7 +198,7 @@
 
 				<button
 					v-if="structures && structures.length"
-					class="tify-header_button"
+					class="tify-header-button"
 					:disabled="customPageViewActive || isFirstPage"
 					:title="$root.translate('Previous section')"
 					@click="goToPreviousSection"
@@ -207,7 +207,7 @@
 				</button>
 
 				<button
-					class="tify-header_button"
+					class="tify-header-button"
 					:disabled="customPageViewActive || isFirstPage"
 					:title="$root.translate('Previous page')"
 					@click="goToPreviousPage"
@@ -216,7 +216,7 @@
 				</button>
 
 				<button
-					class="tify-header_button"
+					class="tify-header-button"
 					:disabled="customPageViewActive || isLastPage"
 					:title="$root.translate('Next page')"
 					@click="goToNextPage"
@@ -226,7 +226,7 @@
 
 				<button
 					v-if="structures && structures.length"
-					class="tify-header_button"
+					class="tify-header-button"
 					:disabled="customPageViewActive || isLastSection"
 					:title="$root.translate('Next section')"
 					@click="goToNextSection"
@@ -235,7 +235,7 @@
 				</button>
 
 				<button
-					class="tify-header_button"
+					class="tify-header-button"
 					:disabled="customPageViewActive || isLastPage"
 					:title="$root.translate('Last page')"
 					@click="goToLastPage"

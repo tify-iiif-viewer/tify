@@ -4,10 +4,8 @@
 
 @import 'mixins/*';
 
-@import 'common/*';
-
 @import 'extends/*';
 
-@import 'sections/*';
+@import 'util/base';
 
-@import 'views/*';
+@import 'sections/*';

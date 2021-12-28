@@ -1,9 +1,9 @@
 describe('Pagination', () => {
-	const currentPage = '.tify-page-select_button';
+	const currentPage = '.tify-page-select-button';
 
 	it('Change page via buttons', () => {
 		cy.visit('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify={"pages":[15]}');
-		cy.get('.tify-app_main').then(() => {
+		cy.get('.tify').then(() => {
 			cy.contains(currentPage, '15 : 7r');
 
 			cy.get('[title="First page"]').first().click();
@@ -32,42 +32,42 @@ describe('Pagination', () => {
 
 	it('Change page via keyboard', () => {
 		cy.visit('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify={"pages":[15]}');
-		cy.get('.tify-app_main').then(() => {
+		cy.get('.tify').then(() => {
 			cy.contains(currentPage, '15 : 7r');
 
-			cy.get('.tify-app_main').type('q');
+			cy.get('.tify').type('q');
 			cy.contains(currentPage, '14 : 6v');
-			cy.get('.tify-app_main').type('e');
+			cy.get('.tify').type('e');
 			cy.contains(currentPage, '15 : 7r');
 
-			cy.get('.tify-app_main').type('b');
+			cy.get('.tify').type('b');
 			cy.contains(currentPage, '14 : 6v');
-			cy.contains('.-active', 'Toggle double-page');
+			cy.get('[title="Toggle double-page"].-active');
 
-			cy.get('.tify-app_main').type('q');
+			cy.get('.tify').type('q');
 			cy.contains(currentPage, '12 : 5v');
-			cy.get('.tify-app_main').type(',');
+			cy.get('.tify').type(',');
 			cy.contains(currentPage, '10 : 4v');
 
-			cy.get('.tify-app_main').type('e');
+			cy.get('.tify').type('e');
 			cy.contains(currentPage, '12 : 5v');
-			cy.get('.tify-app_main').type('.');
+			cy.get('.tify').type('.');
 			cy.contains(currentPage, '14 : 6v');
 
-			cy.get('.tify-app_main').type('Q');
+			cy.get('.tify').type('Q');
 			cy.contains(currentPage, '1 :  -');
 
-			cy.get('.tify-app_main').type('E');
+			cy.get('.tify').type('E');
 			cy.contains(currentPage, '68 :  -');
 
-			cy.get('.tify-app_main').type('b');
+			cy.get('.tify').type('b');
 			cy.contains(currentPage, '68 :  -');
 			cy.get('[title="Toggle double-page"]:not(.-active)');
 
-			cy.get('.tify-app_main').type('Q');
+			cy.get('.tify').type('Q');
 			cy.contains(currentPage, '1 :  -');
 
-			cy.get('.tify-app_main').type('E');
+			cy.get('.tify').type('E');
 			cy.contains(currentPage, '69 :  -');
 		});
 	});

@@ -1,5 +1,5 @@
 <template>
-	<div class="tify-info_metadata">
+	<div class="tify-info-metadata">
 		<div v-for="(item, index) in metadata" :key="index">
 			<h4>
 				<div v-bind:key="index" v-for="(label, index) in $root.convertValueToArray(item.label)">
@@ -7,17 +7,17 @@
 				</div>
 			</h4>
 			<div
-				class="tify-info_content"
+				class="tify-info-content"
 				:class="{ '-collapsed': infoItems[index] && infoItems[index].collapsed }"
 				ref="contents"
 			>
-				<div class="tify-info_value">
+				<div class="tify-info-value">
 					<div v-bind:key="value" v-for="value in $root.convertValueToArray(item.value)" v-html="value"/>
 				</div>
 
 				<button
 					v-if="infoItems[index] && infoItems[index].exceedsHeight"
-					class="tify-info_toggle"
+					class="tify-info-toggle"
 					@click="infoItems[index].collapsed = !infoItems[index].collapsed"
 				>
 					<template v-if="infoItems[index].collapsed">

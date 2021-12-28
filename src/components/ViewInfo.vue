@@ -2,33 +2,33 @@
 	<section class="tify-info">
 		<h2 class="tify-sr-only">{{ $root.translate('Info') }}</h2>
 
-		<div v-if="manifest.label" class="tify-info_section -title">
-			<h3 class="tify-info_heading">{{ $root.translate('Title') }}</h3>
+		<div v-if="manifest.label" class="tify-info-section -title">
+			<h3 class="tify-info-heading">{{ $root.translate('Title') }}</h3>
 			<div :key="label" v-for="label in $root.convertValueToArray(manifest.label)">
 				{{ label }}
 			</div>
 		</div>
 
-		<div v-if="manifest.metadata && manifest.metadata.length" class="tify-info_section -metadata">
+		<div v-if="manifest.metadata && manifest.metadata.length" class="tify-info-section -metadata">
 			<h3>{{ $root.translate('Metadata') }}</h3>
 			<metadata-list v-if="$root.options.view === 'info'" :metadata="manifest.metadata"/>
 		</div>
 
-		<div v-if="currentStructureLabel || currentStructureMetadata" class="tify-info_section -metadata -structure">
+		<div v-if="currentStructureLabel || currentStructureMetadata" class="tify-info-section -metadata -structure">
 			<h3>
 				{{ $root.translate('Current Element') }}
 			</h3>
-			<p v-if="currentStructureLabel" class="tify-info_structure">
+			<p v-if="currentStructureLabel" class="tify-info-structure">
 				{{ currentStructureLabel }}
 			</p>
 			<metadata-list
 				v-if="$root.options.view === 'info' && currentStructureMetadata"
-				class="tify-info_section -metadata"
+				class="tify-info-section -metadata"
 				:metadata="currentStructureMetadata"
 			/>
 		</div>
 
-		<div v-if="manifest.description" class="tify-info_section -description">
+		<div v-if="manifest.description" class="tify-info-section -description">
 			<h3>{{ $root.translate('Description') }}</h3>
 			<div
 				:key="index"
@@ -36,7 +36,7 @@
 				v-html="description"/>
 		</div>
 
-		<div v-if="license.length" class="tify-info_section -license">
+		<div v-if="license.length" class="tify-info-section -license">
 			<h3>{{ $root.translate('License') }}</h3>
 			<div :key="index" v-for="(item, index)  in license">
 				<template v-if="typeof item === 'string'">
@@ -58,7 +58,7 @@
 			</div>
 		</div>
 
-		<div v-if="related.length" class="tify-info_section -related">
+		<div v-if="related.length" class="tify-info-section -related">
 			<h3>{{ $root.translate('Related Resources') }}</h3>
 			<div :key="index" v-for="(item, index)  in related">
 				<a v-if="typeof item === 'string'" :href="item">
@@ -70,24 +70,24 @@
 			</div>
 		</div>
 
-		<div class="tify-info_section -manifest">
+		<div class="tify-info-section -manifest">
 			<h3>{{ $root.translate('IIIF Manifest') }}</h3>
 			<a :href="this.$root.manifestUrl">{{ this.$root.manifestUrl }}</a>
 		</div>
 
-		<div v-if="manifest.attribution" class="tify-info_section -attribution">
+		<div v-if="manifest.attribution" class="tify-info-section -attribution">
 			<h3>{{ $root.translate('Provided by') }}</h3>
 			<div :key="index" v-for="(item, index) in $root.convertValueToArray(manifest.attribution)" v-html="item"/>
 		</div>
 
-		<div v-if="manifest.logo" class="tify-info_section -logo">
+		<div v-if="manifest.logo" class="tify-info-section -logo">
 			<a
 				v-if="logoId && manifest.logo.service && manifest.logo.service['@id']"
 				:href="manifest.logo.service['@id']"
 			>
-				<img class="tify-info_logo" :src="logoId" :alt="$root.translate('Logo')">
+				<img class="tify-info-logo" :src="logoId" :alt="$root.translate('Logo')">
 			</a>
-			<img v-else class="tify-info_logo" :src="logoId" :alt="$root.translate('Logo')">
+			<img v-else class="tify-info-logo" :src="logoId" :alt="$root.translate('Logo')">
 		</div>
 	</section>
 </template>

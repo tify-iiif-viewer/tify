@@ -4,7 +4,7 @@
 
 		<button
 			v-if="!customPageViewActive && !isFirstPage"
-			class="tify-scan_page-button -previous"
+			class="tify-scan-page-button -previous"
 			:title="$root.translate('Previous page')"
 			@click="goToPreviousPage"
 		>
@@ -12,16 +12,16 @@
 		</button>
 		<button
 			v-if="!customPageViewActive && !isLastPage"
-			class="tify-scan_page-button -next"
+			class="tify-scan-page-button -next"
 			:title="$root.translate('Next page')"
 			@click="goToNextPage"
 		>
 			<icon-chevron-right/>
 		</button>
 
-		<div class="tify-scan_buttons" v-if="viewer">
+		<div class="tify-scan-buttons" v-if="viewer">
 			<button
-				class="tify-scan_button"
+				class="tify-scan-button"
 				:disabled="isMaxZoom"
 				:title="$root.translate('Zoom in')"
 				@click="zoomIn"
@@ -29,7 +29,7 @@
 				<icon-magnify-plus/>
 			</button>
 			<button
-				class="tify-scan_button"
+				class="tify-scan-button"
 				:disabled="isReset"
 				:title="$root.translate('Reset')"
 				@click="resetViewer(!!$event.shiftKey)"
@@ -37,7 +37,7 @@
 				<icon-aspect-ratio/>
 			</button>
 			<button
-				class="tify-scan_button"
+				class="tify-scan-button"
 				:disabled="isMinZoom"
 				:title="$root.translate('Zoom out')"
 				@click="zoomOut"
@@ -46,7 +46,7 @@
 			</button>
 
 			<button
-				class="tify-scan_button"
+				class="tify-scan-button"
 				:class="{ '-active': $root.options.rotation }"
 				:title="$root.translate('Rotate')"
 				@click="rotateRight($event)"
@@ -57,25 +57,25 @@
 			<div
 				v-click-outside="closeFilters"
 				v-if="cssFiltersSupported"
-				class="tify-scan_filters"
+				class="tify-scan-filters"
 				:class="{ '-open': filtersVisible }"
 			>
 				<button
-					class="tify-scan_button"
+					class="tify-scan-button"
 					:class="{ '-active': filtersActive }"
 					:title="$root.translate('Toggle image filters')"
 					@click="filtersVisible = !filtersVisible"
 				>
 					<icon-tune/>
 				</button>
-				<div class="tify-scan_filter-popup" v-show="filtersVisible">
+				<div class="tify-scan-filters-popup" v-show="filtersVisible">
 					<p>
 						<label>
 							<icon-white-balance-sunny/>
 							{{ $root.translate('Brightness') }}
 							<b>{{ Math.round(($root.options.filters.brightness || 1) * 100) }}&nbsp;%</b>
 							<input
-								class="tify-scan_range"
+								class="tify-scan-range"
 								max="2"
 								min=".5"
 								ref="firstSlider"
@@ -92,7 +92,7 @@
 							{{ $root.translate('Contrast') }}
 							<b>{{ Math.round(($root.options.filters.contrast || 1) * 100) }}&nbsp;%</b>
 							<input
-								class="tify-scan_range"
+								class="tify-scan-range"
 								max="2"
 								min=".5"
 								step=".01"
@@ -108,7 +108,7 @@
 							{{ $root.translate('Saturation') }}
 							<b>{{ Math.round(saturation * 100)}}&nbsp;%</b>
 							<input
-								class="tify-scan_range"
+								class="tify-scan-range"
 								max="3"
 								min="0"
 								step=".01"
@@ -120,7 +120,7 @@
 					</p>
 					<p>
 						<button
-							class="tify-scan_reset"
+							class="tify-scan-reset"
 							:disabled="!filtersActive"
 							@click="resetFilters"
 						>
@@ -132,7 +132,7 @@
 			</div>
 		</div>
 
-		<div class="tify-scan_image" ref="image"/>
+		<div class="tify-scan-image" ref="image"/>
 	</section>
 </template>
 

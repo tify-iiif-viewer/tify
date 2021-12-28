@@ -6,7 +6,7 @@ $info-content-max-height: g(6.5);
 	padding: g(.5);
 }
 
-.tify-info_content {
+.tify-info-content {
 	position: relative;
 
 	&.-collapsed {
@@ -14,7 +14,7 @@ $info-content-max-height: g(6.5);
 	}
 }
 
-.tify-info_logo {
+.tify-info-logo {
 	display: block;
 	max-height: g(2.5);
 	max-width: 100%;
@@ -22,34 +22,34 @@ $info-content-max-height: g(6.5);
 	width: auto;
 }
 
-.tify-info_metadata {
+.tify-info-metadata {
 	> div {
 		margin-bottom: g(.5);
 	}
 }
 
-.tify-info_section {
+.tify-info-section {
 	margin-bottom: g();
 	word-break: break-word;
 }
 
-.tify-info_toggle {
+.tify-info-toggle {
 	@extend %button-small;
 	margin: g(.5) 0;
 	position: relative;
 }
 
-.tify-info_value {
+.tify-info-value {
 	> div:last-child > :last-child {
 		margin-bottom: 0;
 	}
 
-	.tify-info_content.-collapsed & {
+	.tify-info-content.-collapsed & {
 		max-height: $info-content-max-height - g(2); // 2 = button height
 		overflow: hidden;
 
 		&::after {
-			background: linear-gradient(rgba(#fff, 0), rgba(#fff, 1));
+			background: linear-gradient(rgba($white, 0), rgba($white, 1));
 			bottom: g(2); // 2 = button height
 			content: '';
 			height: g(2);

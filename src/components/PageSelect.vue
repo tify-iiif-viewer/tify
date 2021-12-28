@@ -1,7 +1,7 @@
 <template>
 	<div class="tify-page-select">
 		<button
-			class="tify-page-select_button"
+			class="tify-page-select-button"
 			:title="pageTitleAttr"
 			:aria-label="$root.translate('Current page')"
 			v-click-outside="closeDropdown"
@@ -11,16 +11,16 @@
 		</button>
 
 		<div
-			class="tify-page-select_dropdown"
+			class="tify-page-select-dropdown"
 			key="dropdown"
 			v-show="isOpen"
 			@click.stop
 		>
-			<div class="tify-page-select_filter">
+			<div class="tify-page-select-filter">
 				<input
 					:aria-label="$root.translate('Filter pages')"
 					type="text"
-					class="tify-page-select_input"
+					class="tify-page-select-input"
 					ref="search"
 					v-model="filter"
 					@keyup.enter="(filteredCanvases[highlightIndex]) && setPage(filteredCanvases[highlightIndex].page)"
@@ -29,7 +29,7 @@
 					@keydown.down.prevent="onKeyDownArrow()"
 				>
 			</div>
-			<ol class="tify-page-select_list" ref="list">
+			<ol class="tify-page-select-list" ref="list">
 				<li
 					:key="index"
 					v-for="(canvas, index) in filteredCanvases"

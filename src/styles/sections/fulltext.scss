@@ -4,19 +4,19 @@
 	padding: g(.5);
 }
 
-.tify-fulltext_none {
+.tify-fulltext-none {
 	color: $text-color-light;
 	font-style: italic;
 }
 
-.tify-fulltext_separator {
+.tify-fulltext-separator {
 	background: $border-color;
 	border: 0;
 	height: $border-width;
 	margin: g() 0 (g() - $border-width);
 }
 
-.tify-fulltext_text {
+.tify-fulltext-text {
 	margin-left: 1em;
 	text-indent: -1em;
 	word-break: break-word;

@@ -10,7 +10,7 @@ describe('Scan', () => {
 		cy.visit(`/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify=${encodedParams}`);
 		cy.get('[title="Toggle image filters"]')
 			.click()
-			.get('.tify-scan_filter-popup')
+			.get('.tify-scan-filters-popup')
 			.contains('Saturation 0');
 	});
 
@@ -29,12 +29,12 @@ describe('Scan', () => {
 		const encodedParams = encodeURIComponent(JSON.stringify(params));
 
 		cy.visit(`/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify=${encodedParams}`);
-		cy.get('.tify-app_main').then(() => {
+		cy.get('.tify').then(() => {
 			cy.get('[title="Rotate"].-active');
 			cy.get('[title="Toggle image filters"].-active');
 		});
 
-		cy.get('.tify-app_main').type('{shift}0');
+		cy.get('.tify').type('{shift}0');
 		cy.url().should(
 			'include',
 			'/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json&tify={%22view%22:%22%22}',
@@ -43,23 +43,23 @@ describe('Scan', () => {
 
 	it('Control scan via keyboard', () => {
 		cy.visit('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
-		cy.get('.tify-app_main').then(() => {
+		cy.get('.tify').then(() => {
 			cy.wait(500); // eslint-disable-line cypress/no-unnecessary-waiting
-			cy.get('.tify-app_main').type('r');
+			cy.get('.tify').type('r');
 			cy.get('[title="Rotate"].-active').should('be.visible');
 
-			cy.get('.tify-app_main').type('r');
-			cy.get('.tify-app_main').type('r');
-			cy.get('.tify-app_main').type('r');
+			cy.get('.tify').type('r');
+			cy.get('.tify').type('r');
+			cy.get('.tify').type('r');
 			cy.get('[title="Rotate"]:not(.-active)').should('be.visible');
 
-			cy.get('.tify-app_main').type('i')
+			cy.get('.tify').type('i')
 				.contains('Brightness').should('be.visible')
 				.type('i')
 				.contains('Brightness')
 				.should('not.be.visible');
 
-			cy.get('.tify-app_main').type('i')
+			cy.get('.tify').type('i')
 				.contains('Brightness').should('be.visible')
 				.type('{esc}')
 				.contains('Brightness')

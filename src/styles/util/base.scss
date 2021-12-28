@@ -1,0 +1,74 @@
+.tify {
+	background: $grey url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAEElEQVQImWNgwAGkcElgAgAEogAbFZcwKQAAAABJRU5ErkJggg==);
+	box-sizing: border-box;
+	color: $text-color;
+	display: flex;
+	flex-direction: column;
+	font-family: $font-family;
+	font-size: $font-size;
+	height: 100%;
+	line-height: g();
+	min-height: 240px;
+	min-width: 240px;
+	overflow: hidden;
+	position: relative;
+
+	*,
+	*::before,
+	*::after {
+		box-sizing: inherit;
+	}
+
+	a {
+		color: $link-color;
+		word-wrap: break-word;
+	}
+
+	h3 {
+		border-bottom: 1px solid $shade;
+		font-size: 1.125em;
+		font-weight: normal;
+		padding: 0 0 (g(.25) - 1px);
+		margin: 0 0 g(.75);
+	}
+
+	h4 {
+		color: $text-color-light;
+		font-size: 1em;
+		font-weight: normal;
+		margin: 0;
+
+		&:nth-of-type(n+2) {
+			margin-top: g(.5);
+		}
+	}
+
+	label {
+		cursor: pointer;
+	}
+
+	p {
+		margin: 0 0 g(.5);
+	}
+
+	[type=text],
+	select,
+	textarea {
+		@include transition(border);
+		background: $white;
+		border: $border-width solid $shade;
+		border-radius: $br;
+		font: inherit;
+		padding: (g(.25) - $border-width) .5em;
+
+		&:focus {
+			border-color: $brand-color;
+			outline: 0;
+		}
+	}
+
+	ul {
+		margin: 0 0 g();
+		padding: 0 0 0 g();
+	}
+}

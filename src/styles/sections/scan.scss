@@ -5,7 +5,7 @@
 	user-select: none;
 }
 
-.tify-scan_buttons {
+.tify-scan-buttons {
 	border-radius: $br;
 	display: flex;
 	flex-direction: column;
@@ -15,11 +15,11 @@
 	z-index: 9;
 }
 
-.tify-scan_button {
+.tify-scan-button {
 	background: none;
 	border: 0;
 	border-radius: $br;
-	color: #fff;
+	color: $white;
 	cursor: pointer;
 	filter: drop-shadow(0 0 2px $shade-dark);
 	height: g(1.5);
@@ -30,7 +30,7 @@
 
 	@include hover {
 		background: $shade;
-		color: #fff;
+		color: $white;
 	}
 
 	&:active:not(:disabled) {
@@ -63,13 +63,13 @@
 	}
 }
 
-.tify-scan_filters {
+.tify-scan-filters {
 	position: relative;
 }
 
-.tify-scan_filter-popup {
+.tify-scan-filters-popup {
 	@include dropdown(left, right);
-	left: g(2);
+	left: g(1.75);
 	padding: g(.5);
 	top: (g(-.75) - $br);
 	width: g(10);
@@ -92,7 +92,7 @@
 }
 
 // NOTE: OpenSeadragon adds `position: relative`
-.tify-scan_image {
+.tify-scan-image {
 	height: 100%;
 	white-space: nowrap;
 	width: 100%;
@@ -102,9 +102,9 @@
 	}
 }
 
-.tify-scan_page-button {
+.tify-scan-page-button {
 	@extend %button;
-	background: rgba(#fff, .3);
+	background: rgba($white, .3);
 	border: 0;
 	box-shadow: $card-shadow;
 	height: g(2.5);
@@ -142,11 +142,11 @@
 	}
 }
 
-.tify-scan_range {
+.tify-scan-range {
 	@include range;
 }
 
-.tify-scan_reset {
+.tify-scan-reset {
 	@extend %button;
 	border-radius: $br;
 	box-shadow: $card-shadow;

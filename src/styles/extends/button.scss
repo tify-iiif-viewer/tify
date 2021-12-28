@@ -1,5 +1,5 @@
 %button {
-	background: linear-gradient(to bottom, white, shade(white, 5));
+	background: linear-gradient(to bottom, $white, shade($white, 5));
 	border: 0;
 	border-radius: $br;
 	box-shadow: $card-shadow;
@@ -15,7 +15,7 @@
 	vertical-align: middle;
 
 	@include hover {
-		background: linear-gradient(to bottom, shade(white, 5), shade(white, 10));
+		background: linear-gradient(to bottom, shade($white, 5), shade($white, 10));
 		color: shade($text-color, 20);
 	}
 
@@ -36,7 +36,7 @@
 
 %button-active {
 	background: linear-gradient(to bottom, tint($link-color, 10), shade($link-color, 10));
-	color: white;
+	color: $white;
 	text-shadow: $shade-inset;
 
 	@include hover {
@@ -52,7 +52,7 @@
 
 %button-warning {
 	background: linear-gradient(to bottom, tint($warning-color, 10), shade($warning-color, 10));
-	color: white;
+	color: $white;
 	text-shadow: $shade-inset;
 
 	@include hover {

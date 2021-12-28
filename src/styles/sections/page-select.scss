@@ -1,4 +1,8 @@
-.tify-page-select_button {
+.tify-page-select {
+	//
+}
+
+.tify-page-select-button {
 	@extend %button;
 	border-radius: inherit;
 	box-shadow: none;
@@ -13,7 +17,7 @@
 	white-space: nowrap;
 
 	// Limit width on tiny screens to prevent buttons from breaking
-	.tify-app.-tiny & {
+	.tify.-tiny & {
 		max-width: g(2);
 		min-width: g(2);
 		overflow: hidden;
@@ -22,27 +26,25 @@
 	}
 }
 
-.tify-page-select_dropdown {
+.tify-page-select-dropdown {
 	@include dropdown;
 	margin-top: g(.5);
 	max-width: 100%;
 
-	.tify-app.-small & {
+	.tify.-small & {
 		left: 0;
 	}
 }
 
-.tify-page-select_filter {
-	background: white;
+.tify-page-select-filter {
 	padding: g(.25);
 }
 
-.tify-page-select_input {
+.tify-page-select-input {
 	width: 100%;
 }
 
-.tify-page-select_list {
-	background: white;
+.tify-page-select-list {
 	list-style: none;
 	margin: 0;
 	max-height: g(11);
@@ -54,7 +56,6 @@
 	> li {
 		border-top: $border-width solid $border-color;
 		margin: 0;
-		padding: g(.125) .5em;
 		user-select: none;
 
 		@include hover {
@@ -69,12 +70,18 @@
 
 		&.-highlighted {
 			background: $link-color;
-			color: white;
+			color: $white;
 		}
 	}
 
 	a {
 		color: inherit;
+		display: block;
+		padding: g(.125) .5em;
 		text-decoration: none;
+
+		@include hover {
+			color: inherit;
+		}
 	}
 }

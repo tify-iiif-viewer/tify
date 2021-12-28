@@ -20,14 +20,14 @@ $track-height: g(.25);
 
 $track-radius: $br;
 
-@mixin range_track {
+@mixin range-track {
 	cursor: pointer;
 	height: $track-height;
 	transition: all .2s ease;
 	width: 100%;
 }
 
-@mixin range_thumb {
+@mixin range-thumb {
 	background: $thumb-color;
 	border: 0;
 	border-radius: $thumb-radius;
@@ -43,7 +43,7 @@ $track-radius: $br;
 	width: 100%;
 
 	&::-webkit-slider-runnable-track {
-		@include range_track;
+		@include range-track;
 		background: $track-color;
 		border-radius: $track-radius;
 		box-shadow: $shade-inset;
@@ -51,24 +51,24 @@ $track-radius: $br;
 	}
 
 	&::-webkit-slider-thumb {
-		@include range_thumb;
+		@include range-thumb;
 		-webkit-appearance: none;
 		margin-top: ((-$border-width * 2 + $track-height) * .5) - ($thumb-height * .5);
 	}
 
 	&::-moz-range-track {
-		@include range_track;
+		@include range-track;
 		background: $track-color;
 		border: 0;
 		border-radius: $track-radius;
 	}
 
 	&::-moz-range-thumb {
-		@include range_thumb;
+		@include range-thumb;
 	}
 
 	&::-ms-track {
-		@include range_track;
+		@include range-track;
 		background: transparent;
 		border-color: transparent;
 		border-width: ($thumb-height * .5) 0;
@@ -87,7 +87,7 @@ $track-radius: $br;
 	}
 
 	&::-ms-thumb {
-		@include range_thumb;
+		@include range-thumb;
 		margin-top: 0;
 	}
 

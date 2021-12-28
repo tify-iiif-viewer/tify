@@ -6,11 +6,11 @@
 	user-select: none;
 }
 
-.tify-thumbnails_list {
+.tify-thumbnails-list {
 	margin: g(-.25);
 }
 
-.tify-thumbnails_item {
+.tify-thumbnails-item {
 	@include transition(filter);
 	background: $grey-dark;
 	box-shadow: $drop-shadow;
@@ -40,10 +40,10 @@
 	}
 }
 
-.tify-thumbnails_page {
+.tify-thumbnails-page {
 	@include transition(background);
 	bottom: 0;
-	color: white;
+	color: $white;
 	display: block;
 	font-size: $font-size-small;
 	font-weight: bold;
@@ -58,10 +58,10 @@
 	width: 100%;
 
 	@at-root {
-		.tify-thumbnails_item {
+		.tify-thumbnails-item {
 
 			&.-current {
-				.tify-thumbnails_page {
+				.tify-thumbnails-page {
 					background: $link-color;
 				}
 			}

@@ -1,13 +1,13 @@
 %panel {
 	@include separator(0, 0, 0, 1);
-	background: white;
+	background: $white;
 	flex: 1;
 	min-width: g(15);
 	overflow-y: auto;
 	position: relative;
 	transition: visibility .2s, width .2s;
 
-	.tify-app.-medium & {
+	.tify.-medium & {
 		border: 0;
 		bottom: 0;
 		min-width: 0;

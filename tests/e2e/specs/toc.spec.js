@@ -1,28 +1,28 @@
 describe('TOC', () => {
 	it('Navigate TOC', () => {
 		cy.visit('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081.json');
-		cy.get('.tify-app_main').then(() => {
+		cy.get('.tify').then(() => {
 			cy.contains('Contents').click();
 			cy.contains('Table of Contents');
 
-			cy.get('.tify-toc_structure.-current').contains('Titelseite');
-			cy.get('.tify-toc_structure[data-level="0"]:nth-child(3) > .tify-toc_toggle').click();
+			cy.get('.tify-toc-structure.-current').contains('Titelseite');
+			cy.get('.tify-toc-structure[data-level="0"]:nth-child(3) > .tify-toc-toggle').click();
 			cy.get(
-				'.tify-toc_structure[data-level="0"].-expanded'
-					+ ' .tify-toc_structure[data-level="1"]:first-child > .tify-toc_toggle',
+				'.tify-toc-structure[data-level="0"].-expanded'
+					+ ' .tify-toc-structure[data-level="1"]:first-child > .tify-toc-toggle',
 			).click();
-			cy.get('.tify-toc_label').contains('Huddesche Methode');
+			cy.get('.tify-toc-label').contains('Huddesche Methode');
 
 			// "Kurze Nachrichten"
-			cy.get('.tify-toc_structure[data-level="1"]:last-of-type > .tify-toc_toggle').click();
-			cy.get('.tify-toc_label').contains('Ferrarische Methode (Louis Ferrari)');
+			cy.get('.tify-toc-structure[data-level="1"]:last-of-type > .tify-toc-toggle').click();
+			cy.get('.tify-toc-label').contains('Ferrarische Methode (Louis Ferrari)');
 
 			cy.contains('Collapse').click().then(() => {
 				cy.contains('Ferrarische Methode (Louis Ferrari)').should('not.be.visible');
 			});
 
-			cy.get('.tify-toc > .tify-toc_list > :last-child .tify-toc_link').click().then(() => {
-				cy.get('.tify-toc_structure.-current').contains('Einband');
+			cy.get('.tify-toc > .tify-toc-list > :last-child .tify-toc-link').click().then(() => {
+				cy.get('.tify-toc-structure.-current').contains('Einband');
 			});
 
 			cy.contains('Expand all').click().click().then(() => {
@@ -40,7 +40,7 @@ describe('TOC', () => {
 			cy.contains('Expand all')
 				.click()
 				// collapse first collapsible
-				.get('.tify-toc_structure[data-level="0"].-expanded:nth-child(3) > .tify-toc_toggle:first-of-type')
+				.get('.tify-toc-structure[data-level="0"].-expanded:nth-child(3) > .tify-toc-toggle:first-of-type')
 				.click()
 				.then(() => {
 					// child of first collapsible
@@ -59,10 +59,10 @@ describe('TOC', () => {
 
 		cy.visit(`/?manifest=http://localhost:8081/manifest/MS-ADD-08640.json&tify=${encodedParams}`);
 		cy
-			.get('.tify-app_main')
+			.get('.tify')
 			.then(() => {
 				cy.contains('Table of Contents').should('be.visible');
-				cy.get('.tify-toc_structure.-current').contains('Elizabeth Lyttelton\'s commonplace book');
+				cy.get('.tify-toc-structure.-current').contains('Elizabeth Lyttelton\'s commonplace book');
 			});
 	});
 });

@@ -2,7 +2,7 @@
 	<section class="tify-export">
 		<h2 class="tify-sr-only">{{ $root.translate('Export') }}</h2>
 
-		<div class="tify-export_section -links">
+		<div class="tify-export-section -links">
 			<h3>{{ $root.translate('Download Individual Images') }}</h3>
 			<ul>
 				<li :key="page" v-for="page in pages">
@@ -16,7 +16,7 @@
 			</ul>
 		</div>
 
-		<div v-if="this.$root.manifest.rendering" class="tify-export_section -renderings">
+		<div v-if="this.$root.manifest.rendering" class="tify-export-section -renderings">
 			<h3>{{ $root.translate('Renderings') }}</h3>
 			<ul>
 				<li :key="item['@id']" v-for="item in renderings">
@@ -25,9 +25,9 @@
 				</li>
 			</ul>
 
-			<div class="tify-export_container" v-if="hasElementPdfLinks">
+			<div class="tify-export-container" v-if="hasElementPdfLinks">
 				<button
-						class="tify-export_toggle"
+						class="tify-export-toggle"
 						@click="perElementPdfLinksVisible = !perElementPdfLinksVisible"
 				>
 					<template v-if="!perElementPdfLinksVisible">
@@ -37,7 +37,7 @@
 						{{ $root.translate('Close PDF list') }}
 					</template>
 				</button>
-				<div class="tify-export_toc" v-show="perElementPdfLinksVisible">
+				<div class="tify-export-toc" v-show="perElementPdfLinksVisible">
 					<toc-list
 						purpose="pdf"
 						ref="children"
@@ -48,7 +48,7 @@
 			</div>
 		</div>
 
-		<div v-if="literatureItems.length" class="tify-export_section -literature">
+		<div v-if="literatureItems.length" class="tify-export-section -literature">
 			<h3>{{ $root.translate('Literature Management') }}</h3>
 			<ul>
 				<li :key="item['@id']" v-for="item in literatureItems">
@@ -59,7 +59,7 @@
 			</ul>
 		</div>
 
-		<div v-if="otherItems.length" class="tify-export_section -other">
+		<div v-if="otherItems.length" class="tify-export-section -other">
 			<h3>{{ $root.translate('Other Formats') }}</h3>
 			<ul>
 				<li :key="item['@id']" v-for="item in otherItems">

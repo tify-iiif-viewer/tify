@@ -20,3 +20,4 @@
 - Removed options (ignored if set):
 	- `init`
 	- `stylesheet`
+- Only relevant if you are using custom styles or added event handlers: In all HTML and CSS class names, `_` has been replaced with `-`. The wrapper class has been changed from `tify-app` to `tify`.

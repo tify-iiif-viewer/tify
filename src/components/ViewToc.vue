@@ -2,11 +2,11 @@
 	<section class="tify-toc">
 		<h2 class="tify-sr-only">{{ $root.translate('Table of Contents') }}</h2>
 
-		<div v-if="hasChildStructures" class="tify-toc_header">
-			<button class="tify-toc_toggle-all" @click="$refs.children.toggleAllChildren(true)">
+		<div v-if="hasChildStructures" class="tify-toc-header">
+			<button class="tify-toc-toggle-all" @click="$refs.children.toggleAllChildren(true)">
 				{{ $root.translate('Expand all') }}
 			</button>
-			<button class="tify-toc_toggle-all" @click="$refs.children.toggleAllChildren(false)">
+			<button class="tify-toc-toggle-all" @click="$refs.children.toggleAllChildren(false)">
 				{{ $root.translate('Collapse all') }}
 			</button>
 		</div>
@@ -26,7 +26,7 @@ import TocList from './TocList';
 import scroll from '../mixins/scroll';
 import structures from '../mixins/structures';
 
-const currentSelector = '.tify-toc_structure.-current';
+const currentSelector = '.tify-toc-structure.-current';
 
 export default {
 	mixins: [

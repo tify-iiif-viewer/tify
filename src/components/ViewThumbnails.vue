@@ -2,10 +2,10 @@
 	<section class="tify-thumbnails" @scroll="redrawThumbnails">
 		<h2 class="tify-sr-only">{{ $root.translate('Pages') }}</h2>
 
-		<div class="tify-thumbnails_list" ref="container">
+		<div class="tify-thumbnails-list" ref="container">
 			<a
 				v-for="item in items"
-				class="tify-thumbnails_item"
+				class="tify-thumbnails-item"
 				href="javascript:;"
 				:class="{ '-current': $root.options.pages.indexOf(item.page) > -1 }"
 				:key="item.page"
@@ -14,7 +14,7 @@
 				@touchend="touchEnd"
 			>
 				<img alt="" :src="item.imgUrl">
-				<span class="tify-thumbnails_page">
+				<span class="tify-thumbnails-page">
 					{{ $root.getPageLabel(item.page, item.label) }}
 				</span>
 			</a>
@@ -50,7 +50,7 @@ export default {
 		// eslint-disable-next-line func-names
 		'$root.options.pages': function (pages) {
 			this.$nextTick(() => {
-				const currentSelector = '.tify-thumbnails_item.-current';
+				const currentSelector = '.tify-thumbnails-item.-current';
 				if (pages.length > 2 || (pages.length > 1 && pages[1] !== pages[0] + 1)) {
 					return;
 				}
@@ -94,7 +94,7 @@ export default {
 			}, 200);
 		},
 		updateDimensions() {
-			const itemTemplate = this.$refs.container.querySelector('.tify-thumbnails_item');
+			const itemTemplate = this.$refs.container.querySelector('.tify-thumbnails-item');
 			const itemStyle = itemTemplate.currentStyle || window.getComputedStyle(itemTemplate);
 			const vMargin = parseInt(itemStyle.marginTop, 10) + parseFloat(itemStyle.marginBottom, 10);
 			this.itemHeight = itemTemplate.offsetHeight + vMargin;

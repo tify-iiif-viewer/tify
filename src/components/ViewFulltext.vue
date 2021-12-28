@@ -2,14 +2,15 @@
 	<section class="tify-fulltext">
 		<h2 class="tify-sr-only">{{ $root.translate('Fulltext') }}</h2>
 
-		<div v-if="fulltextAvailable" class="tify-fulltext_texts">
+		<div v-if="fulltextAvailable" class="tify-fulltext-texts">
 			<template v-for="(page, index) in pages">
-				<hr :key="index" v-if="index && page > 1" class="tify-fulltext_separator">
-				<div :key="index" v-for="(text, index) in fulltexts[page]" class="tify-fulltext_text" v-html="text">
+				<hr :key="index" v-if="index && page > 1" class="tify-fulltext-separator">
+				<div :key="index" v-for="(text, index) in fulltexts[page]" class="tify-fulltext-text" v-html="text">
 				</div>
 			</template>
 		</div>
-		<div v-else class="tify-fulltext_none">
+
+		<div v-else class="tify-fulltext-none">
 			{{ $root.translate('Fulltext not available for this page') }}
 		</div>
 	</section>

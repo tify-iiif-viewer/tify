@@ -3,11 +3,11 @@
 	padding: g(.5);
 }
 
-.tify-export_container {
+.tify-export-container {
 	margin: g(.5) 0 g();
 }
 
-.tify-export_toc {
+.tify-export-toc {
 	border: $border-width solid $border-color;
 	border-radius: $br;
 	margin: g(.5) 0 0;
@@ -19,6 +19,6 @@
 	}
 }
 
-.tify-export_toggle {
+.tify-export-toggle {
 	@extend %button-small;
 }

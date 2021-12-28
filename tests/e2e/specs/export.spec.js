@@ -1,7 +1,7 @@
 describe('Export', () => {
 	it('Display export links', () => {
 		cy.visit('/?manifest=http://localhost:8081/manifest/gdz-PPN857449303.json');
-		cy.get('.tify-app_main').then(() => {
+		cy.get('.tify').then(() => {
 			cy.contains('Export').click();
 			cy.contains('Download Individual Images').should('be.visible');
 			cy.contains('Page 1').should('be.visible');
