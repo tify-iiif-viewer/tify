@@ -43,10 +43,10 @@ Embed TIFY into your website in three easy steps:
 		import 'tify/dist/tify.css'
 		```
 
-2. Add an HTML block element with an `id` and set its `width` and `height`.
+2. Add an HTML block element with an `id` and set its `height`.
 
 	``` html
-	<div id="tify" style="width: 100%; height: 640px"></div>
+	<div id="tify" style="height: 640px"></div>
 	```
 
 3. Create a TIFY instance.
