@@ -20,7 +20,6 @@
 			<h3>{{ $root.translate('Renderings') }}</h3>
 			<ul>
 				<li :key="item['@id']" v-for="item in renderings">
-					<i class="tify-badge" v-if="/\.pdf$/i.test(item['@id'])">PDF</i>
 					<a :href="item['@id']">{{ item.label }}</a>
 				</li>
 			</ul>

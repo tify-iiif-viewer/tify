@@ -30,7 +30,6 @@
 				download
 				:href="$root.convertValueToArray(structure.rendering)[0]['@id']"
 			>
-				<i class="tify-badge">PDF</i>
 				{{ structure.label }}
 				({{ structure.pageCount }}&nbsp;{{ $root.translate(structure.pageCount === 1 ? 'page' : 'pages') }})
 			</a>
