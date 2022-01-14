@@ -1,6 +1,7 @@
 .tify-scan {
 	@extend %panel;
 	background: transparent;
+	box-shadow: none;
 	flex: 3;
 	user-select: none;
 }
