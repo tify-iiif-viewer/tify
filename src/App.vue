@@ -108,11 +108,6 @@ export default {
 					this.$root.updateOptionsFromUrlQuery();
 					window.addEventListener('popstate', this.$root.updateOptionsFromUrlQuery);
 
-					if (this.$root.options.title) {
-						window.document.title = this.$root.convertValueToArray(this.$root.manifest.label)[0]
-							+ this.$root.options.titleAffix;
-					}
-
 					this.$nextTick(() => this.$root.readyPromise.resolve());
 				} else {
 					this.$root.error = 'Please provide a valid IIIF Presentation API 2.x manifest';

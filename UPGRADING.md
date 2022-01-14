@@ -15,9 +15,9 @@
 - Renamed or changed options:
 	- `immediateRender` has been replaced with `viewer.immediateRender`.
 	- `manifest` has been renamed to `manifestUrl`.
-	- `title` has been replaced with `titleAffix`, which now includes the separator characters (default ` | `).
 	- `view` is now an empty string by default instead of `info`, meaning TIFY only displays the scan.
 - Removed options (ignored if set):
 	- `init`
 	- `stylesheet`
+	- `title`
 - Only relevant if you are using custom styles or added event handlers: In all HTML and CSS class names, `_` has been replaced with `-`. The wrapper class has been changed from `tify-app` to `tify`.

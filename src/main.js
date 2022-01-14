@@ -30,7 +30,6 @@ window.Tify = function Tify(options = {}) {
 		panX: null,
 		panY: null,
 		rotation: null,
-		titleAffix: '',
 		translationsDirUrl: '',
 		urlQueryKey: '',
 		urlQueryParams: [
