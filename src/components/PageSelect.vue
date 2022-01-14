@@ -2,12 +2,12 @@
 	<div class="tify-page-select">
 		<button
 			class="tify-page-select-button"
-			:title="pageTitleAttr"
+			:title="currentPageTitleAttr"
 			:aria-label="$root.translate('Current page')"
 			v-click-outside="closeDropdown"
 			@click="toggleDropdown"
 		>
-			{{ getCurrentPage() }}
+			{{ currentPageLabel }}
 		</button>
 
 		<div
@@ -63,7 +63,13 @@ export default {
 		};
 	},
 	computed: {
-		pageTitleAttr() {
+		currentPageLabel() {
+			const page = this.$root.options.pages[0] || 1;
+			const canvasIndex = this.$root.options.pages[0] ? this.$root.options.pages[0] - 1 : 0;
+			const label = this.$root.convertValueToArray(this.$root.canvases[canvasIndex].label)[0];
+			return this.$root.getPageLabel(page, label);
+		},
+		currentPageTitleAttr() {
 			const { pages } = this.$root.options;
 			const page = (pages[0] === 0 && pages.length > 1 ? 1 : pages[0]);
 			const physLabel = this.$root.translate('Physical page');
@@ -89,12 +95,6 @@ export default {
 	methods: {
 		closeDropdown() {
 			this.isOpen = false;
-		},
-		getCurrentPage() {
-			const page = this.$root.options.pages[0] || 1;
-			const canvasIndex = this.$root.options.pages[0] ? this.$root.options.pages[0] - 1 : 0;
-			const label = this.$root.convertValueToArray(this.$root.canvases[canvasIndex].label)[0];
-			return `${page} : ${label}`;
 		},
 		onKeydown(event) {
 			if (this.preventKeyboardEvent(event)) {
