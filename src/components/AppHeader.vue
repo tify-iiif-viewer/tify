@@ -426,10 +426,10 @@ export default {
 		toggleControlsPopup() {
 			this.controlsVisible = !this.controlsVisible;
 		},
-		toggleDoublePage(force) {
+		toggleDoublePage(forced) {
 			const { pages } = this.$root.options;
 			let newPages;
-			if ((pages.length > 1 && force !== true) || force === false) {
+			if ((pages.length > 1 && forced !== true) || forced === false) {
 				// There are already multiple pages shown; switch back to single page
 				newPages = [pages[0] < 1 ? 1 : pages[0]];
 			} else if (pages[0] < 2) {
@@ -447,8 +447,8 @@ export default {
 			this.$root.updateOptions({ pages: newPages });
 			return newPages;
 		},
-		toggleFullscreen(force) {
-			if ((this.fullscreenActive && force !== true) || force === false) {
+		toggleFullscreen(forced) {
+			if ((this.fullscreenActive && forced !== true) || forced === false) {
 				if (document.exitFullscreen) {
 					document.exitFullscreen();
 				} else if (document.mozCancelFullScreen) { // Firefox

@@ -173,7 +173,7 @@ There is no API function to load a new manifest; just replace the instance.
 
 	#### Parameters
 
-	- `force` (boolean, default `false`): Double page is forced on (`true`) or off (`false`).
+	- `forced` (boolean, default `false`): Double page is forced on (`true`) or off (`false`).
 
 - ### toggleFullscreen
 
@@ -181,7 +181,7 @@ There is no API function to load a new manifest; just replace the instance.
 
 	#### Parameters
 
-	- `force` (boolean, default `false`): Fullscreen is forced on (`true`) or off (`false`).
+	- `forced` (boolean, default `false`): Fullscreen is forced on (`true`) or off (`false`).
 
 
 ### OpenSeadragon API
