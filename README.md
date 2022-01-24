@@ -132,13 +132,13 @@ There is no API function to load a new manifest; just replace the instance.
 
 	- `container` (string or HTMLElement, required): CSS selector pointing to a single HTML node or the node itself into which TIFY is mounted.
 
-- **resetViewer**
+- **resetScan**
 
-	Resets the viewer display options.
+	Resets the scan display options.
 
 	Parameters:
 
-	- `includingFiltersAndRotation` (boolean, default `false`): By default, only pan and zoom are reset. Set this to `true` to also reset image filters and rotation.
+	- `includingFiltersAndRotation` (boolean, default `false`): By default, only pan and zoom are reset. If `true`, image filters and rotation are reset, too.
 
 - **setPage**
 

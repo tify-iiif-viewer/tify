@@ -32,7 +32,7 @@
 				class="tify-scan-button"
 				:disabled="isReset"
 				:title="$root.translate('Reset')"
-				@click="resetViewer(!!$event.shiftKey)"
+				@click="resetScan(!!$event.shiftKey)"
 			>
 				<icon-aspect-ratio/>
 			</button>
@@ -232,15 +232,15 @@ export default {
 	watch: {
 		// eslint-disable-next-line func-names
 		'$root.options.pages': function (newValue, oldValue) {
-			const resetViewer = newValue.length !== oldValue.length;
-			this.loadImageInfo(resetViewer);
+			const reset = newValue.length !== oldValue.length;
+			this.loadImageInfo(reset);
 		},
 	},
 	methods: {
 		closeFilters() {
 			this.filtersVisible = false;
 		},
-		initViewer(resetViewer) {
+		initViewer(reset) {
 			const { options } = this.$root;
 
 			// TODO: All tile sources could be added at once (sequence mode), but
@@ -285,8 +285,8 @@ export default {
 
 			if (this.viewer) {
 				this.viewer.addOnceHandler('open', () => {
-					if (this.isReset || resetViewer) {
-						this.resetViewer();
+					if (this.isReset || reset) {
+						this.resetScan();
 					} else {
 						this.viewer.viewport.applyConstraints(true);
 
@@ -377,10 +377,10 @@ export default {
 				this.$root.error = `Error loading image: ${error.message}`;
 			});
 
+			this.$root.expose(this.resetScan);
 			this.$root.expose(this.viewer, 'viewer');
-			this.$root.expose(this.resetViewer);
 		},
-		loadImageInfo(resetViewer = false) {
+		loadImageInfo(reset = false) {
 			this.stopLoadingWatch();
 
 			const infoPromises = [];
@@ -419,10 +419,10 @@ export default {
 							this.tileSources[response.page] = response.data;
 						}
 					});
-					this.initViewer(resetViewer);
+					this.initViewer(reset);
 				});
 			} else {
-				this.initViewer(resetViewer);
+				this.initViewer(reset);
 			}
 		},
 		onKeydown(event) {
@@ -439,7 +439,7 @@ export default {
 
 			if (zeroKeyCodes.indexOf(event.keyCode) > -1) {
 				if (event.shiftKey) {
-					this.resetViewer(event);
+					this.resetScan(event);
 				} else {
 					this.viewer.viewport.goHome();
 				}
@@ -497,10 +497,6 @@ export default {
 			default:
 			}
 		},
-		resetFilters() {
-			this.$refs.image.style.cssText = '';
-			this.$root.updateOptions({ filters: {} });
-		},
 		removeScanOptions() {
 			this.$root.updateOptions({
 				panX: null,
@@ -508,7 +504,11 @@ export default {
 				zoom: null,
 			});
 		},
-		resetViewer(includingFiltersAndRotation) {
+		resetFilters() {
+			this.$refs.image.style.cssText = '';
+			this.$root.updateOptions({ filters: {} });
+		},
+		resetScan(includingFiltersAndRotation) {
 			if (includingFiltersAndRotation) {
 				// Rotation has to be reset before pan and zoom
 				this.viewer.viewport.setRotation(0);
