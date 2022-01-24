@@ -112,7 +112,13 @@ window.Tify = function Tify(options = {}) {
 	});
 
 	// TODO: Add test
+	let mounted = false;
 	this.mount = (container) => {
+		if (mounted) {
+			console.warn('TIFY is already mounted');
+			return;
+		}
+
 		const containerEl = typeof container === 'string'
 			? document.querySelector(container)
 			: container;
@@ -126,6 +132,8 @@ window.Tify = function Tify(options = {}) {
 		containerEl.innerHTML = '';
 		containerEl.appendChild(el);
 		this.app.$mount(el);
+
+		mounted = true;
 	};
 
 	// TODO: Add test
