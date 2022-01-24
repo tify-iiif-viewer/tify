@@ -28,7 +28,8 @@
 			<button class="tify-error-close" @click="$root.error = ''">
 				<icon-close/>
 			</button>
-			<span v-html="$root.error"/>
+			<!-- NOTE: Error messages can contain user-controlled content -->
+			<span>{{$root.error}}</span>
 		</div>
 	</div>
 </template>
