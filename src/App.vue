@@ -121,21 +121,31 @@ export default {
 			});
 		},
 		setLanguage(language) {
-			this.$root.options.language = language;
+			let resolveFunction;
+			let rejectFunction;
+			const promise = new Promise((resolve, reject) => {
+				resolveFunction = resolve;
+				rejectFunction = reject;
+			});
 
 			if (language === 'en') {
 				this.$root.translation = null;
-				return;
+				resolveFunction(language);
+				return promise;
 			}
 
 			const translationUrl = `${this.$root.options.translationsDirUrl}/${language}.json`;
 			this.$http.get(translationUrl).then((response) => {
+				this.$root.options.language = language;
 				this.$root.translation = response.data;
+				resolveFunction(language);
 			}, (error) => {
 				const status = (error.response ? error.response.statusText : error.message);
-				this.$root.error = `Error loading translation ${language}: ${status}`;
-				console.warn(this.$root.error); // eslint-disable-line no-console
+				this.$root.error = `Error loading translation for "${language}": ${status}`;
+				rejectFunction(new Error(this.$root.error));
 			});
+
+			return promise;
 		},
 	},
 	beforeDestroy() {
