@@ -32,7 +32,7 @@
 export default {
 	computed: {
 		copyright() {
-			const copyright = 'Copyright &copy; 2017&ndash;2021'
+			const copyright = 'Copyright &copy; 2017&ndash;2022'
 					+ ' <a href="https://www.uni-goettingen.de/en/">Göttingen University</a>'
 					+ ' / <a href="https://www.sub.uni-goettingen.de/en/">Göttingen State and University Library</a>';
 			return this.$root.translate('$copyright', copyright);
