@@ -115,13 +115,16 @@ window.Tify = function Tify(options = {}) {
 	let mounted = false;
 	this.mount = (container) => {
 		if (mounted) {
-			console.warn('TIFY is already mounted');
-			return;
+			throw new Error('TIFY is already mounted');
 		}
 
 		const containerEl = typeof container === 'string'
 			? document.querySelector(container)
 			: container;
+
+		if (!containerEl) {
+			throw new Error('Container element not found');
+		}
 
 		const style = window.getComputedStyle(containerEl);
 		if (style.position === 'static') {
