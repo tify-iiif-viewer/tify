@@ -19,6 +19,12 @@ export default {
 					this.$el.classList.remove(`-${breakpoint}`);
 				}
 			});
+
+			if (this.$el.clientHeight <= 499) {
+				this.$el.classList.add('-short');
+			} else {
+				this.$el.classList.remove('-short');
+			}
 		},
 	},
 	mounted() {

@@ -117,10 +117,7 @@
 	width: g(1.25);
 	z-index: 1;
 
-	// Move buttons to bottom depending on screen height so buttons in the
-	// top-left corner are not overlapped
-	// TODO: Set this depending on container size
-	@media (max-height: 479px) {
+	.tify.-short & {
 		top: 75%;
 	}
 
