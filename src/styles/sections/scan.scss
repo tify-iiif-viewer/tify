@@ -72,7 +72,7 @@
 	@include dropdown(left, right);
 	left: g(1.75);
 	padding: g(.5);
-	top: (g(-.75) - $br);
+	top: g(.75);
 	width: g(10);
 
 	label {

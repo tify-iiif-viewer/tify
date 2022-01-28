@@ -1,14 +1,21 @@
+@use 'sass:math';
+
 @mixin dropdown($position: left, $alignment: bottom) {
 	background: $white;
 	border: $br solid $white;
 	border-radius: $br;
 	filter: drop-shadow($drop-shadow);
-	margin: g(.25) 0;
 	min-width: 6em;
 	overflow: visible;
 	position: absolute;
 	text-shadow: none;
 	z-index: 9;
+
+	@if ($alignment == bottom) {
+		margin: g(.25) 0;
+	} @else if ($alignment == right) {
+		transform: translateY(-50%);
+	}
 
 	// Target IE 11, which is not supporting CSS filters
 	_:-ms-lang(x), & {
@@ -41,7 +48,7 @@
 			}
 		} @else if ($alignment == right) {
 			left: g(-.25) - $br;
-			top: g();
+			top: calc(50% - #{g(.25)});
 		}
 	}
 }
