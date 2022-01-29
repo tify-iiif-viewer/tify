@@ -8,7 +8,7 @@
 	box-shadow: none;
 	display: block;
 	margin: g(-.25);
-	max-width: 30vw;
+	max-width: g(10);
 	min-width: g(3);
 	overflow: hidden;
 	padding: g(.25) g(.5);
@@ -16,13 +16,17 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 
-	// Limit width on tiny screens to prevent buttons from breaking
+	.tify.-medium & {
+		max-width: g(8);
+	}
+
+	.tify.-small & {
+		max-width: g(6);
+	}
+
 	.tify.-tiny & {
-		max-width: g(2);
-		min-width: g(2);
-		overflow: hidden;
+		max-width: g(4);
 		padding: g(.25);
-		white-space: nowrap;
 	}
 }
 
