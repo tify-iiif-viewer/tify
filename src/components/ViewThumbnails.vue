@@ -103,7 +103,7 @@ export default {
 			const hMargin = parseInt(itemStyle.marginLeft, 10) + parseFloat(itemStyle.marginRight, 10);
 			const itemWidth = itemTemplate.offsetWidth + hMargin;
 			this.thumbnailWidth = itemTemplate.offsetWidth;
-			this.itemsPerRow = Math.floor((this.$refs.container.clientWidth) / itemWidth);
+			this.itemsPerRow = Math.floor(this.$refs.container.clientWidth / itemWidth);
 
 			const totalRows = Math.ceil(this.$root.canvases.length / this.itemsPerRow);
 			const containerHeight = (totalRows * this.itemHeight);
