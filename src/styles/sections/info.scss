@@ -16,7 +16,7 @@ $info-content-max-height: g(6.5);
 
 .tify-info-logo {
 	display: block;
-	max-height: g(2.5);
+	max-height: g(4);
 	max-width: 100%;
 	height: auto;
 	width: auto;
@@ -31,6 +31,12 @@ $info-content-max-height: g(6.5);
 .tify-info-section {
 	margin-bottom: g();
 	word-break: break-word;
+
+	&.-logo {
+		> a {
+			display: inline-block;
+		}
+	}
 }
 
 .tify-info-toggle {
