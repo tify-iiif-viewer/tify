@@ -87,6 +87,8 @@
 			<div class="tify-header-button-group" ref="switchViewSmall">
 				<button
 					class="tify-header-button"
+					:aria-controls="$root.getId('controls')"
+					:aria-expanded="controlsVisible ? 'true' : 'false'"
 					v-click-outside="closeControlsPopup"
 					@click="toggleControlsPopup"
 				>
@@ -96,11 +98,18 @@
 			</div>
 		</div>
 
-		<div class="tify-header-column -controls" :class="{ '-visible': controlsVisible }">
+		<div
+			class="tify-header-column -controls"
+			:class="{ '-visible': controlsVisible }"
+			:id="$root.getId('controls')"
+		>
 			<div class="tify-header-button-group -view">
+				<!-- NOTE: This button is hidden on large containers -->
 				<button
 					class="tify-header-button -scan"
 					:class="{ '-active': $root.options.view === 'scan' }"
+					:aria-controls="$root.getId('scan')"
+					:aria-expanded="$root.options.view === 'scan' ? 'true' : 'false'"
 					@click="toggleView('scan')"
 				>
 					<icon-image/>
@@ -111,6 +120,8 @@
 					v-if="fulltextEnabled"
 					class="tify-header-button"
 					:class="{ '-active': $root.options.view === 'fulltext' }"
+					:aria-controls="$root.getId('fulltext')"
+					:aria-expanded="$root.options.view === 'fulltext' ? 'true' : 'false'"
 					@click="toggleView('fulltext')"
 				>
 					<icon-text-long/>
@@ -120,6 +131,8 @@
 				<button
 					class="tify-header-button"
 					:class="{ '-active': $root.options.view === 'thumbnails' }"
+					:aria-controls="$root.getId('thumbnails')"
+					:aria-expanded="$root.options.view === 'thumbnails' ? 'true' : 'false'"
 					@click="toggleView('thumbnails')"
 				>
 					<icon-view-module/>
@@ -130,6 +143,8 @@
 					v-if="tocEnabled"
 					class="tify-header-button"
 					:class="{ '-active': $root.options.view === 'toc' }"
+					:aria-controls="$root.getId('toc')"
+					:aria-expanded="$root.options.view === 'toc' ? 'true' : 'false'"
 					@click="toggleView('toc')"
 				>
 					<icon-table-of-contents/>
@@ -139,6 +154,8 @@
 				<button
 					class="tify-header-button"
 					:class="{ '-active': $root.options.view === 'info' }"
+					:aria-controls="$root.getId('info')"
+					:aria-expanded="$root.options.view === 'info' ? 'true' : 'false'"
 					@click="toggleView('info')"
 				>
 					<icon-information-outline/>
@@ -148,6 +165,8 @@
 				<button
 					class="tify-header-button"
 					:class="{ '-active': $root.options.view === 'export' }"
+					:aria-controls="$root.getId('export')"
+					:aria-expanded="$root.options.view === 'export' ? 'true' : 'false'"
 					@click="toggleView('export')"
 				>
 					<icon-download/>
@@ -157,6 +176,8 @@
 				<button
 					class="tify-header-button -icon-only"
 					:class="{ '-active': $root.options.view === 'help' }"
+					:aria-controls="$root.getId('help')"
+					:aria-expanded="$root.options.view === 'help' ? 'true' : 'false'"
 					:title="$root.translate('Help')"
 					@click="toggleView('help')"
 				>

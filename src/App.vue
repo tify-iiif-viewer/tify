@@ -8,13 +8,35 @@
 		/>
 
 		<div v-if="$root.manifest" class="tify-main">
-			<view-scan/>
-			<view-fulltext v-if="hasOtherContent" v-show="$root.options.view === 'fulltext'"/>
-			<view-toc v-if="hasToc" v-show="$root.options.view === 'toc'"/>
-			<view-thumbnails v-show="$root.options.view === 'thumbnails'"/>
-			<view-info v-show="$root.options.view === 'info'"/>
-			<view-export v-show="$root.options.view === 'export'"/>
-			<view-help v-show="$root.options.view === 'help'"/>
+			<view-scan
+				:id="$root.getId('scan')"
+			/>
+			<view-fulltext
+				:id="$root.getId('fulltext')"
+				v-if="hasOtherContent"
+				v-show="$root.options.view === 'fulltext'"
+			/>
+			<view-toc
+				:id="$root.getId('toc')"
+				v-if="hasToc"
+				v-show="$root.options.view === 'toc'"
+			/>
+			<view-thumbnails
+				:id="$root.getId('thumbnails')"
+				v-show="$root.options.view === 'thumbnails'"
+			/>
+			<view-info
+				:id="$root.getId('info')"
+				v-show="$root.options.view === 'info'"
+			/>
+			<view-export
+				:id="$root.getId('export')"
+				v-show="$root.options.view === 'export'"
+			/>
+			<view-help
+				:id="$root.getId('help')"
+				v-show="$root.options.view === 'help'"
+			/>
 		</div>
 
 		<div
@@ -29,7 +51,7 @@
 				<icon-close/>
 			</button>
 			<!-- NOTE: Error messages can contain user-controlled content -->
-			<span>{{$root.error}}</span>
+			<span>{{ $root.error }}</span>
 		</div>
 	</div>
 </template>

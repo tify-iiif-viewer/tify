@@ -10,7 +10,6 @@ $track-focus-color: $brand-color-light;
 
 $thumb-color: linear-gradient(to bottom, tint($link-color, 20), $link-color);
 $thumb-focus-color: linear-gradient(to bottom, $link-color, shade($link-color, 20));
-$thumb-focus-shadow: 0 0 0 g(.25) $highlight-color;
 
 $thumb-radius: $br;
 $thumb-height: g();
@@ -92,15 +91,12 @@ $track-radius: $br;
 	}
 
 	&:focus {
-		outline: 0;
-
 		&::-webkit-slider-runnable-track {
 			background: $track-focus-color;
 		}
 
 		&::-webkit-slider-thumb {
 			background: $thumb-focus-color;
-			box-shadow: $thumb-focus-shadow;
 		}
 
 		&::-moz-range-track {
@@ -109,7 +105,6 @@ $track-radius: $br;
 
 		&::-moz-range-thumb {
 			background: $thumb-focus-color;
-			box-shadow: $thumb-focus-shadow;
 		}
 
 		&::-ms-fill-lower {
@@ -122,7 +117,6 @@ $track-radius: $br;
 
 		&::-ms-thumb {
 			background: $thumb-focus-color;
-			box-shadow: $thumb-focus-shadow;
 		}
 	}
 }

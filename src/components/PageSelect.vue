@@ -4,6 +4,8 @@
 			class="tify-page-select-button"
 			:title="currentPageTitleAttr"
 			:aria-label="$root.translate('Current page')"
+			:aria-controls="$root.getId('dropdown')"
+			:aria-expanded="isOpen ? 'true' : 'false'"
 			v-click-outside="closeDropdown"
 			@click="toggleDropdown"
 		>
@@ -12,6 +14,7 @@
 
 		<div
 			class="tify-page-select-dropdown"
+			:id="$root.getId('dropdown')"
 			key="dropdown"
 			v-show="isOpen"
 			@click.stop

@@ -1,5 +1,5 @@
 <template>
-	<section class="tify-fulltext">
+	<section class="tify-fulltext" tabindex="0">
 		<h2 class="tify-sr-only">{{ $root.translate('Fulltext') }}</h2>
 
 		<div v-if="fulltextAvailable" class="tify-fulltext-texts">

@@ -68,6 +68,7 @@ window.Tify = function Tify(options = {}) {
 			return {
 				api: {},
 				error: '',
+				id: `tify-${Math.floor(Math.random() * Date.now())}`,
 				loading: 0,
 				manifest: null,
 				manifestUrl: '',
@@ -92,6 +93,9 @@ window.Tify = function Tify(options = {}) {
 		methods: {
 			expose(method, name) {
 				instance[name || method.name.replace('bound ', '')] = method;
+			},
+			getId(postfix) {
+				return this.id + (postfix ? `-${postfix}` : '');
 			},
 			getPageLabel(number, label) {
 				return this.options.pageLabelFormat.replace('P', number).replace('L', label);

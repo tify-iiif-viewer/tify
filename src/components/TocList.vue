@@ -14,6 +14,8 @@
 				v-if="structure.childStructures"
 				class="tify-toc-toggle"
 				:title="$root.translate(expandedStructures[index] ? 'Collapse' : 'Expand')"
+				:aria-controls="`${id}-${index}`"
+				:aria-expanded="expandedStructures[index] ? 'true' : 'false'"
 				@click="toggleChildren(index)"
 			>
 				<template v-if="expandedStructures[index]">
@@ -46,6 +48,7 @@
 			<toc-list
 				v-if="structure.childStructures"
 				v-show="expandedStructures[index]"
+				:id="`${id}-${index}`"
 				ref="children"
 				:level="level + 1"
 				:parentStructure="structure"
@@ -68,6 +71,7 @@ export default {
 	data() {
 		return {
 			expandedStructures: [],
+			id: this.$root.getId(`toc-list-${Math.floor(Math.random() * 1e12)}`),
 		};
 	},
 	methods: {

@@ -64,11 +64,14 @@
 					class="tify-scan-button"
 					:class="{ '-active': filtersActive }"
 					:title="$root.translate('Toggle image filters')"
+					:aria-controls="$root.getId('filters')"
+					:aria-expanded="filtersVisible ? 'true' : 'false'"
 					@click="filtersVisible = !filtersVisible"
 				>
 					<icon-tune/>
 				</button>
-				<div class="tify-scan-filters-popup" v-show="filtersVisible">
+				<div class="tify-scan-filters-popup" :id="$root.getId('filters')" v-show="filtersVisible">
+					<h3 class="tify-sr-only">{{ $root.translate('Image filters') }}</h3>
 					<p>
 						<label>
 							<icon-white-balance-sunny/>

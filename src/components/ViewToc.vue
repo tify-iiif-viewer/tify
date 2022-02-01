@@ -1,5 +1,5 @@
 <template>
-	<section class="tify-toc">
+	<section class="tify-toc" tabindex="0">
 		<h2 class="tify-sr-only">{{ $root.translate('Table of Contents') }}</h2>
 
 		<div v-if="hasChildStructures" class="tify-toc-header">

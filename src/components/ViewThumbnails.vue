@@ -1,13 +1,13 @@
 <template>
-	<section class="tify-thumbnails" @scroll="redrawThumbnails">
+	<section class="tify-thumbnails" tabindex="0" @scroll="redrawThumbnails">
 		<h2 class="tify-sr-only">{{ $root.translate('Pages') }}</h2>
 
 		<div class="tify-thumbnails-list" ref="container">
 			<a
 				v-for="item in items"
 				class="tify-thumbnails-item"
-				href="javascript:;"
 				:class="{ '-current': $root.options.pages.indexOf(item.page) > -1 }"
+				href="javascript:;"
 				:key="item.page"
 				@click.prevent="setPageAndSwitchView(item.page, $event.ctrlKey)"
 				@touchstart="touchStartTogglePage(item.page)"

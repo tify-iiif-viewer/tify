@@ -1,5 +1,5 @@
 <template>
-	<section class="tify-info">
+	<section class="tify-info" tabindex="0">
 		<h2 class="tify-sr-only">{{ $root.translate('Info') }}</h2>
 
 		<div v-if="manifest.label" class="tify-info-section -title">

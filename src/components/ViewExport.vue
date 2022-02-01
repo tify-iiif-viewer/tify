@@ -1,5 +1,5 @@
 <template>
-	<section class="tify-export">
+	<section class="tify-export" tabindex="0">
 		<h2 class="tify-sr-only">{{ $root.translate('Export') }}</h2>
 
 		<div class="tify-export-section -links">
@@ -8,7 +8,7 @@
 				<li :key="page" v-for="page in pages">
 					<!-- NOTE: The download attribute is only honored for same-origin URLs -->
 					<a :href="imageUrls[page]" :download="`${page}.jpg`">
-						{{ $root.translate('Page') }} {{page}}
+						{{ $root.translate('Page') }} {{ page }}
 						:
 						{{ $root.convertValueToArray($root.canvases[page - 1].label)[0] }}
 					</a>
@@ -26,8 +26,10 @@
 
 			<div class="tify-export-container" v-if="hasElementPdfLinks">
 				<button
-						class="tify-export-toggle"
-						@click="perElementPdfLinksVisible = !perElementPdfLinksVisible"
+					class="tify-export-toggle"
+					:aria-controls="$root.getId('export-pdf-list')"
+					:aria-expanded="perElementPdfLinksVisible ? 'true' : 'false'"
+					@click="perElementPdfLinksVisible = !perElementPdfLinksVisible"
 				>
 					<template v-if="!perElementPdfLinksVisible">
 						{{ $root.translate('PDFs for each element') }}
@@ -36,7 +38,11 @@
 						{{ $root.translate('Close PDF list') }}
 					</template>
 				</button>
-				<div class="tify-export-toc" v-show="perElementPdfLinksVisible">
+				<div
+					class="tify-export-toc"
+					:id="$root.getId('export-pdf-list')"
+					v-show="perElementPdfLinksVisible"
+				>
 					<toc-list
 						purpose="pdf"
 						ref="children"
@@ -125,10 +131,9 @@ export default {
 		hasElementPdfLinks() {
 			const { manifest } = this.$root;
 
-			if (
-				!Array.isArray(manifest.structures)
-					|| !manifest.structures[0]
-					|| !manifest.structures[0].rendering
+			if (!Array.isArray(manifest.structures)
+				|| !manifest.structures[0]
+				|| !manifest.structures[0].rendering
 			) return false;
 
 			const renderings = this.$root.convertValueToArray(manifest.structures[0].rendering);

@@ -1,5 +1,5 @@
 <template>
-	<section class="tify-help">
+	<section class="tify-help" tabindex="0">
 		<h2 class="tify-sr-only">{{ $root.translate('Help') }}</h2>
 
 		<h3>{{ $root.translate('About TIFY') }}</h3>
