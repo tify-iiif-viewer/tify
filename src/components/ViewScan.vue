@@ -591,7 +591,9 @@ export default {
 		this.$root.$el.addEventListener('keypress', this.onKeypress);
 	},
 	beforeDestroy() {
-		this.viewer.destroy();
+		if (this.viewer) {
+			this.viewer.destroy();
+		}
 
 		this.$root.$el.removeEventListener('keydown', this.onKeydown);
 		this.$root.$el.removeEventListener('keypress', this.onKeypress);
