@@ -58,6 +58,7 @@
 		background: $white;
 		border: $border-width solid $shade;
 		border-radius: $br;
+		color: inherit;
 		font: inherit;
 		padding: (g(.25) - $border-width) .5em;
 
