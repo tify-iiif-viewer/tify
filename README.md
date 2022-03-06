@@ -1,4 +1,4 @@
-<h1 style="border: 0; padding: 0">
+<h1>
 	<a href="https://github.com/tify-iiif-viewer/tify">
 		<img src="https://tify.rocks/img/tify-logo.svg" alt="TIFY" width="148" height="60">
 	</a>
@@ -72,6 +72,10 @@ TIFY takes an options object as its only parameter. While optional, you usually 
 
 	The HTML element into which TIFY is mounted. If set to `null`, TIFY is not mounted at all until `mount` is called (see [API](#api)).
 
+- **`filters`**: object, default `{}`
+
+	Sets the initial image filters. Available properties are `'brightness'`, `'contrast'` (both a floating-point number between `0.5` and `2`) and `'saturation'` (floating-point number between `0` and `3`), all optional.
+
 - **`language`**: string, default `'en'`
 
 	The interface language, matching the translation filename without extension. [See which translations are available](https://github.com/tify-iiif-viewer/tify/tree/main/dist/translations) or add your own.
@@ -96,7 +100,7 @@ TIFY takes an options object as its only parameter. While optional, you usually 
 
 	The URL of the directory where TIFY finds its translations, without trailing `/`. If not set, TIFY tries to determine this URL automatically from its `<script>` element, but this may not work depending on how TIFY is loaded.
 
-- **`urlQueryKey`**: string or `null` (default), only use characters `A…Z a…z 0…9 - _ . ~`
+- **`urlQueryKey`**: string or `null` (default), only use characters `A…Z a…z 0…9 - _`
 
 	If set, parameters are read from the URL query and any changes are reflected, using the key provided. This works with multiple concurrent instances, but each instance must use a unique key.
 
@@ -111,6 +115,10 @@ TIFY takes an options object as its only parameter. While optional, you usually 
 - **`viewer`**: object
 
 	An object with options for OpenSeadragon, TIFY’s image rendering component. [See its documentation](https://openseadragon.github.io/docs/OpenSeadragon.html#.Options) for all available options.
+
+- **`zoom`**: floating-point number, default `null`
+
+	Sets the initial zoom level. The higher the number, the deeper the zoom. By default, zoom is set automatically so that the full image is visible.
 
 An example with most available options set to non-default values:
 
@@ -129,6 +137,7 @@ new Tify({
   viewer: {
     immediateRender: false,
   },
+  zoom: 1.2,
 })
 ```
 
