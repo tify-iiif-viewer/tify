@@ -2,12 +2,12 @@
 	<!-- NOTE: Root element must be focusable for global keyboard events to work -->
 	<div class="tify" tabindex="-1">
 		<app-header
-			v-if="$root.manifest"
+			v-if="ready"
 			:fulltextEnabled="hasOtherContent"
 			:tocEnabled="hasToc"
 		/>
 
-		<div v-if="$root.manifest" class="tify-main">
+		<div v-if="ready" class="tify-main">
 			<view-scan
 				:id="$root.getId('scan')"
 			/>
@@ -83,6 +83,9 @@ export default {
 		hasToc() {
 			return !!(this.$root.manifest.structures && this.$root.manifest.structures.length);
 		},
+		ready() {
+			return this.$root.manifest && (this.$root.options.language === 'en' || this.$root.translation);
+		},
 	},
 	created() {
 		this.$root.expose(this.setLanguage);
@@ -151,6 +154,7 @@ export default {
 			});
 
 			if (language === 'en') {
+				this.$root.options.language = 'en';
 				this.$root.translation = null;
 				resolveFunction(language);
 				return promise;
