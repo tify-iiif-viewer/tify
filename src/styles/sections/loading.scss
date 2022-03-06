@@ -10,14 +10,6 @@
 	position: absolute;
 	width: g(1.5);
 
-	&.-centered {
-		height: g(2);
-		left: 50%;
-		margin: g(-1);
-		top: 50%;
-		width: g(2);
-	}
-
 	@keyframes fadeIn {
 		0% {
 			opacity: 0;

@@ -42,7 +42,6 @@
 		<div
 			v-if="$root.loading"
 			class="tify-loading"
-			:class="{'-centered' : !$root.manifest}"
 			:aria-label="$root.translation ? $root.translate('Loading') : 'Loading'"
 		/>
 
