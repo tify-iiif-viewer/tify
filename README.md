@@ -88,6 +88,10 @@ TIFY takes an options object as its only parameter. While optional, you usually 
 
 	The page(s) to display initially. Page numbers are physical numbers, starting at 1. This setting can be overridden by setting `pages` via URL query if `urlQueryKey` is set.
 
+- **`pan`**: object, default `{}`
+
+	Sets the initial pan. The object has two optional properties `x` and `y`, both floating-point numbers. The higher the value, the more to the left respectively top the image is positioned. By default, the image is centered within the container.
+
 - **`translationsDirUrl`**: string or `null` (default)
 
 	The URL of the directory where TIFY finds its translations, without trailing `/`. If not set, TIFY tries to determine this URL automatically from its `<script>` element, but this may not work depending on how TIFY is loaded.
@@ -96,7 +100,7 @@ TIFY takes an options object as its only parameter. While optional, you usually 
 
 	If set, parameters are read from the URL query and any changes are reflected, using the key provided. This works with multiple concurrent instances, but each instance must use a unique key.
 
-- **`urlQueryParams`**: array of strings, default `['filters', 'pages', 'panX', 'panY', 'rotation', 'view', 'zoom']`
+- **`urlQueryParams`**: array of strings, default `['filters', 'pages', 'pan', 'rotation', 'view', 'zoom']`
 
 	The parameter keys to be stored in the URL query on change. Only has effect if `urlQueryKey` is set.
 
@@ -117,6 +121,7 @@ new Tify({
   manifestUrl: 'https://example.org/iiif-manifest.json',
   pageLabelFormat: 'P (L)',
   pages: [2, 3],
+  pan: { x: .45, y: .6 },
   translationsDirUrl: '/translations/tify',
   urlQueryKey: 'tify',
   urlQueryParams: ['pages'],

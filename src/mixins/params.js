@@ -118,8 +118,9 @@ export default {
 
 			this.options.filters = params.filters || this.options.filters;
 			this.options.pages = params.pages || this.options.pages;
-			this.options.panX = parseFloat(params.panX) || this.options.panX;
-			this.options.panY = parseFloat(params.panY) || this.options.panY;
+			this.options.pan = params.panX || params.panY
+				? { x: params.panX, y: params.panY }
+				: params.pan || this.options.pan;
 			this.options.rotation = parseInt(params.rotation, 10) || this.options.rotation;
 			this.options.view = params.view || params.view === ''
 				? params.view

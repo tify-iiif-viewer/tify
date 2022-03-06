@@ -301,8 +301,8 @@ export default {
 
 						const offsetX = (options.pages[0] ? 0 : 1);
 						this.viewer.viewport.panTo({
-							x: (bounds.x > 0 ? (bounds.width / 2) + offsetX : options.panX),
-							y: (bounds.y > 0 ? (bounds.height / 2) : options.panY),
+							x: (bounds.x > 0 ? (bounds.width / 2) + offsetX : options.pan.x),
+							y: (bounds.y > 0 ? (bounds.height / 2) : options.pan.y),
 						});
 					}
 				});
@@ -341,8 +341,10 @@ export default {
 				const center = this.viewer.viewport.getCenter();
 				this.$root.updateOptions({
 					// 3 decimals are sufficient, keeping URL short
-					panX: Math.round(center.x * 1e3) / 1e3,
-					panY: Math.round(center.y * 1e3) / 1e3,
+					pan: {
+						x: Math.round(center.x * 1e3) / 1e3,
+						y: Math.round(center.y * 1e3) / 1e3,
+					},
 					zoom: Math.round(this.viewer.viewport.getZoom() * 1e3) / 1e3,
 				});
 			});
@@ -356,11 +358,11 @@ export default {
 			this.viewer.addHandler('open', () => {
 				this.startLoadingWatch();
 
-				if (options.panX !== null || options.panY !== null || options.zoom) {
-					if (options.panX !== null || options.panY !== null) {
+				if (options.pan.x !== undefined || options.pan.y !== undefined || options.zoom) {
+					if (options.pan.x !== undefined || options.pan.y !== undefined) {
 						this.viewer.viewport.panTo({
-							x: options.panX,
-							y: options.panY,
+							x: options.pan.x,
+							y: options.pan.y,
 						}, true);
 					}
 
@@ -502,8 +504,7 @@ export default {
 		},
 		removeScanOptions() {
 			this.$root.updateOptions({
-				panX: null,
-				panY: null,
+				pan: {},
 				zoom: null,
 			});
 		},

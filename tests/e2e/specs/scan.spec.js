@@ -21,8 +21,10 @@ describe('Scan', () => {
 				contrast: 0.9,
 				saturate: 1.1,
 			},
-			panX: .5,
-			panY: .5,
+			pan: {
+				x: .5,
+				y: .5,
+			},
 			rotation: 90,
 			zoom: 2,
 		};
