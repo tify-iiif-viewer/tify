@@ -6,7 +6,7 @@
 
 TIFY is a slim and mobile-friendly IIIF document viewer built with [Vue.js](https://vuejs.org/).
 
-Continue reading to learn how to integrate TIFY into your website or application and about its options and API, [check out the website for usage examples](https://tify.rocks/), or [have a look at the user guide](docs/user-guide.en.md).
+Continue reading to learn how to integrate TIFY into your website or application and about its options and API, [check out the website for usage examples](https://tify.rocks/), or [have a look at the user guide](doc/user-guide.en.md).
 
 ## Embedding TIFY
 
