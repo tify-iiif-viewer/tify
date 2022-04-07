@@ -18,7 +18,7 @@
 	- `manifest` has been renamed to `manifestUrl`.
 	- `panX` and `panY` have been merged into `pan`, an object with two properties `x` and `y`. Old URLs with `panX` and `panY` are still supported.
 	- `stylesheet` has been removed.
-	- `view` is now an empty string by default instead of `info`, meaning TIFY only displays the scan.
 	- `title` has been removed.
+	- `view` is now an empty string by default instead of `info`, meaning TIFY only displays the scan.
 - Only relevant if you are using custom styles or added event handlers: In all HTML and CSS class names, `_` has been replaced with `-`. The wrapper class has been changed from `tify-app` to `tify`.
 - Internet Explorer 11 is no longer supported.
