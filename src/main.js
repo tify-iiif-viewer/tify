@@ -8,7 +8,6 @@ import paramsMixin from './mixins/params';
 import uiMixin from './mixins/ui';
 
 import './directives/click-outside';
-import './polyfills/findIndex';
 
 Vue.prototype.$http = Axios;
 
