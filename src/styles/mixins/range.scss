@@ -66,30 +66,6 @@ $track-radius: $br;
 		@include range-thumb;
 	}
 
-	&::-ms-track {
-		@include range-track;
-		background: transparent;
-		border-color: transparent;
-		border-width: ($thumb-height * .5) 0;
-		color: transparent;
-		margin: g(-.25) 0;
-	}
-
-	&::-ms-fill-lower {
-		background: $track-color;
-		border-radius: $track-radius * 2;
-	}
-
-	&::-ms-fill-upper {
-		background: $track-color;
-		border-radius: $track-radius * 2;
-	}
-
-	&::-ms-thumb {
-		@include range-thumb;
-		margin-top: 0;
-	}
-
 	&:focus {
 		&::-webkit-slider-runnable-track {
 			background: $track-focus-color;
@@ -104,18 +80,6 @@ $track-radius: $br;
 		}
 
 		&::-moz-range-thumb {
-			background: $thumb-focus-color;
-		}
-
-		&::-ms-fill-lower {
-			background: $track-focus-color;
-		}
-
-		&::-ms-fill-upper {
-			background: $track-focus-color;
-		}
-
-		&::-ms-thumb {
 			background: $thumb-focus-color;
 		}
 	}

@@ -17,11 +17,6 @@
 		transform: translateY(-50%);
 	}
 
-	// Target IE 11, which is not supporting CSS filters
-	_:-ms-lang(x), & {
-		box-shadow: $drop-shadow;
-	}
-
 	@if ($position == left) {
 		left: 0;
 	} @else if ($position == right) {
