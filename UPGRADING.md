@@ -2,7 +2,7 @@
 
 ## Any prior release to v0.25
 
-- The stylesheet is no longer loaded automatically. Add `<link rel="stylesheet" href="tify.css?v0.25.2">` to the `<head>` of your HTML.
+- The stylesheet is no longer loaded automatically. Add `<link rel="stylesheet" href="tify.css?v0.25.3">` to the `<head>` of your HTML.
 - TIFY is now a class and must be instantiated, taking an options object as the only parameter instead of setting options globally via `tifyOptions`. To get the previous behavior, set `container`, `manifestUrl` (if not set via URL query), `urlQueryKey`, and the initial `view`:
 	``` js
 	new Tify({
