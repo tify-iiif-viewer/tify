@@ -7,7 +7,7 @@ tests/e2e/screenshots
 tests/e2e/videos
 tests/unit/coverage
 
-# local env files
+# Local env files
 .env.local
 .env.*.local
 
@@ -24,3 +24,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Local shell scripts
+/*.sh
