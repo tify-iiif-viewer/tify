@@ -18,7 +18,7 @@
     "lint": "vue-cli-service lint",
     "lint-fix": "vue-cli-service lint --fix",
     "postinstall": "node build/change-icon-classnames.js",
-    "postversion": "git push && git push --tags && echo Tag v$npm_package_version created. Run \"npm publish\" to publish \"$npm_package_name\" on npmjs.com.",
+    "postversion": "echo 'Update version in README.md, then run \"git add README.md && git commit --amend --no-edit && git tag v$npm_package_version && git push && git push --tags\", and finally \"npm publish\" to publish $npm_package_name on npmjs.com.'",
     "prepare": "node build/get-openseadragon.js v2.4.2",
     "preversion": "rimraf node_modules && npm install && npm run test",
     "serve": "vue-cli-service serve",
