@@ -64,7 +64,7 @@
 			</ul>
 		</div>
 
-		<div v-if="otherItems.length" class="tify-export-section -other">
+		<div class="tify-export-section -other">
 			<h3>{{ $root.translate('Other Formats') }}</h3>
 			<ul>
 				<li>

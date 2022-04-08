@@ -11,6 +11,8 @@ describe('Export', () => {
 			cy.contains('PDFs for each element').click();
 			cy.contains('Titelseite').should('be.visible');
 
+			cy.contains('a', 'IIIF manifest');
+
 			cy.get('a[href="https://gdzdev.sub.uni-goettingen.de/download/pdf/PPN857449303/LOG_0001.pdf"]');
 		});
 	});
