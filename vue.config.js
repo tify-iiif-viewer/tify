@@ -40,10 +40,7 @@ module.exports = {
 			new VueAutomaticImportPlugin({
 				match(originalTag, { kebabTag, camelTag }) {
 					if (kebabTag.startsWith('icon-')) {
-						return [
-							camelTag,
-							`import ${camelTag} from 'vue-material-design-icons/${camelTag.replace('Icon', '')}'`,
-						];
+						return [camelTag, `import ${camelTag} from '@/components/icons/${camelTag}'`];
 					}
 
 					return null;
