@@ -22,7 +22,6 @@ describe('App', () => {
 			},
 			methods: {
 				expose() { },
-				getQueryParam() { },
 			},
 		},
 	});

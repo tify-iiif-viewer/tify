@@ -11,10 +11,6 @@ export default {
 		clearTimeout(this.urlUpdateTimeout);
 	},
 	methods: {
-		getQueryParam(name) {
-			const match = RegExp(`[?&]${name}=([^&]*)`).exec(window.location.search);
-			return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-		},
 		isValidPagesArray(pages) {
 			if (!Array.isArray(pages)) {
 				return false;
@@ -81,18 +77,14 @@ export default {
 						}
 					});
 
-					const regex = new RegExp(`([?&])${this.$root.options.urlQueryKey}=.*?(&|$)`);
-					const query = `${this.$root.options.urlQueryKey}=${JSON.stringify(storedOptions)}`;
-					const uri = window.location.href;
-					const newUrl = uri.match(regex)
-						? uri.replace(regex, `$1${query}$2`)
-						: `${uri}${uri.indexOf('?') < 0 ? '?' : '&'}${query}`;
+					const url = new URL(window.location);
+					url.searchParams.set(this.$root.options.urlQueryKey, JSON.stringify(storedOptions));
 
 					if (options.pages) {
 						this.error = '';
-						window.history.pushState({}, '', newUrl);
+						window.history.pushState({}, '', url);
 					} else {
-						window.history.replaceState({}, '', newUrl);
+						window.history.replaceState({}, '', url);
 					}
 				}, 100);
 			}
@@ -101,7 +93,8 @@ export default {
 			let params = {};
 
 			try {
-				params = JSON.parse(this.getQueryParam(this.$root.options.urlQueryKey)) || {};
+				const query = new URLSearchParams(window.location.search);
+				params = JSON.parse(query.get(this.$root.options.urlQueryKey)) || {};
 			} catch (e) {
 				// Nothing to do here
 			}
