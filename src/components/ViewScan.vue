@@ -140,37 +140,10 @@
 </template>
 
 <script>
-// eslint-disable-next-line import/no-relative-packages
-import OpenSeadragon from '../../openseadragon/src/openseadragon';
+import OpenSeadragon from 'openseadragon';
 
 import keyboard from '../mixins/keyboard';
 import pagination from '../mixins/pagination';
-
-// TODO: Is there a better way to make OpenSeadragon available to imports below?
-window.OpenSeadragon = OpenSeadragon;
-
-// Custom-build OpenSeadragon. Order is important!
-require('../../openseadragon/src/controldock');
-require('../../openseadragon/src/eventsource');
-
-require('../../openseadragon/src/tilesource');
-
-require('../../openseadragon/src/iiiftilesource');
-require('../../openseadragon/src/imagetilesource');
-
-require('../../openseadragon/src/drawer');
-require('../../openseadragon/src/imageloader');
-require('../../openseadragon/src/mousetracker');
-require('../../openseadragon/src/placement');
-require('../../openseadragon/src/point');
-require('../../openseadragon/src/spring');
-require('../../openseadragon/src/tile');
-require('../../openseadragon/src/tilecache');
-require('../../openseadragon/src/tiledimage');
-require('../../openseadragon/src/rectangle');
-require('../../openseadragon/src/viewer');
-require('../../openseadragon/src/viewport');
-require('../../openseadragon/src/world');
 
 const gapBetweenPages = .01;
 const vendorPrefixes = ['-webkit-', '-moz-', '-o-', '-ms-'];
@@ -326,8 +299,7 @@ export default {
 				...this.$root.options.viewer,
 			});
 
-			// Disable OpenSeadragons built-in key handler which interferes with
-			// TIFY's keyboard shortcuts
+			// Disable OpenSeadragons built-in key handler which interferes with TIFY's keyboard shortcuts
 			this.viewer.innerTracker.keyHandler = null;
 
 			this.viewer.gestureSettingsMouse.clickToZoom = false;
@@ -349,8 +321,7 @@ export default {
 				});
 			});
 
-			// Required for touchscreens:
-			// The canvas swallows the touch event, so click-outside is not triggered
+			// Required for touchscreens: The canvas swallows the touch event, so click-outside is not triggered
 			this.viewer.addHandler('canvas-click', () => {
 				document.body.click();
 			});
