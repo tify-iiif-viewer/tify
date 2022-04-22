@@ -82,7 +82,7 @@ TIFY takes an options object as its only parameter. While optional, you usually 
 
 - **`manifestUrl`**: string or `null` (default)
 
-	The URL of the IIIF manifest. If not set, the URL has to be provided via query parameter `manifest`, e.g. `https://example.org/?manifest=https://example.org/iiif-manifest.json`.
+	The URL of the IIIF manifest to load.
 
 - **`pageLabelFormat`**: string, default `'P : L'`
 
@@ -257,8 +257,6 @@ Run in development mode with hot reload on `localhost:8080`:
 npm run serve
 ```
 
-The manifest URL can be provided via option or query parameter (see above).
-
 Build for production with minification:
 
 ``` bash
@@ -269,16 +267,9 @@ The production build will be stored in `dist`.
 
 ### Running Tests
 
-``` bash
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
-```
+Run all tests: `npm test`
+Run unit tests: `npm run unit`
+Run end-to-end tests: `npm run e2e`
 
 ---
 

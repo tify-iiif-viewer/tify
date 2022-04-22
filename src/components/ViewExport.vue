@@ -68,7 +68,7 @@
 			<h3>{{ $root.translate('Other Formats') }}</h3>
 			<ul>
 				<li>
-					<a :href="$root.manifestUrl" download="manifest.json">
+					<a :href="$root.options.manifestUrl" download="manifest.json">
 						{{ $root.translate('IIIF manifest') }}
 					</a>
 				</li>

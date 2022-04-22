@@ -104,21 +104,12 @@ export default {
 			return Promise.reject(error);
 		});
 
-		// Manifest URL set in options trumps query param
-		const manifestUrlQuery = this.$root.getQueryParam('manifest');
-		this.$root.manifestUrl = this.$root.options.manifestUrl || manifestUrlQuery;
-
-		if (!this.$root.manifestUrl) {
-			this.$root.error = 'Missing option "manifestUrl" or query parameter "manifest"';
+		if (!this.$root.options.manifestUrl) {
+			this.$root.error = 'Missing option "manifestUrl"';
 			return;
 		}
 
-		if (this.$root.options.manifestUrl && manifestUrlQuery) {
-			this.$root.error = 'Manifest URL is set via option, ignoring query parameter "manifest"';
-			return;
-		}
-
-		this.loadManifest(this.$root.manifestUrl);
+		this.loadManifest(this.$root.options.manifestUrl);
 		this.setLanguage(this.$root.options.language);
 	},
 	methods: {
