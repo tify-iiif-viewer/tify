@@ -10,6 +10,11 @@
   "bugs": {
     "url": "https://github.com/tify-iiif-viewer/tify/issues"
   },
+  "keywords": [
+    "iiif",
+    "viewer",
+    ":)"
+  ],
   "license": "AGPL-3.0",
   "main": "dist/tify.js",
   "scripts": {
