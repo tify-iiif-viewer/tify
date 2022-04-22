@@ -68,7 +68,6 @@ window.Tify = function Tify(options = {}) {
 				id: `tify-${Math.floor(Math.random() * Date.now())}`,
 				loading: 0,
 				manifest: null,
-				manifestUrl: '',
 				options: instance.options,
 				readyPromise,
 				translation: null,

@@ -9,17 +9,14 @@
 		<main id="tify" style="height: 100vh"></main>
 		<script>
 			window.addEventListener('load', function () {
+				const query = new URLSearchParams(window.location.search)
+
 				const options = {
 					container: '#tify',
+					language: query.get('language') || 'en',
+					manifestUrl: query.get('manifest'),
 					urlQueryKey: 'tify',
 				};
-
-				const matches = window.location.search.match(/(\?|&)language\=([^&]*)/);
-				const language = matches && matches.length === 3 ? matches[2] : null;
-
-				if (language) {
-					options.language = language;
-				}
 
 				window.tify = new Tify(options);
 

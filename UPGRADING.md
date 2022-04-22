@@ -1,5 +1,15 @@
 # Upgrading TIFY
 
+## Any prior release to v0.26
+
+- Support for setting the manifest URL via query parameter `manifest` has been removed. If you need this feature, use something like this:
+	``` js
+	new Tify({
+		container: '#tify',
+		manifestUrl: (new URLSearchParams(window.location.search)).get('manifest'),
+	})
+	```
+
 ## Any prior release to v0.25
 
 - The stylesheet is no longer loaded automatically. Add `<link rel="stylesheet" href="tify.css?v0.25.3">` to the `<head>` of your HTML.
