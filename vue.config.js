@@ -16,6 +16,7 @@ process.env.VUE_APP_DOCS_LANGUAGES = [...new Set(fs.readdirSync('./doc').map((fi
 process.env.VUE_APP_REPOSITORY_URL = env.repository.url;
 
 module.exports = {
+	publicPath: '',
 	chainWebpack: (config) => {
 		config.module.rule('eslint')
 			.use('eslint-loader')
