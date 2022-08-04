@@ -24,7 +24,7 @@
     "lint-fix": "vue-cli-service lint --fix",
     "postinstall": "node build/create-icons.js",
     "postversion": "echo 'Update version in README.md, then run \"git add README.md && git commit --amend --no-edit && git tag v$npm_package_version && git push && git push --tags\", and finally \"npm publish\" to publish $npm_package_name on npmjs.com.'",
-    "preversion": "rimraf node_modules && npm install && npm run test",
+    "preversion": "npm install-clean && npm run test",
     "serve": "vue-cli-service serve",
     "serve-mock-api": "node tests/iiif-api/server.js",
     "test": "npm run unit && npm run e2e",
