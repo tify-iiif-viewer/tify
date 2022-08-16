@@ -4,9 +4,9 @@ describe('Export', () => {
 		cy.get('.tify').then(() => {
 			cy.contains('Export').click();
 			cy.contains('Download Individual Images').should('be.visible');
-			cy.contains('Page 1').should('be.visible');
+			cy.contains('Page 2').should('be.visible'); // NOTE: Page set by startCanvas
 			cy.get('[title="Next page"]').first().click();
-			cy.contains('Page 2').should('be.visible');
+			cy.contains('Page 3').should('be.visible');
 
 			cy.contains('PDFs for each element').click();
 			cy.contains('Titelseite').should('be.visible');

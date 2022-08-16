@@ -6,6 +6,10 @@ const { app } = new Tify();
 describe('main', () => {
 	app.manifest = manifest;
 
+	it('should determine the start page based on startCanvas', () => {
+		expect(app.getStartPages()).toEqual([2]);
+	});
+
 	it('should validate page numbers', () => {
 		expect(app.isValidPagesArray([1])).toEqual(true);
 		expect(app.isValidPagesArray([0, 1])).toEqual(true);

@@ -25,7 +25,7 @@ window.Tify = function Tify(options = {}) {
 		manifestUrl: null,
 		viewer: {},
 		pageLabelFormat: 'P : L',
-		pages: [1],
+		pages: null,
 		pan: {},
 		rotation: null,
 		translationsDirUrl: null,
