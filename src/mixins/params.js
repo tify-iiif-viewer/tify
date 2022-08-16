@@ -11,6 +11,20 @@ export default {
 		clearTimeout(this.urlUpdateTimeout);
 	},
 	methods: {
+		getStartPages() {
+			const { pages } = this.options;
+
+			if (pages) {
+				return pages;
+			}
+
+			const { startCanvas } = this.manifest.sequences[0];
+			const startPage = startCanvas
+				? this.canvases.findIndex((canvas) => canvas['@id'] === startCanvas) + 1
+				: 1;
+
+			return [startPage];
+		},
 		isValidPagesArray(pages) {
 			if (!Array.isArray(pages)) {
 				return false;
@@ -42,6 +56,7 @@ export default {
 			}
 
 			if (pages.length === 1
+				&& this.options.pages
 				&& this.options.pages[0] % 2 < 1
 				&& (this.options.pages[1] === this.options.pages[0] + 1 || this.options.pages[1] === 0)
 			) {
@@ -105,12 +120,12 @@ export default {
 			}
 
 			if (params.pages && !this.isValidPagesArray(params.pages)) {
-				this.$root.error = 'Invalid pages, reset to first page';
-				params.pages = [1];
+				this.$root.error = 'Invalid pages, reset to start page';
+				params.pages = this.getStartPages();
 			}
 
 			this.options.filters = params.filters || this.options.filters;
-			this.options.pages = params.pages || this.options.pages;
+			this.options.pages = params.pages || this.getStartPages();
 			this.options.pan = params.panX || params.panY
 				? { x: params.panX, y: params.panY }
 				: params.pan || this.options.pan;

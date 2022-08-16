@@ -50,7 +50,7 @@
 			"label": "Current Page Order",
 			"viewingDirection": "left-to-right",
 			"viewingHint": "paged",
-			"startCanvas": "//localhost:8081/info/canvas/gdz:PPN857449303:00000001",
+			"startCanvas": "//localhost:8081/info/canvas/gdz:PPN857449303:00000002",
 			"canvases": [
 				{
 					"@id": "//localhost:8081/info/canvas/gdz:PPN857449303:00000001",
