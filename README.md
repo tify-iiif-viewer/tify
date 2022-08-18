@@ -88,9 +88,9 @@ TIFY takes an options object as its only parameter. While optional, you usually 
 
 	Defines how page labels are displayed in the page selector and in the thumbnails view. The placeholder `P` is replaced by the physical page number (consecutive numbers starting at `1`) while `L` is replaced by the logical page label, which can be any string, defined by the manifest.
 
-- **`pages`**: array of 1-based integers, default `[1]`
+- **`pages`**: array of 1-based integers or `null` (default)
 
-	The page(s) to display initially. Page numbers are physical numbers, starting at 1. This setting can be overridden by setting `pages` via URL query if `urlQueryKey` is set.
+	The page(s) to display initially. If `null`, the initial page is determined by the manifest’s `startCanvas`, and if that is not set either, the first page is displayed. Page numbers start at 1.
 
 - **`pan`**: object, default `{}`
 
@@ -102,11 +102,11 @@ TIFY takes an options object as its only parameter. While optional, you usually 
 
 - **`urlQueryKey`**: string or `null` (default), only use characters `A…Z a…z 0…9 - _`
 
-	If set, parameters are read from the URL query and any changes are reflected, using the key provided. This works with multiple concurrent instances, but each instance must use a unique key.
+	If set, parameters are read from the URL query and any changes are reflected, using the key provided. This works with multiple concurrent instances, but each instance must use a unique key. Note that when `urlQueryKey` is set, all options defined by `urlQueryParams` can be overridden by changing the URL in the browser’s address bar.
 
 - **`urlQueryParams`**: array of strings, default `['filters', 'pages', 'pan', 'rotation', 'view', 'zoom']`
 
-	The parameter keys to be stored in the URL query on change. Only has effect if `urlQueryKey` is set.
+	The parameter keys to be read from and stored in the URL query. Only has effect if `urlQueryKey` is set, in which case parameters read from the URL override options of the same name.
 
 - **`view`**: string, default `''`
 
