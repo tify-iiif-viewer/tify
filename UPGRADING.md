@@ -1,5 +1,9 @@
 # Upgrading TIFY
 
+## Any prior release to v0.27
+
+- The initially displayed page is now determined by the manifest’s `startCanvas`. To keep the previous behavior of starting with the first page regardless of `startCanvas`, add `pages: [1]` to TIFY’s options.
+
 ## Any prior release to v0.26
 
 - Support for setting the manifest URL via query parameter `manifest` has been removed. If you need this feature, use something like this:
