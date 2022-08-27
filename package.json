@@ -32,7 +32,7 @@
     "version": "npm run build && git add dist"
   },
   "devDependencies": {
-    "@mdi/js": "^6.9.96",
+    "@mdi/js": "^7.0.96",
     "@vue/cli-plugin-babel": "^4.5.19",
     "@vue/cli-plugin-e2e-cypress": "~4.5.19",
     "@vue/cli-plugin-eslint": "^4.5.19",
@@ -52,12 +52,12 @@
     "node-sass-glob-importer": "^5.3.2",
     "openseadragon": "^3.1.0",
     "promise-polyfill": "^8.2.3",
-    "sass": "^1.54.2",
+    "sass": "^1.54.5",
     "sass-loader": "^10.3.1",
     "striptags": "^3.2.0",
-    "vue": "^2.7.8",
+    "vue": "^2.7.10",
     "vue-automatic-import-loader": "^1.0.0",
-    "vue-template-compiler": "^2.7.8"
+    "vue-template-compiler": "^2.7.10"
   },
   "engines": {
     "node": ">= 12.0",
