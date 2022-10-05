@@ -268,7 +268,9 @@ The production build will be stored in `dist`.
 ### Running Tests
 
 Run all tests: `npm test`
+
 Run unit tests: `npm run unit`
+
 Run end-to-end tests: `npm run e2e`
 
 ---
