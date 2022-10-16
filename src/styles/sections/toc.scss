@@ -1,5 +1,4 @@
 %toc-row-item {
-	@include transition(background);
 	background: $white;
 	position: relative;
 	z-index: 1;
@@ -13,7 +12,7 @@
 	z-index: 0;
 
 	ul {
-		margin: 0 0 0 g(.5);
+		margin: 0 g(-.25) 0 g(.25);
 		padding: 0;
 	}
 }
@@ -25,37 +24,38 @@
 .tify-toc-label {
 	@extend %toc-row-item;
 	padding-right: .2em;
+	transition: inherit;
 }
 
 .tify-toc-link {
-	@include transition(background);
 	border-radius: $br;
 	color: $link-color;
 	cursor: pointer;
 	display: block;
 	overflow: hidden;
+	padding: g(.25);
 	position: relative;
 	text-decoration: none;
 
 	@include hover {
-		background: $brand-color-lighter;
+		background: $base-color-lighter;
 
 		// Element label and page number
 		> span {
-			background: $brand-color-lighter;
+			background: $base-color-lighter;
 		}
 	}
 
 	&.-dots {
 		// Dotted line below
 		&::after {
-			bottom: 6px;
+			bottom: calc(#{g(.5)} - 1px);
 			content: '';
-			left: .2em;
+			left: g(.25);
 			min-width: 4em;
 			border-bottom: 1px dotted;
 			position: absolute;
-			right: .2em;;
+			right: g(.25);
 		}
 	}
 }
@@ -66,7 +66,12 @@
 
 	& & {
 		// Make space for vertical connector to the left
-		margin: g(.25) 0 0 g(1.25);
+		margin: 0 0 0 g(1.25);
+	}
+
+	a {
+		border: 0;
+		box-shadow: none;
 	}
 }
 
@@ -74,6 +79,7 @@
 	@extend %toc-row-item;
 	float: right;
 	padding-left: .2em;
+	transition: inherit;
 	z-index: 1;
 }
 
@@ -83,37 +89,32 @@
 
 	&.-current {
 		// Bold vertical marker
-		// 1px spread to fix a thin blue line appearing below the marker on Firefox
-		box-shadow: (g(-.75) + 1px + 1px) 0 0 1px $white, g(-1) 0 $brand-color-light;
+		box-shadow: calc(#{g(-.5)} + 1px) 0 $white, g(-.75) 0 $base-color-light;
 	}
 
 	&.-expanded {
 		// Vertical connector to the left
 		&::after {
-			border-left: 1px solid $brand-color-light;
+			border-left: 1px solid $base-color-light;
 			content: '';
-			left: g(.5);
+			left: g(.75);
 			height: 100%;
 			position: absolute;
-			top: 0;
+			top: g(.25);
 			z-index: -2;
 		}
-	}
-
-	& + & {
-		margin-top: g(.25);
 	}
 
 	& & {
 		// Horizontal connector
 		&::before {
-			border-top: 1px solid $brand-color-light;
+			border-top: 1px solid $base-color-light;
 			content: '';
 			display: block;
 			height: 100%;
-			left: g(-.75);
+			left: g(-.5);
 			position: absolute;
-			top: g(.5);
+			top: g(.75);
 			width: g(.5);
 		}
 
@@ -131,10 +132,8 @@
 
 .tify-toc-toggle {
 	@extend %button;
-	border-radius: $br;
-	box-shadow: $card-shadow;
 	float: left;
-	margin: 0 g(.25) 0 0;
+	margin: g(.25) 0 0 g(.25);
 	padding: 0;
 	position: relative;
 

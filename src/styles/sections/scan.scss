@@ -4,53 +4,41 @@
 	box-shadow: none;
 	flex: 3;
 	user-select: none;
+	z-index: 0;
 }
 
 .tify-scan-buttons {
 	border-radius: $br;
 	display: flex;
 	flex-direction: column;
-	float: left;
-	margin: g(.25);
+	left: g(.25);
 	position: absolute;
+	top: g(.25);
 	z-index: 9;
 }
 
 .tify-scan-button {
+	@extend %button;
 	background: none;
-	border: 0;
-	border-radius: $br;
+	box-shadow: none;
 	color: $white;
-	cursor: pointer;
-	filter: drop-shadow(0 0 2px $shade-dark);
 	height: g(1.5);
 	padding: 0;
 	position: relative;
 	width: g(1.5);
 
-	@include hover {
-		background: $shade;
-		color: $white;
-	}
-
-	&:active:not(:disabled) {
-		box-shadow: 0 .5px 6px $shade inset;
-	}
-
-	&[disabled] {
-		opacity: .3;
-	}
-
-	// Fixing button dimensions in Firefox
-	&::-moz-focus-inner {
-		border-style: none;
-		padding: 0;
+	&:not(:disabled) {
+		@include hover {
+			backdrop-filter: $blur;
+			background: $shade;
+		}
 	}
 
 	&.-active {
+		// dot marker
 		&::after {
-			background: $brand-color;
-			box-shadow: 0 0 g(.25) $brand-color-light;
+			background: $base-color;
+			box-shadow: 0 0 g(.25) $base-color-lighter;
 			content: '';
 			border-radius: 50%;
 			display: block;
@@ -60,6 +48,10 @@
 			top: g(.25);
 			width: .5em;
 		}
+	}
+
+	.tify-icon {
+		filter: drop-shadow(0 0 2px $shade) drop-shadow(0 0 1px $shade-dark);
 	}
 }
 
@@ -104,38 +96,45 @@
 
 .tify-scan-page-button {
 	@extend %button;
-	background: rgba($white, .3);
+	backdrop-filter: $blur;
+	background: $shine;
 	border: 0;
-	box-shadow: $card-shadow;
+	box-shadow: 0 0 1px $border-color;
 	height: g(2.5);
 	margin-top: g(-1.25);
 	padding: 0;
 	position: absolute;
-	text-shadow: none;
 	top: 50%;
 	width: g(1.25);
 	z-index: 1;
 
 	.tify.-short & {
-		top: 75%;
+		bottom: 0;
+		height: g(1.75);
+		width: g(1.75);
+		top: auto;
 	}
 
 	&.-previous {
 		border-radius: 0 g(1.25) g(1.25) 0;
 		left: 0;
-		text-align: left;
+		justify-content: flex-start;
+
+		.tify.-short & {
+			border-radius: 0 g(1.75) 0 0;
+			padding: g(.375) 0 0 g(.25);
+		}
 	}
 
 	&.-next {
 		border-radius: g(1.25) 0 0 g(1.25);
 		right: 0;
-		text-align: right;
-	}
+		justify-content: flex-end;
 
-	// Fixing button dimensions in Firefox
-	&::-moz-focus-inner {
-		border-style: none;
-		padding: 0;
+		.tify.-short & {
+			border-radius: g(1.75) 0 0;
+			padding: g(.375) g(.25) 0 0;
+		}
 	}
 }
 
@@ -145,7 +144,5 @@
 
 .tify-scan-reset {
 	@extend %button;
-	border-radius: $br;
-	box-shadow: $card-shadow;
 	width: 100%;
 }

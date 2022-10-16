@@ -8,10 +8,10 @@
 }
 
 .tify-export-toc {
-	border: $border-width solid $border-color;
+	border: 1px solid $border-color;
 	border-radius: $br;
 	margin: g(.5) 0 0;
-	padding: g(.5);
+	padding: g(.25);
 
 	ul {
 		margin: 0 0 0 g(.5);

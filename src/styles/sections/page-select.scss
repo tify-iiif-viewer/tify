@@ -1,20 +1,34 @@
 .tify-page-select {
-	//
+	a {
+		border: 0;
+		box-shadow: none;
+	}
 }
 
 .tify-page-select-button {
 	@extend %button;
-	border-radius: inherit;
+	background: none;
+	border-radius: $br 0 0 $br;
 	box-shadow: none;
 	display: block;
-	margin: g(-.25);
+	height: 100%;
 	max-width: g(10);
 	min-width: g(3);
 	overflow: hidden;
-	padding: g(.25) g(.5);
+	padding: g(.25) .5em;
 	position: relative;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+
+	&:not(:disabled) {
+		@include hover {
+			box-shadow: 0 0 0 1px $border-color inset;
+		}
+
+		&:active {
+			box-shadow: $inset-shadow, 0 0 0 1px $border-color inset;
+		}
+	}
 
 	.tify.-medium & {
 		max-width: g(8);
@@ -26,14 +40,13 @@
 
 	.tify.-tiny & {
 		max-width: g(4);
-		padding: g(.25);
 	}
 }
 
 .tify-page-select-dropdown {
 	@include dropdown;
-	margin-top: g(.5);
 	max-width: 100%;
+	text-align: center;
 
 	.tify.-small & {
 		left: 0;
@@ -41,7 +54,7 @@
 }
 
 .tify-page-select-filter {
-	padding: g(.25);
+	padding: $br $br calc(#{$br} * 2);
 }
 
 .tify-page-select-input {
@@ -58,21 +71,21 @@
 	position: relative;
 
 	> li {
-		border-top: $border-width solid $border-color;
+		border-top: 1px solid $border-color;
 		margin: 0;
 		user-select: none;
 
-		@include hover {
-			background: $shade-light;
-			color: $link-color;
+		> a {
+			@include hover {
+				background: $shade-light;
+			}
 		}
 
-		&.-current {
+		&.-current > a {
 			background: $shade-light;
-			color: $text-color-light;
 		}
 
-		&.-highlighted {
+		&.-highlighted > a {
 			background: $link-color;
 			color: $white;
 		}

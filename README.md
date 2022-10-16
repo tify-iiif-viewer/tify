@@ -62,6 +62,8 @@ Embed TIFY into your website in three easy steps:
 	</script>
 	```
 
+Many aspects of the theme can be modified with SCSS variables or CSS custom properties, allowing you to easily adapt TIFY’s appearance to your website. [See the theme settings file](src/styles/util/settings.scss) for all available variables.
+
 ## Upgrading
 
 If you are are upgrading from any previous version, [have a look at the upgrading guidelines](UPGRADING.md).

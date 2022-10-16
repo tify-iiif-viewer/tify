@@ -1,3 +1,7 @@
 @function g($factor: 1) {
-	@return $grid * $factor;
+	@if ($factor == 1) {
+		@return $grid-base;
+	}
+
+	@return calc(#{$grid-base} * #{$factor});
 }

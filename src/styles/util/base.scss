@@ -1,17 +1,17 @@
 .tify {
-	background: $grey url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAEElEQVQImWNgwAGkcElgAgAEogAbFZcwKQAAAABJRU5ErkJggg==);
+	background: $main-bg;
 	box-sizing: border-box;
 	color: $text-color;
 	display: flex;
 	flex-direction: column;
-	font-family: $font-family;
 	font-size: $font-size;
 	height: 100%;
-	line-height: g();
+	line-height: $line-height;
 	min-height: 240px;
 	min-width: 240px;
 	overflow: hidden;
 	position: relative;
+	-webkit-tap-highlight-color: $shade-light;
 
 	*,
 	*::before,
@@ -22,21 +22,29 @@
 	a {
 		color: $link-color;
 		word-wrap: break-word;
+
+		&:focus-visible {
+			outline: 2px solid $base-color-light;
+		}
 	}
 
 	h3 {
-		border-bottom: 1px solid $shade;
-		font-size: 1.125em;
-		font-weight: normal;
-		padding: 0 0 (g(.25) - 1px);
-		margin: 0 0 g(.75);
+		box-shadow: 0 1px $border-color;
+		font-size: .75em;
+		font-weight: bold;
+		letter-spacing: .1em;
+		margin: 0 0 g(.5);
+		color: $text-color-muted;
+		padding: 0;
+		text-transform: uppercase;
 	}
 
 	h4 {
-		color: $text-color-light;
 		font-size: 1em;
 		font-weight: normal;
 		margin: 0;
+		color: $text-color-muted;
+		padding: 0;
 
 		&:nth-of-type(n+2) {
 			margin-top: g(.5);
@@ -45,31 +53,36 @@
 
 	label {
 		cursor: pointer;
+		font-size: inherit;
+		font-weight: normal;
+	}
+
+	li {
+		margin: 0;
+		padding: 0;
 	}
 
 	p {
 		margin: 0 0 g(.5);
-	}
-
-	[type=text],
-	select,
-	textarea {
-		@include transition(border);
-		background: $white;
-		border: $border-width solid $shade;
-		border-radius: $br;
-		color: inherit;
-		font: inherit;
-		padding: (g(.25) - $border-width) .5em;
-
-		&:focus {
-			border-color: $brand-color;
-			outline: 0;
-		}
+		padding: 0;
 	}
 
 	ul {
-		margin: 0 0 g();
+		margin: 0 0 g(.5);
 		padding: 0 0 0 g();
+	}
+
+	[type=text] {
+		background: $white;
+		border: 1px solid $shade;
+		border-radius: $br;
+		color: inherit;
+		font: inherit;
+		padding: calc(#{g(.25)} - 1px) .5em;
+
+		&:focus {
+			border-color: $base-color;
+			outline: 2px solid $base-color-lighter;
+		}
 	}
 }

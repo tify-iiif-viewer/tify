@@ -6,10 +6,10 @@
 // NOTE: Styles with different vendor prefixes must not be grouped
 
 $track-color: $border-color;
-$track-focus-color: $brand-color-light;
+$track-focus-color: null;
 
-$thumb-color: linear-gradient(to bottom, tint($link-color, 20), $link-color);
-$thumb-focus-color: linear-gradient(to bottom, $link-color, shade($link-color, 20));
+$thumb-bg: $link-color linear-gradient(to bottom, #fff3, #fff0);
+$thumb-focus-bg: $link-color linear-gradient(to bottom, #fff1, #0002);
 
 $thumb-radius: $br;
 $thumb-height: g();
@@ -22,15 +22,13 @@ $track-radius: $br;
 @mixin range-track {
 	cursor: pointer;
 	height: $track-height;
-	transition: all .2s ease;
 	width: 100%;
 }
 
 @mixin range-thumb {
-	background: $thumb-color;
+	background: $thumb-bg;
 	border: 0;
 	border-radius: $thumb-radius;
-	box-shadow: $card-shadow;
 	cursor: pointer;
 	height: $thumb-height;
 	width: $thumb-width;
@@ -45,14 +43,13 @@ $track-radius: $br;
 		@include range-track;
 		background: $track-color;
 		border-radius: $track-radius;
-		box-shadow: $shade-inset;
 		margin: 0;
 	}
 
 	&::-webkit-slider-thumb {
 		@include range-thumb;
 		-webkit-appearance: none;
-		margin-top: ((-$border-width * 2 + $track-height) * .5) - ($thumb-height * .5);
+		margin-top: calc(((-1px * 2 + #{$track-height}) * .5) - (#{$thumb-height} * .5));
 	}
 
 	&::-moz-range-track {
@@ -69,18 +66,22 @@ $track-radius: $br;
 	&:focus {
 		&::-webkit-slider-runnable-track {
 			background: $track-focus-color;
+			box-shadow: $inset-shadow;
 		}
 
 		&::-webkit-slider-thumb {
-			background: $thumb-focus-color;
+			background: $thumb-focus-bg;
+			box-shadow: $inset-shadow;
 		}
 
 		&::-moz-range-track {
 			background: $track-focus-color;
+			box-shadow: $inset-shadow;
 		}
 
 		&::-moz-range-thumb {
-			background: $thumb-focus-color;
+			background: $thumb-focus-bg;
+			box-shadow: $inset-shadow;
 		}
 	}
 }
