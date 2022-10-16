@@ -2,40 +2,51 @@
 	<!-- NOTE: Root element must be focusable for global keyboard events to work -->
 	<div class="tify" tabindex="-1">
 		<app-header
-			v-if="ready"
+			v-if="$root.ready && ($root.collection || $root.manifest)"
 			:fulltextEnabled="hasOtherContent"
 			:tocEnabled="hasToc"
 		/>
 
-		<div v-if="ready" class="tify-main">
-			<view-scan
-				:id="$root.getId('scan')"
-			/>
-			<view-fulltext
-				:id="$root.getId('fulltext')"
-				v-if="hasOtherContent"
-				v-show="$root.options.view === 'fulltext'"
-			/>
-			<view-toc
-				:id="$root.getId('toc')"
-				v-if="hasToc"
-				v-show="$root.options.view === 'toc'"
-			/>
-			<view-thumbnails
-				:id="$root.getId('thumbnails')"
-				v-show="$root.options.view === 'thumbnails'"
-			/>
+		<div v-if="$root.ready" class="tify-main">
+			<template v-if="$root.manifest">
+				<!-- Scan must come first, other views in arbitrary order -->
+				<view-scan
+					:id="$root.getId('scan')"
+				/>
+
+				<view-fulltext
+					v-if="hasOtherContent"
+					v-show="$root.options.view === 'fulltext'"
+					:id="$root.getId('fulltext')"
+				/>
+				<view-thumbnails
+					v-show="$root.options.view === 'thumbnails'"
+					:id="$root.getId('thumbnails')"
+				/>
+				<view-toc
+					v-if="hasToc"
+					v-show="$root.options.view === 'toc'"
+					:id="$root.getId('toc')"
+				/>
+				<view-export
+					v-show="$root.options.view === 'export'"
+					:id="$root.getId('export')"
+				/>
+			</template>
+
 			<view-info
-				:id="$root.getId('info')"
+				v-if="$root.collection || $root.manifest"
 				v-show="$root.options.view === 'info'"
+				:id="$root.getId('info')"
 			/>
-			<view-export
-				:id="$root.getId('export')"
-				v-show="$root.options.view === 'export'"
+			<view-collection
+				v-if="$root.collection"
+				v-show="$root.options.view === 'collection'"
+				:id="$root.getId('collection')"
 			/>
 			<view-help
-				:id="$root.getId('help')"
 				v-show="$root.options.view === 'help'"
+				:id="$root.getId('help')"
 			/>
 		</div>
 
@@ -57,6 +68,7 @@
 
 <script>
 import AppHeader from './components/AppHeader';
+import ViewCollection from './components/ViewCollection';
 import ViewExport from './components/ViewExport';
 import ViewFulltext from './components/ViewFulltext';
 import ViewHelp from './components/ViewHelp';
@@ -68,101 +80,21 @@ import ViewToc from './components/ViewToc';
 export default {
 	components: {
 		AppHeader,
+		ViewCollection,
 		ViewExport,
+		ViewFulltext,
 		ViewHelp,
 		ViewInfo,
 		ViewScan,
 		ViewThumbnails,
 		ViewToc,
-		ViewFulltext,
 	},
 	computed: {
 		hasOtherContent() {
-			return this.$root.canvases.some((canvas) => 'otherContent' in canvas);
+			return this.$root.manifest && this.$root.canvases.some((canvas) => 'otherContent' in canvas);
 		},
 		hasToc() {
-			return !!(this.$root.manifest.structures && this.$root.manifest.structures.length);
-		},
-		ready() {
-			return this.$root.manifest && (this.$root.options.language === 'en' || this.$root.translation);
-		},
-	},
-	created() {
-		this.$root.expose(this.setLanguage);
-	},
-	mounted() {
-		this.$http.interceptors.request.use((request) => {
-			this.$root.loading += 1;
-			return request;
-		});
-
-		this.$http.interceptors.response.use((response) => {
-			if (this.$root.loading > 0) this.$root.loading -= 1;
-			return response;
-		}, (error) => {
-			this.$root.loading = 0;
-			return Promise.reject(error);
-		});
-
-		if (!this.$root.options.manifestUrl) {
-			this.$root.error = 'Missing option "manifestUrl"';
-			return;
-		}
-
-		this.loadManifest(this.$root.options.manifestUrl);
-		this.setLanguage(this.$root.options.language);
-	},
-	methods: {
-		loadManifest(manifestUrl) {
-			this.$root.manifest = null;
-
-			this.$http.get(manifestUrl).then((response) => {
-				const manifest = response.data;
-				if (this.$root.isManifest(manifest)) {
-					this.$root.manifest = manifest;
-
-					// Merging user-set query params with defaults
-					this.$root.updateOptionsFromUrlQuery();
-					window.addEventListener('popstate', this.$root.updateOptionsFromUrlQuery);
-
-					this.$nextTick(() => this.$root.readyPromise.resolve());
-				} else {
-					this.$root.error = 'Please provide a valid IIIF Presentation API 2.x manifest';
-					this.$root.readyPromise.reject(this.$root.error);
-				}
-			}, (error) => {
-				const status = (error.response ? error.response.statusText : error.message);
-				this.$root.error = `Error loading IIIF manifest: ${status}`;
-				this.$root.readyPromise.reject(this.$root.error);
-			});
-		},
-		setLanguage(language) {
-			let resolveFunction;
-			let rejectFunction;
-			const promise = new Promise((resolve, reject) => {
-				resolveFunction = resolve;
-				rejectFunction = reject;
-			});
-
-			if (language === 'en') {
-				this.$root.options.language = 'en';
-				this.$root.translation = null;
-				resolveFunction(language);
-				return promise;
-			}
-
-			const translationUrl = `${this.$root.options.translationsDirUrl}/${language}.json`;
-			this.$http.get(translationUrl).then((response) => {
-				this.$root.options.language = language;
-				this.$root.translation = response.data;
-				resolveFunction(language);
-			}, (error) => {
-				const status = (error.response ? error.response.statusText : error.message);
-				this.$root.error = `Error loading translation for "${language}": ${status}`;
-				rejectFunction(new Error(this.$root.error));
-			});
-
-			return promise;
+			return this.$root.manifest && this.$root.manifest.structures && this.$root.manifest.structures.length;
 		},
 	},
 	beforeDestroy() {

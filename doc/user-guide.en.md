@@ -25,7 +25,8 @@ TIFY can be fully controlled via keyboard.
 | Contents (if available) | <kbd>3</kbd> |
 | Info | <kbd>4</kbd> |
 | Export | <kbd>5</kbd> |
-| Help | <kbd>6</kbd> |
+| Collection (if available) | <kbd>6</kbd> |
+| Help | <kbd>7</kbd> |
 | Scan | <kbd>Backspace</kbd> |
 | Toggle fullscreen | <kbd>F</kbd> |
 

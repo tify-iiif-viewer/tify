@@ -3,6 +3,27 @@
 		<h2 class="tify-sr-only">{{ $root.translate('Info') }}</h2>
 
 		<div
+			v-if="$root.collection && $root.manifest"
+			class="tify-info-header"
+		>
+			<button
+				class="tify-info-button"
+				:class="{ '-active': !collectionDataShown }"
+				@click="collectionDataShown = false"
+			>
+				{{ $root.translate('Document') }}
+			</button>
+			<button
+				v-if="$root.collection && $root.manifest"
+				class="tify-info-button"
+				:class="{ '-active': collectionDataShown }"
+				@click="collectionDataShown = true"
+			>
+				{{ $root.translate('Collection') }}
+			</button>
+		</div>
+
+		<div
 			v-if="manifest.label"
 			class="tify-info-section -title"
 		>
@@ -20,7 +41,10 @@
 			<metadata-list v-if="$root.options.view === 'info'" :metadata="manifest.metadata"/>
 		</div>
 
-		<div v-if="currentStructureLabel || currentStructureMetadata" class="tify-info-section -metadata -structure">
+		<div
+			v-if="manifest.structures && (currentStructureLabel || currentStructureMetadata)"
+			class="tify-info-section -metadata -structure"
+		>
 			<h3>
 				{{ $root.translate('Current Element') }}
 			</h3>
@@ -52,7 +76,7 @@
 			<h3>{{ $root.translate('License') }}</h3>
 			<div :key="index" v-for="(item, index)  in license">
 				<template v-if="typeof item === 'string'">
-					<a v-if="isUrl(item)" :href="item">
+					<a v-if="isValidUrl(item)" :href="item">
 						{{ item }}
 					</a>
 					<template v-else>
@@ -60,7 +84,7 @@
 					</template>
 				</template>
 				<template v-else>
-					<a v-if="isUrl(item['@id'])" :href="item['@id']">
+					<a v-if="isValidUrl(item['@id'])" :href="item['@id']">
 						{{ item['label'] || item['@id'] }}
 					</a>
 					<template v-else>
@@ -118,6 +142,8 @@ import MetadataList from './MetadataList';
 
 import structures from '../mixins/structures';
 
+import isValidUrl from '../functions/isValidUrl';
+
 export default {
 	components: {
 		MetadataList,
@@ -125,7 +151,15 @@ export default {
 	mixins: [
 		structures,
 	],
+	data() {
+		return {
+			collectionDataShown: false,
+		};
+	},
 	computed: {
+		collection() {
+			return this.$root.collection;
+		},
 		license() {
 			return this.manifest.license ? this.$root.convertValueToArray(this.manifest.license) : [];
 		},
@@ -133,17 +167,14 @@ export default {
 			return (this.manifest.logo['@id'] ? this.manifest.logo['@id'] : this.manifest.logo);
 		},
 		manifest() {
-			return this.$root.manifest;
+			return this.collectionDataShown ? this.$root.collection : (this.$root.manifest || this.$root.collection);
 		},
 		related() {
 			return this.manifest.related ? this.$root.convertValueToArray(this.manifest.related) : [];
 		},
 	},
 	methods: {
-		isUrl(string) {
-			// Poor man's URL check
-			return /^https?:\/\//.test(string);
-		},
+		isValidUrl,
 	},
 };
 </script>

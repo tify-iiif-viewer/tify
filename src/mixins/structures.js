@@ -1,7 +1,7 @@
 const structures = {
 	computed: {
 		currentStructure() {
-			if (!Array.isArray(this.$root.manifest.structures)) {
+			if (!this.$root.manifest || !Array.isArray(this.$root.manifest.structures)) {
 				return false;
 			}
 

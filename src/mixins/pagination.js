@@ -1,6 +1,10 @@
 module.exports = {
 	computed: {
 		customPageViewActive() {
+			if (!this.$root.options.pages) {
+				return false;
+			}
+
 			const { pages } = this.$root.options;
 			return pages.length > 2
 				|| (pages.length === 2 && (pages[0] % 2 > 0 || pages[1] !== pages[0] + 1) && pages[1] > 0);
