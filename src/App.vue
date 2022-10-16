@@ -1,6 +1,6 @@
 <template>
 	<!-- NOTE: Root element must be focusable for global keyboard events to work -->
-	<div class="tify" tabindex="-1">
+	<article class="tify" tabindex="-1">
 		<app-header
 			v-if="$root.ready && ($root.collection || $root.manifest)"
 			:fulltextEnabled="hasOtherContent"
@@ -63,7 +63,7 @@
 			<!-- NOTE: Error messages can contain user-controlled content -->
 			<span>{{ $root.error }}</span>
 		</div>
-	</div>
+	</article>
 </template>
 
 <script>
