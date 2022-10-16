@@ -51,13 +51,12 @@
     "jest-canvas-mock": "^2.4.0",
     "node-sass-glob-importer": "^5.3.2",
     "openseadragon": "^3.0.0",
-    "promise-polyfill": "^8.2.3",
-    "sass": "^1.54.5",
+    "sass": "^1.55.0",
     "sass-loader": "^10.3.1",
     "striptags": "^3.2.0",
-    "vue": "^2.7.10",
+    "vue": "^2.7.13",
     "vue-automatic-import-loader": "^1.0.0",
-    "vue-template-compiler": "^2.7.10"
+    "vue-template-compiler": "^2.7.13"
   },
   "engines": {
     "node": ">= 12.0",
