@@ -1,16 +1,26 @@
 import Tify from '@/main';
-import manifest from '../iiif-api/data/manifests/gdz-PPN857449303.json';
+import manifest from '../iiif-api/data/manifests/bl-vdc_00000004216E.json';
 
 const { app } = new Tify();
+
+app.$http.get = (url) => new Promise((resolve, reject) => {
+	if (url === '/de.json') {
+		resolve({});
+	} else {
+		reject(new Error());
+	}
+});
+
+app.options.translationsDirUrl = '';
 
 describe('main', () => {
 	app.manifest = manifest;
 
-	it('should determine the start page based on startCanvas', () => {
-		expect(app.getStartPages()).toEqual([2]);
+	it('determines the start page based on startCanvas', () => {
+		expect(app.getStartPage()).toEqual(7);
 	});
 
-	it('should validate page numbers', () => {
+	it('validates page numbers', () => {
 		expect(app.isValidPagesArray([1])).toEqual(true);
 		expect(app.isValidPagesArray([0, 1])).toEqual(true);
 		expect(app.isValidPagesArray([1, 3, 5])).toEqual(true);
@@ -21,7 +31,7 @@ describe('main', () => {
 		expect(app.isValidPagesArray([5, 3, 1])).toEqual(false);
 	});
 
-	it('should set the page', () => {
+	it('sets the page', () => {
 		expect(app.setPage(1)).toEqual([1]);
 		expect(app.setPage([0, 1])).toEqual([0, 1]);
 		expect(app.setPage([1, 3, 5])).toEqual([1, 3, 5]);
@@ -31,10 +41,23 @@ describe('main', () => {
 		expect(() => app.setPage(999)).toThrow(RangeError);
 		expect(() => app.setPage([5, 3, 1])).toThrow(RangeError);
 	});
+
+	it('loads the translation and changes the language', async () => {
+		const result = await app.setLanguage('de');
+		expect(result).toEqual('de');
+	});
+
+	it('throws an error if the translation cannot be loaded', async () => {
+		try {
+			await app.setLanguage('-_-');
+		} catch (error) {
+			expect(error.message).toContain('Error loading translation for "-_-"');
+		}
+	});
 });
 
 describe('filter html', () => {
-	it('should filter HTML', () => {
+	it('filters HTML', () => {
 		const html = `
 			<h1 id="remove tag">
 				<a href="keep tag and attr" class="remove this">
@@ -66,7 +89,7 @@ describe('filter html', () => {
 });
 
 describe('get page label', () => {
-	it('should get the page label', () => {
+	it('gets the page label', () => {
 		expect(app.getPageLabel(1, 'label')).toEqual('1 : label');
 	});
 });

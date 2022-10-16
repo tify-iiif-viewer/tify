@@ -1,21 +1,17 @@
 import Vue from 'vue';
 import Toc from '@/components/ViewToc';
+import iiif from '@/mixins/iiif';
 
-import manifestForLabels from '../../iiif-api/data/manifests/bsb00026283.json';
+import manifestForLabels from '../../iiif-api/data/manifests/digitale-sammlungen-bsb00026283.json';
 import manifestForPages from '../../iiif-api/data/manifests/gdz-DE_611_BF_5619_1801_1806.json';
 
+Vue.mixin(iiif);
+
 describe('Toc', () => {
-	it('should select a label in the current language', () => {
+	it('selects a label in the current language', () => {
 		const vm = new Vue(Toc);
-		vm.$root.convertValueToArray = (value) => {
-			// NOTE - function will be called on structure.label data,
-			// which are (for this manifest) either strings or arrays of objects with 'value' property
-			if (Array.isArray(value)) {
-				// NOTE - we are testing for english title here (see below)
-				return [value.find((thisValue) => thisValue['@language'].indexOf('en') === 0)['@value']];
-			}
-			return [value];
-		};
+
+		vm.$root.options = { language: 'en' };
 		vm.$root.manifest = manifestForLabels;
 		vm.$root.canvases = manifestForLabels.sequences[0].canvases;
 
@@ -23,9 +19,9 @@ describe('Toc', () => {
 		expect(label).toEqual('Table of Contents');
 	});
 
-	it('should be ordered by logical page number', () => {
+	it('orders pages by logical page number', () => {
 		const vm = new Vue(Toc);
-		vm.$root.convertValueToArray = (value) => [value];
+
 		vm.$root.manifest = manifestForPages;
 		vm.$root.canvases = manifestForPages.sequences[0].canvases;
 

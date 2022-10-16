@@ -1,0 +1,411 @@
+{
+	"@context": "http://iiif.io/api/presentation/2/context.json",
+	"@id": "https://iiif.wellcomecollection.org/presentation/v2/b19974760_1",
+	"@type": "sc:Collection",
+	"label": "Volume 1, 1859",
+	"viewingHint": "multi-part",
+	"navDate": "1859-09-15T12:00:00.0000000Z",
+	"within": "",
+	"manifests": [
+		{
+			"@id": "https://iiif.wellcomecollection.org/presentation/v2/b19974760_1_0004",
+			"@type": "sc:Manifest",
+			"label": "15. September 1859",
+			"metadata": [
+				{
+					"label": "Volume",
+					"value": "1"
+				},
+				{
+					"label": "Year",
+					"value": "1859"
+				},
+				{
+					"label": "Month",
+					"value": "September"
+				},
+				{
+					"label": "DisplayDate",
+					"value": "15. September 1859"
+				}
+			],
+			"navDate": "1859-09-15T12:00:00.0000000Z",
+			"within": ""
+		},
+		{
+			"@id": "https://iiif.wellcomecollection.org/presentation/v2/b19974760_1_0007",
+			"@type": "sc:Manifest",
+			"label": "15. October 1859",
+			"metadata": [
+				{
+					"label": "Volume",
+					"value": "1"
+				},
+				{
+					"label": "Year",
+					"value": "1859"
+				},
+				{
+					"label": "Month",
+					"value": "October"
+				},
+				{
+					"label": "DisplayDate",
+					"value": "15. October 1859"
+				}
+			],
+			"navDate": "1859-10-15T12:00:00.0000000Z",
+			"within": ""
+		},
+		{
+			"@id": "https://iiif.wellcomecollection.org/presentation/v2/b19974760_1_0011",
+			"@type": "sc:Manifest",
+			"label": "15. November 1859",
+			"metadata": [
+				{
+					"label": "Volume",
+					"value": "1"
+				},
+				{
+					"label": "Year",
+					"value": "1859"
+				},
+				{
+					"label": "Month",
+					"value": "November"
+				},
+				{
+					"label": "DisplayDate",
+					"value": "15. November 1859"
+				}
+			],
+			"navDate": "1859-11-15T12:00:00.0000000Z",
+			"within": ""
+		},
+		{
+			"@id": "https://iiif.wellcomecollection.org/presentation/v2/b19974760_1_0014",
+			"@type": "sc:Manifest",
+			"label": "15. December 1859",
+			"metadata": [
+				{
+					"label": "Volume",
+					"value": "1"
+				},
+				{
+					"label": "Year",
+					"value": "1859"
+				},
+				{
+					"label": "Month",
+					"value": "December"
+				},
+				{
+					"label": "DisplayDate",
+					"value": "15. December 1859"
+				}
+			],
+			"navDate": "1859-12-15T12:00:00.0000000Z",
+			"within": ""
+		},
+		{
+			"@id": "https://iiif.wellcomecollection.org/presentation/v2/b19974760_1_0018",
+			"@type": "sc:Manifest",
+			"label": "14. January 1860",
+			"metadata": [
+				{
+					"label": "Volume",
+					"value": "1"
+				},
+				{
+					"label": "Year",
+					"value": "1860"
+				},
+				{
+					"label": "Month",
+					"value": "January"
+				},
+				{
+					"label": "DisplayDate",
+					"value": "14. January 1860"
+				}
+			],
+			"navDate": "1860-01-14T12:00:00.0000000Z",
+			"within": ""
+		},
+		{
+			"@id": "https://iiif.wellcomecollection.org/presentation/v2/b19974760_1_0021",
+			"@type": "sc:Manifest",
+			"label": "15. February 1860",
+			"metadata": [
+				{
+					"label": "Volume",
+					"value": "1"
+				},
+				{
+					"label": "Year",
+					"value": "1860"
+				},
+				{
+					"label": "Month",
+					"value": "February"
+				},
+				{
+					"label": "DisplayDate",
+					"value": "15. February 1860"
+				}
+			],
+			"navDate": "1860-02-15T12:00:00.0000000Z",
+			"within": ""
+		},
+		{
+			"@id": "https://iiif.wellcomecollection.org/presentation/v2/b19974760_1_0026",
+			"@type": "sc:Manifest",
+			"label": "15. March 1860",
+			"metadata": [
+				{
+					"label": "Volume",
+					"value": "1"
+				},
+				{
+					"label": "Year",
+					"value": "1860"
+				},
+				{
+					"label": "Month",
+					"value": "March"
+				},
+				{
+					"label": "DisplayDate",
+					"value": "15. March 1860"
+				}
+			],
+			"navDate": "1860-03-15T12:00:00.0000000Z",
+			"within": ""
+		},
+		{
+			"@id": "https://iiif.wellcomecollection.org/presentation/v2/b19974760_1_0030",
+			"@type": "sc:Manifest",
+			"label": "14. April 1860",
+			"metadata": [
+				{
+					"label": "Volume",
+					"value": "1"
+				},
+				{
+					"label": "Year",
+					"value": "1860"
+				},
+				{
+					"label": "Month",
+					"value": "April"
+				},
+				{
+					"label": "DisplayDate",
+					"value": "14. April 1860"
+				}
+			],
+			"navDate": "1860-04-14T12:00:00.0000000Z",
+			"within": ""
+		},
+		{
+			"@id": "https://iiif.wellcomecollection.org/presentation/v2/b19974760_1_0034",
+			"@type": "sc:Manifest",
+			"label": "15. May 1860",
+			"metadata": [
+				{
+					"label": "Volume",
+					"value": "1"
+				},
+				{
+					"label": "Year",
+					"value": "1860"
+				},
+				{
+					"label": "Month",
+					"value": "May"
+				},
+				{
+					"label": "DisplayDate",
+					"value": "15. May 1860"
+				}
+			],
+			"navDate": "1860-05-15T12:00:00.0000000Z",
+			"within": ""
+		},
+		{
+			"@id": "https://iiif.wellcomecollection.org/presentation/v2/b19974760_1_0037",
+			"@type": "sc:Manifest",
+			"label": "15. June 1860",
+			"metadata": [
+				{
+					"label": "Volume",
+					"value": "1"
+				},
+				{
+					"label": "Year",
+					"value": "1860"
+				},
+				{
+					"label": "Month",
+					"value": "June"
+				},
+				{
+					"label": "DisplayDate",
+					"value": "15. June 1860"
+				}
+			],
+			"navDate": "1860-06-15T12:00:00.0000000Z",
+			"within": ""
+		},
+		{
+			"@id": "https://iiif.wellcomecollection.org/presentation/v2/b19974760_1_0041",
+			"@type": "sc:Manifest",
+			"label": "14. July 1860",
+			"metadata": [
+				{
+					"label": "Volume",
+					"value": "1"
+				},
+				{
+					"label": "Year",
+					"value": "1860"
+				},
+				{
+					"label": "Month",
+					"value": "July"
+				},
+				{
+					"label": "DisplayDate",
+					"value": "14. July 1860"
+				}
+			],
+			"navDate": "1860-07-14T12:00:00.0000000Z",
+			"within": ""
+		},
+		{
+			"@id": "https://iiif.wellcomecollection.org/presentation/v2/b19974760_1_0046",
+			"@type": "sc:Manifest",
+			"label": "15. August 1860",
+			"metadata": [
+				{
+					"label": "Volume",
+					"value": "1"
+				},
+				{
+					"label": "Year",
+					"value": "1860"
+				},
+				{
+					"label": "Month",
+					"value": "August"
+				},
+				{
+					"label": "DisplayDate",
+					"value": "15. August 1860"
+				}
+			],
+			"navDate": "1860-08-15T12:00:00.0000000Z",
+			"within": ""
+		},
+		{
+			"@id": "https://iiif.wellcomecollection.org/presentation/v2/b19974760_1_0049",
+			"@type": "sc:Manifest",
+			"label": "15. September 1860",
+			"metadata": [
+				{
+					"label": "Volume",
+					"value": "1"
+				},
+				{
+					"label": "Year",
+					"value": "1860"
+				},
+				{
+					"label": "Month",
+					"value": "September"
+				},
+				{
+					"label": "DisplayDate",
+					"value": "15. September 1860"
+				}
+			],
+			"navDate": "1860-09-15T12:00:00.0000000Z",
+			"within": ""
+		},
+		{
+			"@id": "https://iiif.wellcomecollection.org/presentation/v2/b19974760_1_0052",
+			"@type": "sc:Manifest",
+			"label": "15. October 1860",
+			"metadata": [
+				{
+					"label": "Volume",
+					"value": "1"
+				},
+				{
+					"label": "Year",
+					"value": "1860"
+				},
+				{
+					"label": "Month",
+					"value": "October"
+				},
+				{
+					"label": "DisplayDate",
+					"value": "15. October 1860"
+				}
+			],
+			"navDate": "1860-10-15T12:00:00.0000000Z",
+			"within": ""
+		},
+		{
+			"@id": "https://iiif.wellcomecollection.org/presentation/v2/b19974760_1_0055",
+			"@type": "sc:Manifest",
+			"label": "15. November 1860",
+			"metadata": [
+				{
+					"label": "Volume",
+					"value": "1"
+				},
+				{
+					"label": "Year",
+					"value": "1860"
+				},
+				{
+					"label": "Month",
+					"value": "November"
+				},
+				{
+					"label": "DisplayDate",
+					"value": "15. November 1860"
+				}
+			],
+			"navDate": "1860-11-15T12:00:00.0000000Z",
+			"within": ""
+		},
+		{
+			"@id": "https://iiif.wellcomecollection.org/presentation/v2/b19974760_1_0058",
+			"@type": "sc:Manifest",
+			"label": "15. December 1860",
+			"metadata": [
+				{
+					"label": "Volume",
+					"value": "1"
+				},
+				{
+					"label": "Year",
+					"value": "1860"
+				},
+				{
+					"label": "Month",
+					"value": "December"
+				},
+				{
+					"label": "DisplayDate",
+					"value": "15. December 1860"
+				}
+			],
+			"navDate": "1860-12-15T12:00:00.0000000Z",
+			"within": ""
+		}
+	]
+}

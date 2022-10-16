@@ -1,10 +1,10 @@
 describe('Views', () => {
-	it('Change view via buttons', () => {
-		cy.visit('/?manifest=http://localhost:8081/manifest/wellcome-b18035723.json');
-		cy.get('.tify');
+	it('changes the view via buttons', () => {
+		const encodedParams = encodeURIComponent(JSON.stringify({
+			childManifestUrl: 'http://localhost:8081/manifest/wellcome-b19974760_1_0004',
+		}));
 
-		cy.contains('Info').click();
-		cy.get('.-active').contains('Info');
+		cy.visit(`/?manifest=http://localhost:8081/manifest/wellcome-b19974760&tify=${encodedParams}`);
 
 		cy.contains('Fulltext').click();
 		cy.get('.-active').contains('Fulltext');
@@ -21,19 +21,23 @@ describe('Views', () => {
 		cy.contains('Export').click();
 		cy.get('.-active').contains('Export');
 
+		cy.contains('Collection').click();
+		cy.get('.-active').contains('Collection');
+
 		cy.contains('Help').click();
 		cy.get('.-active').contains('Help');
 	});
 
-	it('Change view via keyboard', () => {
+	it('changes the view via keyboard', () => {
 		cy.visit('/?manifest=http://localhost:8081/manifest/wellcome-b18035723.json');
-		cy.get('.tify').then(() => {
-			cy.get('.tify').type('1').get('.-active').contains('Fulltext');
-			cy.get('.tify').type('2').get('.-active').contains('Pages');
-			cy.get('.tify').type('3').get('.-active').contains('Contents');
-			cy.get('.tify').type('4').get('.-active').contains('Info');
-			cy.get('.tify').type('5').get('.-active').contains('Export');
-			cy.get('.tify').type('6').get('.-active').contains('Help');
-		});
+
+		cy.wait(500); // eslint-disable-line cypress/no-unnecessary-waiting
+
+		cy.get('.tify').type('1').get('.-active').contains('Fulltext');
+		cy.get('.tify').type('2').get('.-active').contains('Pages');
+		cy.get('.tify').type('3').get('.-active').contains('Contents');
+		cy.get('.tify').type('4').get('.-active').contains('Info');
+		cy.get('.tify').type('5').get('.-active').contains('Export');
+		cy.get('.tify').type('7').get('.-active').contains('Help');
 	});
 });
