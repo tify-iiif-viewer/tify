@@ -110,7 +110,7 @@ export default {
 			try {
 				const query = new URLSearchParams(window.location.search);
 				params = JSON.parse(query.get(this.$root.options.urlQueryKey)) || {};
-			} catch (e) {
+			} catch {
 				// Nothing to do here
 			}
 

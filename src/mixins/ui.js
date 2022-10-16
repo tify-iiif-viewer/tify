@@ -6,12 +6,9 @@ export default {
 				return true;
 			}
 
-			// TODO: Update this to work with custom breakpoints
 			return (this.$root.$el.offsetWidth < this.$root.$data.options.breakpoints.medium);
 		},
 		updateBreakpoint() {
-			// TODO: Add class if container height is below 480px and use in scan.scss
-
 			Object.keys(this.options.breakpoints).forEach((breakpoint) => {
 				if (this.$el.clientWidth <= this.options.breakpoints[breakpoint]) {
 					this.$el.classList.add(`-${breakpoint}`);

@@ -30,7 +30,7 @@
 					@keydown.esc.prevent="filter ? filter = '' : closeDropdown()"
 					@keydown.up.prevent="onKeyUpArrow()"
 					@keydown.down.prevent="onKeyDownArrow()"
-				>
+				/>
 			</div>
 			<ol class="tify-page-select-list" ref="list">
 				<li
