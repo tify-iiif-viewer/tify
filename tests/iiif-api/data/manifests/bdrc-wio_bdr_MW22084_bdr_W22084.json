@@ -1,0 +1,969 @@
+{
+	"@context": "http://iiif.io/api/presentation/2/context.json",
+	"@id": "https://iiifpres-dev.bdrc.io/collection/wio:bdr:MW22084::bdr:W22084",
+	"@type": "sc:Collection",
+	"label": {
+		"@language": "bo-x-ewts",
+		"@value": "bka' 'gyur (sde dge par phud)"
+	},
+	"collections": [
+		{
+			"@id": "https://iiifpres-dev.bdrc.io/collection/wio:bdr:MW22084_S0001",
+			"@type": "sc:Collection",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "'dul ba/"
+			}
+		},
+		{
+			"@id": "https://iiifpres-dev.bdrc.io/collection/wio:bdr:MW22084_S0002",
+			"@type": "sc:Collection",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "'bum/"
+			}
+		},
+		{
+			"@id": "https://iiifpres-dev.bdrc.io/collection/wio:bdr:MW22084_S0003",
+			"@type": "sc:Collection",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "nyi khri/"
+			}
+		},
+		{
+			"@id": "https://iiifpres-dev.bdrc.io/collection/wio:bdr:MW22084_S0004",
+			"@type": "sc:Collection",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "khri brgyad/"
+			}
+		},
+		{
+			"@id": "https://iiifpres-dev.bdrc.io/collection/wio:bdr:MW22084_S0005",
+			"@type": "sc:Collection",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "khri pa/"
+			}
+		},
+		{
+			"@id": "https://iiifpres-dev.bdrc.io/collection/wio:bdr:MW22084_S0006",
+			"@type": "sc:Collection",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "brgyad stong"
+			}
+		},
+		{
+			"@id": "https://iiifpres-dev.bdrc.io/collection/wio:bdr:MW22084_S0007",
+			"@type": "sc:Collection",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "sher phyin/"
+			}
+		},
+		{
+			"@id": "https://iiifpres-dev.bdrc.io/collection/wio:bdr:MW22084_S0008",
+			"@type": "sc:Collection",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "phal chen/"
+			}
+		},
+		{
+			"@id": "https://iiifpres-dev.bdrc.io/collection/wio:bdr:MW22084_S0009",
+			"@type": "sc:Collection",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "dkon brtsegs/"
+			}
+		},
+		{
+			"@id": "https://iiifpres-dev.bdrc.io/collection/wio:bdr:MW22084_S0010",
+			"@type": "sc:Collection",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "mdo sde/"
+			}
+		},
+		{
+			"@id": "https://iiifpres-dev.bdrc.io/collection/wio:bdr:MW22084_S0011",
+			"@type": "sc:Collection",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "rgyud/"
+			}
+		},
+		{
+			"@id": "https://iiifpres-dev.bdrc.io/collection/wio:bdr:MW22084_S0012",
+			"@type": "sc:Collection",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "rnying rgyud/"
+			}
+		},
+		{
+			"@id": "https://iiifpres-dev.bdrc.io/collection/wio:bdr:MW22084_S0013",
+			"@type": "sc:Collection",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "gzungs/"
+			}
+		},
+		{
+			"@id": "https://iiifpres-dev.bdrc.io/collection/wio:bdr:MW22084_S0014",
+			"@type": "sc:Collection",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "dus 'khor/"
+			}
+		}
+	],
+	"manifests": [
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0886/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_1"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0887/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_2"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0888/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_3"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0889/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_4"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0890/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_5"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0891/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_6"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0892/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_7"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0893/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_8"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0894/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_9"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0895/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_10"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0896/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_11"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0897/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_12"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0898/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_13"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0899/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_14"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0900/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_15"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0901/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_16"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0902/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_17"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0903/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_18"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0904/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_19"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0905/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_20"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0906/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_21"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0907/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_22"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0908/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_23"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0909/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_24"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0910/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_25"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0911/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_26"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0912/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_27"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0913/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_28"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0914/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_29"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0915/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_30"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0916/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_31"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0917/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_32"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0918/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_33"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0919/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_34"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0920/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_35"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0921/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_36"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0922/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_37"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0923/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_38"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0924/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_39"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0925/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_40"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0926/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_41"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0927/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_42"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0928/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_43"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0929/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_44"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0930/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_45"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0931/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_46"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0932/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_47"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0933/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_48"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0934/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_49"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0935/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_50"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0936/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_51"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0937/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_52"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0938/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_53"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0939/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_54"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0940/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_55"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0941/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_56"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0942/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_57"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0943/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_58"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0944/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_59"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0945/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_60"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0946/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_61"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0947/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_62"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0948/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_63"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0949/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_64"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0950/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_65"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0951/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_66"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0952/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_67"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0953/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_68"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0954/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_69"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0955/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_70"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0956/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_71"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0957/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_72"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0958/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_73"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0959/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_74"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0960/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_75"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0961/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_76"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0962/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_77"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0963/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_78"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0964/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_79"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0965/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_80"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0966/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_81"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0967/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_82"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0968/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_83"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0969/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_84"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0970/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_85"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0971/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_86"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0972/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_87"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0973/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_88"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0974/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_89"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0975/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_90"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0976/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_91"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0977/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_92"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0978/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_93"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0979/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_94"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0980/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_95"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0981/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_96"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0982/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_97"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0983/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_98"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0984/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_99"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0985/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_100"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0986/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_101"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0987/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_102"
+			}
+		},
+		{
+			"@type": "sc:Manifest",
+			"@id": "https://iiifpres-dev.bdrc.io/vo:bdr:I0988/manifest",
+			"label": {
+				"@language": "bo-x-ewts",
+				"@value": "bka' 'gyur (sde dge par phud)_pod/_103"
+			}
+		}
+	],
+	"attribution": [
+		{
+			"@language": "en",
+			"@value": "Buddhist Digital Resource Center"
+		},
+		{
+			"@language": "bo",
+			"@value": "ནང་བསྟན་དཔེ་ཚོགས་ལྟེ་གནས།"
+		},
+		{
+			"@language": "zh",
+			"@value": "佛教数字资源中心（BDRC）"
+		}
+	],
+	"license": "https://creativecommons.org/publicdomain/mark/1.0/",
+	"logo": {
+		"@id": "https://s3.amazonaws.com/bdrcwebassets/prod/iiif-logo.png",
+		"format": "image/png"
+	},
+	"viewingHint": "multi-part"
+}

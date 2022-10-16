@@ -1,144 +1,143 @@
 {
-    "@context": "http://iiif.io/api/presentation/2/context.json",
-    "@id": "//localhost:8081/ubl/0000000001/manifest.json",
-    "@type": "sc:Manifest",
-    "description": "<div>The Ebers Papyrus is the largest, most beautiful, most important and only completely bequeathed scroll of ancient Egyptian medicine. The Ebers Papyrus is a unicum and the main source of knowledge about the old Egyptian medicine.<p><strong>Name:</strong> The scroll is named after its publisher, the Leipzig explorer and Egyptologist Georg Ebers (1837-1898).</p><p><strong>Acquisition:</strong> Georg Ebers purchased the papyrus scroll in Thebes (Upper Egypt) in the winter of 1872/73.</p><p><strong>Storage:</strong> The Ebers Papyrus is the property of the university library of Leipzig since 1873.</p><p><strong>Measurements:</strong> The scroll measures 18,63 m/20,37 yards in length and 0,30 m/11,81 inches in height.</p><p><strong>Age:</strong> The scroll originates in the last quarter of the 16th century BC.</p><p><strong>Origin:</strong> It is presumed that the Ebers Papyrus was found in a grave near Thebes.</p><p><strong>Script/language:</strong> The text is written in hieratic script, from right to left in black ink; red is used for headings and indications of measurements.</p><p><strong>Material and form:</strong> The Ebers Papyrus is a scroll consisting of 48 single papyrus sheets glued together. When discovered, the scroll was complete. For better conservation it was later cut into 29 pieces. Since the Second World War a few columns have been lost or damaged. In the presentation these columns are replaced by the facsimile produced by Georg Ebers in 1875.</p><p><strong>Content and structure:</strong> The Ebers Papyrus is a brief textbook of 110 columns about Ancient Egyptian medicine. Columns 103-110 were written on the backside of columns 102-94. On the back of column I there is a famous calendar which includes the date of the Sotis rising in the 9th year of the reign of Amenophis I (1525-1504 BC). The Ebers Papyrus contains 879 individual texts, describing about 80 different illnesses and their treatments. </p><p>More information in German and English under http://www.foyer-albertina.de <br /> <br /> &copy; Universitätsbibliothek Leipzig, 2016</p></div>",
-    "logo":  "//localhost:8081/ubl-logo.png",
-    "related": [
-        "https://digital.ub.uni-leipzig.de/object/viewid/0000000001",
-        "https://iiif.ub.uni-leipzig.de/0000000001/manifest.json"
-    ],
-    "label": "Papyrus Ebers",
-    "attribution": "Leipzig University Library",
-    "sequences": [
-    {
-        "@id": "//localhost:8081/ubl/0000000001/sequence/1",
-        "@type": "sc:Sequence",
-        "canvases": [
-
-        {
-            "label":"Back to the left (calendar)",
-            "@type":"sc:Canvas",
-            "width":"5198",
-            "@id":"//localhost:8081/ubl/0000000001/canvas/1",
-            "height":"2827",
-            "images": [
-            {
-                "resource": {
-                    "@id":"//localhost:8081/ubl/0000000001/papyrusebers-toc.jpx",
-                    "@type":"dctypes:Image",
-                    "format":"image/jpx",
-                    "width":"5198",
-                    "height":"2827",
-                    "label":"Papyrus Ebers",
-                    "service":
-                    {
-                        "@id":"//localhost:8081/ubl/fcgi-bin/iipsrv.fcgi?iiif=/j2k/0000/0000/0000000001/papyrusebers-toc.jpx",
-                        "profile":"http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1"
-                    }
-                },
-                "on": "//localhost:8081/ubl/0000000001/canvas/1"
-            }
-            ],
-                "otherContent": [
-                {
-                        "@id": "//localhost:8081/ubl/0000000001/translation-toc-en.json",
-                        "@type": "sc:AnnotationList"
-                }
-                ]
-        },
-        {
-            "label":"Front of the scroll",
-            "@type":"sc:Canvas",
-            "width":"145819",
-            "@id":"//localhost:8081/ubl/0000000001/canvas/2",
-            "height":"2827",
-            "images": [
-            {
-                "resource": {
-                    "@id":"//localhost:8081/ubl/0000000001/papyrusebers.jpx",
-                    "@type":"dctypes:Image",
-                    "format":"image/jpx",
-                    "width":"145819",
-                    "height":"2827",
-                    "label":"Papyrus Ebers",
-                    "service":
-                    {
-                        "@id":"//localhost:8081/ubl/fcgi-bin/iipsrv.fcgi?iiif=/j2k/0000/0000/0000000001/papyrusebers.jpx",
-                        "profile":"http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1"
-                    }
-                },
-               	"on": "//localhost:8081/ubl/0000000001/canvas/2"
-            }
-            ],
-		"otherContent": [
+	"@context": "http://iiif.io/api/presentation/2/context.json",
+	"@id": "https://iiif.ub.uni-leipzig.de/0000000001/manifest.json",
+	"@type": "sc:Manifest",
+	"description": "<div>The Ebers Papyrus is the largest, most beautiful, most important and only completely bequeathed scroll of ancient Egyptian medicine. The Ebers Papyrus is a unicum and the main source of knowledge about the old Egyptian medicine.<p><strong>Name:</strong> The scroll is named after its publisher, the Leipzig explorer and Egyptologist Georg Ebers (1837-1898).</p><p><strong>Acquisition:</strong> Georg Ebers purchased the papyrus scroll in Thebes (Upper Egypt) in the winter of 1872/73.</p><p><strong>Storage:</strong> The Ebers Papyrus is the property of the university library of Leipzig since 1873.</p><p><strong>Measurements:</strong> The scroll measures 18,63 m/20,37 yards in length and 0,30 m/11,81 inches in height.</p><p><strong>Age:</strong> The scroll originates in the last quarter of the 16th century BC.</p><p><strong>Origin:</strong> It is presumed that the Ebers Papyrus was found in a grave near Thebes.</p><p><strong>Script/language:</strong> The text is written in hieratic script, from right to left in black ink; red is used for headings and indications of measurements.</p><p><strong>Material and form:</strong> The Ebers Papyrus is a scroll consisting of 48 single papyrus sheets glued together. When discovered, the scroll was complete. For better conservation it was later cut into 29 pieces. Since the Second World War a few columns have been lost or damaged. In the presentation these columns are replaced by the facsimile produced by Georg Ebers in 1875.</p><p><strong>Content and structure:</strong> The Ebers Papyrus is a brief textbook of 110 columns about Ancient Egyptian medicine. Columns 103-110 were written on the backside of columns 102-94. On the back of column I there is a famous calendar which includes the date of the Sotis rising in the 9th year of the reign of Amenophis I (1525-1504 BC). The Ebers Papyrus contains 879 individual texts, describing about 80 different illnesses and their treatments. </p><p>More information in German and English under http://www.foyer-albertina.de <br /> <br /> &copy; Universitätsbibliothek Leipzig, 2016</p></div>",
+	"logo": "https://iiif.ub.uni-leipzig.de/ubl-logo.png",
+	"related": [
+		"https://digital.ub.uni-leipzig.de/object/viewid/0000000001",
+		"https://iiif.ub.uni-leipzig.de/0000000001/manifest.json"
+	],
+	"label": "Papyrus Ebers",
+	"attribution": "Leipzig University Library",
+	"sequences": [
 		{
-			"@id": "https://papyrusebers.de/en/mirador_anno_json/vorderseite/",
-			"@type": "sc:AnnotationList"
+			"@id": "https://iiif.ub.uni-leipzig.de/0000000001/sequence/1",
+			"@type": "sc:Sequence",
+			"canvases": [
+				{
+					"label": "Back to the left (calendar)",
+					"@type": "sc:Canvas",
+					"width": 5198,
+					"@id": "https://iiif.ub.uni-leipzig.de/0000000001/canvas/1",
+					"height": 2827,
+					"images": [
+						{
+							"@type": "oa:Annotation",
+							"@id": "https://iiif.ub.uni-leipzig.de/0000000001/image/1",
+							"motivation": "sc:painting",
+							"resource": {
+								"@id": "https://iiif.ub.uni-leipzig.de/0000000001/papyrusebers-toc.jpx",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"width": 5198,
+								"height": 2827,
+								"label": "Papyrus Ebers",
+								"service": {
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"@id": "https://iiif.ub.uni-leipzig.de/iiif/j2k/0000/0000/0000000001/papyrusebers-toc.jpx",
+									"profile": "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1"
+								}
+							},
+							"on": "https://iiif.ub.uni-leipzig.de/0000000001/canvas/1"
+						}
+					]
+				},
+				{
+					"label": "Front of the scroll",
+					"@type": "sc:Canvas",
+					"width": 145819,
+					"@id": "https://iiif.ub.uni-leipzig.de/0000000001/canvas/2",
+					"height": 2827,
+					"images": [
+						{
+							"@type": "oa:Annotation",
+							"@id": "https://iiif.ub.uni-leipzig.de/0000000001/image/2",
+							"motivation": "sc:painting",
+							"resource": {
+								"@id": "https://iiif.ub.uni-leipzig.de/0000000001/papyrusebers.jpx",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"width": 145819,
+								"height": 2827,
+								"label": "Papyrus Ebers",
+								"service": {
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"@id": "https://iiif.ub.uni-leipzig.de/iiif/j2k/0000/0000/0000000001/papyrusebers.jpx",
+									"profile": "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1"
+								}
+							},
+							"on": "https://iiif.ub.uni-leipzig.de/0000000001/canvas/2"
+						}
+					],
+					"otherContent": [
+						{
+							"@id": "https://iiif.ub.uni-leipzig.de/0000000001/translation-de.json",
+							"@type": "sc:AnnotationList"
+						}
+					]
+				},
+				{
+					"label": "Back to the right",
+					"@type": "sc:Canvas",
+					"width": 22691,
+					"@id": "https://iiif.ub.uni-leipzig.de/0000000001/canvas/3",
+					"height": 2827,
+					"images": [
+						{
+							"@type": "oa:Annotation",
+							"@id": "https://iiif.ub.uni-leipzig.de/0000000001/image/3",
+							"motivation": "sc:painting",
+							"resource": {
+								"@id": "https://iiif.ub.uni-leipzig.de/0000000001/papyrusebers-rear.jpx",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"width": 22691,
+								"height": 2827,
+								"label": "Papyrus Ebers",
+								"service": {
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"@id": "https://iiif.ub.uni-leipzig.de/iiif/j2k/0000/0000/0000000001/papyrusebers-rear.jpx",
+									"profile": "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1"
+								}
+							},
+							"on": "https://iiif.ub.uni-leipzig.de/0000000001/canvas/3"
+						}
+					],
+					"otherContent": [
+						{
+							"@id": "https://iiif.ub.uni-leipzig.de/0000000001/translation-rear-en.json",
+							"@type": "sc:AnnotationList"
+						}
+					]
+				}
+			]
 		}
-		]
-        },
-        {
-            "label":"Back to the right",
-            "@type":"sc:Canvas",
-            "width":"22691",
-            "@id":"//localhost:8081/ubl/0000000001/canvas/3",
-            "height":"2827",
-            "images": [
-            {
-                "resource": {
-                    "@id":"//localhost:8081/ubl/0000000001/papyrusebers-rear.jpx",
-                    "@type":"dctypes:Image",
-                    "format":"image/jp2",
-                    "width":"22691",
-                    "height":"2827",
-                    "label":"Papyrus Ebers",
-                    "service":
-                    {
-                        "@id":"//localhost:8081/ubl/fcgi-bin/iipsrv.fcgi?iiif=/j2k/0000/0000/0000000001/papyrusebers-rear.jpx",
-                        "profile":"http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1"
-                    }
-                },
-                "on": "//localhost:8081/ubl/0000000001/canvas/3"
-            }
-            ],
-                "otherContent": [
-                {
-                        "@id": "https://papyrusebers.de/en/mirador_anno_json/rueckseite/",
-                        "@type": "sc:AnnotationList"
-                }
-                ]
-        }
-        ]
-    }
-    ],
-    "structures": [
-    {
-        "@id": "//localhost:8081/ubl/0000000001/range/1",
-        "@type": "sc:Range",
-        "label": "Front",
-        "canvases": [
-            "//localhost:8081/ubl/0000000001/canvas/1"
-        ]
-    },
-    {
-        "@id": "//localhost:8081/ubl/0000000001/range/2",
-        "@type": "sc:Range",
-        "label": "Back",
-        "canvases": [
-            "//localhost:8081/ubl/0000000001/canvas/2"
-        ]
-    },
-    {
-        "@id": "//localhost:8081/ubl/0000000001/range/3",
-        "@type": "sc:Range",
-        "label": "Calendar",
-        "canvases": [
-            "//localhost:8081/ubl/0000000001/canvas/3"
-        ]
-    }
-    ]
+	],
+	"structures": [
+		{
+			"@id": "https://iiif.ub.uni-leipzig.de/0000000001/range/1",
+			"@type": "sc:Range",
+			"label": "Front",
+			"canvases": [
+				"https://iiif.ub.uni-leipzig.de/0000000001/canvas/1"
+			]
+		},
+		{
+			"@id": "https://iiif.ub.uni-leipzig.de/0000000001/range/2",
+			"@type": "sc:Range",
+			"label": "Back",
+			"canvases": [
+				"https://iiif.ub.uni-leipzig.de/0000000001/canvas/2"
+			]
+		},
+		{
+			"@id": "https://iiif.ub.uni-leipzig.de/0000000001/range/3",
+			"@type": "sc:Range",
+			"label": "Calendar",
+			"canvases": [
+				"https://iiif.ub.uni-leipzig.de/0000000001/canvas/3"
+			]
+		}
+	]
 }
-
-
-

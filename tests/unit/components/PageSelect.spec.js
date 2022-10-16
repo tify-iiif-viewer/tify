@@ -11,7 +11,7 @@ describe('PageSelect', () => {
 
 	vm.$root.convertValueToArray = (value) => [value];
 
-	it('should filter and update canvases', () => {
+	it('filters and updates canvases', () => {
 		vm.filter = '5';
 		vm.updateFilteredCanvases();
 
