@@ -19,6 +19,8 @@ window.Tify = function Tify(options = {}) {
 			medium: 1000,
 			large: 1300,
 		},
+		childManifestAutoloaded: true,
+		childManifestUrl: null,
 		container: null,
 		filters: {},
 		language: 'en',
@@ -31,6 +33,7 @@ window.Tify = function Tify(options = {}) {
 		translationsDirUrl: null,
 		urlQueryKey: null,
 		urlQueryParams: [
+			'childManifestUrl',
 			'filters',
 			'pages',
 			'pan',
@@ -39,6 +42,7 @@ window.Tify = function Tify(options = {}) {
 			'zoom',
 		],
 		view: '',
+		viewer: {},
 		zoom: null,
 	};
 
@@ -64,11 +68,13 @@ window.Tify = function Tify(options = {}) {
 		data() {
 			return {
 				api: {},
+				collection: null,
 				error: '',
 				id: `tify-${Math.floor(Math.random() * Date.now())}`,
 				loading: 0,
 				manifest: null,
 				options: instance.options,
+				ready: false,
 				readyPromise,
 				translation: null,
 			};
@@ -80,11 +86,45 @@ window.Tify = function Tify(options = {}) {
 		],
 		computed: {
 			canvases() {
-				return this.manifest.sequences[0].canvases;
+				return this.manifest ? this.manifest.sequences[0].canvases : [];
 			},
 			pageCount() {
-				return this.manifest.sequences[0].canvases.length;
+				return this.manifest ? this.manifest.sequences[0].canvases.length : 0;
 			},
+		},
+		created() {
+			this.expose(this.setLanguage);
+		},
+		mounted() {
+			this.$http.interceptors.request.use((request) => {
+				this.loading += 1;
+				return request;
+			});
+
+			this.$http.interceptors.response.use((response) => {
+				if (this.loading > 0) this.loading -= 1;
+				return response;
+			}, (error) => {
+				this.loading = 0;
+				return Promise.reject(error);
+			});
+
+			if (!this.options.manifestUrl) {
+				this.error = 'Missing option "manifestUrl"';
+				return;
+			}
+
+			Promise.all([
+				this.loadManifest(this.options.manifestUrl),
+				this.setLanguage(this.options.language),
+			]).then(() => {
+				this.$nextTick(() => {
+					this.ready = true;
+					this.readyPromise.resolve();
+				});
+			}, (error) => {
+				this.readyPromise.reject(error);
+			});
 		},
 		methods: {
 			expose(method, name) {
@@ -95,6 +135,38 @@ window.Tify = function Tify(options = {}) {
 			},
 			getPageLabel(number, label) {
 				return this.options.pageLabelFormat.replace('P', number).replace('L', label);
+			},
+			setLanguage(language) {
+				let resolveFunction;
+				let rejectFunction;
+				const promise = new Promise((resolve, reject) => {
+					resolveFunction = resolve;
+					rejectFunction = reject;
+				});
+
+				if (language === 'en') {
+					this.options.language = 'en';
+					this.translation = null;
+					resolveFunction(language);
+					return promise;
+				}
+
+				if (this.options.translationsDirUrl === null) {
+					rejectFunction(new Error('Could not determine translationsDirUrl'));
+				}
+
+				const translationUrl = `${this.options.translationsDirUrl}/${language}.json`;
+				this.$http.get(translationUrl).then((response) => {
+					this.options.language = language;
+					this.translation = response.data;
+					resolveFunction(language);
+				}, (error) => {
+					const status = (error.response ? error.response.statusText : error.message);
+					this.error = `Error loading translation for "${language}": ${status}`;
+					rejectFunction(new Error(this.error));
+				});
+
+				return promise;
 			},
 			translate(string, fallback) {
 				if (this.translation && this.translation[string]) {

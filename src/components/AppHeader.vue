@@ -6,9 +6,9 @@
 			</h1>
 		</div>
 
-		<div class="tify-header-column -pagination">
-			<div class="tify-header-button-group">
-				<page-select class="tify-header-button"/>
+		<div v-if="$root.manifest" class="tify-header-column -pagination">
+			<div class="tify-header-button-group -page-select">
+				<page-select/>
 
 				<button
 					class="tify-header-button"
@@ -104,6 +104,7 @@
 			<div class="tify-header-button-group -view">
 				<!-- NOTE: This button is hidden on large containers -->
 				<button
+					v-if="$root.manifest"
 					class="tify-header-button -scan"
 					:class="{ '-active': $root.options.view === 'scan' }"
 					:aria-controls="$root.getId('scan')"
@@ -127,6 +128,7 @@
 				</button>
 
 				<button
+					v-if="$root.manifest"
 					class="tify-header-button"
 					:class="{ '-active': $root.options.view === 'thumbnails' }"
 					:aria-controls="$root.getId('thumbnails')"
@@ -161,6 +163,7 @@
 				</button>
 
 				<button
+					v-if="$root.manifest"
 					class="tify-header-button"
 					:class="{ '-active': $root.options.view === 'export' }"
 					:aria-controls="$root.getId('export')"
@@ -171,6 +174,17 @@
 					{{ $root.translate('Export') }}
 				</button>
 
+				<button
+					v-if="$root.collection"
+					class="tify-header-button"
+					:class="{ '-active': $root.options.view === 'collection' }"
+					:aria-controls="$root.getId('collection')"
+					:aria-expanded="$root.options === 'collection' ? 'true' : 'false'"
+					@click="toggleView('collection')"
+				>
+					<icon-list-box-outline/>
+					{{ $root.translate('Collection') }}
+				</button>
 			</div>
 
 			<div v-if="fullscreenSupported" class="tify-header-button-group -view">
@@ -205,7 +219,7 @@
 				</button>
 			</div>
 
-			<div class="tify-header-button-group -popup">
+			<div v-if="$root.manifest" class="tify-header-button-group -popup">
 				<button
 					class="tify-header-button"
 					:disabled="customPageViewActive || isFirstPage"
@@ -326,7 +340,7 @@ export default {
 			return sections;
 		},
 		structures() {
-			return this.$root.manifest.structures;
+			return this.$root.manifest ? this.$root.manifest.structures : [];
 		},
 		title() {
 			return this.$root.convertValueToArray((this.$root.manifest || this.$root.collection || {}).label)
@@ -403,15 +417,17 @@ export default {
 				}
 				break;
 			case '1':
-				if (this.fulltextEnabled) {
+				if (this.$root.manifest && this.fulltextEnabled) {
 					this.toggleView('fulltext');
 				}
 				break;
 			case '2':
-				this.toggleView('thumbnails');
+				if (this.$root.manifest) {
+					this.toggleView('thumbnails');
+				}
 				break;
 			case '3':
-				if (this.tocEnabled) {
+				if (this.$root.manifest && this.tocEnabled) {
 					this.toggleView('toc');
 				}
 				break;
@@ -419,13 +435,22 @@ export default {
 				this.toggleView('info');
 				break;
 			case '5':
-				this.toggleView('export');
+				if (this.$root.manifest) {
+					this.toggleView('export');
+				}
 				break;
 			case '6':
+				if (this.$root.collection) {
+					this.toggleView('collection');
+				}
+				break;
+			case '7':
 				this.toggleView('help');
 				break;
 			case 'b':
-				this.toggleDoublePage();
+				if (this.$root.manifest) {
+					this.toggleDoublePage();
+				}
 				break;
 			case 'f':
 				this.toggleFullscreen();
@@ -433,7 +458,7 @@ export default {
 			default:
 			}
 
-			if (this.customPageViewActive) {
+			if (!this.$root.manifest || this.customPageViewActive) {
 				return;
 			}
 
@@ -523,7 +548,7 @@ export default {
 			this.fullscreenActive = !this.fullscreenActive;
 		},
 		toggleView(name) {
-			const view = name === this.$root.options.view && !this.$root.isMobile()
+			const view = name === this.$root.options.view && this.$root.manifest && !this.$root.isMobile()
 				? ''
 				: name;
 			this.$root.updateOptions({ view });

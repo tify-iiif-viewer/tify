@@ -72,11 +72,11 @@ If you are are upgrading from any previous version, [have a look at the upgradin
 
 TIFY takes an options object as its only parameter. While optional, you usually want to set `container` and `manifestUrl`.
 
-- **`collectionManifestAutoloaded`**: boolean, default `true`
+- **`childManifestAutoloaded`**: boolean, default `true`
 
-	If the manifest set by `manifestUrl` is a collection (`@type` is `sc:Collection`) and `collectionManifestUrl` is not set, automatically load the first manifest in the collection. This only works for collections with `manifests` on the first level; when the collection only contains other collection and `collectionManifestUrl` is not set, only the collection view is shown until the user selects a child manifest to load.
+	If the manifest set by `manifestUrl` is a collection (`@type` is `sc:Collection`) and `childManifestUrl` is not set, automatically load the first manifest in the collection. This only works for collections with `manifests` on the first level; when the collection only contains other collection and `childManifestUrl` is not set, only the collection view is shown until the user selects a child manifest to load.
 
-- **`collectionManifestUrl`**: string or `null` (default)
+- **`childManifestUrl`**: string or `null` (default)
 
 	If the manifest set by `manifestUrl` is a collection (`@type` is `sc:Collection`), additionally load another IIIF manifest, whose `@type` must be `sc:Manifest`. Note that TIFY does not check if this additional manifest is actually part of the collection.
 
@@ -116,7 +116,7 @@ TIFY takes an options object as its only parameter. While optional, you usually 
 
 	If set, parameters are read from the URL query and any changes are reflected, using the key provided. This works with multiple concurrent instances, but each instance must use a unique key. Note that when `urlQueryKey` is set, all options defined by `urlQueryParams` can be overridden by changing the URL in the browser’s address bar.
 
-- **`urlQueryParams`**: array of strings, default `['collectionManifestUrl', 'filters', 'pages', 'pan', 'rotation', 'view', 'zoom']`
+- **`urlQueryParams`**: array of strings, default `['childManifestUrl', 'filters', 'pages', 'pan', 'rotation', 'view', 'zoom']`
 
 	The parameter keys to be read from and stored in the URL query. Only has effect if `urlQueryKey` is set, in which case parameters read from the URL override options of the same name.
 

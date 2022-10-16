@@ -25,7 +25,8 @@ TIFY kann vollständig mit der Tastatur bedient werden.
 | Inhalt (wenn verfügbar) | <kbd>3</kbd> |
 | Info | <kbd>4</kbd> |
 | Export | <kbd>5</kbd> |
-| Hilfe | <kbd>6</kbd> |
+| Sammlung (wenn verfügbar) | <kbd>6</kbd> |
+| Hilfe | <kbd>7</kbd> |
 | Scan | <kbd>Rücktaste</kbd> |
 | Vollbild | <kbd>F</kbd> |
 

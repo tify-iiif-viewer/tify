@@ -6,12 +6,39 @@ $info-content-max-height: g(6.5);
 	padding: g(.5);
 }
 
+.tify-info-button {
+	@extend %button-small;
+	border-radius: 0;
+
+	&:first-child {
+		border-radius: $br 0 0 $br;
+	}
+
+	&:last-child {
+		border-radius: 0 $br $br 0;
+	}
+
+	& + & {
+		margin-left: -1px;
+	}
+
+	&.-active {
+		@extend %button-active;
+	}
+}
+
 .tify-info-content {
 	position: relative;
 
 	&.-collapsed {
 		max-height: $info-content-max-height;
 	}
+}
+
+.tify-info-header {
+	display: inline-flex;
+	margin: 0 0 g(.75);
+	position: relative;
 }
 
 .tify-info-logo {

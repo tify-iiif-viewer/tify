@@ -84,8 +84,90 @@ export default {
 
 			return filteredHtml;
 		},
-		isManifest(manifest) {
-			return manifest && Array.isArray(manifest.sequences);
+		loadManifest(manifestUrl, options = {}) {
+			let resolveFunction;
+			let rejectFunction;
+			const promise = new Promise((resolve, reject) => {
+				resolveFunction = resolve;
+				rejectFunction = reject;
+			});
+
+			return this.$http.get(manifestUrl).then(async (response) => {
+				if (options.expectedType && response.data['@type'] !== options.expectedType) {
+					this.error = `Expected manifest of type ${options.expectedType}, but got ${response.data['@type']}`;
+					rejectFunction(this.error);
+					return promise;
+				}
+
+				// Force re-render of all components that depend on the manifest
+				this.manifest = null;
+				await this.$nextTick();
+
+				if (response.data['@type'] === 'sc:Manifest') {
+					this.manifest = response.data;
+
+					// Merging user-set query params with defaults
+					this.updateOptionsFromUrlQuery();
+					window.addEventListener('popstate', this.updateOptionsFromUrlQuery);
+
+					if (options.reset) {
+						this.updateOptions({
+							childManifestUrl: manifestUrl,
+							pages: [this.getStartPage()],
+							pan: {},
+							rotation: null,
+							view: this.isMobile() ? 'scan' : 'collection',
+							zoom: null,
+						});
+					}
+
+					resolveFunction();
+					return promise;
+				} if (response.data['@type'] === 'sc:Collection') {
+					this.collection = response.data;
+
+					const query = new URLSearchParams(window.location.search);
+					let queryParams = {};
+					try {
+						queryParams = JSON.parse(query.get(this.options.urlQueryKey)) || {};
+					} catch {
+						// Nothing to do here
+					}
+
+					let childManifestUrl = '';
+
+					if (this.options.urlQueryParams.includes('childManifestUrl')
+						&& queryParams.childManifestUrl
+					) {
+						childManifestUrl = queryParams.childManifestUrl;
+					} else if (this.collection.manifests
+						&& this.options.childManifestAutoloaded
+					) {
+						childManifestUrl = this.collection.manifests[0]['@id'];
+					}
+
+					if (childManifestUrl) {
+						await this.loadManifest(childManifestUrl, { expectedType: 'sc:Manifest' });
+					} else {
+						const view = queryParams.view || this.options.view;
+						this.updateOptions({
+							view: ['collection', 'help', 'info'].includes(view) ? view : 'collection',
+						});
+					}
+
+					resolveFunction();
+					return promise;
+				}
+
+				this.error = 'Please provide a valid IIIF Presentation API 2.x manifest';
+				rejectFunction(this.error);
+				return promise;
+			}, (error) => {
+				const status = error.response ? (error.response.statusText || error.response.data) : error.message;
+				this.error = `Error loading IIIF manifest: ${status}`;
+				rejectFunction(this.error);
+				return promise;
+			});
 		},
 	},
 };

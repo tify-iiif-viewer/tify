@@ -1,0 +1,74 @@
+.tify-collection {
+	@extend %panel;
+	overflow-y: scroll;
+	padding: g(.5);
+}
+
+.tify-collection-controls {
+	display: flex;
+
+	> :first-child {
+		border-radius: $br 0 0 $br;
+	}
+
+	> :last-child {
+		border-radius: 0 $br $br 0;
+	}
+}
+
+.tify-collection-filter {
+	flex: 1;
+	max-width: 36em;
+
+	&:focus {
+		z-index: 1;
+	}
+}
+
+.tify-collection-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	& & {
+		margin-left: g(1);
+		margin-top: g(.25);
+	}
+
+	li {
+		margin-bottom: g(.25);
+	}
+}
+
+.tify-collection-link {
+	@extend %button;
+	color: inherit !important;
+	display: block;
+	padding: g(.25) g(.5);
+	text-align: left;
+	text-decoration: none;
+	width: 100%;
+
+	&.-has-children {
+		font-weight: bold;
+	}
+
+	.tify-collection-item.-current & {
+		@extend %button-active;
+		color: $white !important;
+	}
+
+	.tify-icon {
+		margin-left: g(-.25);
+	}
+}
+
+.tify-collection-no-results {
+	color: $text-color-muted;
+}
+
+.tify-collection-reset {
+	@extend %button-small;
+	margin-left: -1px;
+	white-space: nowrap;
+}
