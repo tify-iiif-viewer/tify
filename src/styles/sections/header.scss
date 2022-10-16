@@ -1,18 +1,30 @@
 .tify-header {
-	@include separator(1, 0);
 	background: $header-bg;
+	box-shadow: 0 1px $border-color;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
-	padding: g(.125);
+	z-index: 9;
 }
 
 .tify-header-button-group {
-	border-radius: $br;
-	box-shadow: $card-shadow;
+	align-items: center;
 	display: flex;
-	margin: g(.125);
+	margin: g(.25) 0;
+	padding: 0 g(.25);
 	position: relative;
+
+	&.-page-select {
+		align-self: center;
+		box-shadow: 0 0 0 1px $border-color inset;
+		border-radius: $br;
+		margin: 0 g(.25);
+		padding: 0;
+
+		.tify.-small & {
+			margin: 0;
+		}
+	}
 
 	&.-pagination {
 		.tify.-small & {
@@ -21,47 +33,64 @@
 	}
 
 	&.-popup {
-		@include separator(1);
-		border-radius: 0 0 $br $br;
+		box-shadow: 0 -1px $border-color;
 		display: none;
-		margin: $br (-$br) (-$br);
-		overflow: hidden;
+		margin: calc(#{$br} * 2 - 1px) 0 0;
+		padding: $br 0 0;
 
 		.tify.-small & {
 			display: flex;
 		}
 	}
 
+	&.-toggle {
+		.tify-header-column:not(:nth-child(2)) & {
+			border-left: 1px solid $border-color;
+
+			.tify.-small & {
+				border: 0;
+			}
+		}
+	}
+
 	&.-view {
 		.tify.-large & {
-			box-shadow: none;
 			display: block;
 			margin: 0;
+			padding: 0;
+		}
+
+		&:nth-child(n+2),
+		.tify-header-column.-pagination ~ .tify-header-column & {
+			border-left: 1px solid $border-color;
+
+			.tify.-large & {
+				border-left: 0;
+			}
 		}
 	}
 }
 
 .tify-header-button {
 	@extend %button;
-	border-radius: 0;
+	align-self: center;
+	background: none;
+	border-radius: $br;
+	border: 0;
 	box-shadow: none;
 	margin: 0; // Safari fix
+	min-height: g(1.5);
+	min-width: g(1.5);
+	padding: 0;
 
-	& + & {
-		@include separator(0, 0, 0, 1);
-		z-index: 0;
-	}
+	&:not(:disabled) {
+		@include hover {
+			box-shadow: 0 0 0 1px $shade-light inset;
+		}
 
-	&:first-child {
-		border-radius: $br 0 0 $br;
-	}
-
-	&:last-child {
-		border-radius: 0 $br $br 0;
-	}
-
-	&:only-child {
-		border-radius: $br;
+		&:active {
+			box-shadow: $inset-shadow, 0 0 0 1px $shade-light inset;
+		}
 	}
 
 	&.-active {
@@ -69,10 +98,11 @@
 	}
 
 	&.-icon-only {
-		font-size: 0; // Prevent label from showing
+		display: block;
+		font-size: 0 !important; // Prevent label from showing
 
 		.tify.-large & {
-			font-size: inherit;
+			font-size: inherit !important;
 		}
 	}
 
@@ -82,47 +112,54 @@
 		.tify.-medium & {
 			display: block !important;
 		}
-
-		+ .tify-header-button {
-			border-radius: $br 0 0 $br;
-			box-shadow: none;
-		}
 	}
 
-	&.-warning {
-		@extend %button-warning;
-	}
+	.tify-header-button-group.-toggle & {
+		padding: g(.375);
 
-	.tify-header-button-group.-popup & {
-		+ .tify-header-button {
-			@include separator(0, 0, 0, 1);
+		.tify.-tiny & {
+			margin: g(.125) 0;
+			padding: g(.25);
 		}
 	}
 
 	.tify-header-button-group.-view & {
+		font-size: .75em;
+
+		&:not(.-icon-only) {
+			align-items: center;
+			display: flex;
+			flex-direction: column;
+			font-size: $font-size-small;
+			line-height: 1;
+			min-height: g(1.75);
+			min-width: g(1.75);
+			padding: 0 .5em 4px;
+		}
+
 		.tify.-large & {
-			background: $white;
-			border-radius: 0;
+			align-items: flex-start; // Chrome, not working in Firefox
 			display: block;
-			text-align: left;
+			font: inherit;
+			min-height: 0;
+			padding: g(.25);
+			text-align: left; // Firefox, not working in Chrome
 			width: 100%;
-
-			&.-active {
-				background: $brand-color;
-				text-shadow: none;
-			}
-
-			&:not(.-active) {
-				@include hover {
-					background: $shade-light;
-				}
-			}
 		}
 	}
 
-	.tify-header-button-group.-view > & {
-		.tify.-large & {
-			box-shadow: none;
+	.tify-page-select + & {
+		border-radius: 0 $br $br 0;
+		margin-left: -1px;
+
+		&:not(:disabled) {
+			@include hover {
+				box-shadow: 0 0 0 1px $border-color inset;
+			}
+
+			&:active {
+				box-shadow: $inset-shadow, 0 0 0 1px $border-color inset;
+			}
 		}
 	}
 }
@@ -135,13 +172,9 @@
 
 	&:first-child {
 		flex: 1;
-
-		.tify.-small & {
-			margin-bottom: g(-.25);
-		}
 	}
 
-	&.-controls-toggle {
+	&.-toggle {
 		display: none;
 
 		.tify.-large & {
@@ -154,7 +187,7 @@
 			@include dropdown(right);
 			box-shadow: none;
 			display: none;
-			top: g(1.75);
+			top: g(2);
 
 			&.-visible {
 				display: block;
@@ -164,16 +197,16 @@
 }
 
 .tify-header-title {
-	font-size: 1.25em;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	align-self: center;
+	display: -webkit-box;
+	font-size: 1em;
 	font-weight: normal;
-	line-height: g(1.25);
-	margin: g(.25) g(.125);
+	line-height: g();
+	margin: 0;
 	overflow: hidden;
-	padding: 0;
+	margin: g(.125) g(.5);
+	text-align: left;
 	text-overflow: ellipsis;
-	white-space: nowrap;
-
-	.tify.-small & {
-		font-size: 1em;
-	}
 }
