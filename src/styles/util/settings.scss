@@ -1,42 +1,38 @@
-// Dimensions
-$border-width: 1px !default;
-$br: 2px !default;
-$grid: 24px !default;
-$thumbnail-width: g(4) !default;
-
-// Typography
-$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif !default;
-$font-size: 16px !default;
-$font-size-small: 14px !default;
-$line-height: g() !default;
-
-// Brand colors
-$brand-color: #06b !default;
-$brand-color-light: tint($brand-color, 46) !default;
-$brand-color-lighter: tint($brand-color, 92) !default;
-
-// Shades
+// Opaque shades
 $grey: #666 !default;
 $grey-dark: #333 !default;
-$grey-light: #ccc !default;
-$shade: rgba(black, .24) !default;
-$shade-dark: rgba(black, .6) !default;
-$shade-light: rgba(black, .08) !default;
-$shine: rgba(white, .9) !default;
-$shine-light: rgba(white, .6) !default;
-$white: #fff;
+$grey-light: #f5f5f5 !default;
+$white: #fff !default;
+
+// Semitransparent shades
+$shade: rgba(black, .2) !default;
+$shade-dark: rgba(black, .5) !default;
+$shade-darker: rgba(black, .8) !default;
+$shade-light: rgba(black, .1) !default;
+$shine: rgba($white, .4) !default;
 
 // Semantic colors
-$border-color: $shade !default;
-$highlight-color: rgba(lighten($brand-color, 50), .3) !default;
-$link-color: $brand-color !default;
-$text-color: $grey-dark !default;
-$text-color-light: tint($text-color, 30) !default;
-$warning-color: adjust-hue($brand-color, 180) !default;
+// NOTE: These colors must be solid
+$base-color: var(--tify-base-color, #06b) !default;
+$base-color-light: var(--tify-base-color-light, tint(#06b, 45)) !default;
+$base-color-lighter: var(--tify-base-color-lighter, tint(#06b, 90)) !default;
+$border-color: var(--tify-border-color, $shade) !default;
+$link-color: var(--tify-link-color, $base-color) !default;
+$text-color: var(--tify-text-color, $grey-dark) !default;
+$text-color-muted: var(--tify-text-muted-color, $grey) !default;
+
+// Dimensions
+$br: var(--tify-border-radius, 2px) !default;
+$font-size: var(--tify-font-size, 16px) !default;
+$font-size-small: var(--tify-font-size-small, calc(#{$font-size} * .8125)) !default;
+$grid-base: var(--tify-grid-base, 24px) !default;
+$line-height: var(--tify-line-height, #{g()}) !default;
+$thumbnail-height: var(--tify-thumbnail-height, g(4.5)) !default;
+$thumbnail-width: var(--tify-thumbnail-width, g(4)) !default;
 
 // Combined values
-$card-shadow: 0 0 .5px $shade-light, 0 .5px 3px $shade !default;
+$blur: blur(2px);
 $drop-shadow: 0 0 g(.25) rgba(black, .5) !default;
-$header-bg: #e7e7e7 !default;
+$header-bg: var(--tify-header-bg, $grey-light) !default;
 $inset-shadow: 0 .5px 3px $shade inset !default;
-$shade-inset: 0 -1px $shade !default;
+$main-bg: var(--tify-body-bg, $grey url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAEElEQVQImWNgwAGkcElgAgAEogAbFZcwKQAAAABJRU5ErkJggg==)) !default; // dots pattern

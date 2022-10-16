@@ -1,10 +1,18 @@
+@use 'sass:math';
+
 .tify-thumbnails {
 	@extend %panel;
 	min-height: 100%;
-	overflow: scroll; // NOTE: This is required for thumbnails to be calculated correctly
+	overflow-y: scroll; // NOTE: This is required for thumbnails to be calculated correctly
 	padding: g(.5);
 	position: relative;
 	user-select: none;
+
+	a {
+		color: inherit;
+		border: 0;
+		box-shadow: none;
+	}
 }
 
 .tify-thumbnails-list {
@@ -12,39 +20,38 @@
 }
 
 .tify-thumbnails-item {
-	@include transition(filter);
-	background: $grey-dark;
+	background: currentColor;
 	border-radius: $br;
-	box-shadow: $drop-shadow;
 	cursor: pointer;
 	float: left;
-	height: g(5.5);
 	margin: g(.25);
 	overflow: hidden;
+	padding-bottom: g();
 	position: relative;
-	width: $thumbnail-width;
 
 	@include hover {
-		background: mix($grey-dark, $link-color);
+		background: currentColor;
 		filter: brightness(1.2);
 	}
 
 	img {
 		display: block;
-		max-height: g(4.5);
+		height: $thumbnail-height;
 		margin: auto;
+		object-fit: contain;
 		pointer-events: none;
 		max-width: 100%;
+		width: $thumbnail-width;
 	}
 
 	&.-current {
-		outline: g(.25) solid $brand-color-light;
+		outline: g(math.div(.5, 3)) solid $base-color-light;
 	}
 }
 
 .tify-thumbnails-page {
-	@include transition(background);
 	bottom: 0;
+	box-shadow: 0 -1px $shine;
 	color: $white;
 	display: block;
 	font-size: $font-size-small;
@@ -55,7 +62,6 @@
 	position: absolute;
 	text-align: center;
 	text-overflow: ellipsis;
-	text-shadow: $shade-inset;
 	white-space: nowrap;
 	width: 100%;
 

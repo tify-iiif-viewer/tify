@@ -29,11 +29,13 @@ $info-content-max-height: g(6.5);
 }
 
 .tify-info-section {
-	margin-bottom: g();
+	margin: 0 0 g();
 	word-break: break-word;
 
 	&.-logo {
 		> a {
+			border: 0;
+			box-shadow: none;
 			display: inline-block;
 		}
 	}
@@ -42,6 +44,7 @@ $info-content-max-height: g(6.5);
 .tify-info-toggle {
 	@extend %button-small;
 	margin: g(.5) 0;
+	padding-left: g(.25); // move icon closer to the left
 	position: relative;
 }
 
@@ -51,7 +54,7 @@ $info-content-max-height: g(6.5);
 	}
 
 	.tify-info-content.-collapsed & {
-		max-height: $info-content-max-height - g(2); // 2 = button height
+		max-height: calc(#{$info-content-max-height} - #{g(2)}); // 2 = button height
 		overflow: hidden;
 
 		&::after {

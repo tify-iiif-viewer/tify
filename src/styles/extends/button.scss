@@ -23,6 +23,11 @@
 		&:active {
 			box-shadow: $inset-shadow, 0 0 0 1px $border-color inset;
 		}
+
+		&:focus-visible {
+			outline: 2px solid $base-color-light;
+			z-index: 1;
+		}
 	}
 
 	&[disabled] {
