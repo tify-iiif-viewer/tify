@@ -123,7 +123,9 @@ export default {
 
 					resolveFunction();
 					return promise;
-				} if (response.data['@type'] === 'sc:Collection') {
+				}
+
+				if (response.data['@type'] === 'sc:Collection') {
 					this.collection = response.data;
 
 					const query = new URLSearchParams(window.location.search);
@@ -148,6 +150,9 @@ export default {
 
 					if (childManifestUrl) {
 						await this.loadManifest(childManifestUrl, { expectedType: 'sc:Manifest' });
+						this.updateOptions({
+							childManifestUrl,
+						});
 					} else {
 						const view = queryParams.view || this.options.view;
 						this.updateOptions({
