@@ -17,7 +17,7 @@ export default {
 				}
 			});
 
-			if (this.$el.clientHeight <= 499) {
+			if (this.$el.clientHeight < 520) {
 				this.$el.classList.add('-short');
 			} else {
 				this.$el.classList.remove('-short');

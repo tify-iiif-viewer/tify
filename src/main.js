@@ -15,9 +15,9 @@ window.Tify = function Tify(options = {}) {
 	const defaultOptions = {
 		breakpoints: {
 			tiny: 359,
-			small: 700,
-			medium: 1000,
-			large: 1300,
+			small: 719,
+			medium: 959,
+			large: 1199,
 		},
 		childManifestAutoloaded: true,
 		childManifestUrl: null,
