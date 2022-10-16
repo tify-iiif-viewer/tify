@@ -12,7 +12,12 @@
 				ref="contents"
 			>
 				<div class="tify-info-value">
-					<div v-bind:key="value" v-for="value in $root.convertValueToArray(item.value)" v-html="value"/>
+					<template v-for="value in $root.convertValueToArray(item.value)" >
+						<div v-if="isValidUrl(value)" :key="'url-' + value">
+							<a :href="value">{{ value }}</a>
+						</div>
+						<div v-else v-html="value" :key="'html-' + value"/>
+					</template>
 				</div>
 
 				<button
@@ -35,6 +40,8 @@
 </template>
 
 <script>
+import isValidUrl from '../functions/isValidUrl';
+
 export default {
 	props: [
 		'metadata',
@@ -57,6 +64,7 @@ export default {
 			const cleanedLabel = label.replace('_', ' ');
 			return cleanedLabel.charAt(0).toUpperCase() + cleanedLabel.substr(1);
 		},
+		isValidUrl,
 		updateInfoItems() {
 			this.$nextTick(() => {
 				if (!this.$refs.contents) {
