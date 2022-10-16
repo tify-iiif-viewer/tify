@@ -22,8 +22,11 @@
 		</ul>
 
 		<footer class="tify-help-footer">
-			<p>{{ $root.translate('Version') }} {{ env.VUE_APP_VERSION }}</p>
-			<p v-html="copyrightHtml"/>
+			<p>
+				{{ $root.translate('Version') }} <b>{{ env.VUE_APP_VERSION }}</b>
+				&middot;
+				<span v-html="copyrightHtml"/>
+			</p>
 		</footer>
 	</section>
 </template>
@@ -34,7 +37,8 @@ export default {
 		copyrightHtml() {
 			const copyright = 'Copyright &copy; 2017&ndash;2022'
 					+ ' <a href="https://www.uni-goettingen.de/en/">Göttingen University</a>'
-					+ ' / <a href="https://www.sub.uni-goettingen.de/en/">Göttingen State and University Library</a>';
+					+ '&nbsp;/ '
+					+ '<a href="https://www.sub.uni-goettingen.de/en/">Göttingen State and University Library</a>';
 			return this.$root.translate('$copyright', copyright);
 		},
 		env() {
@@ -42,12 +46,11 @@ export default {
 		},
 		infoHtml() {
 			const info = 'TIFY is a slim and mobile-friendly IIIF document viewer, released under the'
-				+ ', released under the GNU Affero General Public License 3.0.';
+				+ ' <a href="https://www.gnu.org/licenses/agpl-3.0.html.en">GNU Affero General Public License 3.0</a>.';
 			return this.$root.translate('$info', info);
 		},
 		userGuideUrl() {
-			// NOTE: VUE_APP_DOCS_LANGUAGES is not an array but a string ("de,en"), yet still works as intended here
-			const lang = process.env.VUE_APP_DOCS_LANGUAGES.includes(this.$root.options.language)
+			const lang = process.env.VUE_APP_DOCS_LANGUAGES.split(',').includes(this.$root.options.language)
 				? this.$root.options.language
 				: 'en';
 			return `${process.env.VUE_APP_DOCS_URL}/user-guide.${lang}.md`;

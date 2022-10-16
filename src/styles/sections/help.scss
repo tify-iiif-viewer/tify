@@ -5,6 +5,8 @@
 }
 
 .tify-help-footer {
+	box-shadow: 0 1px $border-color inset;
 	font-size: $font-size-small;
 	margin-top: g();
+	padding-top: g(.5);
 }
