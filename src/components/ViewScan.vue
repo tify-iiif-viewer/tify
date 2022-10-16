@@ -255,16 +255,35 @@ export default {
 					} else {
 						this.viewer.viewport.applyConstraints(true);
 
-						// Move upper left corner into viewport if required
-						const bounds = this.viewer.viewport.getBounds();
-						if (bounds.x <= 0 && bounds.y <= 0) {
+						if (!this.$root.options.optionsResetOnPageChange) {
 							return;
 						}
 
-						const offsetX = (options.pages[0] ? 0 : 1);
-						this.viewer.viewport.panTo({
-							x: (bounds.x > 0 ? (bounds.width / 2) + offsetX : options.pan.x),
-							y: (bounds.y > 0 ? (bounds.height / 2) : options.pan.y),
+						// TODO: Add an e2e test for this
+						this.$root.options.optionsResetOnPageChange.forEach((option) => {
+							if (option === 'filters') {
+								this.resetFilters();
+							} else if (option === 'pan') {
+								// Move upper left corner into viewport if required
+								const bounds = this.viewer.viewport.getBounds();
+								if (bounds.x <= 0 && bounds.y <= 0) {
+									return;
+								}
+
+								const offsetX = (options.pages[0] ? 0 : 1);
+								this.viewer.viewport.panTo({
+									x: (bounds.x > 0 ? (bounds.width / 2) + offsetX : options.pan.x),
+									y: (bounds.y > 0 ? (bounds.height / 2) : options.pan.y),
+								});
+
+								this.$root.updateOptions({ pan: {} });
+							} else if (option === 'rotation') {
+								this.viewer.viewport.setRotation(0);
+								this.$root.updateOptions({ rotation: null });
+							} else if (option === 'zoom') {
+								this.viewer.viewport.goHome();
+								this.$root.updateOptions({ zoom: null });
+							}
 						});
 					}
 				});
