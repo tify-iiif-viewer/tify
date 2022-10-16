@@ -49,7 +49,7 @@ $track-radius: $br;
 	&::-webkit-slider-thumb {
 		@include range-thumb;
 		-webkit-appearance: none;
-		margin-top: calc(((-1px * 2 + #{$track-height}) * .5) - (#{$thumb-height} * .5));
+		margin-top: calc((#{$track-height} * .5) - (#{$thumb-height} * .5));
 	}
 
 	&::-moz-range-track {
