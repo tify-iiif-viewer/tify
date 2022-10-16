@@ -13,13 +13,20 @@
 
 	@if ($alignment == bottom) {
 		margin: g(.25) 0;
+	} @else if ($alignment == top) {
+		margin: g(.25) 0;
+		bottom: 100%;
+		top: auto;
+		transform: none;
 	} @else if ($alignment == right) {
 		transform: translateY(-50%);
 	}
 
 	@if ($position == left) {
 		left: 0;
+		right: auto;
 	} @else if ($position == right) {
+		left: auto;
 		right: g(.25);
 	}
 
@@ -34,15 +41,29 @@
 		z-index: -1;
 
 		@if ($alignment == bottom) {
-			top: g(-.25) - $br;
+			bottom: auto;
+			top: calc(#{g(-.25)} - #{$br});
 
 			@if ($position == left) {
-				left: g();
+				left: g(.5);
+				right: auto;
 			} @else if ($position == right) {
-				right: g();
+				left: auto;
+				right: g(.5);
+			}
+		} @else if ($alignment == top) {
+			top: auto;
+			bottom: calc(#{g(-.25)} - #{$br});
+
+			@if ($position == left) {
+				left: g(.5);
+				right: auto;
+			} @else if ($position == right) {
+				left: auto;
+				right: g(.5);
 			}
 		} @else if ($alignment == right) {
-			left: g(-.25) - $br;
+			left: calc(#{g(-.25)} - #{$br});
 			top: calc(50% - #{g(.25)});
 		}
 	}

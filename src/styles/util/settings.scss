@@ -38,5 +38,5 @@ $warning-color: adjust-hue($brand-color, 180) !default;
 $card-shadow: 0 0 .5px $shade-light, 0 .5px 3px $shade !default;
 $drop-shadow: 0 0 g(.25) rgba(black, .5) !default;
 $header-bg: #e7e7e7 !default;
+$inset-shadow: 0 .5px 3px $shade inset !default;
 $shade-inset: 0 -1px $shade !default;
-$shine-inset: 0 1px $shine !default;

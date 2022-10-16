@@ -1,8 +1,8 @@
 <template>
 	<header class="tify-header">
 		<div class="tify-header-column -title">
-			<h1 class="tify-header-title" :title="titles.join(', ')">
-				{{ titles.join(', ') }}
+			<h1 class="tify-header-title" :title="title">
+				{{ title }}
 			</h1>
 		</div>
 
@@ -12,10 +12,7 @@
 
 				<button
 					class="tify-header-button"
-					:class="{
-						'-active': $root.options.pages.length > 1,
-						'-warning': customPageViewActive,
-					}"
+					:class="{ '-active': $root.options.pages.length > 1 }"
 					:title="$root.translate('Toggle double-page')"
 					@click="toggleDoublePage"
 				>
@@ -83,17 +80,18 @@
 			</div>
 		</div>
 
-		<div class="tify-header-column -controls-toggle">
-			<div class="tify-header-button-group" ref="switchViewSmall">
+		<div class="tify-header-column -toggle">
+			<div class="tify-header-button-group -toggle" ref="switchViewSmall">
 				<button
-					class="tify-header-button"
+					v-click-outside="closeControlsPopup"
 					:aria-controls="$root.getId('controls')"
 					:aria-expanded="controlsVisible ? 'true' : 'false'"
-					v-click-outside="closeControlsPopup"
+					:aria-label="$root.translate('View')"
+					class="tify-header-button"
+					:title="$root.translate('View')"
 					@click="toggleControlsPopup"
 				>
-					<icon-menu/>
-					{{ $root.translate('View') }}
+					<icon-dots-grid/>
 				</button>
 			</div>
 		</div>
@@ -158,7 +156,7 @@
 					:aria-expanded="$root.options.view === 'info' ? 'true' : 'false'"
 					@click="toggleView('info')"
 				>
-					<icon-information-outline/>
+					<icon-information-variant/>
 					{{ $root.translate('Info') }}
 				</button>
 
@@ -169,10 +167,13 @@
 					:aria-expanded="$root.options.view === 'export' ? 'true' : 'false'"
 					@click="toggleView('export')"
 				>
-					<icon-download/>
+					<icon-download-outline/>
 					{{ $root.translate('Export') }}
 				</button>
 
+			</div>
+
+			<div v-if="fullscreenSupported" class="tify-header-button-group -view">
 				<button
 					class="tify-header-button -icon-only"
 					:class="{ '-active': $root.options.view === 'help' }"
@@ -184,9 +185,6 @@
 					<icon-help-circle-outline/>
 					{{ $root.translate('Help') }}
 				</button>
-			</div>
-
-			<div class="tify-header-button-group -view" v-if="fullscreenSupported">
 				<button
 					v-if="!fullscreenActive"
 					class="tify-header-button -icon-only"
@@ -291,7 +289,6 @@ export default {
 			controlsVisible: false,
 			fullscreenActive: false,
 			screen: this.$root.$el.parentNode,
-			sections: [],
 		};
 	},
 	computed: {
@@ -306,11 +303,38 @@ export default {
 			const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
 			return page >= this.sections[this.sections.length - 1].firstPage;
 		},
+		sections() {
+			const sections = [];
+
+			if (!this.structures) {
+				return sections;
+			}
+
+			this.structures.forEach((structure) => {
+				if (!structure.canvases) {
+					sections.push({ firstPage: 1, lastPage: this.$root.pageCount });
+					return;
+				}
+
+				const firstCanvasId = structure.canvases[0];
+				const firstPage = this.$root.canvases.findIndex((canvas) => canvas['@id'] === firstCanvasId) + 1;
+				const lastCanvasId = structure.canvases[structure.canvases.length - 1];
+				const lastPage = this.$root.canvases.findIndex((canvas) => canvas['@id'] === lastCanvasId) + 1;
+				sections.push({ firstPage, lastPage });
+			});
+
+			return sections;
+		},
 		structures() {
 			return this.$root.manifest.structures;
 		},
-		titles() {
-			return this.$root.convertValueToArray(this.$root.manifest.label);
+		title() {
+			return this.$root.convertValueToArray((this.$root.manifest || this.$root.collection || {}).label)
+				.join(`${String.fromCharCode(160)}· `) // 160 = &nbsp;
+				.trim()
+				// Ensure the last word does not stand alone in its line if it and
+				// the 2nd-to-last word both have at most 10 characters
+				.replace(/(\S{1,10})\s+(\S{1,10})$/, `$1${String.fromCharCode(160)}$2`);
 		},
 	},
 	methods: {
@@ -510,25 +534,6 @@ export default {
 		this.$root.expose(this.setView);
 		this.$root.expose(this.toggleDoublePage);
 		this.$root.expose(this.toggleFullscreen);
-
-		if (!this.structures) {
-			return;
-		}
-
-		const sections = [];
-		this.structures.forEach((structure) => {
-			if (!structure.canvases) {
-				sections.push({ firstPage: 1, lastPage: this.$root.pageCount });
-				return;
-			}
-
-			const firstCanvasId = structure.canvases[0];
-			const firstPage = this.$root.canvases.findIndex((canvas) => canvas['@id'] === firstCanvasId) + 1;
-			const lastCanvasId = structure.canvases[structure.canvases.length - 1];
-			const lastPage = this.$root.canvases.findIndex((canvas) => canvas['@id'] === lastCanvasId) + 1;
-			sections.push({ firstPage, lastPage });
-		});
-		this.sections = sections;
 	},
 	mounted() {
 		this.$root.$el.addEventListener('keydown', this.onKeyDown);

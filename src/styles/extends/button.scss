@@ -1,60 +1,50 @@
 %button {
-	background: linear-gradient(to bottom, $white, shade($white, 5));
-	border: 0;
+	align-items: center;
+	background: $grey-light linear-gradient(to bottom, #fff7, #fff0);
 	border-radius: $br;
-	box-shadow: $card-shadow;
-	color: $text-color;
-	cursor: pointer;
-	display: inline-block;
+	border: 0;
+	box-shadow: 0 0 0 1px $border-color inset;
+	color: inherit;
+	display: inline-flex;
 	font: inherit;
-	padding: g(.25);
+	justify-content: center;
+	padding: g(.25) g(.5);
 	text-align: center;
-	text-shadow: 0 1px $shine;
 	user-select: none;
 	vertical-align: middle;
 
-	@include hover {
-		background: linear-gradient(to bottom, shade($white, 5), shade($white, 10));
-		color: shade($text-color, 20);
-	}
+	&:not(:disabled) {
+		cursor: pointer;
 
-	&:active:not(:disabled) {
-		box-shadow: 0 .5px 6px $shade inset;
+		@include hover {
+			background: $grey-light linear-gradient(to bottom, #fff, #fff7);
+		}
+
+		&:active {
+			box-shadow: $inset-shadow, 0 0 0 1px $border-color inset;
+		}
 	}
 
 	&[disabled] {
-		color: tint($text-color, 75);
-	}
-
-	// Fixing button dimensions in Firefox
-	&::-moz-focus-inner {
-		border-style: none;
-		padding: 0;
+		opacity: .3;
 	}
 }
 
 %button-active {
-	background: linear-gradient(to bottom, tint($link-color, 10), shade($link-color, 10));
+	background: $link-color linear-gradient(to bottom, #fff3, #fff0);
 	color: $white;
-	text-shadow: $shade-inset;
+	z-index: 1;
 
-	@include hover {
-		background: linear-gradient(to bottom, shade($link-color, 10), shade($link-color, 30));
+	&:not(:disabled) {
+		@include hover {
+			background: $link-color linear-gradient(to bottom, #fff1, #0002);
+			color: $white;
+		}
 	}
 }
 
 %button-small {
 	@extend %button;
 	font-size: $font-size-small;
-	padding: 0 g(.25);
-}
-
-%button-warning {
-	background: linear-gradient(to bottom, tint($warning-color, 10), shade($warning-color, 10));
-	color: $white;
-	text-shadow: $shade-inset;
-
-	@include hover {
-		background: linear-gradient(to bottom, shade($warning-color, 10), shade($warning-color, 30));
-	}
+	padding: 0 g(.5);
 }
