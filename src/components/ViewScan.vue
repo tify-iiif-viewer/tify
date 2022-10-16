@@ -56,7 +56,6 @@
 
 			<div
 				v-click-outside="closeFilters"
-				v-if="cssFiltersSupported"
 				class="tify-scan-filters"
 				:class="{ '-open': filtersVisible }"
 			>
@@ -146,7 +145,6 @@ import keyboard from '../mixins/keyboard';
 import pagination from '../mixins/pagination';
 
 const gapBetweenPages = .01;
-const vendorPrefixes = ['-webkit-', '-moz-', '-o-', '-ms-'];
 
 export default {
 	mixins: [
@@ -163,15 +161,6 @@ export default {
 		};
 	},
 	computed: {
-		cssFiltersSupported() {
-			// https://raw.githubusercontent.com/Modernizr/Modernizr/master/feature-detects/css/filters.js
-			const el = document.createElement('a');
-			el.style.cssText = vendorPrefixes.join('filter:blur(2px);');
-			// https://github.com/Modernizr/Modernizr/issues/615
-			// documentMode is needed for false positives in old IE, see issue above
-			return !!el.style.length
-					&& ((document.documentMode === undefined || document.documentMode > 9));
-		},
 		filtersActive() {
 			return (Object.keys(this.$root.options.filters).length > 0);
 		},
@@ -535,7 +524,7 @@ export default {
 			clearTimeout(this.loadingTimeout);
 		},
 		updateFilterStyle() {
-			if (!this.filtersActive || !this.cssFiltersSupported) {
+			if (!this.filtersActive) {
 				return;
 			}
 
@@ -547,7 +536,7 @@ export default {
 			const { image } = this.$refs;
 			const filterString = filters.join(' ');
 
-			image.style.cssText = vendorPrefixes.join(`filter:${filterString};`);
+			image.style.cssText = `filter: ${filterString}`;
 		},
 		zoomIn() {
 			this.viewer.viewport.zoomBy(this.zoomFactor);
