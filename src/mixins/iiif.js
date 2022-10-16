@@ -4,22 +4,22 @@ export default {
 	methods: {
 		convertValueToArray(value) {
 			// http://iiif.io/api/presentation/2.1/#language-of-property-values
-			const { filterHtml } = this;
 
 			if (!(value instanceof Array)) {
 				if (typeof value === 'object') {
 					if (value['@value']) {
-						return [filterHtml(value['@value'])];
+						return [this.filterHtml(value['@value'])];
 					}
 
 					if (value['@id']) {
-						const id = filterHtml(value['@id']);
-						return [{ '@id': id, label: (value.label ? filterHtml(value.label) : id) }];
+						const id = this.filterHtml(value['@id']);
+						return [{ '@id': id, label: (value.label ? this.filterHtml(value.label) : id) }];
 					}
+
 					return ['(Invalid value)'];
 				}
 
-				return [filterHtml(value)];
+				return [this.filterHtml(value)];
 			}
 
 			const displayedValues = [];
@@ -28,7 +28,7 @@ export default {
 				if (typeof item === 'string' || (item['@id'] && item.label)) {
 					displayedValues.push(item);
 				} else if (item && typeof item !== 'object') {
-					displayedValues.push(filterHtml(item));
+					displayedValues.push(this.filterHtml(item));
 				} else if (item['@language'] && item['@value']) {
 					if (!translation.fallback) {
 						translation.fallback = item['@value'];
@@ -50,7 +50,7 @@ export default {
 				|| null
 			);
 			if (translatedValue) {
-				displayedValues.push(filterHtml(translatedValue));
+				displayedValues.push(this.filterHtml(translatedValue));
 			}
 
 			return displayedValues;

@@ -4,7 +4,7 @@
 
 		<h3>{{ $root.translate('About TIFY') }}</h3>
 
-		<p v-html="info"/>
+		<p v-html="infoHtml"/>
 
 		<ul>
 			<li>
@@ -23,7 +23,7 @@
 
 		<footer class="tify-help-footer">
 			<p>{{ $root.translate('Version') }} {{ env.VUE_APP_VERSION }}</p>
-			<p v-html="copyright"/>
+			<p v-html="copyrightHtml"/>
 		</footer>
 	</section>
 </template>
@@ -31,7 +31,7 @@
 <script>
 export default {
 	computed: {
-		copyright() {
+		copyrightHtml() {
 			const copyright = 'Copyright &copy; 2017&ndash;2022'
 					+ ' <a href="https://www.uni-goettingen.de/en/">Göttingen University</a>'
 					+ ' / <a href="https://www.sub.uni-goettingen.de/en/">Göttingen State and University Library</a>';
@@ -40,8 +40,8 @@ export default {
 		env() {
 			return process.env;
 		},
-		info() {
-			const info = 'TIFY is a slim and mobile-friendly IIIF document viewer'
+		infoHtml() {
+			const info = 'TIFY is a slim and mobile-friendly IIIF document viewer, released under the'
 				+ ', released under the GNU Affero General Public License 3.0.';
 			return this.$root.translate('$info', info);
 		},

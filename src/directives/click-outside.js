@@ -2,16 +2,17 @@ import Vue from 'vue';
 
 // Detect click outside of an element
 Vue.directive('click-outside', {
-	bind(el, binding, vnode) {
+	bind(element, binding, vnode) {
 		// eslint-disable-next-line no-param-reassign
-		el.event = (event) => {
-			if (!(el === event.target || el.contains(event.target))) {
+		element.event = (event) => {
+			if (!(element === event.target || element.contains(event.target))) {
 				vnode.context[binding.expression](event);
 			}
 		};
-		document.body.addEventListener('click', el.event);
+
+		document.body.addEventListener('click', element.event);
 	},
-	unbind(el) {
-		document.body.removeEventListener('click', el.event);
+	unbind(element) {
+		document.body.removeEventListener('click', element.event);
 	},
 });

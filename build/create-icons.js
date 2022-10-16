@@ -19,7 +19,7 @@ Object.keys(mdi).forEach((key) => {
 	</svg>
 </template>
 
-	`.trim();
+	`;
 
-	fs.writeFileSync(`${iconsDir}/Icon${key.substring(3)}.vue`, componentHtml);
+	fs.writeFileSync(`${iconsDir}/Icon${key.substring(3)}.vue`, `${componentHtml.trim()}\n`);
 });

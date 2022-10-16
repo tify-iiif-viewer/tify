@@ -86,7 +86,7 @@
 								type="range"
 								:value="$root.options.filters.brightness || 1"
 								@input="setFilter('brightness', $event)"
-							>
+							/>
 						</label>
 					</p>
 					<p>
@@ -102,7 +102,7 @@
 								type="range"
 								:value="$root.options.filters.contrast || 1"
 								@input="setFilter('contrast', $event)"
-							>
+							/>
 						</label>
 					</p>
 					<p>
@@ -118,7 +118,7 @@
 								type="range"
 								:value="saturation"
 								@input="setFilter('saturate', $event)"
-							>
+							/>
 						</label>
 					</p>
 					<p>
@@ -376,6 +376,7 @@ export default {
 						} else if (error.message) {
 							status = error.message;
 						}
+
 						this.$root.error = `Error loading info file for page ${page}${status ? `: ${status}` : ''}`;
 					}));
 				} else {
@@ -526,8 +527,8 @@ export default {
 			// TODO: A timeout instead of a proper event handler? Abomination!
 			// That's because neither getFullyLoaded() nor the fully-loaded-change
 			// event are working for images that are not currently within canvas
-			// bounds. OpenSeadragon, get your shit together, and add a global
-			// fully-loaded event, not just for each TiledImage.
+			// bounds. OpenSeadragon would need add a global fully-loaded event,
+			// not just one for each TiledImage.
 			this.loadingTimeout = setTimeout(this.startLoadingWatch, 200);
 		},
 		stopLoadingWatch() {

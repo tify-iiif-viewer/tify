@@ -2,14 +2,20 @@
 	<section class="tify-info" tabindex="0">
 		<h2 class="tify-sr-only">{{ $root.translate('Info') }}</h2>
 
-		<div v-if="manifest.label" class="tify-info-section -title">
+		<div
+			v-if="manifest.label"
+			class="tify-info-section -title"
+		>
 			<h3 class="tify-info-heading">{{ $root.translate('Title') }}</h3>
 			<div :key="label" v-for="label in $root.convertValueToArray(manifest.label)">
 				{{ label }}
 			</div>
 		</div>
 
-		<div v-if="manifest.metadata && manifest.metadata.length" class="tify-info-section -metadata">
+		<div
+			v-if="manifest.metadata && manifest.metadata.length"
+			class="tify-info-section -metadata"
+		>
 			<h3>{{ $root.translate('Metadata') }}</h3>
 			<metadata-list v-if="$root.options.view === 'info'" :metadata="manifest.metadata"/>
 		</div>
@@ -28,7 +34,10 @@
 			/>
 		</div>
 
-		<div v-if="manifest.description" class="tify-info-section -description">
+		<div
+			v-if="manifest.description"
+			class="tify-info-section -description"
+		>
 			<h3>{{ $root.translate('Description') }}</h3>
 			<div
 				:key="index"
@@ -36,7 +45,10 @@
 				v-html="description"/>
 		</div>
 
-		<div v-if="license.length" class="tify-info-section -license">
+		<div
+			v-if="license.length"
+			class="tify-info-section -license"
+		>
 			<h3>{{ $root.translate('License') }}</h3>
 			<div :key="index" v-for="(item, index)  in license">
 				<template v-if="typeof item === 'string'">
@@ -58,9 +70,12 @@
 			</div>
 		</div>
 
-		<div v-if="related.length" class="tify-info-section -related">
+		<div
+			v-if="related.length"
+			class="tify-info-section -related"
+		>
 			<h3>{{ $root.translate('Related Resources') }}</h3>
-			<div :key="index" v-for="(item, index)  in related">
+			<div v-for="(item, index) in related" :key="index">
 				<a v-if="typeof item === 'string'" :href="item">
 					{{ item }}
 				</a>
@@ -70,12 +85,22 @@
 			</div>
 		</div>
 
-		<div v-if="manifest.attribution" class="tify-info-section -attribution">
+		<div
+			v-if="manifest.attribution"
+			class="tify-info-section -attribution"
+		>
 			<h3>{{ $root.translate('Provided by') }}</h3>
-			<div :key="index" v-for="(item, index) in $root.convertValueToArray(manifest.attribution)" v-html="item"/>
+			<div
+				v-for="(item, index) in $root.convertValueToArray(manifest.attribution)"
+				:key="index"
+				v-html="item"
+			/>
 		</div>
 
-		<div v-if="manifest.logo" class="tify-info-section -logo">
+		<div
+			v-if="manifest.logo"
+			class="tify-info-section -logo"
+		>
 			<a
 				v-if="logoId && manifest.logo.service && manifest.logo.service['@id']"
 				:href="manifest.logo.service['@id']"

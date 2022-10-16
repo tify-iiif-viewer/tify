@@ -96,12 +96,12 @@ export default {
 		updateDimensions() {
 			const itemTemplate = this.$refs.container.querySelector('.tify-thumbnails-item');
 			const itemStyle = itemTemplate.currentStyle || window.getComputedStyle(itemTemplate);
-			const vMargin = parseInt(itemStyle.marginTop, 10) + parseFloat(itemStyle.marginBottom, 10);
-			this.itemHeight = itemTemplate.offsetHeight + vMargin;
-			this.itemVMargin = vMargin;
+			const verticalMargin = parseInt(itemStyle.marginTop, 10) + parseFloat(itemStyle.marginBottom, 10);
+			this.itemHeight = itemTemplate.offsetHeight + verticalMargin;
+			this.itemVerticalMargin = verticalMargin;
 
-			const hMargin = parseInt(itemStyle.marginLeft, 10) + parseFloat(itemStyle.marginRight, 10);
-			const itemWidth = itemTemplate.offsetWidth + hMargin;
+			const horizontalMargin = parseInt(itemStyle.marginLeft, 10) + parseFloat(itemStyle.marginRight, 10);
+			const itemWidth = itemTemplate.offsetWidth + horizontalMargin;
 			this.thumbnailWidth = itemTemplate.offsetWidth;
 			this.itemsPerRow = Math.floor(this.$refs.container.clientWidth / itemWidth);
 
