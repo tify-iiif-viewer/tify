@@ -7,11 +7,20 @@
 	margin: g(.5) 0 g();
 }
 
+.tify-export-section {
+	margin: 0 0 g();
+}
+
 .tify-export-toc {
 	border: 1px solid $border-color;
 	border-radius: $br;
 	margin: g(.5) 0 0;
 	padding: g(.25);
+	position: relative;
+
+	h4 {
+		margin: g(.25) g(.75);
+	}
 
 	ul {
 		margin: 0 0 0 g(.5);
@@ -21,4 +30,12 @@
 
 .tify-export-toggle {
 	@extend %button-small;
+
+	&.-close {
+		border-radius: 0 $br;
+		padding: g(.25);
+		position: absolute;
+		right: g(.5);
+		z-index: 1;
+	}
 }
