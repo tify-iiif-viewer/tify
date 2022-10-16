@@ -3,11 +3,18 @@
 		<h2 class="tify-sr-only">{{ $root.translate('Fulltext') }}</h2>
 
 		<div v-if="fulltextAvailable" class="tify-fulltext-texts">
-			<template v-for="(page, index) in pages">
-				<hr :key="index" v-if="index && page > 1" class="tify-fulltext-separator">
-				<div :key="index" v-for="(text, index) in fulltexts[page]" class="tify-fulltext-text" v-html="text">
-				</div>
-			</template>
+			<div v-for="page in pages" class="tify-fulltext-page" :key="page">
+			<h3>
+				{{ $root.translate('Page') }}
+				{{ $root.getPageLabel(page, $root.canvases[page - 1].label) }}
+			</h3>
+			<div
+				v-for="(text, index) in fulltexts[page]"
+				v-html="text"
+				class="tify-fulltext-text"
+				:key="`${page}-${index}`"
+			/>
+			</div>
 		</div>
 
 		<div v-else class="tify-fulltext-none">
@@ -17,6 +24,8 @@
 </template>
 
 <script>
+import isValidUrl from '@/functions/isValidUrl';
+
 export default {
 	data() {
 		return {
@@ -45,8 +54,6 @@ export default {
 					return;
 				}
 
-				this.$set(this.fulltexts, page, []);
-
 				const annotationListUrl = canvas.otherContent[0]['@id'];
 				this.$http.get(annotationListUrl).then((response) => {
 					const { resources } = response.data;
@@ -62,6 +69,10 @@ export default {
 								this.fulltextAvailable = true;
 							}
 
+							if (!this.fulltexts[page]) {
+								this.$set(this.fulltexts, page, []);
+							}
+
 							this.$set(this.fulltexts[page], index, text);
 						} else if (res['@id']) {
 							this.loadRemoteFulltext(page, index, res['@id']);
@@ -75,6 +86,12 @@ export default {
 			});
 		},
 		loadRemoteFulltext(page, index, url) {
+			// Only attempt to load remote fulltext if we got a valid URL
+			// TODO: Add support for dctypes
+			if (!isValidUrl(url)) {
+				return;
+			}
+
 			this.$http.get(url).then((response2) => {
 				const text = this.$root.filterHtml(response2.data);
 				if (text) {
