@@ -8,9 +8,8 @@
 				<li :key="page" v-for="page in pages">
 					<!-- NOTE: The download attribute is only honored for same-origin URLs -->
 					<a :href="imageUrls[page]" :download="`${page}.jpg`">
-						{{ $root.translate('Page') }} {{ page }}
-						:
-						{{ $root.convertValueToArray($root.canvases[page - 1].label)[0] }}
+						{{ $root.translate('Page') }}
+						{{ $root.getPageLabel(page, $root.convertValueToArray($root.canvases[page - 1].label)[0]) }}
 					</a>
 				</li>
 			</ul>
@@ -27,6 +26,7 @@
 			<div class="tify-export-container" v-if="hasElementPdfLinks">
 				<button
 					class="tify-export-toggle"
+					:class="{ '-close': perElementPdfLinksVisible }"
 					:aria-controls="$root.getId('export-pdf-list')"
 					:aria-expanded="perElementPdfLinksVisible ? 'true' : 'false'"
 					@click="perElementPdfLinksVisible = !perElementPdfLinksVisible"
@@ -35,14 +35,16 @@
 						{{ $root.translate('PDFs for each element') }}
 					</template>
 					<template v-else>
-						{{ $root.translate('Close PDF list') }}
+						<icon-close/>
+						<span class="tify-sr-only">{{ $root.translate('Close PDF list') }}</span>
 					</template>
 				</button>
 				<div
 					class="tify-export-toc"
 					:id="$root.getId('export-pdf-list')"
-					v-show="perElementPdfLinksVisible"
+					v-if="perElementPdfLinksVisible"
 				>
+					<h4>{{ $root.translate('PDFs for each element') }}</h4>
 					<toc-list
 						purpose="pdf"
 						ref="children"
