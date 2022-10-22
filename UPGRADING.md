@@ -1,5 +1,9 @@
 # Upgrading TIFY
 
+## Any prior release to v0.28
+
+- All default breakpoints have been modified, so TIFY’s layout may look different than before, depending on its container size. Change the `breakpoints` option if required.
+
 ## Any prior release to v0.27
 
 - The initially displayed page is now determined by the manifest’s `startCanvas`. To keep the previous behavior of starting with the first page regardless of `startCanvas`, add `pages: [1]` to TIFY’s options.
