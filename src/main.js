@@ -91,7 +91,7 @@ window.Tify = function Tify(options = {}) {
 				return this.manifest ? this.manifest.sequences[0].canvases : [];
 			},
 			pageCount() {
-				return this.manifest ? this.manifest.sequences[0].canvases.length : 0;
+				return this.canvases.length;
 			},
 		},
 		created() {

@@ -164,7 +164,7 @@ export default {
 			return this.manifest.license ? this.$root.convertValueToArray(this.manifest.license) : [];
 		},
 		logoId() {
-			return (this.manifest.logo['@id'] ? this.manifest.logo['@id'] : this.manifest.logo);
+			return this.manifest.logo['@id'] || this.manifest.logo;
 		},
 		manifest() {
 			return this.collectionDataShown ? this.$root.collection : (this.$root.manifest || this.$root.collection);
