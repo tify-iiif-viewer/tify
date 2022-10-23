@@ -82,7 +82,9 @@ export default {
 				this.children = manifest.manifests || manifest.collections || [];
 				this.expanded = true;
 			}, (error) => {
-				const status = error.response ? (error.response.statusText || error.response.data) : error.message;
+				const status = error.response
+					? (error.response.statusText || error.response.data || error.message)
+					: error.message;
 				this.$root.error = `Error loading IIIF manifest: ${status}`;
 				this.children = false;
 			});

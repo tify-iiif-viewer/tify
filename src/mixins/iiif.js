@@ -168,7 +168,9 @@ export default {
 				rejectFunction(this.error);
 				return promise;
 			}, (error) => {
-				const status = error.response ? (error.response.statusText || error.response.data) : error.message;
+				const status = error.response
+					? (error.response.statusText || error.response.data || error.message)
+					: error.message;
 				this.error = `Error loading IIIF manifest: ${status}`;
 				rejectFunction(this.error);
 				return promise;
