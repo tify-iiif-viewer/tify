@@ -1,6 +1,7 @@
 describe('TOC', () => {
 	it('allows navigation', () => {
-		cy.visit('/?manifest=http://localhost:8081/manifest/gdz-HANS_DE_7_w042081');
+		const manifestUrl = 'http://localhost:8081/manifest/gdz-HANS_DE_7_w042081';
+		cy.visit(`/?manifest=${manifestUrl}`);
 
 		cy.contains('Contents').click();
 		cy.contains('Table of Contents');
@@ -50,13 +51,28 @@ describe('TOC', () => {
 	});
 
 	it('is visible when there are structures without canvases', () => {
+		const manifestUrl = 'http://localhost:8081/manifest/cambridge-MS-ADD-08640';
 		const encodedParams = encodeURIComponent(JSON.stringify({
 			view: 'toc',
 		}));
 
-		cy.visit(`/?manifest=http://localhost:8081/manifest/cambridge-MS-ADD-08640&tify=${encodedParams}`);
+		cy.visit(`/?manifest=${manifestUrl}&tify=${encodedParams}`);
 
 		cy.contains('Table of Contents').should('be.visible');
 		cy.get('.tify-toc-structure.-current').contains('Elizabeth Lyttelton\'s commonplace book');
+	});
+
+	it('hides the first item if its viewingHint is "top"', () => {
+		const manifestUrl = 'http://localhost:8081/manifest/digitale-sammlungen-bsb00026283.json';
+		const encodedParams = encodeURIComponent(JSON.stringify({
+			view: 'toc',
+		}));
+
+		cy.visit(`/?manifest=${manifestUrl}&tify=${encodedParams}`);
+
+		cy.contains('Table of Contents').should('be.visible');
+		cy.get('.tify-toc-structure:first-child')
+			.should('not.contain', 'Table of Contents')
+			.contains('Miniatur: Jesu Gebet in Gethsemane');
 	});
 });

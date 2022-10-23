@@ -56,6 +56,11 @@ const structures = {
 			for (let i = 0; i < length; i += 1) {
 				const structure = this.$root.manifest.structures[i];
 
+				// https://iiif.io/api/presentation/2.1/#viewinghint
+				if (structure.viewingHint === 'top') {
+					continue;
+				}
+
 				if (structure.label) {
 					structure.label = this.$root.convertValueToArray(structure.label)[0].trim();
 				} else {

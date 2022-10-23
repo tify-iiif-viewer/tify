@@ -11,12 +11,12 @@ describe('Toc', () => {
 	it('selects a label in the current language', () => {
 		const vm = new Vue(Toc);
 
-		vm.$root.options = { language: 'en' };
+		vm.$root.options = { language: 'de' };
 		vm.$root.manifest = manifestForLabels;
 		vm.$root.canvases = manifestForLabels.sequences[0].canvases;
 
 		const { label } = vm.structures[0];
-		expect(label).toEqual('Table of Contents');
+		expect(label).toEqual('Miniatur: Jesu Gebet in Gethsemane');
 	});
 
 	it('orders pages by logical page number', () => {
