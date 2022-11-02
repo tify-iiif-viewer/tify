@@ -1,5 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TIFY</title><link href="/tify.css" rel="preload" as="style"><link href="/tify.js" rel="preload" as="script"><link href="/tify.css" rel="stylesheet"></head><body style="margin: 0"><main id="tify" style="height: 100vh"></main><script>window.addEventListener('load', function () {
-				const query = new URLSearchParams(window.location.search)
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TIFY</title><style>html {
+				font-family: sans-serif;
+			}</style><link href="tify.css" rel="preload" as="style"><link href="tify.js" rel="preload" as="script"><link href="tify.css" rel="stylesheet"></head><body style="margin: 0"><main id="tify" style="height: 100vh"></main><script>window.addEventListener('load', () => {
+				const query = new URLSearchParams(window.location.search);
 
 				const options = {
 					container: '#tify',
@@ -10,6 +12,6 @@
 
 				window.tify = new Tify(options);
 
-				console.log('%cHi there! Glad you want to learn more about TIFY. Check out https://github.com/tify-iiif-viewer/tify or have at look at the current instance:', 'color: #09f')
+				console.log('%cHi there! Glad you want to learn more about TIFY. Check out https://github.com/tify-iiif-viewer/tify or have at look at the current instance:', 'color: #09f');
 				console.dir(window.tify);
-			})</script><script src="/tify.js"></script></body></html>
+			})</script><script src="tify.js"></script></body></html>
