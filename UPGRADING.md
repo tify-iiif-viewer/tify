@@ -2,7 +2,8 @@
 
 ## Any prior release to v0.28
 
-- All default breakpoints have been modified, so TIFY’s layout may look different than before, depending on its container size. Change the `breakpoints` option if required.
+- Layout breakpoints have changed, so TIFY may show different interface elements than before, depending on its container size. Modify the `breakpoints` option if required.
+- If you are using a customized stylesheet, it probably needs updating.
 
 ## Any prior release to v0.27
 
