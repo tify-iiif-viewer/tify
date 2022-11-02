@@ -71,9 +71,12 @@
 	position: relative;
 
 	> li {
-		border-top: 1px solid $border-color;
 		margin: 0;
 		user-select: none;
+
+		+ li {
+			box-shadow: 0 1px $border-color inset;
+		}
 
 		> a {
 			@include hover {
