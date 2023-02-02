@@ -63,14 +63,13 @@ export default {
 
 					resources.forEach((resource, index) => {
 						const res = resource.resource;
+						if (!this.fulltexts[page]) {
+							this.$set(this.fulltexts, page, []);
+						}
 						if (res && res.chars) {
 							const text = this.$root.filterHtml(res.chars);
 							if (text) {
 								this.fulltextAvailable = true;
-							}
-
-							if (!this.fulltexts[page]) {
-								this.$set(this.fulltexts, page, []);
 							}
 
 							this.$set(this.fulltexts[page], index, text);
