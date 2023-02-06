@@ -63,6 +63,7 @@ export default {
 
 					resources.forEach((resource, index) => {
 						const res = resource.resource;
+						if (!res) return;
 						if (!this.fulltexts[page]) {
 							this.$set(this.fulltexts, page, []);
 						}
