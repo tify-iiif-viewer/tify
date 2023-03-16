@@ -18,6 +18,7 @@ $base-color-light: var(--tify-base-color-light, tint(#06b, 45)) !default;
 $base-color-lighter: var(--tify-base-color-lighter, tint(#06b, 90)) !default;
 $border-color: var(--tify-border-color, $shade) !default;
 $link-color: var(--tify-link-color, $base-color) !default;
+$link-hover-color: var(--tify-link-hover-color, $link-color) !default;
 $text-color: var(--tify-text-color, $grey-dark) !default;
 $text-color-muted: var(--tify-text-muted-color, $grey) !default;
 
