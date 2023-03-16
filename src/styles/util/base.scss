@@ -23,6 +23,10 @@
 		color: $link-color;
 		word-wrap: break-word;
 
+		@include hover {
+			color: $link-hover-color;
+		}
+
 		&:focus-visible {
 			outline: 2px solid $base-color-light;
 		}
