@@ -14,8 +14,9 @@ $shine: rgba($white, .4) !default;
 // Semantic colors
 // NOTE: These colors must be solid
 $base-color: var(--tify-base-color, #06b) !default;
-$base-color-light: var(--tify-base-color-light, tint(#06b, 45)) !default;
-$base-color-lighter: var(--tify-base-color-lighter, tint(#06b, 90)) !default;
+
+$base-color-light: var(--tify-base-color-light, mix(white, #06b, 45%)) !default;
+$base-color-lighter: var(--tify-base-color-lighter, mix(white, #06b, 90%)) !default;
 $border-color: var(--tify-border-color, $shade) !default;
 $link-color: var(--tify-link-color, $base-color) !default;
 $link-hover-color: var(--tify-link-hover-color, $link-color) !default;
