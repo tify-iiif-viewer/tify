@@ -1,37 +1,51 @@
 <template>
 	<div class="tify-info-metadata">
-		<div v-for="(item, index) in metadata" :key="index">
+		<div
+			v-for="(item, index) in metadata"
+			:key="index"
+		>
 			<h4>
-				<div v-bind:key="index" v-for="(label, index) in $root.convertValueToArray(item.label)">
+				<div
+					v-for="(label, index2) in convertValueToArray(item.label)"
+					:key="index2"
+				>
 					{{ cleanLabel(label) }}
 				</div>
 			</h4>
 			<div
+				ref="contents"
 				class="tify-info-content"
 				:class="{ '-collapsed': infoItems[index] && infoItems[index].collapsed }"
-				ref="contents"
 			>
 				<div class="tify-info-value">
-					<template v-for="value in $root.convertValueToArray(item.value)" >
-						<div v-if="isValidUrl(value)" :key="'url-' + value">
+					<template v-for="value in convertValueToArray(item.value)">
+						<div
+							v-if="isValidUrl(value)"
+							:key="'url-' + value"
+						>
 							<a :href="value">{{ value }}</a>
 						</div>
-						<div v-else v-html="value" :key="'html-' + value"/>
+						<div
+							v-else
+							:key="'html-' + value"
+							v-html="value"
+						/>
 					</template>
 				</div>
 
 				<button
 					v-if="infoItems[index] && infoItems[index].exceedsHeight"
+					type="button"
 					class="tify-info-toggle"
 					@click="infoItems[index].collapsed = !infoItems[index].collapsed"
 				>
 					<template v-if="infoItems[index].collapsed">
-						<icon-chevron-down/>
-						{{ $root.translate('Expand') }}
+						<icon-chevron-down />
+						{{ translate('Expand') }}
 					</template>
 					<template v-else>
-						<icon-chevron-up/>
-						{{ $root.translate('Collapse') }}
+						<icon-chevron-up />
+						{{ translate('Collapse') }}
 					</template>
 				</button>
 			</div>
@@ -40,12 +54,17 @@
 </template>
 
 <script>
-import isValidUrl from '../functions/isValidUrl';
+import { translate } from '../modules/i18n';
+import { convertValueToArray } from '../modules/iiif';
+import { isValidUrl } from '../modules/validation';
 
 export default {
-	props: [
-		'metadata',
-	],
+	props: {
+		metadata: {
+			type: Array,
+			default: () => [],
+		},
+	},
 	data() {
 		return {
 			infoItems: [],
@@ -64,7 +83,7 @@ export default {
 			const cleanedLabel = label.replace('_', ' ');
 			return cleanedLabel.charAt(0).toUpperCase() + cleanedLabel.substr(1);
 		},
-		isValidUrl,
+		convertValueToArray,
 		updateInfoItems() {
 			this.$nextTick(() => {
 				if (!this.$refs.contents) {
@@ -74,23 +93,25 @@ export default {
 				this.$refs.contents.forEach((content, index) => {
 					const fullHeight = content.offsetHeight;
 
-					this.$set(this.infoItems, index, {
+					this.infoItems[index] = {
 						collapsed: true,
 						exceedsHeight: true,
-					});
+					};
 
 					this.$nextTick(() => {
 						const collapsedHeight = content.offsetHeight;
 						const shouldBeCollapsed = fullHeight >= collapsedHeight;
 
-						this.$set(this.infoItems, index, {
+						this.infoItems[index] = {
 							collapsed: shouldBeCollapsed,
 							exceedsHeight: shouldBeCollapsed,
-						});
+						};
 					});
 				});
 			});
 		},
+		isValidUrl,
+		translate,
 	},
 };
 </script>

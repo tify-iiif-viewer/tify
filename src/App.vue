@@ -1,104 +1,116 @@
 <template>
-	<!-- NOTE: Root element must be focusable for global keyboard events to work -->
-	<article class="tify" tabindex="-1">
+	<article
+		class="tify"
+		tabindex="-1"
+	>
+		<!-- NOTE: Root element must be focusable for global keyboard events to work -->
 		<app-header
-			v-if="$root.ready && ($root.collection || $root.manifest)"
-			:fulltextEnabled="hasOtherContent"
-			:tocEnabled="hasToc"
+			v-if="ready && (collection['@id'] || manifest['@id'])"
+			:fulltext-enabled="hasOtherContent"
+			:toc-enabled="hasToc"
 		/>
 
-		<div v-if="$root.ready" class="tify-main">
-			<template v-if="$root.manifest">
+		<div
+			v-if="ready"
+			class="tify-main"
+		>
+			<template v-if="manifest['@id']">
 				<!-- Scan must come first, other views in arbitrary order -->
-				<view-scan
-					:id="$root.getId('scan')"
-				/>
+				<view-scan :id="getId('scan')" />
 
 				<view-fulltext
 					v-if="hasOtherContent"
-					v-show="$root.options.view === 'fulltext'"
-					:id="$root.getId('fulltext')"
+					v-show="options.view === 'fulltext'"
+					:id="getId('fulltext')"
 				/>
 				<view-thumbnails
-					v-show="$root.options.view === 'thumbnails'"
-					:id="$root.getId('thumbnails')"
+					v-show="options.view === 'thumbnails'"
+					:id="getId('thumbnails')"
 				/>
 				<view-toc
 					v-if="hasToc"
-					v-show="$root.options.view === 'toc'"
-					:id="$root.getId('toc')"
+					v-show="options.view === 'toc'"
+					:id="getId('toc')"
 				/>
 				<view-export
-					v-show="$root.options.view === 'export'"
-					:id="$root.getId('export')"
+					v-show="options.view === 'export'"
+					:id="getId('export')"
 				/>
 			</template>
 
 			<view-info
-				v-if="$root.collection || $root.manifest"
-				v-show="$root.options.view === 'info'"
-				:id="$root.getId('info')"
+				v-if="collection['@id'] || manifest['@id']"
+				v-show="options.view === 'info'"
+				:id="getId('info')"
 			/>
 			<view-collection
-				v-if="$root.collection"
-				v-show="$root.options.view === 'collection'"
-				:id="$root.getId('collection')"
+				v-if="collection['@id']"
+				v-show="options.view === 'collection'"
+				:id="getId('collection')"
 			/>
 			<view-help
-				v-show="$root.options.view === 'help'"
-				:id="$root.getId('help')"
+				v-show="options.view === 'help'"
+				:id="getId('help')"
 			/>
 		</div>
 
 		<div
-			v-if="$root.loading"
+			v-if="loading"
 			class="tify-loading"
-			:aria-label="$root.translation ? $root.translate('Loading') : 'Loading'"
+			:aria-label="translationLoaded ? translate('Loading') : 'Loading'"
 		/>
 
-		<div v-if="$root.error" class="tify-error">
-			<button class="tify-error-close" @click="$root.error = ''">
-				<icon-close/>
+		<div
+			v-if="error"
+			class="tify-error"
+		>
+			<button
+				type="button"
+				class="tify-error-close"
+				@click="setError('')"
+			>
+				<icon-close />
 			</button>
 			<!-- NOTE: Error messages can contain user-controlled content -->
-			<span>{{ $root.error }}</span>
+			<span>{{ error }}</span>
 		</div>
 	</article>
 </template>
 
 <script>
-import AppHeader from './components/AppHeader';
-import ViewCollection from './components/ViewCollection';
-import ViewExport from './components/ViewExport';
-import ViewFulltext from './components/ViewFulltext';
-import ViewHelp from './components/ViewHelp';
-import ViewInfo from './components/ViewInfo';
-import ViewScan from './components/ViewScan';
-import ViewThumbnails from './components/ViewThumbnails';
-import ViewToc from './components/ViewToc';
+import { error, setError } from './modules/error';
+import { getId } from './modules/id';
+import { loading } from './modules/http';
+import { translate } from './modules/i18n';
+import { canvases, collection, manifest, options, translation } from './modules/store';
 
 export default {
-	components: {
-		AppHeader,
-		ViewCollection,
-		ViewExport,
-		ViewFulltext,
-		ViewHelp,
-		ViewInfo,
-		ViewScan,
-		ViewThumbnails,
-		ViewToc,
+	props: {
+		ready: Boolean,
+	},
+	data() {
+		return {
+			canvases,
+			collection,
+			manifest,
+			error,
+			loading,
+			options,
+			translationLoaded: !!translation,
+		};
 	},
 	computed: {
 		hasOtherContent() {
-			return this.$root.manifest && this.$root.canvases.some((canvas) => 'otherContent' in canvas);
+			return canvases.value.some((canvas) => 'otherContent' in canvas);
 		},
 		hasToc() {
-			return this.$root.manifest && this.$root.manifest.structures && this.$root.manifest.structures.length;
+			return manifest.structures && manifest.structures.length > 0;
 		},
 	},
-	beforeDestroy() {
-		window.removeEventListener('popstate', this.$root.updateOptionsFromUrlQuery);
+	methods: {
+		getId,
+		setError,
+		translate,
 	},
 };
 </script>

@@ -1,15 +1,25 @@
-import Vue from 'vue';
-import PageSelect from '@/components/PageSelect';
+import { describe, it, expect } from 'vitest';
+import { mount } from '@vue/test-utils';
+
+import PageSelect from '../../../src/components/PageSelect.vue';
+
+import { options, setManifest } from '../../../src/modules/store';
 
 import manifest from '../../iiif-api/data/manifests/gdz-PPN857449303.json';
 
-describe('PageSelect', () => {
-	const vm = new Vue(PageSelect);
-	vm.$root.manifest = manifest;
-	vm.$root.canvases = manifest.sequences[0].canvases;
-	vm.$root.options = { pages: [1] };
+options.language = 'en';
+options.pages = [1];
+options.pageLabelFormat = 'P : L';
+options.root = {
+	$el: {
+		addEventListener() {},
+	},
+};
 
-	vm.$root.convertValueToArray = (value) => [value];
+setManifest(manifest);
+
+describe('PageSelect', () => {
+	const { vm } = mount(PageSelect);
 
 	it('filters and updates canvases', () => {
 		vm.filter = '5';

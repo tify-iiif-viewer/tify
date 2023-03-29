@@ -1,15 +1,15 @@
-import Vue from 'vue';
-import Axios from 'axios';
+import { createApp, h } from 'vue';
+import clickOutside from 'click-outside-vue3';
 
-import App from './App';
+import App from './App.vue';
 
-import iiifMixin from './mixins/iiif';
-import paramsMixin from './mixins/params';
-import uiMixin from './mixins/ui';
-
-import './directives/click-outside';
-
-Vue.prototype.$http = Axios;
+import { expose } from './modules/api';
+import { setError } from './modules/error';
+import { readOptionsFromUrlQuery } from './modules/http';
+import { setLanguage } from './modules/i18n';
+import { loadManifest } from './modules/iiif';
+import { setPage } from './modules/pagination';
+import { updateOptions, urlUpdateTimeout } from './modules/store';
 
 window.Tify = function Tify(options = {}) {
 	const defaultOptions = {
@@ -65,15 +65,11 @@ window.Tify = function Tify(options = {}) {
 	});
 
 	const instance = this;
-	this.app = new Vue({
-		render: (h) => h(App),
+	this.app = createApp({
 		data() {
 			return {
-				api: {},
 				collection: null,
 				error: '',
-				id: `tify-${Math.floor(Math.random() * Date.now())}`,
-				loading: 0,
 				manifest: null,
 				options: instance.options,
 				ready: false,
@@ -81,44 +77,27 @@ window.Tify = function Tify(options = {}) {
 				translation: null,
 			};
 		},
-		mixins: [
-			iiifMixin,
-			paramsMixin,
-			uiMixin,
-		],
-		computed: {
-			canvases() {
-				return this.manifest ? this.manifest.sequences[0].canvases : [];
-			},
-			pageCount() {
-				return this.canvases.length;
-			},
-		},
 		created() {
-			this.expose(this.setLanguage);
+			this.options.root = this;
+
+			updateOptions(instance.options, false);
+
+			expose(setLanguage);
+			expose(setPage);
 		},
 		mounted() {
-			this.$http.interceptors.request.use((request) => {
-				this.loading += 1;
-				return request;
-			});
-
-			this.$http.interceptors.response.use((response) => {
-				if (this.loading > 0) this.loading -= 1;
-				return response;
-			}, (error) => {
-				this.loading = 0;
-				return Promise.reject(error);
-			});
+			// Set current breakpoint as classes on container element for use in CSS
+			this.updateBreakpoint();
+			window.addEventListener('resize', this.updateBreakpoint);
 
 			if (!this.options.manifestUrl) {
-				this.error = 'Missing option "manifestUrl"';
+				setError('Missing option "manifestUrl"');
 				return;
 			}
 
 			Promise.all([
-				this.loadManifest(this.options.manifestUrl),
-				this.setLanguage(this.options.language),
+				loadManifest(this.options.manifestUrl, {}, this),
+				setLanguage(this.options.language),
 			]).then(() => {
 				this.$nextTick(() => {
 					this.ready = true;
@@ -128,62 +107,34 @@ window.Tify = function Tify(options = {}) {
 				this.readyPromise.reject(error);
 			});
 		},
+		beforeUnmount() {
+			clearTimeout(urlUpdateTimeout);
+			window.removeEventListener('resize', this.updateBreakpoint);
+			window.removeEventListener('popstate', readOptionsFromUrlQuery);
+		},
 		methods: {
-			expose(method, name) {
-				instance[name || method.name.replace('bound ', '')] = method;
-			},
-			getId(postfix) {
-				return this.id + (postfix ? `-${postfix}` : '');
-			},
-			getPageLabel(number, label) {
-				return this.options.pageLabelFormat.replace('P', number).replace('L', label);
-			},
-			setLanguage(language) {
-				let resolveFunction;
-				let rejectFunction;
-				const promise = new Promise((resolve, reject) => {
-					resolveFunction = resolve;
-					rejectFunction = reject;
+			updateBreakpoint() {
+				Object.keys(this.options.breakpoints).forEach((breakpoint) => {
+					if (this.$el.clientWidth <= this.options.breakpoints[breakpoint]) {
+						this.$el.classList.add(`-${breakpoint}`);
+					} else {
+						this.$el.classList.remove(`-${breakpoint}`);
+					}
 				});
 
-				if (language === 'en') {
-					this.options.language = 'en';
-					this.translation = null;
-					resolveFunction(language);
-					return promise;
+				if (this.$el.clientHeight < 520) {
+					this.$el.classList.add('-short');
+				} else {
+					this.$el.classList.remove('-short');
 				}
-
-				if (this.options.translationsDirUrl === null) {
-					rejectFunction(new Error('Could not determine translationsDirUrl'));
-				}
-
-				const translationUrl = `${this.options.translationsDirUrl}/${language}.json`;
-				this.$http.get(translationUrl).then((response) => {
-					this.options.language = language;
-					this.translation = response.data;
-					resolveFunction(language);
-				}, (error) => {
-					const status = (error.response ? error.response.statusText : error.message);
-					this.error = `Error loading translation for "${language}": ${status}`;
-					rejectFunction(new Error(this.error));
-				});
-
-				return promise;
-			},
-			translate(string, fallback) {
-				if (this.translation && this.translation[string]) {
-					return this.translation[string];
-				}
-
-				if (process.env.NODE_ENV !== 'production' && this.options.language !== 'en') {
-					// eslint-disable-next-line no-console
-					console.warn(`Missing translation for "${string}"`);
-				}
-
-				return fallback || string;
 			},
 		},
+		render() {
+			return h(App, { ready: this.ready });
+		},
 	});
+
+	this.app.use(clickOutside);
 
 	// TODO: Add test
 	let mounted = false;
@@ -205,17 +156,14 @@ window.Tify = function Tify(options = {}) {
 			containerEl.style.position = 'relative';
 		}
 
-		const el = document.createElement('div');
-		containerEl.innerHTML = '';
-		containerEl.appendChild(el);
-		this.app.$mount(el);
+		this.app.mount(containerEl);
 
 		mounted = true;
 	};
 
 	// TODO: Add test
 	this.destroy = () => {
-		this.app.$destroy();
+		this.app.unmount();
 	};
 
 	if (this.options.container) {
