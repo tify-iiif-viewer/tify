@@ -1,22 +1,23 @@
 <template>
 	<li
 		class="tify-collection-item"
-		:class="{ '-current': $root.manifest && $root.manifest['@id'] === item['@id'] }"
+		:class="{ '-current': manifest['@id'] === item['@id'] }"
 	>
 		<button
 			v-if="item['@type'] === 'sc:Collection'"
+			type="button"
 			:aria-controls="id"
 			:aria-expanded="expanded ? 'true' : 'false'"
 			class="tify-collection-link -has-children"
 			@click="toggleChildren()"
 		>
 			<template v-if="expanded">
-				<icon-minus/>
-				<span class="tify-sr-only">{{ $root.translate('Collapse') }}</span>
+				<icon-minus />
+				<span class="tify-sr-only">{{ translate('Collapse') }}</span>
 			</template>
 			<template v-else>
-				<icon-plus/>
-				<span class="tify-sr-only">{{ $root.translate('Expand') }}</span>
+				<icon-plus />
+				<span class="tify-sr-only">{{ translate('Expand') }}</span>
 			</template>
 
 			{{ label }}
@@ -25,41 +26,66 @@
 			v-else
 			href="javascript:;"
 			class="tify-collection-link"
-			@click="$root.loadManifest(item['@id'], { expectedType: item['@type'], reset: true })"
+			@click="loadManifest(item['@id'], { expectedType: item['@type'], reset: true }, this)"
 		>
 			{{ label }}
 		</a>
 
 		<template v-if="expanded">
-			<ol v-if="expanded" class="tify-collection-list" :id="id">
-				<collection-node v-for="child in children" :key="child['@id']" :item="child"/>
+			<ol
+				v-if="expanded"
+				:id="id"
+				class="tify-collection-list"
+			>
+				<collection-node
+					v-for="child in children"
+					:key="child['@id']"
+					:item="child"
+				/>
 			</ol>
-			<p v-else-if="children === false" class="tify-collection-error">
-				{{ $root.translate('Could not load child manifest') }}
+			<p
+				v-else-if="children === false"
+				class="tify-collection-error"
+			>
+				{{ translate('Could not load child manifest') }}
 			</p>
 		</template>
 	</li>
 </template>
 
 <script>
+import { setError } from '../modules/error';
+import { getId } from '../modules/id';
+import { fetchJson } from '../modules/http';
+import { translate } from '../modules/i18n';
+import { convertValueToArray, loadManifest } from '../modules/iiif';
+import { manifest } from '../modules/store';
+
 export default {
-	name: 'collection-node',
-	props: ['item'],
+	name: 'CollectionNode',
+	props: {
+		item: {
+			type: Object,
+			default: () => {},
+		},
+	},
 	data() {
 		return {
 			children: null,
 			expanded: false,
-			id: this.$root.getId(`collection-node-${Math.floor(Math.random() * 1e12)}`),
+			id: getId(`collection-node-${Math.floor(Math.random() * 1e12)}`),
+			manifest,
 		};
 	},
 	computed: {
 		label() {
-			return this.item
-				? this.$root.convertValueToArray(this.item.label).join(`${String.fromCharCode(160)}· `) // 160 = &nbsp;
+			return this.item.label
+				? convertValueToArray(this.item.label).join(`${String.fromCharCode(160)}· `) // 160 = &nbsp;
 				: '';
 		},
 	},
 	methods: {
+		loadManifest,
 		toggleChildren() {
 			if (this.expanded) {
 				this.expanded = false;
@@ -77,18 +103,21 @@ export default {
 				return;
 			}
 
-			this.$http.get(this.item['@id']).then((response) => {
-				const manifest = response.data;
-				this.children = manifest.manifests || manifest.collections || [];
-				this.expanded = true;
-			}, (error) => {
-				const status = error.response
-					? (error.response.statusText || error.response.data || error.message)
-					: error.message;
-				this.$root.error = `Error loading IIIF manifest: ${status}`;
-				this.children = false;
-			});
+			fetchJson(this.item['@id']).then(
+				(childManifest) => {
+					this.children = childManifest.manifests || childManifest.collections || [];
+					this.expanded = true;
+				},
+				(error) => {
+					const status = error.response
+						? error.response.statusText || error.response.data || error.message
+						: error.message;
+					setError(`Error loading IIIF manifest: ${status}`);
+					this.children = false;
+				},
+			);
 		},
+		translate,
 	},
 };
 </script>

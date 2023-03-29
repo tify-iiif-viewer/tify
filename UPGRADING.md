@@ -1,5 +1,9 @@
 # Upgrading TIFY
 
+## Any prior release to v0.29
+
+- Only concerns local development: Node script names have been changed to match current Vue defaults, e.g. `npm run serve` is now `npm run dev`. See README.md and package.json for more details.
+
 ## Any prior release to v0.28
 
 - Layout breakpoints have changed, so TIFY may show different interface elements than before, depending on its container size. Modify the `breakpoints` option if required.

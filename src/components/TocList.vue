@@ -2,27 +2,28 @@
 	<ul class="tify-toc-list">
 		<li
 			v-for="(structure, index) in structures"
+			:key="index"
 			class="tify-toc-structure"
 			:data-level="level"
 			:class="{
 				'-current': checkIfPagesInStructure(structure),
 				'-expanded': expandedStructures[index],
 			}"
-			:key="index"
 		>
 			<button
 				v-if="structure.childStructures"
+				type="button"
 				class="tify-toc-toggle"
-				:title="$root.translate(expandedStructures[index] ? 'Collapse' : 'Expand')"
+				:title="translate(expandedStructures[index] ? 'Collapse' : 'Expand')"
 				:aria-controls="`${id}-${index}`"
 				:aria-expanded="expandedStructures[index] ? 'true' : 'false'"
 				@click="toggleChildren(index)"
 			>
 				<template v-if="expandedStructures[index]">
-					<icon-minus/>
+					<icon-minus />
 				</template>
 				<template v-else>
-					<icon-plus/>
+					<icon-plus />
 				</template>
 			</button>
 
@@ -30,10 +31,10 @@
 				v-if="purpose === 'pdf'"
 				class="tify-toc-link"
 				download
-				:href="$root.convertValueToArray(structure.rendering)[0]['@id']"
+				:href="convertValueToArray(structure.rendering)[0]['@id']"
 			>
 				{{ structure.label }}
-				({{ structure.pageCount }}&nbsp;{{ $root.translate(structure.pageCount === 1 ? 'page' : 'pages') }})
+				({{ structure.pageCount }}&nbsp;{{ translate(structure.pageCount === 1 ? 'page' : 'pages') }})
 			</a>
 			<a
 				v-else
@@ -51,7 +52,7 @@
 				:id="`${id}-${index}`"
 				ref="children"
 				:level="level + 1"
-				:parentStructure="structure"
+				:parent-structure="structure"
 				:purpose="purpose"
 				:structures="structure.childStructures"
 			/>
@@ -60,29 +61,49 @@
 </template>
 
 <script>
+import { getId } from '../modules/id';
+import { translate } from '../modules/i18n';
+import { convertValueToArray } from '../modules/iiif';
+import { setPage } from '../modules/pagination';
+import { isMobile } from '../modules/ui';
+import { options, updateOptions } from '../modules/store';
+
 export default {
-	name: 'toc-list',
-	props: [
-		'level',
-		'structures',
-		'parentStructure',
-		'purpose',
-	],
+	name: 'TocList',
+	props: {
+		level: {
+			type: Number,
+			default: 0,
+		},
+		structures: {
+			type: Array,
+			default: () => [],
+		},
+		parentStructure: {
+			type: Object,
+			default: () => {},
+		},
+		purpose: {
+			type: String,
+			default: '',
+		},
+	},
 	data() {
 		return {
 			expandedStructures: [],
-			id: this.$root.getId(`toc-list-${Math.floor(Math.random() * 1e12)}`),
+			id: getId(`toc-list-${Math.floor(Math.random() * 1e12)}`),
 		};
 	},
 	methods: {
 		checkIfPagesInStructure(structure) {
-			const { pages } = this.$root.options;
+			const { pages } = options;
 			return pages.some((page) => page >= structure.firstPage && page <= structure.lastPage);
 		},
+		convertValueToArray,
 		setPage(page) {
-			this.$root.setPage(page);
-			if (this.$root.isMobile()) {
-				this.$root.updateOptions({ view: 'scan' });
+			setPage(page);
+			if (isMobile()) {
+				updateOptions({ view: 'scan' });
 			}
 		},
 		toggleAllChildren(expanded = null) {
@@ -104,13 +125,9 @@ export default {
 				return;
 			}
 
-			const doExpand = (expanded !== null ? expanded : !this.expandedStructures[index]);
-			if (doExpand) {
-				this.$set(this.expandedStructures, index, true);
-			} else {
-				this.$set(this.expandedStructures, index, false);
-			}
+			this.expandedStructures[index] = expanded !== null ? expanded : !this.expandedStructures[index];
 		},
+		translate,
 	},
 };
 </script>

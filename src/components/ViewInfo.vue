@@ -1,25 +1,31 @@
 <template>
-	<section class="tify-info" tabindex="0">
-		<h2 class="tify-sr-only">{{ $root.translate('Info') }}</h2>
+	<section
+		class="tify-info"
+		tabindex="0"
+	>
+		<h2 class="tify-sr-only">
+			{{ translate('Info') }}
+		</h2>
 
 		<div
-			v-if="$root.collection && $root.manifest"
+			v-if="collection['@id'] && manifest['@id']"
 			class="tify-info-header"
 		>
 			<button
+				type="button"
 				class="tify-info-button"
 				:class="{ '-active': !collectionDataShown }"
 				@click="collectionDataShown = false"
 			>
-				{{ $root.translate('Document') }}
+				{{ translate('Document') }}
 			</button>
 			<button
-				v-if="$root.collection && $root.manifest"
+				type="button"
 				class="tify-info-button"
 				:class="{ '-active': collectionDataShown }"
 				@click="collectionDataShown = true"
 			>
-				{{ $root.translate('Collection') }}
+				{{ translate('Collection') }}
 			</button>
 		</div>
 
@@ -27,8 +33,13 @@
 			v-if="manifest.label"
 			class="tify-info-section -title"
 		>
-			<h3 class="tify-info-heading">{{ $root.translate('Title') }}</h3>
-			<div :key="label" v-for="label in $root.convertValueToArray(manifest.label)">
+			<h3 class="tify-info-heading">
+				{{ translate('Title') }}
+			</h3>
+			<div
+				v-for="label in convertValueToArray(manifest.label)"
+				:key="label"
+			>
 				{{ label }}
 			</div>
 		</div>
@@ -37,8 +48,11 @@
 			v-if="manifest.metadata && manifest.metadata.length"
 			class="tify-info-section -metadata"
 		>
-			<h3>{{ $root.translate('Metadata') }}</h3>
-			<metadata-list v-if="$root.options.view === 'info'" :metadata="manifest.metadata"/>
+			<h3>{{ translate('Metadata') }}</h3>
+			<metadata-list
+				v-if="options.view === 'info'"
+				:metadata="manifest.metadata"
+			/>
 		</div>
 
 		<div
@@ -46,13 +60,16 @@
 			class="tify-info-section -metadata -structure"
 		>
 			<h3>
-				{{ $root.translate('Current Element') }}
+				{{ translate('Current Element') }}
 			</h3>
-			<p v-if="currentStructureLabel" class="tify-info-structure">
+			<p
+				v-if="currentStructureLabel"
+				class="tify-info-structure"
+			>
 				{{ currentStructureLabel }}
 			</p>
 			<metadata-list
-				v-if="$root.options.view === 'info' && currentStructureMetadata"
+				v-if="options.view === 'info' && currentStructureMetadata"
 				class="tify-info-section -metadata"
 				:metadata="currentStructureMetadata"
 			/>
@@ -62,21 +79,28 @@
 			v-if="manifest.description"
 			class="tify-info-section -description"
 		>
-			<h3>{{ $root.translate('Description') }}</h3>
+			<h3>{{ translate('Description') }}</h3>
 			<div
+				v-for="(description, index) in convertValueToArray(manifest.description)"
 				:key="index"
-				v-for="(description, index) in $root.convertValueToArray(manifest.description)"
-				v-html="description"/>
+				v-html="description"
+			/>
 		</div>
 
 		<div
 			v-if="license.length"
 			class="tify-info-section -license"
 		>
-			<h3>{{ $root.translate('License') }}</h3>
-			<div :key="index" v-for="(item, index)  in license">
+			<h3>{{ translate('License') }}</h3>
+			<div
+				v-for="(item, index) in license"
+				:key="index"
+			>
 				<template v-if="typeof item === 'string'">
-					<a v-if="isValidUrl(item)" :href="item">
+					<a
+						v-if="isValidUrl(item)"
+						:href="item"
+					>
 						{{ item }}
 					</a>
 					<template v-else>
@@ -84,7 +108,10 @@
 					</template>
 				</template>
 				<template v-else>
-					<a v-if="isValidUrl(item['@id'])" :href="item['@id']">
+					<a
+						v-if="isValidUrl(item['@id'])"
+						:href="item['@id']"
+					>
 						{{ item['label'] || item['@id'] }}
 					</a>
 					<template v-else>
@@ -98,12 +125,21 @@
 			v-if="related.length"
 			class="tify-info-section -related"
 		>
-			<h3>{{ $root.translate('Related Resources') }}</h3>
-			<div v-for="(item, index) in related" :key="index">
-				<a v-if="typeof item === 'string'" :href="item">
+			<h3>{{ translate('Related Resources') }}</h3>
+			<div
+				v-for="(item, index) in related"
+				:key="index"
+			>
+				<a
+					v-if="typeof item === 'string'"
+					:href="item"
+				>
 					{{ item }}
 				</a>
-				<a v-else :href="item['@id']">
+				<a
+					v-else
+					:href="item['@id']"
+				>
 					{{ item['label'] || item['@id'] }}
 				</a>
 			</div>
@@ -113,9 +149,9 @@
 			v-if="manifest.attribution"
 			class="tify-info-section -attribution"
 		>
-			<h3>{{ $root.translate('Provided by') }}</h3>
+			<h3>{{ translate('Provided by') }}</h3>
 			<div
-				v-for="(item, index) in $root.convertValueToArray(manifest.attribution)"
+				v-for="(item, index) in convertValueToArray(manifest.attribution)"
 				:key="index"
 				v-html="item"
 			/>
@@ -129,52 +165,62 @@
 				v-if="logoId && manifest.logo.service && manifest.logo.service['@id']"
 				:href="manifest.logo.service['@id']"
 			>
-				<img class="tify-info-logo" :src="logoId" :alt="$root.translate('Logo')">
+				<img
+					class="tify-info-logo"
+					:src="logoId"
+					:alt="translate('Logo')"
+				/>
 			</a>
-			<img v-else class="tify-info-logo" :src="logoId" :alt="$root.translate('Logo')">
+			<img
+				v-else
+				class="tify-info-logo"
+				:src="logoId"
+				:alt="translate('Logo')"
+			/>
 		</div>
 	</section>
 </template>
 
 <script>
 // TODO: Handle and display manifest.service, see http://iiif.io/api/presentation/2.1/#service
-import MetadataList from './MetadataList';
 
-import structures from '../mixins/structures';
-
-import isValidUrl from '../functions/isValidUrl';
+import { translate } from '../modules/i18n';
+import { convertValueToArray } from '../modules/iiif';
+import { collection, manifest, options } from '../modules/store';
+import { currentStructure, currentStructureMetadata, currentStructureLabel } from '../modules/structures';
+import { isValidUrl } from '../modules/validation';
 
 export default {
-	components: {
-		MetadataList,
-	},
-	mixins: [
-		structures,
-	],
 	data() {
 		return {
+			currentStructure,
+			currentStructureLabel,
+			currentStructureMetadata,
 			collectionDataShown: false,
+			options,
 		};
 	},
 	computed: {
 		collection() {
-			return this.$root.collection;
+			return collection;
 		},
 		license() {
-			return this.manifest.license ? this.$root.convertValueToArray(this.manifest.license) : [];
+			return manifest.license ? convertValueToArray(this.manifest.license) : [];
 		},
 		logoId() {
-			return this.manifest.logo['@id'] || this.manifest.logo;
+			return manifest.logo['@id'] || manifest.logo;
 		},
 		manifest() {
-			return this.collectionDataShown ? this.$root.collection : (this.$root.manifest || this.$root.collection);
+			return this.collectionDataShown ? collection : (manifest || collection);
 		},
 		related() {
-			return this.manifest.related ? this.$root.convertValueToArray(this.manifest.related) : [];
+			return manifest.related ? convertValueToArray(manifest.related) : [];
 		},
 	},
 	methods: {
+		convertValueToArray,
 		isValidUrl,
+		translate,
 	},
 };
 </script>

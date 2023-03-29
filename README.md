@@ -265,10 +265,10 @@ Install dependencies:
 npm install
 ```
 
-Run in development mode with hot reload on `localhost:8080`:
+Run in development mode with hot reload and automatic linting:
 
 ``` bash
-npm run serve
+npm run dev
 ```
 
 Build for production with minification:
@@ -281,11 +281,11 @@ The production build will be stored in `dist`.
 
 ### Running Tests
 
-Run all tests: `npm test`
+Run unit tests: `npm run test:unit`
 
-Run unit tests: `npm run unit`
-
-Run end-to-end tests: `npm run e2e`
+Run end-to-end tests:
+- Development build: `npm run dev`
+- Production build: `npm run build && npm run test:e2e`
 
 ---
 
