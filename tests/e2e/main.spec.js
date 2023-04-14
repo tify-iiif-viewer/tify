@@ -17,6 +17,6 @@ describe('Main', () => {
 		cy.on('uncaught:exception', () => false);
 
 		cy.visit('/?manifest=http://0.0.0.0:8081/manifest/not-json');
-		cy.contains('is not valid JSON');
+		cy.contains('Error loading IIIF manifest');
 	});
 });
