@@ -5,7 +5,7 @@ import App from './App.vue';
 
 import { expose } from './modules/api';
 import { setError } from './modules/error';
-import { readOptionsFromUrlQuery } from './modules/http';
+import { initOptions } from './modules/http';
 import { setLanguage } from './modules/i18n';
 import { loadManifest } from './modules/iiif';
 import { setPage } from './modules/pagination';
@@ -110,7 +110,7 @@ window.Tify = function Tify(options = {}) {
 		beforeUnmount() {
 			clearTimeout(urlUpdateTimeout);
 			window.removeEventListener('resize', this.updateBreakpoint);
-			window.removeEventListener('popstate', readOptionsFromUrlQuery);
+			window.removeEventListener('popstate', initOptions);
 		},
 		methods: {
 			updateBreakpoint() {

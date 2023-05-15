@@ -2,7 +2,7 @@ import { nextTick } from 'vue';
 import striptags from 'striptags';
 
 import { error, setError } from './error';
-import { fetchJson, readOptionsFromUrlQuery } from './http';
+import { fetchJson, initOptions } from './http';
 import {
 	collection,
 	getStartPage,
@@ -127,8 +127,8 @@ export function loadManifest(manifestUrl, params = {}) {
 				setManifest(manifest);
 
 				// Merging user-set query params with defaults
-				readOptionsFromUrlQuery();
-				window.addEventListener('popstate', readOptionsFromUrlQuery);
+				initOptions();
+				window.addEventListener('popstate', initOptions);
 
 				if (params.reset) {
 					updateOptions({
