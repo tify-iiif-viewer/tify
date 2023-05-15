@@ -29,15 +29,20 @@ describe('Views', () => {
 	});
 
 	it('changes the view via keyboard', () => {
-		cy.visit('/?manifest=http://0.0.0.0:8081/manifest/wellcome-b18035723.json');
+		const encodedParams = encodeURIComponent(JSON.stringify({
+			childManifestUrl: 'http://0.0.0.0:8081/manifest/wellcome-b19974760_1_0004',
+		}));
 
-		cy.wait(500); // eslint-disable-line cypress/no-unnecessary-waiting
+		cy.visit(`/?manifest=http://0.0.0.0:8081/manifest/wellcome-b19974760&tify=${encodedParams}`);
+
+		cy.contains('The chemist and druggist');
 
 		cy.get('.tify').type('1').get('.-active').contains('Fulltext');
 		cy.get('.tify').type('2').get('.-active').contains('Pages');
 		cy.get('.tify').type('3').get('.-active').contains('Contents');
 		cy.get('.tify').type('4').get('.-active').contains('Info');
 		cy.get('.tify').type('5').get('.-active').contains('Export');
+		cy.get('.tify').type('6').get('.-active').contains('Collection');
 		cy.get('.tify').type('7').get('.-active').contains('Help');
 	});
 });

@@ -63,7 +63,7 @@ describe('TOC', () => {
 	});
 
 	it('hides the first item if its viewingHint is "top"', () => {
-		const manifestUrl = 'http://0.0.0.0:8081/manifest/digitale-sammlungen-bsb00026283.json';
+		const manifestUrl = 'http://0.0.0.0:8081/manifest/digitale-sammlungen-bsb00026283';
 		const encodedParams = encodeURIComponent(JSON.stringify({
 			view: 'toc',
 		}));

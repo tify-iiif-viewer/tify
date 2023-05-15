@@ -9,7 +9,7 @@ describe('Info', () => {
 		cy.contains('Info').click();
 		cy.contains('Related Resources');
 		cy.contains('/object/viewid/0000000001');
-		cy.contains('/0000000001/manifest.json');
+		cy.contains('/0000000001/manifest');
 	});
 
 	it('collapses long metadata values', () => {
