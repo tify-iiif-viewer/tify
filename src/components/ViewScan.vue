@@ -166,7 +166,7 @@ import OpenSeadragon from 'openseadragon';
 import { expose } from '../modules/api';
 import { setError } from '../modules/error';
 import { getId } from '../modules/id';
-import { fetchJson, setLoading } from '../modules/http';
+import { fetchJson, loading } from '../modules/http';
 import { translate } from '../modules/i18n';
 import { preventEvent } from '../modules/keyboard';
 import { isLastPage, customPageViewActive, isFirstPage, goToPreviousPage, goToNextPage } from '../modules/pagination';
@@ -561,12 +561,12 @@ export default {
 			this.updateFilterStyle();
 		},
 		startLoadingWatch() {
-			setLoading(0);
+			loading.value = 0;
 			for (let i = this.viewer.world.getItemCount() - 1; i >= 0; i -= 1) {
 				const image = this.viewer.world.getItemAt(i);
 				// eslint-disable-next-line no-underscore-dangle
 				if (image && image._tilesLoading) {
-					setLoading(1);
+					loading.value = 1;
 					break;
 				}
 			}

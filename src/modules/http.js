@@ -61,14 +61,16 @@ export async function fetchText(...args) {
 	return result;
 }
 
-export function readOptionsFromUrlQuery(caller) {
+export function initOptions(caller) {
 	let params = {};
 
-	try {
-		const query = new URLSearchParams(window.location.search);
-		params = JSON.parse(query.get(options.urlQueryKey)) || {};
-	} catch {
-		// Nothing to do here
+	if (options.urlQueryKey) {
+		try {
+			const query = new URLSearchParams(window.location.search);
+			params = JSON.parse(query.get(options.urlQueryKey)) || {};
+		} catch {
+			// Nothing to do here
+		}
 	}
 
 	// NOTE: params.view can be an empty string (showing only the scan on large screens)
@@ -94,8 +96,4 @@ export function readOptionsFromUrlQuery(caller) {
 		? params.view
 		: options.view;
 	options.zoom = parseFloat(params.zoom) || options.zoom;
-}
-
-export function setLoading(value = 1) {
-	loading.value = value;
 }
