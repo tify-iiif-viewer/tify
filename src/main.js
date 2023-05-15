@@ -9,9 +9,9 @@ import { initOptions } from './modules/http';
 import { setLanguage } from './modules/i18n';
 import { loadManifest } from './modules/iiif';
 import { setPage } from './modules/pagination';
-import { updateOptions, urlUpdateTimeout } from './modules/store';
+import { options, urlUpdateTimeout } from './modules/store';
 
-window.Tify = function Tify(options = {}) {
+window.Tify = function Tify(userOptions = {}) {
 	const defaultOptions = {
 		breakpoints: {
 			tiny: 359,
@@ -48,7 +48,7 @@ window.Tify = function Tify(options = {}) {
 		zoom: null,
 	};
 
-	this.options = { ...defaultOptions, ...options };
+	this.options = { ...defaultOptions, ...userOptions };
 
 	if (!this.options.translationsDirUrl) {
 		const scripts = document.getElementsByTagName('script');
@@ -80,7 +80,7 @@ window.Tify = function Tify(options = {}) {
 		created() {
 			this.options.root = this;
 
-			updateOptions(instance.options, false);
+			Object.assign(options, instance.options);
 
 			expose(setLanguage);
 			expose(setPage);
