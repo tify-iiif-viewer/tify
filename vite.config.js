@@ -1,13 +1,13 @@
 import { defineConfig } from 'vite';
 
-import { fileURLToPath, URL } from 'node:url';
 import { readdirSync, readFileSync } from 'node:fs';
+import { fileURLToPath, URL } from 'node:url';
 
-import banner from 'vite-plugin-banner';
+import vue from '@vitejs/plugin-vue';
 import componentsAutoImport from 'unplugin-vue-components/vite'; // eslint-disable-line import/no-unresolved
+import banner from 'vite-plugin-banner';
 import eslint from 'vite-plugin-eslint';
 import sassGlobImport from 'vite-plugin-sass-glob-import';
-import vue from '@vitejs/plugin-vue';
 
 import pkg from './package.json';
 
@@ -51,10 +51,13 @@ export default defineConfig({
 		componentsAutoImport({
 			resolvers: [
 				(componentName) => {
-					const dir = `${__dirname}/src/components/${componentName.startsWith('Icon') ? 'icons/' : ''}`;
+					// Replacing "\" with "/" in import paths so unit tests work on Windows
+					// NOTE: path.normalize cannot help here
+					const baseDir = __dirname.replaceAll('\\', '/');
+					const dir = `${baseDir}/src/components${componentName.startsWith('Icon') ? '/icons' : ''}`;
 					return {
 						name: componentName,
-						from: `${dir}${componentName}.vue`,
+						from: `${dir}/${componentName}.vue`,
 					};
 				},
 			],
