@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { setError } from '../modules/error';
+import { errorHandler } from '../modules/errorHandler';
 import { getId } from '../modules/id';
 import { fetchJson } from '../modules/http';
 import { translate } from '../modules/i18n';
@@ -112,7 +112,7 @@ export default {
 					const status = error.response
 						? error.response.statusText || error.response.data || error.message
 						: error.message;
-					setError(`Error loading IIIF manifest: ${status}`);
+					errorHandler.add(`Error loading IIIF manifest: ${status}`);
 					this.children = false;
 				},
 			);

@@ -1,8 +1,6 @@
 import { fetchJson } from './http';
-import { setError } from './error';
 import { options, setTranslation, translation } from './store';
-
-options.translationsDirUrl = '';
+import { errorHandler } from './errorHandler';
 
 export function setLanguage(language) {
 	let resolveFunction;
@@ -30,7 +28,7 @@ export function setLanguage(language) {
 		resolveFunction(language);
 	}, (error) => {
 		const status = error.response ? error.response.statusText : error.message;
-		setError(`Error loading translation for "${language}": ${status}`);
+		errorHandler.add(`Error loading translation for "${language}": ${status}`);
 		rejectFunction(new Error(error));
 	});
 

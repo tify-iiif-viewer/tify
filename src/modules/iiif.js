@@ -1,7 +1,7 @@
 import { nextTick } from 'vue';
 import striptags from 'striptags';
 
-import { error, setError } from './error';
+import { errorHandler } from './errorHandler';
 import { fetchJson, initOptions } from './http';
 import {
 	collection,
@@ -114,8 +114,9 @@ export function loadManifest(manifestUrl, params = {}) {
 	return fetchJson(manifestUrl).then(
 		async (manifest) => {
 			if (params.expectedType && manifest['@type'] !== params.expectedType) {
-				setError(`Expected manifest of type ${params.expectedType}, but got ${manifest['@type']}`);
-				rejectFunction(error);
+				const errorMessage = `Expected manifest of type ${params.expectedType}, but got ${manifest['@type']}`;
+				errorHandler.add(errorMessage);
+				rejectFunction(errorMessage);
 				return promise;
 			}
 
@@ -180,16 +181,18 @@ export function loadManifest(manifestUrl, params = {}) {
 				return promise;
 			}
 
-			setError('Please provide a valid IIIF Presentation API 2.x manifest');
-			rejectFunction(error);
+			const errorMessage = 'Please provide a valid IIIF Presentation API 2.x manifest';
+			errorHandler.add(errorMessage);
+			rejectFunction(errorMessage);
 			return promise;
 		},
-		(e) => {
-			const status = e.response
-				? e.response.statusText || e.response.data || e.message
-				: e.message;
-			setError(`Error loading IIIF manifest: ${status}`);
-			rejectFunction(e);
+		(error) => {
+			const status = error.response
+				? error.response.statusText || error.response.data || error.message
+				: error.message;
+			const errorMessage = `Error loading IIIF manifest: ${status}`;
+			errorHandler.add(errorMessage);
+			rejectFunction(errorMessage);
 			return promise;
 		},
 	);

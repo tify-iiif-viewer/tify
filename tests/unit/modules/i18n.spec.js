@@ -1,7 +1,10 @@
 import { describe, it, expect } from 'vitest';
 
-import { error } from '../../../src/modules/error';
+import { errorHandler } from '../../../src/modules/errorHandler';
 import { setLanguage } from '../../../src/modules/i18n';
+import { options } from '../../../src/modules/store';
+
+options.translationsDirUrl = '';
 
 describe('setLanguage', () => {
 	it('loads the translation and changes the language', async () => {
@@ -13,7 +16,7 @@ describe('setLanguage', () => {
 		try {
 			await setLanguage('-_-');
 		} catch {
-			expect(error.value).toContain('Error loading translation for "-_-"');
+			expect(errorHandler.messages.slice(-1)[0]).toContain('Error loading translation for "-_-"');
 		}
 	});
 });

@@ -60,25 +60,30 @@
 			:aria-label="translationLoaded ? translate('Loading') : 'Loading'"
 		/>
 
-		<div
-			v-if="error"
+		<section
+			v-if="errorHandler.messages.length"
 			class="tify-error"
 		>
 			<button
 				type="button"
 				class="tify-error-close"
-				@click="setError('')"
+				:aria-label="translate('Dismiss')"
+				@click="errorHandler.clear()"
 			>
 				<icon-close />
 			</button>
 			<!-- NOTE: Error messages can contain user-controlled content -->
-			<span>{{ error }}</span>
-		</div>
+			<div class="tify-error-messages">
+				<p v-for="message in errorHandler.messages" :key="message">
+					{{ message }}
+				</p>
+			</div>
+		</section>
 	</article>
 </template>
 
 <script>
-import { error, setError } from './modules/error';
+import { errorHandler } from './modules/errorHandler';
 import { getId } from './modules/id';
 import { loading } from './modules/http';
 import { translate } from './modules/i18n';
@@ -93,7 +98,7 @@ export default {
 			canvases,
 			collection,
 			manifest,
-			error,
+			errorHandler,
 			loading,
 			options,
 			translationLoaded: !!translation,
@@ -109,7 +114,6 @@ export default {
 	},
 	methods: {
 		getId,
-		setError,
 		translate,
 	},
 };

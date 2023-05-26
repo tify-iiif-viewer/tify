@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 
-import { setError } from './error';
+import { errorHandler } from './errorHandler';
 import { getStartPage, isValidPagesArray, options } from './store';
 import { isMobile } from './ui';
 
@@ -79,7 +79,7 @@ export function initOptions(caller) {
 	}
 
 	if (params.pages && !isValidPagesArray(params.pages)) {
-		setError('Invalid pages, reset to start page');
+		errorHandler.add('Invalid pages, reset to start page');
 		params.pages = null;
 	}
 
