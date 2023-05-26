@@ -1,6 +1,6 @@
 const { defineConfig } = require('cypress');
 
-// TODO: Should this be placed elsewhere?
+process.env.iiifApiPort = 8082;
 require('./tests/iiif-api/server');
 
 module.exports = defineConfig({
@@ -16,5 +16,8 @@ module.exports = defineConfig({
 		videosFolder: 'tests/e2e/videos',
 		downloadsFolder: 'tests/e2e/downloads',
 		supportFile: false,
+	},
+	env: {
+		iiifApiUrl: `http://0.0.0.0:${process.env.iiifApiPort}`,
 	},
 });

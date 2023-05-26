@@ -1,6 +1,6 @@
 describe('Export', () => {
 	it('displays export links', () => {
-		cy.visit('/?manifest=http://0.0.0.0:8081/manifest/gdz-PPN857449303');
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-PPN857449303`);
 
 		cy.contains('Export').click();
 		cy.contains('Download Individual Images').should('be.visible');

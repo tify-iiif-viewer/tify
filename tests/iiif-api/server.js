@@ -1,12 +1,13 @@
 const fs = require('fs');
 const http = require('http');
 const url = require('url');
-const config = require('./config.json');
 
-const server = http.createServer().listen(config.port, config.host);
+const port = process.env.iiifApiPort || 8081;
+
+const server = http.createServer().listen(port);
 
 // eslint-disable-next-line no-console
-console.log(`\n  🤖 Mock IIIF API listening at http://localhost:${config.port}\n`);
+console.log(`\n  🤖 Mock IIIF API listening at http://localhost:${port}\n`);
 
 server.on('request', (req, res) => {
 	function outputJpeg(fileName) {
@@ -32,7 +33,7 @@ server.on('request', (req, res) => {
 				// Rewrite all remote URLs to local ones, except IIIF API profiles
 				const dataWithLocalUrls = data.replace(
 					/https?:\/\/(?!iiif.io\/api\/)[a-z0-9-.:]*/gi,
-					`http://127.0.0.1:${config.port}`,
+					`http://127.0.0.1:${port}`,
 				);
 
 				res.write(dataWithLocalUrls);
@@ -83,15 +84,15 @@ server.on('request', (req, res) => {
 		}
 
 		if (action === 'manifest') {
-			outputJson(`${__dirname}/${config.dataDir}/manifests/${file}`);
+			outputJson(`${__dirname}/data/manifests/${file}`);
 		} else if (action === 'annotation-lists') {
-			outputJson(`${__dirname}/${config.dataDir}/annotation-lists/${file}`);
+			outputJson(`${__dirname}/data/annotation-lists/${file}`);
 		} else if (action === 'annotations') {
-			outputJson(`${__dirname}/${config.dataDir}/annotations/${file || 'default.json'}`);
+			outputJson(`${__dirname}/data/annotations/${file || 'default.json'}`);
 		} else if (action === 'info') {
-			outputJson(`${__dirname}/${config.dataDir}/infos/default.json`);
+			outputJson(`${__dirname}/data/infos/default.json`);
 		} else if (['image', 'images', 'logos'].includes(action)) {
-			outputJpeg(`${__dirname}/${config.dataDir}/images/default.jpg`);
+			outputJpeg(`${__dirname}/data/images/default.jpg`);
 		} else {
 			res.writeHead(400);
 			res.end();

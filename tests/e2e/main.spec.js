@@ -1,6 +1,6 @@
 describe('Main', () => {
 	it('starts the app', () => {
-		cy.visit('/?manifest=http://0.0.0.0:8081/manifest/gdz-PPN857449303&language=de');
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-PPN857449303&language=de`);
 		cy.get('#tify > .tify');
 	});
 
@@ -8,7 +8,7 @@ describe('Main', () => {
 		// Prevent the test from failing due to an uncaught exception (which is expected)
 		cy.on('uncaught:exception', () => false);
 
-		cy.visit('/?manifest=http://0.0.0.0:8081/manifest/invalid');
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/invalid`);
 		cy.contains('Please provide a valid IIIF Presentation API 2.x manifest');
 	});
 
@@ -16,7 +16,7 @@ describe('Main', () => {
 		// Prevent the test from failing due to an uncaught exception (which is expected)
 		cy.on('uncaught:exception', () => false);
 
-		cy.visit('/?manifest=http://0.0.0.0:8081/manifest/not-json');
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/not-json`);
 		cy.contains('Error loading IIIF manifest');
 	});
 });

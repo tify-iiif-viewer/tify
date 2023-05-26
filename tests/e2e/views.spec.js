@@ -1,10 +1,10 @@
 describe('Views', () => {
 	it('changes the view via buttons', () => {
 		const encodedParams = encodeURIComponent(JSON.stringify({
-			childManifestUrl: 'http://0.0.0.0:8081/manifest/wellcome-b19974760_1_0004',
+			childManifestUrl: `${Cypress.env('iiifApiUrl')}/manifest/wellcome-b19974760_1_0004`,
 		}));
 
-		cy.visit(`/?manifest=http://0.0.0.0:8081/manifest/wellcome-b19974760&tify=${encodedParams}`);
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/wellcome-b19974760&tify=${encodedParams}`);
 
 		cy.contains('Fulltext').click();
 		cy.get('.-active').contains('Fulltext');
@@ -30,10 +30,10 @@ describe('Views', () => {
 
 	it('changes the view via keyboard', () => {
 		const encodedParams = encodeURIComponent(JSON.stringify({
-			childManifestUrl: 'http://0.0.0.0:8081/manifest/wellcome-b19974760_1_0004',
+			childManifestUrl: `${Cypress.env('iiifApiUrl')}/manifest/wellcome-b19974760_1_0004`,
 		}));
 
-		cy.visit(`/?manifest=http://0.0.0.0:8081/manifest/wellcome-b19974760&tify=${encodedParams}`);
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/wellcome-b19974760&tify=${encodedParams}`);
 
 		cy.contains('The chemist and druggist');
 
