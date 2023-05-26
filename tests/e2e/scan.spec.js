@@ -6,7 +6,7 @@ describe('Scan', () => {
 			},
 		}));
 
-		cy.visit(`/?manifest=http://0.0.0.0:8081/manifest/gdz-HANS_DE_7_w042081&tify=${encodedParams}`);
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081&tify=${encodedParams}`);
 		cy.get('[title="Toggle image filters"]')
 			.click()
 			.get('.tify-scan-filters-popup')
@@ -28,7 +28,7 @@ describe('Scan', () => {
 			zoom: 2,
 		}));
 
-		cy.visit(`/?manifest=http://0.0.0.0:8081/manifest/gdz-HANS_DE_7_w042081&tify=${encodedParams}`);
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081&tify=${encodedParams}`);
 
 		cy.get('[title="Rotate"].-active');
 		cy.get('[title="Toggle image filters"].-active');
@@ -36,13 +36,13 @@ describe('Scan', () => {
 		cy.get('.tify').type('{shift}0');
 		cy.url().should(
 			'include',
-			`/?manifest=${encodeURIComponent('http://0.0.0.0:8081/manifest/gdz-HANS_DE_7_w042081')}`
+			`/?manifest=${encodeURIComponent(`${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081`)}`
 				+ `&tify=${encodeURIComponent('{"view":""}')}`,
 		);
 	});
 
 	it('controls the scan via keyboard', () => {
-		cy.visit('/?manifest=http://0.0.0.0:8081/manifest/gdz-HANS_DE_7_w042081');
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081`);
 
 		cy.wait(500); // eslint-disable-line cypress/no-unnecessary-waiting
 

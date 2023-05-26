@@ -1,6 +1,6 @@
 describe('TOC', () => {
 	it('allows navigation', () => {
-		const manifestUrl = 'http://0.0.0.0:8081/manifest/gdz-HANS_DE_7_w042081';
+		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081`;
 		cy.visit(`/?manifest=${manifestUrl}`);
 
 		cy.contains('Contents').click();
@@ -51,7 +51,7 @@ describe('TOC', () => {
 	});
 
 	it('is visible when there are structures without canvases', () => {
-		const manifestUrl = 'http://0.0.0.0:8081/manifest/cambridge-MS-ADD-08640';
+		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/cambridge-MS-ADD-08640`;
 		const encodedParams = encodeURIComponent(JSON.stringify({
 			view: 'toc',
 		}));
@@ -63,7 +63,7 @@ describe('TOC', () => {
 	});
 
 	it('hides the first item if its viewingHint is "top"', () => {
-		const manifestUrl = 'http://0.0.0.0:8081/manifest/digitale-sammlungen-bsb00026283';
+		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/digitale-sammlungen-bsb00026283`;
 		const encodedParams = encodeURIComponent(JSON.stringify({
 			view: 'toc',
 		}));
