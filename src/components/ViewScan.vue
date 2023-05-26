@@ -164,7 +164,7 @@
 import OpenSeadragon from 'openseadragon';
 
 import { expose } from '../modules/api';
-import { setError } from '../modules/error';
+import { errorHandler } from '../modules/errorHandler';
 import { getId } from '../modules/id';
 import { fetchJson, loading } from '../modules/http';
 import { translate } from '../modules/i18n';
@@ -389,7 +389,7 @@ export default {
 			this.viewer.addHandler('zoom', this.updateViewerState);
 
 			this.viewer.addHandler('tile-load-failed', (error) => {
-				setError(`Error loading image: ${error.message}`);
+				errorHandler.add(`Error loading image: ${error.message}`);
 			});
 
 			expose(this.resetScan);
@@ -419,7 +419,7 @@ export default {
 									status = error.message;
 								}
 
-								setError(`Error loading info file for page ${page}${status ? `: ${status}` : ''}`);
+								errorHandler.add(`Error loading info file for page ${page}${status ? `: ${status}` : ''}`);
 							},
 						),
 					);

@@ -1,6 +1,6 @@
 import { computed, reactive } from 'vue';
 
-import { setError } from './error';
+import { errorHandler } from './errorHandler';
 
 export let urlUpdateTimeout; // eslint-disable-line import/no-mutable-exports
 
@@ -80,7 +80,7 @@ export function updateOptions(updatedOptions) {
 		}
 
 		if (updatedOptions.pages) {
-			setError('');
+			errorHandler.clear();
 			window.history.pushState({}, '', url);
 		} else {
 			window.history.replaceState({}, '', url);

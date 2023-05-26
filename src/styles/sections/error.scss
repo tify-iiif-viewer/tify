@@ -3,22 +3,30 @@
 	border-radius: 0 $br 0 0;
 	bottom: 0;
 	color: $white;
+	display: flex;
 	font-weight: bold;
 	max-width: 90%;
-	padding: g(.25);
 	position: absolute;
+
+	p {
+		margin: 0;
+	}
 }
 
 .tify-error-close {
+	align-items: flex-start;
 	background: 0;
 	border: 0;
 	color: $white;
 	cursor: pointer;
-	float: left;
-	margin: g(-.25) 0 g(-.25) g(-.25);
+	display: flex;
 	padding: g(.25);
 
 	@include hover {
 		background: $shade-light;
 	}
+}
+
+.tify-error-messages {
+	padding: g(.25) g(.5) g(.25) 0;
 }

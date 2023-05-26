@@ -4,7 +4,7 @@ import clickOutside from 'click-outside-vue3';
 import App from './App.vue';
 
 import { expose } from './modules/api';
-import { setError } from './modules/error';
+import { errorHandler } from './modules/errorHandler';
 import { initOptions } from './modules/http';
 import { setLanguage } from './modules/i18n';
 import { loadManifest } from './modules/iiif';
@@ -91,7 +91,7 @@ window.Tify = function Tify(userOptions = {}) {
 			window.addEventListener('resize', this.updateBreakpoint);
 
 			if (!this.options.manifestUrl) {
-				setError('Missing option "manifestUrl"');
+				errorHandler.add('Missing option "manifestUrl"');
 				return;
 			}
 
