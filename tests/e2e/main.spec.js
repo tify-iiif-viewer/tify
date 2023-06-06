@@ -1,7 +1,7 @@
 describe('Main', () => {
 	it('starts the app', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-PPN857449303&language=de`);
-		cy.get('#tify > .tify');
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-PPN857449303`);
+		cy.get('.tify');
 	});
 
 	it('checks the manifest (valid JSON, but not IIIF)', () => {
