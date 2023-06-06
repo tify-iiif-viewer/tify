@@ -88,7 +88,7 @@ window.Tify = function Tify(userOptions = {}) {
 		mounted() {
 			// Set current breakpoint as classes on container element for use in CSS
 			this.updateBreakpoint();
-			window.addEventListener('resize', this.updateBreakpoint);
+			new ResizeObserver(this.updateBreakpoint).observe(this.$el);
 
 			if (!this.options.manifestUrl) {
 				errorHandler.add('Missing option "manifestUrl"');
@@ -109,7 +109,6 @@ window.Tify = function Tify(userOptions = {}) {
 		},
 		beforeUnmount() {
 			clearTimeout(urlUpdateTimeout);
-			window.removeEventListener('resize', this.updateBreakpoint);
 			window.removeEventListener('popstate', initOptions);
 		},
 		methods: {

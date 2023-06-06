@@ -46,7 +46,6 @@ const longTouchDuration = 750;
 export default {
 	data() {
 		return {
-			isInited: false,
 			itemHeight: 0,
 			itemVMargin: 0,
 			items: [{ label: '' }], // Dummy thumbnail to get dimensions
@@ -90,21 +89,13 @@ export default {
 	mounted() {
 		this.style.flex = this.$el.style.flex;
 	},
-	beforeUnmount() {
-		window.removeEventListener('resize', this.onResize);
-	},
 	methods: {
 		getPageLabel,
 		init() {
 			this.updateDimensions();
 			this.scrollToCurrentPage(false);
 
-			if (!this.isInited) {
-				// Redraw thumbnails when the window is resized
-				window.addEventListener('resize', this.onResize);
-
-				this.isInited = true;
-			}
+			new ResizeObserver(this.onResize).observe(this.$el);
 		},
 		onResize() {
 			clearTimeout(this.resizeTimeout);
