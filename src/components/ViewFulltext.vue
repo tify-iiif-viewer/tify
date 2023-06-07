@@ -4,11 +4,11 @@
 		tabindex="0"
 	>
 		<h2 class="tify-sr-only">
-			{{ translate('Fulltext') }}
+			{{ $translate('Fulltext') }}
 		</h2>
 
 		<div
-			v-if="fulltextAvailable"
+			v-if="fulltextAvailable !== false"
 			class="tify-fulltext-texts"
 		>
 			<div
@@ -17,8 +17,8 @@
 				class="tify-fulltext-page"
 			>
 				<h3>
-					{{ translate('Page') }}
-					{{ getPageLabel(page, canvases[page - 1].label) }}
+					{{ $translate('Page') }}
+					{{ $store.getPageLabel(page, $store.canvases[page - 1].label) }}
 				</h3>
 				<div
 					v-for="(text, index) in fulltexts[page]"
@@ -33,35 +33,30 @@
 			v-else
 			class="tify-fulltext-none"
 		>
-			{{ translate('Fulltext not available for this page') }}
+			{{ $translate('Fulltext not available for this page') }}
 		</div>
 	</section>
 </template>
 
 <script>
-import { fetchText, fetchJson } from '../modules/http';
-import { translate } from '../modules/i18n';
-import { filterHtml, getPageLabel } from '../modules/iiif';
+import { filterHtml } from '../modules/filter';
 import { isValidUrl } from '../modules/validation';
-import { canvases, manifest, options } from '../modules/store';
 
 export default {
 	data() {
 		return {
-			canvases,
-			fulltextAvailable: false,
+			fulltextAvailable: null,
 			fulltexts: [],
-			options,
 		};
 	},
 	computed: {
 		pages() {
-			return options.pages.filter((page) => !!page);
+			return this.$store.options.pages.filter((page) => !!page);
 		},
 	},
 	watch: {
 		// eslint-disable-next-line func-names
-		'options.pages': function () {
+		'$store.options.pages': function () {
 			this.loadFulltexts();
 		},
 	},
@@ -69,24 +64,24 @@ export default {
 		this.loadFulltexts();
 	},
 	methods: {
-		getPageLabel,
 		loadFulltexts() {
-			this.fulltextAvailable = false;
+			this.fulltextAvailable = null;
 			this.fulltexts = [];
 
-			options.pages.forEach((page) => {
+			this.$store.options.pages.forEach((page) => {
 				if (page < 1 || this.fulltexts[page]) {
 					return;
 				}
 
-				const canvas = manifest.sequences[0].canvases[page - 1];
+				const canvas = this.$store.canvases[page - 1];
 				if (!('otherContent' in canvas)) {
+					this.fulltextAvailable = false;
 					return;
 				}
 
 				const annotationListUrl = canvas.otherContent[0]['@id'];
 
-				fetchJson(annotationListUrl).then(
+				this.$store.fetchJson(annotationListUrl).then(
 					(data) => {
 						const { resources } = data;
 						if (!Array.isArray(resources)) {
@@ -120,18 +115,19 @@ export default {
 						const status = error.response ? error.response.statusText : error.message;
 						// eslint-disable-next-line no-console
 						console.warn(`Could not load annotations: ${status}`);
+						this.fulltextAvailable = false;
 					},
 				);
 			});
 		},
 		loadRemoteFulltext(page, index, url) {
-			// Only attempt to load remote fulltext if we got a valid URL
 			// TODO: Add support for dctypes
+
 			if (!isValidUrl(url)) {
 				return;
 			}
 
-			fetchText(url).then(
+			this.$store.fetchText(url).then(
 				(html) => {
 					const text = filterHtml(html);
 					if (text) {
@@ -151,7 +147,6 @@ export default {
 				},
 			);
 		},
-		translate,
 	},
 };
 </script>

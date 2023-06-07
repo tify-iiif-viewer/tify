@@ -4,7 +4,7 @@
 		tabindex="0"
 	>
 		<h2 class="tify-sr-only">
-			{{ translate('Collection') }}
+			{{ $translate('Collection') }}
 		</h2>
 
 		<p
@@ -13,9 +13,9 @@
 		>
 			<input
 				v-model="filter"
-				:aria-label="translate('Filter collection')"
+				:aria-label="$translate('Filter collection')"
 				class="tify-collection-filter"
-				:placeholder="translate('Filter collection')"
+				:placeholder="$translate('Filter collection')"
 				type="text"
 				@keydown.esc.prevent="filter ? (filter = '') : $event.target.blur()"
 				@keydown.stop
@@ -26,7 +26,7 @@
 				:disabled="!filter"
 				@click="filter = ''"
 			>
-				{{ translate('Reset') }}
+				{{ $translate('Reset') }}
 			</button>
 		</p>
 
@@ -44,15 +44,12 @@
 			v-else
 			class="tify-collection-no-results"
 		>
-			{{ translate('No results') }}
+			{{ $translate('No results') }}
 		</p>
 	</section>
 </template>
 
 <script>
-import { translate } from '../modules/i18n';
-import { collection } from '../modules/store';
-
 export default {
 	data() {
 		return {
@@ -68,29 +65,26 @@ export default {
 			});
 		},
 		items() {
-			if (collection.manifests && collection.collections) {
+			if (this.$store.collection.manifests && this.$store.collection.collections) {
 				// Create dummy collection containing both
 				return [
 					{
 						'@id': 'tify-collection-manifests',
 						'@type': 'sc:Collection',
-						label: translate('Documents'),
-						children: collection.manifests,
+						label: this.$translate('Documents'),
+						children: this.$store.collection.manifests,
 					},
 					{
 						'@id': 'tify-collection-collections',
 						'@type': 'sc:Collection',
-						label: translate('Collections'),
-						children: collection.collections,
+						label: this.$translate('Collections'),
+						children: this.$store.collection.collections,
 					},
 				];
 			}
 
-			return collection.manifests || collection.collections;
+			return this.$store.collection.manifests || this.$store.collection.collections;
 		},
-	},
-	methods: {
-		translate,
 	},
 };
 </script>

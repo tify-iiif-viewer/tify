@@ -3,23 +3,28 @@ import { mount } from '@vue/test-utils';
 
 import PageSelect from '../../../src/components/PageSelect.vue';
 
-import { options, setManifest } from '../../../src/modules/store';
+import i18n from '../../../src/plugins/i18n';
+import store from '../../../src/plugins/store';
 
 import manifest from '../../iiif-api/data/manifests/gdz-PPN857449303.json';
 
-options.language = 'en';
-options.pages = [1];
-options.pageLabelFormat = 'P : L';
-options.root = {
-	$el: {
-		addEventListener() {},
-	},
-};
-
-setManifest(manifest);
-
 describe('PageSelect', () => {
-	const { vm } = mount(PageSelect);
+	const { vm } = mount(PageSelect, {
+		global: {
+			plugins: [
+				i18n,
+				[store, {
+					manifest,
+					options: {
+						language: 'en',
+						pageLabelFormat: 'P : L',
+						pages: [1],
+					},
+					rootElement: { addEventListener() {} },
+				}],
+			],
+		},
+	});
 
 	it('filters and updates canvases', () => {
 		vm.filter = '5';

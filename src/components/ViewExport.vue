@@ -4,11 +4,11 @@
 		tabindex="0"
 	>
 		<h2 class="tify-sr-only">
-			{{ translate('Export') }}
+			{{ $translate('Export') }}
 		</h2>
 
 		<div class="tify-export-section -links">
-			<h3>{{ translate('Download Individual Images') }}</h3>
+			<h3>{{ $translate('Download Individual Images') }}</h3>
 			<ul>
 				<li
 					v-for="page in pages"
@@ -19,18 +19,18 @@
 						:href="imageUrls[page]"
 						:download="`${page}.jpg`"
 					>
-						{{ translate('Page') }}
-						{{ getPageLabel(page, convertValueToArray(canvases[page - 1].label)[0]) }}
+						{{ $translate('Page') }}
+						{{ $store.getPageLabel(page, $store.convertValueToArray($store.canvases[page - 1].label)[0]) }}
 					</a>
 				</li>
 			</ul>
 		</div>
 
 		<div
-			v-if="manifest.rendering"
+			v-if="$store.manifest.rendering"
 			class="tify-export-section -renderings"
 		>
-			<h3>{{ translate('Renderings') }}</h3>
+			<h3>{{ $translate('Renderings') }}</h3>
 			<ul>
 				<li
 					v-for="item in renderings"
@@ -48,29 +48,29 @@
 					type="button"
 					class="tify-export-toggle"
 					:class="{ '-close': perElementPdfLinksVisible }"
-					:aria-controls="getId('export-pdf-list')"
+					:aria-controls="$store.getId('export-pdf-list')"
 					:aria-expanded="perElementPdfLinksVisible ? 'true' : 'false'"
 					@click="perElementPdfLinksVisible = !perElementPdfLinksVisible"
 				>
 					<template v-if="!perElementPdfLinksVisible">
-						{{ translate('PDFs for each element') }}
+						{{ $translate('PDFs for each element') }}
 					</template>
 					<template v-else>
 						<icon-close />
-						<span class="tify-sr-only">{{ translate('Close PDF list') }}</span>
+						<span class="tify-sr-only">{{ $translate('Close PDF list') }}</span>
 					</template>
 				</button>
 				<div
 					v-if="perElementPdfLinksVisible"
-					:id="getId('export-pdf-list')"
+					:id="$store.getId('export-pdf-list')"
 					class="tify-export-toc"
 				>
-					<h4>{{ translate('PDFs for each element') }}</h4>
+					<h4>{{ $translate('PDFs for each element') }}</h4>
 					<toc-list
 						ref="children"
 						purpose="pdf"
 						:level="0"
-						:structures="structures"
+						:structures="$store.structures"
 					/>
 				</div>
 			</div>
@@ -80,7 +80,7 @@
 			v-if="literatureItems.length"
 			class="tify-export-section -literature"
 		>
-			<h3>{{ translate('Literature Management') }}</h3>
+			<h3>{{ $translate('Literature Management') }}</h3>
 			<ul>
 				<li
 					v-for="item in literatureItems"
@@ -97,22 +97,22 @@
 		</div>
 
 		<div class="tify-export-section -other">
-			<h3>{{ translate('Other Formats') }}</h3>
+			<h3>{{ $translate('Other Formats') }}</h3>
 			<ul>
-				<li v-if="options.childManifestUrl">
+				<li v-if="$store.options.childManifestUrl">
 					<a
-						:href="options.childManifestUrl"
+						:href="$store.options.childManifestUrl"
 						download="manifest.json"
 					>
-						{{ translate('IIIF manifest (current document)') }}
+						{{ $translate('IIIF manifest (current document)') }}
 					</a>
 				</li>
 				<li>
 					<a
-						:href="options.manifestUrl"
+						:href="$store.options.manifestUrl"
 						download="manifest.json"
 					>
-						{{ translate(collection ? 'IIIF manifest (collection)' : 'IIIF manifest') }}
+						{{ $translate($store.collection ? 'IIIF manifest (collection)' : 'IIIF manifest') }}
 					</a>
 				</li>
 				<li
@@ -132,12 +132,6 @@
 </template>
 
 <script>
-import { getId } from '../modules/id';
-import { translate } from '../modules/i18n';
-import { convertValueToArray, getPageLabel } from '../modules/iiif';
-import { canvases, collection, manifest, options } from '../modules/store';
-import { structures } from '../modules/structures';
-
 const itemCriteria = [
 	{
 		label: 'BibTex',
@@ -169,39 +163,29 @@ const itemCriteria = [
 export default {
 	data() {
 		return {
-			collection,
 			literatureItems: [],
-			manifest,
-			options,
 			otherItems: [],
 			perElementPdfLinksVisible: false,
-			structures,
 		};
 	},
 	computed: {
-		canvases() {
-			return canvases.value;
-		},
-		pages() {
-			return options.pages.filter((page) => page > 0);
-		},
 		hasElementPdfLinks() {
-			if (!Array.isArray(manifest.structures)
-				|| !manifest.structures[0]
-				|| !manifest.structures[0].rendering
+			if (!Array.isArray(this.$store.manifest.structures)
+				|| !this.$store.manifest.structures[0]
+				|| !this.$store.manifest.structures[0].rendering
 			) return false;
 
-			const renderings = convertValueToArray(manifest.structures[0].rendering);
+			const renderings = this.$store.convertValueToArray(this.$store.manifest.structures[0].rendering);
 			return renderings.some((rendering) => rendering.format && rendering.format === 'application/pdf');
 		},
 		imageUrls() {
 			const imageUrls = {};
-			options.pages.forEach((page) => {
+			this.$store.options.pages.forEach((page) => {
 				if (!page) {
 					return;
 				}
 
-				const { resource } = this.canvases[page - 1].images[0];
+				const { resource } = this.$store.canvases[page - 1].images[0];
 				if (resource.service) {
 					const quality = resource.service['@context'] === 'http://iiif.io/api/image/2/context.json'
 						? 'default'
@@ -214,12 +198,16 @@ export default {
 			});
 			return imageUrls;
 		},
+		pages() {
+			return this.$store.options.pages.filter((page) => page > 0);
+		},
 		renderings() {
-			return convertValueToArray(manifest.rendering);
+			return this.$store.convertValueToArray(this.$store.manifest.rendering);
 		},
 	},
 	created() {
-		const { seeAlso } = manifest;
+		const { seeAlso } = this.$store.manifest;
+
 		if (!seeAlso) {
 			return;
 		}
@@ -251,12 +239,6 @@ export default {
 				this.otherItems.push(currentItem);
 			}
 		});
-	},
-	methods: {
-		convertValueToArray,
-		getId,
-		getPageLabel,
-		translate,
 	},
 };
 </script>

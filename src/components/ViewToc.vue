@@ -4,7 +4,7 @@
 		tabindex="0"
 	>
 		<h2 class="tify-sr-only">
-			{{ translate('Table of Contents') }}
+			{{ $translate('Table of Contents') }}
 		</h2>
 
 		<div
@@ -16,14 +16,14 @@
 				class="tify-toc-toggle-all"
 				@click="$refs.children.toggleAllChildren(true)"
 			>
-				{{ translate('Expand all') }}
+				{{ $translate('Expand all') }}
 			</button>
 			<button
 				type="button"
 				class="tify-toc-toggle-all"
 				@click="$refs.children.toggleAllChildren(false)"
 			>
-				{{ translate('Collapse all') }}
+				{{ $translate('Collapse all') }}
 			</button>
 		</div>
 
@@ -31,16 +31,13 @@
 			v-if="isInited"
 			ref="children"
 			:level="0"
-			:structures="structures"
+			:structures="$store.structures"
 		/>
 	</section>
 </template>
 
 <script>
-import { translate } from '../modules/i18n';
-import { options } from '../modules/store';
-import { structures } from '../modules/structures';
-import { updateScrollPos } from '../modules/ui';
+import { updateScrollPos } from '../modules/scroll';
 
 const currentSelector = '.tify-toc-structure.-current';
 
@@ -48,22 +45,20 @@ export default {
 	data() {
 		return {
 			isInited: false,
-			options, // required for watcher
-			structures,
 		};
 	},
 	computed: {
 		hasChildStructures() {
-			return structures.value && structures.value.some((structure) => structure.childStructures);
+			return this.$store.structures
+				&& this.$store.structures.some((structure) => structure.childStructures);
 		},
 	},
 	watch: {
 		// eslint-disable-next-line func-names
-		'options.pages': function () {
+		'$store.options.pages': function () {
 			this.$nextTick(() => updateScrollPos(currentSelector, this.$el));
 		},
-		// eslint-disable-next-line func-names
-		'options.view': {
+		'$store.options.view': {
 			handler(view) {
 				if (view === 'toc') {
 					this.$nextTick(this.init);
@@ -77,7 +72,6 @@ export default {
 			this.isInited = true;
 			this.$nextTick(() => updateScrollPos(currentSelector, this.$el, false));
 		},
-		translate,
 	},
 };
 </script>

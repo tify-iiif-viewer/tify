@@ -1,1 +1,17 @@
-{"@context":"http://iiif.io/api/presentation/2/context.json","@id":"https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN235181684_0029/list/gdz:PPN235181684_0029:00000001","@type":"sc:AnnotationList","resources":[{"@context":"http://iiif.io/api/presentation/2/context.json","@type":"oa:Annotation","motivation":"sc:painting","resource":{"@id":"https://gdz.sub.uni-goettingen.de/fulltext/PPN235181684_0029/00000001.xml","@type":"dctypes:Text","format":"text/html"}}]}
+{
+	"@context": "http://iiif.io/api/presentation/2/context.json",
+	"@id": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN235181684_0029/list/gdz:PPN235181684_0029:00000001",
+	"@type": "sc:AnnotationList",
+	"resources": [
+		{
+			"@context": "http://iiif.io/api/presentation/2/context.json",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@id": "https://gdz.sub.uni-goettingen.de/fulltext/PPN235181684_0029/00000001.xml",
+				"@type": "dctypes:Text",
+				"format": "text/html"
+			}
+		}
+	]
+}

@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils';
 
 import MetadataList from '../../../src/components/MetadataList.vue';
 
-describe('Metadata List', () => {
+describe('MetadataList', () => {
 	const { vm } = mount(MetadataList);
 
 	it('formats a label', () => {

@@ -1,7 +1,7 @@
 <template>
 	<li
 		class="tify-collection-item"
-		:class="{ '-current': manifest['@id'] === item['@id'] }"
+		:class="{ '-current': $store.manifest && $store.manifest['@id'] === item['@id'] }"
 	>
 		<button
 			v-if="item['@type'] === 'sc:Collection'"
@@ -13,11 +13,11 @@
 		>
 			<template v-if="expanded">
 				<icon-minus />
-				<span class="tify-sr-only">{{ translate('Collapse') }}</span>
+				<span class="tify-sr-only">{{ $translate('Collapse') }}</span>
 			</template>
 			<template v-else>
 				<icon-plus />
-				<span class="tify-sr-only">{{ translate('Expand') }}</span>
+				<span class="tify-sr-only">{{ $translate('Expand') }}</span>
 			</template>
 
 			{{ label }}
@@ -26,7 +26,7 @@
 			v-else
 			href="javascript:;"
 			class="tify-collection-link"
-			@click="loadManifest(item['@id'], { expectedType: item['@type'], reset: true }, this)"
+			@click="$store.loadManifest(item['@id'], { expectedType: item['@type'], reset: true })"
 		>
 			{{ label }}
 		</a>
@@ -47,20 +47,13 @@
 				v-else-if="children === false"
 				class="tify-collection-error"
 			>
-				{{ translate('Could not load child manifest') }}
+				{{ $translate('Could not load child manifest') }}
 			</p>
 		</template>
 	</li>
 </template>
 
 <script>
-import { errorHandler } from '../modules/errorHandler';
-import { getId } from '../modules/id';
-import { fetchJson } from '../modules/http';
-import { translate } from '../modules/i18n';
-import { convertValueToArray, loadManifest } from '../modules/iiif';
-import { manifest } from '../modules/store';
-
 export default {
 	name: 'CollectionNode',
 	props: {
@@ -73,19 +66,17 @@ export default {
 		return {
 			children: null,
 			expanded: false,
-			id: getId(`collection-node-${Math.floor(Math.random() * 1e12)}`),
-			manifest,
+			id: this.$store.getId(`collection-node-${Math.floor(Math.random() * 1e12)}`),
 		};
 	},
 	computed: {
 		label() {
 			return this.item.label
-				? convertValueToArray(this.item.label).join(`${String.fromCharCode(160)}· `) // 160 = &nbsp;
+				? this.$store.convertValueToArray(this.item.label).join(`${String.fromCharCode(160)}· `) // 160 = &nbsp;
 				: '';
 		},
 	},
 	methods: {
-		loadManifest,
 		toggleChildren() {
 			if (this.expanded) {
 				this.expanded = false;
@@ -103,7 +94,7 @@ export default {
 				return;
 			}
 
-			fetchJson(this.item['@id']).then(
+			this.$store.fetchJson(this.item['@id']).then(
 				(childManifest) => {
 					this.children = childManifest.manifests || childManifest.collections || [];
 					this.expanded = true;
@@ -112,12 +103,11 @@ export default {
 					const status = error.response
 						? error.response.statusText || error.response.data || error.message
 						: error.message;
-					errorHandler.add(`Error loading IIIF manifest: ${status}`);
+					this.$store.addError(`Error loading IIIF manifest: ${status}`);
 					this.children = false;
 				},
 			);
 		},
-		translate,
 	},
 };
 </script>

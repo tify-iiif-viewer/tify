@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { filterHtml, getPageLabel } from '../../../src/modules/iiif';
-import { options } from '../../../src/modules/store';
+import { filterHtml } from '../../../src/modules/filter';
 
 describe('filterHtml', () => {
 	it('filters HTML', () => {
@@ -32,12 +31,5 @@ describe('filterHtml', () => {
 		`;
 
 		expect(filterHtml(html)).toEqual(filteredHtml);
-	});
-});
-
-describe('setPageLabel', () => {
-	it('gets the page label', () => {
-		options.pageLabelFormat = 'P : L';
-		expect(getPageLabel(1, 'label')).toEqual('1 : label');
 	});
 });

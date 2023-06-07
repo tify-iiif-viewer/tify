@@ -1,31 +1,36 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
 
-import Toc from '../../../src/components/ViewToc.vue';
+import ViewToc from '../../../src/components/ViewToc.vue';
 
-import { options, setManifest } from '../../../src/modules/store';
+import i18n from '../../../src/plugins/i18n';
+import store from '../../../src/plugins/store';
 
 import manifestForLabels from '../../iiif-api/data/manifests/digitale-sammlungen-bsb00026283.json';
 import manifestForPages from '../../iiif-api/data/manifests/gdz-DE_611_BF_5619_1801_1806.json';
 
-options.language = 'en';
+describe('ViewToc', () => {
+	const { vm } = mount(ViewToc, {
+		global: {
+			plugins: [
+				i18n,
+				[store, {
+					options: { language: 'en' },
+					manifest: manifestForLabels,
+				}],
+			],
+		},
+	});
 
-describe('Toc', () => {
 	it('selects a label in the current language', () => {
-		setManifest(manifestForLabels);
-
-		const { vm } = mount(Toc);
-
-		const { label } = vm.structures[0];
+		const { label } = vm.$store.structures[0];
 		expect(label).toEqual('Miniatur: Jesu Gebet in Gethsemane');
 	});
 
 	it('orders pages by logical page number', () => {
-		setManifest(manifestForPages);
+		vm.$store.manifest = manifestForPages;
 
-		const { vm } = mount(Toc);
-
-		const pages = vm.structures[0].childStructures.map((structure) => structure.firstPage);
+		const pages = vm.$store.structures[0].childStructures.map((structure) => structure.firstPage);
 		expect(pages.toString()).toEqual(pages.sort((a, b) => a - b).toString());
 	});
 });

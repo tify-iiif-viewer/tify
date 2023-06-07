@@ -1,9 +1,3 @@
-import { options } from './store';
-
-export function isMobile() {
-	return options.root.$el.offsetWidth < options.breakpoints.medium;
-}
-
 export function scrollTo(element, to, animationDuration = 120) {
 	const el = element;
 	const duration = animationDuration === true ? 120 : animationDuration;
