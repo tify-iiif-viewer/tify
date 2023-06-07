@@ -1,24 +1,24 @@
 <template>
 	<section class="tify-scan">
 		<h2 class="tify-sr-only">
-			{{ translate('Scan') }}
+			{{ $translate('Scan') }}
 		</h2>
 
 		<button
-			v-if="!customPageViewActive && !isFirstPage"
+			v-if="!$store.isCustomPageView && !$store.isFirstPage"
 			type="button"
 			class="tify-scan-page-button -previous"
-			:title="translate('Previous page')"
-			@click="goToPreviousPage"
+			:title="$translate('Previous page')"
+			@click="$store.goToPreviousPage()"
 		>
 			<icon-chevron-left />
 		</button>
 		<button
-			v-if="!customPageViewActive && !isLastPage"
+			v-if="!$store.isCustomPageView && !$store.isLastPage"
 			type="button"
 			class="tify-scan-page-button -next"
-			:title="translate('Next page')"
-			@click="goToNextPage"
+			:title="$translate('Next page')"
+			@click="$store.goToNextPage()"
 		>
 			<icon-chevron-right />
 		</button>
@@ -31,8 +31,8 @@
 				type="button"
 				class="tify-scan-button"
 				:disabled="viewerState.isMaxZoom"
-				:title="translate('Zoom in')"
-				@click="zoomIn"
+				:title="$translate('Zoom in')"
+				@click="zoomIn()"
 			>
 				<icon-magnify-plus />
 			</button>
@@ -40,7 +40,7 @@
 				type="button"
 				class="tify-scan-button"
 				:disabled="viewerState.isReset"
-				:title="translate('Reset')"
+				:title="$translate('Reset')"
 				@click="resetScan(!!$event.shiftKey)"
 			>
 				<icon-aspect-ratio />
@@ -49,8 +49,8 @@
 				type="button"
 				class="tify-scan-button"
 				:disabled="viewerState.isMinZoom"
-				:title="translate('Zoom out')"
-				@click="zoomOut"
+				:title="$translate('Zoom out')"
+				@click="zoomOut()"
 			>
 				<icon-magnify-minus />
 			</button>
@@ -58,8 +58,8 @@
 			<button
 				type="button"
 				class="tify-scan-button"
-				:class="{ '-active': options.rotation }"
-				:title="translate('Rotate')"
+				:class="{ '-active': $store.options.rotation }"
+				:title="$translate('Rotate')"
 				@click="rotateRight($event)"
 			>
 				<icon-rotate-right />
@@ -74,8 +74,8 @@
 					type="button"
 					class="tify-scan-button"
 					:class="{ '-active': filtersActive }"
-					:title="translate('Toggle image filters')"
-					:aria-controls="getId('filters')"
+					:title="$translate('Toggle image filters')"
+					:aria-controls="$store.getId('filters')"
 					:aria-expanded="filtersVisible ? 'true' : 'false'"
 					@click="filtersVisible = !filtersVisible"
 				>
@@ -83,17 +83,17 @@
 				</button>
 				<div
 					v-show="filtersVisible"
-					:id="getId('filters')"
+					:id="$store.getId('filters')"
 					class="tify-scan-filters-popup"
 				>
 					<h3 class="tify-sr-only">
-						{{ translate('Image filters') }}
+						{{ $translate('Image filters') }}
 					</h3>
 					<p>
 						<label>
 							<icon-white-balance-sunny />
-							{{ translate('Brightness') }}
-							<b>{{ Math.round((options.filters.brightness || 1) * 100) }}&nbsp;%</b>
+							{{ $translate('Brightness') }}
+							<b>{{ Math.round(($store.options.filters.brightness || 1) * 100) }}&nbsp;%</b>
 							<input
 								ref="firstSlider"
 								class="tify-scan-range"
@@ -101,7 +101,7 @@
 								min=".5"
 								step=".01"
 								type="range"
-								:value="options.filters.brightness || 1"
+								:value="$store.options.filters.brightness || 1"
 								@input="setFilter('brightness', $event)"
 							/>
 						</label>
@@ -109,15 +109,15 @@
 					<p>
 						<label>
 							<icon-brightness-6 />
-							{{ translate('Contrast') }}
-							<b>{{ Math.round((options.filters.contrast || 1) * 100) }}&nbsp;%</b>
+							{{ $translate('Contrast') }}
+							<b>{{ Math.round(($store.options.filters.contrast || 1) * 100) }}&nbsp;%</b>
 							<input
 								class="tify-scan-range"
 								max="2"
 								min=".5"
 								step=".01"
 								type="range"
-								:value="options.filters.contrast || 1"
+								:value="$store.options.filters.contrast || 1"
 								@input="setFilter('contrast', $event)"
 							/>
 						</label>
@@ -125,7 +125,7 @@
 					<p>
 						<label>
 							<icon-palette />
-							{{ translate('Saturation') }}
+							{{ $translate('Saturation') }}
 							<b>{{ Math.round(saturation * 100) }}&nbsp;%</b>
 							<input
 								class="tify-scan-range"
@@ -143,10 +143,10 @@
 							type="button"
 							class="tify-scan-reset"
 							:disabled="!filtersActive"
-							@click="resetFilters"
+							@click="resetFilters()"
 						>
 							<icon-backup-restore />
-							{{ translate('Reset') }}
+							{{ $translate('Reset') }}
 						</button>
 					</p>
 				</div>
@@ -164,15 +164,7 @@
 import vClickOutside from 'click-outside-vue3';
 import OpenSeadragon from 'openseadragon';
 
-import { expose } from '../modules/api';
-import { errorHandler } from '../modules/errorHandler';
-import { getId } from '../modules/id';
-import { fetchJson, loading } from '../modules/http';
-import { translate } from '../modules/i18n';
 import { preventEvent } from '../modules/keyboard';
-import { isLastPage, customPageViewActive, isFirstPage, goToPreviousPage, goToNextPage } from '../modules/pagination';
-import { isMobile } from '../modules/ui';
-import { canvases, options, pageCount, updateOptions } from '../modules/store';
 
 const gapBetweenPages = 0.01;
 
@@ -184,28 +176,24 @@ export default {
 		return {
 			filtersVisible: false,
 			loadingTimeout: null,
-			options,
 			tileSources: {},
 			viewer: null,
 			viewerState: {}, // NOTE: See updateViewerState()
 			zoomFactor: 1.5,
-			isLastPage,
-			customPageViewActive,
-			isFirstPage,
 		};
 	},
 	computed: {
 		filtersActive() {
-			return Object.keys(options.filters).length > 0;
+			return Object.keys(this.$store.options.filters).length > 0;
 		},
 		saturation() {
-			const saturation = options.filters.saturate;
+			const saturation = this.$store.options.filters.saturate;
 			return typeof saturation === 'number' ? saturation : 1;
 		},
 	},
 	watch: {
 		// eslint-disable-next-line func-names
-		'options.pages': function (newValue, oldValue) {
+		'$store.options.pages': function (newValue, oldValue) {
 			const reset = newValue.length !== oldValue.length;
 			this.loadImageInfo(reset);
 		},
@@ -214,24 +202,22 @@ export default {
 		this.loadImageInfo();
 		this.updateFilterStyle();
 
-		options.root.$el.addEventListener('keydown', this.onKeydown);
-		options.root.$el.addEventListener('keypress', this.onKeypress);
+		// TODO: Add a function for adding/removing global event listeners
+		this.$store.rootElement.addEventListener('keydown', this.onKeydown);
+		this.$store.rootElement.addEventListener('keypress', this.onKeypress);
 	},
 	beforeUnmount() {
 		if (this.viewer) {
 			this.viewer.destroy();
 		}
 
-		options.root.$el.removeEventListener('keydown', this.onKeydown);
-		options.root.$el.removeEventListener('keypress', this.onKeypress);
+		this.$store.rootElement.removeEventListener('keydown', this.onKeydown);
+		this.$store.rootElement.removeEventListener('keypress', this.onKeypress);
 	},
 	methods: {
 		closeFilters() {
 			this.filtersVisible = false;
 		},
-		getId,
-		goToNextPage,
-		goToPreviousPage,
 		initViewer(reset) {
 			// TODO: All tile sources could be added at once (sequence mode), but
 			// this required the correct resolution to be present in the manifest,
@@ -242,11 +228,11 @@ export default {
 			let tileSourceIndex;
 			let totalWidth = 0;
 
-			options.pages.forEach((page, index) => {
+			this.$store.options.pages.forEach((page, index) => {
 				let opacity = 1;
 				if (page < 1) {
 					opacity = 0;
-					tileSourceIndex = index > 0 ? pageCount.value : 1;
+					tileSourceIndex = index > 0 ? this.$store.pageCount : 1;
 				} else {
 					tileSourceIndex = page;
 				}
@@ -280,12 +266,12 @@ export default {
 					} else {
 						this.viewer.viewport.applyConstraints(true);
 
-						if (!options.optionsResetOnPageChange) {
+						if (!this.$store.options.optionsResetOnPageChange) {
 							return;
 						}
 
 						// TODO: Add an e2e test for this
-						options.optionsResetOnPageChange.forEach((option) => {
+						this.$store.options.optionsResetOnPageChange.forEach((option) => {
 							if (option === 'filters') {
 								this.resetFilters();
 							} else if (option === 'pan') {
@@ -295,25 +281,25 @@ export default {
 									return;
 								}
 
-								const offsetX = options.pages[0]
+								const offsetX = this.$store.options.pages[0]
 									? 0
 									: 1;
 								this.viewer.viewport.panTo({
 									x: bounds.x > 0
 										? (bounds.width / 2) + offsetX
-										: options.pan.x,
+										: this.$store.options.pan.x,
 									y: bounds.y > 0
 										? bounds.height / 2
-										: options.pan.y,
+										: this.$store.options.pan.y,
 								});
 
-								updateOptions({ pan: {} });
+								this.$store.updateOptions({ pan: {} });
 							} else if (option === 'rotation') {
 								this.viewer.viewport.setRotation(0);
-								updateOptions({ rotation: null });
+								this.$store.updateOptions({ rotation: null });
 							} else if (option === 'zoom') {
 								this.viewer.viewport.goHome();
-								updateOptions({ zoom: null });
+								this.$store.updateOptions({ zoom: null });
 							}
 						});
 					}
@@ -328,14 +314,14 @@ export default {
 				animationTime: 0.4,
 				element: this.$refs.image,
 				immediateRender: true,
-				preload: !isMobile(),
+				preload: !this.$store.isMobile(),
 				preserveImageSizeOnResize: true,
 				preserveViewport: true,
 				showNavigationControl: false,
 				showZoomControl: false,
 				tileSources,
 				visibilityRatio: 0.2,
-				...options.viewer,
+				...this.$store.options.viewer,
 			});
 
 			// Disable OpenSeadragons built-in key handler which interferes with TIFY's keyboard shortcuts
@@ -350,7 +336,7 @@ export default {
 				}
 
 				const center = this.viewer.viewport.getCenter();
-				updateOptions({
+				this.$store.updateOptions({
 					// 3 decimals are sufficient, keeping URL short
 					pan: {
 						x: Math.round(center.x * 1e3) / 1e3,
@@ -368,23 +354,26 @@ export default {
 			this.viewer.addHandler('open', () => {
 				this.startLoadingWatch();
 
-				if (options.pan.x !== undefined || options.pan.y !== undefined || options.zoom) {
-					if (options.pan.x !== undefined || options.pan.y !== undefined) {
+				if (this.$store.options.pan.x !== undefined
+					|| this.$store.options.pan.y !== undefined
+					|| this.$store.options.zoom
+				) {
+					if (this.$store.options.pan.x !== undefined || this.$store.options.pan.y !== undefined) {
 						this.viewer.viewport.panTo({
-							x: options.pan.x,
-							y: options.pan.y,
+							x: this.$store.options.pan.x,
+							y: this.$store.options.pan.y,
 						}, true);
 					}
 
-					if (options.zoom) {
-						this.viewer.viewport.zoomTo(options.zoom, null, true);
+					if (this.$store.options.zoom) {
+						this.viewer.viewport.zoomTo(this.$store.options.zoom, null, true);
 					}
 				} else {
 					this.viewer.viewport.goHome();
 				}
 
-				if (options.rotation !== null) {
-					this.viewer.viewport.setRotation(options.rotation);
+				if (this.$store.options.rotation !== null) {
+					this.viewer.viewport.setRotation(this.$store.options.rotation);
 				}
 			});
 
@@ -393,27 +382,27 @@ export default {
 			this.viewer.addHandler('zoom', this.updateViewerState);
 
 			this.viewer.addHandler('tile-load-failed', (error) => {
-				errorHandler.add(`Error loading image: ${error.message}`);
+				this.$store.addError(`Error loading image: ${error.message}`);
 			});
 
-			expose(this.resetScan);
-			expose(this.viewer, 'viewer');
+			this.$api.expose(this.resetScan);
+			this.$api.expose(this.viewer, 'viewer');
 		},
 		loadImageInfo(reset = false) {
 			this.stopLoadingWatch();
 
 			const infoPromises = [];
-			options.pages.forEach((page) => {
+			this.$store.options.pages.forEach((page) => {
 				if (page < 1 || this.tileSources[page]) {
 					return;
 				}
 
-				const { resource } = canvases.value[page - 1].images[0];
+				const { resource } = this.$store.canvases[page - 1].images[0];
 				if (resource.service) {
 					const id = resource.service['@id'];
 					const infoUrl = `${id}${id.slice(-1) === '/' ? '' : '/'}info.json`;
 					infoPromises.push(
-						fetchJson(infoUrl).then(
+						this.$store.fetchJson(infoUrl).then(
 							(infoItem) => ({ ...infoItem, page }),
 							(error) => {
 								let status;
@@ -423,7 +412,7 @@ export default {
 									status = error.message;
 								}
 
-								errorHandler.add(`Error loading info file for page ${page}${status ? `: ${status}` : ''}`);
+								this.$store.addError(`Error loading info file for page ${page}${status ? `: ${status}` : ''}`);
 							},
 						),
 					);
@@ -463,7 +452,7 @@ export default {
 				96, // Numpad0
 			];
 
-			if (zeroKeyCodes.indexOf(event.keyCode) > -1) {
+			if (zeroKeyCodes.includes(event.keyCode)) {
 				if (event.shiftKey) {
 					this.resetScan(event);
 				} else {
@@ -524,20 +513,20 @@ export default {
 			}
 		},
 		removeScanOptions() {
-			updateOptions({
+			this.$store.updateOptions({
 				pan: {},
 				zoom: null,
 			});
 		},
 		resetFilters() {
 			this.$refs.image.style.cssText = '';
-			updateOptions({ filters: {} });
+			this.$store.updateOptions({ filters: {} });
 		},
 		resetScan(includingFiltersAndRotation) {
 			if (includingFiltersAndRotation) {
 				// Rotation has to be reset before pan and zoom
 				this.viewer.viewport.setRotation(0);
-				updateOptions({ rotation: null });
+				this.$store.updateOptions({ rotation: null });
 				if (this.filtersActive) {
 					this.resetFilters();
 				}
@@ -552,25 +541,25 @@ export default {
 				? 0
 				: (viewport.getRotation() + 90) % 360;
 			viewport.setRotation(degrees);
-			updateOptions({ rotation: degrees || null });
+			this.$store.updateOptions({ rotation: degrees || null });
 		},
 		setFilter(name, event) {
 			const value = event.target.valueAsNumber;
 			if (value === 1) {
-				delete options.filters[name];
+				delete this.$store.options.filters[name];
 			} else {
-				options.filters[name] = value;
+				this.$store.options.filters[name] = value;
 			}
-			updateOptions({ filters: options.filters });
+			this.$store.updateOptions({ filters: this.$store.options.filters });
 			this.updateFilterStyle();
 		},
 		startLoadingWatch() {
-			loading.value = 0;
+			this.$store.loading = 0;
 			for (let i = this.viewer.world.getItemCount() - 1; i >= 0; i -= 1) {
 				const image = this.viewer.world.getItemAt(i);
 				// eslint-disable-next-line no-underscore-dangle
 				if (image && image._tilesLoading) {
-					loading.value = 1;
+					this.$store.loading = 1;
 					break;
 				}
 			}
@@ -591,8 +580,8 @@ export default {
 			}
 
 			const filters = [];
-			Object.keys(options.filters).forEach((key) => {
-				filters.push(`${key}(${options.filters[key]})`);
+			Object.keys(this.$store.options.filters).forEach((key) => {
+				filters.push(`${key}(${this.$store.options.filters[key]})`);
 			});
 
 			const { image } = this.$refs;
@@ -615,7 +604,6 @@ export default {
 				&& Math.abs(homeBounds.x - currentBounds.x) < 1e-9
 				&& Math.abs(homeBounds.y - currentBounds.y) < 1e-9;
 		},
-		translate,
 		zoomIn() {
 			this.viewer.viewport.zoomBy(this.zoomFactor);
 		},

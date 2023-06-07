@@ -4,68 +4,61 @@
 		tabindex="0"
 	>
 		<h2 class="tify-sr-only">
-			{{ translate('Help') }}
+			{{ $translate('Help') }}
 		</h2>
 
-		<h3>{{ translate('About TIFY') }}</h3>
+		<h3>{{ $translate('About TIFY') }}</h3>
 
-		<p v-html="infoHtml" />
+		<p v-html="$translate('$info', infoHtml)" />
 
 		<ul>
 			<li>
-				<a :href="userGuideUrl">{{ translate('User guide') }}</a>
+				<a :href="userGuideUrl">{{ $translate('User guide') }}</a>
 			</li>
 			<li>
-				<a :href="env.repositoryUrl">{{ translate('Source code') }}</a>
+				<a :href="env.repositoryUrl">{{ $translate('Source code') }}</a>
 			</li>
 			<li>
-				<a :href="env.contributorsUrl">{{ translate('Contributors') }}</a>
+				<a :href="env.contributorsUrl">{{ $translate('Contributors') }}</a>
 			</li>
 			<li>
-				<a :href="env.bugsUrl">{{ translate('Report a bug') }}</a>
+				<a :href="env.bugsUrl">{{ $translate('Report a bug') }}</a>
 			</li>
 		</ul>
 
 		<footer class="tify-help-footer">
 			<p>
-				{{ translate('Version') }} <b>{{ env.version }}</b>
+				{{ $translate('Version') }} <b>{{ env.version }}</b>
 				&middot;
-				<span v-html="copyrightHtml" />
+				<span v-html="$translate('$copyright', copyrightHtml)" />
 			</p>
 		</footer>
 	</section>
 </template>
 
 <script>
-import { translate } from '../modules/i18n';
-import { options } from '../modules/store';
-
 export default {
 	computed: {
+		// NOTE: If $t is returned directly, this text won’t update when the language is changed via API
 		copyrightHtml() {
-			const copyright = 'Copyright &copy; 2017&ndash;2022'
+			return 'Copyright &copy; 2017&ndash;2022'
 				+ ' <a href="https://www.uni-goettingen.de/en/">Göttingen University</a>'
 				+ '&nbsp;/ '
 				+ '<a href="https://www.sub.uni-goettingen.de/en/">Göttingen State and University Library</a>';
-			return translate('$copyright', copyright);
 		},
 		env() {
 			return ENV;
 		},
 		infoHtml() {
-			const info = 'TIFY is a slim and mobile-friendly IIIF document viewer, released under the'
+			return 'TIFY is a slim and mobile-friendly IIIF document viewer, released under the'
 				+ ' <a href="https://www.gnu.org/licenses/agpl-3.0.html.en">GNU Affero General Public License 3.0</a>.';
-			return translate('$info', info);
 		},
 		userGuideUrl() {
-			const lang = this.env.docsLanguages.includes(options.language)
-				? options.language
+			const lang = this.env.docsLanguages.includes(this.$store.options.language)
+				? this.$store.options.language
 				: 'en';
 			return `${this.env.docsUrl}/user-guide.${lang}.md`;
 		},
-	},
-	methods: {
-		translate,
 	},
 };
 </script>

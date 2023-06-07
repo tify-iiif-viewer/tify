@@ -4,11 +4,11 @@
 		tabindex="0"
 	>
 		<h2 class="tify-sr-only">
-			{{ translate('Info') }}
+			{{ $translate('Info') }}
 		</h2>
 
 		<div
-			v-if="collection['@id'] && manifest['@id']"
+			v-if="$store.collection && $store.manifest"
 			class="tify-info-header"
 		>
 			<button
@@ -17,7 +17,7 @@
 				:class="{ '-active': !collectionDataShown }"
 				@click="collectionDataShown = false"
 			>
-				{{ translate('Document') }}
+				{{ $translate('Document') }}
 			</button>
 			<button
 				type="button"
@@ -25,19 +25,19 @@
 				:class="{ '-active': collectionDataShown }"
 				@click="collectionDataShown = true"
 			>
-				{{ translate('Collection') }}
+				{{ $translate('Collection') }}
 			</button>
 		</div>
 
 		<div
-			v-if="manifest.label"
+			v-if="manifestOrCollection.label"
 			class="tify-info-section -title"
 		>
 			<h3 class="tify-info-heading">
-				{{ translate('Title') }}
+				{{ $translate('Title') }}
 			</h3>
 			<div
-				v-for="label in convertValueToArray(manifest.label)"
+				v-for="label in $store.convertValueToArray(manifestOrCollection.label)"
 				:key="label"
 			>
 				{{ label }}
@@ -45,43 +45,43 @@
 		</div>
 
 		<div
-			v-if="manifest.metadata && manifest.metadata.length"
+			v-if="manifestOrCollection.metadata && manifestOrCollection.metadata.length"
 			class="tify-info-section -metadata"
 		>
-			<h3>{{ translate('Metadata') }}</h3>
+			<h3>{{ $translate('Metadata') }}</h3>
 			<metadata-list
-				v-if="options.view === 'info'"
-				:metadata="manifest.metadata"
+				v-if="$store.options.view === 'info'"
+				:metadata="manifestOrCollection.metadata"
 			/>
 		</div>
 
 		<div
-			v-if="manifest.structures && (currentStructureLabel || currentStructureMetadata)"
+			v-if="manifestOrCollection.structures && ($store.currentStructure.label || $store.currentStructure.metadata)"
 			class="tify-info-section -metadata -structure"
 		>
 			<h3>
-				{{ translate('Current Element') }}
+				{{ $translate('Current Element') }}
 			</h3>
 			<p
-				v-if="currentStructureLabel"
+				v-if="$store.currentStructure.label"
 				class="tify-info-structure"
 			>
-				{{ currentStructureLabel }}
+				{{ $store.currentStructure.label }}
 			</p>
 			<metadata-list
-				v-if="options.view === 'info' && currentStructureMetadata"
+				v-if="$store.options.view === 'info' && $store.currentStructure.metadata"
 				class="tify-info-section -metadata"
-				:metadata="currentStructureMetadata"
+				:metadata="$store.currentStructure.metadata"
 			/>
 		</div>
 
 		<div
-			v-if="manifest.description"
+			v-if="manifestOrCollection.description"
 			class="tify-info-section -description"
 		>
-			<h3>{{ translate('Description') }}</h3>
+			<h3>{{ $translate('Description') }}</h3>
 			<div
-				v-for="(description, index) in convertValueToArray(manifest.description)"
+				v-for="(description, index) in $store.convertValueToArray($store.manifest.description)"
 				:key="index"
 				v-html="description"
 			/>
@@ -91,7 +91,7 @@
 			v-if="license.length"
 			class="tify-info-section -license"
 		>
-			<h3>{{ translate('License') }}</h3>
+			<h3>{{ $translate('License') }}</h3>
 			<div
 				v-for="(item, index) in license"
 				:key="index"
@@ -125,7 +125,7 @@
 			v-if="related.length"
 			class="tify-info-section -related"
 		>
-			<h3>{{ translate('Related Resources') }}</h3>
+			<h3>{{ $translate('Related Resources') }}</h3>
 			<div
 				v-for="(item, index) in related"
 				:key="index"
@@ -146,36 +146,36 @@
 		</div>
 
 		<div
-			v-if="manifest.attribution"
+			v-if="manifestOrCollection.attribution"
 			class="tify-info-section -attribution"
 		>
-			<h3>{{ translate('Provided by') }}</h3>
+			<h3>{{ $translate('Provided by') }}</h3>
 			<div
-				v-for="(item, index) in convertValueToArray(manifest.attribution)"
+				v-for="(item, index) in $store.convertValueToArray($store.manifest.attribution)"
 				:key="index"
 				v-html="item"
 			/>
 		</div>
 
 		<div
-			v-if="manifest.logo"
+			v-if="manifestOrCollection.logo"
 			class="tify-info-section -logo"
 		>
 			<a
-				v-if="logoId && manifest.logo.service && manifest.logo.service['@id']"
-				:href="manifest.logo.service['@id']"
+				v-if="logoId && manifestOrCollection.logo.service && manifestOrCollection.logo.service['@id']"
+				:href="manifestOrCollection.logo.service['@id']"
 			>
 				<img
 					class="tify-info-logo"
 					:src="logoId"
-					:alt="translate('Logo')"
+					:alt="$translate('Logo')"
 				/>
 			</a>
 			<img
 				v-else
 				class="tify-info-logo"
 				:src="logoId"
-				:alt="translate('Logo')"
+				:alt="$translate('Logo')"
 			/>
 		</div>
 	</section>
@@ -184,43 +184,38 @@
 <script>
 // TODO: Handle and display manifest.service, see http://iiif.io/api/presentation/2.1/#service
 
-import { translate } from '../modules/i18n';
-import { convertValueToArray } from '../modules/iiif';
-import { collection, manifest, options } from '../modules/store';
-import { currentStructure, currentStructureMetadata, currentStructureLabel } from '../modules/structures';
 import { isValidUrl } from '../modules/validation';
 
 export default {
 	data() {
 		return {
-			currentStructure,
-			currentStructureLabel,
-			currentStructureMetadata,
 			collectionDataShown: false,
-			options,
 		};
 	},
 	computed: {
-		collection() {
-			return collection;
-		},
 		license() {
-			return manifest.license ? convertValueToArray(this.manifest.license) : [];
+			return this.manifestOrCollection.license
+				? this.$store.convertValueToArray(this.manifestOrCollection.license)
+				: [];
 		},
 		logoId() {
-			return manifest.logo['@id'] || manifest.logo;
+			return this.manifestOrCollection.logo['@id'] || this.manifestOrCollection.logo;
 		},
-		manifest() {
-			return this.collectionDataShown ? collection : (manifest || collection);
+		manifestOrCollection() {
+			if (this.collectionDataShown) {
+				return this.$store.collection;
+			}
+
+			return this.$store.manifest || this.$store.collection;
 		},
 		related() {
-			return manifest.related ? convertValueToArray(manifest.related) : [];
+			return this.manifestOrCollection.related
+				? this.$store.convertValueToArray(this.manifestOrCollection.related)
+				: [];
 		},
 	},
 	methods: {
-		convertValueToArray,
 		isValidUrl,
-		translate,
 	},
 };
 </script>

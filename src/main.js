@@ -2,13 +2,9 @@ import { createApp, h } from 'vue';
 
 import App from './App.vue';
 
-import { expose } from './modules/api';
-import { errorHandler } from './modules/errorHandler';
-import { initOptions } from './modules/http';
-import { setLanguage } from './modules/i18n';
-import { loadManifest } from './modules/iiif';
-import { setPage } from './modules/pagination';
-import { options, urlUpdateTimeout } from './modules/store';
+import api from './plugins/api';
+import i18n from './plugins/i18n';
+import store from './plugins/store';
 
 window.Tify = function Tify(userOptions = {}) {
 	const defaultOptions = {
@@ -65,72 +61,11 @@ window.Tify = function Tify(userOptions = {}) {
 
 	const instance = this;
 	this.app = createApp({
-		data() {
-			return {
-				collection: null,
-				error: '',
-				manifest: null,
-				options: instance.options,
-				ready: false,
-				readyPromise,
-				translation: null,
-			};
-		},
-		created() {
-			this.options.root = this;
-
-			Object.assign(options, instance.options);
-
-			expose(setLanguage);
-			expose(setPage);
-		},
-		mounted() {
-			// Set current breakpoint as classes on container element for use in CSS
-			this.updateBreakpoint();
-			new ResizeObserver(this.updateBreakpoint).observe(this.$el);
-
-			if (!this.options.manifestUrl) {
-				errorHandler.add('Missing option "manifestUrl"');
-				return;
-			}
-
-			Promise.all([
-				loadManifest(this.options.manifestUrl, {}, this),
-				setLanguage(this.options.language),
-			]).then(() => {
-				this.$nextTick(() => {
-					this.ready = true;
-					this.readyPromise.resolve();
-				});
-			}, (error) => {
-				this.readyPromise.reject(error);
-			});
-		},
-		beforeUnmount() {
-			clearTimeout(urlUpdateTimeout);
-			window.removeEventListener('popstate', initOptions);
-		},
-		methods: {
-			updateBreakpoint() {
-				Object.keys(this.options.breakpoints).forEach((breakpoint) => {
-					if (this.$el.clientWidth <= this.options.breakpoints[breakpoint]) {
-						this.$el.classList.add(`-${breakpoint}`);
-					} else {
-						this.$el.classList.remove(`-${breakpoint}`);
-					}
-				});
-
-				if (this.$el.clientHeight < 520) {
-					this.$el.classList.add('-short');
-				} else {
-					this.$el.classList.remove('-short');
-				}
-			},
-		},
-		render() {
-			return h(App, { ready: this.ready });
-		},
-	});
+		render: () => h(App, { readyPromise }),
+	})
+		.use(api, { instance })
+		.use(i18n)
+		.use(store, { options: this.options });
 
 	// TODO: Add test
 	let mounted = false;

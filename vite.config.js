@@ -40,18 +40,18 @@ export default defineConfig({
 		// Prepend copyright notice to each compiled file
 		banner(
 			'/*!'
-			+ `\nTIFY v${pkg.version}`
-			+ `\n(c) 2017-${new Date().getFullYear()}`
-			+ ' Göttingen State and University Library (https://www.sub.uni-goettingen.de/)'
-			+ `\n${pkg.license}`
-			+ `\n${pkg.homepage}`
-			+ '\n*/',
+				+ `\nTIFY v${pkg.version}`
+				+ `\n(c) 2017-${new Date().getFullYear()}`
+				+ ' Göttingen State and University Library (https://www.sub.uni-goettingen.de/)'
+				+ `\n${pkg.license}`
+				+ `\n${pkg.homepage}`
+				+ '\n*/',
 		),
 		componentsAutoImport({
 			resolvers: [
 				(componentName) => {
-					// Replacing "\" with "/" in import paths so unit tests work on Windows
-					// NOTE: path.normalize cannot help here
+					// NOTE: Full path required for unit tests with Vitest
+					// Replacing "\" with "/" so it works on Windows; path.normalize cannot help here
 					const baseDir = __dirname.replaceAll('\\', '/');
 					const dir = `${baseDir}/src/components${componentName.startsWith('Icon') ? '/icons' : ''}`;
 					return {

@@ -10,7 +10,7 @@
 		</div>
 
 		<div
-			v-if="manifest['@id']"
+			v-if="$store.manifest"
 			class="tify-header-column -pagination"
 		>
 			<div class="tify-header-button-group -page-select">
@@ -19,11 +19,11 @@
 				<button
 					type="button"
 					class="tify-header-button"
-					:class="{ '-active': options.pages.length > 1 }"
-					:title="translate('Toggle double-page')"
+					:class="{ '-active': $store.options.pages.length > 1 }"
+					:title="$translate('Toggle double-page')"
 					@click="toggleDoublePage"
 				>
-					<icon-view-module v-if="customPageViewActive" />
+					<icon-view-module v-if="$store.isCustomPageView" />
 					<icon-book-open-blank-variant v-else />
 				</button>
 			</div>
@@ -32,20 +32,20 @@
 				<button
 					type="button"
 					class="tify-header-button"
-					:disabled="customPageViewActive || isFirstPage"
-					:title="translate('First page')"
-					@click="goToFirstPage"
+					:disabled="$store.isCustomPageView || $store.isFirstPage"
+					:title="$translate('First page')"
+					@click="$store.goToFirstPage()"
 				>
 					<icon-page-first />
 				</button>
 
 				<button
-					v-if="structures && structures.length"
+					v-if="$store.manifest.structures"
 					type="button"
 					class="tify-header-button"
-					:disabled="customPageViewActive || isFirstPage"
-					:title="translate('Previous section')"
-					@click="goToPreviousSection"
+					:disabled="$store.isCustomPageView || $store.isFirstPage"
+					:title="$translate('Previous section')"
+					@click="goToPreviousSection()"
 				>
 					<icon-skip-previous />
 				</button>
@@ -53,9 +53,9 @@
 				<button
 					type="button"
 					class="tify-header-button"
-					:disabled="customPageViewActive || isFirstPage"
-					:title="translate('Previous page')"
-					@click="goToPreviousPage"
+					:disabled="$store.isCustomPageView || $store.isFirstPage"
+					:title="$translate('Previous page')"
+					@click="$store.goToPreviousPage()"
 				>
 					<icon-chevron-left />
 				</button>
@@ -63,20 +63,20 @@
 				<button
 					type="button"
 					class="tify-header-button"
-					:disabled="customPageViewActive || isLastPage"
-					:title="translate('Next page')"
-					@click="goToNextPage"
+					:disabled="$store.isCustomPageView || $store.isLastPage"
+					:title="$translate('Next page')"
+					@click="$store.goToNextPage()"
 				>
 					<icon-chevron-right />
 				</button>
 
 				<button
-					v-if="structures && structures.length"
+					v-if="$store.manifest.structures"
 					type="button"
 					class="tify-header-button"
-					:disabled="customPageViewActive || isLastSection"
-					:title="translate('Next section')"
-					@click="goToNextSection"
+					:disabled="$store.isCustomPageView || isLastSection"
+					:title="$translate('Next section')"
+					@click="goToNextSection()"
 				>
 					<icon-skip-next />
 				</button>
@@ -84,9 +84,9 @@
 				<button
 					type="button"
 					class="tify-header-button"
-					:disabled="customPageViewActive || isLastPage"
-					:title="translate('Last page')"
-					@click="goToLastPage"
+					:disabled="$store.isCustomPageView || $store.isLastPage"
+					:title="$translate('Last page')"
+					@click="$store.goToLastPage()"
 				>
 					<icon-page-last />
 				</button>
@@ -101,11 +101,11 @@
 				<button
 					v-click-outside="closeControlsPopup"
 					type="button"
-					:aria-controls="getId('controls')"
+					:aria-controls="$store.getId('controls')"
 					:aria-expanded="controlsVisible ? 'true' : 'false'"
-					:aria-label="translate('View')"
+					:aria-label="$translate('View')"
 					class="tify-header-button"
-					:title="translate('View')"
+					:title="$translate('View')"
 					@click="toggleControlsPopup"
 				>
 					<icon-dots-grid />
@@ -114,100 +114,100 @@
 		</div>
 
 		<div
-			:id="getId('controls')"
+			:id="$store.getId('controls')"
 			class="tify-header-column -controls"
 			:class="{ '-visible': controlsVisible }"
 		>
 			<div class="tify-header-button-group -view">
 				<!-- NOTE: This button is hidden on large containers -->
 				<button
-					v-if="manifest['@id']"
+					v-if="$store.manifest"
 					type="button"
 					class="tify-header-button -scan"
-					:class="{ '-active': options.view === 'scan' }"
-					:aria-controls="getId('scan')"
-					:aria-expanded="options.view === 'scan' ? 'true' : 'false'"
+					:class="{ '-active': $store.options.view === 'scan' }"
+					:aria-controls="$store.getId('scan')"
+					:aria-expanded="$store.options.view === 'scan' ? 'true' : 'false'"
 					@click="toggleView('scan')"
 				>
 					<icon-image />
-					{{ translate('Scan') }}
+					{{ $translate('Scan') }}
 				</button>
 
 				<button
 					v-if="fulltextEnabled"
 					type="button"
 					class="tify-header-button"
-					:class="{ '-active': options.view === 'fulltext' }"
-					:aria-controls="getId('fulltext')"
-					:aria-expanded="options.view === 'fulltext' ? 'true' : 'false'"
+					:class="{ '-active': $store.options.view === 'fulltext' }"
+					:aria-controls="$store.getId('fulltext')"
+					:aria-expanded="$store.options.view === 'fulltext' ? 'true' : 'false'"
 					@click="toggleView('fulltext')"
 				>
 					<icon-text-long />
-					{{ translate('Fulltext') }}
+					{{ $translate('Fulltext') }}
 				</button>
 
 				<button
-					v-if="manifest['@id']"
+					v-if="$store.manifest"
 					type="button"
 					class="tify-header-button"
-					:class="{ '-active': options.view === 'thumbnails' }"
-					:aria-controls="getId('thumbnails')"
-					:aria-expanded="options.view === 'thumbnails' ? 'true' : 'false'"
+					:class="{ '-active': $store.options.view === 'thumbnails' }"
+					:aria-controls="$store.getId('thumbnails')"
+					:aria-expanded="$store.options.view === 'thumbnails' ? 'true' : 'false'"
 					@click="toggleView('thumbnails')"
 				>
 					<icon-view-module />
-					{{ translate('Pages') }}
+					{{ $translate('Pages') }}
 				</button>
 
 				<button
 					v-if="tocEnabled"
 					type="button"
 					class="tify-header-button"
-					:class="{ '-active': options.view === 'toc' }"
-					:aria-controls="getId('toc')"
-					:aria-expanded="options.view === 'toc' ? 'true' : 'false'"
+					:class="{ '-active': $store.options.view === 'toc' }"
+					:aria-controls="$store.getId('toc')"
+					:aria-expanded="$store.options.view === 'toc' ? 'true' : 'false'"
 					@click="toggleView('toc')"
 				>
 					<icon-table-of-contents />
-					{{ translate('Contents') }}
+					{{ $translate('Contents') }}
 				</button>
 
 				<button
 					type="button"
 					class="tify-header-button"
-					:class="{ '-active': options.view === 'info' }"
-					:aria-controls="getId('info')"
-					:aria-expanded="options.view === 'info' ? 'true' : 'false'"
+					:class="{ '-active': $store.options.view === 'info' }"
+					:aria-controls="$store.getId('info')"
+					:aria-expanded="$store.options.view === 'info' ? 'true' : 'false'"
 					@click="toggleView('info')"
 				>
 					<icon-information-variant />
-					{{ translate('Info') }}
+					{{ $translate('Info') }}
 				</button>
 
 				<button
-					v-if="manifest['@id']"
+					v-if="$store.manifest"
 					type="button"
 					class="tify-header-button"
-					:class="{ '-active': options.view === 'export' }"
-					:aria-controls="getId('export')"
-					:aria-expanded="options.view === 'export' ? 'true' : 'false'"
+					:class="{ '-active': $store.options.view === 'export' }"
+					:aria-controls="$store.getId('export')"
+					:aria-expanded="$store.options.view === 'export' ? 'true' : 'false'"
 					@click="toggleView('export')"
 				>
 					<icon-download-outline />
-					{{ translate('Export') }}
+					{{ $translate('Export') }}
 				</button>
 
 				<button
-					v-if="collection['@id']"
+					v-if="$store.collection"
 					type="button"
 					class="tify-header-button"
-					:class="{ '-active': options.view === 'collection' }"
-					:aria-controls="getId('collection')"
-					:aria-expanded="options === 'collection' ? 'true' : 'false'"
+					:class="{ '-active': $store.options.view === 'collection' }"
+					:aria-controls="$store.getId('collection')"
+					:aria-expanded="$store.options === 'collection' ? 'true' : 'false'"
 					@click="toggleView('collection')"
 				>
 					<icon-list-box-outline />
-					{{ translate('Collection') }}
+					{{ $translate('Collection') }}
 				</button>
 			</div>
 
@@ -215,58 +215,58 @@
 				<button
 					type="button"
 					class="tify-header-button -icon-only"
-					:class="{ '-active': options.view === 'help' }"
-					:aria-controls="getId('help')"
-					:aria-expanded="options.view === 'help' ? 'true' : 'false'"
-					:title="translate('Help')"
+					:class="{ '-active': $store.options.view === 'help' }"
+					:aria-controls="$store.getId('help')"
+					:aria-expanded="$store.options.view === 'help' ? 'true' : 'false'"
+					:title="$translate('Help')"
 					@click="toggleView('help')"
 				>
 					<icon-help-circle-outline />
-					{{ translate('Help') }}
+					{{ $translate('Help') }}
 				</button>
 				<button
 					v-if="!fullscreenActive"
 					type="button"
 					class="tify-header-button -icon-only"
-					:title="translate('Fullscreen')"
+					:title="$translate('Fullscreen')"
 					@click="toggleFullscreen"
 				>
 					<icon-fullscreen />
-					{{ translate('Fullscreen') }}
+					{{ $translate('Fullscreen') }}
 				</button>
 				<button
 					v-else
 					type="button"
 					class="tify-header-button -icon-only"
-					:title="translate('Exit fullscreen')"
+					:title="$translate('Exit fullscreen')"
 					@click="toggleFullscreen"
 				>
 					<icon-fullscreen-exit />
-					{{ translate('Exit fullscreen') }}
+					{{ $translate('Exit fullscreen') }}
 				</button>
 			</div>
 
 			<div
-				v-if="manifest['@id']"
+				v-if="$store.manifest"
 				class="tify-header-button-group -popup"
 			>
 				<button
 					type="button"
 					class="tify-header-button"
-					:disabled="customPageViewActive || isFirstPage"
-					:title="translate('First page')"
-					@click="goToFirstPage"
+					:disabled="$store.isCustomPageView || $store.isFirstPage"
+					:title="$translate('First page')"
+					@click="goToFirstPage()"
 				>
 					<icon-page-first />
 				</button>
 
 				<button
-					v-if="structures && structures.length"
+					v-if="$store.manifest.structures"
 					type="button"
 					class="tify-header-button"
-					:disabled="customPageViewActive || isFirstPage"
-					:title="translate('Previous section')"
-					@click="goToPreviousSection"
+					:disabled="$store.isCustomPageView || $store.isFirstPage"
+					:title="$translate('Previous section')"
+					@click="goToPreviousSection()"
 				>
 					<icon-skip-previous />
 				</button>
@@ -274,9 +274,9 @@
 				<button
 					type="button"
 					class="tify-header-button"
-					:disabled="customPageViewActive || isFirstPage"
-					:title="translate('Previous page')"
-					@click="goToPreviousPage"
+					:disabled="$store.isCustomPageView || $store.isFirstPage"
+					:title="$translate('Previous page')"
+					@click="goToPreviousPage()"
 				>
 					<icon-chevron-left />
 				</button>
@@ -284,20 +284,20 @@
 				<button
 					type="button"
 					class="tify-header-button"
-					:disabled="customPageViewActive || isLastPage"
-					:title="translate('Next page')"
-					@click="goToNextPage"
+					:disabled="$store.isCustomPageView || $store.isLastPage"
+					:title="$translate('Next page')"
+					@click="goToNextPage()"
 				>
 					<icon-chevron-right />
 				</button>
 
 				<button
-					v-if="structures && structures.length"
+					v-if="$store.manifest.structures"
 					type="button"
 					class="tify-header-button"
-					:disabled="customPageViewActive || isLastSection"
-					:title="translate('Next section')"
-					@click="goToNextSection"
+					:disabled="$store.isCustomPageView || $store.isLastSection"
+					:title="$translate('Next section')"
+					@click="goToNextSection()"
 				>
 					<icon-skip-next />
 				</button>
@@ -305,9 +305,9 @@
 				<button
 					type="button"
 					class="tify-header-button"
-					:disabled="customPageViewActive || isLastPage"
-					:title="translate('Last page')"
-					@click="goToLastPage"
+					:disabled="$store.isCustomPageView || $store.isLastPage"
+					:title="$translate('Last page')"
+					@click="$store.goToLastPage()"
 				>
 					<icon-page-last />
 				</button>
@@ -319,23 +319,7 @@
 <script>
 import vClickOutside from 'click-outside-vue3';
 
-import { canvases, collection, manifest, options, pageCount, updateOptions } from '../modules/store';
-import { expose } from '../modules/api';
-import { getId } from '../modules/id';
-import { translate } from '../modules/i18n';
-import { convertValueToArray } from '../modules/iiif';
 import { preventEvent } from '../modules/keyboard';
-import {
-	customPageViewActive,
-	goToFirstPage,
-	goToLastPage,
-	goToNextPage,
-	goToPreviousPage,
-	isFirstPage,
-	isLastPage,
-	setPage,
-} from '../modules/pagination';
-import { isMobile } from '../modules/ui';
 
 export default {
 	directives: {
@@ -347,15 +331,9 @@ export default {
 	},
 	data() {
 		return {
-			collection,
 			controlsVisible: false,
-			customPageViewActive,
 			fullscreenActive: false,
-			isFirstPage,
-			isLastPage,
-			manifest,
-			options,
-			screen: options.root.$el.parentNode,
+			screen: this.$store.rootElement.parentNode,
 		};
 	},
 	computed: {
@@ -363,7 +341,7 @@ export default {
 			return document.fullscreenElement === null || document.webkitFullscreenElement === null;
 		},
 		isLastSection() {
-			const { pages } = options;
+			const { pages } = this.$store.options;
 			const lastIndex = pages.length - 1;
 			const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
 			return page >= this.sections[this.sections.length - 1].firstPage;
@@ -371,31 +349,28 @@ export default {
 		sections() {
 			const sections = [];
 
-			if (!this.structures) {
+			if (!this.$store.manifest.structures) {
 				return sections;
 			}
 
-			this.structures.forEach((structure) => {
+			this.$store.manifest.structures.forEach((structure) => {
 				if (!structure.canvases) {
-					sections.push({ firstPage: 1, lastPage: pageCount.value });
+					sections.push({ firstPage: 1, lastPage: this.$store.pageCount });
 					return;
 				}
 
 				const firstCanvasId = structure.canvases[0];
-				const firstPage = canvases.value.findIndex((canvas) => canvas['@id'] === firstCanvasId) + 1;
+				const firstPage = this.$store.canvases.findIndex((canvas) => canvas['@id'] === firstCanvasId) + 1;
 				const lastCanvasId = structure.canvases[structure.canvases.length - 1];
-				const lastPage = canvases.value.findIndex((canvas) => canvas['@id'] === lastCanvasId) + 1;
+				const lastPage = this.$store.canvases.findIndex((canvas) => canvas['@id'] === lastCanvasId) + 1;
 				sections.push({ firstPage, lastPage });
 			});
 
 			return sections;
 		},
-		structures() {
-			return manifest ? manifest.structures : [];
-		},
 		title() {
 			return (
-				convertValueToArray((manifest || collection || {}).label)
+				this.$store.convertValueToArray((this.$store.manifest || this.$store.collection || {}).label)
 					.join(`${String.fromCharCode(160)}· `) // 160 = &nbsp;
 					.trim()
 					// Ensure the last word does not stand alone in its line if it and
@@ -405,12 +380,12 @@ export default {
 		},
 	},
 	created() {
-		expose(this.setView);
-		expose(this.toggleDoublePage);
-		expose(this.toggleFullscreen);
+		this.$api.expose(this.setView);
+		this.$api.expose(this.toggleDoublePage);
+		this.$api.expose(this.toggleFullscreen);
 	},
 	mounted() {
-		options.root.$el.addEventListener('keydown', this.onKeyDown);
+		this.$store.rootElement.addEventListener('keydown', this.onKeyDown);
 
 		// NOTE: Fullscreen state cannot be computed
 		const vendorPrefixes = ['', 'moz', 'webkit'];
@@ -419,7 +394,7 @@ export default {
 		});
 	},
 	beforeUnmount() {
-		options.root.$el.removeEventListener('keydown', this.onKeyDown);
+		this.$store.rootElement.removeEventListener('keydown', this.onKeyDown);
 	},
 	methods: {
 		closeControlsPopup() {
@@ -443,13 +418,8 @@ export default {
 
 			return fullscreenAPI;
 		},
-		getId,
-		goToFirstPage,
-		goToLastPage,
-		goToNextPage,
-		goToPreviousPage,
 		goToNextSection() {
-			const { pages } = options;
+			const { pages } = this.$store.options;
 			const lastIndex = pages.length - 1;
 			const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
 			let sectionIndex = 0;
@@ -459,10 +429,10 @@ export default {
 			) {
 				sectionIndex += 1;
 			}
-			setPage(this.sections[sectionIndex].firstPage);
+			this.$store.setPage(this.sections[sectionIndex].firstPage);
 		},
 		goToPreviousSection() {
-			const { pages } = options;
+			const { pages } = this.$store.options;
 			const page = pages[0] ? pages[0] : pages[1];
 			let sectionIndex = this.sections.length - 1;
 			while (
@@ -471,7 +441,7 @@ export default {
 			) {
 				sectionIndex -= 1;
 			}
-			setPage(this.sections[sectionIndex].firstPage);
+			this.$store.setPage(this.sections[sectionIndex].firstPage);
 		},
 		onKeyDown(event) {
 			if (preventEvent(event)) {
@@ -491,17 +461,17 @@ export default {
 					}
 					break;
 				case '1':
-					if (manifest && this.fulltextEnabled) {
+					if (this.$store.manifest && this.fulltextEnabled) {
 						this.toggleView('fulltext');
 					}
 					break;
 				case '2':
-					if (manifest) {
+					if (this.$store.manifest) {
 						this.toggleView('thumbnails');
 					}
 					break;
 				case '3':
-					if (manifest && this.tocEnabled) {
+					if (this.$store.manifest && this.tocEnabled) {
 						this.toggleView('toc');
 					}
 					break;
@@ -509,12 +479,12 @@ export default {
 					this.toggleView('info');
 					break;
 				case '5':
-					if (manifest) {
+					if (this.$store.manifest) {
 						this.toggleView('export');
 					}
 					break;
 				case '6':
-					if (collection) {
+					if (this.$store.collection) {
 						this.toggleView('collection');
 					}
 					break;
@@ -522,7 +492,7 @@ export default {
 					this.toggleView('help');
 					break;
 				case 'b':
-					if (manifest) {
+					if (this.$store.manifest) {
 						this.toggleDoublePage();
 					}
 					break;
@@ -532,46 +502,46 @@ export default {
 				default:
 			}
 
-			if (!manifest || this.customPageViewActive) {
+			if (!this.$store.manifest || this.$store.isCustomPageView) {
 				return;
 			}
 
-			const { pages } = options;
+			const { pages } = this.$store.options;
 
 			switch (event.key) {
 				case 'q':
 				case ',':
 					if (pages[0] > 1) {
-						goToPreviousPage();
+						this.$store.goToPreviousPage();
 					}
 					break;
 				case 'e':
 				case '.':
 					if (!this.isLastPage) {
-						goToNextPage();
+						this.$store.goToNextPage();
 					}
 					break;
 				case 'Q':
 					if (pages[0] > 1) {
-						goToFirstPage();
+						this.$store.goToFirstPage();
 					}
 					break;
 				case 'E':
 					if (!this.isLastPage) {
-						goToLastPage();
+						this.$store.goToLastPage();
 					}
 					break;
 				default:
 			}
 		},
 		setView(name) {
-			updateOptions({ view: name });
+			this.$store.updateOptions({ view: name });
 		},
 		toggleControlsPopup() {
 			this.controlsVisible = !this.controlsVisible;
 		},
 		toggleDoublePage(forced) {
-			const { pages } = options;
+			const { pages } = this.$store.options;
 			let newPages;
 			if ((pages.length > 1 && forced !== true) || forced === false) {
 				// There are already multiple pages shown; switch back to single page
@@ -584,11 +554,11 @@ export default {
 				newPages = [pages[0] - 1, pages[0]];
 			} else {
 				// An even page was selected, add the following page or 0 if it is the last one
-				const followingPage = pages[0] < pageCount.value ? pages[0] + 1 : 0;
+				const followingPage = pages[0] < this.$store.pageCount ? pages[0] + 1 : 0;
 				newPages = [pages[0], followingPage];
 			}
 
-			updateOptions({ pages: newPages });
+			this.$store.updateOptions({ pages: newPages });
 			return newPages;
 		},
 		toggleFullscreen(forced) {
@@ -621,13 +591,12 @@ export default {
 			this.fullscreenActive = !this.fullscreenActive;
 		},
 		toggleView(name) {
-			const view = name === options.view && manifest && !isMobile()
+			const view = name === this.$store.options.view && this.$store.manifest && !this.$store.isMobile()
 				? ''
 				: name;
-			updateOptions({ view });
+			this.$store.updateOptions({ view });
 			return view;
 		},
-		translate,
 	},
 };
 </script>

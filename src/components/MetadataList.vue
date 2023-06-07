@@ -6,7 +6,7 @@
 		>
 			<h4>
 				<div
-					v-for="(label, index2) in convertValueToArray(item.label)"
+					v-for="(label, index2) in $store.convertValueToArray(item.label)"
 					:key="index2"
 				>
 					{{ cleanLabel(label) }}
@@ -18,7 +18,7 @@
 				:class="{ '-collapsed': infoItems[index] && infoItems[index].collapsed }"
 			>
 				<div class="tify-info-value">
-					<template v-for="value in convertValueToArray(item.value)">
+					<template v-for="value in $store.convertValueToArray(item.value)">
 						<div
 							v-if="isValidUrl(value)"
 							:key="'url-' + value"
@@ -41,11 +41,11 @@
 				>
 					<template v-if="infoItems[index].collapsed">
 						<icon-chevron-down />
-						{{ translate('Expand') }}
+						{{ $translate('Expand') }}
 					</template>
 					<template v-else>
 						<icon-chevron-up />
-						{{ translate('Collapse') }}
+						{{ $translate('Collapse') }}
 					</template>
 				</button>
 			</div>
@@ -54,8 +54,6 @@
 </template>
 
 <script>
-import { translate } from '../modules/i18n';
-import { convertValueToArray } from '../modules/iiif';
 import { isValidUrl } from '../modules/validation';
 
 export default {
@@ -83,7 +81,6 @@ export default {
 			const cleanedLabel = label.replace('_', ' ');
 			return cleanedLabel.charAt(0).toUpperCase() + cleanedLabel.substr(1);
 		},
-		convertValueToArray,
 		updateInfoItems() {
 			this.$nextTick(() => {
 				if (!this.$refs.contents) {
@@ -111,7 +108,6 @@ export default {
 			});
 		},
 		isValidUrl,
-		translate,
 	},
 };
 </script>

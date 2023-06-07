@@ -6,7 +6,7 @@
 			class="tify-toc-structure"
 			:data-level="level"
 			:class="{
-				'-current': checkIfPagesInStructure(structure),
+				'-current': isCurrentPageInStructure(structure),
 				'-expanded': expandedStructures[index],
 			}"
 		>
@@ -14,7 +14,7 @@
 				v-if="structure.childStructures"
 				type="button"
 				class="tify-toc-toggle"
-				:title="translate(expandedStructures[index] ? 'Collapse' : 'Expand')"
+				:title="$translate(expandedStructures[index] ? 'Collapse' : 'Expand')"
 				:aria-controls="`${id}-${index}`"
 				:aria-expanded="expandedStructures[index] ? 'true' : 'false'"
 				@click="toggleChildren(index)"
@@ -31,16 +31,16 @@
 				v-if="purpose === 'pdf'"
 				class="tify-toc-link"
 				download
-				:href="convertValueToArray(structure.rendering)[0]['@id']"
+				:href="$store.convertValueToArray(structure.rendering)[0]['@id']"
 			>
 				{{ structure.label }}
-				({{ structure.pageCount }}&nbsp;{{ translate(structure.pageCount === 1 ? 'page' : 'pages') }})
+				({{ structure.pageCount }}&nbsp;{{ $translate(structure.pageCount === 1 ? 'page' : 'pages') }})
 			</a>
 			<a
 				v-else
 				class="tify-toc-link -dots"
 				href="javascript:;"
-				@click="setPage(structure.firstPage)"
+				@click="$store.setPage(structure.firstPage)"
 			>
 				<span class="tify-toc-label">{{ structure.label }}</span>
 				<span class="tify-toc-page">{{ structure.pageLabel }}</span>
@@ -61,13 +61,6 @@
 </template>
 
 <script>
-import { getId } from '../modules/id';
-import { translate } from '../modules/i18n';
-import { convertValueToArray } from '../modules/iiif';
-import { setPage } from '../modules/pagination';
-import { isMobile } from '../modules/ui';
-import { options, updateOptions } from '../modules/store';
-
 export default {
 	name: 'TocList',
 	props: {
@@ -91,19 +84,18 @@ export default {
 	data() {
 		return {
 			expandedStructures: [],
-			id: getId(`toc-list-${Math.floor(Math.random() * 1e12)}`),
+			id: this.$store.getId(`toc-list-${Math.floor(Math.random() * 1e12)}`),
 		};
 	},
 	methods: {
-		checkIfPagesInStructure(structure) {
-			const { pages } = options;
+		isCurrentPageInStructure(structure) {
+			const { pages } = this.$store.options;
 			return pages.some((page) => page >= structure.firstPage && page <= structure.lastPage);
 		},
-		convertValueToArray,
 		setPage(page) {
-			setPage(page);
-			if (isMobile()) {
-				updateOptions({ view: 'scan' });
+			this.$store.setPage(page);
+			if (this.$store.isMobile()) {
+				this.$store.updateOptions({ view: 'scan' });
 			}
 		},
 		toggleAllChildren(expanded = null) {
@@ -127,7 +119,6 @@ export default {
 
 			this.expandedStructures[index] = expanded !== null ? expanded : !this.expandedStructures[index];
 		},
-		translate,
 	},
 };
 </script>
