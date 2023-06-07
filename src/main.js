@@ -1,5 +1,4 @@
 import { createApp, h } from 'vue';
-import clickOutside from 'click-outside-vue3';
 
 import App from './App.vue';
 
@@ -132,8 +131,6 @@ window.Tify = function Tify(userOptions = {}) {
 			return h(App, { ready: this.ready });
 		},
 	});
-
-	this.app.use(clickOutside);
 
 	// TODO: Add test
 	let mounted = false;

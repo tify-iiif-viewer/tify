@@ -161,6 +161,7 @@
 </template>
 
 <script>
+import vClickOutside from 'click-outside-vue3';
 import OpenSeadragon from 'openseadragon';
 
 import { expose } from '../modules/api';
@@ -176,6 +177,9 @@ import { canvases, options, pageCount, updateOptions } from '../modules/store';
 const gapBetweenPages = 0.01;
 
 export default {
+	directives: {
+		clickOutside: vClickOutside.directive,
+	},
 	data() {
 		return {
 			filtersVisible: false,

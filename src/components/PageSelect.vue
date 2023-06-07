@@ -58,6 +58,8 @@
 </template>
 
 <script>
+import vClickOutside from 'click-outside-vue3';
+
 import { getId } from '../modules/id';
 import { translate } from '../modules/i18n';
 import { convertValueToArray, getPageLabel } from '../modules/iiif';
@@ -67,6 +69,9 @@ import { options, updateOptions, manifest } from '../modules/store';
 import { isMobile } from '../modules/ui';
 
 export default {
+	directives: {
+		clickOutside: vClickOutside.directive,
+	},
 	data() {
 		return {
 			filter: '',

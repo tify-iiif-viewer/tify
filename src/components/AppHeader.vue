@@ -317,6 +317,8 @@
 </template>
 
 <script>
+import vClickOutside from 'click-outside-vue3';
+
 import { canvases, collection, manifest, options, pageCount, updateOptions } from '../modules/store';
 import { expose } from '../modules/api';
 import { getId } from '../modules/id';
@@ -336,6 +338,9 @@ import {
 import { isMobile } from '../modules/ui';
 
 export default {
+	directives: {
+		clickOutside: vClickOutside.directive,
+	},
 	props: {
 		fulltextEnabled: Boolean,
 		tocEnabled: Boolean,
