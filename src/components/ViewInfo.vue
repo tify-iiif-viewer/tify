@@ -81,7 +81,7 @@
 		>
 			<h3>{{ $translate('Description') }}</h3>
 			<div
-				v-for="(description, index) in $store.convertValueToArray($store.manifest.description)"
+				v-for="(description, index) in $store.convertValueToArray(manifestOrCollection.description)"
 				:key="index"
 				v-html="description"
 			/>
@@ -151,7 +151,7 @@
 		>
 			<h3>{{ $translate('Provided by') }}</h3>
 			<div
-				v-for="(item, index) in $store.convertValueToArray($store.manifest.attribution)"
+				v-for="(item, index) in $store.convertValueToArray(manifestOrCollection.attribution)"
 				:key="index"
 				v-html="item"
 			/>
@@ -206,7 +206,7 @@ export default {
 				return this.$store.collection;
 			}
 
-			return this.$store.manifest || this.$store.collection;
+			return this.$store.manifest || this.$store.collection || {};
 		},
 		related() {
 			return this.manifestOrCollection.related
