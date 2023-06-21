@@ -40,7 +40,7 @@ jobs:
         restore-keys: |
           cypress-${{ runner.os }}-cypress-node${{ matrix.node-version }}-
 
-    - name: install dependencies
+    - name: Install dependencies
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
@@ -87,7 +87,7 @@ jobs:
         restore-keys: |
           cypress-${{ runner.os }}-cypress-node${{ matrix.node-version }}-
 
-    - name: install dependencies
+    - name: Install dependencies
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
@@ -133,7 +133,7 @@ jobs:
           restore-keys: |
             cypress-${{ runner.os }}-cypress-node${{ matrix.node-version }}-
 
-      - name: install dependencies
+      - name: Install dependencies
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
