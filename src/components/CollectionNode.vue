@@ -71,9 +71,10 @@ export default {
 	},
 	computed: {
 		label() {
+			const nbsp = String.fromCharCode(160);
 			return this.item.label
-				? this.$store.convertValueToArray(this.item.label).join(`${String.fromCharCode(160)}· `) // 160 = &nbsp;
-				: '';
+				? this.$store.convertValueToArray(this.item.label).join(`${nbsp}· `)
+				: '—'; // &mdash;
 		},
 	},
 	methods: {

@@ -369,13 +369,14 @@ export default {
 			return sections;
 		},
 		title() {
+			const nbsp = String.fromCharCode(160);
 			return (
 				this.$store.convertValueToArray((this.$store.manifest || this.$store.collection || {}).label)
-					.join(`${String.fromCharCode(160)}· `) // 160 = &nbsp;
+					.join(`${nbsp}· `)
 					.trim()
 					// Ensure the last word does not stand alone in its line if it and
 					// the 2nd-to-last word both have at most 10 characters
-					.replace(/(\S{1,10})\s+(\S{1,10})$/, `$1${String.fromCharCode(160)}$2`)
+					.replace(/(\S{1,10})\s+(\S{1,10})$/, `$1${nbsp}$2`)
 			);
 		},
 	},
