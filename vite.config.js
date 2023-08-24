@@ -79,9 +79,6 @@ export default defineConfig({
 	},
 	test: {
 		include: ['../tests/unit/**/*.spec.js'],
-		deps: {
-			inline: ['vitest-canvas-mock'],
-		},
 		threads: false,
 		environment: 'jsdom',
 	},
