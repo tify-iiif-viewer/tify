@@ -5,6 +5,7 @@
 	color: $white;
 	display: flex;
 	font-weight: bold;
+	max-height: 50%;
 	max-width: 90%;
 	position: absolute;
 
@@ -14,7 +15,7 @@
 }
 
 .tify-error-close {
-	align-items: flex-start;
+	align-self: flex-start;
 	background: 0;
 	border: 0;
 	color: $white;
@@ -28,5 +29,6 @@
 }
 
 .tify-error-messages {
+	overflow: auto;
 	padding: g(.25) g(.5) g(.25) 0;
 }
