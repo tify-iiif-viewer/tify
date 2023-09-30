@@ -74,9 +74,6 @@ export default defineConfig({
 		sassGlobImport(),
 		vue(),
 	],
-	server: {
-		port: 8080,
-	},
 	test: {
 		include: ['../tests/unit/**/*.spec.js'],
 		threads: false,
