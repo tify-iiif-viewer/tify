@@ -1,17 +1,202 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TIFY</title><style>html {
-				font-family: sans-serif;
-			}</style><link href="tify.css" rel="preload" as="style"><link href="tify.js" rel="preload" as="script"><link href="tify.css" rel="stylesheet"></head><body style="margin: 0"><main id="tify" style="height: 100vh"></main><script>window.addEventListener('load', () => {
-				const query = new URLSearchParams(window.location.search);
+<!DOCTYPE html>
+<html lang="en">
 
-				const options = {
-					container: '#tify',
-					language: query.get('language') || 'en',
-					manifestUrl: query.get('manifest'),
-					urlQueryKey: 'tify',
-				};
+<head>
+	<meta charset="utf-8">
+	<link rel="icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAMMOAADDDgAAAAAAAAAAAABERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/////////////////////////////////////////////////////////////////RERE/0RERP9ERET/RERE/////////////////////////////////////////////////////////////////0RERP9ERET/RERE/0RERP///////////////////////////0RERP9ERET///////////////////////////9ERET/RERE/0RERP9ERET///////////////////////////9ERET/RERE////////////////////////////RERE/0RERP9ERET/RERE////////////////////////////RERE/0RERP///////////////////////////0RERP9ERET/RERE/0RERP///////////////////////////0RERP9ERET///////////////////////////9ERET/RERE/0RERP9ERET///////////////////////////9ERET/RERE////////////////////////////RERE/0RERP9ERET/RERE////////////////////////////RERE/0RERP///////////////////////////0RERP9ERET/RERE/0RERP///////////0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET///////////9ERET/RERE/0RERP9ERET///////////9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE////////////RERE/0RERP9ERET/RERE/////////////////////////////////////////////////////////////////0RERP9ERET/RERE/0RERP////////////////////////////////////////////////////////////////9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>TIFY</title>
+	<style>
+		:root {
+			--base-color: #06b;
+			--button-hover-bg: #0058a2;
+		}
 
-				window.tify = new Tify(options);
+		html {
+			color: #333;
+			background: #666;
+			font-size: 24px;
+		}
 
-				console.log('%cHi there! Glad you want to learn more about TIFY. Check out https://github.com/tify-iiif-viewer/tify or have at look at the current instance:', 'color: #09f');
-				console.dir(window.tify);
-			})</script><script src="tify.js"></script></body></html>
+		body {
+			font: 16px/1rem sans-serif;
+			margin: 0;
+		}
+
+		.button {
+			background: var(--base-color);
+			border: 0;
+			color: #fff;
+			cursor: pointer;
+			font: .9em/1rem monospace;
+			padding: .25rem .5rem
+		}
+
+		.button + .button {
+			border-left: 1px solid;
+		}
+
+		.button:focus,
+		.button:hover {
+			background: var(--button-hover-bg);
+			opacity: 1 !important;
+		}
+
+		.header-form {
+			display: flex;
+			position: relative;
+			z-index: 2;
+		}
+
+		.header-input {
+			border: 0;
+			box-shadow: 0 -1px inset;
+			flex: 1;
+			font: .9em/1rem monospace;
+			padding: .25rem .5rem
+		}
+
+		.header-input:focus {
+			box-shadow: 0 0 0 1px var(--base-color) inset;
+			outline: 0;
+		}
+
+		.main {
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		.instance {
+			box-shadow: -1px 0, 0 -1px;
+			flex: 1;
+			position: relative;
+			z-index: 1;
+		}
+
+		.instance-header {
+			backdrop-filter: blur(1px);
+			display: flex;
+			position: absolute;
+			top: 0;
+			z-index: 10;
+		}
+
+		.instance-close {
+			border-radius: 0 0 2px;
+			height: 1rem;
+			opacity: .5;
+			padding: 0;
+			width: 1rem;
+		}
+
+		.instance-tify {
+			height: calc(100vh - 1.5rem);
+		}
+	</style>
+  <script type="module" crossorigin src="/tify.js"></script>
+  <link rel="stylesheet" href="/tify.css">
+</head>
+
+<body>
+	<header class="header">
+		<form class="header-form" onsubmit="addInstance(); return false">
+			<input
+				type="url"
+				class="header-input"
+				id="manifestUrl"
+				placeholder="Enter a IIIF manifest URL"
+				aria-label="Manifest URL"
+			/>
+			<button type="submit" class="button">Add</button>
+			<button type="reset" class="button" onclick="removeAllInstances()">Remove all</button>
+		</form>
+	</header>
+	<main class="main">
+		<div class="instance">
+			<header class="instance-header">
+				<button class="button instance-close" aria-label="Remove instance">
+					&times;
+				</button>
+			</header>
+			<div class="instance-tify"></div>
+		</div>
+	</main>
+
+	
+	<script>
+		const tifyOptions = {
+			translationsDirUrl: '/translations',
+		};
+
+		const main = document.querySelector('main');
+		const manifestUrlInput = document.querySelector('#manifestUrl');
+		const template = document.querySelector('.instance');
+		template.remove();
+
+		const instances = [];
+		window.instances = instances;
+
+		// Restore instances from URL query
+		window.onload = () => {
+			const url = new URL(window.location);
+			for (const params of url.searchParams) {
+				if (!params[0].startsWith('manifest')) {
+					continue
+				}
+
+				const key = parseInt(params[0].replace('manifest', ''), 10) || '';
+				addInstance({
+					key,
+					manifestUrl: params[1],
+					urlQueryKey: `tify${key}`,
+				});
+			}
+		};
+
+		function addInstance(options = {}) {
+			element = template.cloneNode(true);
+			main.append(element);
+
+			let key = options.key || '';
+			while (instances.find(instance => instance.key === key)) {
+				key = (key || 0) + 1;
+			}
+
+			tifyOptions.container = element.querySelector('.instance-tify');
+			tifyOptions.manifestUrl = options.manifestUrl || manifestUrlInput.value;
+			tifyOptions.urlQueryKey = options.urlQueryKey || `tify${key}`;
+
+			const tify = new Tify(tifyOptions);
+			const instance = { element, key, tify };
+			instances.push(instance);
+
+			// Expose API of lastest instance for e2e tests
+			window.tify = tify;
+
+			element.querySelector('.instance-close').onclick = () => removeInstance(instance);
+
+			// Update URL query if manifest was set via input
+			if (!options.manifestUrl) {
+				const url = new URL(window.location);
+				url.searchParams.append(`manifest${key}`, tifyOptions.manifestUrl);
+				window.history.pushState(null, '', url.toString());
+			}
+		}
+
+		function removeInstance(instanceToRemove) {
+			instanceToRemove.element.remove();
+			instanceToRemove.tify.destroy();
+
+			instances.splice(instances.findIndex(instance => instance.key === instanceToRemove.key), 1);
+
+			const url = new URL(window.location);
+			url.searchParams.delete(`manifest${instanceToRemove.key}`);
+			url.searchParams.delete(`tify${instanceToRemove.key}`);
+			window.history.pushState(null, '', url.toString());
+		}
+
+		function removeAllInstances() {
+			[...instances].forEach(instance => removeInstance(instance))
+		}
+	</script>
+</body>
