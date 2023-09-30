@@ -23,7 +23,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "mock-api": "node tests/iiif-api/server.js",
     "postinstall": "node build/create-icons.js",
-    "preversion": "npm install-clean && npm run test",
+    "preversion": "npm install-clean && npm run test:unit && npm run build && npm run test:e2e",
     "preview": "vite preview",
     "test:unit": "vitest run --environment jsdom --root src/",
     "test:e2e": "start-server-and-test preview http://localhost:4173 'cypress run --e2e'",
