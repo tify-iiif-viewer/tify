@@ -2,8 +2,9 @@ node_modules
 src/components/icons
 
 # Local-only files
-*.local
 .DS_Store
+*.local
+/*.sh
 
 # Test output
 tests/e2e/output
@@ -28,6 +29,3 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
-
-# Local shell scripts
-/*.sh
