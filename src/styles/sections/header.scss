@@ -30,20 +30,26 @@
 		.tify.-small & {
 			display: none;
 		}
-	}
 
-	&.-popup {
-		box-shadow: 0 -1px $border-color;
-		display: none;
-		margin: calc(#{$br} * 2 - 1px) 0 0;
-		padding: $br 0 0;
+		.tify-header-popup & {
+			box-shadow: 0 -1px $border-color;
+			display: none;
+			margin: calc(#{$br} * 2 - 1px) 0 0;
+			padding: $br 0 0;
 
-		.tify.-small & {
-			display: flex;
+			.tify.-small & {
+				display: flex;
+			}
 		}
 	}
 
 	&.-toggle {
+		display: none;
+
+		.tify.-large & {
+			display: flex;
+		}
+
 		.tify-header-column:not(:nth-child(2)) & {
 			border-left: 1px solid $border-color;
 
@@ -173,25 +179,19 @@
 	&:first-child {
 		flex: 1;
 	}
+}
 
-	&.-toggle {
+.tify-header-popup {
+	display: flex;
+
+	.tify.-large & {
+		@include dropdown(right);
+		box-shadow: none;
 		display: none;
+		top: g(2);
 
-		.tify.-large & {
+		&.-visible {
 			display: block;
-		}
-	}
-
-	&.-controls {
-		.tify.-large & {
-			@include dropdown(right);
-			box-shadow: none;
-			display: none;
-			top: g(2);
-
-			&.-visible {
-				display: block;
-			}
 		}
 	}
 }
