@@ -74,7 +74,35 @@ function Store(args) {
 			const { pages } = store.options;
 			return pages[0] >= store.pageCount || pages[pages.length - 1] >= store.pageCount;
 		}),
+		isLastSection: computed(() => {
+			const { pages } = store.options;
+			const lastIndex = pages.length - 1;
+			const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
+			return page >= store.sections[store.sections.length - 1].firstPage;
+		}),
 		pageCount: computed(() => store.canvases.length),
+		sections: computed(() => {
+			const sections = [];
+
+			if (!store.manifest.structures) {
+				return sections;
+			}
+
+			store.manifest.structures.forEach((structure) => {
+				if (!structure.canvases) {
+					sections.push({ firstPage: 1, lastPage: store.pageCount });
+					return;
+				}
+
+				const firstCanvasId = structure.canvases[0];
+				const firstPage = store.canvases.findIndex((canvas) => canvas['@id'] === firstCanvasId) + 1;
+				const lastCanvasId = structure.canvases[structure.canvases.length - 1];
+				const lastPage = store.canvases.findIndex((canvas) => canvas['@id'] === lastCanvasId) + 1;
+				sections.push({ firstPage, lastPage });
+			});
+
+			return sections;
+		}),
 		structures: computed(() => {
 			if (!store.manifest.structures) {
 				return [];
@@ -269,6 +297,19 @@ function Store(args) {
 
 			store.setPage(page);
 		},
+		goToNextSection() {
+			const { pages } = store.options;
+			const lastIndex = pages.length - 1;
+			const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
+			let sectionIndex = 0;
+			while (
+				page >= this.sections[sectionIndex].firstPage
+					|| (page && page >= this.sections[sectionIndex].firstPage)
+			) {
+				sectionIndex += 1;
+			}
+			store.setPage(this.sections[sectionIndex].firstPage);
+		},
 		goToLastPage() {
 			store.setPage(store.pageCount);
 		},
@@ -279,6 +320,18 @@ function Store(args) {
 			}
 
 			store.setPage(page);
+		},
+		goToPreviousSection() {
+			const { pages } = store.options;
+			const page = pages[0] ? pages[0] : pages[1];
+			let sectionIndex = this.sections.length - 1;
+			while (
+				page <= this.sections[sectionIndex].firstPage
+					|| (page && page <= this.sections[sectionIndex].firstPage)
+			) {
+				sectionIndex -= 1;
+			}
+			store.setPage(this.sections[sectionIndex].firstPage);
 		},
 		initOptions(caller) {
 			let params = {};

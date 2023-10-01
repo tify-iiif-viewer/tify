@@ -76,4 +76,20 @@ describe('Pagination', () => {
 		cy.get('[aria-label="Current page"]').first().click();
 		cy.contains('.-current.-highlighted', '69 : -');
 	});
+
+	it('changes the page on a small touchscreen', () => {
+		cy.viewport(375, 667);
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081`);
+
+		cy.get('[title="View"]').click();
+		cy.get('.tify-header-button-group.-popup [title="Last page"]').click();
+		cy.get('.tify-header-button-group.-popup [title="Next page"]').should('be.disabled');
+		cy.get('.tify-header-button-group.-popup [title="Next section"]').should('be.disabled');
+		cy.get('.tify-header-button-group.-popup [title="Last page"]').should('be.disabled');
+
+		cy.get('.tify-header-button-group.-popup [title="Previous section"]').click();
+		cy.contains(currentPage, '67 : -');
+		cy.get('.tify-header').click();
+		cy.get('.tify-header-column.-controls').should('not.be.visible');
+	});
 });

@@ -45,7 +45,7 @@
 					class="tify-header-button"
 					:disabled="$store.isCustomPageView || $store.isFirstPage"
 					:title="$translate('Previous section')"
-					@click="goToPreviousSection()"
+					@click="$store.goToPreviousSection()"
 				>
 					<icon-skip-previous />
 				</button>
@@ -74,9 +74,9 @@
 					v-if="$store.manifest.structures"
 					type="button"
 					class="tify-header-button"
-					:disabled="$store.isCustomPageView || isLastSection"
+					:disabled="$store.isCustomPageView || $store.isLastSection"
 					:title="$translate('Next section')"
-					@click="goToNextSection()"
+					@click="$store.goToNextSection()"
 				>
 					<icon-skip-next />
 				</button>
@@ -99,14 +99,13 @@
 				class="tify-header-button-group -toggle"
 			>
 				<button
-					v-click-outside="closeControlsPopup"
 					type="button"
 					:aria-controls="$store.getId('controls')"
 					:aria-expanded="controlsVisible ? 'true' : 'false'"
 					:aria-label="$translate('View')"
 					class="tify-header-button"
 					:title="$translate('View')"
-					@click="toggleControlsPopup"
+					@click.stop="toggleControlsPopup"
 				>
 					<icon-dots-grid />
 				</button>
@@ -115,6 +114,7 @@
 
 		<div
 			:id="$store.getId('controls')"
+			v-click-outside="closeControlsPopup"
 			class="tify-header-column -controls"
 			:class="{ '-visible': controlsVisible }"
 		>
@@ -255,7 +255,7 @@
 					class="tify-header-button"
 					:disabled="$store.isCustomPageView || $store.isFirstPage"
 					:title="$translate('First page')"
-					@click="goToFirstPage()"
+					@click="$store.goToFirstPage()"
 				>
 					<icon-page-first />
 				</button>
@@ -266,7 +266,7 @@
 					class="tify-header-button"
 					:disabled="$store.isCustomPageView || $store.isFirstPage"
 					:title="$translate('Previous section')"
-					@click="goToPreviousSection()"
+					@click="$store.goToPreviousSection()"
 				>
 					<icon-skip-previous />
 				</button>
@@ -276,7 +276,7 @@
 					class="tify-header-button"
 					:disabled="$store.isCustomPageView || $store.isFirstPage"
 					:title="$translate('Previous page')"
-					@click="goToPreviousPage()"
+					@click="$store.goToPreviousPage()"
 				>
 					<icon-chevron-left />
 				</button>
@@ -286,7 +286,7 @@
 					class="tify-header-button"
 					:disabled="$store.isCustomPageView || $store.isLastPage"
 					:title="$translate('Next page')"
-					@click="goToNextPage()"
+					@click="$store.goToNextPage()"
 				>
 					<icon-chevron-right />
 				</button>
@@ -297,7 +297,7 @@
 					class="tify-header-button"
 					:disabled="$store.isCustomPageView || $store.isLastSection"
 					:title="$translate('Next section')"
-					@click="goToNextSection()"
+					@click="$store.goToNextSection()"
 				>
 					<icon-skip-next />
 				</button>
@@ -339,34 +339,6 @@ export default {
 	computed: {
 		fullscreenSupported() {
 			return document.fullscreenElement === null || document.webkitFullscreenElement === null;
-		},
-		isLastSection() {
-			const { pages } = this.$store.options;
-			const lastIndex = pages.length - 1;
-			const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
-			return page >= this.sections[this.sections.length - 1].firstPage;
-		},
-		sections() {
-			const sections = [];
-
-			if (!this.$store.manifest.structures) {
-				return sections;
-			}
-
-			this.$store.manifest.structures.forEach((structure) => {
-				if (!structure.canvases) {
-					sections.push({ firstPage: 1, lastPage: this.$store.pageCount });
-					return;
-				}
-
-				const firstCanvasId = structure.canvases[0];
-				const firstPage = this.$store.canvases.findIndex((canvas) => canvas['@id'] === firstCanvasId) + 1;
-				const lastCanvasId = structure.canvases[structure.canvases.length - 1];
-				const lastPage = this.$store.canvases.findIndex((canvas) => canvas['@id'] === lastCanvasId) + 1;
-				sections.push({ firstPage, lastPage });
-			});
-
-			return sections;
 		},
 		title() {
 			const nbsp = String.fromCharCode(160);
@@ -418,31 +390,6 @@ export default {
 			}
 
 			return fullscreenAPI;
-		},
-		goToNextSection() {
-			const { pages } = this.$store.options;
-			const lastIndex = pages.length - 1;
-			const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
-			let sectionIndex = 0;
-			while (
-				page >= this.sections[sectionIndex].firstPage
-					|| (page && page >= this.sections[sectionIndex].firstPage)
-			) {
-				sectionIndex += 1;
-			}
-			this.$store.setPage(this.sections[sectionIndex].firstPage);
-		},
-		goToPreviousSection() {
-			const { pages } = this.$store.options;
-			const page = pages[0] ? pages[0] : pages[1];
-			let sectionIndex = this.sections.length - 1;
-			while (
-				page <= this.sections[sectionIndex].firstPage
-					|| (page && page <= this.sections[sectionIndex].firstPage)
-			) {
-				sectionIndex -= 1;
-			}
-			this.$store.setPage(this.sections[sectionIndex].firstPage);
 		},
 		onKeyDown(event) {
 			if (preventEvent(event)) {
@@ -592,6 +539,8 @@ export default {
 			this.fullscreenActive = !this.fullscreenActive;
 		},
 		toggleView(name) {
+			this.closeControlsPopup();
+
 			const view = name === this.$store.options.view && this.$store.manifest && !this.$store.isMobile()
 				? ''
 				: name;

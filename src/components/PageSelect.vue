@@ -1,7 +1,9 @@
 <template>
-	<div class="tify-page-select">
+	<div
+		v-click-outside="closeDropdown"
+		class="tify-page-select"
+	>
 		<button
-			v-click-outside="closeDropdown"
 			type="button"
 			class="tify-page-select-button"
 			:title="currentPageTitleAttr"
