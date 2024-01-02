@@ -7,10 +7,8 @@ describe('Scan', () => {
 		}));
 
 		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081&tify=${encodedParams}`);
-		cy.get('[title="Toggle image filters"]')
-			.click()
-			.get('.tify-scan-filters-popup')
-			.contains('Saturation 0');
+		cy.get('[title="Toggle image filters"]').click();
+		cy.get('.tify-scan-filters-popup').contains('Saturation 0');
 	});
 
 	it('resets pan, zoom, rotation and filters at once', () => {
@@ -37,7 +35,7 @@ describe('Scan', () => {
 		cy.url().should(
 			'include',
 			`/?manifest=${encodeURIComponent(`${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081`)}`
-				+ `&tify=${encodeURIComponent('{"view":""}')}`,
+			+ `&tify=${encodeURIComponent('{"view":""}')}`,
 		);
 	});
 
@@ -54,16 +52,14 @@ describe('Scan', () => {
 		cy.get('.tify').type('r');
 		cy.get('[title="Rotate"]:not(.-active)').should('be.visible');
 
-		cy.get('.tify').type('i')
-			.contains('Brightness').should('be.visible')
-			.type('i')
-			.contains('Brightness')
-			.should('not.be.visible');
+		cy.get('.tify').type('i');
+		cy.contains('Brightness').should('be.visible')
+			.type('i');
+		cy.contains('Brightness').should('not.be.visible');
 
-		cy.get('.tify').type('i')
-			.contains('Brightness').should('be.visible')
-			.type('{esc}')
-			.contains('Brightness')
-			.should('not.be.visible');
+		cy.get('.tify').type('i');
+		cy.contains('Brightness').should('be.visible')
+			.type('{esc}');
+		cy.contains('Brightness').should('not.be.visible');
 	});
 });
