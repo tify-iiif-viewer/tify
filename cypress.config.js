@@ -1,5 +1,6 @@
 import { defineConfig } from 'cypress';
 
+// eslint-disable-next-line import/extensions
 import server from './tests/iiif-api/server.js';
 
 const iiifApiPort = 8082;

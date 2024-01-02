@@ -18,25 +18,21 @@ describe('TOC', () => {
 		cy.get('.tify-toc-structure[data-level="1"]:last-of-type > .tify-toc-toggle').click();
 		cy.get('.tify-toc-label').contains('Ferrarische Methode (Louis Ferrari)');
 
-		cy.contains('Collapse').click().then(() => {
-			cy.contains('Ferrarische Methode (Louis Ferrari)').should('not.be.visible');
-		});
+		cy.contains('Collapse').click();
+		cy.contains('Ferrarische Methode (Louis Ferrari)').should('not.be.visible');
 
-		cy.get('.tify-toc > .tify-toc-list > :last-child .tify-toc-link').click().then(() => {
-			cy.get('.tify-toc-structure.-current').contains('Einband');
-		});
+		cy.get('.tify-toc > .tify-toc-list > :last-child .tify-toc-link').click();
+		cy.get('.tify-toc-structure.-current').contains('Einband');
 
-		cy.contains('Expand all').click().click().then(() => {
-			// Multiple clicks should not toggle all children again
-			cy.contains('Auflösung von Gleichungen 3ten Grades').should('be.visible');
-			cy.contains('Recursionsformeln').should('be.visible');
-		});
+		// Multiple clicks should not toggle all children again
+		Cypress._.times(2, () => cy.contains('Expand all').click());
+		cy.contains('Auflösung von Gleichungen 3ten Grades').should('be.visible');
+		cy.contains('Recursionsformeln').should('be.visible');
 
-		cy.contains('Collapse all').click().click().then(() => {
-			// Multiple clicks should not toggle all children again
-			cy.contains('Auflösung von Gleichungen 3ten Grades').should('not.be.visible');
-			cy.contains('Recursionsformeln').should('not.be.visible');
-		});
+		// Multiple clicks should not toggle all children again
+		Cypress._.times(2, () => cy.contains('Collapse all').click());
+		cy.contains('Auflösung von Gleichungen 3ten Grades').should('not.be.visible');
+		cy.contains('Recursionsformeln').should('not.be.visible');
 
 		cy.contains('Expand all').click();
 
