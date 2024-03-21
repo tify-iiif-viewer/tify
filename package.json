@@ -52,6 +52,7 @@
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-sass-glob-import": "^3.0.2",
     "vitest": "^1.4.0",
+    "vitest-canvas-mock": "^0.3.3",
     "vue": "^3.4.21"
   },
   "engines": {
