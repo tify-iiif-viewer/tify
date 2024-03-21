@@ -1,5 +1,5 @@
 export function isValidPagesArray(pages, pageCount) {
-	if (!Array.isArray(pages)) {
+	if (!(pages instanceof Array) || !pageCount) {
 		return false;
 	}
 
