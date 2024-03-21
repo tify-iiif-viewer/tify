@@ -9,6 +9,27 @@ export default mergeConfig(
 			environment: 'jsdom',
 			include: ['tests/unit/**/*.spec.js'],
 			root: fileURLToPath(new URL('./', import.meta.url)),
+
+			// Prevent canvas-related error in unit tests
+			// https://github.com/wobsoriano/vitest-canvas-mock
+			setupFiles: ['./vitest.setup.js'],
+			deps: {
+				optimizer: {
+					web: {
+						include: ['vitest-canvas-mock'],
+					},
+				},
+			},
+			poolOptions: {
+				threads: {
+					singleThread: true,
+				},
+			},
+			environmentOptions: {
+				jsdom: {
+					resources: 'usable',
+				},
+			},
 		},
 	}),
 );
