@@ -262,7 +262,7 @@ The `viewer` object exposes the full [OpenSeadragon API](https://openseadragon.g
 
 ## Build Setup
 
-You need to have Node.js v12.0 or above, npm v5.5.1 or above (usually comes with Node.js) and git installed.
+You need to have Node.js v18.0 or above, npm (usually comes with Node.js) and git installed.
 
 Install dependencies:
 
