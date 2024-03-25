@@ -1,0 +1,340 @@
+{
+	"@context": "http://iiif.io/api/presentation/3/context.json",
+	"id": "https://imagehub.mskgent.be/iiif/3/8210/manifest.json",
+	"type": "Manifest",
+	"label": {
+		"en": [
+			"Portrait of François-Auguste Gevaert"
+		],
+		"nl": [
+			"Portret van François-Auguste Gevaert"
+		]
+	},
+	"metadata": {
+		"manifest_url": {
+			"label": {
+				"none": [
+					"IIIF manifest"
+				]
+			},
+			"value": {
+				"none": [
+					"<a href=\"https://imagehub.mskgent.be/iiif/3/8210/manifest.json\">https://imagehub.mskgent.be/iiif/3/8210/manifest.json</a>"
+				]
+			}
+		}
+	},
+	"viewingDirection": "left-to-right",
+	"behavior": [
+		"individuals"
+	],
+	"rights": "https://creativecommons.org/publicdomain/mark/1.0/",
+	"requiredStatement": {
+		"label": {
+			"en": [
+				"Attribution"
+			],
+			"nl": [
+				"Naamsvermelding"
+			]
+		},
+		"value": {
+			"en": [
+				"<p><a href=\"http://creativecommons.org/publicdomain/mark/1.0/\"><img src=\"https://licensebuttons.net/p/mark/1.0/88x31.png\"/></a></p><a href=\"https://www.mskgent.be/en\">Museum of Fine Arts Ghent</a><br><p>The original TIFF files of this work, in highest resolution and color-coded, can be ordered from <a href=\"https://artinflanders.be\">Art in Flanders</a> (meemoo). If this image is used for a printed publication or a commercial product, MSK Gent would appreciate having three copies sent to MSK Gent, Hofbouwlaan 28, B-9000 Gent. More information: <a href=\"mailto:museum.msk@stad.gent\">museum.msk@stad.gent</a>.</p></p>"
+			],
+			"nl": [
+				"<p><a href=\"http://creativecommons.org/publicdomain/mark/1.0/\"><img src=\"https://licensebuttons.net/p/mark/1.0/88x31.png\"/></a></p><a href=\"https://www.mskgent.be\">Museum voor Schone Kunsten Gent</a><br><p>De originele TIFF-bestanden van dit werk, in hoogste resolutie en met kleurencode, kunnen worden besteld bij <a href=\"https://artinflanders.be\">Art in Flanders</a> (meemoo). Wanneer dit beeld gebruikt wordt voor een gedrukte publicatie of een commercieel product, dan vraagt MSK Gent dat drie exemplaren worden toegestuurd naar MSK Gent, Hofbouwlaan 28, B-9000 Gent. Meer info: <a href=\"mailto:museum.msk@stad.gent\">museum.msk@stad.gent</a>.</p></p>"
+			]
+		}
+	},
+	"seeAlso": [
+		{
+			"id": "https://datahub.mskgent.be/oai?verb=GetRecord&metadataPrefix=oai_lido&identifier=oai:datahub.mskgent.be:mskgent.be:1909-RRR-1",
+			"type": "Dataset",
+			"label": {
+				"en": [
+					"Object Description in XML"
+				],
+				"nl": [
+					"Objectbeschrijving in XML"
+				]
+			},
+			"format": "text/xml",
+			"profile": "http://www.lido-schema.org"
+		}
+	],
+	"items": [
+		{
+			"id": "https://imagehub.mskgent.be/iiif/3/8210/canvas/1",
+			"type": "Canvas",
+			"label": {
+				"en": [
+					"Portrait of François-Auguste Gevaert"
+				],
+				"nl": [
+					"Portret van François-Auguste Gevaert"
+				]
+			},
+			"metadata": [
+				{
+					"label": {
+						"en": [
+							"Title"
+						],
+						"nl": [
+							"Titel"
+						]
+					},
+					"value": {
+						"en": [
+							"Portrait of François-Auguste Gevaert"
+						],
+						"nl": [
+							"Portret van François-Auguste Gevaert"
+						]
+					}
+				},
+				{
+					"label": {
+						"en": [
+							"Creator"
+						],
+						"nl": [
+							"Vervaardiger"
+						]
+					},
+					"value": {
+						"none": [
+							"Medailleur: Samuel, Charles"
+						]
+					}
+				},
+				{
+					"label": {
+						"en": [
+							"Date created"
+						],
+						"nl": [
+							"Vervaardigingsdatum"
+						]
+					},
+					"value": {
+						"none": [
+							"1908"
+						]
+					}
+				},
+				{
+					"label": {
+						"en": [
+							"Inventory no."
+						],
+						"nl": [
+							"Inventarisnummer"
+						]
+					},
+					"value": {
+						"none": [
+							"1909-RRR-1"
+						]
+					}
+				},
+				{
+					"label": {
+						"en": [
+							"Description"
+						],
+						"nl": [
+							"Beschrijving"
+						]
+					},
+					"value": {
+						"none": [
+							"François Auguste Gevaert, geboren te Huise bij Oudenaarde in 1828, bouwde een indrukwekkende muzikale carrière uit. Hij studeerde aan het Gentse Conservatorium, waar hij in 1844 de eerste prijs voor piano behaalde. Hij werd organist in de Gentse Jezuïetenkerk. In 1847 won Gevaert de Belgische Prijs van Rome. Na een rondreis in Italië, Spanje en Duitsland trok hij naar Parijs waar hij koordirecteur werd van de Grand Opéra. Na de Franse oorlog van 1870 kwam hij terug naar België en werd in 1871 directeur van het Koninklijk Conservatorium te Brussel waar hij actief bleef tot aan zijn dood in 1908. Hij was kapelmeester aan het hof en werd in de adelstand verheven. Charles Samuel gaf op de keerzijde van deze plaquette het grafmonument weer dat Paul De Vigne ontwierp voor mevrouw Gevaert. Het bevindt zich op de stadsbegraafplaats te Brussel. De lauwerkrans en palmtak verwijzen naar de grote verdiensten van Gevaert."
+						]
+					}
+				}
+			],
+			"height": 3347,
+			"width": 2605,
+			"items": [
+				{
+					"id": "https://imagehub.mskgent.be/iiif/3/8210/canvas/1/1",
+					"type": "AnnotationPage",
+					"items": [
+						{
+							"id": "https://imagehub.mskgent.be/iiif/3/8210/annotation/1-image",
+							"type": "Annotation",
+							"motivation": "painting",
+							"body": {
+								"id": "https://imagehub.mskgent.be/iiif/2/public%2F8210.tif/full/full/0/default.jpg",
+								"type": "Image",
+								"format": "image/jpeg",
+								"service": [
+									{
+										"@id": "https://imagehub.mskgent.be/iiif/2/public%2F8210.tif",
+										"@type": "ImageService2",
+										"profile": "http://iiif.io/api/image/2/level1.json"
+									}
+								],
+								"height": 3347,
+								"width": 2605
+							},
+							"target": "https://imagehub.mskgent.be/iiif/3/8210/canvas/1"
+						}
+					]
+				}
+			],
+			"thumbnail": [
+				{
+					"id": "https://imagehub.mskgent.be/iiif/2/public%2F8210.tif/full/400,/0/default.jpg",
+					"type": "Image",
+					"format": "image/jpeg",
+					"service": [
+						{
+							"id": "https://imagehub.mskgent.be/iiif/2/public%2F8210.tif",
+							"@type": "ImageService2",
+							"profile": "http://iiif.io/api/image/2/level2.json"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "https://imagehub.mskgent.be/iiif/3/8210/canvas/2",
+			"type": "Canvas",
+			"label": {
+				"en": [
+					"Portrait of François-Auguste Gevaert"
+				],
+				"nl": [
+					"Portret van François-Auguste Gevaert"
+				]
+			},
+			"metadata": [
+				{
+					"label": {
+						"en": [
+							"Title"
+						],
+						"nl": [
+							"Titel"
+						]
+					},
+					"value": {
+						"en": [
+							"Portrait of François-Auguste Gevaert"
+						],
+						"nl": [
+							"Portret van François-Auguste Gevaert"
+						]
+					}
+				},
+				{
+					"label": {
+						"en": [
+							"Creator"
+						],
+						"nl": [
+							"Vervaardiger"
+						]
+					},
+					"value": {
+						"none": [
+							"Medailleur: Samuel, Charles"
+						]
+					}
+				},
+				{
+					"label": {
+						"en": [
+							"Date created"
+						],
+						"nl": [
+							"Vervaardigingsdatum"
+						]
+					},
+					"value": {
+						"none": [
+							"1908"
+						]
+					}
+				},
+				{
+					"label": {
+						"en": [
+							"Inventory no."
+						],
+						"nl": [
+							"Inventarisnummer"
+						]
+					},
+					"value": {
+						"none": [
+							"1909-RRR-1"
+						]
+					}
+				},
+				{
+					"label": {
+						"en": [
+							"Description"
+						],
+						"nl": [
+							"Beschrijving"
+						]
+					},
+					"value": {
+						"none": [
+							"François Auguste Gevaert, geboren te Huise bij Oudenaarde in 1828, bouwde een indrukwekkende muzikale carrière uit. Hij studeerde aan het Gentse Conservatorium, waar hij in 1844 de eerste prijs voor piano behaalde. Hij werd organist in de Gentse Jezuïetenkerk. In 1847 won Gevaert de Belgische Prijs van Rome. Na een rondreis in Italië, Spanje en Duitsland trok hij naar Parijs waar hij koordirecteur werd van de Grand Opéra. Na de Franse oorlog van 1870 kwam hij terug naar België en werd in 1871 directeur van het Koninklijk Conservatorium te Brussel waar hij actief bleef tot aan zijn dood in 1908. Hij was kapelmeester aan het hof en werd in de adelstand verheven. Charles Samuel gaf op de keerzijde van deze plaquette het grafmonument weer dat Paul De Vigne ontwierp voor mevrouw Gevaert. Het bevindt zich op de stadsbegraafplaats te Brussel. De lauwerkrans en palmtak verwijzen naar de grote verdiensten van Gevaert."
+						]
+					}
+				}
+			],
+			"height": 3347,
+			"width": 2605,
+			"items": [
+				{
+					"id": "https://imagehub.mskgent.be/iiif/3/8210/canvas/2/1",
+					"type": "AnnotationPage",
+					"items": [
+						{
+							"id": "https://imagehub.mskgent.be/iiif/3/8210/annotation/2-image",
+							"type": "Annotation",
+							"motivation": "painting",
+							"body": {
+								"id": "https://imagehub.mskgent.be/iiif/2/public%2F8211.tif/full/full/0/default.jpg",
+								"type": "Image",
+								"format": "image/jpeg",
+								"service": [
+									{
+										"@id": "https://imagehub.mskgent.be/iiif/2/public%2F8211.tif",
+										"@type": "ImageService2",
+										"profile": "http://iiif.io/api/image/2/level1.json"
+									}
+								],
+								"height": 3347,
+								"width": 2605
+							},
+							"target": "https://imagehub.mskgent.be/iiif/3/8210/canvas/2"
+						}
+					]
+				}
+			],
+			"thumbnail": [
+				{
+					"id": "https://imagehub.mskgent.be/iiif/2/public%2F8211.tif/full/400,/0/default.jpg",
+					"type": "Image",
+					"format": "image/jpeg",
+					"service": [
+						{
+							"id": "https://imagehub.mskgent.be/iiif/2/public%2F8211.tif",
+							"@type": "ImageService2",
+							"profile": "http://iiif.io/api/image/2/level2.json"
+						}
+					]
+				}
+			]
+		}
+	]
+}
