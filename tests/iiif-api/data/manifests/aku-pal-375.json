@@ -1,0 +1,129 @@
+{
+	"@context": "http://iiif.io/api/presentation/3/context.json",
+	"homepage": [
+		{
+			"format": "text/html",
+			"id": "https://aku-pal.uni-mainz.de/objects/375",
+			"label": {
+				"en": [
+					"AKU-PAL database record"
+				]
+			},
+			"type": "Text"
+		}
+	],
+	"id": "https://aku-pal.uni-mainz.de/api/manifests/cae2c87f-52d0-408e-9e87-508e73baa954",
+	"items": [
+		{
+			"height": 3743,
+			"id": "https://089f3bbe-c4f4-4c8f-a242-38f919c74141",
+			"items": [
+				{
+					"id": "https://089f3bbe-c4f4-4c8f-a242-38f919c74141/page/p1/1",
+					"items": [
+						{
+							"body": {
+								"format": "image/jpeg",
+								"height": 3743,
+								"id": "https://aku-pal.uni-mainz.de:8183/iiif/3/data%2Fdig%2Fdig_10.tif/full/max/0/default.jpg",
+								"type": "Image",
+								"width": 5613
+							},
+							"id": "https://089f3bbe-c4f4-4c8f-a242-38f919c74141/annotation/p1",
+							"motivation": "painting",
+							"target": "https://089f3bbe-c4f4-4c8f-a242-38f919c74141",
+							"type": "Annotation"
+						}
+					],
+					"type": "AnnotationPage"
+				}
+			],
+			"label": {
+				"none": [
+					"Dipinto"
+				]
+			},
+			"type": "Canvas",
+			"width": 5613
+		}
+	],
+	"label": {
+		"en": [
+			"Dipinto Assiut, Gebel Assiut al-gharbi, N13.1 TN2"
+		]
+	},
+	"logo": {
+		"id": "https://www.aegyptologie.uni-mainz.de/files/2014/08/Logo_neu.jpg",
+		"type": "Image"
+	},
+	"metadata": [
+		{
+			"label": {
+				"de": [
+					"Objekt"
+				],
+				"en": [
+					"Object"
+				]
+			},
+			"value": {
+				"de": [
+					"Dipinto"
+				],
+				"en": [
+					"Dipinto"
+				]
+			}
+		},
+		{
+			"label": {
+				"de": [
+					"Standort"
+				],
+				"en": [
+					"Location"
+				]
+			},
+			"value": {
+				"de": [
+					"Assiut, Gebel Assiut al-gharbi, N13.1 TN2"
+				],
+				"en": [
+					"Asyut, Gebel Asyut al-gharbi, N13.1 TN2"
+				]
+			}
+		},
+		{
+			"label": {
+				"de": [
+					"Datierung"
+				],
+				"en": [
+					"Date"
+				]
+			},
+			"value": {
+				"de": [
+					"Neues Reich, 18. Dynastie"
+				],
+				"en": [
+					"New Kingdom, 18th Dynasty"
+				]
+			}
+		}
+	],
+	"requiredStatement": {
+		"label": {
+			"en": [
+				"Attribution"
+			]
+		},
+		"value": {
+			"en": [
+				"<a href='https://www.aegyptologie.uni-mainz.de/the-asyut-project-feldarbeiten-in-mittelaegyptenfieldwork-in-middle-egypt/'>The Asyut Project</a>, photo: Fritz Barthel"
+			]
+		}
+	},
+	"rights": "http://rightsstatements.org/vocab/InC/1.0/",
+	"type": "Manifest"
+}
