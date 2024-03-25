@@ -6,6 +6,9 @@ describe('TOC', () => {
 		cy.contains('Contents').click();
 		cy.contains('Table of Contents');
 
+		cy.contains('.tify-toc-toggle-all', 'Expand all');
+		cy.contains('.tify-toc-toggle-all', 'Collapse all');
+
 		cy.get('.tify-toc-structure.-current').contains('Titelseite');
 		cy.get('.tify-toc-structure[data-level="0"]:nth-child(3) > .tify-toc-toggle').click();
 		cy.get(
@@ -46,13 +49,15 @@ describe('TOC', () => {
 		cy.contains('Recursionsformeln').should('be.visible');
 	});
 
-	it('is visible when there are structures without canvases', () => {
+	it('is working even when structures are chaotic', () => {
 		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/cambridge-MS-ADD-08640`;
 		const encodedParams = encodeURIComponent(JSON.stringify({
 			view: 'toc',
 		}));
 
 		cy.visit(`/?manifest=${manifestUrl}&tify=${encodedParams}`);
+
+		cy.contains('.tify-toc-toggle-all').should('not.exist');
 
 		cy.get('.tify-toc-structure.-current').contains('Elizabeth Lyttelton\'s commonplace book');
 	});
