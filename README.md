@@ -82,6 +82,11 @@ TIFY takes an options object as its only parameter. While optional, you usually 
 
 	The HTML element into which TIFY is mounted. If set to `null`, TIFY is not mounted at all until `mount` is called (see [API](#api)).
 
+
+- **`fallbackLanguage`**: string, default `'en'`
+
+	The language to be used for strings from the IIIF manifest that are not available in the current `language`. If no value matches `language` or `fallbackLanguage`, the first available language is displayed.
+
 - **`filters`**: object, default `{}`
 
 	Sets the initial image filters. Available properties are `'brightness'`, `'contrast'` (both a floating-point number between `0.5` and `2`) and `'saturation'` (floating-point number between `0` and `3`), all optional.
