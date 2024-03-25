@@ -1,9 +1,13 @@
-const { defineConfig } = require('cypress');
+import { defineConfig } from 'cypress';
 
-process.env.iiifApiPort = 8082;
-require('./tests/iiif-api/server');
+// eslint-disable-next-line import/extensions
+import server from './tests/iiif-api/server.js';
 
-module.exports = defineConfig({
+const iiifApiPort = 8082;
+
+server.start(iiifApiPort);
+
+export default defineConfig({
 	e2e: {
 		baseUrl: 'http://localhost:4173',
 		specPattern: 'tests/e2e/**/*.{cy,spec}.{js,jsx,ts,tsx}',
@@ -18,6 +22,6 @@ module.exports = defineConfig({
 		supportFile: false,
 	},
 	env: {
-		iiifApiUrl: `http://0.0.0.0:${process.env.iiifApiPort}`,
+		iiifApiUrl: `http://0.0.0.0:${iiifApiPort}`,
 	},
 });

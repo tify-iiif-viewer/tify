@@ -1,0 +1,146 @@
+{
+	"@context": [
+		"http://www.w3.org/ns/anno.jsonld",
+		"http://iiif.io/api/presentation/3/context.json"
+	],
+	"type": "Manifest",
+	"id": "https://acdc.amherst.edu/do/63cc6105-570d-407b-af8c-07fda3f8c620/metadata/iiifmanifest/default.jsonld",
+	"label": {
+		"en": [
+			"Transcription of Emily Dickinson's \"I'll clutch - and clutch\" - Image 3"
+		]
+	},
+	"requiredStatement": {
+		"label": {
+			"en": [
+				"Attribution"
+			]
+		},
+		"value": {
+			"en": [
+				"Provided by Archipelago Deployment"
+			]
+		}
+	},
+	"metadata": [
+		{
+			"label": {
+				"en": [
+					"description"
+				]
+			},
+			"value": {
+				"en": [
+					""
+				]
+			}
+		},
+		{
+			"label": {
+				"en": [
+					"navDate"
+				]
+			},
+			"value": {
+				"en": [
+					"January 23rd at 7:11pm"
+				]
+			}
+		},
+		{
+			"label": {
+				"en": [
+					"license"
+				]
+			},
+			"value": {
+				"en": [
+					"http:\/\/rightsstatements.org\/vocab\/InC-EDU\/1.0\/"
+				]
+			}
+		}
+	],
+	"within": "",
+	"partOf": [
+		{
+			"id": "/metadata/iiifmanifest3cws/default.jsonld",
+			"type": "Manifest"
+		}
+	],
+	"items": [
+		{
+			"id": "https://acdc.amherst.edu/view/EmilyDickinson/ma00167-14-40-00508-0003/iiif/canvas/p1",
+			"type": "Canvas",
+			"label": {
+				"en": [
+					"Transcription of Emily Dickinson's \"I'll clutch - and clutch\" - Image 3"
+				]
+			},
+			"thumbnail": [
+				{
+					"id": "https://acdc.amherst.edu/cantaloupe/iiif/2/media%2FEmilyDickinson%2Fma00167-14-40-00508%2Fimage-ma00167-14-40-00508-0003-a75da8c0-f701-45ab-8aff-48d72502bf95.jpg/full/240,/0/default.jpg",
+					"type": "Image",
+					"format": "image/jpeg",
+					"width": 240,
+					"height": 375
+				}
+			],
+			"height": 4035,
+			"width": 2585,
+			"items": [
+				{
+					"id": "https://acdc.amherst.edu/view/EmilyDickinson/ma00167-14-40-00508-0003/iiif/page/p1",
+					"type": "AnnotationPage",
+					"items": [
+						{
+							"id": "https://acdc.amherst.edu/view/EmilyDickinson/ma00167-14-40-00508-0003/iiif/annotation/p1",
+							"type": "Annotation",
+							"motivation": "painting",
+							"thumbnail": [
+								{
+									"id": "https://acdc.amherst.edu/cantaloupe/iiif/2/media%2FEmilyDickinson%2Fma00167-14-40-00508%2Fimage-ma00167-14-40-00508-0003-a75da8c0-f701-45ab-8aff-48d72502bf95.jpg/full/240,/0/default.jpg",
+									"type": "Image",
+									"format": "image/jpeg",
+									"width": 240,
+									"height": 375
+								}
+							],
+							"body": {
+								"id": "https://acdc.amherst.edu/cantaloupe/iiif/2/media%2FEmilyDickinson%2Fma00167-14-40-00508%2Fimage-ma00167-14-40-00508-0003-a75da8c0-f701-45ab-8aff-48d72502bf95.jpg/full/full/0/default.jpg",
+								"type": "Image",
+								"format": "image/jpeg",
+								"service": [
+									{
+										"id": "https://acdc.amherst.edu/cantaloupe/iiif/2/media%2FEmilyDickinson%2Fma00167-14-40-00508%2Fimage-ma00167-14-40-00508-0003-a75da8c0-f701-45ab-8aff-48d72502bf95.jpg",
+										"type": "ImageService2",
+										"profile": "level2"
+									}
+								],
+								"height": 4035,
+								"width": 2585
+							},
+							"target": "https://acdc.amherst.edu/view/EmilyDickinson/ma00167-14-40-00508-0003/iiif/canvas/p1"
+						}
+					]
+				}
+			]
+		}
+	],
+	"structures": [
+		{
+			"id": "https://acdc.amherst.edu/view/EmilyDickinson/ma00167-14-40-00508-0003/iiif/range/r1",
+			"type": "Range",
+			"label": {
+				"en": [
+					"Transcription of Emily Dickinson's \"I'll clutch - and clutch\" - Image 3"
+				]
+			},
+			"items": [
+				{
+					"id": "https://acdc.amherst.edu/view/EmilyDickinson/ma00167-14-40-00508-0003/iiif/canvas/p1",
+					"type": "Canvas"
+				}
+			]
+		}
+	]
+}

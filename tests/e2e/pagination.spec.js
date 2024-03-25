@@ -9,20 +9,16 @@ describe('Pagination', () => {
 		cy.get('[title="First page"]').first().click();
 		cy.contains(currentPage, '1 : -');
 
-		cy.get('[title="Next page"]').first().click().click();
+		Cypress._.times(2, () => cy.get('[title="Next page"]').first().click());
 		cy.contains(currentPage, '3 : 1r');
 
-		cy.get('[title="Next section"]').first().click().click();
+		Cypress._.times(2, () => cy.get('[title="Next section"]').first().click());
 		cy.contains(currentPage, '7 : 3r');
 
 		cy.get('[title="Last page"]').first().click();
 		cy.contains(currentPage, '69 : -');
 
-		cy.get('[title="Previous section"]').first()
-			.click()
-			.click()
-			.click()
-			.click();
+		Cypress._.times(4, () => cy.get('[title="Previous section"]').first().click());
 		cy.contains('16 : 7v');
 
 		cy.get('[title="Toggle double-page"]').first().click();

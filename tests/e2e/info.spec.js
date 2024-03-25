@@ -30,11 +30,7 @@ describe('Info', () => {
 	it('shows metadata of a nested structure', () => {
 		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-DE_611_BF_5619_1801_1806`);
 		cy.contains('Info').click();
-		cy.get('[title="Next page"]').first()
-			.click()
-			.click()
-			.click()
-			.click();
+		Cypress._.times(4, () => cy.get('[title="Next page"]').first().click());
 		cy.contains('Current Element').should('be.visible');
 		cy.contains(
 			'.tify-info-section.-metadata.-structure',

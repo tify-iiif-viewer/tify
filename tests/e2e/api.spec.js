@@ -14,6 +14,9 @@ describe('API', () => {
 
 				tify.setView('export');
 				cy.contains('.-active', 'Export');
+
+				tify.setLanguage('de');
+				cy.contains('.tify-header-button', 'Seiten');
 			});
 		});
 	});

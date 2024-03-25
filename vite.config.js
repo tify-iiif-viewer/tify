@@ -74,9 +74,4 @@ export default defineConfig({
 		sassGlobImport(),
 		vue(),
 	],
-	test: {
-		include: ['../tests/unit/**/*.spec.js'],
-		threads: false,
-		environment: 'jsdom',
-	},
 });

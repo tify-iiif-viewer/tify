@@ -17,6 +17,7 @@ window.Tify = function Tify(userOptions = {}) {
 		childManifestAutoloaded: true,
 		childManifestUrl: null,
 		container: null,
+		fallbackLanguage: 'en',
 		filters: {},
 		language: 'en',
 		manifestUrl: null,

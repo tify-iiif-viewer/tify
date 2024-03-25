@@ -1,13 +1,9 @@
-const fs = require('fs');
-const http = require('http');
-const url = require('url');
+import fs from 'fs';
+import http from 'http';
+import url from 'url';
 
-const port = process.env.iiifApiPort || 8081;
-
-const server = http.createServer().listen(port);
-
-// eslint-disable-next-line no-console
-console.log(`\n  🤖 Mock IIIF API listening at http://localhost:${port}\n`);
+const dataDir = url.fileURLToPath(new URL('data', import.meta.url));
+const server = http.createServer();
 
 server.on('request', (req, res) => {
 	function outputJpeg(fileName) {
@@ -33,7 +29,7 @@ server.on('request', (req, res) => {
 				// Rewrite all remote URLs to local ones, except IIIF API profiles
 				const dataWithLocalUrls = data.replace(
 					/https?:\/\/(?!iiif.io\/api\/)[a-z0-9-.:]*/gi,
-					`http://127.0.0.1:${port}`,
+					`http://127.0.0.1:${server.port}`,
 				);
 
 				res.write(dataWithLocalUrls);
@@ -84,15 +80,15 @@ server.on('request', (req, res) => {
 		}
 
 		if (action === 'manifest') {
-			outputJson(`${__dirname}/data/manifests/${file}`);
+			outputJson(`${dataDir}/manifests/${file}`);
 		} else if (action === 'annotation-lists') {
-			outputJson(`${__dirname}/data/annotation-lists/${file}`);
+			outputJson(`${dataDir}/annotation-lists/${file}`);
 		} else if (action === 'annotations') {
-			outputJson(`${__dirname}/data/annotations/${file || 'default.json'}`);
+			outputJson(`${dataDir}/annotations/${file || 'default.json'}`);
 		} else if (action === 'info') {
-			outputJson(`${__dirname}/data/infos/default.json`);
+			outputJson(`${dataDir}/infos/default.json`);
 		} else if (['image', 'images', 'logos'].includes(action)) {
-			outputJpeg(`${__dirname}/data/images/default.jpg`);
+			outputJpeg(`${dataDir}/images/default.jpg`);
 		} else {
 			res.writeHead(400);
 			res.end();
@@ -100,8 +96,15 @@ server.on('request', (req, res) => {
 	});
 });
 
-module.exports = {
-	close: () => {
+export default {
+	start(port = 8081) {
+		server.listen(port);
+		server.port = port;
+
+		// eslint-disable-next-line no-console
+		console.log(`\n  🤖 Mock IIIF API listening at http://localhost:${port}\n`);
+	},
+	stop() {
 		server.close();
 	},
 };

@@ -1,7 +1,27 @@
 import { computed, nextTick, reactive } from 'vue';
 
-import { filterHtml } from '../modules/filter';
+import { convertPresentation2 } from '@iiif/parser/presentation-2';
+
 import { isValidPagesArray } from '../modules/validation';
+
+function convertManifest(originalManifest) {
+	// For IIIF 2: "related" may be erroneously converted, save for later
+	const { related } = originalManifest;
+
+	// Convert IIIF 2 manifest to IIIF 3 (IIIF 3 remains unchanged)
+	// NOTE: originalManifest may be modified during conversion
+	const manifest = convertPresentation2(originalManifest);
+
+	// For IIIF 2: Restore "related" if homepage conversion failed
+	const providerContainsHomepage = manifest.provider?.some(
+		(provider) => provider.homepage?.some((homepage) => homepage.type !== 'unknown'),
+	);
+	if (related && !manifest.homepage && !providerContainsHomepage) {
+		manifest.homepage = related;
+	}
+
+	return manifest;
+}
 
 function Store(args) {
 	const instanceId = `tify-${Math.floor(Math.random() * Date.now())}`;
@@ -10,24 +30,19 @@ function Store(args) {
 		collection: null,
 		errors: [],
 		loading: 0,
-		manifest: args.manifest || null,
+		manifest: args.manifest ? convertManifest(args.manifest) : null,
 		options: args.options || {},
 		rootElement: args.rootElement || null,
 		urlUpdateTimeout: null,
-		canvases: computed(() => (
-			store.manifest && store.manifest.sequences
-				? store.manifest.sequences[0].canvases
-				: []
-		)),
 		currentStructure: computed(() => {
-			if (!Array.isArray(store.manifest.structures)) {
+			if (!(store.manifest.structures instanceof Array)) {
 				return false;
 			}
 
 			const currentCanvasIds = [];
 			store.options.pages.forEach((page) => {
 				if (page) {
-					currentCanvasIds.push(store.manifest.sequences[0].canvases[page - 1]['@id']);
+					currentCanvasIds.push(store.manifest.items[page - 1].id);
 				}
 			});
 
@@ -36,23 +51,21 @@ function Store(args) {
 			let smallestRange;
 			for (let i = 0; i < length; i += 1) {
 				const structure = store.manifest.structures[i];
-				const { canvases } = structure;
-				if (canvases && canvases.some((canvasId) => currentCanvasIds.includes(canvasId))) {
-					if (structure.firstPage && structure.lastPage) {
-						const currentRange = structure.lastPage - structure.firstPage;
-						if (currentRange < smallestRange || !smallestRange) {
-							indexOfStructureWithSmallestRange = i;
-							smallestRange = currentRange;
-							if (smallestRange === 0) {
-								break;
-							}
+				const { items } = structure;
+				if (items?.some((item) => currentCanvasIds.includes(item.id))) {
+					const currentRange = structure.items.length;
+					if (currentRange < smallestRange || !smallestRange) {
+						indexOfStructureWithSmallestRange = i;
+						smallestRange = currentRange;
+						if (smallestRange === 0) {
+							break;
 						}
 					}
 				}
 			}
 
 			if (typeof indexOfStructureWithSmallestRange === 'number'
-			&& indexOfStructureWithSmallestRange >= 0
+				&& indexOfStructureWithSmallestRange >= 0
 			) {
 				return store.manifest.structures[indexOfStructureWithSmallestRange];
 			}
@@ -80,7 +93,7 @@ function Store(args) {
 			const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
 			return page >= store.sections[store.sections.length - 1].firstPage;
 		}),
-		pageCount: computed(() => store.canvases.length),
+		pageCount: computed(() => store.manifest.items?.length),
 		sections: computed(() => {
 			const sections = [];
 
@@ -89,15 +102,15 @@ function Store(args) {
 			}
 
 			store.manifest.structures.forEach((structure) => {
-				if (!structure.canvases) {
+				if (!structure.items) {
 					sections.push({ firstPage: 1, lastPage: store.pageCount });
 					return;
 				}
 
-				const firstCanvasId = structure.canvases[0];
-				const firstPage = store.canvases.findIndex((canvas) => canvas['@id'] === firstCanvasId) + 1;
-				const lastCanvasId = structure.canvases[structure.canvases.length - 1];
-				const lastPage = store.canvases.findIndex((canvas) => canvas['@id'] === lastCanvasId) + 1;
+				const firstCanvasId = structure.items[0].id;
+				const firstPage = store.manifest.items.findIndex((canvas) => canvas.id === firstCanvasId) + 1;
+				const lastCanvasId = structure.items[structure.items.length - 1].id;
+				const lastPage = store.manifest.items.findIndex((canvas) => canvas.id === lastCanvasId) + 1;
 				sections.push({ firstPage, lastPage });
 			});
 
@@ -108,134 +121,87 @@ function Store(args) {
 				return [];
 			}
 
+			// TODO: Get rid of Table of Contents if first child without items?
+			// See https://digital.blb-karlsruhe.de/i3f/v20/1209510/manifest
+			if (store.manifest.structures.some((structure) => structure.type === 'Range')) {
+				return store.manifest.structures;
+			}
+
 			const mappedStructures = [];
-			const structuresThatAreChildren = [];
-			const { canvases } = store.manifest.sequences[0];
-			const { length } = store.manifest.structures;
-			for (let i = 0; i < length; i += 1) {
-				const structure = store.manifest.structures[i];
+			const canvases = store.manifest.items;
+			const structuresCount = store.manifest.structures.length;
 
-				// https://iiif.io/api/presentation/2.1/#viewinghint
-				if (structure.viewingHint === 'top') {
-					continue;
-				}
+			for (let i = 0; i < structuresCount; i += 1) {
+				const structure = { ...store.manifest.structures[i] };
 
-				if (structure.label) {
-					structure.label = store.convertValueToArray(structure.label)[0].trim();
-				} else {
-					structure.label = '—'; // NOTE: That is an em dash (&mdash;)
-				}
+				// TODO: Add full behavior support, see https://iiif.io/api/presentation/3.0/#behavior
 
-				if (structure.canvases) {
-					const firstCanvas = structure.canvases[0];
-					structure.firstPage = canvases.findIndex((canvas) => canvas['@id'] === firstCanvas) + 1;
+				if (structure.items) {
+					const firstCanvasIdOfStructure = structure.items[0].id;
+					structure.firstPage = canvases.findIndex((canvas) => canvas.id === firstCanvasIdOfStructure) + 1;
 
-					const lastCanvas = structure.canvases[structure.canvases.length - 1];
-					structure.lastPage = canvases.findIndex((canvas) => canvas['@id'] === lastCanvas) + 1;
+					const lastCanvasIdOfStructure = structure.items.slice(-1)[0].id;
+					structure.lastPage = canvases.findIndex((canvas) => canvas.id === lastCanvasIdOfStructure) + 1;
 
-					const firstPageCanvas = canvases[structure.firstPage - 1];
-					if (!firstPageCanvas) {
+					if (!canvases[structure.firstPage - 1]) {
 						// Excluding structure if its range has no canvases
 						continue;
 					}
-
-					structure.pageLabel = firstPageCanvas.label;
-				} else if (canvases[0]) {
+				} else if (canvases?.[0]) {
 					structure.firstPage = 1;
 					structure.lastPage = store.pageCount;
-					structure.pageLabel = canvases[0].label;
 				}
 
+				structure.level = 0;
 				structure.pageCount = structure.lastPage - structure.firstPage + 1;
-
-				if (structure.within) {
-					structuresThatAreChildren.push(structure);
-				}
 
 				mappedStructures.push(structure);
 			}
 
-			const structuresThatAreChildrenLength = structuresThatAreChildren.length;
-			for (let i = 0; i < length; i += 1) {
-				const childStructures = [];
-				for (let j = 0; j < structuresThatAreChildrenLength; j += 1) {
-					const childStructure = structuresThatAreChildren[j];
-					if (childStructure.within === mappedStructures[i]['@id']) {
-						childStructures.push(childStructure);
-					}
-				}
+			let maxLevel = 0;
+			for (let i = 0; i < mappedStructures.length; i += 1) {
+				const structure = mappedStructures[i];
 
-				if (childStructures.length) {
-					mappedStructures[i].childStructures = childStructures.sort((a, b) => a.firstPage - b.firstPage);
+				for (let j = i + 1; j < mappedStructures.length; j += 1) {
+					const structure2 = mappedStructures[j];
+
+					if (structure2.firstPage >= structure.firstPage
+						&& structure2.lastPage <= structure.lastPage
+					) {
+						structure.items = (structure.items || []).filter((item) => item.label);
+						structure.items.push(structure2);
+
+						structure2.level += 1;
+						maxLevel = Math.max(maxLevel, structure2.level);
+					}
 				}
 			}
 
-			const topLevelStructures = mappedStructures
-				.filter((structure) => !structure.within)
-				.sort((a, b) => a.firstPage - b.firstPage);
+			// Remove all child structures that are not at their intended level
+			// TODO: There may be a simpler and faster solution
+			const removeIllegitimateChildren = (structures, level = 0) => {
+				for (let i = 0; i < structures.length; i += 1) {
+					const structure = structures[i];
 
-			return topLevelStructures;
+					if (structure.level > level) {
+						structures.splice(i, 1);
+					} else if (structure.items) {
+						removeIllegitimateChildren(structure.items, level + 1);
+					}
+				}
+			};
+
+			for (let i = 0; i < maxLevel; i += 1) {
+				removeIllegitimateChildren(mappedStructures);
+			}
+
+			return mappedStructures;
 		}),
 		addError(message) {
 			store.errors.push(message);
 		},
 		clearErrors() {
 			store.errors = [];
-		},
-		convertValueToArray(value) {
-			if (!store.options.language) {
-				throw new Error('language not set');
-			}
-
-			// http://iiif.io/api/presentation/2.1/#language-of-property-values
-
-			if (!(value instanceof Array)) {
-				if (typeof value === 'object') {
-					if (value['@value']) {
-						return [filterHtml(value['@value'])];
-					}
-
-					if (value['@id']) {
-						const id = filterHtml(value['@id']);
-						return [{
-							'@id': id,
-							label: (value.label ? filterHtml(value.label) : id),
-						}];
-					}
-
-					return ['(Invalid value)'];
-				}
-
-				return [filterHtml(value)];
-			}
-
-			const displayedValues = [];
-			const translation = {};
-			value.forEach((item) => {
-				if (typeof item === 'string' || (item['@id'] && item.label)) {
-					displayedValues.push(item);
-				} else if (item && typeof item !== 'object') {
-					displayedValues.push(filterHtml(item));
-				} else if (item['@language'] && item['@value']) {
-					if (!translation.fallback) {
-						translation.fallback = item['@value'];
-					}
-
-					if (item['@language'].indexOf('en') === 0) {
-						// Language is en or en-US or en-GB
-						translation.en = item['@value'];
-					} else if (store.options.language && item['@language'] === store.options.language) {
-						translation.preferred = item['@value'];
-					}
-				}
-			});
-
-			const translatedValue = translation.preferred || translation.en || translation.fallback || null;
-			if (translatedValue) {
-				displayedValues.push(filterHtml(translatedValue));
-			}
-
-			return displayedValues;
 		},
 		async fetchJson(url) {
 			store.loading += 1;
@@ -282,8 +248,11 @@ function Store(args) {
 			return store.options.pageLabelFormat.replace('P', number).replace('L', label);
 		},
 		getStartPage() {
-			const { startCanvas } = store.manifest.sequences[0];
-			const startCanvasIndex = store.canvases.findIndex((canvas) => canvas['@id'] === startCanvas);
+			if (!store.manifest.start || !store.manifest.items) {
+				return 1;
+			}
+
+			const startCanvasIndex = store.manifest.items.findIndex((canvas) => canvas.id === store.manifest.start.id);
 			return startCanvasIndex >= 0 ? startCanvasIndex + 1 : 1;
 		},
 		goToFirstPage() {
@@ -304,7 +273,7 @@ function Store(args) {
 			let sectionIndex = 0;
 			while (
 				page >= this.sections[sectionIndex].firstPage
-					|| (page && page >= this.sections[sectionIndex].firstPage)
+				|| (page && page >= this.sections[sectionIndex].firstPage)
 			) {
 				sectionIndex += 1;
 			}
@@ -327,7 +296,7 @@ function Store(args) {
 			let sectionIndex = this.sections.length - 1;
 			while (
 				page <= this.sections[sectionIndex].firstPage
-					|| (page && page <= this.sections[sectionIndex].firstPage)
+				|| (page && page <= this.sections[sectionIndex].firstPage)
 			) {
 				sectionIndex -= 1;
 			}
@@ -381,9 +350,11 @@ function Store(args) {
 			});
 
 			return store.fetchJson(manifestUrl).then(
-				async (manifest) => {
-					if (params.expectedType && manifest['@type'] !== params.expectedType) {
-						const errorMessage = `Expected manifest of type ${params.expectedType}, but got ${manifest['@type']}`;
+				async (originalManifest) => {
+					const manifest = convertManifest(originalManifest);
+
+					if (params.expectedType && manifest.type !== params.expectedType) {
+						const errorMessage = `Expected manifest of type ${params.expectedType}, but got ${manifest.type}`;
 						store.addError(errorMessage);
 						rejectFunction(errorMessage);
 						return promise;
@@ -393,7 +364,7 @@ function Store(args) {
 					store.manifest = null;
 					await nextTick();
 
-					if (manifest['@type'] === 'sc:Manifest') {
+					if (manifest.type === 'Manifest') {
 						store.manifest = manifest;
 
 						// Merging user-set query params with defaults
@@ -415,7 +386,7 @@ function Store(args) {
 						return promise;
 					}
 
-					if (manifest['@type'] === 'sc:Collection') {
+					if (manifest.type === 'Collection') {
 						store.collection = manifest;
 
 						const query = new URLSearchParams(window.location.search);
@@ -431,11 +402,11 @@ function Store(args) {
 						if (store.options.urlQueryParams.includes('childManifestUrl') && queryParams.childManifestUrl) {
 							childManifestUrl = queryParams.childManifestUrl;
 						} else if (store.collection.manifests && store.options.childManifestAutoloaded) {
-							childManifestUrl = store.collection.manifests[0]['@id'];
+							childManifestUrl = store.collection.manifests[0].id;
 						}
 
 						if (childManifestUrl) {
-							await store.loadManifest(childManifestUrl, { expectedType: 'sc:Manifest' });
+							await store.loadManifest(childManifestUrl, { expectedType: 'Manifest' });
 							store.updateOptions({
 								childManifestUrl,
 							});
@@ -450,7 +421,7 @@ function Store(args) {
 						return promise;
 					}
 
-					const errorMessage = 'Please provide a valid IIIF Presentation API 2.x manifest';
+					const errorMessage = 'Please provide a valid IIIF Presentation API manifest';
 					store.addError(errorMessage);
 					rejectFunction(errorMessage);
 					return promise;
@@ -466,9 +437,35 @@ function Store(args) {
 				},
 			);
 		},
+		localize(labelObject) {
+			const nbsp = String.fromCharCode(160);
+			const separator = `${nbsp}· `;
+
+			if (!store.options.language) {
+				throw new Error('language not set');
+			}
+
+			if (!labelObject) {
+				return '';
+			}
+
+			if (typeof labelObject === 'string') {
+				return labelObject;
+			}
+
+			const label = labelObject[store.options.language]
+				|| labelObject[store.options.fallbackLanguage]
+				|| Object.values(labelObject)[0];
+
+			const labelString = label instanceof Array
+				? label.join(separator)
+				: label;
+
+			return (labelString || '').trim() || '—'; // &mdash;
+		},
 		setPage(pageOrPages) {
 			let pages = pageOrPages;
-			if (!Array.isArray(pageOrPages)) {
+			if (!(pageOrPages instanceof Array)) {
 				pages = [pageOrPages];
 			}
 
@@ -536,6 +533,7 @@ function Store(args) {
 }
 
 export default {
+	convertManifest,
 	install: (app, options = {}) => {
 		// eslint-disable-next-line no-param-reassign
 		app.config.globalProperties.$store = new Store(options);

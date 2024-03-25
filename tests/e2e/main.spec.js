@@ -9,7 +9,7 @@ describe('Main', () => {
 		cy.on('uncaught:exception', () => false);
 
 		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/invalid`);
-		cy.contains('Please provide a valid IIIF Presentation API 2.x manifest');
+		cy.contains('Please provide a valid IIIF Presentation API manifest');
 	});
 
 	it('checks the manifest (invalid JSON)', () => {

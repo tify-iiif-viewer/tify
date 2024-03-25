@@ -1,12 +1,15 @@
-const fs = require('fs');
+import fs from 'fs';
+import url from 'url';
 
-if (!fs.existsSync(`${__dirname}/../node_modules/@mdi/js`)) {
+import mdi from '@mdi/js';
+
+const rootDir = url.fileURLToPath(new URL('..', import.meta.url));
+
+if (!fs.existsSync(`${rootDir}/node_modules/@mdi/js`)) {
 	process.exit();
 }
 
-const mdi = require('@mdi/js');
-
-const iconsDir = `${__dirname}/../src/components/icons`;
+const iconsDir = `${rootDir}/src/components/icons`;
 
 fs.mkdirSync(iconsDir, { recursive: true });
 

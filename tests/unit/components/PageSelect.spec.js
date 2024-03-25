@@ -6,7 +6,7 @@ import PageSelect from '../../../src/components/PageSelect.vue';
 import i18n from '../../../src/plugins/i18n';
 import store from '../../../src/plugins/store';
 
-import manifest from '../../iiif-api/data/manifests/gdz-PPN857449303.json';
+import manifest from '../../iiif-api/data/manifests/utrecht-1874-325480.json';
 
 describe('PageSelect', () => {
 	const { vm } = mount(PageSelect, {
@@ -27,10 +27,10 @@ describe('PageSelect', () => {
 	});
 
 	it('filters and updates canvases', () => {
-		vm.filter = '5';
+		vm.filter = '10';
 		vm.updateFilteredCanvases();
 
 		expect(vm.highlightIndex).toEqual(0);
-		expect(vm.filteredCanvases.length).toEqual(4); // Should contain pages 5, 15, 25, 35
+		expect(vm.filteredCanvases.length).toEqual(12); // Should contain pages 5, 15, 25, 35
 	});
 });

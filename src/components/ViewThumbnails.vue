@@ -113,7 +113,7 @@ export default {
 			this.thumbnailWidth = itemTemplate.offsetWidth;
 			this.itemsPerRow = Math.floor(this.$refs.container.clientWidth / itemWidth);
 
-			const totalRows = Math.ceil(this.$store.canvases.length / this.itemsPerRow);
+			const totalRows = Math.ceil(this.$store.manifest.items.length / this.itemsPerRow);
 			const containerHeight = totalRows * this.itemHeight;
 			this.$refs.container.style.height = `${containerHeight}px`;
 
@@ -127,25 +127,26 @@ export default {
 			const visibleRowsCount = Math.ceil(this.$el.offsetHeight / this.itemHeight);
 			const visiblePagesCount = visibleRowsCount * this.itemsPerRow;
 			const lastPage = startPage + this.itemsPerRow + visiblePagesCount;
-			const endPage = Math.min(this.$store.canvases.length, lastPage);
+			const endPage = Math.min(this.$store.manifest.items.length, lastPage);
 
 			const items = [];
 			for (let i = startPage - 1; i < endPage; i += 1) {
-				const { resource } = this.$store.canvases[i].images[0];
+				const resource = this.$store.manifest.items[i].items[0].items[0].body;
 				if (resource.service) {
-					const quality = resource.service['@context'] === 'http://iiif.io/api/image/2/context.json'
+					const service = resource.service instanceof Array ? resource.service[0] : resource.service;
+					const quality = ['ImageService2', 'ImageService3'].includes(service.type || service['@type'])
 						? 'default'
 						: 'native';
-					const id = resource.service['@id'];
+					const id = service.id || service['@id'];
 					items.push({
-						label: this.$store.convertValueToArray(this.$store.canvases[i].label)[0],
+						label: this.$store.localize(this.$store.manifest.items[i].label),
 						imgUrl: `${id}${id.slice(-1) === '/' ? '' : '/'}full/${this.thumbnailWidth},/0/${quality}.jpg`,
 						page: i + 1,
 					});
 				} else {
 					items.push({
-						label: this.$store.convertValueToArray(this.$store.canvases[i].label)[0],
-						imgUrl: resource['@id'],
+						label: this.$store.localize(this.$store.manifest.items[i].label),
+						imgUrl: resource.id,
 						page: i + 1,
 					});
 				}

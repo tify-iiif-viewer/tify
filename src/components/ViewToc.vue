@@ -8,7 +8,7 @@
 		</h2>
 
 		<div
-			v-if="hasChildStructures"
+			v-if="isNested"
 			class="tify-toc-header"
 		>
 			<button
@@ -31,7 +31,7 @@
 			v-if="isInited"
 			ref="children"
 			:level="0"
-			:structures="$store.structures"
+			:structures="tocStructures"
 		/>
 	</section>
 </template>
@@ -48,9 +48,11 @@ export default {
 		};
 	},
 	computed: {
-		hasChildStructures() {
-			return this.$store.structures
-				&& this.$store.structures.some((structure) => structure.childStructures);
+		isNested() {
+			return this.tocStructures.some((structure) => structure.items?.some((item) => item.items));
+		},
+		tocStructures() {
+			return this.$store.structures.filter((structure) => !structure.behavior?.includes('top'));
 		},
 	},
 	watch: {

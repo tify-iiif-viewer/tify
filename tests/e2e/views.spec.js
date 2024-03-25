@@ -37,12 +37,25 @@ describe('Views', () => {
 
 		cy.contains('The chemist and druggist');
 
-		cy.get('.tify').type('1').get('.-active').contains('Fulltext');
-		cy.get('.tify').type('2').get('.-active').contains('Pages');
-		cy.get('.tify').type('3').get('.-active').contains('Contents');
-		cy.get('.tify').type('4').get('.-active').contains('Info');
-		cy.get('.tify').type('5').get('.-active').contains('Export');
-		cy.get('.tify').type('6').get('.-active').contains('Collection');
-		cy.get('.tify').type('7').get('.-active').contains('Help');
+		cy.get('.tify').type('1');
+		cy.get('.-active').contains('Fulltext');
+
+		cy.get('.tify').type('2');
+		cy.get('.-active').contains('Pages');
+
+		cy.get('.tify').type('3');
+		cy.get('.-active').contains('Contents');
+
+		cy.get('.tify').type('4');
+		cy.get('.-active').contains('Info');
+
+		cy.get('.tify').type('5');
+		cy.get('.-active').contains('Export');
+
+		cy.get('.tify').type('6');
+		cy.get('.-active').contains('Collection');
+
+		cy.get('.tify').type('7');
+		cy.get('.-active').contains('Help');
 	});
 });

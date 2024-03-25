@@ -32,4 +32,9 @@ module.exports = {
 	globals: {
 		ENV: true, // defined in vite.config.js
 	},
+	settings: {
+		'import/resolver': {
+			typescript: {}, // load <rootdir>/tsconfig.json to eslint, required for @iiif/parser
+		},
+	},
 };

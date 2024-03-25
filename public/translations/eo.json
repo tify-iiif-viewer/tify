@@ -1,7 +1,6 @@
 {
 	"$copyright": "Kopirajtoj &copy; 2017&ndash;2022 <a href='https://www.uni-goettingen.de/'>Universitato Goettingen</a>&nbsp;/ <a href='https://www.sub.uni-goettingen.de/'>Ŝtata kaj Universitata Biblioteko Goettingen</a>",
 	"$info": "TIFY estas pli svelta kaj pli movebla amika IIIF-dokumentrigardilo publikigita sub la <a href='https://www.gnu.org/licenses/agpl-3.0.html.en'>Ĝenerala Publika Permesilo 3.0 de GNU Affero</a>.",
-	"(Invalid value)": "(nevalida valoro)",
 	"About TIFY": "Per TIFY",
 	"Author": "Aŭtoro",
 	"Brightness": "Helecon",
@@ -53,7 +52,6 @@
 	"Physical page": "Fizika paĝo",
 	"Previous page": "Antaŭa paĝo",
 	"Previous section": "Antaŭa sekcio",
-	"Provided by": "Provizita de",
 	"Related Resources": "Rilataj fontoj",
 	"Renderings": "Bildaj datumoj",
 	"Report a bug": "Raportu eraron",

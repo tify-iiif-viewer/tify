@@ -51,7 +51,7 @@
 						href="javascript:;"
 						@click="setPage(canvas.page)"
 					>
-						{{ $store.getPageLabel(canvas.page, $store.convertValueToArray(canvas.label)[0]) }}
+						{{ $store.getPageLabel(canvas.page, $store.localize(canvas.label)) }}
 					</a>
 				</li>
 			</ol>
@@ -80,7 +80,7 @@ export default {
 		currentPageLabel() {
 			const page = this.$store.options.pages[0] || 1;
 			const canvasIndex = this.$store.options.pages[0] ? this.$store.options.pages[0] - 1 : 0;
-			const label = this.$store.convertValueToArray(this.$store.canvases[canvasIndex].label)[0];
+			const label = this.$store.localize(this.$store.manifest.items[canvasIndex].label);
 			return this.$store.getPageLabel(page, label);
 		},
 		currentPageTitleAttr() {
@@ -91,7 +91,7 @@ export default {
 			const physLabel = this.$translate('Physical page');
 			const logLabel = this.$translate('Logical page');
 			return `${physLabel}: ${page}\n`
-				+ `${logLabel}: ${this.$store.convertValueToArray(this.$store.canvases[page - 1].label)[0]}`;
+				+ `${logLabel}: ${this.$store.localize(this.$store.manifest.items[page - 1].label)}`;
 		},
 	},
 	watch: {
@@ -166,8 +166,8 @@ export default {
 			const filteredCanvases = [];
 			const filter = this.filter.toLowerCase();
 			let highlightIndex = -1;
-			this.$store.canvases.forEach((canvas, index) => {
-				const label = this.$store.convertValueToArray(canvas.label)[0];
+			this.$store.manifest.items.forEach((canvas, index) => {
+				const label = this.$store.localize(canvas.label);
 				const labelMatchesFilter = label.toLowerCase().includes(filter);
 				const pageMatchesFilter = (index + 1).toFixed().includes(filter);
 				if (labelMatchesFilter || pageMatchesFilter) {

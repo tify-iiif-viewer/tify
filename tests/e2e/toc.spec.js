@@ -6,6 +6,9 @@ describe('TOC', () => {
 		cy.contains('Contents').click();
 		cy.contains('Table of Contents');
 
+		cy.contains('.tify-toc-toggle-all', 'Expand all');
+		cy.contains('.tify-toc-toggle-all', 'Collapse all');
+
 		cy.get('.tify-toc-structure.-current').contains('Titelseite');
 		cy.get('.tify-toc-structure[data-level="0"]:nth-child(3) > .tify-toc-toggle').click();
 		cy.get(
@@ -18,25 +21,21 @@ describe('TOC', () => {
 		cy.get('.tify-toc-structure[data-level="1"]:last-of-type > .tify-toc-toggle').click();
 		cy.get('.tify-toc-label').contains('Ferrarische Methode (Louis Ferrari)');
 
-		cy.contains('Collapse').click().then(() => {
-			cy.contains('Ferrarische Methode (Louis Ferrari)').should('not.be.visible');
-		});
+		cy.contains('Collapse').click();
+		cy.contains('Ferrarische Methode (Louis Ferrari)').should('not.be.visible');
 
-		cy.get('.tify-toc > .tify-toc-list > :last-child .tify-toc-link').click().then(() => {
-			cy.get('.tify-toc-structure.-current').contains('Einband');
-		});
+		cy.get('.tify-toc > .tify-toc-list > :last-child .tify-toc-link').click();
+		cy.get('.tify-toc-structure.-current').contains('Einband');
 
-		cy.contains('Expand all').click().click().then(() => {
-			// Multiple clicks should not toggle all children again
-			cy.contains('Auflösung von Gleichungen 3ten Grades').should('be.visible');
-			cy.contains('Recursionsformeln').should('be.visible');
-		});
+		// Multiple clicks should not toggle all children again
+		Cypress._.times(2, () => cy.contains('Expand all').click());
+		cy.contains('Auflösung von Gleichungen 3ten Grades').should('be.visible');
+		cy.contains('Recursionsformeln').should('be.visible');
 
-		cy.contains('Collapse all').click().click().then(() => {
-			// Multiple clicks should not toggle all children again
-			cy.contains('Auflösung von Gleichungen 3ten Grades').should('not.be.visible');
-			cy.contains('Recursionsformeln').should('not.be.visible');
-		});
+		// Multiple clicks should not toggle all children again
+		Cypress._.times(2, () => cy.contains('Collapse all').click());
+		cy.contains('Auflösung von Gleichungen 3ten Grades').should('not.be.visible');
+		cy.contains('Recursionsformeln').should('not.be.visible');
 
 		cy.contains('Expand all').click();
 
@@ -50,7 +49,7 @@ describe('TOC', () => {
 		cy.contains('Recursionsformeln').should('be.visible');
 	});
 
-	it('is visible when there are structures without canvases', () => {
+	it('is working even when structures are chaotic', () => {
 		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/cambridge-MS-ADD-08640`;
 		const encodedParams = encodeURIComponent(JSON.stringify({
 			view: 'toc',
@@ -58,11 +57,12 @@ describe('TOC', () => {
 
 		cy.visit(`/?manifest=${manifestUrl}&tify=${encodedParams}`);
 
-		cy.contains('Table of Contents').should('be.visible');
+		cy.contains('.tify-toc-toggle-all').should('not.exist');
+
 		cy.get('.tify-toc-structure.-current').contains('Elizabeth Lyttelton\'s commonplace book');
 	});
 
-	it('hides the first item if its viewingHint is "top"', () => {
+	it('hides items if their "behavior" is "top"', () => {
 		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/digitale-sammlungen-bsb00026283`;
 		const encodedParams = encodeURIComponent(JSON.stringify({
 			view: 'toc',

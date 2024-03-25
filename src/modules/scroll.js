@@ -29,7 +29,7 @@ export function updateScrollPos(selector, ancestorElement, animated = true) {
 	let topCurrentElement = elements[0];
 	const bottomCurrentElement = elements[elements.length - 1];
 	Array.prototype.forEach.call(elements, (element) => {
-		if (element.dataset.level > topCurrentElement.dataset.level) {
+		if (element.dataset.level >= topCurrentElement.dataset.level) {
 			topCurrentElement = element;
 		}
 	});

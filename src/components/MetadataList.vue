@@ -5,12 +5,7 @@
 			:key="index"
 		>
 			<h4>
-				<div
-					v-for="(label, index2) in $store.convertValueToArray(item.label)"
-					:key="index2"
-				>
-					{{ cleanLabel(label) }}
-				</div>
+				{{ cleanLabel($store.localize(item.label)) }}
 			</h4>
 			<div
 				ref="contents"
@@ -18,19 +13,17 @@
 				:class="{ '-collapsed': infoItems[index] && infoItems[index].collapsed }"
 			>
 				<div class="tify-info-value">
-					<template v-for="value in $store.convertValueToArray(item.value)">
-						<div
-							v-if="isValidUrl(value)"
-							:key="'url-' + value"
-						>
-							<a :href="value">{{ value }}</a>
-						</div>
-						<div
-							v-else
-							:key="'html-' + value"
-							v-html="value"
-						/>
-					</template>
+					<p
+						v-if="isValidUrl(item.value)"
+						:key="`url-${index}`"
+					>
+						<a :href="item.value">{{ item.value }}</a>
+					</p>
+					<p
+						v-else
+						:key="`html-${index}`"
+						v-html="filterHtml($store.localize(item.value))"
+					/>
 				</div>
 
 				<button
@@ -54,6 +47,7 @@
 </template>
 
 <script>
+import { filterHtml } from '../modules/filter';
 import { isValidUrl } from '../modules/validation';
 
 export default {
@@ -77,6 +71,7 @@ export default {
 		this.updateInfoItems();
 	},
 	methods: {
+		// TODO: Review this - maybe just display ugly strings instead
 		cleanLabel(label) {
 			const cleanedLabel = label.replace('_', ' ');
 			return cleanedLabel.charAt(0).toUpperCase() + cleanedLabel.substr(1);
@@ -107,6 +102,7 @@ export default {
 				});
 			});
 		},
+		filterHtml,
 		isValidUrl,
 	},
 };

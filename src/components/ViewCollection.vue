@@ -8,7 +8,7 @@
 		</h2>
 
 		<p
-			v-if="items.length > 5"
+			v-if="$store.collection.items.length > 5"
 			class="tify-collection-controls"
 		>
 			<input
@@ -36,7 +36,7 @@
 		>
 			<collection-node
 				v-for="item in filteredItems"
-				:key="item['@id']"
+				:key="item.id"
 				:item="item"
 			/>
 		</ol>
@@ -59,31 +59,10 @@ export default {
 	computed: {
 		filteredItems() {
 			const tokens = this.filter.trim().toLowerCase().split(/\s+/);
-			return this.items.filter((item) => {
-				const label = (item.label || '').toLowerCase();
+			return this.$store.collection.items.filter((item) => {
+				const label = (this.$store.localize(item.label) || '').toLowerCase();
 				return tokens.every((token) => label.includes(token));
 			});
-		},
-		items() {
-			if (this.$store.collection.manifests && this.$store.collection.collections) {
-				// Create dummy collection containing both
-				return [
-					{
-						'@id': 'tify-collection-manifests',
-						'@type': 'sc:Collection',
-						label: this.$translate('Documents'),
-						children: this.$store.collection.manifests,
-					},
-					{
-						'@id': 'tify-collection-collections',
-						'@type': 'sc:Collection',
-						label: this.$translate('Collections'),
-						children: this.$store.collection.collections,
-					},
-				];
-			}
-
-			return this.$store.collection.manifests || this.$store.collection.collections;
 		},
 	},
 };
