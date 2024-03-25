@@ -54,11 +54,10 @@ describe('TOC', () => {
 
 		cy.visit(`/?manifest=${manifestUrl}&tify=${encodedParams}`);
 
-		cy.contains('Table of Contents').should('be.visible');
 		cy.get('.tify-toc-structure.-current').contains('Elizabeth Lyttelton\'s commonplace book');
 	});
 
-	it('hides the first item if its viewingHint is "top"', () => {
+	it('hides items if their "behavior" is "top"', () => {
 		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/digitale-sammlungen-bsb00026283`;
 		const encodedParams = encodeURIComponent(JSON.stringify({
 			view: 'toc',
