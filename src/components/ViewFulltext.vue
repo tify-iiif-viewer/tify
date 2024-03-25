@@ -18,7 +18,7 @@
 			>
 				<h3>
 					{{ $translate('Page') }}
-					{{ $store.getPageLabel(page, $store.canvases[page - 1].label) }}
+					{{ $store.getPageLabel(page, $store.localize($store.manifest.items[page - 1].label)) }}
 				</h3>
 				<div
 					v-for="(text, index) in fulltexts[page]"
@@ -73,18 +73,18 @@ export default {
 					return;
 				}
 
-				const canvas = this.$store.canvases[page - 1];
-				if (!('otherContent' in canvas)) {
+				const canvas = this.$store.manifest.items[page - 1];
+				if (!('annotations' in canvas)) {
 					this.fulltextAvailable = false;
 					return;
 				}
 
-				const annotationListUrl = canvas.otherContent[0]['@id'];
+				const annotationListUrl = canvas.annotations[0].id;
 
 				this.$store.fetchJson(annotationListUrl).then(
 					(data) => {
 						const { resources } = data;
-						if (!Array.isArray(resources)) {
+						if (!(resources instanceof Array)) {
 							return;
 						}
 
@@ -106,8 +106,8 @@ export default {
 								}
 
 								this.fulltexts[page][index] = text;
-							} else if (res['@id']) {
-								this.loadRemoteFulltext(page, index, res['@id']);
+							} else if (res.id || res['@id']) {
+								this.loadRemoteFulltext(page, index, res.id || res['@id']);
 							}
 						});
 					},

@@ -6,7 +6,7 @@
 		<!-- NOTE: Root element must be focusable for global keyboard events to work -->
 		<app-header
 			v-if="ready && ($store.collection || $store.manifest)"
-			:fulltext-enabled="hasOtherContent"
+			:fulltext-enabled="hasAnnotations"
 			:toc-enabled="hasToc"
 		/>
 
@@ -19,7 +19,7 @@
 				<view-scan :id="$store.getId('scan')" />
 
 				<view-fulltext
-					v-if="hasOtherContent"
+					v-if="hasAnnotations"
 					v-show="$store.options.view === 'fulltext'"
 					:id="$store.getId('fulltext')"
 				/>
@@ -96,11 +96,11 @@ export default {
 		};
 	},
 	computed: {
-		hasOtherContent() {
-			return this.$store.canvases.some((canvas) => 'otherContent' in canvas);
+		hasAnnotations() {
+			return this.$store.manifest?.items?.some((canvas) => 'annotations' in canvas);
 		},
 		hasToc() {
-			return this.$store.manifest && this.$store.manifest.structures && this.$store.manifest.structures.length > 0;
+			return this.$store.manifest?.structures?.length > 0;
 		},
 	},
 	created() {

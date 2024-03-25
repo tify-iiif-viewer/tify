@@ -1,10 +1,10 @@
 <template>
 	<li
 		class="tify-collection-item"
-		:class="{ '-current': $store.manifest && $store.manifest['@id'] === item['@id'] }"
+		:class="{ '-current': $store.manifest && $store.manifest.id === item.id }"
 	>
 		<button
-			v-if="item['@type'] === 'sc:Collection'"
+			v-if="item.type === 'Collection'"
 			type="button"
 			:aria-controls="id"
 			:aria-expanded="expanded ? 'true' : 'false'"
@@ -20,15 +20,15 @@
 				<span class="tify-sr-only">{{ $translate('Expand') }}</span>
 			</template>
 
-			{{ label }}
+			{{ $store.localize(item.label) }}
 		</button>
 		<a
 			v-else
 			href="javascript:;"
 			class="tify-collection-link"
-			@click="$store.loadManifest(item['@id'], { expectedType: item['@type'], reset: true })"
+			@click="$store.loadManifest(item['@id'] || item.id, { expectedType: item.type, reset: true })"
 		>
-			{{ label }}
+			{{ $store.localize(item.label) }}
 		</a>
 
 		<template v-if="expanded">
@@ -39,7 +39,7 @@
 			>
 				<collection-node
 					v-for="child in children"
-					:key="child['@id']"
+					:key="child.id"
 					:item="child"
 				/>
 			</ol>
@@ -69,14 +69,6 @@ export default {
 			id: this.$store.getId(`collection-node-${Math.floor(Math.random() * 1e12)}`),
 		};
 	},
-	computed: {
-		label() {
-			const nbsp = String.fromCharCode(160);
-			return this.item.label
-				? this.$store.convertValueToArray(this.item.label).join(`${nbsp}· `)
-				: '—'; // &mdash;
-		},
-	},
 	methods: {
 		toggleChildren() {
 			if (this.expanded) {
@@ -95,9 +87,9 @@ export default {
 				return;
 			}
 
-			this.$store.fetchJson(this.item['@id']).then(
+			this.$store.fetchJson(this.item.id).then(
 				(childManifest) => {
-					this.children = childManifest.manifests || childManifest.collections || [];
+					this.children = childManifest.collections || childManifest.items || childManifest.manifests || [];
 					this.expanded = true;
 				},
 				(error) => {

@@ -32,6 +32,7 @@
     "version": "npm run build && git add dist"
   },
   "devDependencies": {
+    "@iiif/parser": "^2.0.2",
     "@mdi/js": "^7.4.47",
     "@rushstack/eslint-patch": "^1.8.0",
     "@vitejs/plugin-vue": "^5.0.4",
@@ -40,6 +41,7 @@
     "click-outside-vue3": "^4.0.1",
     "cypress": "^13.7.1",
     "eslint": "^8.57.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-cypress": "^2.15.1",
     "eslint-plugin-vue": "^9.23.0",
     "jsdom": "^24.0.0",

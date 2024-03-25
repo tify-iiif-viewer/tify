@@ -11,7 +11,7 @@
 			}"
 		>
 			<button
-				v-if="structure.childStructures"
+				v-if="structure.items?.some((item) => item.items)"
 				type="button"
 				class="tify-toc-toggle"
 				:title="$translate(expandedStructures[index] ? 'Collapse' : 'Expand')"
@@ -28,33 +28,47 @@
 			</button>
 
 			<a
-				v-if="purpose === 'pdf'"
+				v-if="purpose === 'pdf' && structure.pageCount"
 				class="tify-toc-link"
+				:href="structure.rendering[0].id"
 				download
-				:href="$store.convertValueToArray(structure.rendering)[0]['@id']"
 			>
-				{{ structure.label }}
+				{{ $store.localize(structure.label) }}
 				({{ structure.pageCount }}&nbsp;{{ $translate(structure.pageCount === 1 ? 'page' : 'pages') }})
+			</a>
+			<!-- Only display page if different from label -->
+			<a
+				v-else-if="$store.localize(structure.label) !== $store.localize(getPageLabel(structure))"
+				class="tify-toc-link -dots"
+				href="javascript:;"
+				@click="$store.setPage(structure.firstPage || getFirstPage(structure))"
+			>
+				<span class="tify-toc-label">
+					{{ $store.localize(structure.label) }}
+				</span>
+				<span class="tify-toc-page">
+					{{ $store.localize(getPageLabel(structure)) || '—' }}
+				</span>
 			</a>
 			<a
 				v-else
-				class="tify-toc-link -dots"
+				class="tify-toc-link"
 				href="javascript:;"
-				@click="$store.setPage(structure.firstPage)"
+				@click="$store.setPage(structure.firstPage || getFirstPage(structure))"
 			>
-				<span class="tify-toc-label">{{ structure.label }}</span>
-				<span class="tify-toc-page">{{ structure.pageLabel }}</span>
+				<span class="tify-toc-label">
+					{{ $store.localize(structure.label) }}
+				</span>
 			</a>
 
 			<toc-list
-				v-if="structure.childStructures"
+				v-if="structure.items?.some((item) => item.items)"
 				v-show="expandedStructures[index]"
 				:id="`${id}-${index}`"
 				ref="children"
 				:level="level + 1"
-				:parent-structure="structure"
 				:purpose="purpose"
-				:structures="structure.childStructures"
+				:structures="structure.items"
 			/>
 		</li>
 	</ul>
@@ -72,10 +86,6 @@ export default {
 			type: Array,
 			default: () => [],
 		},
-		parentStructure: {
-			type: Object,
-			default: () => {},
-		},
 		purpose: {
 			type: String,
 			default: '',
@@ -88,9 +98,28 @@ export default {
 		};
 	},
 	methods: {
+		getPageLabel(structure) {
+			const firstPage = this.getFirstPage(structure);
+			return this.$store.manifest.items[firstPage - 1]?.label;
+		},
+		getFirstPage(structure) {
+			if (structure.items) {
+				return this.getFirstPage(structure.items[0]);
+			}
+
+			const index = this.$store.manifest.items.findIndex((item) => item.id === structure.id);
+			return index < 0 ? 1 : index + 1;
+		},
 		isCurrentPageInStructure(structure) {
-			const { pages } = this.$store.options;
-			return pages.some((page) => page >= structure.firstPage && page <= structure.lastPage);
+			const currentCanvasIds = this.$store.manifest.items
+				.filter((item, index) => this.$store.options.pages.includes(index + 1))
+				.map((canvas) => canvas.id);
+
+			if (currentCanvasIds.some((id) => structure.items?.some((item) => item.id === id))) {
+				return true;
+			}
+
+			return this.$store.options.pages.includes(structure.firstPage || this.getFirstPage(structure));
 		},
 		setPage(page) {
 			this.$store.setPage(page);
@@ -113,7 +142,7 @@ export default {
 		},
 		toggleChildren(index, expanded = null) {
 			const structure = this.structures[index];
-			if (!structure.childStructures) {
+			if (!structure.items?.some((item) => item.items)) {
 				return;
 			}
 
