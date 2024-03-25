@@ -23,14 +23,14 @@ describe('ViewToc', () => {
 	});
 
 	it('selects a label in the current language', () => {
-		const { label } = vm.$store.structures[0];
+		const label = vm.$store.localize(vm.$store.structures[1].label);
 		expect(label).toEqual('Miniatur: Jesu Gebet in Gethsemane');
 	});
 
 	it('orders pages by logical page number', () => {
 		vm.$store.manifest = manifestForPages;
 
-		const pages = vm.$store.structures[0].childStructures.map((structure) => structure.firstPage);
+		const pages = vm.$store.structures[0].canvases.map((structure) => structure.firstPage);
 		expect(pages.toString()).toEqual(pages.sort((a, b) => a - b).toString());
 	});
 });

@@ -7,7 +7,7 @@ import manifest from '../../iiif-api/data/manifests/bl-vdc_00000004216E.json';
 const app = { config: { globalProperties: {} } };
 
 store.install(app, {
-	manifest,
+	manifest: store.convertManifest(manifest),
 	options: {
 		pageLabelFormat: 'P : L',
 		translationsDirUrl: '',
