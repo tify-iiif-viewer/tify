@@ -397,9 +397,10 @@ export default {
 					return;
 				}
 
-				const { resource } = this.$store.canvases[page - 1].images[0];
+				const resource = this.$store.manifest.items[page - 1].items?.[0].items?.[0].body;
 				if (resource.service) {
-					const id = resource.service['@id'];
+					const service = resource.service instanceof Array ? resource.service[0] : resource.service;
+					const id = service.id || service['@id'];
 					const infoUrl = `${id}${id.slice(-1) === '/' ? '' : '/'}info.json`;
 					infoPromises.push(
 						this.$store.fetchJson(infoUrl).then(
@@ -419,7 +420,7 @@ export default {
 				} else {
 					this.tileSources[page] = {
 						type: 'image',
-						url: resource['@id'],
+						url: resource.id,
 						width: resource.width,
 						height: resource.height,
 					};
@@ -443,6 +444,7 @@ export default {
 		onKeydown(event) {
 			if (event.key === 'Escape') {
 				this.filtersVisible = false;
+				this.$store.rootElement.focus();
 			}
 
 			// Reset pan, zoom, rotation and filters
@@ -474,9 +476,9 @@ export default {
 				case 'i':
 					this.filtersVisible = !this.filtersVisible;
 					if (this.filtersVisible) {
-						this.$nextTick(() => {
-							this.$refs.firstSlider.focus();
-						});
+						this.$nextTick(() => this.$refs.firstSlider.focus());
+					} else {
+						this.$store.rootElement.focus();
 					}
 					break;
 				case 'I':

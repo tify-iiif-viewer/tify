@@ -33,15 +33,8 @@
 			v-if="manifestOrCollection.label"
 			class="tify-info-section -title"
 		>
-			<h3 class="tify-info-heading">
-				{{ $translate('Title') }}
-			</h3>
-			<div
-				v-for="label in $store.convertValueToArray(manifestOrCollection.label)"
-				:key="label"
-			>
-				{{ label }}
-			</div>
+			<h3>{{ $translate('Title') }}</h3>
+			<p>{{ $store.localize(manifestOrCollection.label) }}</p>
 		</div>
 
 		<div
@@ -56,17 +49,26 @@
 		</div>
 
 		<div
+			v-if="manifestOrCollection.summary"
+			class="tify-info-section -description"
+		>
+			<h3>{{ $translate('Description') }}</h3>
+			<metadata-list
+				v-if="$store.options.view === 'info'"
+				:metadata="[{ value: manifestOrCollection.summary }]"
+			/>
+		</div>
+
+		<div
 			v-if="manifestOrCollection.structures && ($store.currentStructure.label || $store.currentStructure.metadata)"
 			class="tify-info-section -metadata -structure"
 		>
-			<h3>
-				{{ $translate('Current Element') }}
-			</h3>
+			<h3>{{ $translate('Current Element') }}</h3>
 			<p
 				v-if="$store.currentStructure.label"
 				class="tify-info-structure"
 			>
-				{{ $store.currentStructure.label }}
+				{{ $store.localize($store.currentStructure.label) }}
 			</p>
 			<metadata-list
 				v-if="$store.options.view === 'info' && $store.currentStructure.metadata"
@@ -76,107 +78,70 @@
 		</div>
 
 		<div
-			v-if="manifestOrCollection.description"
-			class="tify-info-section -description"
-		>
-			<h3>{{ $translate('Description') }}</h3>
-			<div
-				v-for="(description, index) in $store.convertValueToArray(manifestOrCollection.description)"
-				:key="index"
-				v-html="description"
-			/>
-		</div>
-
-		<div
-			v-if="license.length"
-			class="tify-info-section -license"
-		>
-			<h3>{{ $translate('License') }}</h3>
-			<div
-				v-for="(item, index) in license"
-				:key="index"
-			>
-				<template v-if="typeof item === 'string'">
-					<a
-						v-if="isValidUrl(item)"
-						:href="item"
-					>
-						{{ item }}
-					</a>
-					<template v-else>
-						{{ item }}
-					</template>
-				</template>
-				<template v-else>
-					<a
-						v-if="isValidUrl(item['@id'])"
-						:href="item['@id']"
-					>
-						{{ item['label'] || item['@id'] }}
-					</a>
-					<template v-else>
-						{{ item['label'] || item['@id'] }}
-					</template>
-				</template>
-			</div>
-		</div>
-
-		<div
-			v-if="related.length"
+			v-if="homepages.length"
 			class="tify-info-section -related"
 		>
 			<h3>{{ $translate('Related Resources') }}</h3>
 			<div
-				v-for="(item, index) in related"
+				v-for="(homepage, index) in homepages"
 				:key="index"
 			>
 				<a
-					v-if="typeof item === 'string'"
-					:href="item"
+					v-if="typeof homepage === 'string'"
+					:href="homepage"
 				>
-					{{ item }}
+					{{ homepage }}
 				</a>
 				<a
 					v-else
-					:href="item['@id']"
+					:href="homepage.id"
 				>
-					{{ item['label'] || item['@id'] }}
+					{{ $store.localize(homepage.label) || homepage.id }}
 				</a>
 			</div>
 		</div>
 
 		<div
-			v-if="manifestOrCollection.attribution"
+			v-if="manifestOrCollection.requiredStatement"
 			class="tify-info-section -attribution"
 		>
-			<h3>{{ $translate('Provided by') }}</h3>
-			<div
-				v-for="(item, index) in $store.convertValueToArray(manifestOrCollection.attribution)"
-				:key="index"
-				v-html="item"
-			/>
+			<h3>{{ $store.localize(manifestOrCollection.requiredStatement.label) }}</h3>
+			<p v-html="filterHtml($store.localize(manifestOrCollection.requiredStatement.value))" />
 		</div>
 
 		<div
-			v-if="manifestOrCollection.logo"
+			v-if="manifestOrCollection.rights"
+			class="tify-info-section -license"
+		>
+			<h3>{{ $translate('License') }}</h3>
+			<p>
+				<a :href="manifestOrCollection.rights">{{ manifestOrCollection.rights }}</a>
+			</p>
+		</div>
+
+		<div
+			v-if="logos.length"
 			class="tify-info-section -logo"
 		>
-			<a
-				v-if="logoId && manifestOrCollection.logo.service && manifestOrCollection.logo.service['@id']"
-				:href="manifestOrCollection.logo.service['@id']"
-			>
+			<p v-for="logo, index in logos" :key="index">
+				<a
+					v-if="logo.id"
+					:href="logo.id"
+				>
+					<!-- TODO: This alt string is not accessible, but there is no way to get a proper one -->
+					<img
+						class="tify-info-logo"
+						:src="logo.id"
+						:alt="$translate('Logo')"
+					/>
+				</a>
 				<img
+					v-else
 					class="tify-info-logo"
-					:src="logoId"
+					:src="logo.id"
 					:alt="$translate('Logo')"
 				/>
-			</a>
-			<img
-				v-else
-				class="tify-info-logo"
-				:src="logoId"
-				:alt="$translate('Logo')"
-			/>
+			</p>
 		</div>
 	</section>
 </template>
@@ -184,6 +149,7 @@
 <script>
 // TODO: Handle and display manifest.service, see http://iiif.io/api/presentation/2.1/#service
 
+import { filterHtml } from '../modules/filter';
 import { isValidUrl } from '../modules/validation';
 
 export default {
@@ -193,14 +159,6 @@ export default {
 		};
 	},
 	computed: {
-		license() {
-			return this.manifestOrCollection.license
-				? this.$store.convertValueToArray(this.manifestOrCollection.license)
-				: [];
-		},
-		logoId() {
-			return this.manifestOrCollection.logo['@id'] || this.manifestOrCollection.logo;
-		},
 		manifestOrCollection() {
 			if (this.collectionDataShown) {
 				return this.$store.collection;
@@ -208,13 +166,39 @@ export default {
 
 			return this.$store.manifest || this.$store.collection || {};
 		},
-		related() {
-			return this.manifestOrCollection.related
-				? this.$store.convertValueToArray(this.manifestOrCollection.related)
+		homepages() {
+			// This must be an array as per IIIF docs, yet on some servers it is not
+			const homepages = this.manifestOrCollection.homepage
+				? [].concat(this.manifestOrCollection.homepage)
 				: [];
+
+			this.manifestOrCollection.provider?.forEach((provider) => {
+				(provider.homepage || []).forEach((homepage) => {
+					if (homepage.type !== 'unknown') {
+						homepages.push(homepage);
+					}
+				});
+			});
+
+			return homepages;
+		},
+		logos() {
+			// This must be an array as per IIIF docs, yet on some servers it is not
+			let logos = this.manifestOrCollection.logo
+				? [].concat(this.manifestOrCollection.logo)
+				: [];
+
+			this.manifestOrCollection.provider?.forEach((provider) => {
+				if (provider.logo) {
+					logos = logos.concat(provider.logo);
+				}
+			});
+
+			return logos;
 		},
 	},
 	methods: {
+		filterHtml,
 		isValidUrl,
 	},
 };

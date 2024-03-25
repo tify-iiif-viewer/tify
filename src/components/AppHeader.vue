@@ -218,9 +218,7 @@ export default {
 		title() {
 			const nbsp = String.fromCharCode(160);
 			return (
-				this.$store.convertValueToArray((this.$store.manifest || this.$store.collection || {}).label)
-					.join(`${nbsp}· `)
-					.trim()
+				this.$store.localize((this.$store.manifest || this.$store.collection || {}).label)
 					// Ensure the last word does not stand alone in its line if it and
 					// the 2nd-to-last word both have at most 10 characters
 					.replace(/(\S{1,10})\s+(\S{1,10})$/, `$1${nbsp}$2`)

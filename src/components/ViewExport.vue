@@ -20,7 +20,7 @@
 						:download="`${page}.jpg`"
 					>
 						{{ $translate('Page') }}
-						{{ $store.getPageLabel(page, $store.convertValueToArray($store.canvases[page - 1].label)[0]) }}
+						{{ $store.getPageLabel(page, $store.localize($store.manifest.items[page - 1].label)) }}
 					</a>
 				</li>
 			</ul>
@@ -34,9 +34,9 @@
 			<ul>
 				<li
 					v-for="item in renderings"
-					:key="item['@id']"
+					:key="item.id"
 				>
-					<a :href="item['@id']">{{ item.label }}</a>
+					<a :href="item.id">{{ $store.localize(item.label) }}</a>
 				</li>
 			</ul>
 
@@ -84,10 +84,10 @@
 			<ul>
 				<li
 					v-for="item in literatureItems"
-					:key="item['@id']"
+					:key="item.id"
 				>
 					<a
-						:href="item['@id']"
+						:href="item.id"
 						download
 					>
 						{{ item.label }}
@@ -96,8 +96,8 @@
 			</ul>
 		</div>
 
-		<div class="tify-export-section -other">
-			<h3>{{ $translate('Other Formats') }}</h3>
+		<div class="tify-export-section -iiif">
+			<h3>IIIF</h3>
 			<ul>
 				<li v-if="$store.options.childManifestUrl">
 					<a
@@ -115,15 +115,21 @@
 						{{ $translate($store.collection ? 'IIIF manifest (collection)' : 'IIIF manifest') }}
 					</a>
 				</li>
+			</ul>
+		</div>
+
+		<div class="tify-export-section -other">
+			<h3>{{ $translate('Other Formats') }}</h3>
+			<ul>
 				<li
-					v-for="item in otherItems"
-					:key="item['@id']"
+					v-for="item in $store.manifest.seeAlso"
+					:key="item.id"
 				>
 					<a
-						:href="item['@id']"
+						:href="item.id"
 						download
 					>
-						{{ item.label || item['@id'] }}
+						{{ item.label ? $store.localize(item.label) : item.id }}
 					</a>
 				</li>
 			</ul>
@@ -132,33 +138,6 @@
 </template>
 
 <script>
-const itemCriteria = [
-	{
-		label: 'BibTex',
-		profile: 'http://www.bibtex.org/Format/',
-		type: 'literature',
-	},
-	{
-		label: 'EndNote',
-		profile: 'http://endnote.com/',
-		type: 'literature',
-	},
-	{
-		label: 'RIS',
-		profile: 'http://referencemanager.com/sites/rm/files/m/direct_export_ris.pdf',
-		type: 'literature',
-	},
-	{
-		label: 'METS',
-		profile: 'http://www.loc.gov/standards/mets/profile_docs/mets.profile.v2-0.xsd',
-		type: 'other',
-	},
-	{
-		label: 'MODS',
-		format: 'application/mods+xml',
-		type: 'other',
-	},
-];
 
 export default {
 	data() {
@@ -170,12 +149,14 @@ export default {
 	},
 	computed: {
 		hasElementPdfLinks() {
-			if (!Array.isArray(this.$store.manifest.structures)
+			if (!(this.$store.manifest.structures instanceof Array)
 				|| !this.$store.manifest.structures[0]
 				|| !this.$store.manifest.structures[0].rendering
-			) return false;
+			) {
+				return false;
+			}
 
-			const renderings = this.$store.convertValueToArray(this.$store.manifest.structures[0].rendering);
+			const renderings = this.$store.manifest.structures[0].rendering;
 			return renderings.some((rendering) => rendering.format && rendering.format === 'application/pdf');
 		},
 		imageUrls() {
@@ -185,15 +166,16 @@ export default {
 					return;
 				}
 
-				const { resource } = this.$store.canvases[page - 1].images[0];
-				if (resource.service) {
-					const quality = resource.service['@context'] === 'http://iiif.io/api/image/2/context.json'
+				const resource = this.$store.manifest.items[page - 1].items?.[0].items?.[0].body;
+				if (resource?.service) {
+					const service = resource.service instanceof Array ? resource.service[0] : resource.service;
+					const quality = ['ImageService2', 'ImageService3'].includes(service.type)
 						? 'default'
 						: 'native';
-					const id = resource.service['@id'];
+					const id = service.id || service['@id'];
 					imageUrls[page] = `${id}${id.slice(-1) === '/' ? '' : '/'}full/full/0/${quality}.jpg`;
 				} else {
-					imageUrls[page] = resource['@id'];
+					imageUrls[page] = resource.id;
 				}
 			});
 			return imageUrls;
@@ -202,43 +184,10 @@ export default {
 			return this.$store.options.pages.filter((page) => page > 0);
 		},
 		renderings() {
-			return this.$store.convertValueToArray(this.$store.manifest.rendering);
+			return this.$store.manifest.rendering
+				? [].concat(this.$store.manifest.rendering)
+				: [];
 		},
-	},
-	created() {
-		const { seeAlso } = this.$store.manifest;
-
-		if (!seeAlso) {
-			return;
-		}
-
-		// Create clone
-		const items = JSON.parse(JSON.stringify(Array.isArray(seeAlso) ? seeAlso : [seeAlso]));
-		items.forEach((item) => {
-			const currentItem = typeof item === 'object'
-				? item
-				: { '@id': item };
-			let isLiterature = false;
-			itemCriteria.some((criterion) => {
-				const formatsMatch = item.format && criterion.format === item.format;
-				const profilesMatch = item.profile && criterion.profile === item.profile;
-				if (formatsMatch || profilesMatch) {
-					currentItem.label = criterion.label;
-					if (criterion.type === 'literature') {
-						isLiterature = true;
-					}
-
-					return true;
-				}
-				return false;
-			});
-
-			if (isLiterature) {
-				this.literatureItems.push(currentItem);
-			} else {
-				this.otherItems.push(currentItem);
-			}
-		});
 	},
 };
 </script>
