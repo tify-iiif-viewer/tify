@@ -4,7 +4,7 @@
 	</a>
 </h1>
 
-TIFY is a slim and mobile-friendly [IIIF](https://iiif.io/) document viewer built with [Vue.js](https://vuejs.org/). It supports version 2 of the IIIF [Presentation API](https://iiif.io/api/presentation/2.1/) and [Image API](https://iiif.io/api/image/2.1/). Support for version 3 APIs is coming in the near future.
+TIFY is a slim and mobile-friendly [IIIF](https://iiif.io/) document viewer built with [Vue.js](https://vuejs.org/). It supports [IIIF Presentation API and Image API](https://iiif.io/api/) version 2 and 3.
 
 Continue reading to learn how to integrate TIFY into your website or application and about its options and API, [check out the website for usage examples](https://tify.rocks/), or [have a look at the user guide](doc/user-guide.en.md).
 
