@@ -125,8 +125,8 @@
 		>
 			<p v-for="logo, index in logos" :key="index">
 				<a
-					v-if="logo.id"
-					:href="logo.id"
+					v-if="logo.link"
+					:href="logo.link"
 				>
 					<!-- TODO: This alt string is not accessible, but there is no way to get a proper one -->
 					<img
@@ -193,6 +193,11 @@ export default {
 					logos = logos.concat(provider.logo);
 				}
 			});
+
+			logos = logos.map((logo) => ({
+				id: logo.id,
+				link: logo.service?.[0]?.id || logo.service?.[0]?.['@id'],
+			}));
 
 			return logos;
 		},
