@@ -1,6 +1,6 @@
 import { computed, nextTick, reactive } from 'vue';
 
-import { convertPresentation2 } from '@iiif/parser/presentation-2';
+import { upgrade } from '@iiif/parser/upgrader';
 
 import { isValidPagesArray } from '../modules/validation';
 
@@ -10,7 +10,7 @@ function convertManifest(originalManifest) {
 
 	// Convert IIIF 2 manifest to IIIF 3 (IIIF 3 remains unchanged)
 	// NOTE: originalManifest may be modified during conversion
-	const manifest = convertPresentation2(originalManifest);
+	const manifest = upgrade(originalManifest);
 
 	// For IIIF 2: Restore "related" if homepage conversion failed
 	const providerContainsHomepage = manifest.provider?.some(
