@@ -118,7 +118,10 @@
 			</ul>
 		</div>
 
-		<div class="tify-export-section -other">
+		<div
+			v-if="$store.manifest.seeAlso"
+			class="tify-export-section -other"
+		>
 			<h3>{{ $translate('Other Formats') }}</h3>
 			<ul>
 				<li
