@@ -12,12 +12,20 @@ function convertManifest(originalManifest) {
 	// NOTE: originalManifest may be modified during conversion
 	const manifest = upgrade(originalManifest);
 
-	// For IIIF 2: Restore "related" if homepage conversion failed
-	const providerContainsHomepage = manifest.provider?.some(
-		(provider) => provider.homepage?.some((homepage) => homepage.type !== 'unknown'),
-	);
-	if (related && !manifest.homepage && !providerContainsHomepage) {
-		manifest.homepage = related;
+	// For IIIF 2: Restore "related" items
+	if (related && originalManifest['@context'] === 'http://iiif.io/api/presentation/2/context.json') {
+		[].concat(related).forEach((object) => {
+			manifest.homepage = manifest.homepage || [];
+			manifest.homepage.push(
+				typeof object === 'string'
+					? object
+					: {
+						id: object['@id'],
+						label: object.label,
+						format: object.format,
+					},
+			);
+		});
 	}
 
 	return manifest;
