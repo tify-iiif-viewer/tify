@@ -174,14 +174,6 @@ export default {
 				? [].concat(this.manifestOrCollection.homepage)
 				: [];
 
-			this.manifestOrCollection.provider?.forEach((provider) => {
-				(provider.homepage || []).forEach((homepage) => {
-					if (homepage.type !== 'unknown') {
-						homepages.push(homepage);
-					}
-				});
-			});
-
 			return homepages;
 		},
 		logos() {
