@@ -1,0 +1,14 @@
+.tify-list {
+	margin: 0 0 g(.5);
+	padding: 0 0 0 g();
+
+	li {
+		margin: 0;
+		padding: 0;
+
+		&:only-child {
+			list-style: none;
+			margin-left: g(-1);
+		}
+	}
+}
