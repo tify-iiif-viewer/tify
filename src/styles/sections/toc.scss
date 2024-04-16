@@ -7,14 +7,8 @@
 .tify-toc {
 	@extend %panel;
 	overflow-y: auto;
-	padding: g(.5);
 	position: relative;
 	z-index: 0;
-
-	ul {
-		margin: 0 g(-.25) 0 g(.25);
-		padding: 0;
-	}
 }
 
 .tify-toc-header {
@@ -61,6 +55,8 @@
 }
 
 .tify-toc-list {
+	margin: 0 0 g(.25) g(.25);
+	padding: 0;
 	position: relative;
 	z-index: 0;
 

@@ -1,10 +1,10 @@
 .tify-export {
 	@extend %panel;
-	padding: g(.5);
 }
 
 .tify-export-container {
 	margin: g(.5) 0 g();
+	position: relative;
 }
 
 .tify-export-section {
@@ -35,7 +35,7 @@
 		border-radius: 0 $br;
 		padding: g(.25);
 		position: absolute;
-		right: g(.5);
+		right: 0;
 		z-index: 1;
 	}
 }

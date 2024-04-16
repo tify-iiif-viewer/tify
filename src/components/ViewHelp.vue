@@ -11,7 +11,7 @@
 
 		<p v-html="$translate('$info', infoHtml)" />
 
-		<ul>
+		<ul class="tify-list">
 			<li>
 				<a :href="userGuideUrl">{{ $translate('User guide') }}</a>
 			</li>
