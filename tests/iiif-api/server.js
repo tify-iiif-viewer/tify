@@ -58,7 +58,7 @@ server.on('request', (req, res) => {
 	} else if (path.endsWith('.jpg')) {
 		action = 'image';
 	} else {
-		action = segments.slice(-1)[0] === 'info.json' ? 'info' : segments[1];
+		action = segments.at(-1) === 'info.json' ? 'info' : segments[1];
 
 		if (segments[2] && action !== 'annotations') {
 			file = segments[2] + (segments[2].endsWith('.json') ? '' : '.json');
