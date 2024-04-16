@@ -36,7 +36,7 @@ describe('setLanguage', () => {
 		try {
 			await vm.setLanguage('-_-');
 		} catch {
-			expect(vm.$store.errors.slice(-1)[0]).toContain('Error loading translation for "-_-"');
+			expect(vm.$store.errors.at(-1)).toContain('Error loading translation for "-_-"');
 		}
 	});
 });

@@ -176,7 +176,7 @@ export default {
 						? 'default'
 						: 'native';
 					const id = service.id || service['@id'];
-					imageUrls[page] = `${id}${id.slice(-1) === '/' ? '' : '/'}full/full/0/${quality}.jpg`;
+					imageUrls[page] = `${id}${id.at(-1) === '/' ? '' : '/'}full/full/0/${quality}.jpg`;
 				} else {
 					imageUrls[page] = resource.id;
 				}

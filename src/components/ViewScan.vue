@@ -401,7 +401,7 @@ export default {
 				if (resource.service) {
 					const service = resource.service instanceof Array ? resource.service[0] : resource.service;
 					const id = service.id || service['@id'];
-					const infoUrl = `${id}${id.slice(-1) === '/' ? '' : '/'}info.json`;
+					const infoUrl = `${id}${id.at(-1) === '/' ? '' : '/'}info.json`;
 					infoPromises.push(
 						this.$store.fetchJson(infoUrl).then(
 							(infoItem) => ({ ...infoItem, page }),

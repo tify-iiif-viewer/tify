@@ -146,7 +146,7 @@ function Store(args) {
 					const firstCanvasIdOfStructure = structure.items[0].id;
 					structure.firstPage = canvases.findIndex((canvas) => canvas.id === firstCanvasIdOfStructure) + 1;
 
-					const lastCanvasIdOfStructure = structure.items.slice(-1)[0].id;
+					const lastCanvasIdOfStructure = structure.items.at(-1).id;
 					structure.lastPage = canvases.findIndex((canvas) => canvas.id === lastCanvasIdOfStructure) + 1;
 
 					if (!canvases[structure.firstPage - 1]) {
