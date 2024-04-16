@@ -15,5 +15,15 @@ describe('Export', () => {
 		cy.contains('a', 'IIIF manifest');
 
 		cy.get('a[href$="/download/pdf/PPN857449303/LOG_0001.pdf"]');
+
+		cy.contains('Other Formats').next().find('a').should('have.length', 4);
+	});
+
+	it('hides "Other Formats" if not available', () => {
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/aku-pal-375`);
+
+		cy.contains('Export').click();
+
+		cy.should('not.contain', 'Other Formats');
 	});
 });
