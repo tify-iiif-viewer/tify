@@ -140,7 +140,7 @@ export default {
 					const id = service.id || service['@id'];
 					items.push({
 						label: this.$store.localize(this.$store.manifest.items[i].label),
-						imgUrl: `${id}${id.slice(-1) === '/' ? '' : '/'}full/${this.thumbnailWidth},/0/${quality}.jpg`,
+						imgUrl: `${id}${id.at(-1) === '/' ? '' : '/'}full/${this.thumbnailWidth},/0/${quality}.jpg`,
 						page: i + 1,
 					});
 				} else {
