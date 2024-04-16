@@ -76,26 +76,6 @@
 			</div>
 		</div>
 
-		<div
-			v-if="literatureItems.length"
-			class="tify-export-section -literature"
-		>
-			<h3>{{ $translate('Literature Management') }}</h3>
-			<ul>
-				<li
-					v-for="item in literatureItems"
-					:key="item.id"
-				>
-					<a
-						:href="item.id"
-						download
-					>
-						{{ item.label }}
-					</a>
-				</li>
-			</ul>
-		</div>
-
 		<div class="tify-export-section -iiif">
 			<h3>IIIF</h3>
 			<ul class="tify-list">
@@ -145,7 +125,6 @@
 export default {
 	data() {
 		return {
-			literatureItems: [],
 			otherItems: [],
 			perElementPdfLinksVisible: false,
 		};
