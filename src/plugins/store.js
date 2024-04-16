@@ -129,8 +129,6 @@ function Store(args) {
 				return [];
 			}
 
-			// TODO: Get rid of Table of Contents if first child without items?
-			// See https://digital.blb-karlsruhe.de/i3f/v20/1209510/manifest
 			if (store.manifest.structures.some((structure) => structure.type === 'Range')) {
 				return store.manifest.structures;
 			}
