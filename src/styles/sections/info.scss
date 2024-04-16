@@ -3,7 +3,6 @@ $info-content-max-height: g(6.5);
 .tify-info {
 	@extend %panel;
 	overflow-y: auto;
-	padding: g(.5);
 }
 
 .tify-info-button {

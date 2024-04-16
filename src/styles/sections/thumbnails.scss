@@ -4,7 +4,6 @@
 	@extend %panel;
 	min-height: 100%;
 	overflow-y: scroll; // NOTE: This is required for thumbnails to be calculated correctly
-	padding: g(.5);
 	position: relative;
 	user-select: none;
 

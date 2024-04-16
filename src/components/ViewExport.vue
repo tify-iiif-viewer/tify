@@ -9,7 +9,7 @@
 
 		<div class="tify-export-section -links">
 			<h3>{{ $translate('Download Individual Images') }}</h3>
-			<ul>
+			<ul class="tify-list">
 				<li
 					v-for="page in pages"
 					:key="page"
@@ -31,7 +31,7 @@
 			class="tify-export-section -renderings"
 		>
 			<h3>{{ $translate('Renderings') }}</h3>
-			<ul>
+			<ul class="tify-list">
 				<li
 					v-for="item in renderings"
 					:key="item.id"
@@ -98,7 +98,7 @@
 
 		<div class="tify-export-section -iiif">
 			<h3>IIIF</h3>
-			<ul>
+			<ul class="tify-list">
 				<li v-if="$store.options.childManifestUrl">
 					<a
 						:href="$store.options.childManifestUrl"
@@ -123,7 +123,7 @@
 			class="tify-export-section -other"
 		>
 			<h3>{{ $translate('Other Formats') }}</h3>
-			<ul>
+			<ul class="tify-list">
 				<li
 					v-for="item in $store.manifest.seeAlso"
 					:key="item.id"

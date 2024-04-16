@@ -82,23 +82,25 @@
 			class="tify-info-section -related"
 		>
 			<h3>{{ $translate('Related Resources') }}</h3>
-			<div
-				v-for="(homepage, index) in homepages"
-				:key="index"
-			>
-				<a
-					v-if="typeof homepage === 'string'"
-					:href="homepage"
+			<ul class="tify-list">
+				<li
+					v-for="(homepage, index) in homepages"
+					:key="index"
 				>
-					{{ homepage }}
-				</a>
-				<a
-					v-else
-					:href="homepage.id"
-				>
-					{{ $store.localize(homepage.label) || homepage.id }}
-				</a>
-			</div>
+					<a
+						v-if="typeof homepage === 'string'"
+						:href="homepage"
+					>
+						{{ homepage }}
+					</a>
+					<a
+						v-else
+						:href="homepage.id"
+					>
+						{{ $store.localize(homepage.label) || homepage.id }}
+					</a>
+				</li>
+			</ul>
 		</div>
 
 		<div
