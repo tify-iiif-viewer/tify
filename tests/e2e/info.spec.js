@@ -10,6 +10,12 @@ describe('Info', () => {
 		cy.contains('Related Resources');
 		cy.contains('/object/viewid/0000000001');
 		cy.contains('/0000000001/manifest');
+
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/digitale-sammlungen-bsb00026283`);
+		cy.contains('Info').click();
+		cy.get('.tify-info-section.-related li').should('have.length', 2);
+		cy.get('a[href$="/details:bsb00026283"]').contains('Details');
+		cy.get('a[href$="/title/BV023398264"]').contains('OPAC');
 	});
 
 	it('collapses long metadata values', () => {
