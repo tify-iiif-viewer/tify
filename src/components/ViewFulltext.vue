@@ -29,12 +29,12 @@
 			</div>
 		</div>
 
-		<div
+		<p
 			v-else
 			class="tify-fulltext-none"
 		>
 			{{ $translate('Fulltext not available for this page') }}
-		</div>
+		</p>
 	</section>
 </template>
 
