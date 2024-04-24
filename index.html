@@ -30,6 +30,7 @@
 			cursor: pointer;
 			font: .9em/1rem monospace;
 			padding: .25rem .5rem;
+			min-width: 1.5rem;
 			white-space: nowrap;
 		}
 
@@ -43,10 +44,25 @@
 			opacity: 1 !important;
 		}
 
+		.container {
+			box-shadow: -1px 0, 0 -1px;
+			flex: 1;
+			position: relative;
+			z-index: 1;
+		}
+
+		.container-header {
+			backdrop-filter: blur(1px);
+			display: flex;
+		}
+
+		.container-tify {
+			height: calc(100vh - 1.5rem);
+		}
+
 		.header-form {
 			display: flex;
-			position: relative;
-			z-index: 2;
+			width: 100%;
 		}
 
 		.header-input {
@@ -66,70 +82,63 @@
 			display: flex;
 			flex-wrap: wrap;
 		}
-
-		.instance {
-			box-shadow: -1px 0, 0 -1px;
-			flex: 1;
-			position: relative;
-			z-index: 1;
-		}
-
-		.instance-header {
-			backdrop-filter: blur(1px);
-			display: flex;
-			position: absolute;
-			top: 0;
-			z-index: 10;
-		}
-
-		.instance-close {
-			border-radius: 0 0 2px;
-			height: 1rem;
-			opacity: .5;
-			padding: 0;
-			width: 1rem;
-		}
-
-		.instance-tify {
-			height: calc(100vh - 1.5rem);
-		}
 	</style>
 </head>
 
 <body>
 	<header class="header">
-		<form class="header-form" onsubmit="addInstance(); return false">
-			<input
-				type="url"
-				class="header-input"
-				id="manifestUrl"
-				placeholder="Enter a IIIF manifest URL"
-				aria-label="Manifest URL"
-			/>
-			<button type="submit" class="button">Add</button>
-			<button type="reset" class="button" onclick="removeAllInstances()">Remove all</button>
-		</form>
 	</header>
 	<main class="main">
-		<div class="instance">
-			<header class="instance-header">
-				<button class="button instance-close" aria-label="Remove instance">
-					&times;
-				</button>
+		<div class="container" data-key="1">
+			<header class="container-header">
+				<form
+					class="header-form"
+					onsubmit="
+						const key = parseInt(event.target.closest('.container').dataset.key, 10)
+						removeInstance(key);
+						addInstance(new FormData(event.target).get('manifestUrl'), key);
+						return false;
+					"
+				>
+					<input
+						type="url"
+						class="header-input"
+						name="manifestUrl"
+						placeholder="IIIF manifest URL"
+						aria-label="Manifest URL"
+						onclick="event.target.select()"
+					/>
+					<button
+						type="submit"
+						class="button"
+					>
+						Load
+					</button>
+					<button
+						type="button"
+						class="button"
+						onclick="addInstance(new FormData(event.target.closest('form')).get('manifestUrl'))"
+						aria-label="Add new"
+					>
+						+
+					</button>
+					<button
+						class="button"
+						aria-label="Remove instance"
+						onclick="removeInstance(parseInt(event.target.closest('.container').dataset.key, 10))"
+					>
+						&times;
+					</button>
+				</form>
 			</header>
-			<div class="instance-tify"></div>
+			<div class="container-tify"></div>
 		</div>
 	</main>
 
 	<script type="module" src="/src/main.js"></script>
 	<script>
-		const tifyOptions = {
-			translationsDirUrl: '/translations',
-		};
-
 		const main = document.querySelector('main');
-		const manifestUrlInput = document.querySelector('#manifestUrl');
-		const template = document.querySelector('.instance');
+		const template = document.querySelector('.container');
 		template.remove();
 
 		const instances = [];
@@ -143,59 +152,71 @@
 					continue
 				}
 
-				const key = parseInt(params[0].replace('manifest', ''), 10) || '';
-				addInstance({
-					key,
-					manifestUrl: params[1],
-					urlQueryKey: `tify${key}`,
-				});
+				const key = parseInt(params[0].replace('manifest', ''), 10);
+				addInstance(params[1], key)
+			}
+
+			if (!instances.length) {
+				addInstance()
 			}
 		};
 
-		function addInstance(options = {}) {
-			element = template.cloneNode(true);
-			main.append(element);
-
-			let key = options.key || '';
-			while (instances.find(instance => instance.key === key)) {
-				key = (key || 0) + 1;
+		function addInstance(manifestUrl, originKey = 1) {
+			let key = originKey
+			while (instances.find(i => i.key === key)) {
+				key = key + 1;
 			}
 
-			tifyOptions.container = element.querySelector('.instance-tify');
-			tifyOptions.manifestUrl = options.manifestUrl || manifestUrlInput.value;
-			tifyOptions.urlQueryKey = options.urlQueryKey || `tify${key}`;
+			element = template.cloneNode(true);
+			element.dataset.key = key;
+			element.querySelector('[name=manifestUrl]').value = manifestUrl || ''
 
-			const tify = new Tify(tifyOptions);
-			const instance = { element, key, tify };
+			const instance = { key, element };
 			instances.push(instance);
 
-			// Expose API of lastest instance for e2e tests
-			window.tify = tify;
+			if (instances.length === 1) {
+				instance.element.querySelector('[aria-label="Remove instance"]').hidden = true
+			} else {
+				for (const button of main.querySelectorAll('[aria-label="Remove instance"]')) {
+					button.hidden = false
+				}
+			}
 
-			element.querySelector('.instance-close').onclick = () => removeInstance(instance);
+			main.append(instance.element)
 
-			// Update URL query if manifest was set via input
-			if (!options.manifestUrl) {
+			if (manifestUrl) {
+				const tifyOptions = {
+					container: element.querySelector('.container-tify'),
+					manifestUrl,
+					translationsDirUrl: '/translations',
+					urlQueryKey: `tify${key}`,
+				};
+
+				instance.tify = new Tify(tifyOptions);
+
+				// Expose API of latest container for e2e tests
+				window.tify = instance.tify;
+
 				const url = new URL(window.location);
-				url.searchParams.append(`manifest${key}`, tifyOptions.manifestUrl);
-				window.history.pushState(null, '', url.toString());
+				if (!url.searchParams.get(`manifest${key}`)) {
+					url.searchParams.append(`manifest${key}`, manifestUrl);
+					window.history.pushState(null, '', url.toString());
+				}
 			}
 		}
 
-		function removeInstance(instanceToRemove) {
-			instanceToRemove.element.remove();
-			instanceToRemove.tify.destroy();
+		function removeInstance(key) {
+			const instance = instances.find(i => i.key === key);
 
-			instances.splice(instances.findIndex(instance => instance.key === instanceToRemove.key), 1);
+			instance.element.remove();
+			instance.tify?.destroy();
+
+			instances.splice(instances.findIndex(i => i.key === key), 1);
 
 			const url = new URL(window.location);
-			url.searchParams.delete(`manifest${instanceToRemove.key}`);
-			url.searchParams.delete(`tify${instanceToRemove.key}`);
+			url.searchParams.delete(`manifest${key}`);
+			url.searchParams.delete(`tify${key}`);
 			window.history.pushState(null, '', url.toString());
-		}
-
-		function removeAllInstances() {
-			[...instances].forEach(instance => removeInstance(instance))
 		}
 	</script>
 </body>
