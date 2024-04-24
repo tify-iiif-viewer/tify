@@ -13,7 +13,7 @@ describe('TOC', () => {
 		cy.get('.tify-toc-structure[data-level="0"]:nth-child(3) > .tify-toc-toggle').click();
 		cy.get(
 			'.tify-toc-structure[data-level="0"].-expanded'
-				+ ' .tify-toc-structure[data-level="1"]:first-child > .tify-toc-toggle',
+			+ ' .tify-toc-structure[data-level="1"]:first-child > .tify-toc-toggle',
 		).click();
 		cy.get('.tify-toc-label').contains('Huddesche Methode');
 
@@ -47,6 +47,18 @@ describe('TOC', () => {
 
 		// Child of second collapsible
 		cy.contains('Recursionsformeln').should('be.visible');
+	});
+
+	it('highlights all current levels', () => {
+		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081`;
+		cy.visit(`/?manifest=${manifestUrl}`);
+
+		cy.contains('Contents').click();
+
+		cy.contains('Expand all').click();
+
+		cy.contains('Discriminante R').click();
+		cy.get('.tify-toc-structure.-current').should('have.length', 4);
 	});
 
 	it('is working even when structures are chaotic', () => {

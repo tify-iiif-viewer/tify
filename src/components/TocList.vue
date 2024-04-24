@@ -102,6 +102,7 @@ export default {
 			const firstPage = this.getFirstPage(structure);
 			return this.$store.manifest.items[firstPage - 1]?.label;
 		},
+		// TODO: Add unit test
 		getFirstPage(structure) {
 			if (structure.items) {
 				return this.getFirstPage(structure.items[0]);
@@ -110,6 +111,16 @@ export default {
 			const index = this.$store.manifest.items.findIndex((item) => item.id === structure.id);
 			return index < 0 ? 1 : index + 1;
 		},
+		// TODO: Add unit test
+		getLastPage(structure) {
+			if (structure.items) {
+				return this.getLastPage(structure.items.at(-1));
+			}
+
+			const index = this.$store.manifest.items.findLastIndex((item) => item.id === structure.id);
+			return index < 0 ? this.$store.manifest.items.length : index + 1;
+		},
+		// TODO: Add unit test
 		isCurrentPageInStructure(structure) {
 			const currentCanvasIds = this.$store.manifest.items
 				.filter((item, index) => this.$store.options.pages.includes(index + 1))
@@ -119,7 +130,10 @@ export default {
 				return true;
 			}
 
-			return this.$store.options.pages.includes(structure.firstPage || this.getFirstPage(structure));
+			const firstPage = structure.firstPage || this.getFirstPage(structure);
+			const lastPage = structure.lastPage || this.getLastPage(structure);
+
+			return this.$store.options.pages.some((page) => page >= firstPage && page <= lastPage);
 		},
 		setPage(page) {
 			this.$store.setPage(page);
