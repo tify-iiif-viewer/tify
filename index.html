@@ -78,6 +78,7 @@
 			backdrop-filter: blur(1px);
 			display: flex;
 			position: absolute;
+			right: 0;
 			top: 0;
 			z-index: 10;
 		}
@@ -107,6 +108,7 @@
 				id="manifestUrl"
 				placeholder="Enter a IIIF manifest URL"
 				aria-label="Manifest URL"
+				onfocus="event.target.select()"
 			/>
 			<button type="submit" class="button">Add</button>
 			<button type="reset" class="button" onclick="removeAllInstances()">Remove all</button>
