@@ -151,11 +151,14 @@ export default {
 				const resource = this.$store.manifest.items[page - 1].items?.[0].items?.[0].body;
 				if (resource?.service) {
 					const service = resource.service instanceof Array ? resource.service[0] : resource.service;
-					const quality = ['ImageService2', 'ImageService3'].includes(service.type)
+					const quality = ['ImageService2', 'ImageService3'].includes(service.type || service['@type'])
 						? 'default'
 						: 'native';
+					const size = service.type === 'ImageService3'
+						? 'max'
+						: 'full';
 					const id = service.id || service['@id'];
-					imageUrls[page] = `${id}${id.at(-1) === '/' ? '' : '/'}full/full/0/${quality}.jpg`;
+					imageUrls[page] = `${id}${id.at(-1) === '/' ? '' : '/'}full/${size}/0/${quality}.jpg`;
 				} else {
 					imageUrls[page] = resource.id;
 				}
