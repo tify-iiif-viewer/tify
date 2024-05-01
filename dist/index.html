@@ -3,18 +3,19 @@
 
 <head>
 	<meta charset="utf-8">
-	<link rel="icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAMMOAADDDgAAAAAAAAAAAABERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/////////////////////////////////////////////////////////////////RERE/0RERP9ERET/RERE/////////////////////////////////////////////////////////////////0RERP9ERET/RERE/0RERP///////////////////////////0RERP9ERET///////////////////////////9ERET/RERE/0RERP9ERET///////////////////////////9ERET/RERE////////////////////////////RERE/0RERP9ERET/RERE////////////////////////////RERE/0RERP///////////////////////////0RERP9ERET/RERE/0RERP///////////////////////////0RERP9ERET///////////////////////////9ERET/RERE/0RERP9ERET///////////////////////////9ERET/RERE////////////////////////////RERE/0RERP9ERET/RERE////////////////////////////RERE/0RERP///////////////////////////0RERP9ERET/RERE/0RERP///////////0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET///////////9ERET/RERE/0RERP9ERET///////////9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE////////////RERE/0RERP9ERET/RERE/////////////////////////////////////////////////////////////////0RERP9ERET/RERE/0RERP////////////////////////////////////////////////////////////////9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/RERE/0RERP9ERET/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==">
+	<link rel="icon" href="/tify.ico">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>TIFY</title>
 	<style>
 		:root {
 			--base-color: #06b;
+			--base-color-lighter: #e6f0f8;
 			--button-hover-bg: #0058a2;
 		}
 
 		html {
-			color: #333;
 			background: #666;
+			color: #333;
 			font-size: 24px;
 		}
 
@@ -24,42 +25,49 @@
 		}
 
 		.button {
-			background: var(--base-color);
+			background: var(--base-color) linear-gradient(to bottom, rgba(255, 255, 255, .2), rgba(255, 255, 255, 0));
 			border: 0;
+			border-radius: 2px;
 			color: #fff;
 			cursor: pointer;
-			font: .9em/1rem monospace;
-			padding: .25rem .5rem;
+			font: inherit;
+			font-size: .8125em;
+			margin: .125rem;
+			padding: .125rem .5rem;
 			white-space: nowrap;
-		}
-
-		.button + .button {
-			border-left: 1px solid;
 		}
 
 		.button:focus,
 		.button:hover {
-			background: var(--button-hover-bg);
+			background-color: var(--button-hover-bg);
 			opacity: 1 !important;
 		}
 
+		.button:active {
+			box-shadow: 0 .5px 3px rgba(0, 0, 0, .2) inset, 0 0 0 1px rgba(0, 0, 0, .1) inset;
+		}
+
 		.header-form {
+			background: #fff;
 			display: flex;
-			position: relative;
-			z-index: 2;
+			align-items: center;
+			padding: .125rem;
 		}
 
 		.header-input {
-			border: 0;
-			box-shadow: 0 -1px inset;
+			background: #fff;
+			border: 1px solid transparent;
+			border-radius: 2px;
+			color: inherit;
 			flex: 1;
-			font: .9em/1rem monospace;
-			padding: .25rem .5rem;
+			font: inherit;
+			margin: .125rem;
+			padding: calc(.125rem - 1px) calc(.25rem - 1px);
 		}
 
 		.header-input:focus {
-			box-shadow: 0 0 0 1px var(--base-color) inset;
-			outline: 0;
+			border-color: var(--base-color);
+			outline: 2px solid var(--base-color-lighter);
 		}
 
 		.main {
@@ -68,14 +76,13 @@
 		}
 
 		.instance {
-			box-shadow: -1px 0, 0 -1px;
+			box-shadow: -1px 0 rgba(0, 0, 0, .2), 0 -1px rgba(0, 0, 0, .2);
 			flex: 1;
 			position: relative;
 			z-index: 1;
 		}
 
 		.instance-header {
-			backdrop-filter: blur(1px);
 			display: flex;
 			position: absolute;
 			top: 0;
@@ -83,19 +90,22 @@
 		}
 
 		.instance-close {
-			border-radius: 0 0 2px;
-			height: 1rem;
+			border-radius: 0;
+			clip-path: polygon(0 0, 100% 0, 0 100%);
+			height: 1.25rem;
+			line-height: 1;
+			margin: 0;
 			opacity: .5;
-			padding: 0;
-			width: 1rem;
+			padding: 0 .5rem .5rem 0;
+			width: 1.25rem;
 		}
 
 		.instance-tify {
-			height: calc(100vh - 1.5rem);
+			height: calc(100vh - 1.75rem);
 		}
 	</style>
   <script type="module" crossorigin src="/tify.js"></script>
-  <link rel="stylesheet" href="/tify.css">
+  <link rel="stylesheet" crossorigin href="/tify.css">
 </head>
 
 <body>
@@ -105,8 +115,9 @@
 				type="url"
 				class="header-input"
 				id="manifestUrl"
-				placeholder="Enter a IIIF manifest URL"
-				aria-label="Manifest URL"
+				placeholder="IIIF manifest URL"
+				aria-label="IIIF manifest URL"
+				onfocus="event.target.select()"
 			/>
 			<button type="submit" class="button">Add</button>
 			<button type="reset" class="button" onclick="removeAllInstances()">Remove all</button>
@@ -123,7 +134,6 @@
 		</div>
 	</main>
 
-	
 	<script>
 		const tifyOptions = {
 			translationsDirUrl: '/translations',
