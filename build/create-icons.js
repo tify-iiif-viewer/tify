@@ -1,13 +1,13 @@
 import fs from 'fs';
 import url from 'url';
 
-import mdi from '@mdi/js';
-
 const rootDir = url.fileURLToPath(new URL('..', import.meta.url));
 
 if (!fs.existsSync(`${rootDir}/node_modules/@mdi/js`)) {
 	process.exit();
 }
+
+const mdi = await import('@mdi/js');
 
 const iconsDir = `${rootDir}/src/components/icons`;
 
