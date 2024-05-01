@@ -1,5 +1,9 @@
 # Upgrading TIFY
 
+## Any prior release to v0.30
+
+TIFY now supports IIIF Presentation API and Image API version 2 and 3. There are no breaking changes.
+
 ## Any prior release to v0.29
 
 - Only concerns local development: Node script names have been changed to match current Vue defaults, e.g. `npm run serve` is now `npm run dev`. See README.md and package.json for more details.
