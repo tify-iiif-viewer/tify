@@ -81,6 +81,7 @@
 
 .tify-toc-structure {
 	display: block;
+	margin: 0; // For smooth embedding
 	position: relative;
 
 	&.-current {
