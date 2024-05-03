@@ -72,7 +72,7 @@ TIFY takes an options object as its only parameter. While optional, you usually 
 
 - **`childManifestAutoloaded`**: boolean, default `true`
 
-	If the manifest set by `manifestUrl` is a collection (`@type` is `sc:Collection`) and `childManifestUrl` is not set, automatically load the first manifest in the collection. This only works for collections with `manifests` on the first level; when the collection only contains other collection and `childManifestUrl` is not set, only the collection view is shown until the user selects a child manifest to load.
+	If the manifest set by `manifestUrl` is a collection (`@type` is `sc:Collection`) and `childManifestUrl` is not set, automatically load the first manifest in the collection. This only works for collections with `manifests` on the first level; when the collection only contains other collections and `childManifestUrl` is not set, only the collection view is shown until the user selects a child manifest to load.
 
 - **`childManifestUrl`**: string or `null` (default)
 
@@ -81,7 +81,6 @@ TIFY takes an options object as its only parameter. While optional, you usually 
 - **`container`**: string or HTMLElement or `null` (default)
 
 	The HTML element into which TIFY is mounted. If set to `null`, TIFY is not mounted at all until `mount` is called (see [API](#api)).
-
 
 - **`fallbackLanguage`**: string, default `'en'`
 
