@@ -100,7 +100,7 @@ export default {
 			return this.$store.manifest?.items?.some((canvas) => 'annotations' in canvas);
 		},
 		hasToc() {
-			return this.$store.manifest?.structures?.length > 0;
+			return this.$store.structures.some((structure) => !structure.behavior?.includes('top'));
 		},
 	},
 	created() {
