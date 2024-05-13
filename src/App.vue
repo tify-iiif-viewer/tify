@@ -5,13 +5,13 @@
 	>
 		<!-- NOTE: Root element must be focusable for global keyboard events to work -->
 		<app-header
-			v-if="ready && ($store.collection || $store.manifest)"
+			v-if="readyToRender && ($store.collection || $store.manifest)"
 			:fulltext-enabled="hasAnnotations"
 			:toc-enabled="hasToc"
 		/>
 
 		<div
-			v-if="ready"
+			v-if="readyToRender"
 			class="tify-main"
 		>
 			<template v-if="$store.manifest">
@@ -83,16 +83,19 @@
 </template>
 
 <script>
+import { createPromise } from './modules/promise';
+
 export default {
 	props: {
 		readyPromise: {
 			type: Object,
 			default: null,
+			required: true,
 		},
 	},
 	data() {
 		return {
-			ready: false,
+			readyToRender: false,
 		};
 	},
 	computed: {
@@ -123,9 +126,14 @@ export default {
 			this.$store.loadManifest(this.$store.options.manifestUrl),
 			this.setLanguage(this.$store.options.language),
 		]).then(() => {
+			this.readyToRender = true;
+
+			// Wait for child components to be mounted
 			this.$nextTick(() => {
-				this.ready = true;
-				this.readyPromise.resolve();
+				Promise.all(this.$store.readyPromises).then(() => {
+					// Resolve at the very last
+					setTimeout(this.readyPromise.resolve);
+				});
 			});
 		}, (error) => {
 			this.readyPromise.reject(error);
@@ -137,22 +145,17 @@ export default {
 	},
 	methods: {
 		setLanguage(language) {
-			let resolveFunction;
-			let rejectFunction;
-			const promise = new Promise((resolve, reject) => {
-				resolveFunction = resolve;
-				rejectFunction = reject;
-			});
+			const promise = createPromise();
 
 			if (language === 'en') {
 				this.$store.options.language = 'en';
 				this.$translate.setTranslation(null);
-				resolveFunction(language);
+				promise.resolve(language);
 				return promise;
 			}
 
 			if (this.$store.options.translationsDirUrl === null) {
-				rejectFunction(new Error('Could not determine translationsDirUrl'));
+				promise.reject(new Error('Could not determine translationsDirUrl'));
 				return promise;
 			}
 
@@ -160,11 +163,11 @@ export default {
 			this.$store.fetchJson(translationUrl).then((loadedTranslation) => {
 				this.$store.options.language = language;
 				this.$translate.setTranslation(loadedTranslation);
-				resolveFunction(language);
+				promise.resolve(language);
 			}, (error) => {
 				const status = error.response ? error.response.statusText : error.message;
 				this.$store.addError(`Error loading translation for "${language}": ${status}`);
-				rejectFunction(new Error(error));
+				promise.reject(new Error(error));
 			});
 
 			return promise;

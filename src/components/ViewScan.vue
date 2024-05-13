@@ -165,6 +165,7 @@ import vClickOutside from 'click-outside-vue3';
 import OpenSeadragon from 'openseadragon';
 
 import { preventEvent } from '../modules/keyboard';
+import { createPromise } from '../modules/promise';
 
 const gapBetweenPages = 0.01;
 
@@ -176,6 +177,7 @@ export default {
 		return {
 			filtersVisible: false,
 			loadingTimeout: null,
+			promise: createPromise(),
 			tileSources: {},
 			viewer: null,
 			viewerState: {}, // NOTE: See updateViewerState()
@@ -201,6 +203,8 @@ export default {
 	mounted() {
 		this.loadImageInfo();
 		this.updateFilterStyle();
+
+		this.$store.readyPromises.push(this.promise);
 
 		// TODO: Add a function for adding/removing global event listeners
 		this.$store.rootElement.addEventListener('keydown', this.onKeydown);
@@ -387,6 +391,8 @@ export default {
 
 			this.$api.expose(this.resetScan);
 			this.$api.expose(this.viewer, 'viewer');
+
+			this.promise.resolve();
 		},
 		loadImageInfo(reset = false) {
 			this.stopLoadingWatch();
