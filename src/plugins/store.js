@@ -2,6 +2,7 @@ import { computed, nextTick, reactive } from 'vue';
 
 import { upgrade } from '@iiif/parser/upgrader';
 
+import { createPromise } from '../modules/promise';
 import { isValidPagesArray } from '../modules/validation';
 
 function convertManifest(originalManifest) {
@@ -40,6 +41,7 @@ function Store(args) {
 		loading: 0,
 		manifest: args.manifest ? convertManifest(args.manifest) : null,
 		options: args.options || {},
+		readyPromises: [],
 		rootElement: args.rootElement || null,
 		urlUpdateTimeout: null,
 		currentStructure: computed(() => {
@@ -348,12 +350,7 @@ function Store(args) {
 			return store.rootElement.offsetWidth < store.options.breakpoints.medium;
 		},
 		loadManifest(manifestUrl, params = {}) {
-			let resolveFunction;
-			let rejectFunction;
-			const promise = new Promise((resolve, reject) => {
-				resolveFunction = resolve;
-				rejectFunction = reject;
-			});
+			const promise = createPromise();
 
 			return store.fetchJson(manifestUrl).then(
 				async (originalManifest) => {
@@ -362,7 +359,7 @@ function Store(args) {
 					if (params.expectedType && manifest.type !== params.expectedType) {
 						const errorMessage = `Expected manifest of type ${params.expectedType}, but got ${manifest.type}`;
 						store.addError(errorMessage);
-						rejectFunction(errorMessage);
+						promise.reject(errorMessage);
 						return promise;
 					}
 
@@ -388,7 +385,7 @@ function Store(args) {
 							});
 						}
 
-						resolveFunction();
+						promise.resolve();
 						return promise;
 					}
 
@@ -423,13 +420,13 @@ function Store(args) {
 							});
 						}
 
-						resolveFunction();
+						promise.resolve();
 						return promise;
 					}
 
 					const errorMessage = 'Please provide a valid IIIF Presentation API manifest';
 					store.addError(errorMessage);
-					rejectFunction(errorMessage);
+					promise.reject(errorMessage);
 					return promise;
 				},
 				(error) => {
@@ -438,7 +435,7 @@ function Store(args) {
 						: error.message;
 					const errorMessage = `Error loading IIIF manifest: ${status}`;
 					store.addError(errorMessage);
-					rejectFunction(errorMessage);
+					promise.reject(errorMessage);
 					return promise;
 				},
 			);
