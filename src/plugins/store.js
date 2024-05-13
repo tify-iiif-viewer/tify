@@ -125,7 +125,7 @@ function Store(args) {
 			return sections;
 		}),
 		structures: computed(() => {
-			if (!store.manifest.structures) {
+			if (!store.manifest?.structures) {
 				return [];
 			}
 

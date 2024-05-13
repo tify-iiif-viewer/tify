@@ -87,4 +87,12 @@ describe('TOC', () => {
 			.should('not.contain', 'Table of Contents')
 			.contains('Miniatur: Jesu Gebet in Gethsemane');
 	});
+
+	it('hides the whole TOC if it only contains a single "top" item', () => {
+		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/bodleian-faeff7fb-f8a7-44b5-95ed-cff9a9ffd198.json`;
+
+		cy.visit(`/?manifest=${manifestUrl}`);
+
+		cy.contains('Contents').should('not.exist');
+	});
 });
