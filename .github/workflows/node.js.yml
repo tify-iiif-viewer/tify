@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16, 18]
+        node-version: [18, 20]
 
     steps:
     - uses: actions/checkout@v3
@@ -61,7 +61,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16, 18]
+        node-version: [18, 20]
 
     steps:
     - uses: actions/checkout@v3
@@ -108,7 +108,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        node-version: [16, 18]
+        node-version: [18, 20]
 
     steps:
       - uses: actions/checkout@v3
