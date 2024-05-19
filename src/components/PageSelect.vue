@@ -49,6 +49,7 @@
 				>
 					<a
 						href="javascript:;"
+						:aria-label="$translate('Jump to page')"
 						@click="setPage(canvas.page)"
 					>
 						{{ $store.getPageLabel(canvas.page, $store.localize(canvas.label)) }}
