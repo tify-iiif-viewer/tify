@@ -27,6 +27,8 @@
 	}
 
 	&.-pagination {
+		padding-left: 0; // There is always the page dropdown to the left, which needs less spacing
+
 		.tify.-small & {
 			display: none;
 		}
