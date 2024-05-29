@@ -6,13 +6,13 @@
 		<button
 			type="button"
 			class="tify-page-select-button"
-			:title="currentPageTitleAttr"
-			:aria-label="$translate('Current page')"
 			:aria-controls="$store.getId('dropdown')"
 			:aria-expanded="isOpen ? 'true' : 'false'"
 			@click="toggleDropdown()"
 		>
+			<span class="tify-sr-only">{{ $translate('Current page:') }}</span>
 			{{ currentPageLabel }}
+			<span class="tify-sr-only">/ {{ $translate('Toggle page select') }}</span>
 		</button>
 
 		<div
@@ -82,16 +82,6 @@ export default {
 			const canvasIndex = this.$store.options.pages[0] ? this.$store.options.pages[0] - 1 : 0;
 			const label = this.$store.localize(this.$store.manifest.items[canvasIndex].label);
 			return this.$store.getPageLabel(page, label);
-		},
-		currentPageTitleAttr() {
-			const { pages } = this.$store.options;
-			const page = pages[0] === 0 && pages.length > 1
-				? 1
-				: pages[0];
-			const physLabel = this.$translate('Physical page');
-			const logLabel = this.$translate('Logical page');
-			return `${physLabel}: ${page}\n`
-				+ `${logLabel}: ${this.$store.localize(this.$store.manifest.items[page - 1].label)}`;
 		},
 	},
 	watch: {
