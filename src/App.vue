@@ -57,8 +57,10 @@
 		<div
 			v-if="$store.loading"
 			class="tify-loading"
-			:aria-label="$translate('Loading')"
-		/>
+			role="status"
+		>
+			<span class="tify-sr-only">{{ $translate('Loading') }}</span>
+		</div>
 
 		<section
 			v-if="$store.errors.length"

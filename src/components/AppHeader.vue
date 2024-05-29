@@ -9,9 +9,10 @@
 			</h1>
 		</div>
 
-		<div
+		<nav
 			v-if="$store.manifest"
 			class="tify-header-column -pagination"
+			:aria-label="$translate('Page')"
 		>
 			<div class="tify-header-button-group -page-select">
 				<page-select />
@@ -29,11 +30,12 @@
 			</div>
 
 			<pagination-buttons />
-		</div>
+		</nav>
 
-		<div
+		<nav
 			v-click-outside="closeControlsPopup"
 			class="tify-header-column -controls"
+			:aria-label="$translate('View')"
 		>
 			<div
 				ref="switchViewSmall"
@@ -187,7 +189,7 @@
 
 				<pagination-buttons v-if="$store.manifest" />
 			</div>
-		</div>
+		</nav>
 	</header>
 </template>
 
