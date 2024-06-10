@@ -31,7 +31,7 @@
 			v-if="isInited"
 			ref="children"
 			:level="0"
-			:structures="tocStructures"
+			:structures="$store.structures"
 		/>
 	</section>
 </template>
@@ -49,10 +49,9 @@ export default {
 	},
 	computed: {
 		isNested() {
-			return this.tocStructures.some((structure) => structure.items?.some((item) => item.items));
-		},
-		tocStructures() {
-			return this.$store.structures.filter((structure) => !structure.behavior?.includes('top'));
+			return this.$store.structures
+				.filter((structure) => structure.items?.some((item) => item.items))
+				.length > 1;
 		},
 	},
 	watch: {

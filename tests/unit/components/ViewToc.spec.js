@@ -23,7 +23,7 @@ describe('ViewToc', () => {
 	});
 
 	it('selects a label in the current language', () => {
-		const label = vm.$store.localize(vm.$store.structures[1].label);
+		const label = vm.$store.localize(vm.$store.structures[0].label);
 		expect(label).toEqual('Miniatur: Jesu Gebet in Gethsemane');
 	});
 
