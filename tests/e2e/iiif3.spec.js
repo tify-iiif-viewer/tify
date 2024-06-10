@@ -5,10 +5,8 @@ describe('Support for native IIIF 3 manifests', () => {
 			+ '&tify={"view":"info"}',
 		);
 
-		cy.get('.tify').then(() => {
-			cy.contains('h1', 'Dipinto Assiut, Gebel Assiut al-gharbi, N13.1 TN2');
-			cy.contains('a', 'AKU-PAL database record');
-		});
+		cy.contains('h1', 'Dipinto Assiut, Gebel Assiut al-gharbi, N13.1 TN2');
+		cy.contains('a', 'AKU-PAL database record');
 	});
 
 	it('displays the TOC', () => {
@@ -17,10 +15,9 @@ describe('Support for native IIIF 3 manifests', () => {
 			+ '&tify={"view":"toc"}',
 		);
 
-		cy.get('.tify').then(() => {
-			cy.contains('.tify-toc-link', 'Transcription of Emily Dickinson\'s "I\'ll clutch - and clutch" - Image 3');
-			cy.get('.tify-toc-link').should('have.length', 1);
-		});
+		cy.get('.tify-toc-structure.-current:not(.-expanded)');
+		cy.contains('.tify-toc-link', 'Transcription of Emily Dickinson\'s "I\'ll clutch - and clutch" - Image 3');
+		cy.get('.tify-toc-link').should('have.length', 1);
 	});
 
 	it('displays attribution HTML', () => {
@@ -29,9 +26,7 @@ describe('Support for native IIIF 3 manifests', () => {
 			+ '&tify={"view":"info"}',
 		);
 
-		cy.get('.tify').then(() => {
-			cy.get('.tify-info-section.-attribution').find('img'); // logo in attribution section
-		});
+		cy.get('.tify-info-section.-attribution').find('img'); // logo in attribution section
 	});
 
 	it('displays a dash for metadata with an empty value', () => {
@@ -40,8 +35,6 @@ describe('Support for native IIIF 3 manifests', () => {
 			+ '&tify={"view":"info"}',
 		);
 
-		cy.get('.tify-info-metadata').then(() => {
-			cy.contains('h4', 'Published').next().should('have.text', '—'); // &mdash;
-		});
+		cy.contains('h4', 'Published').next().should('have.text', '—'); // &mdash;
 	});
 });

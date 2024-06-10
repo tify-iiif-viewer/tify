@@ -36,9 +36,9 @@
 				{{ $store.localize(structure.label) }}
 				({{ structure.pageCount }}&nbsp;{{ $translate(structure.pageCount === 1 ? 'page' : 'pages') }})
 			</a>
-			<!-- Only display page if different from label -->
+			<!-- Only display page label if structure has a different label -->
 			<a
-				v-else-if="$store.localize(structure.label) !== $store.localize(getPageLabel(structure))"
+				v-else-if="structure.label && $store.localize(structure.label) !== getFirstPageLabel(structure)"
 				class="tify-toc-link -dots"
 				href="javascript:;"
 				@click="$store.setPage(structure.firstPage || getFirstPage(structure))"
@@ -47,7 +47,7 @@
 					{{ $store.localize(structure.label) }}
 				</span>
 				<span class="tify-toc-page">
-					{{ $store.localize(getPageLabel(structure)) || '—' }}
+					{{ getFirstPageLabel(structure) || '—' }}
 				</span>
 			</a>
 			<a
@@ -57,7 +57,7 @@
 				@click="$store.setPage(structure.firstPage || getFirstPage(structure))"
 			>
 				<span class="tify-toc-label">
-					{{ $store.localize(structure.label) }}
+					{{ $store.localize(structure.label) || getFirstPageLabel(structure) }}
 				</span>
 			</a>
 
@@ -93,15 +93,16 @@ export default {
 	},
 	data() {
 		return {
-			expandedStructures: [],
+			// Auto-expand a single top-level structure with children
+			expandedStructures: this.level === 0
+				&& this.structures.length === 1
+				&& this.structures[0].items.some((item) => item.items)
+				? [true]
+				: [],
 			id: this.$store.getId(`toc-list-${Math.floor(Math.random() * 1e12)}`),
 		};
 	},
 	methods: {
-		getPageLabel(structure) {
-			const firstPage = this.getFirstPage(structure);
-			return this.$store.manifest.items[firstPage - 1]?.label;
-		},
 		// TODO: Add unit test
 		getFirstPage(structure) {
 			if (structure.items) {
@@ -110,6 +111,10 @@ export default {
 
 			const index = this.$store.manifest.items.findIndex((item) => item.id === structure.id);
 			return index < 0 ? 1 : index + 1;
+		},
+		getFirstPageLabel(structure) {
+			const firstPage = this.getFirstPage(structure);
+			return this.$store.localize(this.$store.manifest.items[firstPage - 1]?.label);
 		},
 		// TODO: Add unit test
 		getLastPage(structure) {

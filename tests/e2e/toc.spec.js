@@ -65,11 +65,13 @@ describe('TOC', () => {
 		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/cambridge-MS-ADD-08640`;
 		const encodedParams = encodeURIComponent(JSON.stringify({
 			view: 'toc',
+			pages: [4],
 		}));
 
 		cy.visit(`/?manifest=${manifestUrl}&tify=${encodedParams}`);
 
-		cy.contains('.tify-toc-toggle-all').should('not.exist');
+		cy.get('.tify-toc');
+		cy.contains('Expand all').should('not.exist');
 
 		cy.get('.tify-toc-structure.-current').contains('Elizabeth Lyttelton\'s commonplace book');
 	});
@@ -88,11 +90,36 @@ describe('TOC', () => {
 			.contains('Miniatur: Jesu Gebet in Gethsemane');
 	});
 
-	it('hides the whole TOC if it only contains a single "top" item', () => {
-		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/bodleian-faeff7fb-f8a7-44b5-95ed-cff9a9ffd198.json`;
+	it('hides the whole TOC if there are no structures', () => {
+		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/aku-pal-375.json`;
 
 		cy.visit(`/?manifest=${manifestUrl}`);
 
+		cy.get('.tify-header');
 		cy.contains('Contents').should('not.exist');
+		cy.get('.tify-toc').should('not.exist');
+	});
+
+	it('displays page labels instead of structure labels if the latter are missing', () => {
+		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/bodleian-faeff7fb-f8a7-44b5-95ed-cff9a9ffd198.json`;
+		const encodedParams = encodeURIComponent(JSON.stringify({
+			view: 'toc',
+		}));
+
+		cy.visit(`/?manifest=${manifestUrl}&tify=${encodedParams}`);
+
+		cy.contains('Upper cover');
+		cy.contains('fol. 1r');
+	});
+
+	it('auto-expands a single top-level structure', () => {
+		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/cambridge-MS-ADD-08640`;
+
+		cy.visit(`/?manifest=${manifestUrl}`);
+
+		cy.contains('Contents').click();
+
+		cy.get('.tify-toc-structure.-expanded').contains('Elizabeth Lyttelton\'s commonplace book');
+		cy.contains('whateuer Praises are or haue been due2'); // NOTE: Line break before "2" is omitted
 	});
 });
