@@ -149,16 +149,21 @@
 		// Restore instances from URL query
 		window.onload = () => {
 			const url = new URL(window.location);
-			for (const params of url.searchParams) {
-				if (!params[0].startsWith('manifest')) {
+			for (const [key, value] of url.searchParams) {
+				if (key.startsWith('language')) {
+					const id = parseInt(key.replace('language', ''), 10) || '';
+					instances.find(instance => instance.id === id).tify.setLanguage(value)
+				}
+
+				if (!key.startsWith('manifest')) {
 					continue
 				}
 
-				const key = parseInt(params[0].replace('manifest', ''), 10) || '';
+				const id = parseInt(key.replace('manifest', ''), 10) || '';
 				addInstance({
-					key,
-					manifestUrl: params[1],
-					urlQueryKey: `tify${key}`,
+					id,
+					manifestUrl: value,
+					urlQueryKey: `tify${id}`,
 				});
 			}
 		};
@@ -167,17 +172,17 @@
 			element = template.cloneNode(true);
 			main.append(element);
 
-			let key = options.key || '';
-			while (instances.find(instance => instance.key === key)) {
-				key = (key || 0) + 1;
+			let id = options.id || '';
+			while (instances.find(instance => instance.id === id)) {
+				id = (id || 0) + 1;
 			}
 
 			tifyOptions.container = element.querySelector('.instance-tify');
 			tifyOptions.manifestUrl = options.manifestUrl || manifestUrlInput.value;
-			tifyOptions.urlQueryKey = options.urlQueryKey || `tify${key}`;
+			tifyOptions.urlQueryKey = options.urlQueryKey || `tify${id}`;
 
 			const tify = new Tify(tifyOptions);
-			const instance = { element, key, tify };
+			const instance = { element, id, tify };
 			instances.push(instance);
 
 			// Expose API of lastest instance for e2e tests
@@ -188,7 +193,7 @@
 			// Update URL query if manifest was set via input
 			if (!options.manifestUrl) {
 				const url = new URL(window.location);
-				url.searchParams.append(`manifest${key}`, tifyOptions.manifestUrl);
+				url.searchParams.append(`manifest${id}`, tifyOptions.manifestUrl);
 				window.history.pushState(null, '', url.toString());
 			}
 		}
@@ -197,11 +202,12 @@
 			instanceToRemove.element.remove();
 			instanceToRemove.tify.destroy();
 
-			instances.splice(instances.findIndex(instance => instance.key === instanceToRemove.key), 1);
+			instances.splice(instances.findIndex(instance => instance.id === instanceToRemove.id), 1);
 
 			const url = new URL(window.location);
-			url.searchParams.delete(`manifest${instanceToRemove.key}`);
-			url.searchParams.delete(`tify${instanceToRemove.key}`);
+			url.searchParams.delete(`language${instanceToRemove.id}`);
+			url.searchParams.delete(`manifest${instanceToRemove.id}`);
+			url.searchParams.delete(`tify${instanceToRemove.id}`);
 			window.history.pushState(null, '', url.toString());
 		}
 

@@ -167,9 +167,10 @@ export default {
 				this.$translate.setTranslation(loadedTranslation);
 				promise.resolve(language);
 			}, (error) => {
+				// Allow the promise to resolve, but display an error message and keep the previous language
 				const status = error.response ? error.response.statusText : error.message;
 				this.$store.addError(`Error loading translation for "${language}": ${status}`);
-				promise.reject(new Error(error));
+				promise.resolve(this.$store.options.language);
 			});
 
 			return promise;
