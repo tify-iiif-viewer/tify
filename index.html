@@ -153,7 +153,7 @@
 			for (const [key, value] of url.searchParams) {
 				if (key.startsWith('language')) {
 					const id = parseInt(key.replace('language', ''), 10) || '';
-					instances.find(instance => instance.id === id)?.tify.setLanguage(value)
+					instances.find(instance => instance.id === id).tify.setLanguage(value)
 				}
 
 				if (!key.startsWith('manifest')) {
