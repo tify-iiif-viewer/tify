@@ -26,9 +26,11 @@
     "postinstall": "node build/create-icons.js",
     "preversion": "npm install-clean && npm run test:unit && npm run build && npm run test:e2e",
     "preview": "vite preview",
-    "test:unit": "vitest run",
+    "test:i18n": "node tests/i18n/test-translations.js",
+    "test:i18n:fix": "node tests/i18n/test-translations.js --add --remove --sort",
     "test:e2e": "start-server-and-test preview http://localhost:4173 'cypress run --e2e'",
     "test:e2e:dev": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress open --e2e'",
+    "test:unit": "vitest run",
     "version": "git add dist"
   },
   "devDependencies": {
@@ -38,8 +40,10 @@
     "@vitejs/plugin-vue": "^5.0.5",
     "@vue/eslint-config-airbnb": "^8.0.0",
     "@vue/test-utils": "^2.4.6",
+    "chalk": "^5.3.0",
     "click-outside-vue3": "^4.0.1",
     "cypress": "^13.11.0",
+    "diff": "^5.2.0",
     "eslint": "^8.57.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-cypress": "^2.15.2",
