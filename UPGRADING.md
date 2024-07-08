@@ -1,5 +1,9 @@
 # Upgrading TIFY
 
+## Any prior release to v0.31
+
+No breaking changes.
+
 ## Any prior release to v0.30
 
 TIFY now supports IIIF Presentation API and Image API version 2 and 3. There are no breaking changes.
