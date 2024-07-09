@@ -1,7 +1,7 @@
 <template>
 	<li
 		class="tify-collection-item"
-		:class="{ '-current': $store.manifest && $store.manifest.id === item.id }"
+		:class="{ '-current': $store.manifest && $store.manifest.id === (item['@id'] || item.id) }"
 	>
 		<button
 			v-if="item.type === 'Collection'"
@@ -87,7 +87,7 @@ export default {
 				return;
 			}
 
-			this.$store.fetchJson(this.item.id).then(
+			this.$store.fetchJson(this.item['@id'] || this.item.id).then(
 				(childManifest) => {
 					this.children = childManifest.collections || childManifest.items || childManifest.manifests || [];
 					this.expanded = true;

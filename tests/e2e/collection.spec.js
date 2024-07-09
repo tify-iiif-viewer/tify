@@ -40,4 +40,12 @@ describe('Collection', () => {
 		cy.contains('15. October 1859').click();
 		cy.contains('h1', 'The chemist and druggist, 15. October 1859');
 	});
+
+	it('highlights the current child manifest', () => {
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/wellcome-b19974760`);
+
+		cy.contains('Volume 1').click();
+		cy.contains('15. September 1859').click();
+		cy.contains('.tify-collection-item.-current', '15. September 1859');
+	});
 });
