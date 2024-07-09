@@ -95,6 +95,20 @@
 	}
 }
 
+.tify-scan-overlay {
+	border-radius: $br;
+	box-shadow: 0 0 0 1px $link-color, 0 0 0 2px $shine-weak;
+	cursor: pointer;
+
+	@include hover {
+		background: $shade-light;
+	}
+
+	&.-current {
+		background: $shade-light;
+	}
+}
+
 .tify-scan-page-button {
 	@extend %button;
 	backdrop-filter: $blur;
