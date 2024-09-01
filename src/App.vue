@@ -4,10 +4,10 @@
 		tabindex="-1"
 	>
 		<!-- NOTE: Root element must be focusable for global keyboard events to work -->
-		<app-header
+		<AppHeader
 			v-if="readyToRender && ($store.collection || $store.manifest)"
-			:fulltext-enabled="hasAnnotations"
-			:toc-enabled="hasToc"
+			:fulltextEnabled="hasAnnotations"
+			:tocEnabled="hasToc"
 		/>
 
 		<div
@@ -16,39 +16,39 @@
 		>
 			<template v-if="$store.manifest">
 				<!-- Scan must come first, other views in arbitrary order -->
-				<view-scan :id="$store.getId('scan')" />
+				<ViewScan :id="$store.getId('scan')" />
 
-				<view-fulltext
+				<ViewFulltext
 					v-if="hasAnnotations"
 					v-show="$store.options.view === 'fulltext'"
 					:id="$store.getId('fulltext')"
 				/>
-				<view-thumbnails
+				<ViewThumbnails
 					v-show="$store.options.view === 'thumbnails'"
 					:id="$store.getId('thumbnails')"
 				/>
-				<view-toc
+				<ViewToc
 					v-if="hasToc"
 					v-show="$store.options.view === 'toc'"
 					:id="$store.getId('toc')"
 				/>
-				<view-export
+				<ViewExport
 					v-show="$store.options.view === 'export'"
 					:id="$store.getId('export')"
 				/>
 			</template>
 
-			<view-info
+			<ViewInfo
 				v-if="$store.collection || $store.manifest"
 				v-show="$store.options.view === 'info'"
 				:id="$store.getId('info')"
 			/>
-			<view-collection
+			<ViewCollection
 				v-if="$store.collection"
 				v-show="$store.options.view === 'collection'"
 				:id="$store.getId('collection')"
 			/>
-			<view-help
+			<ViewHelp
 				v-show="$store.options.view === 'help'"
 				:id="$store.getId('help')"
 			/>
@@ -72,7 +72,7 @@
 				:aria-label="$translate('Dismiss')"
 				@click="$store.clearErrors()"
 			>
-				<icon-close />
+				<IconClose />
 			</button>
 			<div class="tify-error-messages">
 				<!-- NOTE: Error messages can contain user-controlled content -->

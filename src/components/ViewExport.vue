@@ -56,7 +56,7 @@
 						{{ $translate('PDFs for each element') }}
 					</template>
 					<template v-else>
-						<icon-close />
+						<IconClose />
 						<span class="tify-sr-only">{{ $translate('Close PDF list') }}</span>
 					</template>
 				</button>
@@ -66,7 +66,7 @@
 					class="tify-export-toc"
 				>
 					<h4>{{ $translate('PDFs for each element') }}</h4>
-					<toc-list
+					<TocList
 						ref="children"
 						purpose="pdf"
 						:level="0"
