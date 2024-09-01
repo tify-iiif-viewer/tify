@@ -105,7 +105,7 @@ export default {
 			return this.$store.manifest?.items?.some((canvas) => 'annotations' in canvas);
 		},
 		hasToc() {
-			return this.$store.structures.length;
+			return this.$store.structures.length > 0;
 		},
 	},
 	created() {
