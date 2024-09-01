@@ -1,14 +1,16 @@
+import { ref } from 'vue';
+
 export default {
 	install: (app) => {
-		let translation = null;
+		const translation = ref(null);
 
 		// eslint-disable-next-line no-param-reassign
 		app.config.globalProperties.$translate = (string, fallback) => {
-			if (translation && translation[string]) {
-				return translation[string];
+			if (translation.value?.[string]) {
+				return translation.value[string];
 			}
 
-			if (import.meta.env.DEV && translation) {
+			if (import.meta.env.DEV && translation.value) {
 				// eslint-disable-next-line no-console
 				console.warn(`Missing translation for "${string}"`);
 			}
@@ -21,7 +23,7 @@ export default {
 		// value is the translated string, e.g. { key: 'Schlüssel' }
 		// eslint-disable-next-line no-param-reassign
 		app.config.globalProperties.$translate.setTranslation = (translationObject) => {
-			translation = translationObject;
+			translation.value = translationObject;
 		};
 	},
 };
