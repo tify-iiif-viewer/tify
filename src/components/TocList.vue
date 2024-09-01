@@ -20,10 +20,10 @@
 				@click="toggleChildren(index)"
 			>
 				<template v-if="expandedStructures[index]">
-					<icon-minus />
+					<IconMinus />
 				</template>
 				<template v-else>
-					<icon-plus />
+					<IconPlus />
 				</template>
 			</button>
 
@@ -61,7 +61,7 @@
 				</span>
 			</a>
 
-			<toc-list
+			<TocList
 				v-if="structure.items?.some((item) => item.items)"
 				v-show="expandedStructures[index]"
 				:id="`${id}-${index}`"

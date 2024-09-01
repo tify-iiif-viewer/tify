@@ -34,7 +34,7 @@
 			v-if="filteredItems.length"
 			class="tify-collection-list"
 		>
-			<collection-node
+			<CollectionNode
 				v-for="item in filteredItems"
 				:key="item.id"
 				:item="item"

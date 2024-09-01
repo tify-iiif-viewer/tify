@@ -7,7 +7,7 @@
 			:title="$translate('First page')"
 			@click="$store.goToFirstPage()"
 		>
-			<icon-page-first />
+			<IconPageFirst />
 		</button>
 
 		<button
@@ -18,7 +18,7 @@
 			:title="$translate('Previous section')"
 			@click="$store.goToPreviousSection()"
 		>
-			<icon-skip-previous />
+			<IconSkipPrevious />
 		</button>
 
 		<button
@@ -28,7 +28,7 @@
 			:title="$translate('Previous page')"
 			@click="$store.goToPreviousPage()"
 		>
-			<icon-chevron-left />
+			<IconChevronLeft />
 		</button>
 
 		<button
@@ -38,7 +38,7 @@
 			:title="$translate('Next page')"
 			@click="$store.goToNextPage()"
 		>
-			<icon-chevron-right />
+			<IconChevronRight />
 		</button>
 
 		<button
@@ -49,7 +49,7 @@
 			:title="$translate('Next section')"
 			@click="$store.goToNextSection()"
 		>
-			<icon-skip-next />
+			<IconSkipNext />
 		</button>
 
 		<button
@@ -59,7 +59,7 @@
 			:title="$translate('Last page')"
 			@click="$store.goToLastPage()"
 		>
-			<icon-page-last />
+			<IconPageLast />
 		</button>
 	</div>
 </template>

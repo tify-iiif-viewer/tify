@@ -15,7 +15,7 @@
 			:aria-label="$translate('Page')"
 		>
 			<div class="tify-header-button-group -page-select">
-				<page-select />
+				<PageSelect />
 
 				<button
 					type="button"
@@ -24,12 +24,12 @@
 					:title="$translate('Toggle double-page')"
 					@click="toggleDoublePage"
 				>
-					<icon-view-module v-if="$store.isCustomPageView" />
-					<icon-book-open-blank-variant v-else />
+					<IconViewModule v-if="$store.isCustomPageView" />
+					<IconBookOpenBlankVariant v-else />
 				</button>
 			</div>
 
-			<pagination-buttons />
+			<PaginationButtons />
 		</nav>
 
 		<nav
@@ -50,7 +50,7 @@
 					:title="$translate('View')"
 					@click="toggleControlsPopup"
 				>
-					<icon-dots-grid />
+					<IconDotsGrid />
 				</button>
 			</div>
 
@@ -70,7 +70,7 @@
 						:aria-expanded="$store.options.view === 'scan' ? 'true' : 'false'"
 						@click="toggleView('scan')"
 					>
-						<icon-image />
+						<IconImage />
 						{{ $translate('Scan') }}
 					</button>
 
@@ -83,7 +83,7 @@
 						:aria-expanded="$store.options.view === 'fulltext' ? 'true' : 'false'"
 						@click="toggleView('fulltext')"
 					>
-						<icon-text-long />
+						<IconTextLong />
 						{{ $translate('Fulltext') }}
 					</button>
 
@@ -96,7 +96,7 @@
 						:aria-expanded="$store.options.view === 'thumbnails' ? 'true' : 'false'"
 						@click="toggleView('thumbnails')"
 					>
-						<icon-view-module />
+						<IconViewModule />
 						{{ $translate('Pages') }}
 					</button>
 
@@ -109,7 +109,7 @@
 						:aria-expanded="$store.options.view === 'toc' ? 'true' : 'false'"
 						@click="toggleView('toc')"
 					>
-						<icon-table-of-contents />
+						<IconTableOfContents />
 						{{ $translate('Contents') }}
 					</button>
 
@@ -121,7 +121,7 @@
 						:aria-expanded="$store.options.view === 'info' ? 'true' : 'false'"
 						@click="toggleView('info')"
 					>
-						<icon-information-variant />
+						<IconInformationVariant />
 						{{ $translate('Info') }}
 					</button>
 
@@ -134,7 +134,7 @@
 						:aria-expanded="$store.options.view === 'export' ? 'true' : 'false'"
 						@click="toggleView('export')"
 					>
-						<icon-download-outline />
+						<IconDownloadOutline />
 						{{ $translate('Export') }}
 					</button>
 
@@ -147,7 +147,7 @@
 						:aria-expanded="$store.options === 'collection' ? 'true' : 'false'"
 						@click="toggleView('collection')"
 					>
-						<icon-list-box-outline />
+						<IconListBoxOutline />
 						{{ $translate('Collection') }}
 					</button>
 				</div>
@@ -162,7 +162,7 @@
 						:title="$translate('Help')"
 						@click="toggleView('help')"
 					>
-						<icon-help-circle-outline />
+						<IconHelpCircleOutline />
 						{{ $translate('Help') }}
 					</button>
 					<button
@@ -172,7 +172,7 @@
 						:title="$translate('Fullscreen')"
 						@click="toggleFullscreen"
 					>
-						<icon-fullscreen />
+						<IconFullscreen />
 						{{ $translate('Fullscreen') }}
 					</button>
 					<button
@@ -182,12 +182,12 @@
 						:title="$translate('Exit fullscreen')"
 						@click="toggleFullscreen"
 					>
-						<icon-fullscreen-exit />
+						<IconFullscreenExit />
 						{{ $translate('Exit fullscreen') }}
 					</button>
 				</div>
 
-				<pagination-buttons v-if="$store.manifest" />
+				<PaginationButtons v-if="$store.manifest" />
 			</div>
 		</nav>
 	</header>

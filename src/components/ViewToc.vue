@@ -27,7 +27,7 @@
 			</button>
 		</div>
 
-		<toc-list
+		<TocList
 			v-if="isInited"
 			ref="children"
 			:level="0"

@@ -12,11 +12,11 @@
 			@click="toggleChildren()"
 		>
 			<template v-if="expanded">
-				<icon-minus />
+				<IconMinus />
 				<span class="tify-sr-only">{{ $translate('Collapse') }}</span>
 			</template>
 			<template v-else>
-				<icon-plus />
+				<IconPlus />
 				<span class="tify-sr-only">{{ $translate('Expand') }}</span>
 			</template>
 
@@ -37,7 +37,7 @@
 				:id="id"
 				class="tify-collection-list"
 			>
-				<collection-node
+				<CollectionNode
 					v-for="child in children"
 					:key="child.id"
 					:item="child"

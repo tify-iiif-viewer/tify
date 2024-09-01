@@ -25,6 +25,10 @@ module.exports = {
 		'object-curly-newline': ['error', {
 			ImportDeclaration: { multiline: true },
 		}],
+		'vue/attribute-hyphenation': ['error', 'never'],
+		'vue/component-name-in-template-casing': ['error', 'PascalCase', {
+			registeredComponentsOnly: false,
+		}],
 		'vue/html-indent': ['error', 'tab'],
 		'vue/max-len': ['error', 120],
 		'vue/no-v-html': 'off',

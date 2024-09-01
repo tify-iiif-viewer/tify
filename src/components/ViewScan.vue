@@ -11,7 +11,7 @@
 			:title="$translate('Previous page')"
 			@click="$store.goToPreviousPage()"
 		>
-			<icon-chevron-left />
+			<IconChevronLeft />
 		</button>
 		<button
 			v-if="!$store.isCustomPageView && !$store.isLastPage"
@@ -20,7 +20,7 @@
 			:title="$translate('Next page')"
 			@click="$store.goToNextPage()"
 		>
-			<icon-chevron-right />
+			<IconChevronRight />
 		</button>
 
 		<div
@@ -34,7 +34,7 @@
 				:title="$translate('Zoom in')"
 				@click="zoomIn()"
 			>
-				<icon-magnify-plus />
+				<IconMagnifyPlus />
 			</button>
 			<button
 				type="button"
@@ -43,7 +43,7 @@
 				:title="$translate('Reset')"
 				@click="resetScan(!!$event.shiftKey)"
 			>
-				<icon-aspect-ratio />
+				<IconAspectRatio />
 			</button>
 			<button
 				type="button"
@@ -52,7 +52,7 @@
 				:title="$translate('Zoom out')"
 				@click="zoomOut()"
 			>
-				<icon-magnify-minus />
+				<IconMagnifyMinus />
 			</button>
 
 			<button
@@ -62,7 +62,7 @@
 				:title="$translate('Rotate')"
 				@click="rotateRight($event)"
 			>
-				<icon-rotate-right />
+				<IconRotateRight />
 			</button>
 
 			<div
@@ -79,7 +79,7 @@
 					:aria-expanded="filtersVisible ? 'true' : 'false'"
 					@click="filtersVisible = !filtersVisible"
 				>
-					<icon-tune />
+					<IconTune />
 				</button>
 				<div
 					v-show="filtersVisible"
@@ -91,7 +91,7 @@
 					</h3>
 					<p>
 						<label>
-							<icon-white-balance-sunny />
+							<IconWhiteBalanceSunny />
 							{{ $translate('Brightness') }}
 							<b>{{ Math.round(($store.options.filters.brightness || 1) * 100) }}&nbsp;%</b>
 							<input
@@ -108,7 +108,7 @@
 					</p>
 					<p>
 						<label>
-							<icon-brightness-6 />
+							<IconBrightness6 />
 							{{ $translate('Contrast') }}
 							<b>{{ Math.round(($store.options.filters.contrast || 1) * 100) }}&nbsp;%</b>
 							<input
@@ -124,7 +124,7 @@
 					</p>
 					<p>
 						<label>
-							<icon-palette />
+							<IconPalette />
 							{{ $translate('Saturation') }}
 							<b>{{ Math.round(saturation * 100) }}&nbsp;%</b>
 							<input
@@ -145,7 +145,7 @@
 							:disabled="!filtersActive"
 							@click="resetFilters()"
 						>
-							<icon-backup-restore />
+							<IconBackupRestore />
 							{{ $translate('Reset') }}
 						</button>
 					</p>

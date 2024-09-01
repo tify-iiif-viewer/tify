@@ -42,7 +42,7 @@
 			class="tify-info-section -metadata"
 		>
 			<h3>{{ $translate('Metadata') }}</h3>
-			<metadata-list
+			<MetadataList
 				v-if="$store.options.view === 'info'"
 				:metadata="manifestOrCollection.metadata"
 			/>
@@ -53,7 +53,7 @@
 			class="tify-info-section -description"
 		>
 			<h3>{{ $translate('Description') }}</h3>
-			<metadata-list
+			<MetadataList
 				v-if="$store.options.view === 'info'"
 				:metadata="[{ value: manifestOrCollection.summary }]"
 			/>
@@ -70,7 +70,7 @@
 			>
 				{{ $store.localize($store.currentStructure.label) }}
 			</p>
-			<metadata-list
+			<MetadataList
 				v-if="$store.options.view === 'info' && $store.currentStructure.metadata"
 				class="tify-info-section -metadata"
 				:metadata="$store.currentStructure.metadata"
