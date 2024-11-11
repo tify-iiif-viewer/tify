@@ -1,5 +1,8 @@
 <template>
-	<div class="tify-header-button-group -pagination">
+	<div
+		v-if="$store.manifest.items.length > 1"
+		class="tify-header-button-group -pagination"
+	>
 		<button
 			type="button"
 			class="tify-header-button"
