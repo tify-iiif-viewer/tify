@@ -28,7 +28,7 @@ server.on('request', (req, res) => {
 
 				// Rewrite all remote URLs to local ones, except IIIF API profiles
 				const dataWithLocalUrls = data.replace(
-					/https?:\/\/(?!iiif.io\/api\/)[a-z0-9-.:]*/gi,
+					/(?!http:\/\/iiif.io\/api\/)https?:\/\/[a-z0-9-.:]*/gi,
 					`http://127.0.0.1:${server.port}`,
 				);
 
