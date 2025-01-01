@@ -122,7 +122,7 @@ TIFY takes an options object as its only parameter. While optional, you usually 
 
 	If set, parameters are read from the URL query and any changes are reflected, using the key provided. This works with multiple concurrent instances, but each instance must use a unique key. Note that when `urlQueryKey` is set, all options defined by `urlQueryParams` can be overridden by changing the URL in the browser’s address bar.
 
-- **`urlQueryParams`**: array of strings, default `['childManifestUrl', 'filters', 'pages', 'pan', 'rotation', 'view', 'zoom']`
+- **`urlQueryParams`**: array of strings, default `['annotationId', 'childManifestUrl', 'filters', 'pages', 'pan', 'rotation', 'view', 'zoom']`
 
 	The parameter keys to be read from and stored in the URL query. Only has effect if `urlQueryKey` is set, in which case parameters read from the URL override options of the same name.
 
