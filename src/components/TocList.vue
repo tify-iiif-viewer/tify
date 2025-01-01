@@ -20,7 +20,7 @@ export default {
 			// Auto-expand a single top-level structure with children
 			expandedStructures: this.level === 0
 				&& this.structures.length === 1
-				&& this.structures[0].items.some((item) => item.items)
+				&& this.structures[0].items?.some((item) => item.items)
 				? [true]
 				: [],
 			id: this.$store.getId(`toc-list-${Math.floor(Math.random() * 1e12)}`),
