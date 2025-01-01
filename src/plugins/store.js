@@ -133,7 +133,7 @@ function Store(args) {
 
 			if (store.manifest.structures.some((structure) => structure.type === 'Range')) {
 				return store.manifest.structures.length === 1 && store.manifest.structures[0].behavior?.includes('top')
-					? store.manifest.structures[0].items
+					? (store.manifest.structures[0].items || [])
 					: store.manifest.structures;
 			}
 
