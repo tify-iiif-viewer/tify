@@ -1,6 +1,6 @@
 /*!
 TIFY v0.31.0
-(c) 2017-2024 Göttingen State and University Library (https://www.sub.uni-goettingen.de/)
+(c) 2017-2025 Göttingen State and University Library (https://www.sub.uni-goettingen.de/)
 AGPL-3.0
 https://tify.rocks/
 */
