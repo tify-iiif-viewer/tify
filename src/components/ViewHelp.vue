@@ -1,3 +1,30 @@
+<script>
+export default {
+	computed: {
+		// NOTE: If $t is returned directly, this text won’t update when the language is changed via API
+		copyrightHtml() {
+			return 'Copyright &copy; 2017&ndash;2022'
+				+ ' <a href="https://www.uni-goettingen.de/en/">Göttingen University</a>'
+				+ '&nbsp;/ '
+				+ '<a href="https://www.sub.uni-goettingen.de/en/">Göttingen State and University Library</a>';
+		},
+		env() {
+			return ENV;
+		},
+		infoHtml() {
+			return 'TIFY is a slim and mobile-friendly IIIF document viewer, released under the'
+				+ ' <a href="https://www.gnu.org/licenses/agpl-3.0.html.en">GNU Affero General Public License 3.0</a>.';
+		},
+		userGuideUrl() {
+			const lang = this.env.docsLanguages.includes(this.$store.options.language)
+				? this.$store.options.language
+				: 'en';
+			return `${this.env.docsUrl}/user-guide.${lang}.md`;
+		},
+	},
+};
+</script>
+
 <template>
 	<section
 		class="tify-help"
@@ -35,30 +62,3 @@
 		</footer>
 	</section>
 </template>
-
-<script>
-export default {
-	computed: {
-		// NOTE: If $t is returned directly, this text won’t update when the language is changed via API
-		copyrightHtml() {
-			return 'Copyright &copy; 2017&ndash;2022'
-				+ ' <a href="https://www.uni-goettingen.de/en/">Göttingen University</a>'
-				+ '&nbsp;/ '
-				+ '<a href="https://www.sub.uni-goettingen.de/en/">Göttingen State and University Library</a>';
-		},
-		env() {
-			return ENV;
-		},
-		infoHtml() {
-			return 'TIFY is a slim and mobile-friendly IIIF document viewer, released under the'
-				+ ' <a href="https://www.gnu.org/licenses/agpl-3.0.html.en">GNU Affero General Public License 3.0</a>.';
-		},
-		userGuideUrl() {
-			const lang = this.env.docsLanguages.includes(this.$store.options.language)
-				? this.$store.options.language
-				: 'en';
-			return `${this.env.docsUrl}/user-guide.${lang}.md`;
-		},
-	},
-};
-</script>

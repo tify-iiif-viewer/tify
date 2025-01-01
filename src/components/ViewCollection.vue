@@ -1,3 +1,22 @@
+<script>
+export default {
+	data() {
+		return {
+			filter: '',
+		};
+	},
+	computed: {
+		filteredItems() {
+			const tokens = this.filter.trim().toLowerCase().split(/\s+/);
+			return this.$store.collection.items.filter((item) => {
+				const label = (this.$store.localize(item.label) || '').toLowerCase();
+				return tokens.every((token) => label.includes(token));
+			});
+		},
+	},
+};
+</script>
+
 <template>
 	<section
 		class="tify-collection"
@@ -48,22 +67,3 @@
 		</p>
 	</section>
 </template>
-
-<script>
-export default {
-	data() {
-		return {
-			filter: '',
-		};
-	},
-	computed: {
-		filteredItems() {
-			const tokens = this.filter.trim().toLowerCase().split(/\s+/);
-			return this.$store.collection.items.filter((item) => {
-				const label = (this.$store.localize(item.label) || '').toLowerCase();
-				return tokens.every((token) => label.includes(token));
-			});
-		},
-	},
-};
-</script>
