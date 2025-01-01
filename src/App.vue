@@ -22,6 +22,20 @@ export default {
 			return this.$store.structures.length > 0;
 		},
 	},
+	watch: {
+		// eslint-disable-next-line func-names
+		'$store.options.pages': function () {
+			if (this.$store.annotationsActive) {
+				this.$store.loadAnnotations();
+			}
+		},
+		// eslint-disable-next-line func-names
+		'$store.options.view': function () {
+			if (this.$store.annotationsActive) {
+				this.$store.loadAnnotations();
+			}
+		},
+	},
 	created() {
 		this.$api.expose(this.setLanguage);
 		this.$api.expose(this.$store.setPage);
