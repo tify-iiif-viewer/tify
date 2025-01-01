@@ -13,8 +13,10 @@ export default {
 	},
 	data() {
 		return {
+			defaultCanvasCss: '',
 			filtersVisible: false,
 			loadingTimeout: null,
+			overlays: [],
 			promise: createPromise(),
 			tileSources: {},
 			viewer: null,
@@ -32,15 +34,51 @@ export default {
 		},
 	},
 	watch: {
+		'$store.annotations': {
+			// TODO: This may be called more often than required, yet limiting
+			// calls to the currently visible pages leads to missing annotations
+			handler() {
+				this.updateOverlays();
+			},
+			deep: true,
+		},
+		// eslint-disable-next-line func-names
+		'$store.options.annotationId': function (annotationId) {
+			this.updateOverlays();
+
+			if (!annotationId) {
+				return;
+			}
+
+			// Pan current annotation overlay into view if outside of viewport bounds
+			const viewportBounds = this.viewer.viewport.getBounds();
+			const overlayElement = this.overlays
+				.find((overlay) => overlay.id === annotationId)
+				?.element;
+
+			if (!overlayElement) {
+				return;
+			}
+
+			const overlay = this.viewer.getOverlayById(overlayElement);
+			const overlayBounds = overlay.getBounds(this.viewer.viewport);
+
+			if (!viewportBounds.intersection(overlayBounds)) {
+				this.viewer.viewport.fitBoundsWithConstraints(overlayBounds);
+			}
+		},
 		// eslint-disable-next-line func-names
 		'$store.options.pages': function (newValue, oldValue) {
 			const reset = newValue.length !== oldValue.length;
 			this.loadImageInfo(reset);
 		},
+		// eslint-disable-next-line func-names
+		'$store.options.view': function () {
+			this.updateOverlays();
+		},
 	},
 	mounted() {
 		this.loadImageInfo();
-		this.updateFilterStyle();
 
 		this.$store.readyPromises.push(this.promise);
 
@@ -148,6 +186,7 @@ export default {
 				});
 
 				this.viewer.open(tileSources);
+
 				return;
 			}
 
@@ -223,6 +262,8 @@ export default {
 				if (this.$store.options.rotation !== null) {
 					this.viewer.viewport.setRotation(this.$store.options.rotation);
 				}
+
+				this.updateOverlays();
 			});
 
 			this.viewer.addHandler('pan', this.updateViewerState);
@@ -232,6 +273,9 @@ export default {
 			this.viewer.addHandler('tile-load-failed', (error) => {
 				this.$store.addError(`Error loading image: ${error.message}`);
 			});
+
+			this.defaultCanvasCss = this.viewer.drawer.canvas.style.cssText;
+			this.updateFilterStyle();
 
 			this.$api.expose(this.resetScan);
 			this.$api.expose(this.viewer, 'viewer');
@@ -370,7 +414,7 @@ export default {
 			});
 		},
 		resetFilters() {
-			this.$refs.image.style.cssText = '';
+			this.viewer.drawer.canvas.style.cssText = this.defaultCanvasCss;
 			this.$store.updateOptions({ filters: {} });
 		},
 		resetScan(includingFiltersAndRotation) {
@@ -425,6 +469,12 @@ export default {
 		stopLoadingWatch() {
 			clearTimeout(this.loadingTimeout);
 		},
+		toggleOverlays() {
+			this.$store.updateOptions({
+				annotationsVisible: this.$store.options.annotationsVisible !== false ? false : null,
+			});
+			this.updateOverlays();
+		},
 		updateFilterStyle() {
 			if (!this.filtersActive) {
 				return;
@@ -435,10 +485,84 @@ export default {
 				filters.push(`${key}(${this.$store.options.filters[key]})`);
 			});
 
-			const { image } = this.$refs;
 			const filterString = filters.join(' ');
 
-			image.style.cssText = `filter: ${filterString}`;
+			this.viewer.drawer.canvas.style.cssText = `${this.defaultCanvasCss} filter: ${filterString}`;
+		},
+		updateOverlays() {
+			if (!this.viewer) {
+				return;
+			}
+
+			this.viewer.clearOverlays();
+			this.overlays = [];
+
+			if (!this.$store.annotationsActive) {
+				return;
+			}
+
+			if (this.$store.options.annotationsVisible === false) {
+				return;
+			}
+
+			let firstCanvasWidth;
+			let offset = 0;
+
+			this.$store.options.pages.forEach((page, pageIndex) => {
+				if (!this.$store.annotations[page]?.[0]?.coords) {
+					return;
+				}
+
+				// Calculate offset for each page, which depends on all previously displayed pages
+				if (!pageIndex) {
+					firstCanvasWidth = (this.$store.manifest.items[page - 1]).width;
+				} else {
+					const prevPage = this.$store.options.pages[pageIndex - 1];
+					const prevCanvasWidth = this.$store.manifest.items[prevPage - 1].width;
+					offset += gapBetweenPages + prevCanvasWidth / firstCanvasWidth;
+				}
+
+				this.$store.annotations[page]?.forEach((annotation, annotationIndex) => {
+					// TODO: Add aria-label?
+					const element = document.createElement('a');
+
+					element.className = `tify-scan-overlay${
+						this.$store.options.annotationId === annotation.id
+							? ' -current'
+							: ''
+					}`;
+
+					// NOTE: If the overlay element has no ID, OpenSeadragon adds the
+					// same ID "overlay-wrapper" too all wrapper elements. The ID can
+					// be removed once this issue is resolved:
+					// https://github.com/openseadragon/openseadragon/issues/2682
+					element.id = this.$store.getId(`overlay-${page}-${annotationIndex}`);
+
+					this.viewer.addOverlay({
+						element,
+						location: new OpenSeadragon.Rect(
+							annotation.coords[0] / firstCanvasWidth + offset,
+							annotation.coords[1] / firstCanvasWidth,
+							annotation.coords[2] / firstCanvasWidth,
+							annotation.coords[3] / firstCanvasWidth,
+						),
+					});
+
+					// NOTE: Using addEventListener instead worked only on Firefox
+					// eslint-disable-next-line no-new
+					new OpenSeadragon.MouseTracker({
+						element,
+						clickHandler: () => this.$store.toggleAnnotationId(annotation.id),
+					});
+
+					const overlay = {
+						id: annotation.id,
+						element,
+					};
+
+					this.overlays.push(overlay);
+				});
+			});
 		},
 		// NOTE: With Vue 3, watching return values of OpenSeadragon function via
 		// `computed` is no longer working, so we need to actively keep track of
@@ -618,6 +742,17 @@ export default {
 					</p>
 				</div>
 			</div>
+
+			<button
+				v-if="$store.annotations.length && ($store.options.view === 'fulltext' || $store.isMobile())"
+				type="button"
+				class="tify-scan-button"
+				:title="$translate('Toggle annotations')"
+				@click="toggleOverlays()"
+			>
+				<IconMessageTextOutline v-if="$store.options.annotationsVisible !== false" />
+				<IconMessageOffOutline v-else />
+			</button>
 		</div>
 
 		<div

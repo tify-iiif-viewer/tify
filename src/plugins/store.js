@@ -2,8 +2,9 @@ import { computed, nextTick, reactive } from 'vue';
 
 import { upgrade } from '@iiif/parser/upgrader';
 
+import { filterHtml } from '../modules/filter';
 import { createPromise } from '../modules/promise';
-import { isValidPagesArray } from '../modules/validation';
+import { isValidPagesArray, isValidUrl } from '../modules/validation';
 
 function convertManifest(originalManifest) {
 	// For IIIF 2: "related" may be erroneously converted, save for later
@@ -36,6 +37,8 @@ function Store(args) {
 	const instanceId = `tify-${Math.floor(Math.random() * Date.now())}`;
 
 	const store = reactive({
+		annotations: [],
+		annotationsAvailable: null,
 		collection: null,
 		errors: [],
 		loading: 0,
@@ -44,6 +47,20 @@ function Store(args) {
 		readyPromises: [],
 		rootElement: args.rootElement || null,
 		urlUpdateTimeout: null,
+		annotationsActive: computed(() => {
+			if (store.options.view === 'fulltext') {
+				return true;
+			}
+
+			if (['scan', ''].includes(store.options.view)
+				&& store.options.annotationsVisible !== false
+				&& store.isMobile()
+			) {
+				return true;
+			}
+
+			return false;
+		}),
 		currentStructure: computed(() => {
 			if (!(store.manifest.structures instanceof Array)) {
 				return false;
@@ -312,6 +329,103 @@ function Store(args) {
 			}
 			store.setPage(this.sections[sectionIndex].firstPage);
 		},
+		loadAnnotations() {
+			store.annotationsAvailable = null;
+			store.annotations = [];
+
+			store.options.pages.forEach(async (page) => {
+				if (page < 1 || store.annotations[page]) {
+					return;
+				}
+
+				const canvas = store.manifest.items[page - 1];
+				if (!('annotations' in canvas)) {
+					this.annotationsAvailable = false;
+					return;
+				}
+
+				store.annotations[page] = [];
+
+				let resources = canvas.annotations[0].items;
+
+				if (!resources) {
+					const annotationListUrl = canvas.annotations[0].id;
+
+					try {
+						resources = (await store.fetchJson(annotationListUrl)).resources;
+					} catch (error) {
+						const status = error.response ? error.response.statusText : error.message;
+						// eslint-disable-next-line no-console
+						console.warn(`Could not load annotations: ${status}`);
+						this.annotationsAvailable = false;
+						return;
+					}
+				}
+
+				if (!(resources instanceof Array)) {
+					return;
+				}
+
+				resources.forEach(async (resource, index) => {
+					let html;
+
+					const id = resource.id
+						|| resource['@id']
+						|| resource.resource?.id
+						|| resource.resource?.['@id'];
+
+					if (resource.resource?.chars) {
+						html = resource.resource.chars;
+					} else if (resource.resource?.[0]?.chars) {
+						html = resource.resource?.[0]?.chars;
+					} else if (resource.resource?.label) {
+						html = `<i>${resource.resource.label}</i>`;
+					} else if (resource.body?.value) {
+						html = resource.body.value;
+					} else {
+						const url = resource.body?.id
+							|| resource.body?.['@id']
+							|| id;
+
+						if (isValidUrl(url)) {
+							html = await store.fetchText(url);
+						}
+					}
+
+					if (!html) {
+						return;
+					}
+
+					if ((resource.format || resource.body?.format) === 'text/plain') {
+						html = html.replace(/\n/g, '<br>');
+					}
+
+					this.annotationsAvailable = true;
+
+					const annotation = {
+						id,
+						html: filterHtml(html),
+					};
+
+					const coordinatesString = resource.on?.selector?.value
+						|| (typeof resource.on === 'string' ? resource.on : null)
+						|| resource.target;
+
+					const xywh = coordinatesString?.split('xywh=')[1];
+					if (xywh) {
+						const coords = xywh
+							.split(',')
+							.map((number) => parseFloat(number));
+
+						if (coords.length === 4) {
+							annotation.coords = coords;
+						}
+					}
+
+					store.annotations[page][index] = annotation;
+				});
+			});
+		},
 		initOptions(caller) {
 			let params = {};
 
@@ -334,8 +448,10 @@ function Store(args) {
 				params.pages = null;
 			}
 
+			store.options.annotationId = params.annotationId;
 			store.options.childManifestUrl = params.childManifestUrl || store.options.childManifestUrl;
 			store.options.filters = params.filters || store.options.filters;
+			store.options.annotationsVisible = params.annotationsVisible;
 			store.options.pages = caller && caller.type === 'popstate'
 				? params.pages || [store.getStartPage()]
 				: params.pages || store.options.pages || [store.getStartPage()];
@@ -489,6 +605,18 @@ function Store(args) {
 
 			store.updateOptions({ pages });
 			return pages;
+		},
+		toggleAnnotationId(annotationId) {
+			const options = {
+				annotationId: store.options.annotationId === annotationId ? null : annotationId,
+				annotationsVisible: store.options.annotationId ? null : store.annotationsVisible,
+			};
+
+			if (options.annotationId && store.isMobile()) {
+				options.view = ['scan', ''].includes(store.options.view) ? 'fulltext' : 'scan';
+			}
+
+			store.updateOptions(options);
 		},
 		updateOptions(updatedOptions) {
 			Object.assign(store.options, updatedOptions);

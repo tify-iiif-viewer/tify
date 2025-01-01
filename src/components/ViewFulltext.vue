@@ -1,14 +1,7 @@
 <script>
 import { filterHtml } from '../modules/filter';
-import { isValidUrl } from '../modules/validation';
 
 export default {
-	data() {
-		return {
-			fulltextAvailable: null,
-			fulltexts: [],
-		};
-	},
 	computed: {
 		pages() {
 			return this.$store.options.pages.filter((page) => !!page);
@@ -16,96 +9,35 @@ export default {
 	},
 	watch: {
 		// eslint-disable-next-line func-names
-		'$store.options.pages': function () {
-			this.loadFulltexts();
+		'$store.options.annotationId': function () {
+			this.scrollToCurrentAnnotation();
+		},
+		// eslint-disable-next-line func-names
+		'$store.annotationsAvailable': function () {
+			if (this.$store.options.annotationId) {
+				this.scrollToCurrentAnnotation();
+			}
 		},
 	},
 	mounted() {
-		this.loadFulltexts();
+		if (this.$store.options.annotationId && this.$store.annotationsAvailable) {
+			this.scrollToCurrentAnnotation();
+		}
 	},
 	methods: {
-		loadFulltexts() {
-			this.fulltextAvailable = null;
-			this.fulltexts = [];
-
-			this.$store.options.pages.forEach((page) => {
-				if (page < 1 || this.fulltexts[page]) {
+		filterHtml,
+		scrollToCurrentAnnotation() {
+			this.$nextTick(() => {
+				const item = this.$refs.currentItem?.[0];
+				if (!item) {
 					return;
 				}
 
-				const canvas = this.$store.manifest.items[page - 1];
-				if (!('annotations' in canvas)) {
-					this.fulltextAvailable = false;
-					return;
-				}
-
-				const annotationListUrl = canvas.annotations[0].id;
-
-				this.$store.fetchJson(annotationListUrl).then(
-					(data) => {
-						const { resources } = data;
-						if (!(resources instanceof Array)) {
-							return;
-						}
-
-						resources.forEach((resource, index) => {
-							const res = resource.resource;
-
-							if (!res) {
-								return;
-							}
-
-							if (!this.fulltexts[page]) {
-								this.fulltexts[page] = [];
-							}
-
-							if (res && res.chars) {
-								const text = filterHtml(res.chars);
-								if (text) {
-									this.fulltextAvailable = true;
-								}
-
-								this.fulltexts[page][index] = text;
-							} else if (res.id || res['@id']) {
-								this.loadRemoteFulltext(page, index, res.id || res['@id']);
-							}
-						});
-					},
-					(error) => {
-						const status = error.response ? error.response.statusText : error.message;
-						// eslint-disable-next-line no-console
-						console.warn(`Could not load annotations: ${status}`);
-						this.fulltextAvailable = false;
-					},
-				);
+				item.scrollIntoView({
+					behavior: 'smooth',
+					block: item.offsetHeight < this.$refs.panel.offsetHeight / 2 ? 'center' : 'start',
+				});
 			});
-		},
-		loadRemoteFulltext(page, index, url) {
-			// TODO: Add support for dctypes
-
-			if (!isValidUrl(url)) {
-				return;
-			}
-
-			this.$store.fetchText(url).then(
-				(html) => {
-					const text = filterHtml(html);
-					if (text) {
-						this.fulltextAvailable = true;
-					}
-
-					if (!this.fulltexts[page]) {
-						this.fulltexts[page] = [];
-					}
-
-					this.fulltexts[page][index] = text;
-				},
-				(error) => {
-					const status = error.response ? error.response.statusText : error.message;
-					// eslint-disable-next-line no-console
-					console.warn(`Could not load fulltext: ${status}`);
-				},
-			);
 		},
 	},
 };
@@ -113,6 +45,7 @@ export default {
 
 <template>
 	<section
+		ref="panel"
 		class="tify-fulltext"
 		tabindex="0"
 	>
@@ -121,7 +54,7 @@ export default {
 		</h2>
 
 		<div
-			v-if="fulltextAvailable !== false"
+			v-if="$store.annotationsAvailable !== false"
 			class="tify-fulltext-texts"
 		>
 			<div
@@ -133,12 +66,24 @@ export default {
 					{{ $translate('Page') }}
 					{{ $store.getPageLabel(page, $store.localize($store.manifest.items[page - 1].label)) }}
 				</h3>
-				<div
-					v-for="(text, index) in fulltexts[page]"
-					:key="`${page}-${index}`"
-					class="tify-fulltext-text"
-					v-html="text"
-				/>
+				<ul class="tify-fulltext-list">
+					<li
+						v-for="(annotation, index) in $store.annotations[page]"
+						:key="`${page}-${index}`"
+						:ref="$store.options.annotationId === annotation.id ? 'currentItem' : ''"
+						class="tify-fulltext-item"
+						:class="{ '-current': $store.options.annotationId === annotation.id }"
+					>
+						<div
+							role="button"
+							tabindex="0"
+							class="tify-fulltext-toggle"
+							@keydown.enter.space="$store.toggleAnnotationId(annotation.id)"
+							@click="$store.toggleAnnotationId(annotation.id)"
+							v-html="filterHtml(annotation.html)"
+						/>
+					</li>
+				</ul>
 			</div>
 		</div>
 
