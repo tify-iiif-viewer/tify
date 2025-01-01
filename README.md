@@ -129,6 +129,14 @@ Run end-to-end tests:
 - Development build: `npm run dev`
 - Production build: `npm run build && npm run test:e2e`
 
+## Translations
+
+Translations reside in `public/translations`. Each language is represented by a JSON file, where the file name is the language’s [ISO 639 alpha-2 code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes). Each file consists of a single object of key-value pairs; the key is the English string, the value is the translation. The first string of each file with key `$language` contains its native name. There are a few other special keys starting with `$`; while all other keys are to be translated literally, these keys serve as placeholders for longer sections of text. Search the source files for these keys to reveal their corresponding English texts.
+
+To create a new empty translation, run `node build/create-translation.js` and follow the prompts.
+
+To check all translations for validity and completeness, use `npm run test:i18n` or `npm run test:i18n:fix`, the latter adding missing keys, removing unused keys, and sorting keys.
+
 ---
 
 <a href="https://www.sub.uni-goettingen.de/en/">
