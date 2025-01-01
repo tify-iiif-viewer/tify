@@ -3,21 +3,49 @@
 	overflow-y: auto;
 }
 
+.tify-fulltext-item {
+	margin: 0 g(-.75);
+	padding: 0 g(.5);
+
+	&.-current {
+		box-shadow: g(-.25) 0 $base-color-light;
+		color: $link-color;
+	}
+}
+
+.tify-fulltext-toggle {
+	border-radius: $br;
+	cursor: pointer;
+	display: block;
+	padding: g(.25);
+	text-decoration: none;
+	word-break: break-word;
+
+	@include hover {
+		background: $base-color-lighter;
+		color: $link-color;
+
+		// Element label and page number
+		> span {
+			background: $base-color-lighter;
+		}
+	}
+
+	p {
+		margin: 0;
+	}
+}
+
+.tify-fulltext-list {
+	list-style: none;
+	padding: 0 !important;
+}
+
 .tify-fulltext-none {
 	color: $text-color-muted;
 	font-style: italic;
 }
 
 .tify-fulltext-page {
-	margin: 0 0 g();
-}
-
-.tify-fulltext-text {
-	margin-left: 1em;
-	text-indent: -1em;
-	word-break: break-word;
-
-	p {
-		margin: 0 0 1em;
-	}
+	margin: 0 g(.25) g() g(.5);
 }

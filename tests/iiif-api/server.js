@@ -47,7 +47,7 @@ server.on('request', (req, res) => {
 		// Rewrite collection child manifest URLs for local testing
 		action = 'manifest';
 		file = `wellcome-${segments[3]}.json`;
-	} else if (segments[2] === 'presentation' && segments[4] === 'list') {
+	} else if (segments[4] === 'list') {
 		// Rewrite annotation lists URLs for local testing
 		action = 'annotation-lists';
 		file = `${(segments[5] || 'default').replace(/:/g, '-')}.json`;

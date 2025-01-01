@@ -70,6 +70,14 @@ If you are are upgrading from any previous version, [have a look at the upgradin
 
 TIFY takes an options object as its only parameter. While optional, you usually want to set `container` and `manifestUrl`.
 
+- **`annotationId`**: string or `null` (default)
+
+	The ID of the annotation to highlight when the fulltext view is active. Only has effect for manifests with annotations.
+
+- **`annotationsVisible`**: boolean or `null` (default)
+
+	When the fulltext view is active (or just the scan view on small screens), TIFY displays clickable annotation overlays on the scan, which are linked to their corresponding fulltext section. Set to `false` to hide overlays by default. Annotation overlays can always be toggled by the user. Only has effect for manifests with annotations.
+
 - **`childManifestAutoloaded`**: boolean, default `true`
 
 	If the manifest set by `manifestUrl` is a collection (`@type` is `sc:Collection`) and `childManifestUrl` is not set, automatically load the first manifest in the collection. This only works for collections with `manifests` on the first level; when the collection only contains other collections and `childManifestUrl` is not set, only the collection view is shown until the user selects a child manifest to load.
@@ -122,7 +130,7 @@ TIFY takes an options object as its only parameter. While optional, you usually 
 
 	If set, parameters are read from the URL query and any changes are reflected, using the key provided. This works with multiple concurrent instances, but each instance must use a unique key. Note that when `urlQueryKey` is set, all options defined by `urlQueryParams` can be overridden by changing the URL in the browser’s address bar.
 
-- **`urlQueryParams`**: array of strings, default `['childManifestUrl', 'filters', 'pages', 'pan', 'rotation', 'view', 'zoom']`
+- **`urlQueryParams`**: array of strings, default `['annotationId', 'annotationsVisible', 'childManifestUrl', 'filters', 'pages', 'pan', 'rotation', 'view', 'zoom']`
 
 	The parameter keys to be read from and stored in the URL query. Only has effect if `urlQueryKey` is set, in which case parameters read from the URL override options of the same name.
 
