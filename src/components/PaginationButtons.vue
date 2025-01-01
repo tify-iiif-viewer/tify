@@ -1,3 +1,6 @@
+<script>
+</script>
+
 <template>
 	<div class="tify-header-button-group -pagination">
 		<button
@@ -63,5 +66,3 @@
 		</button>
 	</div>
 </template>
-
-<script />

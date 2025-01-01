@@ -1,41 +1,3 @@
-<template>
-	<section
-		class="tify-toc"
-		tabindex="0"
-	>
-		<h2 class="tify-sr-only">
-			{{ $translate('Table of Contents') }}
-		</h2>
-
-		<div
-			v-if="isNested"
-			class="tify-toc-header"
-		>
-			<button
-				type="button"
-				class="tify-toc-toggle-all"
-				@click="$refs.children.toggleAllChildren(true)"
-			>
-				{{ $translate('Expand all') }}
-			</button>
-			<button
-				type="button"
-				class="tify-toc-toggle-all"
-				@click="$refs.children.toggleAllChildren(false)"
-			>
-				{{ $translate('Collapse all') }}
-			</button>
-		</div>
-
-		<TocList
-			v-if="isInited"
-			ref="children"
-			:level="0"
-			:structures="$store.structures"
-		/>
-	</section>
-</template>
-
 <script>
 import { updateScrollPos } from '../modules/scroll';
 
@@ -76,3 +38,41 @@ export default {
 	},
 };
 </script>
+
+<template>
+	<section
+		class="tify-toc"
+		tabindex="0"
+	>
+		<h2 class="tify-sr-only">
+			{{ $translate('Table of Contents') }}
+		</h2>
+
+		<div
+			v-if="isNested"
+			class="tify-toc-header"
+		>
+			<button
+				type="button"
+				class="tify-toc-toggle-all"
+				@click="$refs.children.toggleAllChildren(true)"
+			>
+				{{ $translate('Expand all') }}
+			</button>
+			<button
+				type="button"
+				class="tify-toc-toggle-all"
+				@click="$refs.children.toggleAllChildren(false)"
+			>
+				{{ $translate('Collapse all') }}
+			</button>
+		</div>
+
+		<TocList
+			v-if="isInited"
+			ref="children"
+			:level="0"
+			:structures="$store.structures"
+		/>
+	</section>
+</template>

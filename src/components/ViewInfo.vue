@@ -1,3 +1,58 @@
+<script>
+// TODO: Handle and display manifest.service, see http://iiif.io/api/presentation/2.1/#service
+
+import { filterHtml } from '../modules/filter';
+import { isValidUrl } from '../modules/validation';
+
+export default {
+	data() {
+		return {
+			collectionDataShown: false,
+		};
+	},
+	computed: {
+		manifestOrCollection() {
+			if (this.collectionDataShown) {
+				return this.$store.collection;
+			}
+
+			return this.$store.manifest || this.$store.collection || {};
+		},
+		homepages() {
+			// This must be an array as per IIIF docs, yet on some servers it is not
+			const homepages = this.manifestOrCollection.homepage
+				? [].concat(this.manifestOrCollection.homepage)
+				: [];
+
+			return homepages;
+		},
+		logos() {
+			// This must be an array as per IIIF docs, yet on some servers it is not
+			let logos = this.manifestOrCollection.logo
+				? [].concat(this.manifestOrCollection.logo)
+				: [];
+
+			this.manifestOrCollection.provider?.forEach((provider) => {
+				if (provider.logo) {
+					logos = logos.concat(provider.logo);
+				}
+			});
+
+			logos = logos.map((logo) => ({
+				id: logo.id,
+				link: logo.service?.[0]?.id || logo.service?.[0]?.['@id'],
+			}));
+
+			return logos;
+		},
+	},
+	methods: {
+		filterHtml,
+		isValidUrl,
+	},
+};
+</script>
+
 <template>
 	<section
 		class="tify-info"
@@ -147,58 +202,3 @@
 		</div>
 	</section>
 </template>
-
-<script>
-// TODO: Handle and display manifest.service, see http://iiif.io/api/presentation/2.1/#service
-
-import { filterHtml } from '../modules/filter';
-import { isValidUrl } from '../modules/validation';
-
-export default {
-	data() {
-		return {
-			collectionDataShown: false,
-		};
-	},
-	computed: {
-		manifestOrCollection() {
-			if (this.collectionDataShown) {
-				return this.$store.collection;
-			}
-
-			return this.$store.manifest || this.$store.collection || {};
-		},
-		homepages() {
-			// This must be an array as per IIIF docs, yet on some servers it is not
-			const homepages = this.manifestOrCollection.homepage
-				? [].concat(this.manifestOrCollection.homepage)
-				: [];
-
-			return homepages;
-		},
-		logos() {
-			// This must be an array as per IIIF docs, yet on some servers it is not
-			let logos = this.manifestOrCollection.logo
-				? [].concat(this.manifestOrCollection.logo)
-				: [];
-
-			this.manifestOrCollection.provider?.forEach((provider) => {
-				if (provider.logo) {
-					logos = logos.concat(provider.logo);
-				}
-			});
-
-			logos = logos.map((logo) => ({
-				id: logo.id,
-				link: logo.service?.[0]?.id || logo.service?.[0]?.['@id'],
-			}));
-
-			return logos;
-		},
-	},
-	methods: {
-		filterHtml,
-		isValidUrl,
-	},
-};
-</script>

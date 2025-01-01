@@ -1,39 +1,3 @@
-<template>
-	<section
-		class="tify-thumbnails"
-		tabindex="0"
-		@scroll="redrawThumbnails"
-	>
-		<h2 class="tify-sr-only">
-			{{ $translate('Pages') }}
-		</h2>
-
-		<div
-			ref="container"
-			class="tify-thumbnails-list"
-		>
-			<a
-				v-for="item in items"
-				:key="item.page"
-				class="tify-thumbnails-item"
-				:class="{ '-current': $store.options.pages.includes(item.page) }"
-				href="javascript:;"
-				@click.prevent="setPageAndSwitchView(item.page, $event.ctrlKey)"
-				@touchstart="touchStartTogglePage(item.page)"
-				@touchend="touchEnd"
-			>
-				<img
-					alt=""
-					:src="item.imgUrl"
-				/>
-				<span class="tify-thumbnails-page">
-					{{ $store.getPageLabel(item.page, item.label) }}
-				</span>
-			</a>
-		</div>
-	</section>
-</template>
-
 <script>
 import { scrollTo, updateScrollPos } from '../modules/scroll';
 
@@ -210,3 +174,39 @@ export default {
 	},
 };
 </script>
+
+<template>
+	<section
+		class="tify-thumbnails"
+		tabindex="0"
+		@scroll="redrawThumbnails"
+	>
+		<h2 class="tify-sr-only">
+			{{ $translate('Pages') }}
+		</h2>
+
+		<div
+			ref="container"
+			class="tify-thumbnails-list"
+		>
+			<a
+				v-for="item in items"
+				:key="item.page"
+				class="tify-thumbnails-item"
+				:class="{ '-current': $store.options.pages.includes(item.page) }"
+				href="javascript:;"
+				@click.prevent="setPageAndSwitchView(item.page, $event.ctrlKey)"
+				@touchstart="touchStartTogglePage(item.page)"
+				@touchend="touchEnd"
+			>
+				<img
+					alt=""
+					:src="item.imgUrl"
+				/>
+				<span class="tify-thumbnails-page">
+					{{ $store.getPageLabel(item.page, item.label) }}
+				</span>
+			</a>
+		</div>
+	</section>
+</template>

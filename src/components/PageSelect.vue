@@ -1,64 +1,3 @@
-<template>
-	<div
-		v-click-outside="closeDropdown"
-		class="tify-page-select"
-	>
-		<button
-			type="button"
-			class="tify-page-select-button"
-			:aria-controls="$store.getId('dropdown')"
-			:aria-expanded="isOpen ? 'true' : 'false'"
-			@click="toggleDropdown()"
-		>
-			<span class="tify-sr-only">{{ $translate('Current page:') }}</span>
-			{{ currentPageLabel }}
-			<span class="tify-sr-only">/ {{ $translate('Toggle page select') }}</span>
-		</button>
-
-		<div
-			v-show="isOpen"
-			:id="$store.getId('dropdown')"
-			key="dropdown"
-			class="tify-page-select-dropdown"
-			@click.stop
-		>
-			<div class="tify-page-select-filter">
-				<input
-					ref="search"
-					v-model="filter"
-					:aria-label="$translate('Filter pages')"
-					type="text"
-					class="tify-page-select-input"
-					@keyup.enter="filteredCanvases[highlightIndex] && $store.setPage(filteredCanvases[highlightIndex].page)"
-					@keydown.esc.prevent="filter ? (filter = '') : closeDropdown()"
-					@keydown.up.prevent="onKeyUpArrow()"
-					@keydown.down.prevent="onKeyDownArrow()"
-				/>
-			</div>
-			<ol
-				ref="list"
-				class="tify-page-select-list"
-			>
-				<li
-					v-for="(canvas, index) in filteredCanvases"
-					:key="index"
-					:class="{
-						'-current': $store.options.pages.includes(canvas.page),
-						'-highlighted': highlightIndex === index,
-					}"
-				>
-					<a
-						href="javascript:;"
-						@click="setPage(canvas.page)"
-					>
-						{{ $store.getPageLabel(canvas.page, $store.localize(canvas.label)) }}
-					</a>
-				</li>
-			</ol>
-		</div>
-	</div>
-</template>
-
 <script>
 import vClickOutside from 'click-outside-vue3';
 
@@ -185,3 +124,64 @@ export default {
 	},
 };
 </script>
+
+<template>
+	<div
+		v-click-outside="closeDropdown"
+		class="tify-page-select"
+	>
+		<button
+			type="button"
+			class="tify-page-select-button"
+			:aria-controls="$store.getId('dropdown')"
+			:aria-expanded="isOpen ? 'true' : 'false'"
+			@click="toggleDropdown()"
+		>
+			<span class="tify-sr-only">{{ $translate('Current page:') }}</span>
+			{{ currentPageLabel }}
+			<span class="tify-sr-only">/ {{ $translate('Toggle page select') }}</span>
+		</button>
+
+		<div
+			v-show="isOpen"
+			:id="$store.getId('dropdown')"
+			key="dropdown"
+			class="tify-page-select-dropdown"
+			@click.stop
+		>
+			<div class="tify-page-select-filter">
+				<input
+					ref="search"
+					v-model="filter"
+					:aria-label="$translate('Filter pages')"
+					type="text"
+					class="tify-page-select-input"
+					@keyup.enter="filteredCanvases[highlightIndex] && $store.setPage(filteredCanvases[highlightIndex].page)"
+					@keydown.esc.prevent="filter ? (filter = '') : closeDropdown()"
+					@keydown.up.prevent="onKeyUpArrow()"
+					@keydown.down.prevent="onKeyDownArrow()"
+				/>
+			</div>
+			<ol
+				ref="list"
+				class="tify-page-select-list"
+			>
+				<li
+					v-for="(canvas, index) in filteredCanvases"
+					:key="index"
+					:class="{
+						'-current': $store.options.pages.includes(canvas.page),
+						'-highlighted': highlightIndex === index,
+					}"
+				>
+					<a
+						href="javascript:;"
+						@click="setPage(canvas.page)"
+					>
+						{{ $store.getPageLabel(canvas.page, $store.localize(canvas.label)) }}
+					</a>
+				</li>
+			</ol>
+		</div>
+	</div>
+</template>

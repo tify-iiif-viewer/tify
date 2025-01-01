@@ -1,89 +1,3 @@
-<template>
-	<article
-		class="tify"
-		tabindex="-1"
-	>
-		<!-- NOTE: Root element must be focusable for global keyboard events to work -->
-		<AppHeader
-			v-if="readyToRender && ($store.collection || $store.manifest)"
-			:fulltextEnabled="hasAnnotations"
-			:tocEnabled="hasToc"
-		/>
-
-		<div
-			v-if="readyToRender"
-			class="tify-main"
-		>
-			<template v-if="$store.manifest">
-				<!-- Scan must come first, other views in arbitrary order -->
-				<ViewScan :id="$store.getId('scan')" />
-
-				<ViewFulltext
-					v-if="hasAnnotations"
-					v-show="$store.options.view === 'fulltext'"
-					:id="$store.getId('fulltext')"
-				/>
-				<ViewThumbnails
-					v-show="$store.options.view === 'thumbnails'"
-					:id="$store.getId('thumbnails')"
-				/>
-				<ViewToc
-					v-if="hasToc"
-					v-show="$store.options.view === 'toc'"
-					:id="$store.getId('toc')"
-				/>
-				<ViewExport
-					v-show="$store.options.view === 'export'"
-					:id="$store.getId('export')"
-				/>
-			</template>
-
-			<ViewInfo
-				v-if="$store.collection || $store.manifest"
-				v-show="$store.options.view === 'info'"
-				:id="$store.getId('info')"
-			/>
-			<ViewCollection
-				v-if="$store.collection"
-				v-show="$store.options.view === 'collection'"
-				:id="$store.getId('collection')"
-			/>
-			<ViewHelp
-				v-show="$store.options.view === 'help'"
-				:id="$store.getId('help')"
-			/>
-		</div>
-
-		<div
-			v-if="$store.loading"
-			class="tify-loading"
-			role="status"
-		>
-			<span class="tify-sr-only">{{ $translate('Loading') }}</span>
-		</div>
-
-		<section
-			v-if="$store.errors.length"
-			class="tify-error"
-		>
-			<button
-				type="button"
-				class="tify-error-close"
-				:aria-label="$translate('Dismiss')"
-				@click="$store.clearErrors()"
-			>
-				<IconClose />
-			</button>
-			<div class="tify-error-messages">
-				<!-- NOTE: Error messages can contain user-controlled content -->
-				<p v-for="error in $store.errors" :key="error">
-					{{ error }}
-				</p>
-			</div>
-		</section>
-	</article>
-</template>
-
 <script>
 import { createPromise } from './modules/promise';
 
@@ -193,5 +107,91 @@ export default {
 	},
 };
 </script>
+
+<template>
+	<article
+		class="tify"
+		tabindex="-1"
+	>
+		<!-- NOTE: Root element must be focusable for global keyboard events to work -->
+		<AppHeader
+			v-if="readyToRender && ($store.collection || $store.manifest)"
+			:fulltextEnabled="hasAnnotations"
+			:tocEnabled="hasToc"
+		/>
+
+		<div
+			v-if="readyToRender"
+			class="tify-main"
+		>
+			<template v-if="$store.manifest">
+				<!-- Scan must come first, other views in arbitrary order -->
+				<ViewScan :id="$store.getId('scan')" />
+
+				<ViewFulltext
+					v-if="hasAnnotations"
+					v-show="$store.options.view === 'fulltext'"
+					:id="$store.getId('fulltext')"
+				/>
+				<ViewThumbnails
+					v-show="$store.options.view === 'thumbnails'"
+					:id="$store.getId('thumbnails')"
+				/>
+				<ViewToc
+					v-if="hasToc"
+					v-show="$store.options.view === 'toc'"
+					:id="$store.getId('toc')"
+				/>
+				<ViewExport
+					v-show="$store.options.view === 'export'"
+					:id="$store.getId('export')"
+				/>
+			</template>
+
+			<ViewInfo
+				v-if="$store.collection || $store.manifest"
+				v-show="$store.options.view === 'info'"
+				:id="$store.getId('info')"
+			/>
+			<ViewCollection
+				v-if="$store.collection"
+				v-show="$store.options.view === 'collection'"
+				:id="$store.getId('collection')"
+			/>
+			<ViewHelp
+				v-show="$store.options.view === 'help'"
+				:id="$store.getId('help')"
+			/>
+		</div>
+
+		<div
+			v-if="$store.loading"
+			class="tify-loading"
+			role="status"
+		>
+			<span class="tify-sr-only">{{ $translate('Loading') }}</span>
+		</div>
+
+		<section
+			v-if="$store.errors.length"
+			class="tify-error"
+		>
+			<button
+				type="button"
+				class="tify-error-close"
+				:aria-label="$translate('Dismiss')"
+				@click="$store.clearErrors()"
+			>
+				<IconClose />
+			</button>
+			<div class="tify-error-messages">
+				<!-- NOTE: Error messages can contain user-controlled content -->
+				<p v-for="error in $store.errors" :key="error">
+					{{ error }}
+				</p>
+			</div>
+		</section>
+	</article>
+</template>
 
 <style src="./styles/main.scss" lang="scss"></style>

@@ -1,165 +1,3 @@
-<template>
-	<section class="tify-scan">
-		<h2 class="tify-sr-only">
-			{{ $translate('Scan') }}
-		</h2>
-
-		<button
-			v-if="!$store.isCustomPageView && !$store.isFirstPage"
-			type="button"
-			class="tify-scan-page-button -previous"
-			:title="$translate('Previous page')"
-			@click="$store.goToPreviousPage()"
-		>
-			<IconChevronLeft />
-		</button>
-		<button
-			v-if="!$store.isCustomPageView && !$store.isLastPage"
-			type="button"
-			class="tify-scan-page-button -next"
-			:title="$translate('Next page')"
-			@click="$store.goToNextPage()"
-		>
-			<IconChevronRight />
-		</button>
-
-		<div
-			v-if="viewer"
-			class="tify-scan-buttons"
-		>
-			<button
-				type="button"
-				class="tify-scan-button"
-				:disabled="viewerState.isMaxZoom"
-				:title="$translate('Zoom in')"
-				@click="zoomIn()"
-			>
-				<IconMagnifyPlus />
-			</button>
-			<button
-				type="button"
-				class="tify-scan-button"
-				:disabled="viewerState.isReset"
-				:title="$translate('Reset')"
-				@click="resetScan(!!$event.shiftKey)"
-			>
-				<IconAspectRatio />
-			</button>
-			<button
-				type="button"
-				class="tify-scan-button"
-				:disabled="viewerState.isMinZoom"
-				:title="$translate('Zoom out')"
-				@click="zoomOut()"
-			>
-				<IconMagnifyMinus />
-			</button>
-
-			<button
-				type="button"
-				class="tify-scan-button"
-				:class="{ '-active': $store.options.rotation }"
-				:title="$translate('Rotate')"
-				@click="rotateRight($event)"
-			>
-				<IconRotateRight />
-			</button>
-
-			<div
-				v-click-outside="closeFilters"
-				class="tify-scan-filters"
-				:class="{ '-open': filtersVisible }"
-			>
-				<button
-					type="button"
-					class="tify-scan-button"
-					:class="{ '-active': filtersActive }"
-					:title="$translate('Toggle image filters')"
-					:aria-controls="$store.getId('filters')"
-					:aria-expanded="filtersVisible ? 'true' : 'false'"
-					@click="filtersVisible = !filtersVisible"
-				>
-					<IconTune />
-				</button>
-				<div
-					v-show="filtersVisible"
-					:id="$store.getId('filters')"
-					class="tify-scan-filters-popup"
-				>
-					<h3 class="tify-sr-only">
-						{{ $translate('Image filters') }}
-					</h3>
-					<p>
-						<label>
-							<IconWhiteBalanceSunny />
-							{{ $translate('Brightness') }}
-							<b>{{ Math.round(($store.options.filters.brightness || 1) * 100) }}&nbsp;%</b>
-							<input
-								ref="firstSlider"
-								class="tify-scan-range"
-								max="2"
-								min=".5"
-								step=".01"
-								type="range"
-								:value="$store.options.filters.brightness || 1"
-								@input="setFilter('brightness', $event)"
-							/>
-						</label>
-					</p>
-					<p>
-						<label>
-							<IconBrightness6 />
-							{{ $translate('Contrast') }}
-							<b>{{ Math.round(($store.options.filters.contrast || 1) * 100) }}&nbsp;%</b>
-							<input
-								class="tify-scan-range"
-								max="2"
-								min=".5"
-								step=".01"
-								type="range"
-								:value="$store.options.filters.contrast || 1"
-								@input="setFilter('contrast', $event)"
-							/>
-						</label>
-					</p>
-					<p>
-						<label>
-							<IconPalette />
-							{{ $translate('Saturation') }}
-							<b>{{ Math.round(saturation * 100) }}&nbsp;%</b>
-							<input
-								class="tify-scan-range"
-								max="3"
-								min="0"
-								step=".01"
-								type="range"
-								:value="saturation"
-								@input="setFilter('saturate', $event)"
-							/>
-						</label>
-					</p>
-					<p>
-						<button
-							type="button"
-							class="tify-scan-reset"
-							:disabled="!filtersActive"
-							@click="resetFilters()"
-						>
-							<IconBackupRestore />
-							{{ $translate('Reset') }}
-						</button>
-					</p>
-				</div>
-			</div>
-		</div>
-
-		<div
-			ref="image"
-			class="tify-scan-image"
-		/>
-	</section>
-</template>
-
 <script>
 import vClickOutside from 'click-outside-vue3';
 import OpenSeadragon from 'openseadragon';
@@ -621,3 +459,165 @@ export default {
 	},
 };
 </script>
+
+<template>
+	<section class="tify-scan">
+		<h2 class="tify-sr-only">
+			{{ $translate('Scan') }}
+		</h2>
+
+		<button
+			v-if="!$store.isCustomPageView && !$store.isFirstPage"
+			type="button"
+			class="tify-scan-page-button -previous"
+			:title="$translate('Previous page')"
+			@click="$store.goToPreviousPage()"
+		>
+			<IconChevronLeft />
+		</button>
+		<button
+			v-if="!$store.isCustomPageView && !$store.isLastPage"
+			type="button"
+			class="tify-scan-page-button -next"
+			:title="$translate('Next page')"
+			@click="$store.goToNextPage()"
+		>
+			<IconChevronRight />
+		</button>
+
+		<div
+			v-if="viewer"
+			class="tify-scan-buttons"
+		>
+			<button
+				type="button"
+				class="tify-scan-button"
+				:disabled="viewerState.isMaxZoom"
+				:title="$translate('Zoom in')"
+				@click="zoomIn()"
+			>
+				<IconMagnifyPlus />
+			</button>
+			<button
+				type="button"
+				class="tify-scan-button"
+				:disabled="viewerState.isReset"
+				:title="$translate('Reset')"
+				@click="resetScan(!!$event.shiftKey)"
+			>
+				<IconAspectRatio />
+			</button>
+			<button
+				type="button"
+				class="tify-scan-button"
+				:disabled="viewerState.isMinZoom"
+				:title="$translate('Zoom out')"
+				@click="zoomOut()"
+			>
+				<IconMagnifyMinus />
+			</button>
+
+			<button
+				type="button"
+				class="tify-scan-button"
+				:class="{ '-active': $store.options.rotation }"
+				:title="$translate('Rotate')"
+				@click="rotateRight($event)"
+			>
+				<IconRotateRight />
+			</button>
+
+			<div
+				v-click-outside="closeFilters"
+				class="tify-scan-filters"
+				:class="{ '-open': filtersVisible }"
+			>
+				<button
+					type="button"
+					class="tify-scan-button"
+					:class="{ '-active': filtersActive }"
+					:title="$translate('Toggle image filters')"
+					:aria-controls="$store.getId('filters')"
+					:aria-expanded="filtersVisible ? 'true' : 'false'"
+					@click="filtersVisible = !filtersVisible"
+				>
+					<IconTune />
+				</button>
+				<div
+					v-show="filtersVisible"
+					:id="$store.getId('filters')"
+					class="tify-scan-filters-popup"
+				>
+					<h3 class="tify-sr-only">
+						{{ $translate('Image filters') }}
+					</h3>
+					<p>
+						<label>
+							<IconWhiteBalanceSunny />
+							{{ $translate('Brightness') }}
+							<b>{{ Math.round(($store.options.filters.brightness || 1) * 100) }}&nbsp;%</b>
+							<input
+								ref="firstSlider"
+								class="tify-scan-range"
+								max="2"
+								min=".5"
+								step=".01"
+								type="range"
+								:value="$store.options.filters.brightness || 1"
+								@input="setFilter('brightness', $event)"
+							/>
+						</label>
+					</p>
+					<p>
+						<label>
+							<IconBrightness6 />
+							{{ $translate('Contrast') }}
+							<b>{{ Math.round(($store.options.filters.contrast || 1) * 100) }}&nbsp;%</b>
+							<input
+								class="tify-scan-range"
+								max="2"
+								min=".5"
+								step=".01"
+								type="range"
+								:value="$store.options.filters.contrast || 1"
+								@input="setFilter('contrast', $event)"
+							/>
+						</label>
+					</p>
+					<p>
+						<label>
+							<IconPalette />
+							{{ $translate('Saturation') }}
+							<b>{{ Math.round(saturation * 100) }}&nbsp;%</b>
+							<input
+								class="tify-scan-range"
+								max="3"
+								min="0"
+								step=".01"
+								type="range"
+								:value="saturation"
+								@input="setFilter('saturate', $event)"
+							/>
+						</label>
+					</p>
+					<p>
+						<button
+							type="button"
+							class="tify-scan-reset"
+							:disabled="!filtersActive"
+							@click="resetFilters()"
+						>
+							<IconBackupRestore />
+							{{ $translate('Reset') }}
+						</button>
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div
+			ref="image"
+			class="tify-scan-image"
+		/>
+	</section>
+</template>

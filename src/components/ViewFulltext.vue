@@ -1,43 +1,3 @@
-<template>
-	<section
-		class="tify-fulltext"
-		tabindex="0"
-	>
-		<h2 class="tify-sr-only">
-			{{ $translate('Fulltext') }}
-		</h2>
-
-		<div
-			v-if="fulltextAvailable !== false"
-			class="tify-fulltext-texts"
-		>
-			<div
-				v-for="page in pages"
-				:key="page"
-				class="tify-fulltext-page"
-			>
-				<h3>
-					{{ $translate('Page') }}
-					{{ $store.getPageLabel(page, $store.localize($store.manifest.items[page - 1].label)) }}
-				</h3>
-				<div
-					v-for="(text, index) in fulltexts[page]"
-					:key="`${page}-${index}`"
-					class="tify-fulltext-text"
-					v-html="text"
-				/>
-			</div>
-		</div>
-
-		<p
-			v-else
-			class="tify-fulltext-none"
-		>
-			{{ $translate('Fulltext not available for this page') }}
-		</p>
-	</section>
-</template>
-
 <script>
 import { filterHtml } from '../modules/filter';
 import { isValidUrl } from '../modules/validation';
@@ -150,3 +110,43 @@ export default {
 	},
 };
 </script>
+
+<template>
+	<section
+		class="tify-fulltext"
+		tabindex="0"
+	>
+		<h2 class="tify-sr-only">
+			{{ $translate('Fulltext') }}
+		</h2>
+
+		<div
+			v-if="fulltextAvailable !== false"
+			class="tify-fulltext-texts"
+		>
+			<div
+				v-for="page in pages"
+				:key="page"
+				class="tify-fulltext-page"
+			>
+				<h3>
+					{{ $translate('Page') }}
+					{{ $store.getPageLabel(page, $store.localize($store.manifest.items[page - 1].label)) }}
+				</h3>
+				<div
+					v-for="(text, index) in fulltexts[page]"
+					:key="`${page}-${index}`"
+					class="tify-fulltext-text"
+					v-html="text"
+				/>
+			</div>
+		</div>
+
+		<p
+			v-else
+			class="tify-fulltext-none"
+		>
+			{{ $translate('Fulltext not available for this page') }}
+		</p>
+	</section>
+</template>

@@ -1,79 +1,3 @@
-<template>
-	<ul class="tify-toc-list">
-		<li
-			v-for="(structure, index) in structures"
-			:key="index"
-			class="tify-toc-structure"
-			:data-level="level"
-			:class="{
-				'-current': isCurrentPageInStructure(structure),
-				'-expanded': expandedStructures[index],
-			}"
-		>
-			<button
-				v-if="structure.items?.some((item) => item.items)"
-				type="button"
-				class="tify-toc-toggle"
-				:title="$translate(expandedStructures[index] ? 'Collapse' : 'Expand')"
-				:aria-controls="`${id}-${index}`"
-				:aria-expanded="expandedStructures[index] ? 'true' : 'false'"
-				@click="toggleChildren(index)"
-			>
-				<template v-if="expandedStructures[index]">
-					<IconMinus />
-				</template>
-				<template v-else>
-					<IconPlus />
-				</template>
-			</button>
-
-			<a
-				v-if="purpose === 'pdf' && structure.pageCount"
-				class="tify-toc-link"
-				:href="structure.rendering[0].id"
-				download
-			>
-				{{ $store.localize(structure.label) }}
-				({{ structure.pageCount }}&nbsp;{{ $translate(structure.pageCount === 1 ? 'page' : 'pages') }})
-			</a>
-			<!-- Only display page label if structure has a different label -->
-			<a
-				v-else-if="structure.label && $store.localize(structure.label) !== getFirstPageLabel(structure)"
-				class="tify-toc-link -dots"
-				href="javascript:;"
-				@click="$store.setPage(structure.firstPage || getFirstPage(structure))"
-			>
-				<span class="tify-toc-label">
-					{{ $store.localize(structure.label) }}
-				</span>
-				<span class="tify-toc-page">
-					{{ getFirstPageLabel(structure) || '—' }}
-				</span>
-			</a>
-			<a
-				v-else
-				class="tify-toc-link"
-				href="javascript:;"
-				@click="$store.setPage(structure.firstPage || getFirstPage(structure))"
-			>
-				<span class="tify-toc-label">
-					{{ $store.localize(structure.label) || getFirstPageLabel(structure) }}
-				</span>
-			</a>
-
-			<TocList
-				v-if="structure.items?.some((item) => item.items)"
-				v-show="expandedStructures[index]"
-				:id="`${id}-${index}`"
-				ref="children"
-				:level="level + 1"
-				:purpose="purpose"
-				:structures="structure.items"
-			/>
-		</li>
-	</ul>
-</template>
-
 <script>
 export default {
 	name: 'TocList',
@@ -170,3 +94,79 @@ export default {
 	},
 };
 </script>
+
+<template>
+	<ul class="tify-toc-list">
+		<li
+			v-for="(structure, index) in structures"
+			:key="index"
+			class="tify-toc-structure"
+			:data-level="level"
+			:class="{
+				'-current': isCurrentPageInStructure(structure),
+				'-expanded': expandedStructures[index],
+			}"
+		>
+			<button
+				v-if="structure.items?.some((item) => item.items)"
+				type="button"
+				class="tify-toc-toggle"
+				:title="$translate(expandedStructures[index] ? 'Collapse' : 'Expand')"
+				:aria-controls="`${id}-${index}`"
+				:aria-expanded="expandedStructures[index] ? 'true' : 'false'"
+				@click="toggleChildren(index)"
+			>
+				<template v-if="expandedStructures[index]">
+					<IconMinus />
+				</template>
+				<template v-else>
+					<IconPlus />
+				</template>
+			</button>
+
+			<a
+				v-if="purpose === 'pdf' && structure.pageCount"
+				class="tify-toc-link"
+				:href="structure.rendering[0].id"
+				download
+			>
+				{{ $store.localize(structure.label) }}
+				({{ structure.pageCount }}&nbsp;{{ $translate(structure.pageCount === 1 ? 'page' : 'pages') }})
+			</a>
+			<!-- Only display page label if structure has a different label -->
+			<a
+				v-else-if="structure.label && $store.localize(structure.label) !== getFirstPageLabel(structure)"
+				class="tify-toc-link -dots"
+				href="javascript:;"
+				@click="$store.setPage(structure.firstPage || getFirstPage(structure))"
+			>
+				<span class="tify-toc-label">
+					{{ $store.localize(structure.label) }}
+				</span>
+				<span class="tify-toc-page">
+					{{ getFirstPageLabel(structure) || '—' }}
+				</span>
+			</a>
+			<a
+				v-else
+				class="tify-toc-link"
+				href="javascript:;"
+				@click="$store.setPage(structure.firstPage || getFirstPage(structure))"
+			>
+				<span class="tify-toc-label">
+					{{ $store.localize(structure.label) || getFirstPageLabel(structure) }}
+				</span>
+			</a>
+
+			<TocList
+				v-if="structure.items?.some((item) => item.items)"
+				v-show="expandedStructures[index]"
+				:id="`${id}-${index}`"
+				ref="children"
+				:level="level + 1"
+				:purpose="purpose"
+				:structures="structure.items"
+			/>
+		</li>
+	</ul>
+</template>

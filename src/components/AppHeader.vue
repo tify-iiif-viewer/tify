@@ -1,198 +1,3 @@
-<template>
-	<header class="tify-header">
-		<div class="tify-header-column -title">
-			<h1
-				class="tify-header-title"
-				:title="title"
-			>
-				{{ title }}
-			</h1>
-		</div>
-
-		<nav
-			v-if="$store.manifest"
-			class="tify-header-column -pagination"
-			:aria-label="$translate('Page')"
-		>
-			<div class="tify-header-button-group -page-select">
-				<PageSelect />
-
-				<button
-					type="button"
-					class="tify-header-button"
-					:class="{ '-active': $store.options.pages.length > 1 }"
-					:title="$translate('Toggle double-page')"
-					@click="toggleDoublePage"
-				>
-					<IconViewModule v-if="$store.isCustomPageView" />
-					<IconBookOpenBlankVariant v-else />
-				</button>
-			</div>
-
-			<PaginationButtons />
-		</nav>
-
-		<nav
-			v-click-outside="closeControlsPopup"
-			class="tify-header-column -controls"
-			:aria-label="$translate('View')"
-		>
-			<div
-				ref="switchViewSmall"
-				class="tify-header-button-group -toggle"
-			>
-				<button
-					type="button"
-					:aria-controls="$store.getId('controls')"
-					:aria-expanded="controlsVisible ? 'true' : 'false'"
-					:aria-label="$translate('View')"
-					class="tify-header-button"
-					:title="$translate('View')"
-					@click="toggleControlsPopup"
-				>
-					<IconDotsGrid />
-				</button>
-			</div>
-
-			<div
-				:id="$store.getId('controls')"
-				class="tify-header-popup"
-				:class="{ '-visible': controlsVisible }"
-			>
-				<div class="tify-header-button-group -view">
-					<!-- NOTE: This button is hidden on large containers -->
-					<button
-						v-if="$store.manifest"
-						type="button"
-						class="tify-header-button -scan"
-						:class="{ '-active': $store.options.view === 'scan' }"
-						:aria-controls="$store.getId('scan')"
-						:aria-expanded="$store.options.view === 'scan' ? 'true' : 'false'"
-						@click="toggleView('scan')"
-					>
-						<IconImage />
-						{{ $translate('Scan') }}
-					</button>
-
-					<button
-						v-if="fulltextEnabled"
-						type="button"
-						class="tify-header-button"
-						:class="{ '-active': $store.options.view === 'fulltext' }"
-						:aria-controls="$store.getId('fulltext')"
-						:aria-expanded="$store.options.view === 'fulltext' ? 'true' : 'false'"
-						@click="toggleView('fulltext')"
-					>
-						<IconTextLong />
-						{{ $translate('Fulltext') }}
-					</button>
-
-					<button
-						v-if="$store.manifest"
-						type="button"
-						class="tify-header-button"
-						:class="{ '-active': $store.options.view === 'thumbnails' }"
-						:aria-controls="$store.getId('thumbnails')"
-						:aria-expanded="$store.options.view === 'thumbnails' ? 'true' : 'false'"
-						@click="toggleView('thumbnails')"
-					>
-						<IconViewModule />
-						{{ $translate('Pages') }}
-					</button>
-
-					<button
-						v-if="tocEnabled"
-						type="button"
-						class="tify-header-button"
-						:class="{ '-active': $store.options.view === 'toc' }"
-						:aria-controls="$store.getId('toc')"
-						:aria-expanded="$store.options.view === 'toc' ? 'true' : 'false'"
-						@click="toggleView('toc')"
-					>
-						<IconTableOfContents />
-						{{ $translate('Contents') }}
-					</button>
-
-					<button
-						type="button"
-						class="tify-header-button"
-						:class="{ '-active': $store.options.view === 'info' }"
-						:aria-controls="$store.getId('info')"
-						:aria-expanded="$store.options.view === 'info' ? 'true' : 'false'"
-						@click="toggleView('info')"
-					>
-						<IconInformationVariant />
-						{{ $translate('Info') }}
-					</button>
-
-					<button
-						v-if="$store.manifest"
-						type="button"
-						class="tify-header-button"
-						:class="{ '-active': $store.options.view === 'export' }"
-						:aria-controls="$store.getId('export')"
-						:aria-expanded="$store.options.view === 'export' ? 'true' : 'false'"
-						@click="toggleView('export')"
-					>
-						<IconDownloadOutline />
-						{{ $translate('Export') }}
-					</button>
-
-					<button
-						v-if="$store.collection"
-						type="button"
-						class="tify-header-button"
-						:class="{ '-active': $store.options.view === 'collection' }"
-						:aria-controls="$store.getId('collection')"
-						:aria-expanded="$store.options === 'collection' ? 'true' : 'false'"
-						@click="toggleView('collection')"
-					>
-						<IconListBoxOutline />
-						{{ $translate('Collection') }}
-					</button>
-				</div>
-
-				<div v-if="fullscreenSupported" class="tify-header-button-group -view">
-					<button
-						type="button"
-						class="tify-header-button -icon-only"
-						:class="{ '-active': $store.options.view === 'help' }"
-						:aria-controls="$store.getId('help')"
-						:aria-expanded="$store.options.view === 'help' ? 'true' : 'false'"
-						:title="$translate('Help')"
-						@click="toggleView('help')"
-					>
-						<IconHelpCircleOutline />
-						{{ $translate('Help') }}
-					</button>
-					<button
-						v-if="!fullscreenActive"
-						type="button"
-						class="tify-header-button -icon-only"
-						:title="$translate('Fullscreen')"
-						@click="toggleFullscreen"
-					>
-						<IconFullscreen />
-						{{ $translate('Fullscreen') }}
-					</button>
-					<button
-						v-else
-						type="button"
-						class="tify-header-button -icon-only"
-						:title="$translate('Exit fullscreen')"
-						@click="toggleFullscreen"
-					>
-						<IconFullscreenExit />
-						{{ $translate('Exit fullscreen') }}
-					</button>
-				</div>
-
-				<PaginationButtons v-if="$store.manifest" />
-			</div>
-		</nav>
-	</header>
-</template>
-
 <script>
 import vClickOutside from 'click-outside-vue3';
 
@@ -425,3 +230,198 @@ export default {
 	},
 };
 </script>
+
+<template>
+	<header class="tify-header">
+		<div class="tify-header-column -title">
+			<h1
+				class="tify-header-title"
+				:title="title"
+			>
+				{{ title }}
+			</h1>
+		</div>
+
+		<nav
+			v-if="$store.manifest"
+			class="tify-header-column -pagination"
+			:aria-label="$translate('Page')"
+		>
+			<div class="tify-header-button-group -page-select">
+				<PageSelect />
+
+				<button
+					type="button"
+					class="tify-header-button"
+					:class="{ '-active': $store.options.pages.length > 1 }"
+					:title="$translate('Toggle double-page')"
+					@click="toggleDoublePage"
+				>
+					<IconViewModule v-if="$store.isCustomPageView" />
+					<IconBookOpenBlankVariant v-else />
+				</button>
+			</div>
+
+			<PaginationButtons />
+		</nav>
+
+		<nav
+			v-click-outside="closeControlsPopup"
+			class="tify-header-column -controls"
+			:aria-label="$translate('View')"
+		>
+			<div
+				ref="switchViewSmall"
+				class="tify-header-button-group -toggle"
+			>
+				<button
+					type="button"
+					:aria-controls="$store.getId('controls')"
+					:aria-expanded="controlsVisible ? 'true' : 'false'"
+					:aria-label="$translate('View')"
+					class="tify-header-button"
+					:title="$translate('View')"
+					@click="toggleControlsPopup"
+				>
+					<IconDotsGrid />
+				</button>
+			</div>
+
+			<div
+				:id="$store.getId('controls')"
+				class="tify-header-popup"
+				:class="{ '-visible': controlsVisible }"
+			>
+				<div class="tify-header-button-group -view">
+					<!-- NOTE: This button is hidden on large containers -->
+					<button
+						v-if="$store.manifest"
+						type="button"
+						class="tify-header-button -scan"
+						:class="{ '-active': $store.options.view === 'scan' }"
+						:aria-controls="$store.getId('scan')"
+						:aria-expanded="$store.options.view === 'scan' ? 'true' : 'false'"
+						@click="toggleView('scan')"
+					>
+						<IconImage />
+						{{ $translate('Scan') }}
+					</button>
+
+					<button
+						v-if="fulltextEnabled"
+						type="button"
+						class="tify-header-button"
+						:class="{ '-active': $store.options.view === 'fulltext' }"
+						:aria-controls="$store.getId('fulltext')"
+						:aria-expanded="$store.options.view === 'fulltext' ? 'true' : 'false'"
+						@click="toggleView('fulltext')"
+					>
+						<IconTextLong />
+						{{ $translate('Fulltext') }}
+					</button>
+
+					<button
+						v-if="$store.manifest"
+						type="button"
+						class="tify-header-button"
+						:class="{ '-active': $store.options.view === 'thumbnails' }"
+						:aria-controls="$store.getId('thumbnails')"
+						:aria-expanded="$store.options.view === 'thumbnails' ? 'true' : 'false'"
+						@click="toggleView('thumbnails')"
+					>
+						<IconViewModule />
+						{{ $translate('Pages') }}
+					</button>
+
+					<button
+						v-if="tocEnabled"
+						type="button"
+						class="tify-header-button"
+						:class="{ '-active': $store.options.view === 'toc' }"
+						:aria-controls="$store.getId('toc')"
+						:aria-expanded="$store.options.view === 'toc' ? 'true' : 'false'"
+						@click="toggleView('toc')"
+					>
+						<IconTableOfContents />
+						{{ $translate('Contents') }}
+					</button>
+
+					<button
+						type="button"
+						class="tify-header-button"
+						:class="{ '-active': $store.options.view === 'info' }"
+						:aria-controls="$store.getId('info')"
+						:aria-expanded="$store.options.view === 'info' ? 'true' : 'false'"
+						@click="toggleView('info')"
+					>
+						<IconInformationVariant />
+						{{ $translate('Info') }}
+					</button>
+
+					<button
+						v-if="$store.manifest"
+						type="button"
+						class="tify-header-button"
+						:class="{ '-active': $store.options.view === 'export' }"
+						:aria-controls="$store.getId('export')"
+						:aria-expanded="$store.options.view === 'export' ? 'true' : 'false'"
+						@click="toggleView('export')"
+					>
+						<IconDownloadOutline />
+						{{ $translate('Export') }}
+					</button>
+
+					<button
+						v-if="$store.collection"
+						type="button"
+						class="tify-header-button"
+						:class="{ '-active': $store.options.view === 'collection' }"
+						:aria-controls="$store.getId('collection')"
+						:aria-expanded="$store.options === 'collection' ? 'true' : 'false'"
+						@click="toggleView('collection')"
+					>
+						<IconListBoxOutline />
+						{{ $translate('Collection') }}
+					</button>
+				</div>
+
+				<div v-if="fullscreenSupported" class="tify-header-button-group -view">
+					<button
+						type="button"
+						class="tify-header-button -icon-only"
+						:class="{ '-active': $store.options.view === 'help' }"
+						:aria-controls="$store.getId('help')"
+						:aria-expanded="$store.options.view === 'help' ? 'true' : 'false'"
+						:title="$translate('Help')"
+						@click="toggleView('help')"
+					>
+						<IconHelpCircleOutline />
+						{{ $translate('Help') }}
+					</button>
+					<button
+						v-if="!fullscreenActive"
+						type="button"
+						class="tify-header-button -icon-only"
+						:title="$translate('Fullscreen')"
+						@click="toggleFullscreen"
+					>
+						<IconFullscreen />
+						{{ $translate('Fullscreen') }}
+					</button>
+					<button
+						v-else
+						type="button"
+						class="tify-header-button -icon-only"
+						:title="$translate('Exit fullscreen')"
+						@click="toggleFullscreen"
+					>
+						<IconFullscreenExit />
+						{{ $translate('Exit fullscreen') }}
+					</button>
+				</div>
+
+				<PaginationButtons v-if="$store.manifest" />
+			</div>
+		</nav>
+	</header>
+</template>

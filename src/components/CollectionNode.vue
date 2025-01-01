@@ -1,3 +1,55 @@
+<script>
+export default {
+	name: 'CollectionNode',
+	props: {
+		item: {
+			type: Object,
+			default: () => {},
+		},
+	},
+	data() {
+		return {
+			children: null,
+			expanded: false,
+			id: this.$store.getId(`collection-node-${Math.floor(Math.random() * 1e12)}`),
+		};
+	},
+	methods: {
+		toggleChildren() {
+			if (this.expanded) {
+				this.expanded = false;
+				return;
+			}
+
+			if (this.children) {
+				this.expanded = true;
+				return;
+			}
+
+			if (this.item.children) {
+				this.children = this.item.children;
+				this.expanded = true;
+				return;
+			}
+
+			this.$store.fetchJson(this.item['@id'] || this.item.id).then(
+				(childManifest) => {
+					this.children = childManifest.collections || childManifest.items || childManifest.manifests || [];
+					this.expanded = true;
+				},
+				(error) => {
+					const status = error.response
+						? error.response.statusText || error.response.data || error.message
+						: error.message;
+					this.$store.addError(`Error loading IIIF manifest: ${status}`);
+					this.children = false;
+				},
+			);
+		},
+	},
+};
+</script>
+
 <template>
 	<li
 		class="tify-collection-item"
@@ -52,55 +104,3 @@
 		</template>
 	</li>
 </template>
-
-<script>
-export default {
-	name: 'CollectionNode',
-	props: {
-		item: {
-			type: Object,
-			default: () => {},
-		},
-	},
-	data() {
-		return {
-			children: null,
-			expanded: false,
-			id: this.$store.getId(`collection-node-${Math.floor(Math.random() * 1e12)}`),
-		};
-	},
-	methods: {
-		toggleChildren() {
-			if (this.expanded) {
-				this.expanded = false;
-				return;
-			}
-
-			if (this.children) {
-				this.expanded = true;
-				return;
-			}
-
-			if (this.item.children) {
-				this.children = this.item.children;
-				this.expanded = true;
-				return;
-			}
-
-			this.$store.fetchJson(this.item['@id'] || this.item.id).then(
-				(childManifest) => {
-					this.children = childManifest.collections || childManifest.items || childManifest.manifests || [];
-					this.expanded = true;
-				},
-				(error) => {
-					const status = error.response
-						? error.response.statusText || error.response.data || error.message
-						: error.message;
-					this.$store.addError(`Error loading IIIF manifest: ${status}`);
-					this.children = false;
-				},
-			);
-		},
-	},
-};
-</script>

@@ -1,3 +1,59 @@
+<script>
+export default {
+	data() {
+		return {
+			otherItems: [],
+			perElementPdfLinksVisible: false,
+		};
+	},
+	computed: {
+		hasElementPdfLinks() {
+			if (!(this.$store.manifest.structures instanceof Array)
+				|| !this.$store.manifest.structures[0]
+				|| !this.$store.manifest.structures[0].rendering
+			) {
+				return false;
+			}
+
+			const renderings = this.$store.manifest.structures[0].rendering;
+			return renderings.some((rendering) => rendering.format && rendering.format === 'application/pdf');
+		},
+		imageUrls() {
+			const imageUrls = {};
+			this.$store.options.pages.forEach((page) => {
+				if (!page) {
+					return;
+				}
+
+				const resource = this.$store.manifest.items[page - 1].items?.[0].items?.[0].body;
+				if (resource?.service) {
+					const service = resource.service instanceof Array ? resource.service[0] : resource.service;
+					const quality = ['ImageService2', 'ImageService3'].includes(service.type || service['@type'])
+						? 'default'
+						: 'native';
+					const size = service.type === 'ImageService3'
+						? 'max'
+						: 'full';
+					const id = service.id || service['@id'];
+					imageUrls[page] = `${id}${id.at(-1) === '/' ? '' : '/'}full/${size}/0/${quality}.jpg`;
+				} else {
+					imageUrls[page] = resource.id;
+				}
+			});
+			return imageUrls;
+		},
+		pages() {
+			return this.$store.options.pages.filter((page) => page > 0);
+		},
+		renderings() {
+			return this.$store.manifest.rendering
+				? [].concat(this.$store.manifest.rendering)
+				: [];
+		},
+	},
+};
+</script>
+
 <template>
 	<section
 		class="tify-export"
@@ -119,60 +175,3 @@
 		</div>
 	</section>
 </template>
-
-<script>
-
-export default {
-	data() {
-		return {
-			otherItems: [],
-			perElementPdfLinksVisible: false,
-		};
-	},
-	computed: {
-		hasElementPdfLinks() {
-			if (!(this.$store.manifest.structures instanceof Array)
-				|| !this.$store.manifest.structures[0]
-				|| !this.$store.manifest.structures[0].rendering
-			) {
-				return false;
-			}
-
-			const renderings = this.$store.manifest.structures[0].rendering;
-			return renderings.some((rendering) => rendering.format && rendering.format === 'application/pdf');
-		},
-		imageUrls() {
-			const imageUrls = {};
-			this.$store.options.pages.forEach((page) => {
-				if (!page) {
-					return;
-				}
-
-				const resource = this.$store.manifest.items[page - 1].items?.[0].items?.[0].body;
-				if (resource?.service) {
-					const service = resource.service instanceof Array ? resource.service[0] : resource.service;
-					const quality = ['ImageService2', 'ImageService3'].includes(service.type || service['@type'])
-						? 'default'
-						: 'native';
-					const size = service.type === 'ImageService3'
-						? 'max'
-						: 'full';
-					const id = service.id || service['@id'];
-					imageUrls[page] = `${id}${id.at(-1) === '/' ? '' : '/'}full/${size}/0/${quality}.jpg`;
-				} else {
-					imageUrls[page] = resource.id;
-				}
-			});
-			return imageUrls;
-		},
-		pages() {
-			return this.$store.options.pages.filter((page) => page > 0);
-		},
-		renderings() {
-			return this.$store.manifest.rendering
-				? [].concat(this.$store.manifest.rendering)
-				: [];
-		},
-	},
-};
-</script>
