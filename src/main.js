@@ -8,6 +8,8 @@ import store from './plugins/store';
 
 window.Tify = function Tify(userOptions = {}) {
 	const defaultOptions = {
+		annotationId: null,
+		annotationsVisible: null,
 		breakpoints: {
 			tiny: 359,
 			small: 719,
@@ -31,6 +33,8 @@ window.Tify = function Tify(userOptions = {}) {
 		translationsDirUrl: null,
 		urlQueryKey: null,
 		urlQueryParams: [
+			'annotationId',
+			'annotationsVisible',
 			'childManifestUrl',
 			'filters',
 			'pages',
