@@ -105,7 +105,7 @@ export default {
 					class="tify-export-toggle"
 					:class="{ '-close': perElementPdfLinksVisible }"
 					:aria-controls="$store.getId('export-pdf-list')"
-					:aria-expanded="perElementPdfLinksVisible ? 'true' : 'false'"
+					:aria-expanded="perElementPdfLinksVisible"
 					@click="perElementPdfLinksVisible = !perElementPdfLinksVisible"
 				>
 					<template v-if="!perElementPdfLinksVisible">
