@@ -2,48 +2,13 @@ import { createApp, h } from 'vue';
 
 import App from './App.vue';
 
+import defaultOptions from './config';
+
 import api from './plugins/api';
 import i18n from './plugins/i18n';
 import store from './plugins/store';
 
 window.Tify = function Tify(userOptions = {}) {
-	const defaultOptions = {
-		breakpoints: {
-			tiny: 359,
-			small: 719,
-			medium: 959,
-			large: 1199,
-		},
-		childManifestAutoloaded: true,
-		childManifestUrl: null,
-		container: null,
-		fallbackLanguage: 'en',
-		filters: {},
-		language: 'en',
-		manifestUrl: null,
-		optionsResetOnPageChange: [
-			'pan',
-		],
-		pageLabelFormat: 'P : L',
-		pages: null,
-		pan: {},
-		rotation: null,
-		translationsDirUrl: null,
-		urlQueryKey: null,
-		urlQueryParams: [
-			'childManifestUrl',
-			'filters',
-			'pages',
-			'pan',
-			'rotation',
-			'view',
-			'zoom',
-		],
-		view: null,
-		viewer: {},
-		zoom: null,
-	};
-
 	this.options = { ...defaultOptions, ...userOptions };
 
 	if (!this.options.translationsDirUrl) {
