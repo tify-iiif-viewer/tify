@@ -128,7 +128,8 @@ TIFY takes an options object as its only parameter. While optional, you usually 
 
 - **`view`**: string, default `''`
 
-	The initially displayed view (panel); `scan`, `fulltext`, `thumbnails`, `toc`, `info`, `help`, or empty (same as `scan`). On large screens, the scan is always shown next to the selected view.
+	The initially displayed view (panel); `fulltext`, `thumbnails`, `toc`, `info`, `help`, or `null` to display (only) the scan. On large screens, the scan is always shown next to the selected view.
+
 
 - **`viewer`**: object
 
@@ -233,7 +234,7 @@ tify.ready.then(() => {
 
 	- `name`: string (required)
 
-		The view’s name; `'export'`, `'fulltext'`, `'help'`, `'info'`, `'scan'`, `'thumbnails'`, `'toc'`, or an empty string (same as `'scan'`).
+		The view’s name; `'export'`, `'fulltext'`, `'help'`, `'info'`, `'thumbnails'`, `'toc'`, or `null` to display (only) the scan.
 
 - **`toggleDoublePage`**
 
