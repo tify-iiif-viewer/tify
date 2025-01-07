@@ -39,7 +39,7 @@ window.Tify = function Tify(userOptions = {}) {
 			'view',
 			'zoom',
 		],
-		view: '',
+		view: null,
 		viewer: {},
 		zoom: null,
 	};

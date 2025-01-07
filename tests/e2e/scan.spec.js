@@ -34,8 +34,7 @@ describe('Scan', () => {
 		cy.get('.tify').type('{shift}0');
 		cy.url().should(
 			'include',
-			`/?manifest=${encodeURIComponent(`${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081`)}`
-			+ `&tify=${encodeURIComponent('{"view":""}')}`,
+			`/?manifest=${encodeURIComponent(`${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081`)}`,
 		);
 	});
 

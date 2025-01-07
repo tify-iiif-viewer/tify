@@ -85,7 +85,7 @@ export default {
 				case 'Backspace':
 					// switchViewSmall is visible, i.e. screen is small
 					if (this.$refs.switchViewSmall.offsetParent) {
-						this.toggleView('scan');
+						this.toggleView(null);
 					}
 					break;
 				case '1':
@@ -222,7 +222,7 @@ export default {
 			this.closeControlsPopup();
 
 			const view = name === this.$store.options.view && this.$store.manifest && !this.$store.isMobile()
-				? ''
+				? null
 				: name;
 			this.$store.updateOptions({ view });
 			return view;
@@ -298,10 +298,10 @@ export default {
 						v-if="$store.manifest"
 						type="button"
 						class="tify-header-button -scan"
-						:class="{ '-active': $store.options.view === 'scan' }"
+						:class="{ '-active': !$store.options.view }"
 						:aria-controls="$store.getId('scan')"
-						:aria-expanded="$store.options.view === 'scan' ? 'true' : 'false'"
-						@click="toggleView('scan')"
+						:aria-expanded="!$store.options.view"
+						@click="toggleView(null)"
 					>
 						<IconImage />
 						{{ $translate('Scan') }}

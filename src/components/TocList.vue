@@ -67,7 +67,7 @@ export default {
 		setPage(page) {
 			this.$store.setPage(page);
 			if (this.$store.isMobile()) {
-				this.$store.updateOptions({ view: 'scan' });
+				this.$store.updateOptions({ view: null });
 			}
 		},
 		toggleAllChildren(expanded = null) {
