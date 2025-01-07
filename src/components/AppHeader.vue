@@ -277,7 +277,7 @@ export default {
 				<button
 					type="button"
 					:aria-controls="$store.getId('controls')"
-					:aria-expanded="controlsVisible ? 'true' : 'false'"
+					:aria-expanded="controlsVisible"
 					:aria-label="$translate('View')"
 					class="tify-header-button"
 					:title="$translate('View')"
@@ -313,7 +313,7 @@ export default {
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'fulltext' }"
 						:aria-controls="$store.getId('fulltext')"
-						:aria-expanded="$store.options.view === 'fulltext' ? 'true' : 'false'"
+						:aria-expanded="$store.options.view === 'fulltext'"
 						@click="toggleView('fulltext')"
 					>
 						<IconTextLong />
@@ -326,7 +326,7 @@ export default {
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'thumbnails' }"
 						:aria-controls="$store.getId('thumbnails')"
-						:aria-expanded="$store.options.view === 'thumbnails' ? 'true' : 'false'"
+						:aria-expanded="$store.options.view === 'thumbnails'"
 						@click="toggleView('thumbnails')"
 					>
 						<IconViewModule />
@@ -339,7 +339,7 @@ export default {
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'toc' }"
 						:aria-controls="$store.getId('toc')"
-						:aria-expanded="$store.options.view === 'toc' ? 'true' : 'false'"
+						:aria-expanded="$store.options.view === 'toc'"
 						@click="toggleView('toc')"
 					>
 						<IconTableOfContents />
@@ -351,7 +351,7 @@ export default {
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'info' }"
 						:aria-controls="$store.getId('info')"
-						:aria-expanded="$store.options.view === 'info' ? 'true' : 'false'"
+						:aria-expanded="$store.options.view === 'info'"
 						@click="toggleView('info')"
 					>
 						<IconInformationVariant />
@@ -364,7 +364,7 @@ export default {
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'export' }"
 						:aria-controls="$store.getId('export')"
-						:aria-expanded="$store.options.view === 'export' ? 'true' : 'false'"
+						:aria-expanded="$store.options.view === 'export'"
 						@click="toggleView('export')"
 					>
 						<IconDownloadOutline />
@@ -377,7 +377,7 @@ export default {
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'collection' }"
 						:aria-controls="$store.getId('collection')"
-						:aria-expanded="$store.options === 'collection' ? 'true' : 'false'"
+						:aria-expanded="$store.options === 'collection'"
 						@click="toggleView('collection')"
 					>
 						<IconListBoxOutline />
@@ -391,7 +391,7 @@ export default {
 						class="tify-header-button -icon-only"
 						:class="{ '-active': $store.options.view === 'help' }"
 						:aria-controls="$store.getId('help')"
-						:aria-expanded="$store.options.view === 'help' ? 'true' : 'false'"
+						:aria-expanded="$store.options.view === 'help'"
 						:title="$translate('Help')"
 						@click="toggleView('help')"
 					>

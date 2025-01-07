@@ -134,7 +134,7 @@ export default {
 			type="button"
 			class="tify-page-select-button"
 			:aria-controls="$store.getId('dropdown')"
-			:aria-expanded="isOpen ? 'true' : 'false'"
+			:aria-expanded="isOpen"
 			@click="toggleDropdown()"
 		>
 			<span class="tify-sr-only">{{ $translate('Current page:') }}</span>
