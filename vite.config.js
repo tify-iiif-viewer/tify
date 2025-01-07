@@ -8,17 +8,21 @@ import banner from 'vite-plugin-banner';
 import eslint from 'vite-plugin-eslint';
 import sassGlobImport from 'vite-plugin-sass-glob-import';
 
+import 'dotenv/config';
+
 import pkg from './package.json';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+	base: process.env.BASE || '/',
 	build: {
+		outDir: process.env.OUTDIR || './dist',
 		rollupOptions: {
 			output: {
 				// https://rollupjs.org/guide/en/#outputentryfilenames
-				entryFileNames: 'tify.js',
+				entryFileNames: process.env.HASHED ? 'tify.[hash].js' : 'tify.js',
 				// https://rollupjs.org/guide/en/#outputassetfilenames
-				assetFileNames: 'tify.[ext]',
+				assetFileNames: process.env.HASHED ? 'tify.[hash].[ext]' : 'tify.[ext]',
 			},
 		},
 	},
