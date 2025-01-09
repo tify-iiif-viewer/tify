@@ -15,12 +15,6 @@ export default {
 			return 'TIFY is a slim and mobile-friendly IIIF document viewer, released under the'
 				+ ' <a href="https://www.gnu.org/licenses/agpl-3.0.html.en">GNU Affero General Public License 3.0</a>.';
 		},
-		userGuideUrl() {
-			const lang = this.env.docsLanguages.includes(this.$store.options.language)
-				? this.$store.options.language
-				: 'en';
-			return `${this.env.docsUrl}/user-guide.${lang}.md`;
-		},
 	},
 };
 </script>
@@ -40,13 +34,13 @@ export default {
 
 		<ul class="tify-list">
 			<li>
-				<a :href="userGuideUrl">{{ $translate('User guide') }}</a>
-			</li>
-			<li>
 				<a :href="env.repositoryUrl">{{ $translate('Source code') }}</a>
 			</li>
 			<li>
-				<a :href="env.contributorsUrl">{{ $translate('Contributors') }}</a>
+				<a :href="`${env.blobBaseUrl}/doc`">{{ $translate('Documentation') }}</a>
+			</li>
+			<li>
+				<a :href="`${env.blobBaseUrl}/CONTRIBUTORS.md`">{{ $translate('Contributors') }}</a>
 			</li>
 			<li>
 				<a :href="env.bugsUrl">{{ $translate('Report a bug') }}</a>
