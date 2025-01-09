@@ -55,7 +55,7 @@ export default {
 
 	/**
 	 * The HTML element into which TIFY is mounted. If set to `null`, TIFY is not
-	 * mounted at all until `mount` is called (see README.md#api).
+	 * mounted at all until `mount` is called (see docs/api.md).
 	 *
 	 * @type {?string|HTMLElement}
 	 */
