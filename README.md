@@ -66,7 +66,7 @@ Many aspects of the theme can be modified with SCSS variables or CSS custom prop
 
 If you are are upgrading from any previous version, [have a look at the upgrading guidelines](UPGRADING.md).
 
-## Options
+## Configuration
 
 TIFY takes an options object as its only parameter. While optional, you usually want to set `container` and `manifestUrl`.
 
