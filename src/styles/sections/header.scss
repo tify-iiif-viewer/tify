@@ -62,6 +62,10 @@
 	}
 
 	&.-view {
+		&:has(> :only-child):has(.tify-header-button.-scan) {
+			display: none;
+		}
+
 		.tify.-large & {
 			display: block;
 			margin: 0;
@@ -105,7 +109,8 @@
 		@extend %button-active;
 	}
 
-	&.-icon-only {
+	&.-fullscreen,
+	&.-help {
 		display: block;
 		font-size: 0 !important; // Prevent label from showing
 
@@ -117,7 +122,7 @@
 	&.-scan {
 		display: none !important;
 
-		.tify.-medium & {
+		.tify.-medium &:not(:only-child) {
 			display: block !important;
 		}
 	}
@@ -134,7 +139,7 @@
 	.tify-header-button-group.-view & {
 		font-size: .75em;
 
-		&:not(.-icon-only) {
+		&:not(.-fullscreen):not(.-help) {
 			align-items: center;
 			display: flex;
 			flex-direction: column;

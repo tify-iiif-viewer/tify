@@ -129,36 +129,38 @@ export default {
 				<ViewScan :id="$store.getId('scan')" />
 
 				<ViewFulltext
-					v-if="hasAnnotations"
+					v-if="$store.options.views.includes('fulltext') && hasAnnotations"
 					v-show="$store.options.view === 'fulltext'"
 					:id="$store.getId('fulltext')"
 				/>
 				<ViewThumbnails
-					v-show="$store.options.view === 'thumbnails'"
+					v-show="$store.options.views.includes('thumbnails') && $store.options.view === 'thumbnails'"
 					:id="$store.getId('thumbnails')"
 				/>
 				<ViewToc
-					v-if="hasToc"
+					v-if="$store.options.views.includes('toc') && hasToc"
 					v-show="$store.options.view === 'toc'"
 					:id="$store.getId('toc')"
 				/>
 				<ViewExport
+					v-if="$store.options.views.includes('export')"
 					v-show="$store.options.view === 'export'"
 					:id="$store.getId('export')"
 				/>
 			</template>
 
 			<ViewInfo
-				v-if="$store.collection || $store.manifest"
+				v-if="$store.options.views.includes('info') && ($store.collection || $store.manifest)"
 				v-show="$store.options.view === 'info'"
 				:id="$store.getId('info')"
 			/>
 			<ViewCollection
-				v-if="$store.collection"
+				v-if="$store.options.views.includes('collection') && $store.collection"
 				v-show="$store.options.view === 'collection'"
 				:id="$store.getId('collection')"
 			/>
 			<ViewHelp
+				v-if="$store.options.views.includes('help')"
 				v-show="$store.options.view === 'help'"
 				:id="$store.getId('help')"
 			/>

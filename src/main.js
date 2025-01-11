@@ -19,6 +19,7 @@ window.Tify = function Tify(userOptions = {}) {
 		container: null,
 		fallbackLanguage: 'en',
 		filters: {},
+		fullscreenEnabled: true,
 		language: 'en',
 		manifestUrl: null,
 		optionsResetOnPageChange: [
@@ -41,6 +42,15 @@ window.Tify = function Tify(userOptions = {}) {
 		],
 		view: '',
 		viewer: {},
+		views: [
+			'fulltext',
+			'thumbnails',
+			'toc',
+			'info',
+			'export',
+			'collection',
+			'help',
+		],
 		zoom: null,
 	};
 

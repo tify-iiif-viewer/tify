@@ -90,6 +90,10 @@ TIFY takes an options object as its only parameter. While optional, you usually 
 
 	Sets the initial image filters. Available properties are `'brightness'`, `'contrast'` (both a floating-point number between `0.5` and `2`) and `'saturation'` (floating-point number between `0` and `3`), all optional.
 
+- **`fullscreenEnabled`**: boolean, default `true`
+
+	Enable or disable fullscreen mode.
+
 - **`language`**: string, default `'en'`
 
 	The interface language, matching the translation filename without extension. [See which translations are available](https://github.com/tify-iiif-viewer/tify/tree/main/dist/translations) or add your own.
@@ -133,6 +137,10 @@ TIFY takes an options object as its only parameter. While optional, you usually 
 - **`viewer`**: object
 
 	An object with options for OpenSeadragon, TIFY’s image rendering component. [See its documentation](https://openseadragon.github.io/docs/OpenSeadragon.html#.Options) for all available options.
+
+- **`views`**: array of strings, default `['thumbnails', 'toc', 'info', 'export', 'collection', 'help']`
+
+	Configure the available views (panels). This also affects buttons displayed in the header and associated keyboard shortcuts.  Note that `toc` and `collection` are only displayed for some manifests. **If you remove the Help view, you have to include a link to the source code elsewhere on the same web page as per AGPL conditions.**
 
 - **`zoom`**: floating-point number, default `null`
 

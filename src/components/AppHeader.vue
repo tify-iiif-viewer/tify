@@ -84,7 +84,9 @@ export default {
 			switch (event.key) {
 				case 'Backspace':
 					// switchViewSmall is visible, i.e. screen is small
-					if (this.$refs.switchViewSmall.offsetParent) {
+					if (this.$store.options.views.length > 1
+						&& this.$refs.switchViewSmall.offsetParent
+					) {
 						this.toggleView('scan');
 					}
 					break;
@@ -190,6 +192,10 @@ export default {
 			return newPages;
 		},
 		toggleFullscreen(forced) {
+			if (!this.$store.options.fullscreenEnabled || !this.fullscreenSupported) {
+				return false;
+			}
+
 			if ((this.fullscreenActive && forced !== true) || forced === false) {
 				if (document.exitFullscreen) {
 					document.exitFullscreen();
@@ -219,6 +225,10 @@ export default {
 			this.fullscreenActive = !this.fullscreenActive;
 		},
 		toggleView(name) {
+			if (!this.$store.options.views.includes(name)) {
+				return false;
+			}
+
 			this.closeControlsPopup();
 
 			const view = name === this.$store.options.view && this.$store.manifest && !this.$store.isMobile()
@@ -243,7 +253,7 @@ export default {
 		</div>
 
 		<nav
-			v-if="$store.manifest"
+			v-if="$store.manifest?.items.length > 1"
 			class="tify-header-column -pagination"
 			:aria-label="$translate('Page')"
 		>
@@ -308,7 +318,7 @@ export default {
 					</button>
 
 					<button
-						v-if="fulltextEnabled"
+						v-if="$store.options.views.includes('fulltext') && fulltextEnabled"
 						type="button"
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'fulltext' }"
@@ -321,7 +331,7 @@ export default {
 					</button>
 
 					<button
-						v-if="$store.manifest"
+						v-if="$store.options.views.includes('thumbnails') && $store.manifest"
 						type="button"
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'thumbnails' }"
@@ -334,7 +344,7 @@ export default {
 					</button>
 
 					<button
-						v-if="tocEnabled"
+						v-if="$store.options.views.includes('toc') && tocEnabled"
 						type="button"
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'toc' }"
@@ -347,6 +357,7 @@ export default {
 					</button>
 
 					<button
+						v-if="$store.options.views.includes('info')"
 						type="button"
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'info' }"
@@ -359,7 +370,7 @@ export default {
 					</button>
 
 					<button
-						v-if="$store.manifest"
+						v-if="$store.options.views.includes('export') && $store.manifest"
 						type="button"
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'export' }"
@@ -372,7 +383,7 @@ export default {
 					</button>
 
 					<button
-						v-if="$store.collection"
+						v-if="$store.options.views.includes('collection') && $store.collection"
 						type="button"
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'collection' }"
@@ -385,10 +396,11 @@ export default {
 					</button>
 				</div>
 
-				<div v-if="fullscreenSupported" class="tify-header-button-group -view">
+				<div class="tify-header-button-group -view">
 					<button
+						v-if="$store.options.views.includes('help')"
 						type="button"
-						class="tify-header-button -icon-only"
+						class="tify-header-button -help"
 						:class="{ '-active': $store.options.view === 'help' }"
 						:aria-controls="$store.getId('help')"
 						:aria-expanded="$store.options.view === 'help' ? 'true' : 'false'"
@@ -398,26 +410,29 @@ export default {
 						<IconHelpCircleOutline />
 						{{ $translate('Help') }}
 					</button>
-					<button
-						v-if="!fullscreenActive"
-						type="button"
-						class="tify-header-button -icon-only"
-						:title="$translate('Fullscreen')"
-						@click="toggleFullscreen"
-					>
-						<IconFullscreen />
-						{{ $translate('Fullscreen') }}
-					</button>
-					<button
-						v-else
-						type="button"
-						class="tify-header-button -icon-only"
-						:title="$translate('Exit fullscreen')"
-						@click="toggleFullscreen"
-					>
-						<IconFullscreenExit />
-						{{ $translate('Exit fullscreen') }}
-					</button>
+
+					<template v-if="$store.options.fullscreenEnabled && fullscreenSupported">
+						<button
+							v-if="!fullscreenActive"
+							type="button"
+							class="tify-header-button -fullscreen"
+							:title="$translate('Fullscreen')"
+							@click="toggleFullscreen"
+						>
+							<IconFullscreen />
+							{{ $translate('Fullscreen') }}
+						</button>
+						<button
+							v-else
+							type="button"
+							class="tify-header-button -fullscreen"
+							:title="$translate('Exit fullscreen')"
+							@click="toggleFullscreen"
+						>
+							<IconFullscreenExit />
+							{{ $translate('Exit fullscreen') }}
+						</button>
+					</template>
 				</div>
 
 				<PaginationButtons v-if="$store.manifest" />
