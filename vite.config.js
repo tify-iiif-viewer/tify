@@ -48,6 +48,7 @@ export default defineConfig({
 				+ '\n*/',
 		),
 		componentsAutoImport({
+			dts: false, // disable generating components.d.ts file
 			resolvers: [
 				(componentName) => {
 					// NOTE: Full path required for unit tests with Vitest
