@@ -1,5 +1,5 @@
 import { fileURLToPath } from 'node:url';
-import { mergeConfig, defineConfig } from 'vitest/config';
+import { mergeConfig, defineConfig, configDefaults } from 'vitest/config';
 import viteConfig from './vite.config';
 
 export default mergeConfig(
@@ -8,6 +8,7 @@ export default mergeConfig(
 		test: {
 			environment: 'jsdom',
 			include: ['tests/unit/**/*.spec.js'],
+			exclude: [...configDefaults.exclude],
 			root: fileURLToPath(new URL('./', import.meta.url)),
 
 			// Prevent canvas-related error in unit tests
@@ -18,16 +19,6 @@ export default mergeConfig(
 					web: {
 						include: ['vitest-canvas-mock'],
 					},
-				},
-			},
-			poolOptions: {
-				threads: {
-					singleThread: true,
-				},
-			},
-			environmentOptions: {
-				jsdom: {
-					resources: 'usable',
 				},
 			},
 		},
