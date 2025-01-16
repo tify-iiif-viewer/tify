@@ -166,8 +166,14 @@ export default {
 				...this.$store.options.viewer,
 			});
 
-			// Disable OpenSeadragons built-in key handler which interferes with TIFY's keyboard shortcuts
+			// Disable OpenSeadragons built-in key handlers which interfere with TIFY's keyboard shortcuts
 			this.viewer.innerTracker.keyHandler = null;
+			this.viewer.addHandler('canvas-key', (event) => {
+				if (['r', 'R'].includes(event.originalEvent?.key)) {
+					// eslint-disable-next-line no-param-reassign
+					event.preventDefaultAction = true;
+				}
+			});
 
 			this.viewer.gestureSettingsMouse.clickToZoom = false;
 
@@ -314,7 +320,6 @@ export default {
 			switch (event.key) {
 				case 'r':
 				case 'R':
-				// NOTE: Same physical key for QUERTY and QUERTZ keyboards
 					this.rotateRight(event);
 					break;
 				case 'i':
