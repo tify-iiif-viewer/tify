@@ -324,9 +324,9 @@ function Store(args) {
 				}
 			}
 
-			// NOTE: params.view can be an empty string (showing only the scan on large screens)
-			if (params.view === '' && store.isMobile()) {
-				params.view = 'scan';
+			// For backwards compatibility
+			if (params.view === 'scan') {
+				params.view = null;
 			}
 
 			if (params.pages && !isValidPagesArray(params.pages, store.pageCount)) {
@@ -382,7 +382,7 @@ function Store(args) {
 								pages: [store.getStartPage()],
 								pan: {},
 								rotation: null,
-								view: store.isMobile() ? 'scan' : 'collection',
+								view: store.isMobile() ? null : 'collection',
 								zoom: null,
 							});
 						}

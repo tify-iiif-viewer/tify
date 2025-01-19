@@ -79,7 +79,7 @@ export default {
 			this.closeDropdown();
 			this.$store.setPage(page);
 			if (this.$store.isMobile()) {
-				this.$store.updateOptions({ view: 'scan' });
+				this.$store.updateOptions({ view: null });
 			}
 		},
 		toggleDropdown() {
@@ -134,7 +134,7 @@ export default {
 			type="button"
 			class="tify-page-select-button"
 			:aria-controls="$store.getId('dropdown')"
-			:aria-expanded="isOpen ? 'true' : 'false'"
+			:aria-expanded="isOpen"
 			@click="toggleDropdown()"
 		>
 			<span class="tify-sr-only">{{ $translate('Current page:') }}</span>

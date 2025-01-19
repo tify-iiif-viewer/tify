@@ -29,15 +29,11 @@ export default defineConfig({
 	// https://vitejs.dev/config/#environment-variables
 	define: {
 		ENV: {
-			version: pkg.version,
-			license: pkg.license,
+			blobBaseUrl: `${pkg.repository.url}/blob/v${pkg.version}`,
 			bugsUrl: pkg.bugs.url,
-			contributorsUrl: `${pkg.repository.url}/blob/v${pkg.version}/CONTRIBUTORS.md`,
-			docsUrl: `${pkg.repository.url}/blob/v${pkg.version}/doc`,
-			docsLanguages: [
-				...new Set(readdirSync('./doc').map((file) => file.split('.')[1])),
-			],
+			license: pkg.license,
 			repositoryUrl: pkg.repository.url,
+			version: pkg.version,
 		},
 	},
 	plugins: [

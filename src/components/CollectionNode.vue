@@ -59,7 +59,7 @@ export default {
 			v-if="item.type === 'Collection'"
 			type="button"
 			:aria-controls="id"
-			:aria-expanded="expanded ? 'true' : 'false'"
+			:aria-expanded="expanded"
 			class="tify-collection-link -has-children"
 			@click="toggleChildren()"
 		>

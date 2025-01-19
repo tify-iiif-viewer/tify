@@ -538,7 +538,7 @@ export default {
 					:class="{ '-active': filtersActive }"
 					:title="$translate('Toggle image filters')"
 					:aria-controls="$store.getId('filters')"
-					:aria-expanded="filtersVisible ? 'true' : 'false'"
+					:aria-expanded="filtersVisible"
 					@click="filtersVisible = !filtersVisible"
 				>
 					<IconTune />

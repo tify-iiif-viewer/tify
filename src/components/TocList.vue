@@ -67,7 +67,7 @@ export default {
 		setPage(page) {
 			this.$store.setPage(page);
 			if (this.$store.isMobile()) {
-				this.$store.updateOptions({ view: 'scan' });
+				this.$store.updateOptions({ view: null });
 			}
 		},
 		toggleAllChildren(expanded = null) {
@@ -113,7 +113,7 @@ export default {
 				class="tify-toc-toggle"
 				:title="$translate(expandedStructures[index] ? 'Collapse' : 'Expand')"
 				:aria-controls="`${id}-${index}`"
-				:aria-expanded="expandedStructures[index] ? 'true' : 'false'"
+				:aria-expanded="!!expandedStructures[index]"
 				@click="toggleChildren(index)"
 			>
 				<template v-if="expandedStructures[index]">
