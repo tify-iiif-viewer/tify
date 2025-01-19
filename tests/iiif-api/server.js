@@ -28,7 +28,7 @@ server.on('request', (req, res) => {
 
 				// Rewrite all remote URLs to local ones, except IIIF API profiles
 				const dataWithLocalUrls = data.replace(
-					/https?:\/\/(?!iiif.io\/api\/)[a-z0-9-.:]*/gi,
+					/(?!http:\/\/iiif.io\/api\/)https?:\/\/[a-z0-9-.:]*/gi,
 					`http://127.0.0.1:${server.port}`,
 				);
 
@@ -47,7 +47,7 @@ server.on('request', (req, res) => {
 		// Rewrite collection child manifest URLs for local testing
 		action = 'manifest';
 		file = `wellcome-${segments[3]}.json`;
-	} else if (segments[2] === 'presentation' && segments[4] === 'list') {
+	} else if (segments[4] === 'list') {
 		// Rewrite annotation lists URLs for local testing
 		action = 'annotation-lists';
 		file = `${(segments[5] || 'default').replace(/:/g, '-')}.json`;
