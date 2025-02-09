@@ -12,6 +12,7 @@ export default {
 			itemsPerRow: 0,
 			knownImages: [],
 			lastScrollTop: 0,
+			resizeObserver: null,
 			resizeTimeout: null,
 			style: {},
 			thumbnailWidth: 0,
@@ -47,12 +48,17 @@ export default {
 	mounted() {
 		this.style.flex = this.$el.style.flex;
 	},
+	unmounted() {
+		this.resizeObserver?.disconnect();
+		clearTimeout(this.resizeTimeout);
+	},
 	methods: {
 		init() {
 			this.updateDimensions();
 			this.scrollToCurrentPage(false);
 
-			new ResizeObserver(this.onResize).observe(this.$el);
+			this.resizeObserver = new ResizeObserver(this.onResize);
+			this.resizeObserver.observe(this.$el);
 		},
 		onResize() {
 			clearTimeout(this.resizeTimeout);
