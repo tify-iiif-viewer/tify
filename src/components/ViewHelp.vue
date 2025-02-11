@@ -3,7 +3,7 @@ export default {
 	computed: {
 		// NOTE: If $t is returned directly, this text won’t update when the language is changed via API
 		copyrightHtml() {
-			return 'Copyright &copy; 2017&ndash;2022'
+			return 'Copyright &copy; 2017&ndash;2025'
 				+ ' <a href="https://www.uni-goettingen.de/en/">Göttingen University</a>'
 				+ '&nbsp;/ '
 				+ '<a href="https://www.sub.uni-goettingen.de/en/">Göttingen State and University Library</a>';
