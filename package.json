@@ -21,7 +21,7 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "lint": "eslint . --ext .cjs,.html,.js,.jsx,.mjs,.vue --fix --ignore-path .gitignore",
     "mock-api": "node -e 'import(`./tests/iiif-api/server.js`).then(server => server.default.start())'",
     "postinstall": "node build/create-icons.js",
     "preversion": "npm install-clean && npm run test:unit && npm run build && npm run test:e2e",
@@ -32,6 +32,8 @@
     "version": "git add dist"
   },
   "devDependencies": {
+    "@html-eslint/eslint-plugin": "^0.34.0",
+    "@html-eslint/parser": "^0.34.0",
     "@iiif/parser": "^2.1.2",
     "@mdi/js": "^7.4.47",
     "@rushstack/eslint-patch": "^1.10.3",
@@ -41,12 +43,14 @@
     "click-outside-vue3": "^4.0.1",
     "cypress": "^13.11.0",
     "dotenv": "^16.4.7",
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-cypress": "^2.15.2",
+    "eslint-plugin-html": "^8.1.2",
     "eslint-plugin-vue": "^9.26.0",
     "jsdom": "^24.1.0",
     "openseadragon": "^3.0.0",
+    "petite-vue": "^0.4.1",
     "start-server-and-test": "^2.0.4",
     "striptags": "^3.2.0",
     "unplugin-vue-components": "^0.27.0",
