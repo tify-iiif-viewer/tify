@@ -4,7 +4,7 @@ import {
 	checkTranslationFiles,
 	findTranslatedStrings,
 	rootDir,
-} from './i18n.js';
+} from './i18n.js'; // eslint-disable-line import/extensions
 
 const translatedStrings = findTranslatedStrings(`${rootDir}/src`, '\\$translate')
 	.map((result) => result.key);
