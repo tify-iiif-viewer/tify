@@ -9,11 +9,31 @@ module.exports = {
 		'plugin:vue/vue3-recommended',
 		'@vue/airbnb',
 	],
+	globals: {
+		ENV: true, // defined in vite.config.js
+	},
+	ignorePatterns: ['dist'],
+	overrides: [
+		{
+			files: ['*.html'],
+			parser: '@html-eslint/parser',
+			extends: ['plugin:@html-eslint/recommended'],
+		},
+	],
 	parserOptions: {
 		ecmaVersion: 'latest',
 	},
-	ignorePatterns: ['dist'],
+	plugins: [
+		'@html-eslint',
+		'html',
+	],
 	rules: {
+		'@html-eslint/indent': ['error', 'tab', {
+			tagChildrenIndent: { html: 0 },
+		}],
+		'@html-eslint/require-closing-tags': ['error', {
+			selfClosingCustomPatterns: ['html'],
+		}],
 		'import/prefer-default-export': 'off',
 		'import/no-extraneous-dependencies': ['error', {
 			optionalDependencies: ['tests/unit/index.js'],
@@ -32,9 +52,6 @@ module.exports = {
 		'vue/html-indent': ['error', 'tab'],
 		'vue/max-len': ['error', 120],
 		'vue/no-v-html': 'off',
-	},
-	globals: {
-		ENV: true, // defined in vite.config.js
 	},
 	settings: {
 		'import/resolver': {
