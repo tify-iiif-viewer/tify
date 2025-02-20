@@ -7,7 +7,7 @@ import {
 	findTranslatedStrings,
 	indention,
 	rootDir,
-} from './i18n.js';
+} from './i18n.js'; // eslint-disable-line import/extensions
 
 const rl = readline.createInterface({
 	input: process.stdin,
