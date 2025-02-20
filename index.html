@@ -10,7 +10,20 @@
 		:root {
 			--base-color: #06b;
 			--base-color-lighter: #e6f0f8;
+			--border-color: #0003;
 			--button-hover-bg: #0058a2;
+		}
+
+		*,
+		*::before,
+		*::after {
+			margin: 0;
+			padding: 0;
+			font: inherit;
+		}
+
+		[v-cloak] {
+			display: none !important;
 		}
 
 		html {
@@ -24,37 +37,74 @@
 			margin: 0;
 		}
 
+		.badge {
+			background: var(--base-color);
+			float: left;
+			border-radius: 2px;
+			color: #fff;
+			font-size: .618em;
+			font-weight: bold;
+			line-height: 1;
+			min-width: .75rem;
+			padding: .2em;
+			text-transform: uppercase;
+			text-align: center;
+			margin: .2rem .4em 0 0;
+		}
+
+		.bold {
+			font-weight: bold;
+		}
+
 		.button {
-			background: var(--base-color) linear-gradient(to bottom, rgba(255, 255, 255, .2), rgba(255, 255, 255, 0));
+			background: var(--base-color) linear-gradient(#fff2, #fff0);
 			border: 0;
 			border-radius: 2px;
 			color: #fff;
 			cursor: pointer;
 			font: inherit;
 			font-size: .8125em;
+			font-weight: bold;
 			margin: .125rem;
+			min-width: 1.25rem;
 			padding: .125rem .5rem;
 			white-space: nowrap;
 		}
 
 		.button:focus,
-		.button:hover {
-			background-color: var(--button-hover-bg);
-			opacity: 1 !important;
+		.button:not(:disabled):hover {
+			background: var(--base-color) linear-gradient(#fff4, #fff2);
 		}
 
-		.button:active {
-			box-shadow: 0 .5px 3px rgba(0, 0, 0, .2) inset, 0 0 0 1px rgba(0, 0, 0, .1) inset;
+		.button:not(:disabled):active {
+			box-shadow: 0 .5px 3px #0004 inset, 0 0 0 1px #0002 inset;
 		}
 
-		.header-form {
-			background: #fff;
+		.button:disabled {
+			opacity: .5;
+		}
+
+		.container {
+			height: calc(100vh - 1.75rem);
+		}
+
+		.form {
 			display: flex;
 			align-items: center;
 			padding: .125rem;
+			width: 100%;
 		}
 
-		.header-input {
+		.header {
+			background: #fff;
+			backdrop-filter: blur(1px);
+			display: flex;
+			position: relative;
+			z-index: 10;
+			box-shadow: 0 -1px var(--border-color) inset;
+		}
+
+		.input {
 			background: #fff;
 			border: 1px solid transparent;
 			border-radius: 2px;
@@ -66,154 +116,280 @@
 			padding: calc(.125rem - 1px) calc(.25rem - 1px);
 		}
 
-		.header-input:focus {
+		.input:focus {
 			border-color: var(--base-color);
 			outline: 2px solid var(--base-color-lighter);
 		}
 
-		.main {
+		.instances {
 			display: flex;
 			flex-wrap: wrap;
 		}
 
 		.instance {
-			box-shadow: -1px 0 rgba(0, 0, 0, .2), 0 -1px rgba(0, 0, 0, .2);
+			box-shadow: -1px 0 var(--border-color), 0 -1px var(--border-color);
 			flex: 1;
 			position: relative;
 			z-index: 1;
 		}
 
-		.instance-header {
-			display: flex;
+		.link {
+			color: var(--base-color);
+			text-decoration: none;
+		}
+
+		.link:focus,
+		.link:hover {
+			text-decoration: underline;
+		}
+
+		.menu {
+			position: relative;
+		}
+
+		.menu-dropdown {
+			background: #fff;
+			border-radius: 2px;
+			display: block;
+			filter: drop-shadow(0 0 .5rem #0006);
+			list-style: none;
+			min-width: 5rem;
+			opacity: 1;
+			padding: .5rem .75rem;
 			position: absolute;
-			top: 0;
-			z-index: 10;
+			right: .125rem;
+			top: calc(100% + .125rem);
+			transition: all .2s;
+			white-space: nowrap;
 		}
 
-		.instance-close {
-			border-radius: 0;
-			clip-path: polygon(0 0, 100% 0, 0 100%);
-			height: 1.25rem;
-			line-height: 1;
-			margin: 0;
-			opacity: .5;
-			padding: 0 .5rem .5rem 0;
-			width: 1.25rem;
+		.menu-dropdown[hidden] {
+			opacity: 0;
+			top: calc(100% - .125rem);
+			visibility: hidden;
 		}
 
-		.instance-tify {
-			height: calc(100vh - 1.75rem);
+		.menu-dropdown::before {
+			bottom: 100%;
+			content: '';
+			border: .25rem solid;
+			border-color: transparent transparent #fff;
+			position: absolute;
+			right: .375rem;
+		}
+
+		.menu-list {
+			list-style: none;
+		}
+
+		.menu-list + .menu-list {
+			box-shadow: 0 1px var(--border-color) inset;
+			margin-top: .5rem;
+			padding-top: .5rem;
 		}
 	</style>
 </head>
 
-<body>
-	<header class="header">
-		<form class="header-form" onsubmit="addInstance(); return false">
-			<input
-				type="url"
-				class="header-input"
-				id="manifestUrl"
-				placeholder="IIIF manifest URL"
-				aria-label="IIIF manifest URL"
-				onfocus="event.target.select()"
-			/>
-			<button type="submit" class="button">Add</button>
-			<button type="reset" class="button" onclick="removeAllInstances()">Remove all</button>
-		</form>
-	</header>
-	<main class="main">
-		<div class="instance">
-			<header class="instance-header">
-				<button class="button instance-close" aria-label="Remove instance">
-					&times;
-				</button>
+<body v-scope @vue:mounted="mounted">
+	<main class="instances">
+		<section
+			v-for="instance in instances"
+			class="instance"
+			:key="instance.id"
+		>
+			<header class="header">
+				<form class="form" @submit.prevent="instance.loadManifest()">
+					<input
+						v-model="instance.manifestUrl"
+						type="url"
+						id="manifestUrl"
+						class="input"
+						aria-label="IIIF manifest URL"
+						placeholder="IIIF manifest URL"
+						@focus="event.target.select()"
+					>
+					<button
+						type="submit"
+						class="button"
+						:disabled="!instance.manifestUrl"
+					>
+						Load
+					</button>
+					<div class="menu" @click.stop>
+						<button
+							type="button"
+							class="button"
+							aria-label="Toggle instance and language menu"
+							:aria-controls="`dropdown${instance.id}`"
+							:aria-expanded="instance.dropdownOpen"
+							@click="instance.dropdownOpen = !instance.dropdownOpen"
+						>
+							⋮
+						</button>
+						<div
+							v-cloak
+							:id="`dropdown${instance.id}`"
+							class="menu-dropdown"
+							:hidden="!instance.dropdownOpen"
+						>
+							<ul class="menu-list">
+								<li>
+									<a
+										class="link"
+										href="javascript:;"
+										@click="addInstance()"
+									>
+										Add instance
+									</a>
+								</li>
+								<li v-if="instances.length > 1">
+									<a
+										class="link"
+										href="javascript:;"
+										@click="instance.remove()"
+									>
+										Remove instance
+									</a>
+								</li>
+							</ul>
+							<ul class="menu-list" aria-label="Language">
+								<li
+									v-for="name, code in languages"
+									:key="code"
+									:class="{ 'bold': code === instance.language }"
+								>
+									<a
+										class="link"
+										href="javascript:;"
+										@click="instance.setLanguage(code)"
+									>
+										<span class="badge">{{ code }}</span>
+										{{ name }}
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</form>
 			</header>
-			<div class="instance-tify"></div>
-		</div>
+			<div :id="`container${instance.id}`" class="container"></div>
+		</section>
 	</main>
 
 	<script type="module" src="/src/main.js"></script>
 	<script>
-		const tifyOptions = {
-			translationsDirUrl: 'translations',
-		};
+		/* global PetiteVue, Tify */
 
-		const main = document.querySelector('main');
-		const manifestUrlInput = document.querySelector('#manifestUrl');
-		const template = document.querySelector('.instance');
-		template.remove();
+		$VITE_PETITE_VUE; // eslint-disable-line
 
-		const instances = [];
-		window.instances = instances;
+		const instances = PetiteVue.reactive([]);
 
-		// Restore instances from URL query
-		window.onload = () => {
-			const url = new URL(window.location);
-			for (const [key, value] of url.searchParams) {
-				if (key.startsWith('language')) {
-					const id = parseInt(key.replace('language', ''), 10) || '';
-					instances.find(instance => instance.id === id).tify.setLanguage(value)
+		class Instance {
+			constructor(options = {}) {
+				this.id = options.id || '';
+				while (instances.find((instance) => instance.id === this.id)) {
+					this.id = ((parseInt(this.id, 10) || 1) + 1).toString();
 				}
 
-				if (!key.startsWith('manifest')) {
-					continue
-				}
+				this.dropdownOpen = false;
+				this.language = options.language || 'en';
+				this.manifestUrl = options.manifestUrl || '';
+				this.tify = null;
 
-				const id = parseInt(key.replace('manifest', ''), 10) || '';
-				addInstance({
-					id,
-					manifestUrl: value,
-					urlQueryKey: `tify${id}`,
-				});
-			}
-		};
-
-		function addInstance(options = {}) {
-			element = template.cloneNode(true);
-			main.append(element);
-
-			let id = options.id || '';
-			while (instances.find(instance => instance.id === id)) {
-				id = (id || 0) + 1;
+				instances.push(this);
 			}
 
-			tifyOptions.container = element.querySelector('.instance-tify');
-			tifyOptions.manifestUrl = options.manifestUrl || manifestUrlInput.value;
-			tifyOptions.urlQueryKey = options.urlQueryKey || `tify${id}`;
+			remove() {
+				this.tify?.destroy();
 
-			const tify = new Tify(tifyOptions);
-			const instance = { element, id, tify };
-			instances.push(instance);
+				instances.splice(instances.findIndex((instance) => instance.id === this.id), 1);
 
-			// Expose API of lastest instance for e2e tests
-			window.tify = tify;
-
-			element.querySelector('.instance-close').onclick = () => removeInstance(instance);
-
-			// Update URL query if manifest was set via input
-			if (!options.manifestUrl) {
 				const url = new URL(window.location);
-				url.searchParams.append(`manifest${id}`, tifyOptions.manifestUrl);
+				url.searchParams.delete(`language${this.id}`);
+				url.searchParams.delete(`manifest${this.id}`);
+				url.searchParams.delete(`tify${this.id}`);
 				window.history.pushState(null, '', url.toString());
 			}
+
+			loadManifest() {
+				this.tify?.destroy();
+
+				const url = new URL(window.location);
+
+				// Update URL query if manifest was changed via form input
+				if (url.searchParams.get(`manifest${this.id}`) !== this.manifestUrl) {
+					url.searchParams.delete(`tify${this.id}`);
+					url.searchParams.set(`manifest${this.id}`, this.manifestUrl);
+					window.history.pushState(null, '', url.toString());
+				}
+
+				this.tify = new Tify({
+					container: document.getElementById(`container${this.id}`),
+					manifestUrl: this.manifestUrl,
+					translationsDirUrl: 'translations',
+					language: this.language,
+					urlQueryKey: `tify${this.id}`,
+				});
+
+				// Expose latest instance for e2e tests
+				window.tify = this.tify;
+			}
+
+			setLanguage(code) {
+				this.language = code;
+
+				this.tify?.setLanguage(code);
+
+				const url = new URL(window.location);
+				if (code === 'en') {
+					url.searchParams.delete(`language${this.id}`);
+				} else {
+					url.searchParams.set(`language${this.id}`, code);
+				}
+				window.history.pushState(null, '', url.toString());
+			}
+
+			closeDropdown() {
+				this.dropdownOpen = false;
+			}
 		}
 
-		function removeInstance(instanceToRemove) {
-			instanceToRemove.element.remove();
-			instanceToRemove.tify.destroy();
+		const app = PetiteVue.createApp({
+			instances,
+			languages: $VITE_LANGUAGES, // eslint-disable-line
+			mounted() {
+				// Restore state from URL query
+				const params = (new URL(window.location)).searchParams;
+				params.forEach((url, key) => {
+					if (!key.startsWith('manifest')) {
+						return;
+					}
 
-			instances.splice(instances.findIndex(instance => instance.id === instanceToRemove.id), 1);
+					const id = key.replace('manifest', '');
 
-			const url = new URL(window.location);
-			url.searchParams.delete(`language${instanceToRemove.id}`);
-			url.searchParams.delete(`manifest${instanceToRemove.id}`);
-			url.searchParams.delete(`tify${instanceToRemove.id}`);
-			window.history.pushState(null, '', url.toString());
-		}
+					const instance = new Instance({
+						id,
+						language: params.get(`language${id}`),
+						manifestUrl: url,
+						urlQueryKey: `tify${id}`,
+					});
 
-		function removeAllInstances() {
-			[...instances].forEach(instance => removeInstance(instance))
-		}
+					this.$nextTick(() => {
+						instance.loadManifest();
+					});
+				});
+
+				if (!instances.length) {
+					new Instance(); // eslint-disable-line no-new
+				}
+
+				document.addEventListener('click', () => instances.forEach((instance) => instance.closeDropdown()));
+			},
+			addInstance() {
+				new Instance(); // eslint-disable-line no-new
+			},
+		});
+
+		window.addEventListener('load', () => app.mount('body'));
 	</script>
 </body>
