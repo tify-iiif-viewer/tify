@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
+import { inspect } from 'node:util';
 
 import vue from '@vitejs/plugin-vue';
 import componentsAutoImport from 'unplugin-vue-components/vite'; // eslint-disable-line import/no-unresolved
@@ -11,6 +12,23 @@ import sassGlobImport from 'vite-plugin-sass-glob-import';
 import 'dotenv/config';
 
 import pkg from './package.json';
+
+const transformIndexPlugin = () => ({
+	transformIndexHtml(html) {
+		const translationsDir = './public/translations';
+
+		const petiteVue = readFileSync('./node_modules/petite-vue/dist/petite-vue.iife.js').toString().trim();
+
+		const languages = { en: 'English' };
+		readdirSync(translationsDir).forEach((file) => {
+			languages[file.split('.')[0]] = JSON.parse(readFileSync(`${translationsDir}/${file}`)).$language;
+		});
+
+		return html
+			.replace(/\$VITE_PETITE_VUE;?/, petiteVue)
+			.replace('$VITE_LANGUAGES', inspect(languages, { breakLength: Infinity, compact: true }));
+	},
+});
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -73,6 +91,7 @@ export default defineConfig({
 			fix: true,
 		}),
 		sassGlobImport(),
+		transformIndexPlugin(),
 		vue(),
 	],
 });
