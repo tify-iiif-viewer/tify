@@ -16,6 +16,9 @@ describe('setLanguage', () => {
 				store,
 			],
 		},
+		props: {
+			readyPromise: {},
+		},
 	});
 
 	// Replace fetchJson to return a mock object
