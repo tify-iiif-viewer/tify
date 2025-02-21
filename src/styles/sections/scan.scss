@@ -40,8 +40,8 @@
 		&::after {
 			background: $base-color;
 			box-shadow: 0 0 g(.25) $base-color-lighter;
-			content: '';
 			border-radius: 50%;
+			content: '';
 			display: block;
 			height: .5em;
 			position: absolute;
@@ -92,6 +92,23 @@
 
 	.openseadragon-canvas {
 		outline: 0;
+	}
+}
+
+.tify-scan-overlay {
+	border-radius: $br;
+	box-shadow: 0 0 0 1px $link-color, 0 0 0 1.5px $shine;
+	cursor: pointer;
+
+	@include hover {
+		backdrop-filter: contrast(120%);
+		background: $shade-light;
+		z-index: 1;
+	}
+
+	&.-current {
+		background: none;
+		backdrop-filter: invert(100%) brightness(120%);
 	}
 }
 
