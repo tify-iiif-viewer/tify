@@ -83,24 +83,25 @@ export default {
 			{{ $store.localize(item.label) }}
 		</a>
 
-		<template v-if="expanded">
-			<ol
-				v-if="expanded"
-				:id="id"
-				class="tify-collection-list"
-			>
-				<CollectionNode
-					v-for="child in children"
-					:key="child.id"
-					:item="child"
-				/>
-			</ol>
-			<p
-				v-else-if="children === false"
-				class="tify-collection-error"
-			>
-				{{ $translate('Could not load child manifest') }}
-			</p>
-		</template>
+		<ol
+			v-if="children !== false"
+			v-show="expanded"
+			:id="id"
+			class="tify-collection-list"
+		>
+			<CollectionNode
+				v-for="child in children"
+				:key="child.id"
+				:item="child"
+			/>
+		</ol>
+		<p
+			v-else
+			v-show="expanded"
+			:id="id"
+			class="tify-collection-error"
+		>
+			{{ $translate('Could not load child manifest') }}
+		</p>
 	</li>
 </template>

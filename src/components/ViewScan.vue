@@ -601,6 +601,7 @@ export default {
 			type="button"
 			class="tify-scan-page-button -previous"
 			:title="$translate('Previous page')"
+			:aria-label="$translate('Previous page')"
 			@click="$store.goToPreviousPage()"
 		>
 			<IconChevronLeft />
@@ -610,6 +611,7 @@ export default {
 			type="button"
 			class="tify-scan-page-button -next"
 			:title="$translate('Next page')"
+			:aria-label="$translate('Next page')"
 			@click="$store.goToNextPage()"
 		>
 			<IconChevronRight />
@@ -624,6 +626,7 @@ export default {
 				class="tify-scan-button"
 				:disabled="viewerState.isMaxZoom"
 				:title="$translate('Zoom in')"
+				:aria-label="$translate('Zoom in')"
 				@click="zoomIn()"
 			>
 				<IconMagnifyPlus />
@@ -633,6 +636,7 @@ export default {
 				class="tify-scan-button"
 				:disabled="viewerState.isReset"
 				:title="$translate('Reset')"
+				:aria-label="$translate('Reset')"
 				@click="resetScan(!!$event.shiftKey)"
 			>
 				<IconAspectRatio />
@@ -642,6 +646,7 @@ export default {
 				class="tify-scan-button"
 				:disabled="viewerState.isMinZoom"
 				:title="$translate('Zoom out')"
+				:aria-label="$translate('Zoom out')"
 				@click="zoomOut()"
 			>
 				<IconMagnifyMinus />
@@ -652,6 +657,7 @@ export default {
 				class="tify-scan-button"
 				:class="{ '-active': $store.options.rotation }"
 				:title="$translate('Rotate')"
+				:aria-label="$translate('Rotate')"
 				@click="rotateRight($event)"
 			>
 				<IconRotateRight />
@@ -667,6 +673,7 @@ export default {
 					class="tify-scan-button"
 					:class="{ '-active': filtersActive }"
 					:title="$translate('Toggle image filters')"
+					:aria-label="$translate('Toggle image filters')"
 					:aria-controls="$store.getId('filters')"
 					:aria-expanded="filtersVisible"
 					@click="filtersVisible = !filtersVisible"

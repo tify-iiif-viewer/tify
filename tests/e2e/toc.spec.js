@@ -9,16 +9,26 @@ describe('TOC', () => {
 		cy.contains('.tify-toc-toggle-all', 'Expand all');
 		cy.contains('.tify-toc-toggle-all', 'Collapse all');
 
+		// NOTE: Export panel also contains TOC structures, so we need to set a
+		// parent class for some selectors.
+
 		cy.get('.tify-toc-structure.-current').contains('Titelseite');
-		cy.get('.tify-toc-structure[data-level="0"]:nth-child(3) > .tify-toc-toggle').click();
 		cy.get(
-			'.tify-toc-structure[data-level="0"].-expanded'
+			'.tify-toc'
+			+ ' .tify-toc-structure[data-level="0"]:nth-child(3) > .tify-toc-toggle',
+		).click();
+		cy.get(
+			'.tify-toc'
+			+ ' .tify-toc-structure[data-level="0"].-expanded'
 			+ ' .tify-toc-structure[data-level="1"]:first-child > .tify-toc-toggle',
 		).click();
 		cy.get('.tify-toc-label').contains('Huddesche Methode');
 
 		// "Kurze Nachrichten"
-		cy.get('.tify-toc-structure[data-level="1"]:last-of-type > .tify-toc-toggle').click();
+		cy.get(
+			'.tify-toc'
+			+ ' .tify-toc-structure[data-level="1"]:last-of-type > .tify-toc-toggle',
+		).click();
 		cy.get('.tify-toc-label').contains('Ferrarische Methode (Louis Ferrari)');
 
 		cy.contains('Collapse').click();
@@ -58,7 +68,7 @@ describe('TOC', () => {
 		cy.contains('Expand all').click();
 
 		cy.contains('Discriminante R').click();
-		cy.get('.tify-toc-structure.-current').should('have.length', 4);
+		cy.get('.tify-toc .tify-toc-structure.-current').should('have.length', 4);
 	});
 
 	it('is working even when structures are chaotic', () => {
@@ -73,7 +83,7 @@ describe('TOC', () => {
 		cy.get('.tify-toc');
 		cy.contains('Expand all').should('not.exist');
 
-		cy.get('.tify-toc-structure.-current').contains('Elizabeth Lyttelton\'s commonplace book');
+		cy.get('.tify-toc .tify-toc-structure.-current').contains('Elizabeth Lyttelton\'s commonplace book');
 	});
 
 	it('hides items if their "behavior" is "top"', () => {

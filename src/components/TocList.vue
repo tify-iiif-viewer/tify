@@ -112,6 +112,7 @@ export default {
 				type="button"
 				class="tify-toc-toggle"
 				:title="$translate(expandedStructures[index] ? 'Collapse' : 'Expand')"
+				:aria-label="$translate(expandedStructures[index] ? 'Collapse' : 'Expand')"
 				:aria-controls="`${id}-${index}`"
 				:aria-expanded="!!expandedStructures[index]"
 				@click="toggleChildren(index)"

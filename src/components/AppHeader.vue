@@ -242,11 +242,14 @@ export default {
 			</h1>
 		</div>
 
-		<nav
+		<div
 			v-if="$store.manifest"
 			class="tify-header-column -pagination"
-			:aria-label="$translate('Page')"
 		>
+			<h2 class="tify-sr-only">
+				{{ $translate('Page') }}
+			</h2>
+
 			<div class="tify-header-button-group -page-select">
 				<PageSelect />
 
@@ -255,6 +258,7 @@ export default {
 					class="tify-header-button"
 					:class="{ '-active': $store.options.pages.length > 1 }"
 					:title="$translate('Toggle double-page')"
+					:aria-label="$translate('Toggle double-page')"
 					@click="toggleDoublePage"
 				>
 					<IconViewModule v-if="$store.isCustomPageView" />
@@ -263,13 +267,16 @@ export default {
 			</div>
 
 			<PaginationButtons />
-		</nav>
+		</div>
 
-		<nav
+		<div
 			v-click-outside="closeControlsPopup"
 			class="tify-header-column -controls"
-			:aria-label="$translate('View')"
 		>
+			<h2 class="tify-sr-only">
+				{{ $translate('View') }}
+			</h2>
+
 			<div
 				ref="switchViewSmall"
 				class="tify-header-button-group -toggle"
@@ -278,9 +285,9 @@ export default {
 					type="button"
 					:aria-controls="$store.getId('controls')"
 					:aria-expanded="controlsVisible"
-					:aria-label="$translate('View')"
 					class="tify-header-button"
 					:title="$translate('View')"
+					:aria-label="$translate('View')"
 					@click="toggleControlsPopup"
 				>
 					<IconDotsGrid />
@@ -393,6 +400,7 @@ export default {
 						:aria-controls="$store.getId('help')"
 						:aria-expanded="$store.options.view === 'help'"
 						:title="$translate('Help')"
+						:aria-label="$translate('Help')"
 						@click="toggleView('help')"
 					>
 						<IconHelpCircleOutline />
@@ -403,6 +411,7 @@ export default {
 						type="button"
 						class="tify-header-button -icon-only"
 						:title="$translate('Fullscreen')"
+						:aria-label="$translate('Fullscreen')"
 						@click="toggleFullscreen"
 					>
 						<IconFullscreen />
@@ -413,6 +422,7 @@ export default {
 						type="button"
 						class="tify-header-button -icon-only"
 						:title="$translate('Exit fullscreen')"
+						:aria-label="$translate('Exit fullscreen')"
 						@click="toggleFullscreen"
 					>
 						<IconFullscreenExit />
@@ -422,6 +432,6 @@ export default {
 
 				<PaginationButtons v-if="$store.manifest" />
 			</div>
-		</nav>
+		</div>
 	</header>
 </template>
