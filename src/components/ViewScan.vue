@@ -193,6 +193,7 @@ export default {
 			// https://openseadragon.github.io/examples/tilesource-iiif/
 			this.viewer = OpenSeadragon({
 				animationTime: 0.4,
+				drawer: 'canvas',
 				element: this.$refs.image,
 				immediateRender: true,
 				preload: !this.$store.isMobile(),
