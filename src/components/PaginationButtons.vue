@@ -8,6 +8,7 @@
 			class="tify-header-button"
 			:disabled="$store.isCustomPageView || $store.isFirstPage"
 			:title="$translate('First page')"
+			:aria-label="$translate('First page')"
 			@click="$store.goToFirstPage()"
 		>
 			<IconPageFirst />
@@ -19,6 +20,7 @@
 			class="tify-header-button"
 			:disabled="$store.isCustomPageView || $store.isFirstPage"
 			:title="$translate('Previous section')"
+			:aria-label="$translate('Previous section')"
 			@click="$store.goToPreviousSection()"
 		>
 			<IconSkipPrevious />
@@ -29,6 +31,7 @@
 			class="tify-header-button"
 			:disabled="$store.isCustomPageView || $store.isFirstPage"
 			:title="$translate('Previous page')"
+			:aria-label="$translate('Previous page')"
 			@click="$store.goToPreviousPage()"
 		>
 			<IconChevronLeft />
@@ -39,6 +42,7 @@
 			class="tify-header-button"
 			:disabled="$store.isCustomPageView || $store.isLastPage"
 			:title="$translate('Next page')"
+			:aria-label="$translate('Next page')"
 			@click="$store.goToNextPage()"
 		>
 			<IconChevronRight />
@@ -50,6 +54,7 @@
 			class="tify-header-button"
 			:disabled="$store.isCustomPageView || $store.isLastSection"
 			:title="$translate('Next section')"
+			:aria-label="$translate('Next section')"
 			@click="$store.goToNextSection()"
 		>
 			<IconSkipNext />
@@ -60,6 +65,7 @@
 			class="tify-header-button"
 			:disabled="$store.isCustomPageView || $store.isLastPage"
 			:title="$translate('Last page')"
+			:aria-label="$translate('Last page')"
 			@click="$store.goToLastPage()"
 		>
 			<IconPageLast />

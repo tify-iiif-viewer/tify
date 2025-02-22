@@ -117,7 +117,7 @@ export default {
 					</template>
 				</button>
 				<div
-					v-if="perElementPdfLinksVisible"
+					v-show="perElementPdfLinksVisible"
 					:id="$store.getId('export-pdf-list')"
 					class="tify-export-toc"
 				>
