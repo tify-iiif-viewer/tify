@@ -202,7 +202,7 @@
 					<input
 						v-model="instance.manifestUrl"
 						type="url"
-						id="manifestUrl"
+						:id="`manifest${instance.id}`"
 						class="input"
 						aria-label="IIIF manifest URL"
 						placeholder="IIIF manifest URL"
@@ -252,7 +252,7 @@
 									</a>
 								</li>
 							</ul>
-							<ul class="menu-list" aria-label="Language">
+							<ul class="menu-list">
 								<li
 									v-for="name, code in languages"
 									:key="code"
