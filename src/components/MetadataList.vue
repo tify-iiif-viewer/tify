@@ -66,7 +66,7 @@ export default {
 			v-for="(item, index) in metadata"
 			:key="index"
 		>
-			<h4>
+			<h4 v-if="item.label">
 				{{ cleanLabel($store.localize(item.label)) }}
 			</h4>
 			<div
