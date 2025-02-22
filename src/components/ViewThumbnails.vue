@@ -207,7 +207,7 @@ export default {
 			>
 				<img
 					alt=""
-					:src="item.imgUrl"
+					:src="item.imgUrl || 'data:,'"
 				/>
 				<span class="tify-thumbnails-page">
 					{{ $store.getPageLabel(item.page, item.label) }}
