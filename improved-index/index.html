@@ -22,6 +22,10 @@
 			font: inherit;
 		}
 
+		[v-cloak] {
+			display: none;
+		}
+
 		html {
 			background: #666;
 			color: #333;
@@ -222,8 +226,11 @@
 							type="button"
 							:aria-controls="`dropdown-${instance.id}`"
 							:aria-expanded="instance.dropdownOpen"
+							aria-label="Toggle menu"
 							@click="instance.dropdownOpen = !instance.dropdownOpen"
-						>⋮</button>
+						>
+							⋮
+						</button>
 						<ul
 							v-if="instance.dropdownOpen"
 							v-cloak
@@ -231,10 +238,14 @@
 							class="menu-dropdown"
 						>
 							<li>
-								<a href="javascript:;" @click="addInstance()">Add instance</a>
+								<a href="javascript:;" @click="addInstance(); instance.dropdownOpen = false">
+									Add instance
+								</a>
 							</li>
 							<li v-if="instances.length > 1">
-								<a href="javascript:;" @click="instance.remove()">Close instance</a>
+								<a href="javascript:;" @click="instance.remove()">
+									Remove instance
+								</a>
 							</li>
 							<li>
 								<hr>
@@ -268,7 +279,7 @@
 			constructor(options = {}) {
 				this.id = options.id || '';
 				while (instances.find((instance) => instance.id === this.id)) {
-					this.id = ((parseInt(options.id, 10) || 1) + 1).toString();
+					this.id = ((parseInt(this.id, 10) || 1) + 1).toString();
 				}
 
 				this.dropdownOpen = false;
