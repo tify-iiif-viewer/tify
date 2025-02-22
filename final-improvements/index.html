@@ -119,15 +119,30 @@
 				placeholder="IIIF manifest URL"
 				aria-label="IIIF manifest URL"
 				onfocus="event.target.select()"
-			/>
-			<button type="submit" class="button">Add</button>
-			<button type="reset" class="button" onclick="removeAllInstances()">Remove all</button>
+			>
+			<button
+				type="submit"
+				class="button"
+			>
+				Add
+			</button>
+			<button
+				type="reset"
+				class="button"
+				onclick="removeAllInstances()"
+			>
+				Remove all
+			</button>
 		</form>
 	</header>
 	<main class="main">
 		<div class="instance">
 			<header class="instance-header">
-				<button class="button instance-close" aria-label="Remove instance">
+				<button
+					type="button"
+					class="button instance-close"
+					aria-label="Remove instance"
+				>
 					&times;
 				</button>
 			</header>
@@ -154,11 +169,11 @@
 			for (const [key, value] of url.searchParams) {
 				if (key.startsWith('language')) {
 					const id = parseInt(key.replace('language', ''), 10) || '';
-					instances.find(instance => instance.id === id).tify.setLanguage(value)
+					instances.find((instance) => instance.id === id).tify.setLanguage(value);
 				}
 
 				if (!key.startsWith('manifest')) {
-					continue
+					continue;
 				}
 
 				const id = parseInt(key.replace('manifest', ''), 10) || '';
@@ -171,11 +186,11 @@
 		};
 
 		function addInstance(options = {}) {
-			element = template.cloneNode(true);
+			const element = template.cloneNode(true);
 			main.append(element);
 
 			let id = options.id || '';
-			while (instances.find(instance => instance.id === id)) {
+			while (instances.find((instance) => instance.id === id)) {
 				id = (id || 0) + 1;
 			}
 
@@ -204,7 +219,7 @@
 			instanceToRemove.element.remove();
 			instanceToRemove.tify.destroy();
 
-			instances.splice(instances.findIndex(instance => instance.id === instanceToRemove.id), 1);
+			instances.splice(instances.findIndex((instance) => instance.id === instanceToRemove.id), 1);
 
 			const url = new URL(window.location);
 			url.searchParams.delete(`language${instanceToRemove.id}`);
@@ -214,7 +229,7 @@
 		}
 
 		function removeAllInstances() {
-			[...instances].forEach(instance => removeInstance(instance))
+			[...instances].forEach((instance) => removeInstance(instance));
 		}
 	</script>
 </body>
