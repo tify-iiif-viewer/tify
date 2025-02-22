@@ -756,6 +756,7 @@ export default {
 				type="button"
 				class="tify-scan-button"
 				:title="$translate('Toggle annotations')"
+				:aria-label="$translate('Toggle annotations')"
 				@click="toggleOverlays()"
 			>
 				<IconMessageTextOutline v-if="$store.options.annotationsVisible !== false" />
