@@ -163,7 +163,7 @@ export default {
 			class="tify-info-section -attribution"
 		>
 			<h3>{{ $store.localize(manifestOrCollection.requiredStatement.label) }}</h3>
-			<p v-html="filterHtml($store.localize(manifestOrCollection.requiredStatement.value))" />
+			<div v-html="filterHtml($store.localize(manifestOrCollection.requiredStatement.value))" />
 		</div>
 
 		<div
