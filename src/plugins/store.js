@@ -352,7 +352,8 @@ function Store(args) {
 					const annotationListUrl = canvas.annotations[0].id;
 
 					try {
-						resources = (await store.fetchJson(annotationListUrl)).resources;
+						const annotationList = await store.fetchJson(annotationListUrl);
+						resources = annotationList.resources || annotationList.items;
 					} catch (error) {
 						const status = error.response ? error.response.statusText : error.message;
 						// eslint-disable-next-line no-console
