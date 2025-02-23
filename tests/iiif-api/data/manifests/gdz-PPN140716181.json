@@ -1,0 +1,302 @@
+{
+	"@id": "https://manifests.sub.uni-goettingen.de/id/PPN140716181",
+	"@type": "sc:Manifest",
+	"@context": "http://iiif.io/api/presentation/2/context.json",
+	"viewingDirection": "left-to-right",
+	"viewingHint": "paged",
+	"navDate": "1781-01-01T00:00:00+00:53",
+	"label": "Von Gottes Gnaden Wir Friedrich, Landgraf zu Hessen, F\u00fcrst zu Hersfeld, Graf zu Catzenelnbogen, Dietz, Ziegenhayn, Nidda, Schaumburg und Hanau [et]c. [et]c. Ritter des K\u00f6nigl. Gro\u00df-Brittannischen Ordens vom blauen Hosenbande, wie auch des K\u00f6nigl. Preu\u00dfischen Ordens vom schwarzen Adler, [et]c. [et]c. F\u00fcgen allen und jeden Unseren Unterthanen Unserer F\u00fcrstenth\u00fcmer und zugeh\u00f6rigen Graf- und Herrschaften, nebst Entbietung Unsrer Gnade, hiermit zu Wissen: Nachdem Wir in h\u00f6chstmi\u00dff\u00e4llige Erfahrung gezogen, da\u00df das durch verschiedene vorhinnige Verordnungen, besonders das sub dato den 5ten Martii 1753 ergangene ...",
+	"metadata": [
+		{
+			"label": "Ort",
+			"value": [
+				"[S.l.]"
+			]
+		},
+		{
+			"label": "Jahr",
+			"value": "1781"
+		},
+		{
+			"label": "Digitalisierungsdatum",
+			"value": "2011"
+		},
+		{
+			"label": "Sprache",
+			"value": [
+				"Deutsch"
+			]
+		},
+		{
+			"label": "PURL",
+			"value": "http://resolver.sub.uni-goettingen.de/purl?PPN140716181"
+		}
+	],
+	"thumbnail": {
+		"@id": "https://images.sub.uni-goettingen.de/iiif/image/gdz:PPN140716181:00000001/full/96,/0/default.jpg",
+		"service": {
+			"@id": "https://images.sub.uni-goettingen.de/iiif/presentation/PPN140716181/manifest",
+			"@context": "http://iiif.io/api/image/2/context.json",
+			"profile": "http://iiif.io/api/image/2/level1.json"
+		}
+	},
+	"sequences": [
+		{
+			"@id": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/sequence/normal",
+			"@type": "sc:Sequence",
+			"label": "Current Page Order",
+			"viewingDirection": "left-to-right",
+			"viewingHint": "paged",
+			"startCanvas": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/canvas/gdz:PPN140716181:00000001",
+			"canvases": [
+				{
+					"@type": "sc:Canvas",
+					"@id": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/canvas/gdz:PPN140716181:00000001",
+					"label": " ",
+					"height": 400,
+					"width": 300,
+					"images": [
+						{
+							"@context": "http://iiif.io/api/presentation/2/context.json",
+							"@type": "oa:Annotation",
+							"motivation": "sc:painting",
+							"@id": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/annotation/gdz:PPN140716181:00000001",
+							"resource": {
+								"@id": "https://manifests.sub.uni-goettingen.de/iiif/image/gdz:PPN140716181:00000001",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"service": {
+									"@id": "https://images.sub.uni-goettingen.de/iiif/image/gdz:PPN140716181:00000001",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level1.json"
+								},
+								"height": 400,
+								"width": 300
+							},
+							"on": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/canvas/gdz:PPN140716181:00000001"
+						}
+					]
+				},
+				{
+					"@type": "sc:Canvas",
+					"@id": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/canvas/gdz:PPN140716181:00000002",
+					"label": " ",
+					"height": 400,
+					"width": 300,
+					"images": [
+						{
+							"@context": "http://iiif.io/api/presentation/2/context.json",
+							"@type": "oa:Annotation",
+							"motivation": "sc:painting",
+							"@id": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/annotation/gdz:PPN140716181:00000002",
+							"resource": {
+								"@id": "https://manifests.sub.uni-goettingen.de/iiif/image/gdz:PPN140716181:00000002",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"service": {
+									"@id": "https://images.sub.uni-goettingen.de/iiif/image/gdz:PPN140716181:00000002",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level1.json"
+								},
+								"height": 400,
+								"width": 300
+							},
+							"on": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/canvas/gdz:PPN140716181:00000002"
+						}
+					]
+				},
+				{
+					"@type": "sc:Canvas",
+					"@id": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/canvas/gdz:PPN140716181:00000003",
+					"label": " ",
+					"height": 400,
+					"width": 300,
+					"images": [
+						{
+							"@context": "http://iiif.io/api/presentation/2/context.json",
+							"@type": "oa:Annotation",
+							"motivation": "sc:painting",
+							"@id": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/annotation/gdz:PPN140716181:00000003",
+							"resource": {
+								"@id": "https://manifests.sub.uni-goettingen.de/iiif/image/gdz:PPN140716181:00000003",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"service": {
+									"@id": "https://images.sub.uni-goettingen.de/iiif/image/gdz:PPN140716181:00000003",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level1.json"
+								},
+								"height": 400,
+								"width": 300
+							},
+							"on": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/canvas/gdz:PPN140716181:00000003"
+						}
+					]
+				},
+				{
+					"@type": "sc:Canvas",
+					"@id": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/canvas/gdz:PPN140716181:00000004",
+					"label": " ",
+					"height": 400,
+					"width": 300,
+					"images": [
+						{
+							"@context": "http://iiif.io/api/presentation/2/context.json",
+							"@type": "oa:Annotation",
+							"motivation": "sc:painting",
+							"@id": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/annotation/gdz:PPN140716181:00000004",
+							"resource": {
+								"@id": "https://manifests.sub.uni-goettingen.de/iiif/image/gdz:PPN140716181:00000004",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"service": {
+									"@id": "https://images.sub.uni-goettingen.de/iiif/image/gdz:PPN140716181:00000004",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level1.json"
+								},
+								"height": 400,
+								"width": 300
+							},
+							"on": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/canvas/gdz:PPN140716181:00000004"
+						}
+					]
+				},
+				{
+					"@type": "sc:Canvas",
+					"@id": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/canvas/gdz:PPN140716181:00000005",
+					"label": " ",
+					"height": 400,
+					"width": 300,
+					"images": [
+						{
+							"@context": "http://iiif.io/api/presentation/2/context.json",
+							"@type": "oa:Annotation",
+							"motivation": "sc:painting",
+							"@id": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/annotation/gdz:PPN140716181:00000005",
+							"resource": {
+								"@id": "https://manifests.sub.uni-goettingen.de/iiif/image/gdz:PPN140716181:00000005",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"service": {
+									"@id": "https://images.sub.uni-goettingen.de/iiif/image/gdz:PPN140716181:00000005",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level1.json"
+								},
+								"height": 400,
+								"width": 300
+							},
+							"on": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/canvas/gdz:PPN140716181:00000005"
+						}
+					]
+				},
+				{
+					"@type": "sc:Canvas",
+					"@id": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/canvas/gdz:PPN140716181:00000006",
+					"label": " ",
+					"height": 400,
+					"width": 300,
+					"images": [
+						{
+							"@context": "http://iiif.io/api/presentation/2/context.json",
+							"@type": "oa:Annotation",
+							"motivation": "sc:painting",
+							"@id": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/annotation/gdz:PPN140716181:00000006",
+							"resource": {
+								"@id": "https://manifests.sub.uni-goettingen.de/iiif/image/gdz:PPN140716181:00000006",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"service": {
+									"@id": "https://images.sub.uni-goettingen.de/iiif/image/gdz:PPN140716181:00000006",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level1.json"
+								},
+								"height": 400,
+								"width": 300
+							},
+							"on": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/canvas/gdz:PPN140716181:00000006"
+						}
+					]
+				},
+				{
+					"@type": "sc:Canvas",
+					"@id": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/canvas/gdz:PPN140716181:00000007",
+					"label": " ",
+					"height": 400,
+					"width": 300,
+					"images": [
+						{
+							"@context": "http://iiif.io/api/presentation/2/context.json",
+							"@type": "oa:Annotation",
+							"motivation": "sc:painting",
+							"@id": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/annotation/gdz:PPN140716181:00000007",
+							"resource": {
+								"@id": "https://manifests.sub.uni-goettingen.de/iiif/image/gdz:PPN140716181:00000007",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"service": {
+									"@id": "https://images.sub.uni-goettingen.de/iiif/image/gdz:PPN140716181:00000007",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level1.json"
+								},
+								"height": 400,
+								"width": 300
+							},
+							"on": "https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN140716181/canvas/gdz:PPN140716181:00000007"
+						}
+					]
+				}
+			]
+		}
+	],
+	"attribution": "Nieders\u00e4chsische Staats- und Universit\u00e4tsbibliothek G\u00f6ttingen",
+	"logo": {
+		"@id": "https://gdz.sub.uni-goettingen.de/images/sub-blue.svg",
+		"service": {
+			"@id": "https://gdz.sub.uni-goettingen.de/",
+			"@context": "http://iiif.io/api/image/2/context.json",
+			"profile": "http://iiif.io/api/image/2/level1.json"
+		}
+	},
+	"rendering": [
+		{
+			"@id": "https://gdz.sub.uni-goettingen.de/download/pdf/PPN140716181/PPN140716181.pdf",
+			"label": "PDF download",
+			"format": "application/pdf"
+		},
+		{
+			"@id": "https://dfg-viewer.de/show/?set[mets]=https://gdz.sub.uni-goettingen.de/mets/PPN140716181.mets.xml",
+			"label": "DFG-Viewer",
+			"format": "text/html"
+		}
+	],
+	"seeAlso": [
+		{
+			"@id": "https://gdz.sub.uni-goettingen.de/download/PPN140716181.bib",
+			"format": "application/x-bibtex",
+			"profile": "https://www.bibtex.org/Format/"
+		},
+		{
+			"@id": "https://gdz.sub.uni-goettingen.de/download/PPN140716181.ris",
+			"format": "application/x-research-info-systems",
+			"profile": "https://referencemanager.com/sites/rm/files/m/direct_export_ris.pdf"
+		},
+		{
+			"@id": "https://gdz.sub.uni-goettingen.de/download/PPN140716181.enw",
+			"format": "application/x-endnote-refer",
+			"profile": "https://endnote.com/"
+		},
+		{
+			"@id": "https://gdz.sub.uni-goettingen.de/mets/PPN140716181.mets.xml",
+			"format": "text/xml",
+			"profile": "https://www.loc.gov/standards/mets/profile_docs/mets.profile.v2-0.xsd"
+		}
+	],
+	"structures": [],
+	"related": [
+		{
+			"@id": "http://opac.sub.uni-goettingen.de/DB=1/PPN?PPN=140716181",
+			"label": "OPAC",
+			"format": "text/html"
+		}
+	]
+}

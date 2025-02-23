@@ -15,7 +15,7 @@
 		</button>
 
 		<button
-			v-if="$store.manifest.structures"
+			v-if="$store.sections.length > 1"
 			type="button"
 			class="tify-header-button"
 			:disabled="$store.isCustomPageView || $store.isFirstPage"
@@ -49,7 +49,7 @@
 		</button>
 
 		<button
-			v-if="$store.manifest.structures"
+			v-if="$store.sections.length > 1"
 			type="button"
 			class="tify-header-button"
 			:disabled="$store.isCustomPageView || $store.isLastSection"
