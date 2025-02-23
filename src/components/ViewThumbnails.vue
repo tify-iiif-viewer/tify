@@ -101,6 +101,7 @@ export default {
 
 			const items = [];
 			for (let i = startPage - 1; i < endPage; i += 1) {
+				const label = this.$store.localize(this.$store.manifest.items[i].label, '');
 				const resource = this.$store.manifest.items[i].items[0].items[0].body;
 				if (resource.service) {
 					const service = resource.service instanceof Array ? resource.service[0] : resource.service;
@@ -109,13 +110,13 @@ export default {
 						: 'native';
 					const id = service.id || service['@id'];
 					items.push({
-						label: this.$store.localize(this.$store.manifest.items[i].label),
+						label,
 						imgUrl: `${id}${id.at(-1) === '/' ? '' : '/'}full/${this.thumbnailWidth},/0/${quality}.jpg`,
 						page: i + 1,
 					});
 				} else {
 					items.push({
-						label: this.$store.localize(this.$store.manifest.items[i].label),
+						label,
 						imgUrl: resource.id,
 						page: i + 1,
 					});

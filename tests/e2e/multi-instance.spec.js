@@ -7,7 +7,7 @@ describe('Multi-instance', () => {
 		cy.contains('Algebra : Vorlesungsmanuskript');
 
 		cy.get('[title="Next page"]').eq(0).click();
-		cy.get('.tify-page-select-button').eq(0).contains('2 : -');
-		cy.get('.tify-page-select-button').eq(1).contains('1 : -');
+		cy.get('.tify-page-select-button').eq(0).contains('2 · -');
+		cy.get('.tify-page-select-button').eq(1).contains('1 · -');
 	});
 });
