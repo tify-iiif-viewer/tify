@@ -222,7 +222,7 @@
 							type="button"
 							class="button"
 							aria-label="Toggle instance and language menu"
-							:aria-controls="`dropdown-${instance.id}`"
+							:aria-controls="`dropdown${instance.id}`"
 							:aria-expanded="instance.dropdownOpen"
 							@click="instance.dropdownOpen = !instance.dropdownOpen"
 						>
@@ -230,7 +230,7 @@
 						</button>
 						<div
 							v-cloak
-							:id="`dropdown-${instance.id}`"
+							:id="`dropdown${instance.id}`"
 							class="menu-dropdown"
 							:hidden="!instance.dropdownOpen"
 						>
