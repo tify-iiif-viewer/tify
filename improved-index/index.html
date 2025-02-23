@@ -312,13 +312,15 @@
 				window.history.pushState(null, '', url.toString());
 			}
 
-			loadManifest(resetUrlQuery = true) {
+			loadManifest() {
 				this.tify?.destroy();
 
 				const url = new URL(window.location);
 
-				if (resetUrlQuery) {
+				// Update URL query if manifest was changed via form input
+				if (url.searchParams.get(`manifest${this.id}`) !== this.manifestUrl) {
 					url.searchParams.delete(`tify${this.id}`);
+					url.searchParams.set(`manifest${this.id}`, this.manifestUrl);
 					window.history.pushState(null, '', url.toString());
 				}
 
@@ -332,12 +334,6 @@
 
 				// Expose latest instance for e2e tests
 				window.tify = this.tify;
-
-				// Update URL query if manifest was set via input
-				if (url.searchParams.get(`manifest${this.id}`) !== this.manifestUrl) {
-					url.searchParams.set(`manifest${this.id}`, this.manifestUrl);
-					window.history.pushState(null, '', url.toString());
-				}
 			}
 
 			setLanguage(code) {
@@ -380,7 +376,7 @@
 					});
 
 					this.$nextTick(() => {
-						instance.loadManifest(false);
+						instance.loadManifest();
 					});
 				});
 
