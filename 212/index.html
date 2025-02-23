@@ -23,7 +23,7 @@
 		}
 
 		[v-cloak] {
-			display: none;
+			display: none !important;
 		}
 
 		html {
@@ -37,95 +37,7 @@
 			margin: 0;
 		}
 
-		a {
-			color: var(--base-color);
-			text-decoration: none;
-		}
-
-		a:focus,
-		a:hover {
-			text-decoration: underline;
-		}
-
-		button {
-			background: var(--base-color) linear-gradient(to bottom, rgba(255, 255, 255, .2), rgba(255, 255, 255, 0));
-			border: 0;
-			border-radius: 2px;
-			color: #fff;
-			cursor: pointer;
-			font: inherit;
-			font-size: .8125em;
-			font-weight: bold;
-			margin: .125rem;
-			min-width: 1.25rem;
-			padding: .125rem .5rem;
-			white-space: nowrap;
-		}
-
-		button:focus,
-		button:hover {
-			background-color: var(--button-hover-bg);
-		}
-
-		button:active {
-			box-shadow: 0 .5px 3px rgba(0, 0, 0, .2) inset, 0 0 0 1px rgba(0, 0, 0, .1) inset;
-		}
-
-		button:disabled {
-			opacity: .5;
-		}
-
-		hr {
-			border: 0;
-			border-bottom: 1px solid #0006;
-			margin: calc(.5rem - 1px) 0 .5rem;
-		}
-
-		.container {
-			height: calc(100vh - 1.75rem);
-		}
-
-		.header {
-			background: #fff;
-			backdrop-filter: blur(1px);
-			display: flex;
-			position: relative;
-			z-index: 10;
-			box-shadow: 0 -1px var(--border-color) inset;
-		}
-
-		.header-form {
-			display: flex;
-			align-items: center;
-			padding: .125rem;
-			width: 100%;
-		}
-
-		.header-input {
-			background: #fff;
-			border: 1px solid transparent;
-			border-radius: 2px;
-			color: inherit;
-			flex: 1;
-			font: inherit;
-			margin: .125rem;
-			min-width: 0;
-			padding: calc(.125rem - 1px) calc(.25rem - 1px);
-		}
-
-		.header-input:focus {
-			border-color: var(--base-color);
-			outline: 2px solid var(--base-color-lighter);
-		}
-
-		.instance {
-			box-shadow: -1px 0 var(--border-color), 0 -1px var(--border-color);
-			flex: 1;
-			position: relative;
-			z-index: 1;
-		}
-
-		.language-badge {
+		.badge {
 			background: var(--base-color);
 			float: left;
 			border-radius: 2px;
@@ -140,8 +52,90 @@
 			margin: .2rem .4em 0 0;
 		}
 
-		.language-highlight {
+		.bold {
 			font-weight: bold;
+		}
+
+		.button {
+			background: var(--base-color) linear-gradient(to bottom, rgba(255, 255, 255, .2), rgba(255, 255, 255, 0));
+			border: 0;
+			border-radius: 2px;
+			color: #fff;
+			cursor: pointer;
+			font: inherit;
+			font-size: .8125em;
+			font-weight: bold;
+			margin: .125rem;
+			min-width: 1.25rem;
+			padding: .125rem .5rem;
+			white-space: nowrap;
+		}
+
+		.button:focus,
+		.button:hover {
+			background-color: var(--button-hover-bg);
+		}
+
+		.button:active {
+			box-shadow: 0 .5px 3px rgba(0, 0, 0, .2) inset, 0 0 0 1px rgba(0, 0, 0, .1) inset;
+		}
+
+		.button:disabled {
+			opacity: .5;
+		}
+
+		.container {
+			height: calc(100vh - 1.75rem);
+		}
+
+		.form {
+			display: flex;
+			align-items: center;
+			padding: .125rem;
+			width: 100%;
+		}
+
+		.header {
+			background: #fff;
+			backdrop-filter: blur(1px);
+			display: flex;
+			position: relative;
+			z-index: 10;
+			box-shadow: 0 -1px var(--border-color) inset;
+		}
+
+		.input {
+			background: #fff;
+			border: 1px solid transparent;
+			border-radius: 2px;
+			color: inherit;
+			flex: 1;
+			font: inherit;
+			margin: .125rem;
+			min-width: 0;
+			padding: calc(.125rem - 1px) calc(.25rem - 1px);
+		}
+
+		.input:focus {
+			border-color: var(--base-color);
+			outline: 2px solid var(--base-color-lighter);
+		}
+
+		.instance {
+			box-shadow: -1px 0 var(--border-color), 0 -1px var(--border-color);
+			flex: 1;
+			position: relative;
+			z-index: 1;
+		}
+
+		.link {
+			color: var(--base-color);
+			text-decoration: none;
+		}
+
+		.link:focus,
+		.link:hover {
+			text-decoration: underline;
 		}
 
 		.main {
@@ -153,20 +147,10 @@
 			position: relative;
 		}
 
-		.menu button {
-			padding: .125rem 0;
-		}
-
-		.menu-dropdown[hidden] {
-			display: block;
-			opacity: 0;
-			top: calc(100% - .125rem);
-			visibility: hidden;
-		}
-
 		.menu-dropdown {
 			background: #fff;
 			border-radius: 2px;
+			display: block;
 			filter: drop-shadow(0 0 .5rem #0006);
 			list-style: none;
 			min-width: 5rem;
@@ -177,6 +161,12 @@
 			top: calc(100% + .125rem);
 			transition: all .2s;
 			white-space: nowrap;
+		}
+
+		.menu-dropdown[hidden] {
+			opacity: 0;
+			top: calc(100% - .125rem);
+			visibility: hidden;
 		}
 
 		.menu-dropdown::before {
@@ -198,8 +188,8 @@
 			padding-top: .5rem;
 		}
 	</style>
-  <script type="module" crossorigin src="/tify/212/tify.Kzq4_suk.js"></script>
-  <link rel="stylesheet" crossorigin href="/tify/212/tify.Bl0qSjb1.css">
+  <script type="module" crossorigin src="/tify/212/tify.CanUiKlK.js"></script>
+  <link rel="stylesheet" crossorigin href="/tify/212/tify.DRtZAiFv.css">
 </head>
 
 <body v-scope @vue:mounted="mounted">
@@ -210,57 +200,71 @@
 			:key="instance.id"
 		>
 			<header class="header">
-				<form class="header-form" @submit.prevent="instance.loadManifest()">
+				<form class="form" @submit.prevent="instance.loadManifest()">
 					<input
 						v-model="instance.manifestUrl"
 						type="url"
 						id="manifestUrl"
-						class="header-input"
+						class="input"
 						placeholder="IIIF manifest URL"
 						aria-label="IIIF manifest URL"
 						@focus="event.target.select()"
 					>
-					<button type="submit">Load</button>
+					<button type="submit" class="button">Load</button>
 					<div class="menu" @click.stop>
 						<button
 							type="button"
+							class="button"
+							aria-label="Toggle menu"
 							:aria-controls="`dropdown-${instance.id}`"
 							:aria-expanded="instance.dropdownOpen"
-							aria-label="Toggle menu"
 							@click="instance.dropdownOpen = !instance.dropdownOpen"
 						>
 							⋮
 						</button>
-						<ul
-							v-if="instance.dropdownOpen"
+						<div
 							v-cloak
 							:id="`dropdown-${instance.id}`"
 							class="menu-dropdown"
+							:hidden="!instance.dropdownOpen"
 						>
-							<li>
-								<a href="javascript:;" @click="addInstance(); instance.dropdownOpen = false">
-									Add instance
-								</a>
-							</li>
-							<li v-if="instances.length > 1">
-								<a href="javascript:;" @click="instance.remove()">
-									Remove instance
-								</a>
-							</li>
-							<li>
-								<hr>
-							</li>
-							<li
-								v-for="name, code in languages"
-								:key="code"
-								:class="{ 'language-highlight': code === instance.language }"
-							>
-								<a href="javascript:;" @click="instance.setLanguage(code)">
-									<span class="language-badge">{{ code }}</span>
-									{{ name }}
-								</a>
-							</li>
-						</ul>
+							<ul class="menu-list">
+								<li>
+									<a
+										class="link"
+										href="javascript:;"
+										@click="addInstance(); instance.dropdownOpen = false"
+									>
+										Add instance
+									</a>
+								</li>
+								<li v-if="instances.length > 1">
+									<a
+										class="link"
+										href="javascript:;"
+										@click="instance.remove()"
+									>
+										Remove instance
+									</a>
+								</li>
+							</ul>
+							<ul class="menu-list">
+								<li
+									v-for="name, code in languages"
+									:key="code"
+									:class="{ 'bold': code === instance.language }"
+								>
+									<a
+										class="link"
+										href="javascript:;"
+										@click="instance.setLanguage(code)"
+									>
+										<span class="badge">{{ code }}</span>
+										{{ name }}
+									</a>
+								</li>
+							</ul>
+						</div>
 					</div>
 				</form>
 			</header>
