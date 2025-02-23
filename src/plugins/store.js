@@ -122,11 +122,11 @@ function Store(args) {
 		}),
 		pageCount: computed(() => store.manifest.items?.length),
 		sections: computed(() => {
-			const sections = [];
-
 			if (!store.manifest.structures) {
-				return sections;
+				return [];
 			}
+
+			const sections = [];
 
 			store.manifest.structures.forEach((structure) => {
 				if (!structure.items) {

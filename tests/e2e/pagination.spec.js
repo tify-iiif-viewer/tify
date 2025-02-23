@@ -93,4 +93,12 @@ describe('Pagination', () => {
 		cy.get('.tify-header').click();
 		cy.get('.tify-header-popup').should('not.be.visible');
 	});
+
+	it('hides section buttons if there are less than 2 sections', () => {
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-PPN140716181.json`);
+
+		cy.contains('Von Gottes Gnaden');
+		cy.contains('Previous section').should('not.exist');
+		cy.contains('Next section').should('not.exist');
+	});
 });
