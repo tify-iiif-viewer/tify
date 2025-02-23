@@ -183,7 +183,7 @@
 		}
 
 		.menu-list + .menu-list {
-			box-shadow: 0 1px #0006 inset;
+			box-shadow: 0 1px var(--border-color) inset;
 			margin-top: .5rem;
 			padding-top: .5rem;
 		}
@@ -233,7 +233,7 @@
 									<a
 										class="link"
 										href="javascript:;"
-										@click="addInstance(); instance.dropdownOpen = false"
+										@click="addInstance()"
 									>
 										Add instance
 									</a>
