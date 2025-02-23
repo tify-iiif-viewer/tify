@@ -121,6 +121,11 @@
 			outline: 2px solid var(--base-color-lighter);
 		}
 
+		.instances {
+			display: flex;
+			flex-wrap: wrap;
+		}
+
 		.instance {
 			box-shadow: -1px 0 var(--border-color), 0 -1px var(--border-color);
 			flex: 1;
@@ -136,11 +141,6 @@
 		.link:focus,
 		.link:hover {
 			text-decoration: underline;
-		}
-
-		.main {
-			display: flex;
-			flex-wrap: wrap;
 		}
 
 		.menu {
@@ -193,8 +193,8 @@
 </head>
 
 <body v-scope @vue:mounted="mounted">
-	<main class="main">
-		<div
+	<main class="instances">
+		<section
 			v-for="instance in instances"
 			class="instance"
 			:key="instance.id"
@@ -275,7 +275,7 @@
 				</form>
 			</header>
 			<div :id="`container${instance.id}`" class="container"></div>
-		</div>
+		</section>
 	</main>
 
 	<script>
