@@ -19,8 +19,7 @@ export default {
 		currentPageLabel() {
 			const page = this.$store.options.pages[0] || 1;
 			const canvasIndex = this.$store.options.pages[0] ? this.$store.options.pages[0] - 1 : 0;
-			const label = this.$store.localize(this.$store.manifest.items[canvasIndex].label);
-			return this.$store.getPageLabel(page, label);
+			return this.$store.getPageLabel(page, this.$store.manifest.items[canvasIndex].label);
 		},
 	},
 	watch: {
@@ -178,7 +177,7 @@ export default {
 						href="javascript:;"
 						@click="setPage(canvas.page)"
 					>
-						{{ $store.getPageLabel(canvas.page, $store.localize(canvas.label)) }}
+						{{ $store.getPageLabel(canvas.page, canvas.label) }}
 					</a>
 				</li>
 			</ol>

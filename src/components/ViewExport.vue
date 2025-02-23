@@ -76,7 +76,7 @@ export default {
 						:download="`${page}.jpg`"
 					>
 						{{ $translate('Page') }}
-						{{ $store.getPageLabel(page, $store.localize($store.manifest.items[page - 1].label)) }}
+						{{ $store.getPageLabel(page, $store.manifest.items[page - 1].label) }}
 					</a>
 				</li>
 			</ul>

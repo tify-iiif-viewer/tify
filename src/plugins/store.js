@@ -271,8 +271,16 @@ function Store(args) {
 		getId(postfix) {
 			return instanceId + (postfix ? `-${postfix}` : '');
 		},
-		getPageLabel(number, label) {
-			return store.options.pageLabelFormat.replace('P', number).replace('L', label);
+		getPageLabel(number, labelObject) {
+			const label = store.localize(labelObject, '');
+
+			if (label) {
+				return store.options.pageLabelFormat.replace('P', number).replace('L', label);
+			}
+
+			return store.options.pageLabelFormat.includes('P')
+				? `${number}`
+				: '—'; // &mdash;
 		},
 		getStartPage() {
 			if (!store.manifest.start || !store.manifest.items) {
@@ -559,7 +567,7 @@ function Store(args) {
 				},
 			);
 		},
-		localize(labelObject) {
+		localize(labelObject, fallback = '—' /* &mdash; */) {
 			const nbsp = String.fromCharCode(160);
 			const separator = `${nbsp}· `;
 
@@ -583,7 +591,7 @@ function Store(args) {
 				? label.join(separator)
 				: label;
 
-			return (labelString || '').trim() || '—'; // &mdash;
+			return (labelString || '').trim() || fallback;
 		},
 		setPage(pageOrPages) {
 			let pages = pageOrPages;

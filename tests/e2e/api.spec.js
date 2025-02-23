@@ -18,7 +18,7 @@ describe('API', () => {
 				cy.contains('Seiten');
 
 				tify.setPage(2);
-				cy.contains('.tify-page-select-button', '2 : -');
+				cy.contains('.tify-page-select-button', '2 · -');
 
 				tify.setView('export');
 				cy.contains('.-active', 'Export');

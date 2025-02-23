@@ -64,7 +64,7 @@ export default {
 			>
 				<h3>
 					{{ $translate('Page') }}
-					{{ $store.getPageLabel(page, $store.localize($store.manifest.items[page - 1].label)) }}
+					{{ $store.getPageLabel(page, $store.manifest.items[page - 1].label) }}
 				</h3>
 				<ul class="tify-fulltext-list">
 					<li

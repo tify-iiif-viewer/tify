@@ -9,6 +9,7 @@ const app = { config: { globalProperties: {} } };
 store.install(app, {
 	manifest: store.convertManifest(manifest),
 	options: {
+		language: 'en',
 		pageLabelFormat: 'P : L',
 		translationsDirUrl: '',
 	},
@@ -19,6 +20,10 @@ const { $store } = app.config.globalProperties;
 describe('getPageLabel', () => {
 	it('gets the page label', () => {
 		expect($store.getPageLabel(1, 'label')).toEqual('1 : label');
+	});
+
+	it('gets only the page number if the label is empty', () => {
+		expect($store.getPageLabel(1, {})).toEqual('1');
 	});
 });
 

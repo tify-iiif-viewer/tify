@@ -114,7 +114,7 @@ export default {
 	 *
 	 * @type {string}
 	 */
-	pageLabelFormat: 'P : L',
+	pageLabelFormat: `P${String.fromCharCode(160)/* &nbsp; */}· L`,
 
 	/**
 	 * The page(s) to display initially. If `null`, the initial page is
