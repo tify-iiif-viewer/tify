@@ -206,8 +206,8 @@
 						type="url"
 						id="manifestUrl"
 						class="input"
-						placeholder="IIIF manifest URL"
 						aria-label="IIIF manifest URL"
+						placeholder="IIIF manifest URL"
 						@focus="event.target.select()"
 					>
 					<button
@@ -221,7 +221,7 @@
 						<button
 							type="button"
 							class="button"
-							aria-label="Toggle menu"
+							aria-label="Toggle instance and language menu"
 							:aria-controls="`dropdown-${instance.id}`"
 							:aria-expanded="instance.dropdownOpen"
 							@click="instance.dropdownOpen = !instance.dropdownOpen"
@@ -254,7 +254,7 @@
 									</a>
 								</li>
 							</ul>
-							<ul class="menu-list">
+							<ul class="menu-list" aria-label="Language">
 								<li
 									v-for="name, code in languages"
 									:key="code"
