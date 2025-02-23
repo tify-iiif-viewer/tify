@@ -9,7 +9,11 @@ import i18n from './plugins/i18n';
 import store from './plugins/store';
 
 window.Tify = function Tify(userOptions = {}) {
-	this.options = { ...defaultOptions, ...userOptions };
+	this.options = {
+		// Create independent deep clone
+		...JSON.parse(JSON.stringify(defaultOptions)),
+		...userOptions,
+	};
 
 	if (!this.options.translationsDirUrl) {
 		const scripts = document.getElementsByTagName('script');
