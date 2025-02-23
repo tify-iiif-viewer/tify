@@ -312,8 +312,15 @@
 				window.history.pushState(null, '', url.toString());
 			}
 
-			loadManifest() {
+			loadManifest(resetUrlQuery = true) {
 				this.tify?.destroy();
+
+				const url = new URL(window.location);
+
+				if (resetUrlQuery) {
+					url.searchParams.delete(`tify${this.id}`);
+					window.history.pushState(null, '', url.toString());
+				}
 
 				this.tify = new Tify({
 					container: document.getElementById(`container${this.id}`),
@@ -327,7 +334,6 @@
 				window.tify = this.tify;
 
 				// Update URL query if manifest was set via input
-				const url = new URL(window.location);
 				if (url.searchParams.get(`manifest${this.id}`) !== this.manifestUrl) {
 					url.searchParams.set(`manifest${this.id}`, this.manifestUrl);
 					window.history.pushState(null, '', url.toString());
@@ -374,7 +380,7 @@
 					});
 
 					this.$nextTick(() => {
-						instance.loadManifest();
+						instance.loadManifest(false);
 					});
 				});
 
