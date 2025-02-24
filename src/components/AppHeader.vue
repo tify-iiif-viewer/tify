@@ -243,7 +243,7 @@ export default {
 		</div>
 
 		<div
-			v-if="$store.manifest"
+			v-if="$store.pageCount > 1"
 			class="tify-header-column -pagination"
 		>
 			<h2 class="tify-sr-only">
@@ -430,7 +430,7 @@ export default {
 					</button>
 				</div>
 
-				<PaginationButtons v-if="$store.manifest" />
+				<PaginationButtons v-if="$store.pageCount > 1" />
 			</div>
 		</div>
 	</header>
