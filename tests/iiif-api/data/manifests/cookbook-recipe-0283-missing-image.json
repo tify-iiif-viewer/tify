@@ -1,0 +1,155 @@
+{
+	"@context": "http://iiif.io/api/presentation/3/context.json",
+	"id": "https://iiif.io/api/cookbook/recipe/0283-missing-image/manifest.json",
+	"type": "Manifest",
+	"label": {
+		"en": [
+			"Ethiopic Ms 10"
+		]
+	},
+	"items": [
+		{
+			"id": "https://iiif.io/api/cookbook/recipe/0283-missing-image/canvas/p1",
+			"type": "Canvas",
+			"label": {
+				"en": [
+					"f. 1r"
+				]
+			},
+			"height": 2504,
+			"width": 1768,
+			"items": [
+				{
+					"id": "https://iiif.io/api/cookbook/recipe/0283-missing-image/page/p1/1",
+					"type": "AnnotationPage",
+					"items": [
+						{
+							"id": "https://iiif.io/api/cookbook/recipe/0283-missing-image/annotation/p0001-image",
+							"type": "Annotation",
+							"motivation": "painting",
+							"body": {
+								"id": "https://iiif.io/api/image/3.0/example/reference/d3bbf5397c6df6b894c5991195c912ab-1-21198-zz001d8m41_774608_master/full/max/0/default.jpg",
+								"type": "Image",
+								"format": "image/jpeg",
+								"height": 2504,
+								"width": 1768,
+								"service": [
+									{
+										"id": "https://iiif.io/api/image/3.0/example/reference/d3bbf5397c6df6b894c5991195c912ab-1-21198-zz001d8m41_774608_master",
+										"type": "ImageService3",
+										"profile": "level1"
+									}
+								]
+							},
+							"target": "https://iiif.io/api/cookbook/recipe/0283-missing-image/canvas/p1"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "https://iiif.io/api/cookbook/recipe/0283-missing-image/canvas/p2",
+			"type": "Canvas",
+			"label": {
+				"en": [
+					"f. 1v — MISSING"
+				]
+			},
+			"height": 2504,
+			"width": 1768,
+			"metadata": [
+				{
+					"label": {
+						"en": [
+							"Description"
+						]
+					},
+					"value": {
+						"en": [
+							"Image unavailable or does not exist"
+						]
+					}
+				}
+			],
+			"items": []
+		},
+		{
+			"id": "https://iiif.io/api/cookbook/recipe/0283-missing-image/canvas/p3",
+			"type": "Canvas",
+			"label": {
+				"en": [
+					"f. 2r"
+				]
+			},
+			"height": 2456,
+			"width": 1792,
+			"items": [
+				{
+					"id": "https://iiif.io/api/cookbook/recipe/0283-missing-image/page/p3/1",
+					"type": "AnnotationPage",
+					"items": [
+						{
+							"id": "https://iiif.io/api/cookbook/recipe/0283-missing-image/annotation/p0003-image",
+							"type": "Annotation",
+							"motivation": "painting",
+							"body": {
+								"id": "https://iiif.io/api/image/3.0/example/reference/d3bbf5397c6df6b894c5991195c912ab-3-21198-zz001d8tm5_775004_master/full/max/0/default.jpg",
+								"type": "Image",
+								"format": "image/jpeg",
+								"height": 2456,
+								"width": 1792,
+								"service": [
+									{
+										"id": "https://iiif.io/api/image/3.0/example/reference/d3bbf5397c6df6b894c5991195c912ab-3-21198-zz001d8tm5_775004_master",
+										"type": "ImageService3",
+										"profile": "level1"
+									}
+								]
+							},
+							"target": "https://iiif.io/api/cookbook/recipe/0283-missing-image/canvas/p3"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "https://iiif.io/api/cookbook/recipe/0283-missing-image/canvas/p4",
+			"type": "Canvas",
+			"label": {
+				"en": [
+					"f. 2v"
+				]
+			},
+			"height": 2440,
+			"width": 1760,
+			"items": [
+				{
+					"id": "https://iiif.io/api/cookbook/recipe/0283-missing-image/page/p4/1",
+					"type": "AnnotationPage",
+					"items": [
+						{
+							"id": "https://iiif.io/api/cookbook/recipe/0283-missing-image/annotation/p0004-image",
+							"type": "Annotation",
+							"motivation": "painting",
+							"body": {
+								"id": "https://iiif.io/api/image/3.0/example/reference/d3bbf5397c6df6b894c5991195c912ab-4-21198-zz001d8tnp_775007_master/full/max/0/default.jpg",
+								"type": "Image",
+								"format": "image/jpeg",
+								"height": 2440,
+								"width": 1760,
+								"service": [
+									{
+										"id": "https://iiif.io/api/image/3.0/example/reference/d3bbf5397c6df6b894c5991195c912ab-4-21198-zz001d8tnp_775007_master",
+										"type": "ImageService3",
+										"profile": "level1"
+									}
+								]
+							},
+							"target": "https://iiif.io/api/cookbook/recipe/0283-missing-image/canvas/p4"
+						}
+					]
+				}
+			]
+		}
+	]
+}

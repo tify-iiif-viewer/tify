@@ -302,7 +302,14 @@ export default {
 					return;
 				}
 
-				const resource = this.$store.manifest.items[page - 1].items?.[0].items?.[0].body;
+				const resource = this.$store.manifest.items[page - 1].items?.[0]?.items?.[0]?.body;
+
+				if (!resource) {
+					// eslint-disable-next-line no-console
+					console.warn(`Missing image for page ${page}`);
+					return;
+				}
+
 				if (resource.service) {
 					const service = resource.service instanceof Array ? resource.service[0] : resource.service;
 					const id = service.id || service['@id'];
