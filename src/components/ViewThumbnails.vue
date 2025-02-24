@@ -102,8 +102,8 @@ export default {
 			const items = [];
 			for (let i = startPage - 1; i < endPage; i += 1) {
 				const label = this.$store.localize(this.$store.manifest.items[i].label, '');
-				const resource = this.$store.manifest.items[i].items[0].items[0].body;
-				if (resource.service) {
+				const resource = this.$store.manifest.items[i].items?.[0]?.items?.[0]?.body;
+				if (resource?.service) {
 					const service = resource.service instanceof Array ? resource.service[0] : resource.service;
 					const quality = ['ImageService2', 'ImageService3'].includes(service.type || service['@type'])
 						? 'default'
@@ -117,7 +117,7 @@ export default {
 				} else {
 					items.push({
 						label,
-						imgUrl: resource.id,
+						imgUrl: resource?.id,
 						page: i + 1,
 					});
 				}

@@ -16,16 +16,18 @@ export default {
 			}
 
 			const renderings = this.$store.manifest.structures[0].rendering;
+
 			return renderings.some((rendering) => rendering.format && rendering.format === 'application/pdf');
 		},
 		imageUrls() {
 			const imageUrls = {};
+
 			this.$store.options.pages.forEach((page) => {
 				if (!page) {
 					return;
 				}
 
-				const resource = this.$store.manifest.items[page - 1].items?.[0].items?.[0].body;
+				const resource = this.$store.manifest.items[page - 1].items?.[0]?.items?.[0]?.body;
 				if (resource?.service) {
 					const service = resource.service instanceof Array ? resource.service[0] : resource.service;
 					const quality = ['ImageService2', 'ImageService3'].includes(service.type || service['@type'])
@@ -37,9 +39,10 @@ export default {
 					const id = service.id || service['@id'];
 					imageUrls[page] = `${id}${id.at(-1) === '/' ? '' : '/'}full/${size}/0/${quality}.jpg`;
 				} else {
-					imageUrls[page] = resource.id;
+					imageUrls[page] = resource?.id;
 				}
 			});
+
 			return imageUrls;
 		},
 		pages() {
@@ -66,19 +69,21 @@ export default {
 		<div class="tify-export-section -links">
 			<h3>{{ $translate('Download Individual Images') }}</h3>
 			<ul class="tify-list">
-				<li
+				<template
 					v-for="page in pages"
 					:key="page"
 				>
-					<!-- NOTE: The download attribute is only honored for same-origin URLs -->
-					<a
-						:href="imageUrls[page]"
-						:download="`${page}.jpg`"
-					>
-						{{ $translate('Page') }}
-						{{ $store.getPageLabel(page, $store.manifest.items[page - 1].label) }}
-					</a>
-				</li>
+					<li v-if="imageUrls[page]">
+						<!-- NOTE: The download attribute is only honored for same-origin URLs -->
+						<a
+							:href="imageUrls[page]"
+							:download="`${page}.jpg`"
+						>
+							{{ $translate('Page') }}
+							{{ $store.getPageLabel(page, $store.manifest.items[page - 1].label) }}
+						</a>
+					</li>
+				</template>
 			</ul>
 		</div>
 
