@@ -120,7 +120,7 @@ function Store(args) {
 			const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
 			return page >= store.sections[store.sections.length - 1].firstPage;
 		}),
-		pageCount: computed(() => store.manifest.items?.length),
+		pageCount: computed(() => store.manifest?.items?.length),
 		sections: computed(() => {
 			if (!store.manifest.structures) {
 				return [];
