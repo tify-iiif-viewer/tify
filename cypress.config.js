@@ -13,6 +13,7 @@ server.start(iiifApiPort);
 export default defineConfig({
 	e2e: {
 		baseUrl: 'http://localhost:4173',
+		defaultCommandTimeout: 2000,
 		specPattern: 'tests/e2e/**/*.{cy,spec}.{js,jsx,ts,tsx}',
 
 		viewportWidth: 1600,
