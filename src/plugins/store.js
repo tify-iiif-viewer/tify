@@ -457,10 +457,10 @@ function Store(args) {
 				params.pages = null;
 			}
 
-			store.options.annotationId = params.annotationId;
+			store.options.annotationId = params.annotationId || store.options.annotationId;
 			store.options.childManifestUrl = params.childManifestUrl || store.options.childManifestUrl;
 			store.options.filters = params.filters || store.options.filters;
-			store.options.annotationsVisible = params.annotationsVisible;
+			store.options.annotationsVisible = params.annotationsVisible || store.options.annotationsVisible;
 			store.options.pages = caller && caller.type === 'popstate'
 				? params.pages || [store.getStartPage()]
 				: params.pages || store.options.pages || [store.getStartPage()];
