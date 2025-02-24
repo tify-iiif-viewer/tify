@@ -62,6 +62,13 @@ export default {
 	container: null,
 
 	/**
+	 * If enabled, the manifest URL can be set via the `iiif-content` URL query
+	 * parameter, thus supporting the bare minimum of the IIIF Content State API.
+	 * This query is only evaluated if `manifestUrl` is not set.
+	 */
+	contentStateEnabled: false,
+
+	/**
 	 * The language to be used for strings from the IIIF manifest that are not
 	 * available in the current `language`. If no value matches `language` or
 	 * `fallbackLanguage`, the first available language is displayed.
@@ -160,7 +167,9 @@ export default {
 	 * instances, but each instance must use a unique key. Note that when
 	 * `urlQueryKey` is set, all options defined by `urlQueryParams` can be
 	 * overridden by changing the URL in the browser’s address bar.
-	 * Only use characters `A…Z a…z 0…9 - _`.
+	 * Only use characters `A…Z a…z 0…9 - _`. While this functionality can be
+	 * used together with `iiif-content` (see `contentStateEnabled`), it does
+	 * not yet conform to the IIIF Content State API.
 	 *
 	 * @type {?string}
 	 */

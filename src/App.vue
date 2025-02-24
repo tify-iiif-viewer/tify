@@ -44,8 +44,15 @@ export default {
 		this.$store.rootElement = this.$el;
 
 		if (!this.$store.options.manifestUrl) {
-			this.$store.addError('Missing option "manifestUrl"');
-			return;
+			if (this.$store.options.contentStateEnabled) {
+				const query = new URLSearchParams(window.location.search);
+				this.$store.options.manifestUrl = query.get('iiif-content') || '';
+			}
+
+			if (!this.$store.options.manifestUrl) {
+				this.$store.addError('Missing IIIF manifest URL');
+				return;
+			}
 		}
 
 		// Set current breakpoint as classes on container element for use in CSS
