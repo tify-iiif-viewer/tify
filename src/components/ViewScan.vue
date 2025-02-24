@@ -207,9 +207,19 @@ export default {
 			});
 
 			// Disable OpenSeadragons built-in key handlers which interfere with TIFY's keyboard shortcuts
-			this.viewer.innerTracker.keyHandler = null;
 			this.viewer.addHandler('canvas-key', (event) => {
-				if (['r', 'R'].includes(event.originalEvent?.key)) {
+				if ([
+					'f', // flip horizontally
+					'F', // flip horizontally
+					'r', // rotate clockwise
+					'R', // rotate counter-clockwise
+					'S', // zoom in
+					'W', // zoom out
+					'+', // zoom in
+					'=', // zoom in
+					'-', // zoom out
+					'_', // zoom out
+				].includes(event.originalEvent?.key)) {
 					// eslint-disable-next-line no-param-reassign
 					event.preventDefaultAction = true;
 				}
@@ -379,31 +389,16 @@ export default {
 					this.resetFilters();
 					break;
 
-				// Restore some keyboard events for OpenSeadragon
-				// https://github.com/openseadragon/openseadragon/blob/master/src/viewer.js#L2680-L2725
+				// Restore zoom keyboard events, but with custom zoom factor
 				case '+':
 				case '=':
 				case 'W':
-					this.viewer.viewport.zoomBy(1.1);
-					this.viewer.viewport.applyConstraints();
+					this.zoomIn();
 					break;
 				case '-':
 				case '_':
 				case 'S':
-					this.viewer.viewport.zoomBy(0.9);
-					this.viewer.viewport.applyConstraints();
-					break;
-				case 'w':
-					this.viewer.innerTracker.keyDownHandler({ keyCode: 38 }); // up arrow
-					break;
-				case 's':
-					this.viewer.innerTracker.keyDownHandler({ keyCode: 40 }); // down arrow
-					break;
-				case 'a':
-					this.viewer.innerTracker.keyDownHandler({ keyCode: 37 }); // down arrow
-					break;
-				case 'd':
-					this.viewer.innerTracker.keyDownHandler({ keyCode: 39 }); // right arrow
+					this.zoomOut();
 					break;
 				default:
 			}
@@ -582,9 +577,11 @@ export default {
 		},
 		zoomIn() {
 			this.viewer.viewport.zoomBy(this.zoomFactor);
+			this.viewer.viewport.applyConstraints();
 		},
 		zoomOut() {
 			this.viewer.viewport.zoomBy(1 / this.zoomFactor);
+			this.viewer.viewport.applyConstraints();
 		},
 	},
 };
