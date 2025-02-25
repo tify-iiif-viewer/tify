@@ -31,7 +31,7 @@
     "test:i18n": "node build/test-translations.js",
     "test:i18n:fix": "node build/test-translations.js --add --remove --sort",
     "test:unit": "vitest run",
-    "version": "git add dist"
+    "version": "npm run build; git add dist"
   },
   "devDependencies": {
     "@html-eslint/eslint-plugin": "^0.34.0",
