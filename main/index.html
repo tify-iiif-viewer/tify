@@ -85,6 +85,10 @@
 		}
 
 		.container {
+			height: 100vh;
+		}
+
+		.header + .container {
 			height: calc(100vh - 1.75rem);
 		}
 
@@ -188,7 +192,7 @@
 			padding-top: .5rem;
 		}
 	</style>
-  <script type="module" crossorigin src="/tify/main/tify.CanUiKlK.js"></script>
+  <script type="module" crossorigin src="/tify/main/tify.eGLQ_qFV.js"></script>
   <link rel="stylesheet" crossorigin href="/tify/main/tify.DRtZAiFv.css">
 </head>
 
@@ -199,12 +203,16 @@
 			class="instance"
 			:key="instance.id"
 		>
-			<header class="header">
+			<header
+				v-if="!instance.contentStateActive"
+				v-cloak
+				class="header"
+			>
 				<form class="form" @submit.prevent="instance.loadManifest()">
 					<input
 						v-model="instance.manifestUrl"
 						type="url"
-						id="manifestUrl"
+						:id="`manifest${instance.id}`"
 						class="input"
 						aria-label="IIIF manifest URL"
 						placeholder="IIIF manifest URL"
@@ -254,7 +262,7 @@
 									</a>
 								</li>
 							</ul>
-							<ul class="menu-list" aria-label="Language">
+							<ul class="menu-list">
 								<li
 									v-for="name, code in languages"
 									:key="code"
@@ -292,6 +300,7 @@
 					this.id = ((parseInt(this.id, 10) || 1) + 1).toString();
 				}
 
+				this.contentStateActive = (new URL(window.location)).searchParams.get('iiif-content');
 				this.dropdownOpen = false;
 				this.language = options.language || 'en';
 				this.manifestUrl = options.manifestUrl || '';
@@ -318,7 +327,9 @@
 				const url = new URL(window.location);
 
 				// Update URL query if manifest was changed via form input
-				if (url.searchParams.get(`manifest${this.id}`) !== this.manifestUrl) {
+				if (!this.contentStateActive
+					&& url.searchParams.get(`manifest${this.id}`) !== this.manifestUrl
+				) {
 					url.searchParams.delete(`tify${this.id}`);
 					url.searchParams.set(`manifest${this.id}`, this.manifestUrl);
 					window.history.pushState(null, '', url.toString());
@@ -326,6 +337,7 @@
 
 				this.tify = new Tify({
 					container: document.getElementById(`container${this.id}`),
+					contentStateEnabled: this.contentStateActive,
 					manifestUrl: this.manifestUrl,
 					translationsDirUrl: 'translations',
 					language: this.language,
@@ -362,16 +374,16 @@
 				// Restore state from URL query
 				const params = (new URL(window.location)).searchParams;
 				params.forEach((url, key) => {
-					if (!key.startsWith('manifest')) {
+					if (!key.startsWith('manifest') && key !== 'iiif-content') {
 						return;
 					}
 
-					const id = key.replace('manifest', '');
+					const id = key === 'iiif-content' ? '' : key.replace('manifest', '');
 
 					const instance = new Instance({
 						id,
 						language: params.get(`language${id}`),
-						manifestUrl: url,
+						manifestUrl: key === 'iiif-content' ? null : url,
 						urlQueryKey: `tify${id}`,
 					});
 
