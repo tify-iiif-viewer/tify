@@ -1,6 +1,6 @@
 {
   "name": "tify",
-  "version": "0.31.0",
+  "version": "0.32.0",
   "description": "A slim and mobile-friendly IIIF document viewer",
   "homepage": "https://tify.rocks/",
   "repository": {
