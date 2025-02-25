@@ -1,27 +1,32 @@
 # Upgrading TIFY
 
-## Any prior release to v0.31
+## Upgrading to v0.32
+
+- `'scan'` is no longer a valid value for `view`. Use the default value `null` instead, or omit the `view` option.
+- The default page label format has been changed to `P · L`, resulting in for example `1 · Cover`. For pages without a label, only the number is displayed, regardless of the format.
+
+## Upgrading to v0.31
 
 No breaking changes.
 
-## Any prior release to v0.30
+## Upgrading to v0.30
 
 TIFY now supports IIIF Presentation API and Image API version 2 and 3. There are no breaking changes.
 
-## Any prior release to v0.29
+## Upgrading to v0.29
 
 - Only concerns local development: Node script names have been changed to match current Vue defaults, e.g. `npm run serve` is now `npm run dev`. See README.md and package.json for more details.
 
-## Any prior release to v0.28
+## Upgrading to v0.28
 
 - Layout breakpoints have changed, so TIFY may show different interface elements than before, depending on its container size. Modify the `breakpoints` option if required.
 - If you are using a customized stylesheet, it probably needs updating.
 
-## Any prior release to v0.27
+## Upgrading to v0.27
 
 - The initially displayed page is now determined by the manifest’s `startCanvas`. To keep the previous behavior of starting with the first page regardless of `startCanvas`, add `pages: [1]` to TIFY’s options.
 
-## Any prior release to v0.26
+## Upgrading to v0.26
 
 - Support for setting the manifest URL via query parameter `manifest` has been removed. If you need this feature, use something like this:
 	``` js
@@ -31,7 +36,7 @@ TIFY now supports IIIF Presentation API and Image API version 2 and 3. There are
 	})
 	```
 
-## Any prior release to v0.25
+## Upgrading to v0.25
 
 - The stylesheet is no longer loaded automatically. Add `<link rel="stylesheet" href="tify.css?v0.25.3">` to the `<head>` of your HTML.
 - TIFY is now a class and must be instantiated, taking an options object as the only parameter instead of setting options globally via `tifyOptions`. To get the previous behavior, set `container`, `manifestUrl` (if not set via URL query), `urlQueryKey`, and the initial `view`:
