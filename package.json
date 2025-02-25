@@ -5,7 +5,7 @@
   "homepage": "https://tify.rocks/",
   "repository": {
     "type:": "git",
-    "url": "https://github.com/tify-iiif-viewer/tify"
+    "url": "git+https://github.com/tify-iiif-viewer/tify.git"
   },
   "bugs": {
     "url": "https://github.com/tify-iiif-viewer/tify/issues"

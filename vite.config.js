@@ -50,7 +50,7 @@ export default defineConfig({
 			blobBaseUrl: `${pkg.repository.url}/blob/v${pkg.version}`,
 			bugsUrl: pkg.bugs.url,
 			license: pkg.license,
-			repositoryUrl: pkg.repository.url,
+			repositoryUrl: pkg.repository.url.replace(/git\+(.+)\.git/, '$1'),
 			version: pkg.version,
 		},
 	},
