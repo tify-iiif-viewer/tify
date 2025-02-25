@@ -65,6 +65,8 @@ export default {
 	 * If enabled, the manifest URL can be set via the `iiif-content` URL query
 	 * parameter, thus supporting the bare minimum of the IIIF Content State API.
 	 * This query is only evaluated if `manifestUrl` is not set.
+	 *
+	 * @type {boolean}
 	 */
 	contentStateEnabled: false,
 
