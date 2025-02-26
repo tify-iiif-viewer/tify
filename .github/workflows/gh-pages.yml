@@ -1,7 +1,13 @@
 name: Build and Deploy to GH Pages
+
 on:
   push:
   pull_request:
+
+env:
+  # Leave path empty for latest tag, otherwise path is PR number or branch name
+  path: ${{ github.ref_type != 'tag' && (github.event.pull_request.number || github.ref_name) || '' }}
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -12,9 +18,10 @@ jobs:
       - name: Install and build
         run: |
           # Deploy each branch and pull request to tify-iiif-viewer.github.io/tify/<branch>
-          echo BASE=/tify/${{ github.event.pull_request.number || github.ref_name }} >> .env
+          # Deploy latest tag to tify-iiif-viewer.github.io/tify
+          echo BASE=/tify/${{ env.path }} >> .env
           echo HASHED=1 >> .env
-          echo OUTDIR=./dist-ci/${{ github.event.pull_request.number || github.ref_name }} >> .env
+          echo OUTDIR=./dist-ci/${{ env.path }} >> .env
           npm ci
           npm run build
 
