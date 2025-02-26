@@ -13,6 +13,8 @@ import 'dotenv/config';
 
 import pkg from './package.json';
 
+const repositoryUrl = pkg.repository.url.replace(/git\+(.+)\.git/, '$1');
+
 const transformIndexPlugin = () => ({
 	transformIndexHtml(html) {
 		const translationsDir = './public/translations';
@@ -47,10 +49,10 @@ export default defineConfig({
 	// https://vitejs.dev/config/#environment-variables
 	define: {
 		ENV: {
-			blobBaseUrl: `${pkg.repository.url}/blob/v${pkg.version}`,
+			blobBaseUrl: `${repositoryUrl}/blob/v${pkg.version}`,
 			bugsUrl: pkg.bugs.url,
 			license: pkg.license,
-			repositoryUrl: pkg.repository.url.replace(/git\+(.+)\.git/, '$1'),
+			repositoryUrl,
 			version: pkg.version,
 		},
 	},
