@@ -46,6 +46,7 @@ describe('Fulltext', () => {
 		cy.contains('.tify-fulltext-item.-current', 'näher kommen');
 	});
 
+	// TODO: Split this up, one test per recipe
 	it('correctly displays manifests from the IIIF cookbook', () => {
 		cy.visit(
 			`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/cookbook-recipe-0019-html-in-annotations`
@@ -65,5 +66,15 @@ describe('Fulltext', () => {
 			+ '&tify={"view":"fulltext"}',
 		);
 		cy.get('.tify-scan-overlay').should('not.exist');
+	});
+
+	it('displays images in annotations', () => {
+		cy.visit(
+			`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/cookbook-recipe-0377-image-in-annotation`
+			+ '&tify={"view":"fulltext"}',
+		);
+
+		cy.get('.tify-fulltext img[src$="918ecd18c2592080851777620de9bcb5-fountain/full/300,/0/default.jpg"]');
+		cy.contains('.tify-fulltext', 'Night picture of the Gänseliesel fountain');
 	});
 });

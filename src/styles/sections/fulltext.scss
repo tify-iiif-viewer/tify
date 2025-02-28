@@ -11,6 +11,11 @@
 		box-shadow: g(-.25) 0 $base-color-light;
 		color: $link-color;
 	}
+
+	img {
+		height: auto;
+		max-width: 100%;
+	}
 }
 
 .tify-fulltext-toggle {
