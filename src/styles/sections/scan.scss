@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 .tify-scan {
 	@extend %panel;
 	background: transparent;
@@ -101,14 +103,25 @@
 	cursor: pointer;
 
 	@include hover {
-		backdrop-filter: contrast(120%);
-		background: $shade-light;
-		z-index: 1;
+		box-shadow: 0 0 0 2px $link-color, 0 0 0 2.5px $shine;
 	}
 
 	&.-current {
 		background: none;
-		backdrop-filter: invert(100%) brightness(120%);
+		backdrop-filter: invert(100%);
+		box-shadow: 0 0 0 1px $link-color;
+	}
+}
+
+// Big exception using an ID for styling because that
+// is all we have here, thanks to OpenSeadragon
+// TODO: Revisit after next OpenSeadragon release
+[id^=overlay-wrapper-tify] {
+	&:has(> .tify-scan-overlay.-current) {
+		backdrop-filter: invert(100%);
+		border-radius: calc($br * 3);
+		margin: g(math.div(-.5, 3));
+		padding: g(math.div(.5, 3));
 	}
 }
 
