@@ -27,7 +27,21 @@ function convertManifest(originalManifest) {
 						format: object.format,
 					},
 			);
+
+			// Remove homepage from "provider" if the same URL is already in "related"
+			manifest.provider?.forEach((provider, providerIndex) => {
+				provider?.homepage?.forEach((homepage, homepageIndex) => {
+					if (homepage.id === object['@id']) {
+						manifest.provider[providerIndex].homepage.splice(homepageIndex, 1);
+					}
+				});
+			});
 		});
+	}
+
+	// Remove dummy provider
+	if (manifest.provider?.[0]?.label?.none?.[0] === 'Unknown') {
+		delete manifest.provider[0].label;
 	}
 
 	return manifest;
@@ -406,7 +420,7 @@ function Store(args) {
 					}
 
 					if ((resource.format || resource.body?.format) === 'text/plain') {
-						html = html.replace(/\n/g, '<br>');
+						html = html.replace(/\n/g, ' <br>');
 					}
 
 					this.annotationsAvailable = true;
@@ -567,7 +581,7 @@ function Store(args) {
 				},
 			);
 		},
-		localize(labelObject, fallback = '—' /* &mdash; */) {
+		localize(labelObject, fallback = '—' /* &mdash; */, format = 'string') {
 			const nbsp = String.fromCharCode(160);
 			const separator = `${nbsp}· `;
 
@@ -587,11 +601,19 @@ function Store(args) {
 				|| labelObject[store.options.fallbackLanguage]
 				|| Object.values(labelObject)[0];
 
-			const labelString = label instanceof Array
-				? label.join(separator)
-				: label;
+			if (format === 'string') {
+				const labelString = label instanceof Array
+					? label.join(separator)
+					: label;
 
-			return (labelString || '').trim() || fallback;
+				return (labelString || '').trim() || fallback;
+			}
+
+			const labelArray = label instanceof Array
+				? label
+				: [label];
+
+			return labelArray;
 		},
 		setPage(pageOrPages) {
 			let pages = pageOrPages;
