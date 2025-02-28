@@ -378,7 +378,7 @@ function Store(args) {
 				resources.forEach(async (resource, index) => {
 					let html;
 
-					const id = resource.id
+					const annotationId = resource.id
 						|| resource['@id']
 						|| resource.resource?.id
 						|| resource.resource?.['@id'];
@@ -389,16 +389,36 @@ function Store(args) {
 						html = resource.resource?.[0]?.chars;
 					} else if (resource.resource?.label) {
 						html = `<i>${resource.resource.label}</i>`;
-					} else if (resource.body?.value) {
-						html = resource.body.value;
 					} else {
-						const url = resource.body?.id
-							|| resource.body?.['@id']
-							|| id;
+						const items = resource.body instanceof Array
+							? resource.body
+							: [resource.body];
 
-						if (isValidUrl(url)) {
-							html = await store.fetchText(url);
-						}
+						const strings = await Promise.all(items.map(async (item) => {
+							if (item?.type === 'Image') {
+								return `<img src="${item.id}" alt="">`;
+							}
+
+							if (item?.value) {
+								return item.value;
+							}
+
+							if (item?.body?.value) {
+								return item.body.value;
+							}
+
+							const url = item?.body?.id
+								|| item?.body?.['@id']
+								|| annotationId;
+
+							if (isValidUrl(url)) {
+								return store.fetchText(url);
+							}
+
+							return '';
+						}));
+
+						html = strings.join('<br>');
 					}
 
 					if (!html) {
@@ -412,7 +432,7 @@ function Store(args) {
 					this.annotationsAvailable = true;
 
 					const annotation = {
-						id,
+						id: annotationId,
 						html: filterHtml(html),
 					};
 
