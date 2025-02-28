@@ -43,4 +43,24 @@ describe('Info', () => {
 			'[Brief des Barons von Asch an Heyne vom 29.01./10.02.1801]',
 		);
 	});
+
+	it('displays all provider information', () => {
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/wellcome-b24738918`);
+		cy.contains('Info').click();
+
+		cy.fixture('../../iiif-api/data/manifests/wellcome-b24738918.json').then((manifest) => {
+			const provider = manifest.provider[0];
+			const providerStringWithoutUrl = provider.label.en.slice(0, -1).join('');
+			cy.get('.tify-info-section.-provider').should('contain.text', providerStringWithoutUrl);
+			cy.contains('.tify-info-section.-provider a', provider.homepage[0].label.en.join(''));
+		});
+	});
+
+	it('only displays a related homepage once for converted IIIF 2 manifests', () => {
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-PPN140716181`);
+		cy.contains('Info').click();
+		cy.get('.tify-info-section.-related a[href$="/DB=1/PPN?PPN=140716181"]')
+			.contains('OPAC');
+		cy.get('.tify-info-section.-provider').contains('OPAC').should('not.exist');
+	});
 });
