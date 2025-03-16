@@ -126,7 +126,7 @@ The production build will be stored in `dist`.
 Run unit tests: `npm run test:unit`
 
 Run end-to-end tests:
-- Development build: `npm run dev`
+- Development build: `npm run test:e2e:dev`
 - Production build: `npm run build && npm run test:e2e`
 
 ## Translations
