@@ -4,6 +4,7 @@ import OpenSeadragon from 'openseadragon';
 
 import { preventEvent } from '../modules/keyboard';
 import { createPromise } from '../modules/promise';
+import { createResizeObserver, destroyResizeObserver } from '../modules/resize';
 
 const gapBetweenPages = 0.01;
 
@@ -64,6 +65,12 @@ export default {
 			const overlayBounds = overlay.getBounds(this.viewer.viewport);
 
 			if (!viewportBounds.intersection(overlayBounds)) {
+				// Add a bit of margin
+				overlayBounds.x -= 0.03;
+				overlayBounds.y -= 0.03;
+				overlayBounds.width += 0.06;
+				overlayBounds.height += 0.06;
+
 				this.viewer.viewport.fitBoundsWithConstraints(overlayBounds);
 			}
 		},
@@ -87,6 +94,8 @@ export default {
 		this.$store.rootElement.addEventListener('keypress', this.onKeypress);
 	},
 	beforeUnmount() {
+		destroyResizeObserver(this.$el, this.initViewer);
+
 		if (this.viewer) {
 			this.viewer.destroy();
 		}
@@ -348,9 +357,11 @@ export default {
 					});
 
 					this.initViewer(reset);
+					createResizeObserver(this.$el, this.initViewer.bind(null, reset));
 				});
 			} else {
 				this.initViewer(reset);
+				createResizeObserver(this.$el, this.initViewer.bind(null, reset));
 			}
 		},
 		onKeydown(event) {
