@@ -34,6 +34,6 @@ $thumbnail-width: var(--tify-thumbnail-width, g(4)) !default;
 // Combined values
 $blur: blur(2px);
 $drop-shadow: 0 0 g(.25) rgba(black, .5) !default;
-$header-bg: var(--tify-header-bg, $grey-light) !default;
+$header-bg: var(--tify-header-bg, $white) !default;
 $inset-shadow: 0 .5px 3px $shade inset !default;
 $main-bg: var(--tify-body-bg, $grey url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAEElEQVQImWNgwAGkcElgAgAEogAbFZcwKQAAAABJRU5ErkJggg==)) !default; // dots pattern
