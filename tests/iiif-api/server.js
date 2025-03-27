@@ -102,7 +102,7 @@ export default {
 		server.port = port;
 
 		// eslint-disable-next-line no-console
-		console.log(`\n  🤖 Mock IIIF API listening at http://localhost:${port}\n`);
+		console.log(`  🤖 Mock IIIF API listening at http://localhost:${port}\n`);
 	},
 	stop() {
 		server.close();
