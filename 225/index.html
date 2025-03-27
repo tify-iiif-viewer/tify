@@ -84,6 +84,10 @@
 			opacity: .5;
 		}
 
+		.button.-narrow {
+			padding: .125rem 0;
+		}
+
 		.container {
 			height: 100vh;
 		}
@@ -109,12 +113,13 @@
 		}
 
 		.input {
-			background: #fff;
+			background: none;
 			border: 1px solid transparent;
 			border-radius: 2px;
 			color: inherit;
 			flex: 1;
 			font: inherit;
+			font-family: monospace;
 			margin: .125rem;
 			min-width: 0;
 			padding: calc(.125rem - 1px) calc(.25rem - 1px);
@@ -228,7 +233,7 @@
 					<div class="menu" @click.stop>
 						<button
 							type="button"
-							class="button"
+							class="button -narrow"
 							aria-label="Toggle instance and language menu"
 							:aria-controls="`dropdown${instance.id}`"
 							:aria-expanded="instance.dropdownOpen"
