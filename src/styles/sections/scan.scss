@@ -95,20 +95,25 @@
 	}
 }
 
-.tify-scan-overlay {
+// Big exception using an ID for styling because that
+// is all we have here, thanks to OpenSeadragon
+// TODO: Revisit after next OpenSeadragon release
+[id^=overlay-wrapper-tify] {
 	border-radius: $br;
 	box-shadow: 0 0 0 1px $link-color, 0 0 0 1.5px $shine;
 	cursor: pointer;
 
 	@include hover {
-		backdrop-filter: contrast(120%);
-		background: $shade-light;
-		z-index: 1;
+		box-shadow: 0 0 0 2px $link-color, 0 0 0 2.5px $shine;
 	}
+}
 
+.tify-scan-overlay {
 	&.-current {
-		background: none;
-		backdrop-filter: invert(100%) brightness(120%);
+		border-radius: $br;
+		outline: calc(g(.25) - 2px) solid $white;
+		outline-offset: 2px;
+		mix-blend-mode: difference;
 	}
 }
 
