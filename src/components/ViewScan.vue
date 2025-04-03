@@ -64,6 +64,12 @@ export default {
 			const overlayBounds = overlay.getBounds(this.viewer.viewport);
 
 			if (!viewportBounds.intersection(overlayBounds)) {
+				// Add a bit of margin
+				overlayBounds.x -= 0.03;
+				overlayBounds.y -= 0.03;
+				overlayBounds.width += 0.06;
+				overlayBounds.height += 0.06;
+
 				this.viewer.viewport.fitBoundsWithConstraints(overlayBounds);
 			}
 		},
