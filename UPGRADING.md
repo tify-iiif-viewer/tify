@@ -1,5 +1,9 @@
 # Upgrading TIFY
 
+## Upgrading to v0.33
+
+No breaking changes.
+
 ## Upgrading to v0.32
 
 - `'scan'` is no longer a valid value for `view`. Use the default value `null` instead, or omit the `view` option.
