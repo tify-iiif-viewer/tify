@@ -639,7 +639,17 @@ export default {
 				:aria-label="$translate('Zoom in')"
 				@click="zoomIn()"
 			>
-				<IconMagnifyPlus />
+				<IconPlus />
+			</button>
+			<button
+				type="button"
+				class="tify-scan-button"
+				:disabled="viewerState.isMinZoom"
+				:title="$translate('Zoom out')"
+				:aria-label="$translate('Zoom out')"
+				@click="zoomOut()"
+			>
+				<IconMinus />
 			</button>
 			<button
 				type="button"
@@ -650,16 +660,6 @@ export default {
 				@click="resetScan(!!$event.shiftKey)"
 			>
 				<IconAspectRatio />
-			</button>
-			<button
-				type="button"
-				class="tify-scan-button"
-				:disabled="viewerState.isMinZoom"
-				:title="$translate('Zoom out')"
-				:aria-label="$translate('Zoom out')"
-				@click="zoomOut()"
-			>
-				<IconMagnifyMinus />
 			</button>
 
 			<button
