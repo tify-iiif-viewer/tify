@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="font-size: 24px">
 
 <head>
 	<meta charset="utf-8">
@@ -8,9 +8,9 @@
 	<title>TIFY</title>
 	<style>
 		:root {
-			--base-color: #06b;
-			--border-color: #0003;
-			--header-bg: #f5f5f5;
+			--base-color: light-dark(#06b, #2df);
+			--border-color: light-dark(#0002, #ffffff19);
+			--header-bg: light-dark(#fff, #171717);
 		}
 
 		*,
@@ -19,50 +19,23 @@
 			margin: 0;
 			padding: 0;
 			font: inherit;
+			outline-offset: 2px;
+
+			&:focus-visible {
+				outline: 1px solid var(--base-color);
+			}
 		}
 
 		[v-cloak] {
 			display: none !important;
 		}
 
-		html {
-			background: #666;
-			color: #333;
-			font-size: 24px;
-		}
-
-		body {
-			font: 16px/1rem sans-serif;
-			margin: 0;
-		}
-
-		.badge {
-			background: var(--base-color);
-			float: left;
-			border-radius: 2px;
-			color: #fff;
-			font-size: .618em;
-			font-weight: bold;
-			line-height: 1;
-			min-width: .75rem;
-			padding: .2em;
-			text-transform: uppercase;
-			text-align: center;
-			margin: .2rem .4em 0 0;
-		}
-
-		.bold {
-			font-weight: bold;
-		}
-
 		.button {
-			background: var(--base-color) linear-gradient(#fff2, #fff0);
+			background: var(--base-color);
 			border: 0;
 			border-radius: 2px;
-			color: #fff;
+			color: light-dark(#fff, #171717);
 			cursor: pointer;
-			font-size: .8125em;
-			margin: .125rem;
 			min-width: 1.25rem;
 			padding: .125rem .5rem;
 			white-space: nowrap;
@@ -70,39 +43,24 @@
 
 		.button:focus,
 		.button:not(:disabled):hover {
-			background: var(--base-color) linear-gradient(#fff4, #fff2);
+			background: oklch(from var(--base-color) calc(l + .03) c h);
 		}
 
 		.button:not(:disabled):active {
-			box-shadow: 0 .5px 3px #0004 inset, 0 0 0 1px #0002 inset;
+			box-shadow: 0 0 3px #0002 inset;
 		}
 
 		.button:disabled {
 			opacity: .5;
 		}
 
-		.button.-narrow {
-			padding: .125rem 0;
-		}
-
-		.container {
-			height: calc(100vh - 1.75rem);
-		}
-
-		.form {
-			display: flex;
-			align-items: center;
-			padding: .125rem;
-			width: 100%;
-		}
-
 		.header {
-			background: var(--header-bg);
 			backdrop-filter: blur(1px);
+			background: var(--header-bg);
+			border-bottom: 1px solid var(--border-color);
 			display: flex;
 			position: relative;
 			z-index: 10;
-			box-shadow: 0 -1px var(--border-color) inset;
 		}
 
 		.input {
@@ -110,8 +68,8 @@
 			border: 1px solid transparent;
 			border-radius: 2px;
 			color: var(--base-color);
+			font-size: 16px;
 			flex: 1;
-			margin: .125rem;
 			min-width: 0;
 			padding: calc(.125rem - 1px) calc(.25rem - 1px);
 		}
@@ -125,21 +83,15 @@
 			outline: none;
 		}
 
-		.instances {
-			display: flex;
-			flex-wrap: wrap;
-		}
-
-		.instance {
-			box-shadow: -1px 0 var(--border-color), 0 -1px var(--border-color);
-			flex: 1;
-			position: relative;
-			z-index: 1;
-		}
-
 		.link {
+			background: none;
+			border: 0;
 			color: var(--base-color);
+			cursor: pointer;
+			display: block;
+			text-align: left;
 			text-decoration: none;
+			width: 100%;
 		}
 
 		.link:focus,
@@ -147,23 +99,19 @@
 			text-decoration: underline;
 		}
 
-		.menu {
-			position: relative;
-		}
-
 		.menu-dropdown {
-			background: #fff;
+			background: light-dark(#fff, #262626);
 			border-radius: 2px;
 			display: block;
-			filter: drop-shadow(0 0 .5rem #0006);
+			filter: drop-shadow(0 0 .25rem #0004);
 			list-style: none;
 			min-width: 5rem;
 			opacity: 1;
-			padding: .5rem .75rem;
+			padding: .5rem;
 			position: absolute;
-			right: .125rem;
-			top: calc(100% + .125rem);
-			transition: all .2s;
+			right: 0;
+			top: calc(100% + .25rem);
+			transition: opacity .2s, top .2s, visibility .2s;
 			white-space: nowrap;
 		}
 
@@ -174,41 +122,86 @@
 		}
 
 		.menu-dropdown::before {
-			bottom: 100%;
+			background: light-dark(#fff, #262626);
 			content: '';
-			border: .25rem solid;
-			border-color: transparent transparent #fff;
+			display: block;
+			height: .5rem;
 			position: absolute;
 			right: .375rem;
+			top: calc(-.25rem);
+			transform: rotate(45deg);
+			width: .5rem;
+			z-index: -1;
 		}
 
-		.menu-list {
-			list-style: none;
+		.radio {
+			background: light-dark(#0001, #ffffff19);
+			cursor: pointer;
+			color: var(--base-color);
+			display: block;
+			padding: .125rem .5rem;
+			text-align: center;
 		}
 
-		.menu-list + .menu-list {
-			box-shadow: 0 1px var(--border-color) inset;
-			margin-top: .5rem;
-			padding-top: .5rem;
+		:first-child > .radio {
+			border-radius: 2px 0 0 2px;
+		}
+
+		:last-child > .radio {
+			border-radius: 0 2px 2px 0;
+		}
+
+		.radio:focus-within,
+		.radio:hover {
+			background: var(--base-color);
+			color: light-dark(#fff, #262626);
+		}
+
+		.radio:has(:focus-visible) {
+			outline: 1px solid var(--base-color);
+		}
+
+		.radio:active {
+			box-shadow: 0 0 3px #0002 inset;
+		}
+
+		.radio:has(:checked) {
+			background: none;
+			color: var(--base-color);
+			box-shadow: 0 0 0 1px var(--base-color) inset;
 		}
 	</style>
-  <script type="module" crossorigin src="/tify/update-theme/tify.CoAh4zIH.js"></script>
-  <link rel="stylesheet" crossorigin href="/tify/update-theme/tify.CQ8Z1AXS.css">
+  <script type="module" crossorigin src="/tify/update-theme/tify.DveYc8GT.js"></script>
+  <link rel="stylesheet" crossorigin href="/tify/update-theme/tify.DpfcvIgO.css">
 </head>
 
-<body v-scope @vue:mounted="mounted">
-	<main class="instances">
+<body
+	v-scope
+	@vue:mounted="mounted"
+	style="font: 14px/1rem sans-serif; margin: 0"
+>
+	<main style="background: #777; display: flex; gap: 1px; flex-wrap: wrap">
 		<section
 			v-for="instance in instances"
-			class="instance"
 			:key="instance.id"
+			:style="`
+				background: light-dark(#bbb, #333);
+				flex: 1;
+				position: relative;
+				color-scheme: ${instance.colorMode === 'auto' ? 'light dark' : instance.colorMode};
+			`"
 		>
 			<header
 				v-if="!instance.contentStateActive"
 				v-cloak
 				class="header"
 			>
-				<form class="form" @submit.prevent="instance.loadManifest()">
+				<form @submit.prevent="instance.loadManifest()" style="
+					display: flex;
+					padding: .25rem;
+					width: 100%;
+					gap: .25rem;
+				">
 					<input
 						v-model="instance.manifestUrl"
 						type="url"
@@ -225,64 +218,99 @@
 					>
 						Load
 					</button>
-					<div class="menu" @click.stop>
+					<div @click.stop style="position: relative">
 						<button
 							type="button"
-							class="button -narrow"
+							class="button"
 							aria-label="Toggle instance and language menu"
 							:aria-controls="`dropdown${instance.id}`"
 							:aria-expanded="instance.dropdownOpen"
 							@click="instance.dropdownOpen = !instance.dropdownOpen"
+							style="padding: .125rem"
 						>
 							⋮
 						</button>
 						<div
-							v-cloak
 							:id="`dropdown${instance.id}`"
 							class="menu-dropdown"
 							:hidden="!instance.dropdownOpen"
 						>
-							<ul class="menu-list">
+							<ul style="list-style: none">
 								<li>
-									<a
-										class="link"
-										href="javascript:;"
+									<button
+										type="button"
+										class="button"
+										style="width: 100%"
 										@click="addInstance()"
 									>
 										Add instance
-									</a>
+									</button>
 								</li>
-								<li v-if="instances.length > 1">
-									<a
-										class="link"
-										href="javascript:;"
+								<li v-if="instances.length > 1" style="margin-top: .5rem">
+									<button
+										type="button"
+										class="button"
+										style="width: 100%"
 										@click="instance.remove()"
 									>
 										Remove instance
-									</a>
+									</button>
 								</li>
 							</ul>
-							<ul class="menu-list">
+							<ul aria-description="TIFY color mode" style="
+								display: flex;
+								gap: 1px;
+								list-style: none;
+								margin: .5rem 0 0;
+							">
+								<li v-for="colorMode in ['auto', 'light', 'dark']" style="flex: 1">
+									<label class="radio">
+										<input
+											type="radio"
+											:value="colorMode"
+											:checked="instance.colorMode === colorMode"
+											@click="instance.colorMode = colorMode; instance.tify?.updateOptions({ colorMode })"
+											style="opacity: 0; position: absolute"
+										>
+										{{ colorMode }}
+									</label>
+								</li>
+							</ul>
+							<ul aria-description="TIFY language" style="list-style: none; margin: .25rem 0 -.25rem 0">
 								<li
 									v-for="name, code in languages"
 									:key="code"
-									:class="{ 'bold': code === instance.language }"
+									:style="code === instance.language && 'font-weight: bold'"
 								>
-									<a
+									<button
+										type="button"
 										class="link"
-										href="javascript:;"
 										@click="instance.setLanguage(code)"
 									>
-										<span class="badge">{{ code }}</span>
+										<span style="
+											background: var(--base-color);
+											border-radius: 2px;
+											color: light-dark(#fff, #171717);
+											float: left;
+											font-size: .75em;
+											line-height: 1;
+											margin: .2rem .3em 0 0;
+											min-width: .75rem;
+											padding: .3em;
+											text-align: center;
+											text-transform: uppercase;
+										">
+											{{ code }}
+										</span>
 										{{ name }}
-									</a>
+									</button>
 								</li>
 							</ul>
 						</div>
 					</div>
 				</form>
 			</header>
-			<div :id="`container${instance.id}`" class="container"></div>
+			<div :id="`container${instance.id}`" style="height: calc(100vh - 1.75rem)"></div>
 		</section>
 	</main>
 
@@ -300,6 +328,7 @@
 					this.id = ((parseInt(this.id, 10) || 1) + 1).toString();
 				}
 
+				this.colorMode = 'auto';
 				this.contentStateActive = (new URL(window.location)).searchParams.get('iiif-content');
 				this.dropdownOpen = false;
 				this.language = options.language || 'en';
@@ -337,11 +366,18 @@
 
 				this.tify = new Tify({
 					container: document.getElementById(`container${this.id}`),
+					colorMode: this.colorMode,
 					contentStateEnabled: this.contentStateActive,
 					manifestUrl: this.manifestUrl,
 					translationsDirUrl: 'translations',
 					language: this.language,
 					urlQueryKey: `tify${this.id}`,
+					// TODO: Add e2e test, remove this
+					translations: {
+						en: {
+							Fulltext: 'Annotations',
+						},
+					},
 				});
 
 				// Expose latest instance for e2e tests
