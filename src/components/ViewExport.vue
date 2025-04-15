@@ -27,6 +27,7 @@ export default {
 					return;
 				}
 
+				// TODO: this.$store.options.preferredImageFormat
 				const resource = this.$store.manifest.items[page - 1].items?.[0]?.items?.[0]?.body;
 				if (resource?.service) {
 					const service = resource.service instanceof Array ? resource.service[0] : resource.service;
@@ -68,19 +69,21 @@ export default {
 
 		<div class="tify-export-section -links">
 			<h3>{{ $translate('Download Individual Images') }}</h3>
-			<ul class="tify-list">
+			<ul class="tify-export-image-list">
 				<template
 					v-for="page in pages"
 					:key="page"
 				>
 					<li v-if="imageUrls[page]">
 						<!-- NOTE: The download attribute is only honored for same-origin URLs -->
+						<!-- eslint-disable-next-line vuejs-accessibility/anchor-has-content -->
 						<a
+							class="tify-export-image-link"
 							:href="imageUrls[page]"
 							:download="`${page}.jpg`"
 						>
-							{{ $translate('Page') }}
-							{{ $store.getPageLabel(page, $store.manifest.items[page - 1].label) }}
+							<img :src="$store.getThumbnailUrl(page, 96)" alt="">
+							<PageName :number="page" :multiline="true" />
 						</a>
 					</li>
 				</template>

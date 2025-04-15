@@ -1,8 +1,8 @@
 .tify-error {
-	background: rgba(#d22, .8);
+	background: #d22c;
 	border-radius: 0 $br 0 0;
 	bottom: 0;
-	color: $white;
+	color: #fff;
 	display: flex;
 	font-weight: bold;
 	max-height: 50%;
@@ -18,13 +18,13 @@
 	align-self: flex-start;
 	background: 0;
 	border: 0;
-	color: $white;
+	color: #fff;
 	cursor: pointer;
 	display: flex;
 	padding: g(.25);
 
 	@include hover {
-		background: $shade-light;
+		background: #0002;
 	}
 }
 
