@@ -61,6 +61,6 @@ describe('Info', () => {
 		cy.contains('Info').click();
 		cy.get('.tify-info-section.-related a[href$="/DB=1/PPN?PPN=140716181"]')
 			.contains('OPAC');
-		cy.get('.tify-info-section.-provider').contains('OPAC').should('not.exist');
+		cy.get('.tify-info-section.-provider').should('not.exist');
 	});
 });

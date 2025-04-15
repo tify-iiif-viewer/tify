@@ -5,7 +5,7 @@ import OpenSeadragon from 'openseadragon';
 import { preventEvent } from '../modules/keyboard';
 import { createPromise } from '../modules/promise';
 
-const gapBetweenPages = 0.01;
+const gapBetweenPages = 0.005;
 
 export default {
 	directives: {
@@ -202,7 +202,7 @@ export default {
 				drawer: 'canvas',
 				element: this.$refs.image,
 				immediateRender: true,
-				preload: !this.$store.isMobile(),
+				preload: !this.$store.isSmall(),
 				preserveImageSizeOnResize: true,
 				preserveViewport: true,
 				showNavigationControl: false,
@@ -285,6 +285,7 @@ export default {
 
 			this.viewer.addHandler('pan', this.updateViewerState);
 			this.viewer.addHandler('resize', this.updateViewerState);
+			this.viewer.addHandler('rotate', this.updateViewerState);
 			this.viewer.addHandler('zoom', this.updateViewerState);
 
 			this.viewer.addHandler('tile-load-failed', (error) => {
@@ -311,8 +312,7 @@ export default {
 				const resource = this.$store.manifest.items[page - 1].items?.[0]?.items?.[0]?.body;
 
 				if (!resource) {
-					// eslint-disable-next-line no-console
-					console.warn(`Missing image for page ${page}`);
+					this.$store.addError(`Image missing for page ${page}`);
 					return;
 				}
 
@@ -446,6 +446,8 @@ export default {
 				: (viewport.getRotation() + 90) % 360;
 			viewport.setRotation(degrees);
 			this.$store.updateOptions({ rotation: degrees || null });
+
+			//
 		},
 		setFilter(name, event) {
 			const value = event.target.valueAsNumber;
@@ -606,26 +608,10 @@ export default {
 			{{ $translate('Scan') }}
 		</h2>
 
-		<button
-			v-if="!$store.isCustomPageView && !$store.isFirstPage"
-			type="button"
-			class="tify-scan-page-button -previous"
-			:title="$translate('Previous page')"
-			:aria-label="$translate('Previous page')"
-			@click="$store.goToPreviousPage()"
-		>
-			<IconChevronLeft />
-		</button>
-		<button
-			v-if="!$store.isCustomPageView && !$store.isLastPage"
-			type="button"
-			class="tify-scan-page-button -next"
-			:title="$translate('Next page')"
-			:aria-label="$translate('Next page')"
-			@click="$store.goToNextPage()"
-		>
-			<IconChevronRight />
-		</button>
+		<div
+			ref="image"
+			class="tify-scan-image"
+		/>
 
 		<div
 			v-if="viewer"
@@ -762,7 +748,7 @@ export default {
 			</div>
 
 			<button
-				v-if="$store.annotations.length && ($store.options.view === 'fulltext' || $store.isMobile())"
+				v-if="$store.annotations.length && ($store.options.view === 'fulltext' || $store.isSmall())"
 				type="button"
 				class="tify-scan-button"
 				:title="$translate('Toggle annotations')"
@@ -774,9 +760,25 @@ export default {
 			</button>
 		</div>
 
-		<div
-			ref="image"
-			class="tify-scan-image"
-		/>
+		<button
+			v-if="!$store.isCustomPageView && !$store.isFirstPage"
+			type="button"
+			class="tify-scan-page-button -previous"
+			:title="$translate('Previous page')"
+			:aria-label="$translate('Previous page')"
+			@click="$store.goToPreviousPage()"
+		>
+			<IconChevronLeft />
+		</button>
+		<button
+			v-if="!$store.isCustomPageView && !$store.isLastPage"
+			type="button"
+			class="tify-scan-page-button -next"
+			:title="$translate('Next page')"
+			:aria-label="$translate('Next page')"
+			@click="$store.goToNextPage()"
+		>
+			<IconChevronRight />
+		</button>
 	</section>
 </template>

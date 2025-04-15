@@ -57,6 +57,8 @@ function Store(args) {
 		errors: [],
 		loading: 0,
 		manifest: args.manifest ? convertManifest(args.manifest) : null,
+		// TODO: Ask team if they know a better solution
+		mobileMarker: null,
 		options: args.options || {},
 		readyPromises: [],
 		rootElement: args.rootElement || null,
@@ -68,7 +70,7 @@ function Store(args) {
 
 			if (['scan', ''].includes(store.options.view)
 				&& store.options.annotationsVisible !== false
-				&& store.isMobile()
+				&& store.isSmall()
 			) {
 				return true;
 			}
@@ -240,6 +242,7 @@ function Store(args) {
 		}),
 		addError(message) {
 			store.errors.push(message);
+			console.warn(message); // eslint-disable-line no-console
 		},
 		clearErrors() {
 			store.errors = [];
@@ -285,17 +288,6 @@ function Store(args) {
 		getId(postfix) {
 			return instanceId + (postfix ? `-${postfix}` : '');
 		},
-		getPageLabel(number, labelObject) {
-			const label = store.localize(labelObject, '');
-
-			if (label) {
-				return store.options.pageLabelFormat.replace('P', number).replace('L', label);
-			}
-
-			return store.options.pageLabelFormat.includes('P')
-				? `${number}`
-				: '—'; // &mdash;
-		},
 		getStartPage() {
 			if (!store.manifest.start || !store.manifest.items) {
 				return 1;
@@ -303,6 +295,20 @@ function Store(args) {
 
 			const startCanvasIndex = store.manifest.items.findIndex((canvas) => canvas.id === store.manifest.start.id);
 			return startCanvasIndex >= 0 ? startCanvasIndex + 1 : 1;
+		},
+		getThumbnailUrl(page, thumbnailWidth) {
+			const resource = store.manifest.items[page - 1].items?.[0]?.items?.[0]?.body;
+
+			if (resource?.service) {
+				const service = resource.service instanceof Array ? resource.service[0] : resource.service;
+				const quality = ['ImageService2', 'ImageService3'].includes(service.type || service['@type'])
+					? 'default'
+					: 'native';
+				const id = service.id || service['@id'];
+				return `${id}${id.at(-1) === '/' ? '' : '/'}full/${thumbnailWidth},/0/${quality}.jpg`;
+			}
+
+			return resource?.id;
 		},
 		goToFirstPage() {
 			store.setPage(1);
@@ -452,7 +458,7 @@ function Store(args) {
 
 					const coordinatesString = resource.on?.selector?.value
 						|| (typeof resource.on === 'string' ? resource.on : null)
-						|| resource.target;
+						|| resource.target.toString();
 
 					const xywh = coordinatesString?.split('xywh=')[1];
 					if (xywh) {
@@ -507,8 +513,8 @@ function Store(args) {
 				: store.options.view;
 			store.options.zoom = parseFloat(params.zoom) || store.options.zoom;
 		},
-		isMobile() {
-			return store.rootElement.offsetWidth < store.options.breakpoints.medium;
+		isSmall() {
+			return store.mobileMarker.checkVisibility();
 		},
 		loadManifest(manifestUrl, params = {}) {
 			const promise = createPromise();
@@ -541,7 +547,7 @@ function Store(args) {
 								pages: [store.getStartPage()],
 								pan: {},
 								rotation: null,
-								view: store.isMobile() ? null : 'collection',
+								view: store.isSmall() ? null : 'collection',
 								zoom: null,
 							});
 						}
@@ -610,7 +616,7 @@ function Store(args) {
 			}
 
 			if (!labelObject) {
-				return '';
+				return fallback;
 			}
 
 			if (typeof labelObject === 'string') {
@@ -663,16 +669,20 @@ function Store(args) {
 				annotationsVisible: store.options.annotationId ? null : store.annotationsVisible,
 			};
 
-			if (options.annotationId && store.isMobile()) {
+			if (options.annotationId && store.isSmall()) {
 				options.view = ['scan', ''].includes(store.options.view) ? 'fulltext' : 'scan';
 			}
 
 			store.updateOptions(options);
 		},
 		updateOptions(updatedOptions) {
+			clearTimeout(store.urlUpdateTimeout);
+
 			Object.assign(store.options, updatedOptions);
 
-			clearTimeout(store.urlUpdateTimeout);
+			if (updatedOptions.pages) {
+				store.clearErrors();
+			}
 
 			if (!store.options.urlQueryKey) {
 				return;
@@ -704,7 +714,6 @@ function Store(args) {
 				}
 
 				if (updatedOptions.pages) {
-					store.clearErrors();
 					window.history.pushState({}, '', url);
 				} else {
 					window.history.replaceState({}, '', url);

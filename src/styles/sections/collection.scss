@@ -44,7 +44,6 @@
 	@extend %button;
 	color: inherit !important;
 	display: block;
-	padding: g(.25) g(.5);
 	text-align: left;
 	text-decoration: none;
 	width: 100%;
@@ -55,7 +54,7 @@
 
 	.tify-collection-item.-current & {
 		@extend %button-active;
-		color: $white !important;
+		color: $text-color-inverted !important;
 	}
 
 	.tify-icon {

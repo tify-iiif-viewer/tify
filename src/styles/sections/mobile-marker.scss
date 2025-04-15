@@ -1,0 +1,7 @@
+.tify-mobile-marker {
+	display: block;
+
+	@container (width > #{$medium}) {
+		display: none;
+	}
+}

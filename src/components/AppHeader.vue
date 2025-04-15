@@ -94,7 +94,7 @@ export default {
 					}
 					break;
 				case '2':
-					if (this.$store.manifest) {
+					if (this.$store.manifest && this.$store.pageCount > 1) {
 						this.toggleView('thumbnails');
 					}
 					break;
@@ -221,7 +221,7 @@ export default {
 		toggleView(name) {
 			this.closeControlsPopup();
 
-			const view = name === this.$store.options.view && this.$store.manifest && !this.$store.isMobile()
+			const view = name === this.$store.options.view && this.$store.manifest && !this.$store.isSmall()
 				? null
 				: name;
 			this.$store.updateOptions({ view });
@@ -328,7 +328,7 @@ export default {
 					</button>
 
 					<button
-						v-if="$store.manifest"
+						v-if="$store.manifest && $store.pageCount > 1"
 						type="button"
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'thumbnails' }"

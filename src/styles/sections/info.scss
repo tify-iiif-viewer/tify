@@ -3,6 +3,7 @@ $info-content-max-height: g(6.5);
 .tify-info {
 	@extend %panel;
 	overflow-y: auto;
+	padding-bottom: g();
 }
 
 .tify-info-button {
@@ -66,10 +67,13 @@ $info-content-max-height: g(6.5);
 	}
 
 	&.-logo {
-		> a {
-			border: 0;
-			box-shadow: none;
-			display: inline-block;
+		// Ensure visibility in dark mode since most logos require a white background
+		background: #fff;
+		margin: g(-.5);
+		padding: g(.5);
+
+		> :last-child {
+			margin: 0;
 		}
 	}
 
@@ -97,10 +101,11 @@ $info-content-max-height: g(6.5);
 		overflow: hidden;
 
 		&::after {
-			background: linear-gradient(rgba($white, 0), rgba($white, 1));
-			bottom: g(2); // 2 = button height
+			background: $panel-bg;
+			bottom: g(1.5 + .5); // = button height + margin
 			content: '';
 			height: g(2);
+			mask-image: linear-gradient(transparent, #000);
 			position: absolute;
 			width: 100%;
 		}
