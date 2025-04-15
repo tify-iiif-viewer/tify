@@ -171,8 +171,8 @@
 			box-shadow: 0 0 0 1px var(--base-color) inset;
 		}
 	</style>
-  <script type="module" crossorigin src="/tify/update-theme/tify.CoOlMruT.js"></script>
-  <link rel="stylesheet" crossorigin href="/tify/update-theme/tify.yPPZ83R4.css">
+  <script type="module" crossorigin src="/tify/update-theme/tify.B1GxAgoO.js"></script>
+  <link rel="stylesheet" crossorigin href="/tify/update-theme/tify.BzeDvSFu.css">
 </head>
 
 <body
@@ -310,7 +310,9 @@
 					</div>
 				</form>
 			</header>
-			<div :id="`container${instance.id}`" style="height: calc(100vh - 1.75rem - 1px)"></div>
+			<div :id="`container${instance.id}`" :style="
+				instance.contentStateActive ? 'height: 100vh' : 'height: calc(100vh - 1.75rem - 1px)'
+			"></div>
 		</section>
 	</main>
 
