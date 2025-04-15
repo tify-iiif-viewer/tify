@@ -1,5 +1,10 @@
 # Upgrading TIFY
 
+## Upgrading to v0.34
+
+TODO: `pageLabelFormat` / `pageNameParts`
+TODO: Breakpoints
+
 ## Upgrading to v0.33
 
 No breaking changes.

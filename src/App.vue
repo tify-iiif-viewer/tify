@@ -39,9 +39,11 @@ export default {
 	created() {
 		this.$api.expose(this.setLanguage);
 		this.$api.expose(this.$store.setPage);
+		this.$api.expose(this.$store.updateOptions);
 	},
 	mounted() {
 		this.$store.rootElement = this.$el;
+		this.$store.mobileMarker = this.$refs.mobileMarker;
 
 		if (!this.$store.options.manifestUrl) {
 			if (this.$store.options.contentStateEnabled) {
@@ -54,10 +56,6 @@ export default {
 				return;
 			}
 		}
-
-		// Set current breakpoint as classes on container element for use in CSS
-		this.updateBreakpoint();
-		new ResizeObserver(this.updateBreakpoint).observe(this.$el);
 
 		Promise.all([
 			this.$store.loadManifest(this.$store.options.manifestUrl),
@@ -110,31 +108,18 @@ export default {
 
 			return promise;
 		},
-		updateBreakpoint() {
-			Object.keys(this.$store.options.breakpoints).forEach((breakpoint) => {
-				if (this.$el.clientWidth <= this.$store.options.breakpoints[breakpoint]) {
-					this.$el.classList.add(`-${breakpoint}`);
-				} else {
-					this.$el.classList.remove(`-${breakpoint}`);
-				}
-			});
-
-			if (this.$el.clientHeight < 520) {
-				this.$el.classList.add('-short');
-			} else {
-				this.$el.classList.remove('-short');
-			}
-		},
 	},
 };
 </script>
 
+<!-- NOTE: tabindex makes root element focusable, which is required for global keyboard events to work -->
+<!-- The first child of <template> must not be a comment, or rootElement breaks -->
 <template>
 	<article
 		class="tify"
+		:class="$store.options.colorMode === 'auto' ? '' : `-${$store.options.colorMode}`"
 		tabindex="-1"
 	>
-		<!-- NOTE: Root element must be focusable for global keyboard events to work -->
 		<AppHeader
 			v-if="readyToRender && ($store.collection || $store.manifest)"
 			:fulltextEnabled="hasAnnotations"
@@ -155,6 +140,7 @@ export default {
 					:id="$store.getId('fulltext')"
 				/>
 				<ViewThumbnails
+					v-if="$store.pageCount > 1"
 					v-show="$store.options.view === 'thumbnails'"
 					:id="$store.getId('thumbnails')"
 				/>
@@ -212,6 +198,8 @@ export default {
 				</p>
 			</div>
 		</section>
+
+		<div ref="mobileMarker" class="tify-mobile-marker" />
 	</article>
 </template>
 
