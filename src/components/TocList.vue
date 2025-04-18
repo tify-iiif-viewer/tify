@@ -66,7 +66,7 @@ export default {
 		},
 		setPage(page) {
 			this.$store.setPage(page);
-			if (this.$store.isMobile()) {
+			if (this.$store.isSmall()) {
 				this.$store.updateOptions({ view: null });
 			}
 		},
@@ -101,7 +101,6 @@ export default {
 			v-for="(structure, index) in structures"
 			:key="index"
 			class="tify-toc-structure"
-			:data-level="level"
 			:class="{
 				'-current': isCurrentPageInStructure(structure),
 				'-expanded': expandedStructures[index],

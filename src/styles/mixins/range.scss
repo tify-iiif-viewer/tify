@@ -8,8 +8,8 @@
 $track-color: $border-color;
 $track-focus-color: null;
 
-$thumb-bg: $link-color linear-gradient(to bottom, #fff3, #fff0);
-$thumb-focus-bg: $link-color linear-gradient(to bottom, #fff1, #0002);
+$thumb-bg: $link-color;
+$thumb-focus-bg: $link-hover-color;
 
 $thumb-radius: $br;
 $thumb-height: g();
@@ -36,6 +36,7 @@ $track-radius: $br;
 
 @mixin range {
 	-webkit-appearance: none;
+	background: none;
 	margin: g(.25) 0 g(-.25);
 	width: 100%;
 
