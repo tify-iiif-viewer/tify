@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { inspect } from 'node:util';
 
 import vue from '@vitejs/plugin-vue';
@@ -19,16 +19,21 @@ const transformIndexPlugin = () => ({
 	transformIndexHtml(html) {
 		const translationsDir = './public/translations';
 
-		const petiteVue = readFileSync('./node_modules/petite-vue/dist/petite-vue.iife.js').toString().trim();
-
 		const languages = { en: 'English' };
 		readdirSync(translationsDir).forEach((file) => {
 			languages[file.split('.')[0]] = JSON.parse(readFileSync(`${translationsDir}/${file}`)).$language;
 		});
 
+		const languagesString = inspect(languages, { breakLength: Infinity, compact: false });
+		const hash = Date.now();
+
 		return html
-			.replace(/\$VITE_PETITE_VUE;?/, petiteVue)
-			.replace('$VITE_LANGUAGES', inspect(languages, { breakLength: Infinity, compact: true }));
+			.replace(
+				'// VITE_LANGUAGES',
+				`window.tifyLanguages = ${languagesString.replace(/\n/gm, '\n\t\t')};`,
+			)
+			.replace(/((?:href|src)=".+?.(?:css|js))(")/g, `$1?${hash}$2`)
+			.replace(/[ ]{2}/g, '\t');
 	},
 });
 
@@ -38,11 +43,15 @@ export default defineConfig({
 	build: {
 		outDir: process.env.OUTDIR || './dist',
 		rollupOptions: {
+			input: {
+				'demo-app': 'index.html',
+				tify: 'src/main.js',
+			},
 			output: {
 				// https://rollupjs.org/guide/en/#outputentryfilenames
-				entryFileNames: process.env.HASHED ? 'tify.[hash].js' : 'tify.js',
+				entryFileNames: '[name].js',
 				// https://rollupjs.org/guide/en/#outputassetfilenames
-				assetFileNames: process.env.HASHED ? 'tify.[hash].[ext]' : 'tify.[ext]',
+				assetFileNames: '[name].[ext]',
 			},
 		},
 	},
@@ -58,15 +67,16 @@ export default defineConfig({
 	},
 	plugins: [
 		// Prepend copyright notice to each compiled file
-		banner(
-			'/*!'
+		banner((fileName) => (fileName.startsWith('tify')
+			? '/*!'
 				+ `\nTIFY v${pkg.version}`
 				+ `\n(c) 2017-${new Date().getFullYear()}`
 				+ ' Göttingen State and University Library (https://www.sub.uni-goettingen.de/)'
 				+ `\n${pkg.license}`
 				+ `\n${pkg.homepage}`
-				+ '\n*/',
-		),
+				+ '\n*/'
+			: ''
+		)),
 		componentsAutoImport({
 			dts: false, // disable generating components.d.ts file
 			resolvers: [
@@ -75,9 +85,15 @@ export default defineConfig({
 					// Replacing "\" with "/" so it works on Windows; path.normalize cannot help here
 					const baseDir = __dirname.replaceAll('\\', '/');
 					const dir = `${baseDir}/src/components${componentName.startsWith('Icon') ? '/icons' : ''}`;
+					const path = `${dir}/${componentName}.vue`;
+
+					if (!existsSync(path)) {
+						return false;
+					}
+
 					return {
 						name: componentName,
-						from: `${dir}/${componentName}.vue`,
+						from: path,
 					};
 				},
 			],

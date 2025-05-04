@@ -152,7 +152,7 @@ export default {
 						v-else
 						:href="homepage.id"
 					>
-						{{ $store.localize(homepage.label) || homepage.id }}
+						{{ $store.localize(homepage.label, '') || homepage.id }}
 					</a>
 				</li>
 			</ul>
@@ -177,31 +177,27 @@ export default {
 		</div>
 
 		<div
-			v-if="manifestOrCollection.provider"
+			v-if="manifestOrCollection.provider?.some(provider => provider.label || provider.homepage?.length)"
 			class="tify-info-section -provider"
 		>
 			<h3>{{ $translate('Provided by') }}</h3>
 			<div v-for="provider in manifestOrCollection.provider" :key="provider.id">
-				<p v-if="provider.label">
-					<template
-						v-for="label, labelIndex in $store.localize(provider.label, '', 'array')"
-						:key="`${provider.id}-${labelIndex}`"
+				<ul v-if="provider.label" class="tify-list">
+					<li
+						v-for="label in $store.localize(provider.label, '', 'array')"
+						:key="`${provider.id}-${label}`"
 					>
-						<br v-if="labelIndex">
 						<a v-if="isValidUrl(label)" :href="label">{{ label }}</a>
 						<template v-else>
 							{{ label }}
 						</template>
-					</template>
-				</p>
-				<p>
-					<template v-for="homepage, homepageIndex in provider.homepage" :key="homepage.id">
-						<br v-if="homepageIndex">
-						<a :href="homepage.id">
-							{{ homepage.label ? $store.localize(homepage.label) : homepage.id }}
-						</a>
-					</template>
-				</p>
+					</li>
+				</ul>
+				<ul v-if="provider.homepage?.length" class="tify-list">
+					<li v-for="homepage in provider.homepage" :key="homepage.id">
+						<a :href="homepage.id">{{ homepage.label ? $store.localize(homepage.label) : homepage.id }}</a>
+					</li>
+				</ul>
 			</div>
 		</div>
 
@@ -217,15 +213,17 @@ export default {
 					<!-- TODO: This alt string is not accessible, but there is no way to get a proper one -->
 					<img
 						class="tify-info-logo"
-						:src="logo.id"
 						:alt="$translate('Logo')"
+						loading="lazy"
+						:src="logo.id"
 					/>
 				</a>
 				<img
 					v-else
 					class="tify-info-logo"
-					:src="logo.id"
 					:alt="$translate('Logo')"
+					loading="lazy"
+					:src="logo.id"
 				/>
 			</p>
 		</div>

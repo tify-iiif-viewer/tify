@@ -94,7 +94,7 @@ export default {
 					}
 					break;
 				case '2':
-					if (this.$store.manifest) {
+					if (this.$store.manifest && this.$store.pageCount > 1) {
 						this.toggleView('thumbnails');
 					}
 					break;
@@ -107,7 +107,7 @@ export default {
 					this.toggleView('info');
 					break;
 				case '5':
-					if (this.$store.manifest) {
+					if (this.$store.collection || this.$store.manifest) {
 						this.toggleView('export');
 					}
 					break;
@@ -169,6 +169,8 @@ export default {
 			this.controlsVisible = !this.controlsVisible;
 		},
 		toggleDoublePage(forced) {
+			// TODO: Adapt for RTL
+
 			const { pages } = this.$store.options;
 			let newPages;
 			if ((pages.length > 1 && forced !== true) || forced === false) {
@@ -221,7 +223,7 @@ export default {
 		toggleView(name) {
 			this.closeControlsPopup();
 
-			const view = name === this.$store.options.view && this.$store.manifest && !this.$store.isMobile()
+			const view = name === this.$store.options.view && this.$store.manifest && !this.$store.isSmall()
 				? null
 				: name;
 			this.$store.updateOptions({ view });
@@ -274,7 +276,7 @@ export default {
 			class="tify-header-column -controls"
 		>
 			<h2 class="tify-sr-only">
-				{{ $translate('View') }}
+				{{ $translate('View {noun}') }}
 			</h2>
 
 			<div
@@ -286,8 +288,8 @@ export default {
 					:aria-controls="$store.getId('controls')"
 					:aria-expanded="controlsVisible"
 					class="tify-header-button"
-					:title="$translate('View')"
-					:aria-label="$translate('View')"
+					:title="$translate('View {noun}')"
+					:aria-label="$translate('View {noun}')"
 					@click="toggleControlsPopup"
 				>
 					<IconDotsGrid />
@@ -328,7 +330,7 @@ export default {
 					</button>
 
 					<button
-						v-if="$store.manifest"
+						v-if="$store.manifest && $store.pageCount > 1"
 						type="button"
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'thumbnails' }"
@@ -366,7 +368,7 @@ export default {
 					</button>
 
 					<button
-						v-if="$store.manifest"
+						v-if="$store.collection || $store.manifest"
 						type="button"
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'export' }"

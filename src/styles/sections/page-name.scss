@@ -1,0 +1,48 @@
+.tify-page-name {
+	align-items: flex-start;
+	display: flex;
+	gap: .2em;
+	min-height: 1rem;
+	white-space: nowrap;
+	width: 100%;
+
+	&.-multiline {
+		white-space: normal;
+	}
+}
+
+.tify-page-name-number {
+	&:not(:only-child) {
+		background: light-dark(#0002, #fff2);
+		border-radius: $br;
+		display: block;
+		font-size: $font-size-small;
+		font-weight: normal;
+		letter-spacing: 0;
+		line-height: 1;
+		margin: 0 .1em;
+		padding: .25em .3em;
+		transform: translateY(calc((#{$line-height} - 100%) / 2)); // center on first line
+	}
+
+	&:last-child {
+		margin-left: auto;
+	}
+
+	&:only-child {
+		margin: auto;
+	}
+}
+
+.tify-page-name-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+	&:first-child {
+		margin-right: .1em;
+	}
+
+	&:only-child {
+		margin: auto;
+	}
+}

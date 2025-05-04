@@ -8,9 +8,11 @@ export function isValidPagesArray(pages, pageCount) {
 		return false;
 	}
 
+	// TODO: Adapt for RTL
+
 	for (let i = 0, len = pages.length; i < len; i += 1) {
 		if (!Number.isInteger(pages[i])
-			|| (i > 0 && pages[i] > 0 && pages[i] <= pages[i - 1])
+			// || (i > 0 && pages[i] > 0 && pages[i] <= pages[i - 1])
 			|| pages[i] < 0
 			|| pages[i] > pageCount
 		) return false;

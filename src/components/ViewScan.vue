@@ -1,3 +1,5 @@
+<!-- TODO for top-to-bottom viewing directions, the double pages view should have the second image below the first one instead of on its right [and display the pagination buttons at top and bottom]-->
+
 <script>
 import vClickOutside from 'click-outside-vue3';
 import OpenSeadragon from 'openseadragon';
@@ -5,7 +7,7 @@ import OpenSeadragon from 'openseadragon';
 import { preventEvent } from '../modules/keyboard';
 import { createPromise } from '../modules/promise';
 
-const gapBetweenPages = 0.01;
+const gapBetweenPages = 0.005;
 
 export default {
 	directives: {
@@ -27,6 +29,30 @@ export default {
 	computed: {
 		filtersActive() {
 			return Object.keys(this.$store.options.filters).length > 0;
+		},
+		paginationButtons() {
+			const rtl = this.$store.manifest.viewingDirection === 'right-to-left';
+
+			const buttons = [
+				{
+					hidden: this.$store.isCustomPageView || this.$store.isFirstPage,
+					title: this.$translate('Previous page'),
+					onClick: this.$store.goToPreviousPage,
+					icon: rtl ? 'IconChevronRight' : 'IconChevronLeft',
+				},
+				{
+					hidden: this.$store.isCustomPageView || this.$store.isLastPage,
+					title: this.$translate('Next page'),
+					onClick: this.$store.goToNextPage,
+					icon: rtl ? 'IconChevronLeft' : 'IconChevronRight',
+				},
+			];
+
+			if (rtl) {
+				buttons.reverse();
+			}
+
+			return buttons.filter((button) => !button.hidden);
 		},
 		saturation() {
 			const saturation = this.$store.options.filters.saturate;
@@ -202,7 +228,7 @@ export default {
 				drawer: 'canvas',
 				element: this.$refs.image,
 				immediateRender: true,
-				preload: !this.$store.isMobile(),
+				preload: !this.$store.isSmall(),
 				preserveImageSizeOnResize: true,
 				preserveViewport: true,
 				showNavigationControl: false,
@@ -285,6 +311,7 @@ export default {
 
 			this.viewer.addHandler('pan', this.updateViewerState);
 			this.viewer.addHandler('resize', this.updateViewerState);
+			this.viewer.addHandler('rotate', this.updateViewerState);
 			this.viewer.addHandler('zoom', this.updateViewerState);
 
 			this.viewer.addHandler('tile-load-failed', (error) => {
@@ -311,8 +338,7 @@ export default {
 				const resource = this.$store.manifest.items[page - 1].items?.[0]?.items?.[0]?.body;
 
 				if (!resource) {
-					// eslint-disable-next-line no-console
-					console.warn(`Missing image for page ${page}`);
+					this.$store.addError(`Image missing for page ${page}`);
 					return;
 				}
 
@@ -350,6 +376,14 @@ export default {
 					infoItems.forEach((infoItem) => {
 						if (infoItem) {
 							this.tileSources[infoItem.page] = infoItem;
+
+							// TODO
+							if (this.$store.options.preferredImageFormat) {
+								const formats = infoItem.extraFormats || infoItem.profile?.[1]?.formats;
+								if (formats?.includes(this.$store.options.preferredImageFormat)) {
+									this.tileSources[infoItem.page].tileFormat = this.$store.options.preferredImageFormat;
+								}
+							}
 						}
 					});
 
@@ -446,6 +480,8 @@ export default {
 				: (viewport.getRotation() + 90) % 360;
 			viewport.setRotation(degrees);
 			this.$store.updateOptions({ rotation: degrees || null });
+
+			//
 		},
 		setFilter(name, event) {
 			const value = event.target.valueAsNumber;
@@ -606,26 +642,10 @@ export default {
 			{{ $translate('Scan') }}
 		</h2>
 
-		<button
-			v-if="!$store.isCustomPageView && !$store.isFirstPage"
-			type="button"
-			class="tify-scan-page-button -previous"
-			:title="$translate('Previous page')"
-			:aria-label="$translate('Previous page')"
-			@click="$store.goToPreviousPage()"
-		>
-			<IconChevronLeft />
-		</button>
-		<button
-			v-if="!$store.isCustomPageView && !$store.isLastPage"
-			type="button"
-			class="tify-scan-page-button -next"
-			:title="$translate('Next page')"
-			:aria-label="$translate('Next page')"
-			@click="$store.goToNextPage()"
-		>
-			<IconChevronRight />
-		</button>
+		<div
+			ref="image"
+			class="tify-scan-image"
+		/>
 
 		<div
 			v-if="viewer"
@@ -639,7 +659,17 @@ export default {
 				:aria-label="$translate('Zoom in')"
 				@click="zoomIn()"
 			>
-				<IconMagnifyPlus />
+				<IconPlus />
+			</button>
+			<button
+				type="button"
+				class="tify-scan-button"
+				:disabled="viewerState.isMinZoom"
+				:title="$translate('Zoom out')"
+				:aria-label="$translate('Zoom out')"
+				@click="zoomOut()"
+			>
+				<IconMinus />
 			</button>
 			<button
 				type="button"
@@ -650,16 +680,6 @@ export default {
 				@click="resetScan(!!$event.shiftKey)"
 			>
 				<IconAspectRatio />
-			</button>
-			<button
-				type="button"
-				class="tify-scan-button"
-				:disabled="viewerState.isMinZoom"
-				:title="$translate('Zoom out')"
-				:aria-label="$translate('Zoom out')"
-				@click="zoomOut()"
-			>
-				<IconMagnifyMinus />
 			</button>
 
 			<button
@@ -762,7 +782,7 @@ export default {
 			</div>
 
 			<button
-				v-if="$store.annotations.length && ($store.options.view === 'fulltext' || $store.isMobile())"
+				v-if="$store.annotations.length && ($store.options.view === 'fulltext' || $store.isSmall())"
 				type="button"
 				class="tify-scan-button"
 				:title="$translate('Toggle annotations')"
@@ -774,9 +794,19 @@ export default {
 			</button>
 		</div>
 
-		<div
-			ref="image"
-			class="tify-scan-image"
-		/>
+		<button
+			v-for="button in paginationButtons"
+			:key="button.icon"
+			type="button"
+			class="tify-scan-page-button"
+			:class="button.icon === 'IconChevronLeft' ? '-left' : '-right'"
+			:title="button.title"
+			:aria-label="button.title"
+			@click="button.onClick"
+		>
+			<!-- NOTE: Avoiding <component :is="…" /> in favor of unplugin-vue-components -->
+			<IconChevronLeft v-if="button.icon === 'IconChevronLeft'" />
+			<IconChevronRight v-else-if="button.icon === 'IconChevronRight'" />
+		</button>
 	</section>
 </template>
