@@ -17,6 +17,16 @@ store.install(app, {
 
 const { $store } = app.config.globalProperties;
 
+describe('getPageLabel', () => {
+	it('gets the page label', () => {
+		expect($store.getPageLabel(1, 'label')).toEqual('1 : label');
+	});
+
+	it('gets only the page number if the label is empty', () => {
+		expect($store.getPageLabel(1, {})).toEqual('1');
+	});
+});
+
 describe('getStartPage', () => {
 	it('determines the start page based on startCanvas', () => {
 		expect($store.getStartPage()).toEqual(7);

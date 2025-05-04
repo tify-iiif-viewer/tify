@@ -1,15 +1,16 @@
 import chalk from 'chalk';
+import filenamifyUrl from 'filenamify-url';
 import sharp from 'sharp';
 import { readdirSync, unlinkSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { upgrade } from '@iiif/parser/upgrader';
 
 // eslint-disable-next-line import/extensions
-import sampleManifests from '../src/sample-app/sampleManifests.js';
+import sampleManifests from '../src/demo-app/sampleManifests.js';
 
 const thumbnailsDir = resolve(dirname(import.meta.url.replace('file://', '')), '../public/thumbnails');
-const width = 240;
-const height = 240;
+const thumbnailWidth = 240;
+const thumbnailHeight = 240;
 
 async function saveThumbnail(manifestUrl, parentUrl = '') {
 	// Fetch the IIIF manifest
@@ -64,7 +65,7 @@ async function saveThumbnail(manifestUrl, parentUrl = '') {
 				: 'native';
 			const id = service.id || service['@id'];
 			// NOTE: Using "full" instead of "square" because the latter is not supported by all APIs
-			imageUrl = `${id}${id.at(-1) === '/' ? '' : '/'}full/${width},/0/${quality}.jpg`;
+			imageUrl = `${id}${id.at(-1) === '/' ? '' : '/'}full/${thumbnailWidth},/0/${quality}.jpg`;
 		} else {
 			imageUrl = resource?.id;
 		}
@@ -81,9 +82,9 @@ async function saveThumbnail(manifestUrl, parentUrl = '') {
 	}
 
 	const imageBuffer = await imageRes.arrayBuffer();
-	const thumbnailFilename = `${thumbnailsDir}/${(parentUrl || manifestUrl).replace(/[^\w]/g, '')}.avif`;
+	const thumbnailFilename = `${thumbnailsDir}/${filenamifyUrl(parentUrl || manifestUrl)}.avif`;
 	await sharp(Buffer.from(imageBuffer))
-		.resize(width, height)
+		.resize(thumbnailWidth, thumbnailHeight)
 		.toFile(thumbnailFilename);
 
 	return { thumbnailFilename };

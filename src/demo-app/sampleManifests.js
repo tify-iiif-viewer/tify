@@ -31,7 +31,7 @@ export default [
 	},
 	{
 		title: 'The Natural Method of Healing',
-		url: 'https://iiif.wellcomecollection.org/presentation/v2/b20417081',
+		url: 'https://iiif.wellcomecollection.org/presentation/b20417081',
 		type: 'manifest',
 	},
 	{
@@ -75,8 +75,8 @@ export default [
 		type: 'collection',
 	},
 	{
-		title: 'Wellcome Collection',
-		url: 'https://iiif.wellcomecollection.org/presentation/v3/collections/archives',
+		title: 'The Chemist and Druggist',
+		url: 'https://iiif.wellcomecollection.org/presentation/b19974760',
 		type: 'collection',
 	},
 ];

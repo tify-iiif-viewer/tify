@@ -20,7 +20,7 @@ export default {
 				console.warn(`Missing translation for "${string}"`); // eslint-disable-line no-console
 			}
 
-			return fallback || string;
+			return fallback || string.replace(/{.+?}/g, '');
 		};
 
 		// NOTE: translationObject contains any number of key-value pairs, where

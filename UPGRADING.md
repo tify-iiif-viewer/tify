@@ -2,7 +2,7 @@
 
 ## Upgrading to v0.34
 
-TODO: `pageLabelFormat` / `pageNameParts`
+TODO: `pageNameParts`
 TODO: Breakpoints
 
 ## Upgrading to v0.33

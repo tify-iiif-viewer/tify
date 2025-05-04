@@ -23,8 +23,8 @@ export default {
 					type="radio"
 					:value="colorMode"
 					:checked="instance.colorMode === colorMode"
-					:aria-label="$t(colorMode, instance)"
-					:title="$t(colorMode, instance)"
+					:aria-label="$translate(colorMode, instance)"
+					:title="$translate(colorMode, instance)"
 					@click="$emit('change', colorMode)"
 				>
 				<IconThemeLightDark v-if="colorMode === 'auto'" />
@@ -43,7 +43,6 @@ export default {
 
 ul {
 	display: flex;
-	gap: 1px;
 	list-style: none;
 }
 
@@ -62,12 +61,12 @@ li {
 	@extend %button;
 	border-radius: 0;
 	display: flex;
-	padding: .125rem .5rem;
-	gap: .3em;
-	flex: 1;
+	margin-left: -1px;
+	padding: .25rem;
 
 	:first-child > & {
 		border-radius: $br 0 0 $br;
+		margin: 0;
 	}
 
 	:last-child > & {
@@ -79,9 +78,8 @@ li {
 	}
 
 	&:has(:checked) {
-		background: none;
-		color: $link-color;
-		box-shadow: 0 0 0 1px $link-color inset;
+		background: $link-color !important;
+		color: $text-color-inverted;
 	}
 }
 </style>

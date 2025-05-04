@@ -1,4 +1,7 @@
 <script>
+// eslint-disable-next-line import/no-extraneous-dependencies
+import filenamifyUrl from 'filenamify-url';
+
 import sampleManifests from '../sampleManifests';
 
 export default {
@@ -13,6 +16,7 @@ export default {
 	],
 	data() {
 		return {
+			filenamifyUrl,
 			sampleManifests,
 		};
 	},
@@ -20,7 +24,7 @@ export default {
 </script>
 
 <template>
-	<section :aria-description="$t(`Sample IIIF Manifests`, instance)">
+	<section :aria-description="$translate(`Sample IIIF Manifests`, instance)">
 		<ul>
 			<li v-for="manifest in sampleManifests" :key="manifest.url">
 				<button
@@ -28,14 +32,14 @@ export default {
 					@click="$emit('load', manifest.url)"
 				>
 					<img
-						:src="`thumbnails/${manifest.url.replace(/[^\w]/g, '')}.avif`"
+						:src="`thumbnails/${filenamifyUrl(manifest.url)}.avif`"
 						alt=""
 						width="240"
 						height="240"
 						loading="lazy"
 					>
 					<span v-if="manifest.type === 'collection'" class="badge">
-						{{ $t('Collection', instance) }}
+						{{ $translate('Collection', instance) }}
 					</span>
 					<span class="title">
 						{{ manifest.title }}

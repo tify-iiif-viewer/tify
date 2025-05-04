@@ -67,7 +67,7 @@
 	"Toggle image filters": "Bildfilter umschalten",
 	"Toggle page select": "Seitenauswahl umschalten",
 	"Version": "Version",
-	"View": "Ansicht",
+	"View {noun}": "Ansicht",
 	"Zoom in": "Vergrößern",
 	"Zoom out": "Verkleinern"
 }

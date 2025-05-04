@@ -90,6 +90,7 @@
 // NOTE: OpenSeadragon adds `position: relative`
 .tify-scan-image {
 	height: 100%;
+	overflow: hidden; // For OpenSeadragon plugins that add own elements
 	white-space: nowrap;
 	width: 100%;
 
@@ -128,7 +129,6 @@
 	padding: 0;
 	position: absolute;
 	bottom: 50%;
-	transform: translateY(50%);
 	width: g(1);
 	z-index: 1;
 
@@ -138,12 +138,12 @@
 		transform: none;
 	}
 
-	&.-previous {
+	&.-left {
 		border-radius: 0 $br $br 0;
 		left: 0;
 	}
 
-	&.-next {
+	&.-right {
 		border-radius: $br 0 0 $br;
 		right: 0;
 	}

@@ -162,7 +162,7 @@
 
 	.tify-page-select + & {
 		border-radius: 0 $br $br 0;
-		margin-left: -1px;
+		margin-left: -2px;
 
 		&:not(:disabled) {
 			@include hover {
