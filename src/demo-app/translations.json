@@ -1,0 +1,25 @@
+{
+	"de": {
+		"Add instance": "Neue Instanz",
+		"auto": "automatisch",
+		"Collection": "Sammlung",
+		"Color mode": "Farbmodus",
+		"dark": "dunkel",
+		"IIIF manifest URL": "IIIF-Manifest-URL",
+		"light": "hell",
+		"Load": "Laden",
+		"Remove instance": "Entferne Instanz",
+		"Sample IIIF manifests": "Beispiel-IIIF-Manifeste"
+	},
+	"fr": {
+		"Add instance": "Nouvelle instance",
+		"auto": "automatique",
+		"Collection": "Collection",
+		"dark": "sombre",
+		"IIIF manifest URL": "URL du manifeste IIIF",
+		"light": "clair",
+		"Load manifest": "Charger",
+		"Remove instance": "Supprimer l\"instance",
+		"Sample IIIF manifests": "Exemples de manifestes IIIF"
+	}
+}

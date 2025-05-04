@@ -8,7 +8,6 @@
 .tify-page-select-button {
 	@extend %button;
 	background: none;
-	border-radius: $br 0 0 $br;
 	box-shadow: none;
 	height: 100%;
 	max-width: g(4);
@@ -18,16 +17,6 @@
 	position: relative;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-
-	&:not(:disabled) {
-		@include hover {
-			box-shadow: 0 0 0 1px $border-color inset;
-		}
-
-		&:active {
-			box-shadow: $inset-shadow, 0 0 0 1px $border-color inset;
-		}
-	}
 
 	@container (width > #{$tiny}) {
 		max-width: g(6);
@@ -45,6 +34,20 @@
 
 	@container (width > #{$large}) {
 		max-width: g(12);
+	}
+
+	&:not(:disabled) {
+		@include hover {
+			box-shadow: 0 0 0 1px $border-color inset;
+		}
+
+		&:active {
+			box-shadow: $inset-shadow, 0 0 0 1px $border-color inset;
+		}
+	}
+
+	.tify-page-select:not(:only-child) & {
+		border-radius: $br 0 0 $br;
 	}
 
 	.tify-page-name {

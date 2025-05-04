@@ -134,7 +134,7 @@ function Store(args) {
 			const { pages } = store.options;
 			const lastIndex = pages.length - 1;
 			const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
-			return page >= store.sections[store.sections.length - 1].firstPage;
+			return page >= store.sections[store.sections.length - 1]?.firstPage;
 		}),
 		pageCount: computed(() => store.manifest?.items?.length),
 		sections: computed(() => {
@@ -188,7 +188,7 @@ function Store(args) {
 
 					if (!canvases[structure.firstPage - 1]) {
 						// Excluding structure if its range has no canvases
-						continue;
+						continue; // eslint-disable-line no-continue
 					}
 				} else if (canvases?.[0]) {
 					structure.firstPage = 1;
@@ -297,8 +297,14 @@ function Store(args) {
 			return startCanvasIndex >= 0 ? startCanvasIndex + 1 : 1;
 		},
 		getThumbnailUrl(page, thumbnailWidth) {
-			const resource = store.manifest.items[page - 1].items?.[0]?.items?.[0]?.body;
+			const canvas = store.manifest.items[page - 1];
 
+			const thumbnail = canvas.thumbnail?.[0];
+			if (thumbnail?.id && thumbnail?.width >= thumbnailWidth) {
+				return thumbnail.id;
+			}
+
+			const resource = canvas.items?.[0]?.items?.[0]?.body;
 			if (resource?.service) {
 				const service = resource.service instanceof Array ? resource.service[0] : resource.service;
 				const quality = ['ImageService2', 'ImageService3'].includes(service.type || service['@type'])
@@ -309,7 +315,7 @@ function Store(args) {
 				return `${id}${id.at(-1) === '/' ? '' : '/'}full/${thumbnailWidth},/0/${quality}.jpg`;
 			}
 
-			return resource?.id;
+			return thumbnail?.id || resource?.id;
 		},
 		goToFirstPage() {
 			store.setPage(1);
@@ -328,12 +334,12 @@ function Store(args) {
 			const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
 			let sectionIndex = 0;
 			while (
-				page >= this.sections[sectionIndex].firstPage
-				|| (page && page >= this.sections[sectionIndex].firstPage)
+				page >= store.sections[sectionIndex].firstPage
+				|| (page && page >= store.sections[sectionIndex].firstPage)
 			) {
 				sectionIndex += 1;
 			}
-			store.setPage(this.sections[sectionIndex].firstPage);
+			store.setPage(store.sections[sectionIndex].firstPage);
 		},
 		goToLastPage() {
 			store.setPage(store.pageCount);
@@ -349,14 +355,14 @@ function Store(args) {
 		goToPreviousSection() {
 			const { pages } = store.options;
 			const page = pages[0] ? pages[0] : pages[1];
-			let sectionIndex = this.sections.length - 1;
+			let sectionIndex = store.sections.length - 1;
 			while (
-				page <= this.sections[sectionIndex].firstPage
-				|| (page && page <= this.sections[sectionIndex].firstPage)
+				page <= store.sections[sectionIndex].firstPage
+				|| (page && page <= store.sections[sectionIndex].firstPage)
 			) {
 				sectionIndex -= 1;
 			}
-			store.setPage(this.sections[sectionIndex].firstPage);
+			store.setPage(store.sections[sectionIndex].firstPage);
 		},
 		loadAnnotations() {
 			store.annotationsAvailable = null;
@@ -369,7 +375,7 @@ function Store(args) {
 
 				const canvas = store.manifest.items[page - 1];
 				if (!('annotations' in canvas)) {
-					this.annotationsAvailable = false;
+					store.annotationsAvailable = false;
 					return;
 				}
 
@@ -387,7 +393,7 @@ function Store(args) {
 						const status = error.response ? error.response.statusText : error.message;
 						// eslint-disable-next-line no-console
 						console.warn(`Could not load annotations: ${status}`);
-						this.annotationsAvailable = false;
+						store.annotationsAvailable = false;
 						return;
 					}
 				}
@@ -450,7 +456,7 @@ function Store(args) {
 						html = html.replace(/\n/g, ' <br>');
 					}
 
-					this.annotationsAvailable = true;
+					store.annotationsAvailable = true;
 
 					const annotation = {
 						id: annotationId,

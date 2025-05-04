@@ -213,17 +213,17 @@ export default {
 					<!-- TODO: This alt string is not accessible, but there is no way to get a proper one -->
 					<img
 						class="tify-info-logo"
+						:src="logo.id"
 						:alt="$translate('Logo')"
 						loading="lazy"
-						:src="logo.id"
 					/>
 				</a>
 				<img
 					v-else
 					class="tify-info-logo"
+					:src="logo.id"
 					:alt="$translate('Logo')"
 					loading="lazy"
-					:src="logo.id"
 				/>
 			</p>
 		</div>

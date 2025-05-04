@@ -140,5 +140,5 @@ To check all translations for validity and completeness, use `npm run test:i18n`
 ---
 
 <a href="https://www.sub.uni-goettingen.de/en/">
-	<img src="https://tify.rocks/img/sub-logo.svg" width="329" height="30" alt="Göttingen State and University Library">
+	<img src="https://tify.rocks/img/sub-logo.svg" alt="Göttingen State and University Library" width="329" height="30">
 </a>

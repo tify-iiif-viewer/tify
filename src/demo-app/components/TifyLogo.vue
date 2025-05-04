@@ -1,5 +1,6 @@
 <template>
 	<svg width="592" height="240" viewBox="0 0 592 240" xmlns="http://www.w3.org/2000/svg">
+		<title>TIFY</title>
 		<rect x="12" y="12" width="568" height="216" fill="none" stroke-width="24" />
 		<path fill="#06b" d="M199 82h9v76h-9z" opacity=".33" />
 		<path d="M72 64h96v26h-34v86h-28V90H72" />

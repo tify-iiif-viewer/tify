@@ -44,7 +44,7 @@ export default defineConfig({
 		outDir: process.env.OUTDIR || './dist',
 		rollupOptions: {
 			input: {
-				'sample-app': 'index.html',
+				'demo-app': 'index.html',
 				tify: 'src/main.js',
 			},
 			output: {

@@ -31,18 +31,19 @@ export default {
 			:id="`manifest${instance.id}`"
 			type="url"
 			class="input"
-			:aria-label="$t('IIIF manifest URL', instance)"
-			:placeholder="$t('IIIF manifest URL', instance)"
+			:aria-label="$translate('IIIF manifest URL', instance)"
+			:placeholder="$translate('IIIF manifest URL', instance)"
 			:value="modelValue"
 			@input="$emit('update:modelValue', $event.target.value)"
 			@focus="$event.target.select()"
 		>
 		<button
 			type="submit"
-			class="button"
+			class="header-button"
 			:disabled="!instance.manifestUrl"
+			:aria-label="$translate('Load manifest', instance)"
 		>
-			{{ $t('Load', instance) }}
+			<IconArrowRight />
 		</button>
 	</form>
 </template>

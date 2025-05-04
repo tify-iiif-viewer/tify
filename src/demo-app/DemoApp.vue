@@ -23,9 +23,7 @@ export default {
 		};
 	},
 	computed: {
-		env() {
-			return ENV;
-		},
+		env: () => ENV,
 	},
 	mounted() {
 		// Restore state from URL query
@@ -87,7 +85,7 @@ export default {
 </script>
 
 <template>
-	<div class="app">
+	<main class="app">
 		<section
 			v-for="instance in instances"
 			:key="instance.id"
@@ -97,19 +95,16 @@ export default {
 			<header v-if="instance.tify" class="header">
 				<button
 					type="button"
-					class="button"
+					class="header-button"
 					aria-label="Toggle sidebar"
 					:aria-controls="`sidebar${instance.id}`"
 					:aria-expanded="instance.sidebarOpen"
-					style="font-size: 1rem; height: 1.5rem; margin-right: .25rem; padding: .125rem; width: 1.5rem"
 					@click="instance.sidebarOpen = !instance.sidebarOpen"
 				>
-					<i v-if="!instance.sidebarOpen" class="wiggle">
-						🥚
-					</i>
-					<i v-else>
-						🐰
-					</i>
+					<IconDotsVertical
+						style="transition: transform .2s"
+						:style="instance.sidebarOpen && 'transform: rotate(45deg)'"
+					/>
 				</button>
 
 				<ManifestForm
@@ -120,69 +115,72 @@ export default {
 				/>
 			</header>
 
-			<main class="main">
-				<nav
+			<div class="main">
+				<div
 					:id="`sidebar${instance.id}`"
 					class="sidebar"
 					:hidden="!instance.sidebarOpen && instance.tify"
 				>
 					<div class="sidebar-controls">
-						<!-- eslint-disable-next-line vuejs-accessibility/anchor-has-content -->
-						<a class="logo" href=".">
-							<TifyLogo />
-						</a>
+						<component :is="instance.tify ? 'div' : 'h1'" class="logo">
+							<!-- eslint-disable-next-line vuejs-accessibility/anchor-has-content -->
+							<a href=".">
+								<TifyLogo />
+							</a>
+						</component>
 
-						<ul
+						<div
 							style="
 								display: flex;
 								gap: .5rem;
 								list-style: none;
-								margin-bottom: .5rem;
+								margin: .5rem 0 0;
 							"
 						>
-							<li style="display: flex; gap: 1px; flex: 1">
-								<button
-									type="button"
-									class="button"
-									style="
-										border-radius: 2px 0 0 2px;
-										padding: .125rem;
-										width: 100%;
-									"
-									:aria-label="$t('Add instance', instance)"
-									:title="$t('Add instance', instance)"
-									@click="addInstance()"
-								>
-									<IconCardPlusOutline />
-								</button>
-								<button
-									type="button"
-									class="button"
-									:disabled="!instance.tify && instances.length < 2"
-									style="
-										border-radius: 0 2px 2px 0;
-										padding: .125rem;
-										width: 100%;
-									"
-									:aria-label="$t('Remove instance', instance)"
-									:title="$t('Remove instance', instance)"
-									@click="removeInstance(instance)"
-								>
-									<IconCardRemoveOutline />
-								</button>
-							</li>
-							<li>
-								<ColorModeSwitcher
-									:instance="instance"
-									@change="colorMode => {
-										instance.colorMode = colorMode;
-										instance.tify?.updateOptions({ colorMode })
-									}"
-								/>
-							</li>
-						</ul>
-
-						<LanguageSwitcher :instance="instance" @change="code => instance.setLanguage(code)" />
+							<ul
+								style="
+									display: flex;
+									list-style: none;
+								"
+							>
+								<li>
+									<button
+										type="button"
+										class="button"
+										style="border-radius: 2px 0 0 2px; padding: .25rem"
+										:aria-label="$translate('Add instance', instance)"
+										:title="$translate('Add instance', instance)"
+										@click="addInstance()"
+									>
+										<IconCardPlusOutline />
+									</button>
+								</li>
+								<li>
+									<button
+										type="button"
+										class="button"
+										:disabled="!instance.tify && instances.length < 2"
+										style="border-radius: 0 2px 2px 0; margin-left: -1px; padding: .25rem"
+										:aria-label="$translate('Remove instance', instance)"
+										:title="$translate('Remove instance', instance)"
+										@click="removeInstance(instance)"
+									>
+										<IconCardRemoveOutline />
+									</button>
+								</li>
+							</ul>
+							<ColorModeSwitcher
+								:instance="instance"
+								@change="colorMode => {
+									instance.colorMode = colorMode;
+									instance.tify?.updateOptions({ colorMode })
+								}"
+							/>
+							<LanguageSwitcher
+								:instance="instance"
+								@change="code => instance.setLanguage(code)"
+							/>
+						</div>
 					</div>
 
 					<ManifestForm
@@ -201,12 +199,12 @@ export default {
 							TIFY
 						</a>
 					</footer>
-				</nav>
+				</div>
 
 				<div :id="`container${instance.id}`" class="container" />
-			</main>
+			</div>
 		</section>
-	</div>
+	</main>
 </template>
 
 <style lang="scss">
@@ -246,14 +244,6 @@ export default {
 
 .button {
 	@extend %button;
-	background: $base-color;
-	color: light-dark(#fff, #171717);
-
-	&:not(:disabled) {
-		@include hover {
-			background: oklch(from $base-color calc(l + .03) c h);
-		}
-	}
 }
 
 .container {
@@ -276,49 +266,28 @@ export default {
 	background: $header-bg;
 	border-bottom: 1px solid $border-color;
 	display: flex;
+	gap: .25rem;
 	position: relative;
 	padding: .25rem;
 	z-index: 10;
+}
 
-	// TODO: Remove
-	button:hover .wiggle {
-		@keyframes wiggle {
-			0% {transform:rotate(6deg);}
-			10% {transform:rotate(-5deg);}
-			20% {transform:rotate(5deg);}
-			30% {transform:rotate(-4deg);}
-			40% {transform:rotate(4deg);}
-			50% {transform:rotate(-3deg);}
-			60% {transform:rotate(3deg);}
-			70% {transform:rotate(-2deg);}
-			80% {transform:rotate(2deg);}
-			90% {transform:rotate(-1deg);}
-			100% {transform:rotate(1deg);}
+.header-button {
+	@extend %button;
+	background: none;
+	box-shadow: 0 0 0 1px currentColor inset;
+	color: $link-color;
+	padding: .25rem;
+
+	&:not(:disabled) {
+		@include hover {
+			background: $base-color-paler;
 		}
 
-		animation: wiggle 1.6s;
-		transform-origin: 50% 80%;
+		&:active {
+			box-shadow: $inset-shadow, 0 0 0 1px currentColor inset;
+		}
 	}
-}
-
-.input {
-	background: none;
-	border: 1px solid transparent;
-	border-radius: $br;
-	color: $base-color;
-	font-size: 16px;
-	flex: 1;
-	min-width: 0;
-	padding: calc(.125rem - 1px) calc(.25rem - 1px);
-}
-
-.input:focus {
-	background:
-		linear-gradient($header-bg, $header-bg),
-		linear-gradient($header-bg 80%, $base-color 80%);
-	background-origin: border-box;
-	background-clip: padding-box, border-box;
-	outline: none;
 }
 
 .instance {
@@ -334,11 +303,10 @@ export default {
 
 .logo {
 	height: 1rem;
-	margin: 0 0 .5rem;
 
-	@container (width > 12rem) {
+	@container (width > 15rem) {
 		height: 3rem;
-		margin: 1.5rem 0 2rem;
+		margin: 1.5rem 0;
 	}
 }
 
@@ -360,8 +328,6 @@ export default {
 	flex: 100% 0 0;
 	overflow: auto;
 	padding-bottom: 1rem;
-	// TODO: This makes the sidebar flash on load when manifest is set
-	// transition: margin .2s, opacity .2s, visibility .2s;
 
 	.instance:has(.tify) & {
 		background: $header-bg;
@@ -372,7 +338,7 @@ export default {
 
 		@container (width > 719px) {
 			align-items: flex-start;
-			flex: 0 0 12rem;
+			flex: 0 0 15rem;
 			justify-content: flex-start;
 			position: absolute;
 			position: static;
@@ -385,7 +351,7 @@ export default {
 		visibility: hidden;
 
 		@container (width > 719px) {
-			margin-left: -12rem;
+			margin-left: -15rem;
 		}
 	}
 }
@@ -405,11 +371,7 @@ export default {
 	width: 100%;
 	z-index: 1;
 
-	> * {
-		width: 10rem;
-	}
-
-	@container (width > 12rem) {
+	@container (width > 15rem) {
 		border: 0;
 		position: static
 	}

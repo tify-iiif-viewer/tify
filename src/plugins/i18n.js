@@ -17,10 +17,11 @@ export default {
 			}
 
 			if (import.meta.env.DEV && translation.value) {
-				console.warn(`Missing translation for "${string}"`); // eslint-disable-line no-console
+				// eslint-disable-next-line no-console
+				console.warn(`Missing translation for "${string}"`);
 			}
 
-			return fallback || string;
+			return fallback || string.replace(/{.+?}/g, '').trim();
 		};
 
 		// NOTE: translationObject contains any number of key-value pairs, where

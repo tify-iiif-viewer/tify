@@ -1,3 +1,5 @@
+<!-- TODO for top-to-bottom viewing directions, the double pages view should have the second image below the first one instead of on its right [and display the pagination buttons at top and bottom]-->
+
 <script>
 import vClickOutside from 'click-outside-vue3';
 import OpenSeadragon from 'openseadragon';
@@ -27,6 +29,30 @@ export default {
 	computed: {
 		filtersActive() {
 			return Object.keys(this.$store.options.filters).length > 0;
+		},
+		paginationButtons() {
+			const rtl = this.$store.manifest.viewingDirection === 'right-to-left';
+
+			const buttons = [
+				{
+					hidden: this.$store.isCustomPageView || this.$store.isFirstPage,
+					title: this.$translate('Previous page'),
+					onClick: this.$store.goToPreviousPage,
+					icon: rtl ? 'IconChevronRight' : 'IconChevronLeft',
+				},
+				{
+					hidden: this.$store.isCustomPageView || this.$store.isLastPage,
+					title: this.$translate('Next page'),
+					onClick: this.$store.goToNextPage,
+					icon: rtl ? 'IconChevronLeft' : 'IconChevronRight',
+				},
+			];
+
+			if (rtl) {
+				buttons.reverse();
+			}
+
+			return buttons.filter((button) => !button.hidden);
 		},
 		saturation() {
 			const saturation = this.$store.options.filters.saturate;
@@ -769,24 +795,18 @@ export default {
 		</div>
 
 		<button
-			v-if="!$store.isCustomPageView && !$store.isFirstPage"
+			v-for="button in paginationButtons"
+			:key="button.icon"
 			type="button"
-			class="tify-scan-page-button -previous"
-			:title="$translate('Previous page')"
-			:aria-label="$translate('Previous page')"
-			@click="$store.goToPreviousPage()"
+			class="tify-scan-page-button"
+			:class="button.icon === 'IconChevronLeft' ? '-left' : '-right'"
+			:title="button.title"
+			:aria-label="button.title"
+			@click="button.onClick"
 		>
-			<IconChevronLeft />
-		</button>
-		<button
-			v-if="!$store.isCustomPageView && !$store.isLastPage"
-			type="button"
-			class="tify-scan-page-button -next"
-			:title="$translate('Next page')"
-			:aria-label="$translate('Next page')"
-			@click="$store.goToNextPage()"
-		>
-			<IconChevronRight />
+			<!-- NOTE: Avoiding <component :is="…" /> in favor of unplugin-vue-components -->
+			<IconChevronLeft v-if="button.icon === 'IconChevronLeft'" />
+			<IconChevronRight v-else-if="button.icon === 'IconChevronRight'" />
 		</button>
 	</section>
 </template>

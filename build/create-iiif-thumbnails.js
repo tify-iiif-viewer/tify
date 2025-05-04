@@ -1,45 +1,62 @@
 import chalk from 'chalk';
+import filenamifyUrl from 'filenamify-url';
 import sharp from 'sharp';
 import { readdirSync, unlinkSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { upgrade } from '@iiif/parser/upgrader';
 
 // eslint-disable-next-line import/extensions
-import sampleManifests from '../src/sample-app/sampleManifests.js';
+import sampleManifests from '../src/demo-app/manifests.js';
 
 const thumbnailsDir = resolve(dirname(import.meta.url.replace('file://', '')), '../public/thumbnails');
-const width = 240;
-const height = 240;
+const thumbnailWidth = 240;
+const thumbnailHeight = 240;
+const thumbnailOverflow = 8;
 
 async function saveThumbnail(manifestUrl, parentUrl = '') {
-	// Fetch the IIIF manifest
-	const manifestRes = await fetch(manifestUrl);
-	if (!manifestRes.ok) {
-		return { error: `Failed to fetch manifest ${manifestRes.statusText}` };
+	// Fetch IIIF manifest
+	let manifestRes;
+	try {
+		manifestRes = await fetch(manifestUrl);
+		if (!manifestRes.ok) {
+			return { error: `Failed to fetch manifest: ${manifestRes.statusText}` };
+		}
+	} catch (error) {
+		return { error: 'Failed to fetch manifest' };
 	}
+
 	const originalManifest = await manifestRes.json();
 
-	// Upgrade to a v3 manifest using @iiif/parser/upgrader
+	// Upgrade to IIIF 3 manifest using @iiif/parser/upgrader
 	const manifest = upgrade(originalManifest);
 
-	if (manifest.type === 'Collection') {
-		return saveThumbnail(manifest.items[0].id, parentUrl || manifestUrl);
+	if (manifest.type === 'Collection' || manifest['@type'] === 'sc:Collection') {
+		const manifests = manifest.items || manifest.manifests || [];
+
+		for (let i = 0; i < manifests.length; i += 1) {
+			// eslint-disable-next-line no-await-in-loop
+			const result = await saveThumbnail(manifests[i].id || manifests[i]['@id'], parentUrl || manifestUrl);
+			if (!result.error) {
+				return result;
+			}
+		}
+
+		return { error: `Failed loading thumbnail for any manifest in collection of ${manifests.length}` };
 	}
 
-	if (manifest['@type'] === 'sc:Collection') {
-		return saveThumbnail(manifest.manifests[0]['@id'], parentUrl || manifestUrl);
-	}
-
-	// Try manifest-level thumbnail first
 	let imageUrl = null;
-	// if (manifest.thumbnail && manifest.thumbnail.length > 0) {
-	// 	imageUrl = manifest.thumbnail[0].id || manifest.thumbnail[0]['@id'];
-	// }
 
-	// Fallback: if no thumbnail, use the start canvas or first canvas
+	if (manifest.thumbnail && manifest.thumbnail.length) {
+		const thumbnail = manifest.thumbnail[0];
+		if (thumbnail.width >= thumbnailWidth + thumbnailOverflow * 2
+			&& thumbnail.height >= thumbnailHeight + thumbnailOverflow * 2
+		) {
+			imageUrl = thumbnail.id || thumbnail['@id'];
+		}
+	}
+
 	if (!imageUrl) {
 		const startCanvasId = manifest.start?.id || manifest.items?.[0]?.id;
-
 		if (!startCanvasId) {
 			return { error: 'No thumbnail found, and no canvases in this manifest' };
 		}
@@ -64,14 +81,15 @@ async function saveThumbnail(manifestUrl, parentUrl = '') {
 				: 'native';
 			const id = service.id || service['@id'];
 			// NOTE: Using "full" instead of "square" because the latter is not supported by all APIs
-			imageUrl = `${id}${id.at(-1) === '/' ? '' : '/'}full/${width},/0/${quality}.jpg`;
-		} else {
+			imageUrl = `${id}${id.at(-1) === '/' ? '' : '/'}full/${thumbnailWidth + thumbnailOverflow * 2},/0/${quality}.jpg`;
+		} else if (resource.format.startsWith('image/')) {
+			// Filter out non-image resources like audio
 			imageUrl = resource?.id;
 		}
+	}
 
-		if (!imageUrl) {
-			return { error: 'No image URL found on the annotation body' };
-		}
+	if (!imageUrl) {
+		return { error: 'No image URL found on the annotation body' };
 	}
 
 	// Fetch and save the image
@@ -81,12 +99,20 @@ async function saveThumbnail(manifestUrl, parentUrl = '') {
 	}
 
 	const imageBuffer = await imageRes.arrayBuffer();
-	const thumbnailFilename = `${thumbnailsDir}/${(parentUrl || manifestUrl).replace(/[^\w]/g, '')}.avif`;
+	const thumbnailFilename = `${thumbnailsDir}/${filenamifyUrl(parentUrl || manifestUrl)}.avif`;
 	await sharp(Buffer.from(imageBuffer))
-		.resize(width, height)
+		.resize(thumbnailWidth + thumbnailOverflow * 2, thumbnailHeight + thumbnailOverflow * 2)
+		.extract({
+			width: thumbnailWidth,
+			height: thumbnailHeight,
+			left: thumbnailOverflow,
+			top: thumbnailOverflow,
+		})
 		.toFile(thumbnailFilename);
 
-	return { thumbnailFilename };
+	return {
+		thumbnailFilename,
+	};
 }
 
 console.log();
@@ -96,8 +122,7 @@ if (!sampleManifests?.length) {
 	process.exit();
 }
 
-const files = readdirSync(thumbnailsDir);
-files.forEach((file) => unlinkSync(`${thumbnailsDir}/${file}`));
+readdirSync(thumbnailsDir).forEach((file) => unlinkSync(`${thumbnailsDir}/${file}`));
 
 sampleManifests.forEach((manifest) => {
 	saveThumbnail(manifest.url).then((result) => {

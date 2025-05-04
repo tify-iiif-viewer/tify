@@ -127,7 +127,7 @@ export default {
 	/**
 	 * The page(s) to display initially. If `null`, the initial page is
 	 * determined by the manifest’s `startCanvas`, and if that is not set either,
-	 * the first page is displayed. Page indices starts at 1.
+	 * the first page is displayed. Page indices start at 1.
 	 *
 	 * @type {?Array.<number>}
 	 */
@@ -144,13 +144,13 @@ export default {
 	pan: {},
 
 	/**
-	 * Sets the preferred IIIF image format by extension. If the image format is
-	 * not set or if the set format is not supported, it is determined by the
-	 * IIIF Image API, which usually defaults to JPEG (`jpg`). Possible formats
-	 * are `avif` (not part of the IIIF spec yet, but supported by some servers),
+	 * Sets the preferred IIIF image format by file extension. If the image
+	 * format is not set or if the set format is not supported, it is determined
+	 * by the IIIF Image API, which usually defaults to `jpg`. Possible formats
+	 * are `avif` (not in the IIIF spec yet, but supported by some servers),
 	 * `gif`, `jpg`, `png` and `webp`. Please note that some IIIF Image APIs
 	 * advertise formats without actually being able to provide them, so this
-	 * option is only safe to use when users cannot change the manifest URL.
+	 * option should only be set when users cannot load arbitrary manifests.
 	 *
 	 * @type {?string}
 	 */
@@ -207,9 +207,9 @@ export default {
 	],
 
 	/**
-	 * The initially displayed view (panel); `fulltext`, `thumbnails`,
-	 * `toc`, `info`, `help`, or `null` to display (only) the scan.
-	 * On large screens, the scan is always shown next to the selected view.
+	 * The initially displayed view (panel); `fulltext`, `thumbnails`, `toc`,
+	 * `info`, `help`, or `null` to display (only) the scan. On large screens,
+	 * the scan is always shown next to the selected view.
 	 *
 	 * @type {?string}
 	 */
@@ -217,9 +217,8 @@ export default {
 
 	/**
 	 * An object with options for OpenSeadragon, TIFY’s image rendering
-	 * component. See its documentation at
+	 * component. See the OpenSeadragon documentation for all available options:
 	 * https://openseadragon.github.io/docs/OpenSeadragon.html#.Options
-	 * for all available options.
 	 *
 	 * @type {object}
 	 */

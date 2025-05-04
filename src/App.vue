@@ -129,6 +129,7 @@ export default {
 		<div
 			v-if="readyToRender"
 			class="tify-main"
+			role="region"
 		>
 			<template v-if="$store.manifest">
 				<!-- Scan must come first, other views in arbitrary order -->
@@ -149,12 +150,13 @@ export default {
 					v-show="$store.options.view === 'toc'"
 					:id="$store.getId('toc')"
 				/>
-				<ViewExport
-					v-show="$store.options.view === 'export'"
-					:id="$store.getId('export')"
-				/>
 			</template>
 
+			<ViewExport
+				v-if="$store.collection || $store.manifest"
+				v-show="$store.options.view === 'export'"
+				:id="$store.getId('export')"
+			/>
 			<ViewInfo
 				v-if="$store.collection || $store.manifest"
 				v-show="$store.options.view === 'info'"

@@ -10,7 +10,7 @@ export default [
 		type: 'manifest',
 	},
 	{
-		title: 'Johann Christian Wächtlers Commodes Manual, Oder Hand-Buch',
+		title: 'Commodes Manual, Oder Hand-Buch',
 		url: 'https://manifests.sub.uni-goettingen.de/iiif/presentation/PPN1887397396/manifest?version=7a696723',
 		type: 'manifest',
 	},
@@ -25,13 +25,8 @@ export default [
 		type: 'manifest',
 	},
 	{
-		title: 'Speyerer Evangelistar',
-		url: 'https://digital.blb-karlsruhe.de/i3f/v20/1209510/manifest',
-		type: 'manifest',
-	},
-	{
 		title: 'The Natural Method of Healing',
-		url: 'https://iiif.wellcomecollection.org/presentation/v2/b20417081',
+		url: 'https://iiif.wellcomecollection.org/presentation/b20417081',
 		type: 'manifest',
 	},
 	{
@@ -40,8 +35,8 @@ export default [
 		type: 'manifest',
 	},
 	{
-		title: 'Field with Poppies',
-		url: 'https://bremen.museum-digital.de/apis/iiif-presentation/147/manifest',
+		title: 'Dort, or Dordrecht',
+		url: 'https://manifests.collections.yale.edu/ycba/obj/34',
 		type: 'manifest',
 	},
 	{
@@ -60,6 +55,11 @@ export default [
 		type: 'collection',
 	},
 	{
+		title: 'The Chemist and Druggist',
+		url: 'https://iiif.wellcomecollection.org/presentation/b19974760',
+		type: 'collection',
+	},
+	{
 		title: 'TU Delft',
 		url: 'https://heritage.tudelft.nl/iiif/collection.json',
 		type: 'collection',
@@ -75,7 +75,7 @@ export default [
 		type: 'collection',
 	},
 	{
-		title: 'Wellcome Collection',
+		title: 'Wellcome Collection Archives',
 		url: 'https://iiif.wellcomecollection.org/presentation/v3/collections/archives',
 		type: 'collection',
 	},

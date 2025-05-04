@@ -6,8 +6,11 @@ import {
 	rootDir,
 } from './i18n.js'; // eslint-disable-line import/extensions
 
-const translatedStrings = findTranslatedStrings(`${rootDir}/src`, '\\$translate')
-	.map((result) => result.key);
+const translatedStrings = findTranslatedStrings(
+	`${rootDir}/src/**/*.vue`,
+	['**/demo-app', '**/icons'],
+	'$translate',
+).map((result) => result.key);
 
 if (!translatedStrings.length) {
 	console.log('No translated strings found');

@@ -63,8 +63,8 @@ $main-bg:
 		--tify-body-bg,
 		// dots pattern
 		radial-gradient(
-			light-dark(#ccc, #111) 1px,
-			light-dark($grey-light, $grey) 0
+			light-dark(#aaa, #333) 1px,
+			light-dark(#bbb, #444) 0
 		) 2px 1px / 3px 3px,
 	) !default;
 $panel-bg: var(--tify-bg-color, light-dark(#fff, $grey-dark)) !default;

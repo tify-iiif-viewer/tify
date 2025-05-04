@@ -131,7 +131,7 @@ export default {
 				download
 			>
 				{{ $store.localize(structure.label) }}
-				({{ structure.pageCount }}&nbsp;{{ $translate(structure.pageCount === 1 ? 'page' : 'pages') }})
+				({{ structure.pageCount }}&nbsp;{{ structure.pageCount === 1 ? $translate('page') : $translate('pages') }})
 			</a>
 			<!-- Only display page label if structure has a different label -->
 			<a
