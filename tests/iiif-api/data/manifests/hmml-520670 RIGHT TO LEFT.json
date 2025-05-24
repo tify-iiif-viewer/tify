@@ -1,0 +1,1245 @@
+{
+	"@context": "http://iiif.io/api/presentation/2/context.json",
+	"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021",
+	"@type": "sc:Manifest",
+	"label": "DS 0028 00021",
+	"metadata": [
+		{
+			"label": "Country",
+			"value": "Indonesia"
+		},
+		{
+			"label": "City",
+			"value": "Kuningan (Jawa Barat)"
+		},
+		{
+			"label": "Repository",
+			"value": "Paseban Tri Panca Tunggal"
+		},
+		{
+			"label": "Shelfmark",
+			"value": null
+		},
+		{
+			"label": "HMML Project number",
+			"value": "DS 0028 00021"
+		},
+		{
+			"label": "Rights link",
+			"value": "https://www.vhmml.org/terms"
+		},
+		{
+			"label": "Permalink",
+			"value": "https://w3id.org/vhmml/readingRoom/view/520670"
+		},
+		{
+			"label": "IIIF link",
+			"value": "https://www.vhmml.org/image/manifest/520670"
+		}
+	],
+	"viewingDirection": "right-to-left",
+	"location": "vhmml",
+	"logo": "https://vhmml.org/static/img/hmml-logo.png",
+	"attribution": "Provided by the Hill Museum & Manuscript Library",
+	"sequences": [
+		{
+			"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/normal",
+			"@type": "sc:Sequence",
+			"label": "Current page order",
+			"canvases": [
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-1",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_001r.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-1",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_001r.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_001r.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-1"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-2",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_001v.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-2",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_001v.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_001v.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-2"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-3",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_002r.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-3",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_002r.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_002r.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-3"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-4",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_002v.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-4",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_002v.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_002v.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-4"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-5",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_003r.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-5",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_003r.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_003r.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-5"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-6",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_003v.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-6",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_003v.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_003v.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-6"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-7",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_004r.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-7",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_004r.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_004r.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-7"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-8",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_004v.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-8",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_004v.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_004v.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-8"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-9",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_005r.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-9",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_005r.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_005r.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-9"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-10",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_005v.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-10",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_005v.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_005v.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-10"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-11",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_006r.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-11",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_006r.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_006r.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-11"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-12",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_006v.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-12",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_006v.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_006v.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-12"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-13",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_007r.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-13",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_007r.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_007r.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-13"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-14",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_007v.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-14",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_007v.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_007v.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-14"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-15",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_008r.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-15",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_008r.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_008r.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-15"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-16",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_008v.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-16",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_008v.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_008v.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-16"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-17",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_009r.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-17",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_009r.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_009r.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-17"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-18",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_009v.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-18",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_009v.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_009v.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-18"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-19",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_010r.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-19",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_010r.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_010r.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-19"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-20",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_010v.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-20",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_010v.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_010v.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-20"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-21",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_011r.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-21",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_011r.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_011r.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-21"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-22",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_011v.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-22",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_011v.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_011v.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-22"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-23",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_012r.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-23",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_012r.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_012r.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-23"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-24",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_012v.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-24",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_012v.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_012v.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-24"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-25",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_013r.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-25",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_013r.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_013r.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-25"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-26",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_013v.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-26",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_013v.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_013v.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-26"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-27",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_014r.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-27",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_014r.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_014r.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-27"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-28",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_014v.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-28",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_014v.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_014v.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-28"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-29",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_015r.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-29",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_015r.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_015r.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-29"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-30",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_015v.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-30",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_015v.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_015v.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-30"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-31",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_016r.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-31",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_016r.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_016r.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-31"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-32",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_016v.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-32",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_016v.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_016v.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-32"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-33",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_017r.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-33",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_017r.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_017r.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-33"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-34",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_017v.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-34",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_017v.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_017v.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-34"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-35",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_018r.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-35",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_018r.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_018r.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-35"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-36",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_018v.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-36",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_018v.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_018v.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-36"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-37",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_019r.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-37",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_019r.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_019r.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-37"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-38",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_019v.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-38",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_019v.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_019v.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-38"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-39",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_020r.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-39",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_020r.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_020r.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-39"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-40",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_020v.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-40",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_020v.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_020v.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-40"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-41",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_bc.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-41",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_bc.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_bc.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-41"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-42",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_bp.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-42",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_bp.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_bp.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-42"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-43",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_fc.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-43",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_fc.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_fc.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-43"
+						}
+					]
+				},
+				{
+					"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-44",
+					"@type": "sc:Canvas",
+					"label": "DS_0028_00021_fp.JPG",
+					"height": 6240,
+					"width": 4160,
+					"images": [
+						{
+							"@id": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/imageanno/anno-44",
+							"@type": "oa:Annotation",
+							"motivation": null,
+							"resource": {
+								"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_fp.JPG",
+								"@type": "dctypes:Image",
+								"format": "image/jpeg",
+								"height": 6240,
+								"width": 4160,
+								"service": {
+									"@id": "https://www.vhmml.org/image/READING_ROOM/DS/DS 0028 00021//DS_0028_00021_fp.JPG",
+									"@context": "http://iiif.io/api/image/2/context.json",
+									"profile": "http://iiif.io/api/image/2/level2.json"
+								}
+							},
+							"on": "http://vhmmlprodimage.ad.csbsju.edu:8080/iiif-service/manifest/DS%200028%2000021/canvas/canvas-44"
+						}
+					]
+				}
+			]
+		}
+	],
+	"sc:metadata": {
+		"@id": null,
+		"@type": null
+	}
+}

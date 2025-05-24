@@ -6,6 +6,12 @@ export default {
 
 		// eslint-disable-next-line no-param-reassign
 		app.config.globalProperties.$translate = (string, fallback) => {
+			const { language } = app.config.globalProperties.$store.options;
+			const override = app.config.globalProperties.$store.options.translations?.[language]?.[string];
+			if (override) {
+				return override;
+			}
+
 			if (translation.value?.[string]) {
 				return translation.value[string];
 			}
@@ -15,7 +21,7 @@ export default {
 				console.warn(`Missing translation for "${string}"`);
 			}
 
-			return fallback || string;
+			return fallback || string.replace(/{.+?}/g, '').trim();
 		};
 
 		// NOTE: translationObject contains any number of key-value pairs, where

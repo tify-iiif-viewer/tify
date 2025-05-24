@@ -19,19 +19,6 @@ export default {
 	annotationsVisible: null,
 
 	/**
-	 * Breakpoints used for custom media queries, depending on TIFY’s container
-	 * size instead of the viewport.
-	 *
-	 * @type {object}
-	 */
-	breakpoints: {
-		tiny: 359,
-		small: 719,
-		medium: 959,
-		large: 1199,
-	},
-
-	/**
 	 * If the manifest set by `manifestUrl` is a collection (`@type` is
 	 * `sc:Collection`) and `childManifestUrl` is not set, automatically load the
 	 * first manifest in the collection. This only works for collections with
@@ -52,6 +39,17 @@ export default {
 	 * @type {?string}
 	 */
 	childManifestUrl: null,
+
+	/**
+	 * Determines if TIFY is displayed in light or dark mode.
+	 *
+	 * `auto`: Determine color mode automatically based on browser preferences.
+	 * `light`: Use light mode, regardless of browser preferences.
+	 * `dark`: Use dark mode, regardless of browser preferences.
+	 *
+	 * @type {string}
+	 */
+	colorMode: 'auto',
 
 	/**
 	 * The HTML element into which TIFY is mounted. If set to `null`, TIFY is not
@@ -80,9 +78,9 @@ export default {
 	fallbackLanguage: 'en',
 
 	/**
-	 * Sets the initial image filters. Available properties are `'brightness'`,
-	 * `'contrast'` (both a floating-point number between `0.5` and `2`) and
-	 * `'saturation'` (floating-point number between `0` and `3`), all optional.
+	 * Sets the initial image filters. Available properties are `brightness`,
+	 * `contrast` (both a floating-point number between `0.5` and `2`) and
+	 * `saturation` (floating-point number between `0` and `3`), all optional.
 	 *
 	 * @type {object}
 	 */
@@ -107,7 +105,7 @@ export default {
 
 	/**
 	 * Viewer options that are reset on page change. Allowed array values are
-	 * `'filters'`, `'pan'`, `'rotation'` and `'zoom'`.
+	 * `filters`, `pan`, `rotation` and `zoom`.
 	 *
 	 * @type {Array.<string>}
 	 */
@@ -116,21 +114,20 @@ export default {
 	],
 
 	/**
-	 * Defines how page labels are displayed in the page selector and in the
-	 * thumbnails view. The placeholder `P` is replaced by the page number
-	 * (consecutive numbers starting at `1`) while `L` is replaced by the
-	 * page label, which can be any string, defined by the manifest.
-	 * If the page label is missing, only the page number is displayed,
-	 * regardless of the format.
+	 * Defines how page labels and numbers are displayed in the page selector and
+	 * in the thumbnails view.
 	 *
-	 * @type {string}
+	 * `label`: page label as defined by the manifest
+	 * `number`: page number (consecutive integers starting at `1`)
+	 *
+	 * @type {Array.<string>}
 	 */
-	pageLabelFormat: `P${String.fromCharCode(160)/* &nbsp; */}· L`,
+	pageNameParts: ['number', 'label'],
 
 	/**
 	 * The page(s) to display initially. If `null`, the initial page is
 	 * determined by the manifest’s `startCanvas`, and if that is not set either,
-	 * the first page is displayed. Page numbers start at 1.
+	 * the first page is displayed. Page indices start at 1.
 	 *
 	 * @type {?Array.<number>}
 	 */
@@ -145,6 +142,19 @@ export default {
 	 * @type {object}
 	 */
 	pan: {},
+
+	/**
+	 * Sets the preferred IIIF image format by file extension. If the image
+	 * format is not set or if the set format is not supported, it is determined
+	 * by the IIIF Image API, which usually defaults to `jpg`. Possible formats
+	 * are `avif` (not in the IIIF spec yet, but supported by some servers),
+	 * `gif`, `jpg`, `png` and `webp`. Please note that some IIIF Image APIs
+	 * advertise formats without actually being able to provide them, so this
+	 * option should only be set when users cannot load arbitrary manifests.
+	 *
+	 * @type {?string}
+	 */
+	preferredImageFormat: null,
 
 	/**
 	 * The initial rotation of the scan in degrees. Should be a multiple of 90.
@@ -197,9 +207,9 @@ export default {
 	],
 
 	/**
-	 * The initially displayed view (panel); `fulltext`, `thumbnails`,
-	 * `toc`, `info`, `help`, or `null` to display (only) the scan.
-	 * On large screens, the scan is always shown next to the selected view.
+	 * The initially displayed view (panel); `fulltext`, `thumbnails`, `toc`,
+	 * `info`, `help`, or `null` to display (only) the scan. On large screens,
+	 * the scan is always shown next to the selected view.
 	 *
 	 * @type {?string}
 	 */
@@ -207,9 +217,8 @@ export default {
 
 	/**
 	 * An object with options for OpenSeadragon, TIFY’s image rendering
-	 * component. See its documentation at
+	 * component. See the OpenSeadragon documentation for all available options:
 	 * https://openseadragon.github.io/docs/OpenSeadragon.html#.Options
-	 * for all available options.
 	 *
 	 * @type {object}
 	 */

@@ -81,6 +81,7 @@ export default {
 					>
 						<a :href="item.value">{{ item.value }}</a>
 					</p>
+					<!-- TODO: Value can contains <p>. Check and wrap if missing? -->
 					<p
 						v-else
 						:key="`html-${index}`"

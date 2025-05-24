@@ -27,6 +27,7 @@ export default {
 					return;
 				}
 
+				// TODO: this.$store.options.preferredImageFormat
 				const resource = this.$store.manifest.items[page - 1].items?.[0]?.items?.[0]?.body;
 				if (resource?.service) {
 					const service = resource.service instanceof Array ? resource.service[0] : resource.service;
@@ -66,21 +67,23 @@ export default {
 			{{ $translate('Export') }}
 		</h2>
 
-		<div class="tify-export-section -links">
+		<div
+			v-if="$store.manifest"
+			class="tify-export-section -links"
+		>
 			<h3>{{ $translate('Download Individual Images') }}</h3>
-			<ul class="tify-list">
-				<template
-					v-for="page in pages"
-					:key="page"
-				>
-					<li v-if="imageUrls[page]">
+			<ul class="tify-export-image-list">
+				<template v-for="page in pages">
+					<li v-if="imageUrls[page]" :key="page">
 						<!-- NOTE: The download attribute is only honored for same-origin URLs -->
+						<!-- eslint-disable-next-line vuejs-accessibility/anchor-has-content -->
 						<a
+							class="tify-export-image-link"
 							:href="imageUrls[page]"
 							:download="`${page}.jpg`"
 						>
-							{{ $translate('Page') }}
-							{{ $store.getPageLabel(page, $store.manifest.items[page - 1].label) }}
+							<img :src="$store.getThumbnailUrl(page, 96)" alt="">
+							<PageName :number="page" :multiline="true" />
 						</a>
 					</li>
 				</template>
@@ -88,7 +91,7 @@ export default {
 		</div>
 
 		<div
-			v-if="$store.manifest.rendering"
+			v-if="$store.manifest?.rendering"
 			class="tify-export-section -renderings"
 		>
 			<h3>{{ $translate('Renderings') }}</h3>
@@ -153,14 +156,14 @@ export default {
 						:href="$store.options.manifestUrl"
 						download="manifest.json"
 					>
-						{{ $translate($store.collection ? 'IIIF manifest (collection)' : 'IIIF manifest') }}
+						{{ $store.collection ? $translate('IIIF manifest (collection)') : $translate('IIIF manifest') }}
 					</a>
 				</li>
 			</ul>
 		</div>
 
 		<div
-			v-if="$store.manifest.seeAlso?.length"
+			v-if="$store.manifest?.seeAlso?.length"
 			class="tify-export-section -other"
 		>
 			<h3>{{ $translate('Other Formats') }}</h3>

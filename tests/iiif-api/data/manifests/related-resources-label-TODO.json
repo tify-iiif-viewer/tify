@@ -1,0 +1,155 @@
+{
+    "@context": "http://iiif.io/api/presentation/2/context.json",
+    "@type": "sc:Manifest",
+    "@id": "https://digital.library.villanova.edu/Item/vudl:958535/Manifest",
+    "label": "Photograph, Cory W. Brady seated with Red Cross armband, undated.",
+    "metadata": [
+        {
+            "label": "Full Title",
+            "value": "<span>Photograph, Cory W. Brady seated with Red Cross armband, undated.</span>"
+        },
+        {
+            "label": "Date Added",
+            "value": "<span>17 January 2024</span>"
+        },
+        {
+            "label": "Format",
+            "value": "<span><a href=\"https://digital.library.villanova.edu/Search/Results?filter[]=format:Photograph\">Photograph</a></span>"
+        },
+        {
+            "label": "Publish Date",
+            "value": "<span><a href=\"https://digital.library.villanova.edu/Search/Results?filter[]=dc_date_str:\"></a></span>"
+        },
+        {
+            "label": "Source",
+            "value": "<span><a href=\"https://digital.library.villanova.edu/Search/Results?filter[]=dc_source_str_mv:Museum+of+Nursing+History\">Museum of Nursing History</a></span>"
+        },
+        {
+            "label": "Topic",
+            "value": "<span><a href=\"https://digital.library.villanova.edu/Search/Results?type=Subject&lookfor=%22McVey%2C+Cordelia+Chamberlain.%22\">McVey, Cordelia Chamberlain.</a><br /><a href=\"https://digital.library.villanova.edu/Search/Results?type=Subject&lookfor=%22Nurses.%22\">Nurses.</a></span>"
+        },
+        {
+            "label": "About",
+            "value": "<span><a href=\"https://digital.library.villanova.edu/Record/vudl:958535\">More Details</a><br /><a href=\"https://digital.library.villanova.edu/Item/vudl:958535\">Permanent Link</a></span>"
+        },
+        {
+            "label": "Disclaimers",
+            "value": "<span><a href=\"https://digital.library.villanova.edu/copyright.html#liability\">Disclaimer of Liability</a><br /><a href=\"https://digital.library.villanova.edu/copyright.html#endorsement\">Disclaimer of Endorsement</a></span>"
+        }
+    ],
+    "description": "<p><p>2023.10.3. 1 black and white photograph, 4 x 5 1/2 in., on brown cardboard. Studio photograph of man seated, wearing WWI Red Cross arm band on left arm. Front of card is labeled \"Schriver and Kibler,\" \"1213 N. 3rd Street, Harrisburg, PA.\" Back of photograph is handwritten: \"Cory W. Brady of Pataskala, Licking County, Ohio. Corps reserve ambulance company.\" Another hand in blue ink pen has written: \"Auntie nursed this boy.\" This item is owned by the Museum of Nursing History,&nbsp; <a href=\"https://nursinghistory.org/\" shape=\"rect\">https://nursinghistory.org/</a>.</p></p>",
+    "license": "http://creativecommons.org/licenses/by-nc-nd/4.0/",
+    "requiredStatement": {
+        "label": "ATTRIBUTION",
+        "value": "<span>Digital Library@Villanova University<br /><br /><b>Disclaimers</b>: <br /><a href=\"https://digital.library.villanova.edu/copyright.html#liability\">Disclaimer of Liability</a><br /><a href=\"https://digital.library.villanova.edu/copyright.html#endorsement\">Disclaimer of Endorsement</a><br /><br /><b>License</b>: <br /><a href=\"http://creativecommons.org/licenses/by-nc-nd/4.0/\"><img src=\"https://digital.library.villanova.edu/themes/vudiglib/images/license/by-nc-nd.png\" alt=\"Creative Commons Attribution-NonCommercial-NoDerivs 4.0 International (CC BY-NC-ND 4.0)\"></a></span>"
+    },
+    "attribution": "Digital Library@Villanova University",
+    "related": {
+        "@id": "https://digital.library.villanova.edu/Item/vudl:958535",
+        "format": "text/html"
+    },
+    "within": "https://digital.library.villanova.edu/Collection/vudl:1023250/IIIF",
+    "sequences": [
+        {
+            "@type": "sc:Sequence",
+            "label": "Pages",
+            "viewingDirection": "left-to-right",
+            "viewingHint": "paged",
+            "canvases": [
+                {
+                    "@type": "sc:Canvas",
+                    "@id": "https://digital.library.villanova.edu/Item/vudl:958535/Canvas/p0",
+                    "label": "Front",
+                    "rendering": [
+                        {
+                            "@id": "https://digital.library.villanova.edu/files/vudl:958537/MASTER",
+                            "format": "image/tiff",
+                            "label": "Original source file - 57.34 MB"
+                        },
+                        {
+                            "@id": "https://digital.library.villanova.edu/files/vudl:958537/OCR-DIRTY",
+                            "format": "text/plain",
+                            "label": "Raw OCR Data"
+                        },
+                        {
+                            "@id": "https://digital.library.villanova.edu/files/vudl:958537/MASTER-MD",
+                            "format": "application/xml",
+                            "label": "Technical Metadata"
+                        }
+                    ],
+                    "height": 5297,
+                    "width": 3497,
+                    "images": [
+                        {
+                            "@type": "oa:Annotation",
+                            "motivation": "sc:painting",
+                            "resource": {
+                                "@id": "https://digital.library.villanova.edu/files/vudl:958537/LARGE",
+                                "@type": "dctypes:Image",
+                                "format": "image/jpeg",
+                                "service": {
+                                    "@context": "http://iiif.io/api/image/2/context.json",
+                                    "@id": "https://iiif.library.villanova.edu/image/vudl%3A958537",
+                                    "profile": "http://iiif.io/api/image/2/level1.json"
+                                },
+                                "height": 5297,
+                                "width": 3497
+                            },
+                            "on": "https://digital.library.villanova.edu/Item/vudl:958535/Canvas/p0"
+                        }
+                    ]
+                },
+                {
+                    "@type": "sc:Canvas",
+                    "@id": "https://digital.library.villanova.edu/Item/vudl:958535/Canvas/p1",
+                    "label": "Back",
+                    "rendering": [
+                        {
+                            "@id": "https://digital.library.villanova.edu/files/vudl:958538/MASTER",
+                            "format": "image/tiff",
+                            "label": "Original source file - 56.46 MB"
+                        },
+                        {
+                            "@id": "https://digital.library.villanova.edu/files/vudl:958538/OCR-DIRTY",
+                            "format": "text/plain",
+                            "label": "Raw OCR Data"
+                        },
+                        {
+                            "@id": "https://digital.library.villanova.edu/files/vudl:958538/MASTER-MD",
+                            "format": "application/xml",
+                            "label": "Technical Metadata"
+                        }
+                    ],
+                    "height": 5253,
+                    "width": 3468,
+                    "images": [
+                        {
+                            "@type": "oa:Annotation",
+                            "motivation": "sc:painting",
+                            "resource": {
+                                "@id": "https://digital.library.villanova.edu/files/vudl:958538/LARGE",
+                                "@type": "dctypes:Image",
+                                "format": "image/jpeg",
+                                "service": {
+                                    "@context": "http://iiif.io/api/image/2/context.json",
+                                    "@id": "https://iiif.library.villanova.edu/image/vudl%3A958538",
+                                    "profile": "http://iiif.io/api/image/2/level1.json"
+                                },
+                                "height": 5253,
+                                "width": 3468
+                            },
+                            "on": "https://digital.library.villanova.edu/Item/vudl:958535/Canvas/p1"
+                        }
+                    ]
+                }
+            ],
+            "rendering": [
+                {
+                    "@id": "https://digital.library.villanova.edu/files/vudl:958540/MASTER",
+                    "format": "application/pdf",
+                    "label": "PDF"
+                }
+            ]
+        }
+    ]
+}

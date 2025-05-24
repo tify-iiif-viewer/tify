@@ -40,7 +40,11 @@ const translationObject = {
 	$language: language,
 };
 
-findTranslatedStrings(`${rootDir}/src`, '\\$translate').forEach((item) => {
+findTranslatedStrings(
+	`${rootDir}/src/**/*.vue`,
+	['**/demo-app', '**/icons'],
+	'$translate',
+).forEach((item) => {
 	translationObject[item.key] = '';
 });
 

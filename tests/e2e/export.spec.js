@@ -4,10 +4,10 @@ describe('Export', () => {
 
 		cy.contains('Export').click();
 		cy.contains('Download Individual Images').should('be.visible');
-		cy.contains('Page 1').should('be.visible'); // NOTE: Page set by startCanvas
+		cy.contains('.tify-export-image-link', '1 -'); // NOTE: Page set by startCanvas
 
 		cy.get('[title="Next page"]').first().click();
-		cy.contains('Page 2').should('be.visible');
+		cy.contains('.tify-export-image-link', '2 -');
 
 		cy.contains('PDFs for each element').click();
 		cy.contains('Titelseite').should('be.visible');

@@ -66,7 +66,7 @@ export default {
 		},
 		setPage(page) {
 			this.$store.setPage(page);
-			if (this.$store.isMobile()) {
+			if (this.$store.isSmall()) {
 				this.$store.updateOptions({ view: null });
 			}
 		},
@@ -101,7 +101,6 @@ export default {
 			v-for="(structure, index) in structures"
 			:key="index"
 			class="tify-toc-structure"
-			:data-level="level"
 			:class="{
 				'-current': isCurrentPageInStructure(structure),
 				'-expanded': expandedStructures[index],
@@ -132,7 +131,7 @@ export default {
 				download
 			>
 				{{ $store.localize(structure.label) }}
-				({{ structure.pageCount }}&nbsp;{{ $translate(structure.pageCount === 1 ? 'page' : 'pages') }})
+				({{ structure.pageCount }}&nbsp;{{ structure.pageCount === 1 ? $translate('page') : $translate('pages') }})
 			</a>
 			<!-- Only display page label if structure has a different label -->
 			<a
@@ -155,7 +154,7 @@ export default {
 				@click="$store.setPage(structure.firstPage || getFirstPage(structure))"
 			>
 				<span class="tify-toc-label">
-					{{ $store.localize(structure.label) || getFirstPageLabel(structure) }}
+					{{ structure.label ? $store.localize(structure.label) : getFirstPageLabel(structure) }}
 				</span>
 			</a>
 

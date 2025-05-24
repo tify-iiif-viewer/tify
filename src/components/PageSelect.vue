@@ -15,13 +15,6 @@ export default {
 			isOpen: false,
 		};
 	},
-	computed: {
-		currentPageLabel() {
-			const page = this.$store.options.pages[0] || 1;
-			const canvasIndex = this.$store.options.pages[0] ? this.$store.options.pages[0] - 1 : 0;
-			return this.$store.getPageLabel(page, this.$store.manifest.items[canvasIndex].label);
-		},
-	},
 	watch: {
 		filter() {
 			this.updateFilteredCanvases();
@@ -77,7 +70,7 @@ export default {
 		setPage(page) {
 			this.closeDropdown();
 			this.$store.setPage(page);
-			if (this.$store.isMobile()) {
+			if (this.$store.isSmall()) {
 				this.$store.updateOptions({ view: null });
 			}
 		},
@@ -85,7 +78,12 @@ export default {
 			this.isOpen = !this.isOpen;
 			if (this.isOpen) {
 				this.$nextTick(() => {
-					this.$refs.search.focus();
+					// No autofocus on (presumed) touchscreens to prevent
+					// touch keyboard from shifting view
+					if (!window.matchMedia('(pointer: coarse)').matches) {
+						this.$refs.search.focus();
+					}
+
 					this.updateScroll();
 				});
 			}
@@ -136,9 +134,9 @@ export default {
 			:aria-expanded="isOpen"
 			@click="toggleDropdown()"
 		>
-			<span class="tify-sr-only">{{ $translate('Current page:') }}</span>
-			{{ currentPageLabel }}
-			<span class="tify-sr-only">/ {{ $translate('Toggle page select') }}</span>
+			<span class="tify-sr-only">{{ $translate('Current page:') }} </span>
+			<PageName :number="$store.options.pages[0] || 1" />
+			<span class="tify-sr-only"> / {{ $translate('Toggle page select') }}</span>
 		</button>
 
 		<div
@@ -173,11 +171,12 @@ export default {
 						'-highlighted': highlightIndex === index,
 					}"
 				>
+					<!-- eslint-disable-next-line vuejs-accessibility/anchor-has-content -->
 					<a
 						href="javascript:;"
 						@click="setPage(canvas.page)"
 					>
-						{{ $store.getPageLabel(canvas.page, canvas.label) }}
+						<PageName :number="canvas.page" :multiline="true" />
 					</a>
 				</li>
 			</ol>
