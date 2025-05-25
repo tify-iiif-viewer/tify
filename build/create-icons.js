@@ -17,7 +17,7 @@ Object.keys(mdi).forEach((key) => {
 	const componentHtml = `
 
 <template>
-	<svg class="tify-icon" viewBox="0 0 24 24">
+	<svg class="tify-icon" aria-hidden="true" viewBox="0 0 24 24">
 		<path d="${mdi[key]}"/>
 	</svg>
 </template>
