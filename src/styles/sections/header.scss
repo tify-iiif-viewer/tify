@@ -18,62 +18,65 @@
 		align-self: center;
 		box-shadow: 0 0 0 1px $border-color inset;
 		border-radius: $br;
-		margin: 0 g(.25);
+		margin: 0;
 		padding: 0;
 
-		.tify.-small & {
-			margin: 0;
+		@container (#{$small}) {
+			margin: 0 g(.25);
 		}
 	}
 
 	&.-pagination {
+		display: none;
 		padding-left: 0; // There is always the page dropdown to the left, which needs less spacing
 
-		.tify.-small & {
-			display: none;
+		@container (#{$small}) {
+			display: flex;
 		}
 
 		.tify-header-popup & {
 			box-shadow: 0 -1px $border-color;
-			display: none;
+			display: flex;
 			margin: calc(#{$br} * 2 - 1px) 0 0;
 			padding: $br 0 0;
 
-			.tify.-small & {
-				display: flex;
+			@container (#{$small}) {
+				display: none;
 			}
 		}
 	}
 
 	&.-toggle {
-		display: none;
+		display: flex;
 
-		.tify.-large & {
-			display: flex;
+		@container (#{$large}) {
+			display: none;
 		}
 
 		.tify-header-column:not(:nth-child(2)) & {
-			border-left: 1px solid $border-color;
+			border: 0;
 
-			.tify.-small & {
-				border: 0;
+			@container (#{$small}) {
+				border-left: 1px solid $border-color;
 			}
 		}
 	}
 
 	&.-view {
-		.tify.-large & {
-			display: block;
-			margin: 0;
-			padding: 0;
+		display: block;
+		margin: 0;
+		padding: 0;
+
+		@container (#{$large}) {
+			display: flex;
+			margin: g(.25) 0;
+			padding: 0 g(.25);
 		}
 
 		&:nth-child(n+2),
 		.tify-header-column.-pagination ~ .tify-header-column & {
-			border-left: 1px solid $border-color;
-
-			.tify.-large & {
-				border-left: 0;
+			@container (#{$large}) {
+				border-left: 1px solid $border-color;
 			}
 		}
 	}
@@ -107,52 +110,51 @@
 
 	&.-icon-only {
 		display: block;
-		font-size: 0 !important; // Prevent label from showing
+		font-size: inherit !important;
 
-		.tify.-large & {
-			font-size: inherit !important;
+		@container (#{$large}) {
+			font-size: 0 !important; // Prevent label from showing
 		}
 	}
 
 	&.-scan {
-		display: none !important;
+		display: flex !important;
 
-		.tify.-medium & {
-			display: block !important;
+		@container (#{$medium}) {
+			display: none !important;
 		}
 	}
 
 	.tify-header-button-group.-toggle & {
-		padding: g(.375);
+		margin: g(.125) 0;
+		padding: g(.25);
 
-		.tify.-tiny & {
-			margin: g(.125) 0;
-			padding: g(.25);
+		@container (#{$tiny}) {
+			margin: 0;
+			padding: g(.375);
 		}
 	}
 
 	.tify-header-button-group.-view & {
-		font-size: .75em;
+		display: flex;
+		gap: .3em;
+		justify-content: flex-start;
+		padding: g(.25);
+		width: 100%;
 
 		&:not(.-icon-only) {
-			align-items: center;
-			display: flex;
-			flex-direction: column;
-			font-size: $font-size-small;
-			line-height: 1;
-			min-height: g(1.75);
-			min-width: g(1.75);
-			padding: 0 .5em 4px;
-		}
-
-		.tify.-large & {
-			align-items: flex-start; // Chrome, not working in Firefox
-			display: block;
-			font: inherit;
-			min-height: 0;
-			padding: g(.25);
-			text-align: left; // Firefox, not working in Chrome
-			width: 100%;
+			@container (#{$large}) {
+				align-items: center;
+				flex-direction: column;
+				font-size: $font-size-small;
+				gap: 0;
+				justify-content: center;
+				line-height: 1;
+				min-height: g(1.75);
+				min-width: g(1.75);
+				padding: 0 g(.25) .2em;
+				width: auto;
+			}
 		}
 	}
 
@@ -184,17 +186,26 @@
 }
 
 .tify-header-popup {
-	display: flex;
+	@include dropdown(right);
+	box-shadow: none;
+	display: none;
+	top: g(2);
 
-	.tify.-large & {
-		@include dropdown(right);
-		box-shadow: none;
-		display: none;
-		top: g(2);
+	@container (#{$large}) {
+		background: none;
+		border: 0;
+		display: flex !important;
+		filter: none;
+		margin: 0;
+		position: static;
 
-		&.-visible {
-			display: block;
+		&::before {
+			content: none;
 		}
+	}
+
+	&.-visible {
+		display: block;
 	}
 }
 

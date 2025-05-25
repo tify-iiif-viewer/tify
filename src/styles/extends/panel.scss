@@ -2,23 +2,18 @@
 	background: $white;
 	box-shadow: -1px 0 $border-color;
 	flex: 1;
-	min-width: g(15);
+	inset: 0;
 	overflow-y: auto;
 	padding: g(.5);
-	position: relative;
+	position: absolute;
 
-	.tify.-medium & {
-		border: 0;
-		bottom: 0;
-		min-width: 0;
-		position: absolute;
-		top: 0;
-		width: 100%;
-		z-index: 0;
-	}
+	@container (#{$medium}) {
+		min-width: g(15);
+		position: relative;
 
-	&:first-child {
-		border: 0;
+		.tify-scan ~ & {
+			border-left: 1px solid $border-color;
+		}
 	}
 
 	&.-active {

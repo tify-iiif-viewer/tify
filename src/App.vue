@@ -55,10 +55,6 @@ export default {
 			}
 		}
 
-		// Set current breakpoint as classes on container element for use in CSS
-		this.updateBreakpoint();
-		new ResizeObserver(this.updateBreakpoint).observe(this.$el);
-
 		Promise.all([
 			this.$store.loadManifest(this.$store.options.manifestUrl),
 			this.setLanguage(this.$store.options.language),
@@ -109,21 +105,6 @@ export default {
 			});
 
 			return promise;
-		},
-		updateBreakpoint() {
-			Object.keys(this.$store.options.breakpoints).forEach((breakpoint) => {
-				if (this.$el.clientWidth <= this.$store.options.breakpoints[breakpoint]) {
-					this.$el.classList.add(`-${breakpoint}`);
-				} else {
-					this.$el.classList.remove(`-${breakpoint}`);
-				}
-			});
-
-			if (this.$el.clientHeight < 520) {
-				this.$el.classList.add('-short');
-			} else {
-				this.$el.classList.remove('-short');
-			}
 		},
 	},
 };

@@ -8,17 +8,33 @@
 .tify-page-select-button {
 	@extend %button;
 	background: none;
-	border-radius: $br 0 0 $br;
 	box-shadow: none;
-	display: block;
 	height: 100%;
-	max-width: g(10);
-	min-width: g(3);
+	max-width: g(4);
+	min-width: g(2);
 	overflow: hidden;
-	padding: g(.25) .5em;
+	padding: g(.25);
 	position: relative;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+
+	@container (#{$tiny}) {
+		max-width: g(6);
+		min-width: g(3);
+	}
+
+	@container (#{$small}) {
+		max-width: g(8);
+		min-width: g(4);
+	}
+
+	@container (#{$medium}) {
+		max-width: g(10);
+	}
+
+	@container (#{$large}) {
+		max-width: g(12);
+	}
 
 	&:not(:disabled) {
 		@include hover {
@@ -46,11 +62,6 @@
 .tify-page-select-dropdown {
 	@include dropdown;
 	max-width: 100%;
-	text-align: center;
-
-	.tify.-small & {
-		left: 0;
-	}
 }
 
 .tify-page-select-filter {

@@ -163,7 +163,8 @@ export default {
 			}
 
 			this.$store.setPage(page);
-			if (this.$store.isMobile()) {
+
+			if (!this.$store.isWide()) {
 				this.$store.updateOptions({ view: null });
 			}
 		},

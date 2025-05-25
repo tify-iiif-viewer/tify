@@ -2,6 +2,7 @@
 	background: $main-bg;
 	box-sizing: border-box;
 	color: $text-color;
+	container-type: size;
 	display: flex;
 	flex-direction: column;
 	font-size: $font-size;
@@ -17,6 +18,15 @@
 	*::before,
 	*::after {
 		box-sizing: inherit;
+	}
+
+	// For communicating container size to JS
+	&::after {
+		display: none;
+
+		@container (#{$medium}) {
+			content: 'isWide';
+		}
 	}
 
 	a {
