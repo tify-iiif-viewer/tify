@@ -81,7 +81,8 @@ export default {
 					>
 						<a :href="item.value">{{ item.value }}</a>
 					</p>
-					<p
+					<!-- NOTE: Using <div> because value may contain <p> -->
+					<div
 						v-else
 						:key="`html-${index}`"
 						v-html="filterHtml($store.localize(item.value))"
