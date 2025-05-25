@@ -68,7 +68,7 @@ function Store(args) {
 
 			if (['scan', ''].includes(store.options.view)
 				&& store.options.annotationsVisible !== false
-				&& store.isMobile()
+				&& !store.isWide()
 			) {
 				return true;
 			}
@@ -534,8 +534,8 @@ function Store(args) {
 				: store.options.view;
 			store.options.zoom = parseFloat(params.zoom) || store.options.zoom;
 		},
-		isMobile() {
-			return store.rootElement.offsetWidth < store.options.breakpoints.medium;
+		isWide() {
+			return getComputedStyle(store.rootElement, '::after').content === '"isWide"';
 		},
 		loadManifest(manifestUrl, params = {}) {
 			const promise = createPromise();
@@ -568,7 +568,7 @@ function Store(args) {
 								pages: [store.getStartPage()],
 								pan: {},
 								rotation: null,
-								view: store.isMobile() ? null : 'collection',
+								view: store.isWide() ? 'collection' : null,
 								zoom: null,
 							});
 						}
@@ -690,7 +690,7 @@ function Store(args) {
 				annotationsVisible: store.options.annotationId ? null : store.annotationsVisible,
 			};
 
-			if (options.annotationId && store.isMobile()) {
+			if (options.annotationId && !store.isWide()) {
 				options.view = ['scan', ''].includes(store.options.view) ? 'fulltext' : 'scan';
 			}
 

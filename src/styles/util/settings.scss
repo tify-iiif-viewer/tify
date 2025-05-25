@@ -31,6 +31,14 @@ $line-height: var(--tify-line-height, #{g()}) !default;
 $thumbnail-height: var(--tify-thumbnail-height, g(4.5)) !default;
 $thumbnail-width: var(--tify-thumbnail-width, g(4)) !default;
 
+// Breakpoints
+// NOTE: This is not configurable via CSS custom properties,
+// which cannot be used in @container queries.
+$tiny: 'width > 359px';
+$small: 'width > 719px';
+$medium: 'width > 959px';
+$large: 'width > 1199px';
+
 // Combined values
 $blur: blur(2px);
 $drop-shadow: 0 0 g(.25) rgba(black, .5) !default;
