@@ -304,6 +304,27 @@ function Store(args) {
 			const startCanvasIndex = store.manifest.items.findIndex((canvas) => canvas.id === store.manifest.start.id);
 			return startCanvasIndex >= 0 ? startCanvasIndex + 1 : 1;
 		},
+		getThumbnailUrl(page, thumbnailWidth) {
+			const canvas = store.manifest.items[page - 1];
+
+			const thumbnail = canvas.thumbnail?.[0];
+			if (thumbnail?.id && thumbnail?.width >= thumbnailWidth) {
+				return thumbnail.id;
+			}
+
+			const resource = canvas.items?.[0]?.items?.[0]?.body;
+			if (resource?.service) {
+				const service = resource.service instanceof Array ? resource.service[0] : resource.service;
+				const quality = ['ImageService2', 'ImageService3'].includes(service.type || service['@type'])
+					? 'default'
+					: 'native';
+				const id = service.id || service['@id'];
+				// TODO: this.$store.options.preferredImageFormat
+				return `${id}${id.at(-1) === '/' ? '' : '/'}full/${thumbnailWidth},/0/${quality}.jpg`;
+			}
+
+			return thumbnail?.id || resource?.id;
+		},
 		goToFirstPage() {
 			store.setPage(1);
 		},
