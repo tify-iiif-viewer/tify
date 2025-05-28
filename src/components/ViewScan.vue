@@ -5,7 +5,7 @@ import OpenSeadragon from 'openseadragon';
 import { preventEvent } from '../modules/keyboard';
 import { createPromise } from '../modules/promise';
 
-const gapBetweenPages = 0.01;
+const gapBetweenPages = 0.005;
 
 export default {
 	directives: {
