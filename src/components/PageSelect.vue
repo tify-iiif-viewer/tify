@@ -85,7 +85,12 @@ export default {
 			this.isOpen = !this.isOpen;
 			if (this.isOpen) {
 				this.$nextTick(() => {
-					this.$refs.search.focus();
+					// No autofocus on (presumed) touchscreens to prevent
+					// touch keyboard from shifting view
+					if (!window.matchMedia('(pointer: coarse)').matches) {
+						this.$refs.search.focus();
+					}
+
 					this.updateScroll();
 				});
 			}
