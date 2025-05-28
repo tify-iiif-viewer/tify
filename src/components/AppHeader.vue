@@ -107,7 +107,7 @@ export default {
 					this.toggleView('info');
 					break;
 				case '5':
-					if (this.$store.manifest) {
+					if (this.$store.collection || this.$store.manifest) {
 						this.toggleView('export');
 					}
 					break;
@@ -366,7 +366,7 @@ export default {
 					</button>
 
 					<button
-						v-if="$store.manifest"
+						v-if="$store.collection || $store.manifest"
 						type="button"
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'export' }"
