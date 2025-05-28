@@ -101,7 +101,6 @@ export default {
 			v-for="(structure, index) in structures"
 			:key="index"
 			class="tify-toc-structure"
-			:data-level="level"
 			:class="{
 				'-current': isCurrentPageInStructure(structure),
 				'-expanded': expandedStructures[index],
@@ -139,7 +138,7 @@ export default {
 				v-else-if="structure.label && $store.localize(structure.label) !== getFirstPageLabel(structure)"
 				class="tify-toc-link -dots"
 				href="javascript:;"
-				@click="$store.setPage(structure.firstPage || getFirstPage(structure))"
+				@click="setPage(structure.firstPage || getFirstPage(structure))"
 			>
 				<span class="tify-toc-label">
 					{{ $store.localize(structure.label) }}
@@ -152,7 +151,7 @@ export default {
 				v-else
 				class="tify-toc-link"
 				href="javascript:;"
-				@click="$store.setPage(structure.firstPage || getFirstPage(structure))"
+				@click="setPage(structure.firstPage || getFirstPage(structure))"
 			>
 				<span class="tify-toc-label">
 					{{ $store.localize(structure.label) || getFirstPageLabel(structure) }}
