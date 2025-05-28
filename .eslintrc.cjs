@@ -39,12 +39,8 @@ module.exports = {
 			optionalDependencies: ['tests/unit/index.js'],
 		}],
 		indent: ['error', 'tab', { SwitchCase: 1 }],
-		'no-continue': 'off',
 		'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
 		'no-tabs': 'off',
-		'object-curly-newline': ['error', {
-			ImportDeclaration: { multiline: true },
-		}],
 		'vue/attribute-hyphenation': ['error', 'never'],
 		'vue/component-name-in-template-casing': ['error', 'PascalCase', {
 			registeredComponentsOnly: false,
