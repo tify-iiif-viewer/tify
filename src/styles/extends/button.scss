@@ -1,6 +1,6 @@
 %button {
 	align-items: center;
-	background: $grey-light linear-gradient(to bottom, #fff7, #fff0);
+	background: $button-bg;
 	border-radius: $br;
 	border: 0;
 	box-shadow: 0 0 0 1px $border-color inset;
@@ -17,7 +17,7 @@
 		cursor: pointer;
 
 		@include hover {
-			background: $grey-light linear-gradient(to bottom, #fff, #fff7);
+			background: $button-hover-bg;
 		}
 
 		&:active {
@@ -25,7 +25,6 @@
 		}
 
 		&:focus-visible {
-			outline: 2px solid $base-color-light;
 			z-index: 1;
 		}
 	}
@@ -35,15 +34,34 @@
 	}
 }
 
+%button-translucent {
+	backdrop-filter: $blur;
+	background: oklch(from $panel-bg l c h / 40%);
+	border: 0;
+	box-shadow: none;
+
+	&[disabled] {
+		opacity: 1;
+
+		> * {
+			opacity: .3;
+		}
+	}
+
+	> * {
+		filter: drop-shadow(0 0 .5px $panel-bg);
+	}
+}
+
 %button-active {
-	background: $link-color linear-gradient(to bottom, #fff3, #fff0);
-	color: $white;
+	background: $link-color;
+	color: $text-color-inverted;
 	z-index: 1;
 
 	&:not(:disabled) {
 		@include hover {
-			background: $link-color linear-gradient(to bottom, #fff1, #0002);
-			color: $white;
+			background: $link-color;
+			color: $text-color-inverted;
 		}
 	}
 }

@@ -8,12 +8,12 @@ describe('Fulltext', () => {
 		cy.get('.tify-scan-overlay').should('have.length', 102);
 
 		// Check the first annotation overlay of each page
-		cy.get('[style*="left: 18.8309px; top: 282.988px"]')
-			.children('.tify-scan-overlay[style*="width: 113.797px; height: 5.0324px"]');
-		cy.get('[style*="left: 414.136px; top: 282.988px"]')
-			.children('.tify-scan-overlay[style*="width: 113.797px; height: 5.0324px"]');
-		cy.get('[style*="left: 809.44px; top: 282.988px"]')
-			.children('.tify-scan-overlay[style*="width: 113.797px; height: 5.0324px"]');
+		cy.get('[style*="left: 18.8775px; top: 282.193px"]')
+			.children('.tify-scan-overlay[style*="width: 114.079px; height: 5.04485px"]');
+		cy.get('[style*="left: 413.198px; top: 282.193px"]')
+			.children('.tify-scan-overlay[style*="width: 114.079px; height: 5.04485px"]');
+		cy.get('[style*="left: 807.519px; top: 282.193px"]')
+			.children('.tify-scan-overlay[style*="width: 114.079px; height: 5.04485px"]');
 	});
 
 	it('loads and displays an annotation list', () => {

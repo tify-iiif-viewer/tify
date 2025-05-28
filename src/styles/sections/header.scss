@@ -1,6 +1,6 @@
 .tify-header {
 	background: $header-bg;
-	box-shadow: 0 1px $border-color;
+	border-bottom: 1px solid $border-color;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
@@ -10,6 +10,7 @@
 .tify-header-button-group {
 	align-items: center;
 	display: flex;
+	gap: 1px;
 	margin: g(.25) 0;
 	padding: 0 g(.25);
 	position: relative;
@@ -96,11 +97,11 @@
 
 	&:not(:disabled) {
 		@include hover {
-			box-shadow: 0 0 0 1px $shade-light inset;
+			box-shadow: 0 0 0 1px $border-color inset;
 		}
 
 		&:active {
-			box-shadow: $inset-shadow, 0 0 0 1px $shade-light inset;
+			box-shadow: $inset-shadow, 0 0 0 1px $border-color inset;
 		}
 	}
 
@@ -160,7 +161,7 @@
 
 	.tify-page-select + & {
 		border-radius: 0 $br $br 0;
-		margin-left: -1px;
+		margin-left: -2px;
 
 		&:not(:disabled) {
 			@include hover {

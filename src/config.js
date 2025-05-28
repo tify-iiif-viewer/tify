@@ -41,6 +41,17 @@ export default {
 	childManifestUrl: null,
 
 	/**
+	 * Determines if TIFY is displayed in light or dark mode.
+	 *
+	 * `auto`: Determine color mode automatically based on browser preferences.
+	 * `light`: Use light mode, regardless of browser preferences.
+	 * `dark`: Use dark mode, regardless of browser preferences.
+	 *
+	 * @type {string}
+	 */
+	colorMode: 'auto',
+
+	/**
 	 * The HTML element into which TIFY is mounted. If set to `null`, TIFY is not
 	 * mounted at all until `mount` is called (see docs/api.md).
 	 *

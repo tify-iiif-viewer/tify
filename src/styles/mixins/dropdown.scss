@@ -1,8 +1,6 @@
-@use 'sass:math';
-
 @mixin dropdown($position: left, $alignment: bottom) {
-	background: $white;
-	border: $br solid $white;
+	background: $dropdown-bg;
+	border: $br solid $dropdown-bg;
 	border-radius: $br;
 	filter: drop-shadow($drop-shadow);
 	min-width: 6em;
@@ -34,7 +32,7 @@
 	&::before {
 		position: absolute;
 		content: '';
-		background: $white;
+		background: $dropdown-bg;
 		width: g(.5);
 		height: g(.5);
 		transform: rotate(45deg);
