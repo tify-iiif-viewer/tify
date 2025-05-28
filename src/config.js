@@ -80,9 +80,9 @@ export default {
 	fallbackLanguage: 'en',
 
 	/**
-	 * Sets the initial image filters. Available properties are `'brightness'`,
-	 * `'contrast'` (both a floating-point number between `0.5` and `2`) and
-	 * `'saturation'` (floating-point number between `0` and `3`), all optional.
+	 * Sets the initial image filters. Available properties are `brightness`,
+	 * `contrast` (both a floating-point number between `0.5` and `2`) and
+	 * `saturation` (floating-point number between `0` and `3`), all optional.
 	 *
 	 * @type {object}
 	 */
@@ -107,7 +107,7 @@ export default {
 
 	/**
 	 * Viewer options that are reset on page change. Allowed array values are
-	 * `'filters'`, `'pan'`, `'rotation'` and `'zoom'`.
+	 * `filters`, `pan`, `rotation` and `zoom`.
 	 *
 	 * @type {Array.<string>}
 	 */
@@ -130,7 +130,7 @@ export default {
 	/**
 	 * The page(s) to display initially. If `null`, the initial page is
 	 * determined by the manifest’s `startCanvas`, and if that is not set either,
-	 * the first page is displayed. Page numbers start at 1.
+	 * the first page is displayed. Page indices start at 1.
 	 *
 	 * @type {?Array.<number>}
 	 */
@@ -197,9 +197,9 @@ export default {
 	],
 
 	/**
-	 * The initially displayed view (panel); `fulltext`, `thumbnails`,
-	 * `toc`, `info`, `help`, or `null` to display (only) the scan.
-	 * On large screens, the scan is always shown next to the selected view.
+	 * The initially displayed view (panel); `fulltext`, `thumbnails`, `toc`,
+	 * `info`, `help`, or `null` to display (only) the scan. On large screens,
+	 * the scan is always shown next to the selected view.
 	 *
 	 * @type {?string}
 	 */
@@ -207,9 +207,8 @@ export default {
 
 	/**
 	 * An object with options for OpenSeadragon, TIFY’s image rendering
-	 * component. See its documentation at
+	 * component. See the OpenSeadragon documentation for all available options:
 	 * https://openseadragon.github.io/docs/OpenSeadragon.html#.Options
-	 * for all available options.
 	 *
 	 * @type {object}
 	 */
