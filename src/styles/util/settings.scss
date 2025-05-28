@@ -1,31 +1,44 @@
-// Opaque shades
-$grey: #666 !default;
-$grey-dark: #333 !default;
+// Shades of grey
+$grey: #262626 !default;
+$grey-dark: #171717 !default;
 $grey-light: #f5f5f5 !default;
-$white: #fff !default;
-
-// Semitransparent shades
-$shade: rgba(black, .2) !default;
-$shade-dark: rgba(black, .5) !default;
-$shade-light: rgba(black, .1) !default;
-$shine: rgba($white, .4) !default;
 
 // Semantic colors
-// NOTE: These colors must be solid
-$base-color: var(--tify-base-color, #06b) !default;
-
-$base-color-light: var(--tify-base-color-light, mix(white, #06b, 45%)) !default;
-$base-color-lighter: var(--tify-base-color-lighter, mix(white, #06b, 90%)) !default;
-$border-color: var(--tify-border-color, $shade) !default;
+$base-color: var(--tify-base-color, light-dark(#06b, #0cf)) !default;
+$base-color-pale:
+	var(
+		--tify-base-color-pale,
+		light-dark(
+			color-mix(in oklch, #06b, #fff 55%),
+			color-mix(in oklch, #0cf, $grey-dark 55%)
+		)
+	) !default;
+$base-color-paler:
+	var(
+		--tify-base-color-paler,
+		light-dark(
+			color-mix(in oklch, #06b, #fff 95%),
+			color-mix(in oklch, #0cf, $grey-dark 95%)
+		)
+	) !default;
+$border-color: var(--tify-border-color, light-dark(#0002, #ffffff19)) !default;
 $link-color: var(--tify-link-color, $base-color) !default;
 $link-hover-color: var(--tify-link-hover-color, $link-color) !default;
-$text-color: var(--tify-text-color, $grey-dark) !default;
-$text-color-muted: var(--tify-text-muted-color, $grey) !default;
+$text-color: var(--tify-text-color, light-dark($grey-dark, $grey-light)) !default;
+$text-color-inverted: var(--tify-text-color-inverted, light-dark(#fff, $grey-dark)) !default;
+$text-color-muted:
+	var(
+		--tify-text-muted-color,
+		light-dark(
+			color-mix(in oklch, $grey-dark, #fff 20%),
+			color-mix(in oklch, $grey-light, #000 20%),
+		)
+	) !default;
 
 // Dimensions
 $br: var(--tify-border-radius, 2px) !default;
 $font-size: var(--tify-font-size, 16px) !default;
-$font-size-small: var(--tify-font-size-small, calc(#{$font-size} * .8125)) !default;
+$font-size-small: var(--tify-font-size-small, max(.75em, 10px)) !default;
 $grid-base: var(--tify-grid-base, 24px) !default;
 $line-height: var(--tify-line-height, #{g()}) !default;
 $thumbnail-height: var(--tify-thumbnail-height, g(4.5)) !default;
@@ -40,8 +53,21 @@ $medium: 'width > 959px';
 $large: 'width > 1199px';
 
 // Combined values
-$blur: blur(2px);
-$drop-shadow: 0 0 g(.25) rgba(black, .5) !default;
-$header-bg: var(--tify-header-bg, $white) !default;
-$inset-shadow: 0 .5px 3px $shade inset !default;
-$main-bg: var(--tify-body-bg, $grey url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAEElEQVQImWNgwAGkcElgAgAEogAbFZcwKQAAAABJRU5ErkJggg==)) !default; // dots pattern
+$blur: blur(5px);
+$button-bg: var(--tify-button-bg, light-dark($grey-light, $grey)) !default;
+$button-hover-bg:	var(--tify-button-hover-bg, oklch(from $button-bg calc(l + .03) c h)) !default;
+$drop-shadow: 0 0 g(.25) #0004 !default;
+$dropdown-bg: var(--tify-dropdown-bg, light-dark(#fff, $grey)) !default;
+$header-bg:	var(--tify-header-bg, light-dark(#fff, $grey-dark)) !default;
+$inset-shadow: 0 0 3px #0002 inset !default;
+$main-bg:
+	var(
+		--tify-body-bg,
+		// dots pattern
+		radial-gradient(
+			light-dark(#aaa, #333) 1px,
+			light-dark(#bbb, #444) 0
+		) 2px 1px / 3px 3px,
+	) !default;
+$panel-bg: var(--tify-bg-color, light-dark(#fff, $grey-dark)) !default;
+$panel-bg-muted: var(--tify-bg-color, light-dark($grey-light, $grey)) !default;

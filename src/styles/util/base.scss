@@ -2,6 +2,7 @@
 	background: $main-bg;
 	box-sizing: border-box;
 	color: $text-color;
+	color-scheme: light dark;
 	container-type: size;
 	display: flex;
 	flex-direction: column;
@@ -13,6 +14,14 @@
 	overflow: hidden;
 	position: relative;
 	-webkit-tap-highlight-color: transparent;
+
+	&.-light {
+		color-scheme: light;
+	}
+
+	&.-dark {
+		color-scheme: dark;
+	}
 
 	*,
 	*::before,
@@ -36,15 +45,11 @@
 		@include hover {
 			color: $link-hover-color;
 		}
-
-		&:focus-visible {
-			outline: 2px solid $base-color-light;
-		}
 	}
 
 	h3 {
 		box-shadow: 0 1px $border-color;
-		font-size: .75em;
+		font-size: $font-size-small;
 		font-weight: bold;
 		letter-spacing: .1em;
 		margin: 0 0 g(.5);
@@ -77,8 +82,8 @@
 	}
 
 	[type=text] {
-		background: $white;
-		border: 1px solid $shade;
+		background: none;
+		border: 1px solid $border-color;
 		border-radius: $br;
 		color: inherit;
 		font: inherit;
@@ -86,7 +91,7 @@
 
 		&:focus {
 			border-color: $base-color;
-			outline: 2px solid $base-color-lighter;
+			outline: 0;
 		}
 	}
 }

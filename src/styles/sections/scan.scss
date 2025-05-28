@@ -9,9 +9,13 @@
 }
 
 .tify-scan-buttons {
+	backdrop-filter: $blur;
+	background: linear-gradient($border-color 1px, transparent 1px) -1px -1px / auto calc(#{g(1.5)} + 1px); // separators
 	border-radius: $br;
+	box-shadow: 0 0 0 1px $border-color;
 	display: flex;
 	flex-direction: column;
+	gap: 1px;
 	left: g(.25);
 	position: absolute;
 	top: g(.25);
@@ -20,27 +24,30 @@
 
 .tify-scan-button {
 	@extend %button;
-	background: none;
-	box-shadow: none;
-	color: $white;
-	height: g(1.5);
-	padding: 0;
+	@extend %button-translucent;
+	border-radius: 0;
+	padding: g(.25);
 	position: relative;
-	width: g(1.5);
 
-	&:not(:disabled) {
-		@include hover {
-			backdrop-filter: $blur;
-			background: $shade;
-		}
+	&:not(:disabled):active {
+		box-shadow: $inset-shadow;
+	}
+
+	&:first-child {
+		border-radius: $br $br 0 0;
+	}
+
+	.tify-scan-filters & {
+		border: 0;
+		border-radius: 0 0 $br $br;
 	}
 
 	&.-active {
-		// dot marker
+		// Dot marker
 		&::after {
 			background: $base-color;
-			box-shadow: 0 0 g(.25) $base-color-lighter;
 			border-radius: 50%;
+			box-shadow: 0 0 g(.25) $base-color-paler;
 			content: '';
 			display: block;
 			height: .5em;
@@ -49,10 +56,6 @@
 			top: g(.25);
 			width: .5em;
 		}
-	}
-
-	.tify-icon {
-		filter: drop-shadow(0 0 2px $shade) drop-shadow(0 0 1px $shade-dark);
 	}
 }
 
@@ -87,6 +90,7 @@
 // NOTE: OpenSeadragon adds `position: relative`
 .tify-scan-image {
 	height: 100%;
+	overflow: hidden; // For OpenSeadragon plugins that add own elements
 	white-space: nowrap;
 	width: 100%;
 
@@ -100,18 +104,18 @@
 // TODO: Revisit after next OpenSeadragon release
 [id^=overlay-wrapper-tify] {
 	border-radius: $br;
-	box-shadow: 0 0 0 1px $link-color, 0 0 0 1.5px $shine;
+	box-shadow: 0 0 0 1px $link-color, 0 0 0 1.5px #0009;
 	cursor: pointer;
 
 	@include hover {
-		box-shadow: 0 0 0 2px $link-color, 0 0 0 2.5px $shine;
+		box-shadow: 0 0 0 2px $link-color, 0 0 0 2.5px #0009;
 	}
 }
 
 .tify-scan-overlay {
 	&.-current {
 		border-radius: $br;
-		outline: calc(g(.25) - 2px) solid $white;
+		outline: calc(g(.25) - 2px) solid #fff;
 		outline-offset: 2px;
 		mix-blend-mode: difference;
 	}
@@ -119,45 +123,28 @@
 
 .tify-scan-page-button {
 	@extend %button;
-	backdrop-filter: $blur;
-	background: $shine;
-	border: 0;
-	box-shadow: 0 0 1px $border-color;
-	height: g(2.5);
-	margin-top: g(-1.25);
+	@extend %button-translucent;
+	bottom: g();
+	box-shadow: 0 0 0 1px $border-color;
+	height: g(2.25);
 	padding: 0;
 	position: absolute;
-	top: 50%;
-	width: g(1.25);
+	width: g(1);
 	z-index: 1;
 
-	.tify.-short & {
-		bottom: 0;
-		height: g(1.75);
-		width: g(1.75);
-		top: auto;
+	// Prevent scan buttons from overlapping
+	@container (height > 639px) {
+		bottom: 50%;
 	}
 
-	&.-previous {
-		border-radius: 0 g(1.25) g(1.25) 0;
+	&.-left {
+		border-radius: 0 $br $br 0;
 		left: 0;
-		justify-content: flex-start;
-
-		.tify.-short & {
-			border-radius: 0 g(1.75) 0 0;
-			padding: g(.375) 0 0 g(.25);
-		}
 	}
 
-	&.-next {
-		border-radius: g(1.25) 0 0 g(1.25);
+	&.-right {
+		border-radius: $br 0 0 $br;
 		right: 0;
-		justify-content: flex-end;
-
-		.tify.-short & {
-			border-radius: g(1.75) 0 0;
-			padding: g(.375) g(.25) 0 0;
-		}
 	}
 }
 

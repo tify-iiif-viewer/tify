@@ -52,11 +52,6 @@ window.Tify = function Tify(userOptions = {}) {
 			throw new Error('Container element not found');
 		}
 
-		const style = window.getComputedStyle(containerEl);
-		if (style.position === 'static') {
-			containerEl.style.position = 'relative';
-		}
-
 		this.app.mount(containerEl);
 
 		mounted = true;

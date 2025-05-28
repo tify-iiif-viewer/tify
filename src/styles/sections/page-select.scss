@@ -45,18 +45,6 @@
 			box-shadow: $inset-shadow, 0 0 0 1px $border-color inset;
 		}
 	}
-
-	.tify.-medium & {
-		max-width: g(8);
-	}
-
-	.tify.-small & {
-		max-width: g(6);
-	}
-
-	.tify.-tiny & {
-		max-width: g(4);
-	}
 }
 
 .tify-page-select-dropdown {
@@ -86,29 +74,29 @@
 		user-select: none;
 
 		+ li {
-			box-shadow: 0 1px $border-color inset;
+			border-top: 1px solid $border-color;
 		}
 
 		> a {
 			@include hover {
-				background: $shade-light;
+				background: $base-color-paler;
 			}
 		}
 
 		&.-current > a {
-			background: $shade-light;
+			background: $base-color-paler;
 		}
 
 		&.-highlighted > a {
 			background: $link-color;
-			color: $white;
+			color: $text-color-inverted;
 		}
 	}
 
 	a {
 		color: inherit;
 		display: block;
-		padding: g(.125) .5em;
+		padding: g(.125);
 		text-decoration: none;
 
 		@include hover {

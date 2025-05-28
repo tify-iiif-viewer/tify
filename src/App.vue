@@ -111,12 +111,14 @@ export default {
 };
 </script>
 
+<!-- NOTE: tabindex makes root element focusable, which is required for global keyboard events to work -->
+<!-- The first child of <template> must not be a comment, or rootElement breaks -->
 <template>
 	<article
 		class="tify"
+		:class="$store.options.colorMode === 'auto' ? '' : `-${$store.options.colorMode}`"
 		tabindex="-1"
 	>
-		<!-- NOTE: Root element must be focusable for global keyboard events to work -->
 		<AppHeader
 			v-if="readyToRender && ($store.collection || $store.manifest)"
 			:fulltextEnabled="hasAnnotations"
