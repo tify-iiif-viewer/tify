@@ -8,7 +8,7 @@
 	padding: 0 g(.5);
 
 	&.-current {
-		box-shadow: g(-.25) 0 $base-color-light;
+		box-shadow: g(-.25) 0 $base-color-pale;
 		color: $link-color;
 	}
 
@@ -27,12 +27,12 @@
 	word-break: break-word;
 
 	@include hover {
-		background: $base-color-lighter;
+		background: $base-color-paler;
 		color: $link-color;
 
 		// Element label and page number
 		> span {
-			background: $base-color-lighter;
+			background: $base-color-paler;
 		}
 	}
 

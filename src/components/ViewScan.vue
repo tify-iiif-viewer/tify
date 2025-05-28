@@ -609,7 +609,7 @@ export default {
 		<button
 			v-if="!$store.isCustomPageView && !$store.isFirstPage"
 			type="button"
-			class="tify-scan-page-button -previous"
+			class="tify-scan-page-button -left"
 			:title="$translate('Previous page')"
 			:aria-label="$translate('Previous page')"
 			@click="$store.goToPreviousPage()"
@@ -619,7 +619,7 @@ export default {
 		<button
 			v-if="!$store.isCustomPageView && !$store.isLastPage"
 			type="button"
-			class="tify-scan-page-button -next"
+			class="tify-scan-page-button -right"
 			:title="$translate('Next page')"
 			:aria-label="$translate('Next page')"
 			@click="$store.goToNextPage()"
