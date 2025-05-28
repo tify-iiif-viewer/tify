@@ -39,6 +39,7 @@ export default {
 	created() {
 		this.$api.expose(this.setLanguage);
 		this.$api.expose(this.$store.setPage);
+		this.$api.expose(this.$store.updateOptions);
 	},
 	mounted() {
 		this.$store.rootElement = this.$el;
