@@ -219,6 +219,7 @@ export default {
 						class="tify-info-logo"
 						:src="logo.id"
 						:alt="$translate('Logo')"
+						loading="lazy"
 					/>
 				</a>
 				<img
@@ -226,6 +227,7 @@ export default {
 					class="tify-info-logo"
 					:src="logo.id"
 					:alt="$translate('Logo')"
+					loading="lazy"
 				/>
 			</p>
 		</div>
