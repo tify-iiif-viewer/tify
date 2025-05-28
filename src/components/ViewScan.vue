@@ -285,6 +285,7 @@ export default {
 
 			this.viewer.addHandler('pan', this.updateViewerState);
 			this.viewer.addHandler('resize', this.updateViewerState);
+			this.viewer.addHandler('rotate', this.updateViewerState);
 			this.viewer.addHandler('zoom', this.updateViewerState);
 
 			this.viewer.addHandler('tile-load-failed', (error) => {
