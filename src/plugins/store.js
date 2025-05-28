@@ -272,6 +272,11 @@ function Store(args) {
 				return Promise.reject(error);
 			});
 
+			if (!response.ok) {
+				console.warn('Error loading annotation'); // eslint-disable-line no-console
+				return '';
+			}
+
 			const result = await response.text().catch((error) => {
 				store.loading = 0;
 				return Promise.reject(error);
@@ -384,7 +389,7 @@ function Store(args) {
 
 				const canvas = store.manifest.items[page - 1];
 				if (!('annotations' in canvas)) {
-					this.annotationsAvailable = false;
+					store.annotationsAvailable = false;
 					return;
 				}
 
@@ -402,7 +407,7 @@ function Store(args) {
 						const status = error.response ? error.response.statusText : error.message;
 						// eslint-disable-next-line no-console
 						console.warn(`Could not load annotations: ${status}`);
-						this.annotationsAvailable = false;
+						store.annotationsAvailable = false;
 						return;
 					}
 				}
@@ -465,7 +470,7 @@ function Store(args) {
 						html = html.replace(/\n/g, ' <br>');
 					}
 
-					this.annotationsAvailable = true;
+					store.annotationsAvailable = true;
 
 					const annotation = {
 						id: annotationId,
@@ -474,7 +479,7 @@ function Store(args) {
 
 					const coordinatesString = resource.on?.selector?.value
 						|| (typeof resource.on === 'string' ? resource.on : null)
-						|| resource.target;
+						|| resource.target?.toString();
 
 					const xywh = coordinatesString?.split('xywh=')[1];
 					if (xywh) {
