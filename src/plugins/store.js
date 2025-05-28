@@ -240,6 +240,7 @@ function Store(args) {
 		}),
 		addError(message) {
 			store.errors.push(message);
+			console.warn(message); // eslint-disable-line no-console
 		},
 		clearErrors() {
 			store.errors = [];
@@ -691,9 +692,13 @@ function Store(args) {
 			store.updateOptions(options);
 		},
 		updateOptions(updatedOptions) {
+			clearTimeout(store.urlUpdateTimeout);
+
 			Object.assign(store.options, updatedOptions);
 
-			clearTimeout(store.urlUpdateTimeout);
+			if (updatedOptions.pages) {
+				store.clearErrors();
+			}
 
 			if (!store.options.urlQueryKey) {
 				return;
@@ -725,7 +730,6 @@ function Store(args) {
 				}
 
 				if (updatedOptions.pages) {
-					store.clearErrors();
 					window.history.pushState({}, '', url);
 				} else {
 					window.history.replaceState({}, '', url);
