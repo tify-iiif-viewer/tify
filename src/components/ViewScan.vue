@@ -311,8 +311,7 @@ export default {
 				const resource = this.$store.manifest.items[page - 1].items?.[0]?.items?.[0]?.body;
 
 				if (!resource) {
-					// eslint-disable-next-line no-console
-					console.warn(`Missing image for page ${page}`);
+					this.$store.addError(`Image missing for page ${page}`);
 					return;
 				}
 
