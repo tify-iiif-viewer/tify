@@ -1,4 +1,5 @@
 <script>
+import { createResizeObserver, destroyResizeObserver } from '../modules/resize';
 import { scrollTo, updateScrollPos } from '../modules/scroll';
 
 const longTouchDuration = 750;
@@ -12,8 +13,6 @@ export default {
 			itemsPerRow: 0,
 			knownImages: [],
 			lastScrollTop: 0,
-			resizeObserver: null,
-			resizeTimeout: null,
 			style: {},
 			thumbnailWidth: 0,
 			touchTimeout: null,
@@ -48,28 +47,14 @@ export default {
 	mounted() {
 		this.style.flex = this.$el.style.flex;
 	},
-	unmounted() {
-		this.resizeObserver?.disconnect();
-		clearTimeout(this.resizeTimeout);
+	beforeUnmount() {
+		destroyResizeObserver(this.$el, this.updateDimensions);
 	},
 	methods: {
 		init() {
 			this.updateDimensions();
 			this.scrollToCurrentPage(false);
-
-			this.resizeObserver = new ResizeObserver(this.onResize);
-			this.resizeObserver.observe(this.$el);
-		},
-		onResize() {
-			clearTimeout(this.resizeTimeout);
-
-			this.resizeTimeout = setTimeout(() => {
-				if (this.$store.options.view !== 'thumbnails') {
-					return;
-				}
-
-				this.updateDimensions();
-			}, 200);
+			createResizeObserver(this.$el, this.updateDimensions);
 		},
 		updateDimensions() {
 			const itemTemplate = this.$refs.container.querySelector('.tify-thumbnails-item');
