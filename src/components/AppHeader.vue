@@ -139,23 +139,39 @@ export default {
 			switch (event.key) {
 				case 'q':
 				case ',':
-					if (pages[0] > 1) {
+					if (this.$store.viewingDirection === 'right-to-left') {
+						if (pages[0] < this.$store.pageCount) {
+							this.$store.goToNextPage();
+						}
+					} else if (pages[0] > 1) {
 						this.$store.goToPreviousPage();
 					}
 					break;
 				case 'e':
 				case '.':
-					if (!this.isLastPage) {
+					if (this.$store.viewingDirection === 'right-to-left') {
+						if (pages[0] > 1) {
+							this.$store.goToPreviousPage();
+						}
+					} else if (pages[0] < this.$store.pageCount) {
 						this.$store.goToNextPage();
 					}
 					break;
 				case 'Q':
-					if (pages[0] > 1) {
+					if (this.$store.viewingDirection === 'right-to-left') {
+						if (pages[0] < this.$store.pageCount) {
+							this.$store.goToLastPage();
+						}
+					} else if (pages[0] > 1) {
 						this.$store.goToFirstPage();
 					}
 					break;
 				case 'E':
-					if (!this.isLastPage) {
+					if (this.$store.viewingDirection === 'right-to-left') {
+						if (pages[0] > 1) {
+							this.$store.goToFirstPage();
+						}
+					} else if (pages[0] < this.$store.pageCount) {
 						this.$store.goToLastPage();
 					}
 					break;

@@ -6,10 +6,10 @@
 		<button
 			type="button"
 			class="tify-header-button"
-			:disabled="$store.isCustomPageView || $store.isFirstPage"
-			:title="$translate('First page')"
-			:aria-label="$translate('First page')"
-			@click="$store.goToFirstPage()"
+			:disabled="!$store.ifShowLeftButton"
+			:title="$translate($store.viewingDirection === 'right-to-left' ? 'Last page' : 'First page')"
+			:aria-label="$translate($store.viewingDirection === 'right-to-left' ? 'First page' : 'Last page')"
+			@click="$store.viewingDirection === 'right-to-left' ? $store.goToLastPage() : $store.goToFirstPage()"
 		>
 			<IconPageFirst />
 		</button>
@@ -19,9 +19,9 @@
 			type="button"
 			class="tify-header-button"
 			:disabled="$store.isCustomPageView || $store.isFirstPage"
-			:title="$translate('Previous section')"
-			:aria-label="$translate('Previous section')"
-			@click="$store.goToPreviousSection()"
+			:title="$translate($store.viewingDirection === 'right-to-left' ? 'Next section' : 'Previous section')"
+			:aria-label="$translate($store.viewingDirection === 'right-to-left' ? 'Previous section' : 'Next section')"
+			@click="$store.viewingDirection === 'right-to-left' ? $store.goToNextSection() : $store.goToPreviousSection()"
 		>
 			<IconSkipPrevious />
 		</button>
@@ -29,10 +29,10 @@
 		<button
 			type="button"
 			class="tify-header-button"
-			:disabled="$store.isCustomPageView || $store.isFirstPage"
-			:title="$translate('Previous page')"
-			:aria-label="$translate('Previous page')"
-			@click="$store.goToPreviousPage()"
+			:disabled="!$store.ifShowLeftButton"
+			:title="$translate($store.leftButtonLabel)"
+			:aria-label="$translate($store.leftButtonLabel)"
+			@click="$store.goToLeftPage()"
 		>
 			<IconChevronLeft />
 		</button>
@@ -40,10 +40,10 @@
 		<button
 			type="button"
 			class="tify-header-button"
-			:disabled="$store.isCustomPageView || $store.isLastPage"
-			:title="$translate('Next page')"
-			:aria-label="$translate('Next page')"
-			@click="$store.goToNextPage()"
+			:disabled="!$store.ifShowRightButton"
+			:title="$translate($store.rightButtonLabel)"
+			:aria-label="$translate($store.rightButtonLabel)"
+			@click="$store.goToRightPage()"
 		>
 			<IconChevronRight />
 		</button>
@@ -53,9 +53,9 @@
 			type="button"
 			class="tify-header-button"
 			:disabled="$store.isCustomPageView || $store.isLastSection"
-			:title="$translate('Next section')"
-			:aria-label="$translate('Next section')"
-			@click="$store.goToNextSection()"
+			:title="$translate($store.viewingDirection === 'right-to-left' ? 'Previous section' : 'Next section')"
+			:aria-label="$translate($store.viewingDirection === 'right-to-left' ? 'Previous section' : 'Next section')"
+			@click="$store.viewingDirection === 'right-to-left' ? $store.goToPreviousSection() : $store.goToNextSection()"
 		>
 			<IconSkipNext />
 		</button>
@@ -63,10 +63,10 @@
 		<button
 			type="button"
 			class="tify-header-button"
-			:disabled="$store.isCustomPageView || $store.isLastPage"
-			:title="$translate('Last page')"
-			:aria-label="$translate('Last page')"
-			@click="$store.goToLastPage()"
+			:disabled="!$store.ifShowRightButton"
+			:title="$translate($store.viewingDirection === 'right-to-left' ? 'First page' : 'Last page')"
+			:aria-label="$translate($store.viewingDirection === 'right-to-left' ? 'First page' : 'Last page')"
+			@click="$store.viewingDirection === 'right-to-left' ? $store.goToFirstPage() : $store.goToLastPage()"
 		>
 			<IconPageLast />
 		</button>

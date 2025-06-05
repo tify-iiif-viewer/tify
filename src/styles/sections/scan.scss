@@ -138,7 +138,7 @@
 		top: auto;
 	}
 
-	&.-previous {
+	&.-left {
 		border-radius: 0 g(1.25) g(1.25) 0;
 		left: 0;
 		justify-content: flex-start;
@@ -149,7 +149,7 @@
 		}
 	}
 
-	&.-next {
+	&.-right {
 		border-radius: g(1.25) 0 0 g(1.25);
 		right: 0;
 		justify-content: flex-end;

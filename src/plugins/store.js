@@ -75,6 +75,13 @@ function Store(args) {
 
 			return false;
 		}),
+		viewingDirection: computed(() => {
+			// For now, only "right-to-left" is supported
+			if (store.manifest?.viewingDirection === 'right-to-left') {
+				return 'right-to-left';
+			}
+			return 'left-to-right'; // Default viewing direction
+		}),
 		currentStructure: computed(() => {
 			if (!(store.manifest.structures instanceof Array)) {
 				return false;
@@ -122,6 +129,32 @@ function Store(args) {
 
 			return pages.length > 2
 				|| (pages.length === 2 && (pages[0] % 2 > 0 || pages[1] !== pages[0] + 1) && pages[1] > 0);
+		}),
+		ifShowRightButton: computed(() => {
+			if (store.isCustomPageView) return false;
+			if (store.viewingDirection === 'right-to-left') {
+				return !store.isFirstPage;
+			}
+			return !store.isLastPage;
+		}),
+		ifShowLeftButton: computed(() => {
+			if (store.isCustomPageView) return false;
+			if (store.viewingDirection === 'right-to-left') {
+				return !store.isLastPage;
+			}
+			return !store.isFirstPage;
+		}),
+		rightButtonLabel: computed(() => {
+			if (store.viewingDirection === 'right-to-left') {
+				return 'Previous page';
+			}
+			return 'Next page';
+		}),
+		leftButtonLabel: computed(() => {
+			if (store.viewingDirection === 'right-to-left') {
+				return 'Next page';
+			}
+			return 'Previous page';
 		}),
 		isFirstPage: computed(() => store.options.pages[0] < 2),
 		isLastPage: computed(() => {
@@ -303,6 +336,20 @@ function Store(args) {
 
 			const startCanvasIndex = store.manifest.items.findIndex((canvas) => canvas.id === store.manifest.start.id);
 			return startCanvasIndex >= 0 ? startCanvasIndex + 1 : 1;
+		},
+		goToRightPage() {
+			if (store.viewingDirection === 'right-to-left') {
+				store.goToPreviousPage();
+			} else {
+				store.goToNextPage();
+			}
+		},
+		goToLeftPage() {
+			if (store.viewingDirection === 'right-to-left') {
+				store.goToNextPage();
+			} else {
+				store.goToPreviousPage();
+			}
 		},
 		goToFirstPage() {
 			store.setPage(1);

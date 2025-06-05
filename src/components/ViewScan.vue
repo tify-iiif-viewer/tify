@@ -607,22 +607,22 @@ export default {
 		</h2>
 
 		<button
-			v-if="!$store.isCustomPageView && !$store.isFirstPage"
+			v-if="$store.ifShowLeftButton"
 			type="button"
-			class="tify-scan-page-button -previous"
-			:title="$translate('Previous page')"
-			:aria-label="$translate('Previous page')"
-			@click="$store.goToPreviousPage()"
+			class="tify-scan-page-button -left"
+			:title="$translate($store.leftButtonLabel)"
+			:aria-label="$translate($store.leftButtonLabel)"
+			@click="$store.goToLeftPage()"
 		>
 			<IconChevronLeft />
 		</button>
 		<button
-			v-if="!$store.isCustomPageView && !$store.isLastPage"
+			v-if="$store.ifShowRightButton"
 			type="button"
-			class="tify-scan-page-button -next"
-			:title="$translate('Next page')"
-			:aria-label="$translate('Next page')"
-			@click="$store.goToNextPage()"
+			class="tify-scan-page-button -right"
+			:title="$translate($store.rightButtonLabel)"
+			:aria-label="$translate($store.rightButtonLabel)"
+			@click="$store.goToRightPage()"
 		>
 			<IconChevronRight />
 		</button>
