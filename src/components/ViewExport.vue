@@ -111,6 +111,7 @@ export default {
 					:class="{ '-close': perElementPdfLinksVisible }"
 					:aria-controls="$store.getId('export-pdf-list')"
 					:aria-expanded="perElementPdfLinksVisible"
+					:aria-label="perElementPdfLinksVisible ? $translate('Close PDF list') : null"
 					@click="perElementPdfLinksVisible = !perElementPdfLinksVisible"
 				>
 					<template v-if="!perElementPdfLinksVisible">
@@ -118,7 +119,6 @@ export default {
 					</template>
 					<template v-else>
 						<IconClose />
-						<span class="tify-sr-only">{{ $translate('Close PDF list') }}</span>
 					</template>
 				</button>
 				<div
@@ -153,7 +153,7 @@ export default {
 						:href="$store.options.manifestUrl"
 						download="manifest.json"
 					>
-						{{ $translate($store.collection ? 'IIIF manifest (collection)' : 'IIIF manifest') }}
+						{{ $store.collection ? $translate('IIIF manifest (collection)') : $translate('IIIF manifest') }}
 					</a>
 				</li>
 			</ul>

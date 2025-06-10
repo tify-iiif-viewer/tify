@@ -2,12 +2,16 @@ import chalk from 'chalk';
 
 import {
 	checkTranslationFiles,
+	excludedDirs,
 	findTranslatedStrings,
 	rootDir,
 } from './i18n.js'; // eslint-disable-line import/extensions
 
-const translatedStrings = findTranslatedStrings(`${rootDir}/src`, '\\$translate')
-	.map((result) => result.key);
+const translatedStrings = findTranslatedStrings(
+	`${rootDir}/src/**/*.vue`,
+	excludedDirs,
+	'$translate',
+).map((result) => result.key);
 
 if (!translatedStrings.length) {
 	console.log('No translated strings found');

@@ -111,10 +111,9 @@ export default {
 				v-if="structure.items?.some((item) => item.items)"
 				type="button"
 				class="tify-toc-toggle"
-				:title="$translate(expandedStructures[index] ? 'Collapse' : 'Expand')"
-				:aria-label="$translate(expandedStructures[index] ? 'Collapse' : 'Expand')"
 				:aria-controls="`${id}-${index}`"
 				:aria-expanded="!!expandedStructures[index]"
+				:aria-label="$translate(expandedStructures[index] ? 'Collapse' : 'Expand')"
 				@click="toggleChildren(index)"
 			>
 				<template v-if="expandedStructures[index]">
@@ -132,7 +131,7 @@ export default {
 				download
 			>
 				{{ $store.localize(structure.label) }}
-				({{ structure.pageCount }}&nbsp;{{ $translate(structure.pageCount === 1 ? 'page' : 'pages') }})
+				({{ structure.pageCount }}&nbsp;{{ structure.pageCount === 1 ? $translate('page') : $translate('pages') }})
 			</a>
 			<!-- Only display page label if structure has a different label -->
 			<a

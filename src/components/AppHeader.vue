@@ -274,7 +274,7 @@ export default {
 			class="tify-header-column -controls"
 		>
 			<h2 class="tify-sr-only">
-				{{ $translate('View') }}
+				{{ $translate('View [noun]') }}
 			</h2>
 
 			<div
@@ -286,8 +286,7 @@ export default {
 					:aria-controls="$store.getId('controls')"
 					:aria-expanded="controlsVisible"
 					class="tify-header-button"
-					:title="$translate('View')"
-					:aria-label="$translate('View')"
+					:aria-label="$translate('View [noun]')"
 					@click="toggleControlsPopup"
 				>
 					<IconDotsGrid />

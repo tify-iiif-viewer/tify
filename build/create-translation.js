@@ -4,6 +4,7 @@ import readline from 'readline';
 import chalk from 'chalk';
 
 import {
+	excludedDirs,
 	findTranslatedStrings,
 	indention,
 	rootDir,
@@ -40,7 +41,11 @@ const translationObject = {
 	$language: language,
 };
 
-findTranslatedStrings(`${rootDir}/src`, '\\$translate').forEach((item) => {
+findTranslatedStrings(
+	`${rootDir}/src/**/*.vue`,
+	excludedDirs,
+	'$translate',
+).forEach((item) => {
 	translationObject[item.key] = '';
 });
 

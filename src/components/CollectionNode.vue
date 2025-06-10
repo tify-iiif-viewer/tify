@@ -58,18 +58,17 @@ export default {
 		<button
 			v-if="item.type === 'Collection'"
 			type="button"
+			class="tify-collection-link -has-children"
 			:aria-controls="id"
 			:aria-expanded="expanded"
-			class="tify-collection-link -has-children"
+			:aria-label="expanded ? $translate('Collapse') : $translate('Expand')"
 			@click="toggleChildren()"
 		>
 			<template v-if="expanded">
 				<IconMinus />
-				<span class="tify-sr-only">{{ $translate('Collapse') }}</span>
 			</template>
 			<template v-else>
 				<IconPlus />
-				<span class="tify-sr-only">{{ $translate('Expand') }}</span>
 			</template>
 
 			{{ $store.localize(item.label) }}
