@@ -1,5 +1,3 @@
-@use 'sass:math';
-
 .tify-thumbnails {
 	@extend %panel;
 	min-height: 100%;
@@ -10,7 +8,8 @@
 	a {
 		color: inherit;
 		border: 0;
-		box-shadow: none;
+		box-shadow: 0 0 0 1px $border-color;
+		text-decoration: none;
 	}
 }
 
@@ -19,18 +18,16 @@
 }
 
 .tify-thumbnails-item {
-	background: currentColor;
+	background: $panel-bg-muted;
 	border-radius: $br;
 	cursor: pointer;
 	float: left;
 	margin: g(.25);
-	overflow: hidden;
-	padding-bottom: g();
 	position: relative;
+	width: $thumbnail-width;
 
 	@include hover {
-		background: currentColor;
-		filter: brightness(1.2);
+		background: $panel-bg;
 	}
 
 	img {
@@ -40,25 +37,22 @@
 		object-fit: contain;
 		pointer-events: none;
 		max-width: 100%;
-		width: $thumbnail-width;
 	}
 
 	&.-current {
-		outline: g(math.div(.5, 3)) solid $base-color-light;
+		outline: g(.5 * .33333) solid $base-color-pale;
+		outline-offset: 0;
 	}
 }
 
 .tify-thumbnails-page {
+	border-top: 1px solid $border-color;
 	bottom: 0;
-	box-shadow: 0 -1px $shine;
-	color: $white;
 	display: block;
 	font-size: $font-size-small;
-	font-weight: bold;
 	height: g();
 	overflow: hidden;
 	padding: 0 g(.25);
-	position: absolute;
 	text-align: center;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -70,6 +64,7 @@
 			&.-current {
 				.tify-thumbnails-page {
 					background: $link-color;
+					color: $text-color-inverted;
 				}
 			}
 		}

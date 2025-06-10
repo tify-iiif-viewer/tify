@@ -19,19 +19,6 @@ export default {
 	annotationsVisible: null,
 
 	/**
-	 * Breakpoints used for custom media queries, depending on TIFY’s container
-	 * size instead of the viewport.
-	 *
-	 * @type {object}
-	 */
-	breakpoints: {
-		tiny: 359,
-		small: 719,
-		medium: 959,
-		large: 1199,
-	},
-
-	/**
 	 * If the manifest set by `manifestUrl` is a collection (`@type` is
 	 * `sc:Collection`) and `childManifestUrl` is not set, automatically load the
 	 * first manifest in the collection. This only works for collections with
@@ -52,6 +39,17 @@ export default {
 	 * @type {?string}
 	 */
 	childManifestUrl: null,
+
+	/**
+	 * Determines if TIFY is displayed in light or dark mode.
+	 *
+	 * `auto`: Determine color mode automatically based on browser preferences.
+	 * `light`: Use light mode, regardless of browser preferences.
+	 * `dark`: Use dark mode, regardless of browser preferences.
+	 *
+	 * @type {string}
+	 */
+	colorMode: 'auto',
 
 	/**
 	 * The HTML element into which TIFY is mounted. If set to `null`, TIFY is not

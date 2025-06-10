@@ -5,7 +5,7 @@ import OpenSeadragon from 'openseadragon';
 import { preventEvent } from '../modules/keyboard';
 import { createPromise } from '../modules/promise';
 
-const gapBetweenPages = 0.01;
+const gapBetweenPages = 0.005;
 
 export default {
 	directives: {
@@ -202,7 +202,7 @@ export default {
 				drawer: 'canvas',
 				element: this.$refs.image,
 				immediateRender: true,
-				preload: !this.$store.isMobile(),
+				preload: this.$store.isWide(),
 				preserveImageSizeOnResize: true,
 				preserveViewport: true,
 				showNavigationControl: false,
@@ -609,7 +609,7 @@ export default {
 		<button
 			v-if="!$store.isCustomPageView && !$store.isFirstPage"
 			type="button"
-			class="tify-scan-page-button -previous"
+			class="tify-scan-page-button -left"
 			:title="$translate('Previous page')"
 			:aria-label="$translate('Previous page')"
 			@click="$store.goToPreviousPage()"
@@ -619,7 +619,7 @@ export default {
 		<button
 			v-if="!$store.isCustomPageView && !$store.isLastPage"
 			type="button"
-			class="tify-scan-page-button -next"
+			class="tify-scan-page-button -right"
 			:title="$translate('Next page')"
 			:aria-label="$translate('Next page')"
 			@click="$store.goToNextPage()"
@@ -639,7 +639,17 @@ export default {
 				:aria-label="$translate('Zoom in')"
 				@click="zoomIn()"
 			>
-				<IconMagnifyPlus />
+				<IconPlus />
+			</button>
+			<button
+				type="button"
+				class="tify-scan-button"
+				:disabled="viewerState.isMinZoom"
+				:title="$translate('Zoom out')"
+				:aria-label="$translate('Zoom out')"
+				@click="zoomOut()"
+			>
+				<IconMinus />
 			</button>
 			<button
 				type="button"
@@ -650,16 +660,6 @@ export default {
 				@click="resetScan(!!$event.shiftKey)"
 			>
 				<IconAspectRatio />
-			</button>
-			<button
-				type="button"
-				class="tify-scan-button"
-				:disabled="viewerState.isMinZoom"
-				:title="$translate('Zoom out')"
-				:aria-label="$translate('Zoom out')"
-				@click="zoomOut()"
-			>
-				<IconMagnifyMinus />
 			</button>
 
 			<button
@@ -762,7 +762,7 @@ export default {
 			</div>
 
 			<button
-				v-if="$store.annotations.length && ($store.options.view === 'fulltext' || $store.isMobile())"
+				v-if="$store.annotations.length && ($store.options.view === 'fulltext' || !$store.isWide())"
 				type="button"
 				class="tify-scan-button"
 				:title="$translate('Toggle annotations')"

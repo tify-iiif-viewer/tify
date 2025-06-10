@@ -221,7 +221,7 @@ export default {
 		toggleView(name) {
 			this.closeControlsPopup();
 
-			const view = name === this.$store.options.view && this.$store.manifest && !this.$store.isMobile()
+			const view = name === this.$store.options.view && this.$store.manifest && this.$store.isWide()
 				? null
 				: name;
 			this.$store.updateOptions({ view });

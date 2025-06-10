@@ -1,5 +1,5 @@
 %toc-row-item {
-	background: $white;
+	background: $panel-bg;
 	position: relative;
 	z-index: 1;
 }
@@ -32,11 +32,11 @@
 	text-decoration: none;
 
 	@include hover {
-		background: $base-color-lighter;
+		background: $base-color-paler;
 
 		// Element label and page number
 		> span {
-			background: $base-color-lighter;
+			background: $base-color-paler;
 		}
 	}
 
@@ -86,13 +86,13 @@
 
 	&.-current {
 		// Bold vertical marker
-		box-shadow: calc(#{g(-.5)} + 1px) 0 $white, g(-.75) 0 $base-color-light;
+		box-shadow: calc(#{g(-.5)} + 1px) 0 $panel-bg, g(-.75) 0 $base-color-pale;
 	}
 
 	&.-expanded {
 		// Vertical connector to the left
 		&::after {
-			border-left: 1px solid $base-color-light;
+			border-left: 1px solid $base-color-pale;
 			content: '';
 			left: g(.75);
 			height: 100%;
@@ -100,12 +100,16 @@
 			top: g(.25);
 			z-index: -2;
 		}
+
+		&:last-child::after {
+			height: calc(100% - #{g()});
+		}
 	}
 
 	& & {
 		// Horizontal connector
 		&::before {
-			border-top: 1px solid $base-color-light;
+			border-top: 1px solid $base-color-pale;
 			content: '';
 			display: block;
 			height: 100%;
@@ -116,8 +120,8 @@
 		}
 
 		// Prevent vertical line from protruding at the bottom
-		&:not(.-current):last-child::before {
-			background: $white;
+		&:last-child::before {
+			background: $panel-bg;
 		}
 	}
 }
@@ -134,10 +138,10 @@
 	padding: 0;
 	position: relative;
 
-	// White overlay so vertical line does not touch button
+	// Gap between vertical line and button
 	&::after {
 		content: '';
-		border-bottom: g(.25) solid $white;
+		border-bottom: g(.25) solid $panel-bg;
 		bottom: g(-.25);
 		left: g(.5);
 		pointer-events: none;
