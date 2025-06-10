@@ -8,7 +8,7 @@ export default {
 		return {
 			itemHeight: 0,
 			itemVMargin: 0,
-			items: [{ label: '' }], // Dummy thumbnail to get dimensions
+			items: [{}], // Dummy thumbnail to get dimensions
 			itemsPerRow: 0,
 			knownImages: [],
 			lastScrollTop: 0,
@@ -100,27 +100,11 @@ export default {
 			const endPage = Math.min(this.$store.manifest.items.length, lastPage);
 
 			const items = [];
-			for (let i = startPage - 1; i < endPage; i += 1) {
-				const label = this.$store.localize(this.$store.manifest.items[i].label, '');
-				const resource = this.$store.manifest.items[i].items?.[0]?.items?.[0]?.body;
-				if (resource?.service) {
-					const service = resource.service instanceof Array ? resource.service[0] : resource.service;
-					const quality = ['ImageService2', 'ImageService3'].includes(service.type || service['@type'])
-						? 'default'
-						: 'native';
-					const id = service.id || service['@id'];
-					items.push({
-						label,
-						imgUrl: `${id}${id.at(-1) === '/' ? '' : '/'}full/${this.thumbnailWidth},/0/${quality}.jpg`,
-						page: i + 1,
-					});
-				} else {
-					items.push({
-						label,
-						imgUrl: resource?.id,
-						page: i + 1,
-					});
-				}
+			for (let page = startPage; page <= endPage; page += 1) {
+				items.push({
+					thumbnailUrl: this.$store.getThumbnailUrl(page, this.thumbnailWidth),
+					page,
+				});
 			}
 
 			this.items = items;
@@ -208,7 +192,7 @@ export default {
 			>
 				<img
 					alt=""
-					:src="item.imgUrl || 'data:,'"
+					:src="item.thumbnailUrl || 'data:,'"
 				/>
 				<span class="tify-thumbnails-page">
 					{{ $store.getPageLabel(item.page, item.label) }}

@@ -39,6 +39,7 @@ export default {
 	created() {
 		this.$api.expose(this.setLanguage);
 		this.$api.expose(this.$store.setPage);
+		this.$api.expose(this.$store.updateOptions);
 	},
 	mounted() {
 		this.$store.rootElement = this.$el;
@@ -163,12 +164,13 @@ export default {
 					v-show="$store.options.view === 'toc'"
 					:id="$store.getId('toc')"
 				/>
-				<ViewExport
-					v-show="$store.options.view === 'export'"
-					:id="$store.getId('export')"
-				/>
 			</template>
 
+			<ViewExport
+				v-if="$store.collection || $store.manifest"
+				v-show="$store.options.view === 'export'"
+				:id="$store.getId('export')"
+			/>
 			<ViewInfo
 				v-if="$store.collection || $store.manifest"
 				v-show="$store.options.view === 'info'"

@@ -15,19 +15,19 @@ describe('TOC', () => {
 		cy.get('.tify-toc-structure.-current').contains('Titelseite');
 		cy.get(
 			'.tify-toc'
-			+ ' .tify-toc-structure[data-level="0"]:nth-child(3) > .tify-toc-toggle',
+			+ ' .tify-toc-structure:nth-child(3) > .tify-toc-toggle',
 		).click();
 		cy.get(
 			'.tify-toc'
-			+ ' .tify-toc-structure[data-level="0"].-expanded'
-			+ ' .tify-toc-structure[data-level="1"]:first-child > .tify-toc-toggle',
+			+ ' .tify-toc-structure.-expanded'
+			+ ' .tify-toc-structure:first-child > .tify-toc-toggle',
 		).click();
 		cy.get('.tify-toc-label').contains('Huddesche Methode');
 
 		// "Kurze Nachrichten"
 		cy.get(
 			'.tify-toc'
-			+ ' .tify-toc-structure[data-level="1"]:last-of-type > .tify-toc-toggle',
+			+ ' .tify-toc-structure:eq(2) > .tify-toc-toggle',
 		).click();
 		cy.get('.tify-toc-label').contains('Ferrarische Methode (Louis Ferrari)');
 
@@ -50,7 +50,7 @@ describe('TOC', () => {
 		cy.contains('Expand all').click();
 
 		// Collapse first collapsible
-		cy.get('.tify-toc-structure[data-level="0"].-expanded:nth-child(3) > .tify-toc-toggle:first-of-type').click();
+		cy.get('.tify-toc-structure.-expanded:nth-child(3) > .tify-toc-toggle:first-of-type').click();
 
 		// Child of first collapsible
 		cy.contains('Auflösung von Gleichungen 3ten Grades').should('not.be.visible');

@@ -132,7 +132,7 @@ function Store(args) {
 			const { pages } = store.options;
 			const lastIndex = pages.length - 1;
 			const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
-			return page >= store.sections[store.sections.length - 1].firstPage;
+			return page >= store.sections[store.sections.length - 1]?.firstPage;
 		}),
 		pageCount: computed(() => store.manifest?.items?.length),
 		sections: computed(() => {
@@ -186,7 +186,7 @@ function Store(args) {
 
 					if (!canvases[structure.firstPage - 1]) {
 						// Excluding structure if its range has no canvases
-						continue;
+						continue; // eslint-disable-line no-continue
 					}
 				} else if (canvases?.[0]) {
 					structure.firstPage = 1;
@@ -240,6 +240,7 @@ function Store(args) {
 		}),
 		addError(message) {
 			store.errors.push(message);
+			console.warn(message); // eslint-disable-line no-console
 		},
 		clearErrors() {
 			store.errors = [];
@@ -270,6 +271,11 @@ function Store(args) {
 				store.loading = 0;
 				return Promise.reject(error);
 			});
+
+			if (!response.ok) {
+				console.warn('Error loading annotation'); // eslint-disable-line no-console
+				return '';
+			}
 
 			const result = await response.text().catch((error) => {
 				store.loading = 0;
@@ -304,6 +310,27 @@ function Store(args) {
 			const startCanvasIndex = store.manifest.items.findIndex((canvas) => canvas.id === store.manifest.start.id);
 			return startCanvasIndex >= 0 ? startCanvasIndex + 1 : 1;
 		},
+		getThumbnailUrl(page, thumbnailWidth) {
+			const canvas = store.manifest.items[page - 1];
+
+			const thumbnail = canvas.thumbnail?.[0];
+			if (thumbnail?.id && thumbnail?.width >= thumbnailWidth) {
+				return thumbnail.id;
+			}
+
+			const resource = canvas.items?.[0]?.items?.[0]?.body;
+			if (resource?.service) {
+				const service = resource.service instanceof Array ? resource.service[0] : resource.service;
+				const quality = ['ImageService2', 'ImageService3'].includes(service.type || service['@type'])
+					? 'default'
+					: 'native';
+				const id = service.id || service['@id'];
+				// TODO: this.$store.options.preferredImageFormat
+				return `${id}${id.at(-1) === '/' ? '' : '/'}full/${thumbnailWidth},/0/${quality}.jpg`;
+			}
+
+			return thumbnail?.id || resource?.id;
+		},
 		goToFirstPage() {
 			store.setPage(1);
 		},
@@ -321,12 +348,12 @@ function Store(args) {
 			const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
 			let sectionIndex = 0;
 			while (
-				page >= this.sections[sectionIndex].firstPage
-				|| (page && page >= this.sections[sectionIndex].firstPage)
+				page >= store.sections[sectionIndex].firstPage
+				|| (page && page >= store.sections[sectionIndex].firstPage)
 			) {
 				sectionIndex += 1;
 			}
-			store.setPage(this.sections[sectionIndex].firstPage);
+			store.setPage(store.sections[sectionIndex].firstPage);
 		},
 		goToLastPage() {
 			store.setPage(store.pageCount);
@@ -342,14 +369,14 @@ function Store(args) {
 		goToPreviousSection() {
 			const { pages } = store.options;
 			const page = pages[0] ? pages[0] : pages[1];
-			let sectionIndex = this.sections.length - 1;
+			let sectionIndex = store.sections.length - 1;
 			while (
-				page <= this.sections[sectionIndex].firstPage
-				|| (page && page <= this.sections[sectionIndex].firstPage)
+				page <= store.sections[sectionIndex].firstPage
+				|| (page && page <= store.sections[sectionIndex].firstPage)
 			) {
 				sectionIndex -= 1;
 			}
-			store.setPage(this.sections[sectionIndex].firstPage);
+			store.setPage(store.sections[sectionIndex].firstPage);
 		},
 		loadAnnotations() {
 			store.annotationsAvailable = null;
@@ -362,7 +389,7 @@ function Store(args) {
 
 				const canvas = store.manifest.items[page - 1];
 				if (!('annotations' in canvas)) {
-					this.annotationsAvailable = false;
+					store.annotationsAvailable = false;
 					return;
 				}
 
@@ -380,7 +407,7 @@ function Store(args) {
 						const status = error.response ? error.response.statusText : error.message;
 						// eslint-disable-next-line no-console
 						console.warn(`Could not load annotations: ${status}`);
-						this.annotationsAvailable = false;
+						store.annotationsAvailable = false;
 						return;
 					}
 				}
@@ -443,7 +470,7 @@ function Store(args) {
 						html = html.replace(/\n/g, ' <br>');
 					}
 
-					this.annotationsAvailable = true;
+					store.annotationsAvailable = true;
 
 					const annotation = {
 						id: annotationId,
@@ -452,7 +479,7 @@ function Store(args) {
 
 					const coordinatesString = resource.on?.selector?.value
 						|| (typeof resource.on === 'string' ? resource.on : null)
-						|| resource.target;
+						|| resource.target?.toString();
 
 					const xywh = coordinatesString?.split('xywh=')[1];
 					if (xywh) {
@@ -670,9 +697,13 @@ function Store(args) {
 			store.updateOptions(options);
 		},
 		updateOptions(updatedOptions) {
+			clearTimeout(store.urlUpdateTimeout);
+
 			Object.assign(store.options, updatedOptions);
 
-			clearTimeout(store.urlUpdateTimeout);
+			if (updatedOptions.pages) {
+				store.clearErrors();
+			}
 
 			if (!store.options.urlQueryKey) {
 				return;
@@ -704,7 +735,6 @@ function Store(args) {
 				}
 
 				if (updatedOptions.pages) {
-					store.clearErrors();
 					window.history.pushState({}, '', url);
 				} else {
 					window.history.replaceState({}, '', url);
