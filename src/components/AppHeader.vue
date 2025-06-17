@@ -218,7 +218,7 @@ export default {
 			class="tify-header-column -controls"
 		>
 			<h2 class="tify-sr-only">
-				{{ $translate('View') }}
+				{{ $translate('View [noun]') }}
 			</h2>
 
 			<div
@@ -230,8 +230,8 @@ export default {
 					:aria-controls="$getId('controls')"
 					:aria-expanded="controlsVisible"
 					class="tify-header-button"
-					:title="$translate('View')"
-					:aria-label="$translate('View')"
+					:title="$translate('View [noun]')"
+					:aria-label="$translate('View [noun]')"
 					@click="toggleControlsPopup"
 				>
 					<IconDotsGrid />
@@ -255,7 +255,7 @@ export default {
 						@click="toggleView(null)"
 					>
 						<IconImage />
-						{{ $translate('Scan') }}
+						{{ $translate('Scan [noun]') }}
 					</button>
 
 					<button
@@ -319,7 +319,7 @@ export default {
 						@click="toggleView('export')"
 					>
 						<IconDownloadOutline />
-						{{ $translate('Export') }}
+						{{ $translate('Export [noun]') }}
 					</button>
 
 					<button
