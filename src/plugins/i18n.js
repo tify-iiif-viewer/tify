@@ -1,11 +1,19 @@
 import { ref } from 'vue';
 
+import strings from '../strings.json';
+
 export default {
 	install: (app) => {
 		const translation = ref(null);
 
 		// eslint-disable-next-line no-param-reassign
-		app.config.globalProperties.$translate = (string, fallback) => {
+		app.config.globalProperties.$translate = (string) => {
+			const { language } = app.config.globalProperties.$store.options;
+			const override = app.config.globalProperties.$store.options.translations?.[language]?.[string];
+			if (override) {
+				return override;
+			}
+
 			if (translation.value?.[string]) {
 				return translation.value[string];
 			}
@@ -15,7 +23,7 @@ export default {
 				console.warn(`Missing translation for "${string}"`);
 			}
 
-			return fallback || string;
+			return strings[string] || string.replace(/\s*\[.+?\]/g, '');
 		};
 
 		// NOTE: translationObject contains any number of key-value pairs, where
