@@ -6,15 +6,13 @@ import {
 	rootDir,
 } from './i18n.js'; // eslint-disable-line import/extensions
 
-const translatedStrings = findTranslatedStrings(`${rootDir}/src`, '\\$translate')
-	.map((result) => result.key);
+const translatedStrings = findTranslatedStrings().map((result) => result.key);
 
 if (!translatedStrings.length) {
 	console.log('No translated strings found');
 	process.exit(1);
 }
 
-// TODO: Alert on missing language name
 translatedStrings.unshift('$language');
 
 const options = {
@@ -29,7 +27,7 @@ const results = checkTranslationFiles(translationsDir, translatedStrings, option
 let translationsWithIssuesCount = 0;
 
 results.forEach((result) => {
-	console.log(`${chalk.dim('file://')}${translationsDir}/${chalk.bold(result.lang)}.json`);
+	console.log(`${chalk.dim('file://')}${translationsDir}/${chalk.bold(result.langCode)}.json · ${result.langName}`);
 
 	['empty', 'missing', 'unused'].forEach((type) => {
 		const issues = result.issues.filter((issue) => issue.type === type);
