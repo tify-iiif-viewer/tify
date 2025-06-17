@@ -22,7 +22,7 @@
 	"Exit fullscreen": "フルスクリーン終了",
 	"Expand": "展開",
 	"Expand all": "すべてを展開",
-	"Export": "エクスポート",
+	"Export [noun]": "エクスポート",
 	"Filter collection": "コレクションのフィルタ",
 	"Filter pages": "ページのフィルタ",
 	"First page": "最初のページ",
@@ -58,7 +58,7 @@
 	"Reset": "リセット",
 	"Rotate": "回転",
 	"Saturation": "彩度",
-	"Scan": "スキャン",
+	"Scan [noun]": "スキャン",
 	"Source code": "ソースコード",
 	"Table of Contents": "目次",
 	"Title": "タイトル",
@@ -67,7 +67,7 @@
 	"Toggle image filters": "画像フィルタの切替",
 	"Toggle page select": "ページ選択の切替",
 	"Version": "バージョン",
-	"View": "表示",
+	"View [noun]": "表示",
 	"Zoom in": "拡大",
 	"Zoom out": "縮小"
 }
