@@ -603,7 +603,7 @@ export default {
 <template>
 	<section class="tify-scan">
 		<h2 class="tify-sr-only">
-			{{ $translate('Scan') }}
+			{{ $translate('Scan [noun]') }}
 		</h2>
 
 		<button

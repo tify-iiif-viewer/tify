@@ -131,7 +131,13 @@ Run end-to-end tests:
 
 ## Translations
 
-Translations reside in `public/translations`. Each language is represented by a JSON file, where the file name is the language’s [ISO 639 alpha-2 code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes). Each file consists of a single object of key-value pairs; the key is the original English string, the value is the translation. The first key `$language` denotes the native name of the translation’s language. There are a few other special keys starting with `$`; while all other keys are to be translated literally, these keys serve as placeholders for longer sections of text. Search the source files for these keys to reveal their corresponding texts.
+Translations reside in `public/translations`. Each language is represented by a JSON file, where the file name is the language’s [ISO 639 alpha-2 code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes). Each file consists of a single object of key-value pairs; the key is the original English string, the value is the translation.
+
+The key `$language` denotes the native name of the translation’s language.
+
+There are more special keys starting with `$`; while all other keys are to be translated literally, these keys serve as placeholders for longer sections of text, see `src/strings.json`.
+
+English keys (but not translated values) may contains translation hints in square brackets, e.g. `View [noun]` should be treated as a noun, not as a verb.
 
 To create a new empty translation, run `node build/create-translation.js` and follow the prompts.
 

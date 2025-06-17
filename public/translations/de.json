@@ -22,7 +22,7 @@
 	"Exit fullscreen": "Vollbildmodus verlassen",
 	"Expand": "Ausklappen",
 	"Expand all": "Alle ausklappen",
-	"Export": "Export",
+	"Export [noun]": "Export",
 	"Filter collection": "Sammlung filtern",
 	"Filter pages": "Seiten filtern",
 	"First page": "Erste Seite",
@@ -58,7 +58,7 @@
 	"Reset": "Zurücksetzen",
 	"Rotate": "Drehen",
 	"Saturation": "Sättigung",
-	"Scan": "Scan",
+	"Scan [noun]": "Scan",
 	"Source code": "Quellcode",
 	"Table of Contents": "Inhaltsverzeichnis",
 	"Title": "Titel",
@@ -67,7 +67,7 @@
 	"Toggle image filters": "Bildfilter umschalten",
 	"Toggle page select": "Seitenauswahl umschalten",
 	"Version": "Version",
-	"View": "Ansicht",
+	"View [noun]": "Ansicht",
 	"Zoom in": "Vergrößern",
 	"Zoom out": "Verkleinern"
 }

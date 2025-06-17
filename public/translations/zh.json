@@ -22,7 +22,7 @@
 	"Exit fullscreen": "退出全屏",
 	"Expand": "展开",
 	"Expand all": "全部展开",
-	"Export": "导出",
+	"Export [noun]": "导出",
 	"Filter collection": "筛选集合",
 	"Filter pages": "筛选页面",
 	"First page": "首页",
@@ -58,7 +58,7 @@
 	"Reset": "重置",
 	"Rotate": "旋转",
 	"Saturation": "饱和度",
-	"Scan": "扫描件",
+	"Scan [noun]": "扫描件",
 	"Source code": "源代码",
 	"Table of Contents": "目录",
 	"Title": "标题",
@@ -67,7 +67,7 @@
 	"Toggle image filters": "开启/关闭图像滤镜",
 	"Toggle page select": "页面选择开关",
 	"Version": "版本",
-	"View": "查看",
+	"View [noun]": "查看",
 	"Zoom in": "放大",
 	"Zoom out": "缩小"
 }

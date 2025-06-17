@@ -22,7 +22,7 @@
 	"Exit fullscreen": "Изход от цял екран",
 	"Expand": "Разгъни",
 	"Expand all": "Разгъни всички",
-	"Export": "Експортиране",
+	"Export [noun]": "Експортиране",
 	"Filter collection": "Филтрирай колекцията",
 	"Filter pages": "Филтрирай страниците",
 	"First page": "Първа страница",
@@ -58,7 +58,7 @@
 	"Reset": "Нулирай",
 	"Rotate": "Завърти",
 	"Saturation": "Наситеност",
-	"Scan": "Сканирай",
+	"Scan [noun]": "Сканирай",
 	"Source code": "Изходен код",
 	"Table of Contents": "Съдържание",
 	"Title": "Заглавие",
@@ -67,7 +67,7 @@
 	"Toggle image filters": "Превключи филтрите на изображения",
 	"Toggle page select": "Превключи избора на страница",
 	"Version": "Версия",
-	"View": "Изглед",
+	"View [noun]": "Изглед",
 	"Zoom in": "Увеличи",
 	"Zoom out": "Намали"
 }
