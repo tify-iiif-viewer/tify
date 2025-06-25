@@ -6,8 +6,11 @@ import chalk from 'chalk';
 import * as Diff from 'diff';
 
 export const indention = '\t';
-
 export const rootDir = url.fileURLToPath(new URL('..', import.meta.url));
+
+const globPattern = `${rootDir}/src/**/*.vue`;
+const excludedGlobPatterns = ['**/demo', '**/icons'];
+const translationFunctionName = '$translate';
 
 function sortTranslation(translation) {
 	return Object.keys(translation)
@@ -37,10 +40,8 @@ export function checkTranslationFiles(
 
 	const results = [];
 	translationFiles.forEach((file) => {
-		const lang = path.parse(file).name;
-
 		const result = {
-			lang,
+			langCode: path.parse(file).name,
 			notes: [],
 			issues: [],
 		};
@@ -48,6 +49,8 @@ export function checkTranslationFiles(
 		const json = fs.readFileSync(`${translationsDir}/${file}`);
 		const translation = JSON.parse(json);
 		const keys = Object.keys(translation);
+
+		result.langName = translation.$language;
 
 		const emptyKeys = keys.filter((key) => !translation[key]);
 		result.issues.push(...emptyKeys.map((key) => ({ type: 'empty', key })));
@@ -120,45 +123,34 @@ export function checkTranslationFiles(
  *
  * Good examples:
  *
- * 	$translate('String');
- * 	$translate('String', 'Fallback string');
- * 	$translate(first ? 'String' : 'Other string');
+ * 	$translate('String')
+ * 	$translate(condition ? 'String' : 'Another string')
  *
  * Bad examples (i.e. would not be found):
  *
- * 	$translate('String' + ' ' + 'another string');
+ * 	$translate('String' + ' ' + 'another string')
  * 	$translate(
  * 		'String',
- * 	);
+ * 	)
  * 	$translate(1);
  * 	$translate(
  * 		'1',
  * 		`2`,
- * 	);
+ * 	)
  * 	$translate('',
  * 		'2',
- * 	);
+ * 	)
  */
-export function findTranslatedStrings(dir, functionName, fileName = '\\.(js|vue)$') {
-	const files = fs.readdirSync(dir, { withFileTypes: true });
+export function findTranslatedStrings() {
+	const filePaths = fs.globSync(globPattern, { exclude: excludedGlobPatterns });
 	const results = [];
 
-	const translationFunctionRegexp = new RegExp(`${functionName}\\s*\\(\\s*(.*)\\s*\\)?`, 'gs');
-	const fileNameRegexp = new RegExp(fileName);
+	const translationFunctionRegexp = new RegExp(
+		`${translationFunctionName.replace(/\$/g, '\\$')}\\s*\\(\\s*(.*)\\s*\\)?`,
+		'gs',
+	);
 
-	files.forEach((file) => {
-		const filePath = path.join(dir, file.name);
-
-		if (file.isDirectory()) {
-			const dirResults = findTranslatedStrings(filePath, functionName);
-			results.push(...dirResults);
-			return;
-		}
-
-		if (!file.name.match(fileNameRegexp)) {
-			return;
-		}
-
+	filePaths.forEach((filePath) => {
 		let lineNumber = 1;
 
 		const fileContents = fs.readFileSync(filePath, 'utf8');
