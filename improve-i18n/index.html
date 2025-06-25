@@ -9,9 +9,8 @@
 	<style>
 		:root {
 			--base-color: #06b;
-			--base-color-lighter: #e6f0f8;
 			--border-color: #0003;
-			--button-hover-bg: #0058a2;
+			--header-bg: #f5f5f5;
 		}
 
 		*,
@@ -62,9 +61,7 @@
 			border-radius: 2px;
 			color: #fff;
 			cursor: pointer;
-			font: inherit;
 			font-size: .8125em;
-			font-weight: bold;
 			margin: .125rem;
 			min-width: 1.25rem;
 			padding: .125rem .5rem;
@@ -84,6 +81,10 @@
 			opacity: .5;
 		}
 
+		.button.-narrow {
+			padding: .125rem 0;
+		}
+
 		.container {
 			height: 100vh;
 		}
@@ -100,7 +101,7 @@
 		}
 
 		.header {
-			background: #fff;
+			background: var(--header-bg);
 			backdrop-filter: blur(1px);
 			display: flex;
 			position: relative;
@@ -109,20 +110,23 @@
 		}
 
 		.input {
-			background: #fff;
+			background: none;
 			border: 1px solid transparent;
 			border-radius: 2px;
-			color: inherit;
+			color: var(--base-color);
 			flex: 1;
-			font: inherit;
 			margin: .125rem;
 			min-width: 0;
 			padding: calc(.125rem - 1px) calc(.25rem - 1px);
 		}
 
 		.input:focus {
-			border-color: var(--base-color);
-			outline: 2px solid var(--base-color-lighter);
+			background:
+				linear-gradient(var(--header-bg), var(--header-bg)),
+				linear-gradient(var(--header-bg) 80%, var(--base-color) 80%);
+			background-origin: border-box;
+			background-clip: padding-box, border-box;
+			outline: none;
 		}
 
 		.instances {
@@ -192,8 +196,8 @@
 			padding-top: .5rem;
 		}
 	</style>
-  <script type="module" crossorigin src="/tify/improve-i18n/tify.CyxD5Z60.js"></script>
-  <link rel="stylesheet" crossorigin href="/tify/improve-i18n/tify.guRM6TqS.css">
+  <script type="module" crossorigin src="/tify/improve-i18n/tify.gtf2kxYi.js"></script>
+  <link rel="stylesheet" crossorigin href="/tify/improve-i18n/tify.Bs64eEHf.css">
 </head>
 
 <body v-scope @vue:mounted="mounted">
@@ -228,7 +232,7 @@
 					<div class="menu" @click.stop>
 						<button
 							type="button"
-							class="button"
+							class="button -narrow"
 							aria-label="Toggle instance and language menu"
 							:aria-controls="`dropdown${instance.id}`"
 							:aria-expanded="instance.dropdownOpen"
