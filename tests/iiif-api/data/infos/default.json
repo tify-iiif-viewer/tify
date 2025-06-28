@@ -10,7 +10,7 @@
     "gray"
   ],
   "height": 3024,
-  "id": "https://iiif.io/api/image/3.0/example/reference/918ecd18c2592080851777620de9bcb5-gottingen",
+  "id": "{{ id.path }}",
   "profile": "level1",
   "protocol": "http://iiif.io/api/image",
   "tiles": [

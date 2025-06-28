@@ -1,6 +1,6 @@
 {
 	"@context": "http://iiif.io/api/image/2/context.json",
-	"@id": "http://localhost:8081/image",
+	"@id": "{{ id.path }}",
 	"width": 1732,
 	"height": 2236,
 	"protocol": "http://iiif.io/api/image",
