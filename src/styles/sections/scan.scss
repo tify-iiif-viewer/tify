@@ -10,7 +10,9 @@
 
 .tify-scan-buttons {
 	backdrop-filter: $blur;
-	background: linear-gradient($border-color 1px, transparent 1px) -1px -1px / auto calc(#{g(1.5)} + 1px); // separators
+	background:
+		linear-gradient($border-color 1px, transparent 1px) -1px -1px /
+		auto calc(#{g(1.5)} + 1px); // separators
 	border-radius: $br;
 	box-shadow: 0 0 0 1px $border-color;
 	display: flex;
@@ -29,12 +31,12 @@
 	padding: g(.25);
 	position: relative;
 
-	&:not(:disabled):active {
-		box-shadow: $inset-shadow;
-	}
-
 	&:first-child {
 		border-radius: $br $br 0 0;
+	}
+
+	&:not(:disabled):active {
+		box-shadow: $inset-shadow;
 	}
 
 	.tify-scan-filters & {
@@ -115,9 +117,9 @@
 .tify-scan-overlay {
 	&.-current {
 		border-radius: $br;
+		mix-blend-mode: difference;
 		outline: calc(g(.25) - 2px) solid #fff;
 		outline-offset: 2px;
-		mix-blend-mode: difference;
 	}
 }
 
