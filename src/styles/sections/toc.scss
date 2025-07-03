@@ -43,11 +43,11 @@
 	&.-dots {
 		// Dotted line below
 		&::after {
+			border-bottom: 1px dotted;
 			bottom: calc(#{g(.5)} - 1px);
 			content: '';
 			left: g(.25);
 			min-width: 4em;
-			border-bottom: 1px dotted;
 			position: absolute;
 			right: g(.25);
 		}
@@ -94,8 +94,8 @@
 		&::after {
 			border-left: 1px solid $base-color-pale;
 			content: '';
-			left: g(.75);
 			height: 100%;
+			left: g(.75);
 			position: absolute;
 			top: g(.25);
 			z-index: -2;
@@ -140,9 +140,9 @@
 
 	// Gap between vertical line and button
 	&::after {
-		content: '';
 		border-bottom: g(.25) solid $panel-bg;
 		bottom: g(-.25);
+		content: '';
 		left: g(.5);
 		pointer-events: none;
 		position: absolute;
