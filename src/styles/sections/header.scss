@@ -17,8 +17,8 @@
 
 	&.-page-select {
 		align-self: center;
-		box-shadow: 0 0 0 1px $border-color inset;
 		border-radius: $br;
+		box-shadow: 0 0 0 1px $border-color inset;
 		margin: 0;
 		padding: 0;
 
@@ -87,8 +87,8 @@
 	@extend %button;
 	align-self: center;
 	background: none;
-	border-radius: $br;
 	border: 0;
+	border-radius: $br;
 	box-shadow: none;
 	margin: 0; // Safari fix
 	min-height: g(1.5);
@@ -139,7 +139,7 @@
 	.tify-header-button-group.-view & {
 		display: flex;
 		gap: .3em;
-		justify-content: flex-start;
+		justify-content: start;
 		padding: g(.25);
 		width: 100%;
 
@@ -211,16 +211,15 @@
 }
 
 .tify-header-title {
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;
 	align-self: center;
+	-webkit-box-orient: vertical;
 	display: -webkit-box;
 	font-size: 1em;
 	font-weight: normal;
+	-webkit-line-clamp: 2;
 	line-height: g();
-	margin: 0;
-	overflow: hidden;
 	margin: g(.125) g(.5);
+	overflow: hidden;
 	text-align: left;
 	text-overflow: ellipsis;
 }

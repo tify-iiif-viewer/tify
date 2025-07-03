@@ -7,16 +7,12 @@
 
 $track-color: $border-color;
 $track-focus-color: null;
-
 $thumb-bg: $link-color;
 $thumb-focus-bg: $link-hover-color;
-
 $thumb-radius: $br;
 $thumb-height: g();
 $thumb-width: g(.5);
-
 $track-height: g(.25);
-
 $track-radius: $br;
 
 @mixin range-track {
@@ -35,7 +31,7 @@ $track-radius: $br;
 }
 
 @mixin range {
-	-webkit-appearance: none;
+	appearance: none;
 	background: none;
 	margin: g(.25) 0 g(-.25);
 	width: 100%;
@@ -49,7 +45,7 @@ $track-radius: $br;
 
 	&::-webkit-slider-thumb {
 		@include range-thumb;
-		-webkit-appearance: none;
+		appearance: none;
 		margin-top: calc((#{$track-height} * .5) - (#{$thumb-height} * .5));
 	}
 

@@ -9,58 +9,58 @@
 	text-shadow: none;
 	z-index: 9;
 
-	@if ($alignment == bottom) {
+	@if $alignment == bottom {
 		margin: g(.25) 0;
-	} @else if ($alignment == top) {
-		margin: g(.25) 0;
+	} @else if $alignment == top {
 		bottom: 100%;
+		margin: g(.25) 0;
 		top: auto;
 		transform: none;
-	} @else if ($alignment == right) {
+	} @else if $alignment == right {
 		transform: translateY(-50%);
 	}
 
-	@if ($position == left) {
+	@if $position == left {
 		left: 0;
 		right: auto;
-	} @else if ($position == right) {
+	} @else if $position == right {
 		left: auto;
 		right: g(.25);
 	}
 
 	// Wedge
 	&::before {
-		position: absolute;
-		content: '';
 		background: $dropdown-bg;
-		width: g(.5);
+		content: '';
 		height: g(.5);
+		position: absolute;
 		transform: rotate(45deg);
+		width: g(.5);
 		z-index: -1;
 
-		@if ($alignment == bottom) {
+		@if $alignment == bottom {
 			bottom: auto;
 			top: calc(#{g(-.25)} - #{$br});
 
-			@if ($position == left) {
+			@if $position == left {
 				left: g(.5);
 				right: auto;
-			} @else if ($position == right) {
+			} @else if $position == right {
 				left: auto;
 				right: g(.5);
 			}
-		} @else if ($alignment == top) {
-			top: auto;
+		} @else if $alignment == top {
 			bottom: calc(#{g(-.25)} - #{$br});
+			top: auto;
 
-			@if ($position == left) {
+			@if $position == left {
 				left: g(.5);
 				right: auto;
-			} @else if ($position == right) {
+			} @else if $position == right {
 				left: auto;
 				right: g(.5);
 			}
-		} @else if ($alignment == right) {
+		} @else if $alignment == right {
 			left: calc(#{g(-.25)} - #{$br});
 			top: calc(50% - #{g(.25)});
 		}
