@@ -30,8 +30,8 @@ $text-color-muted:
 	var(
 		--tify-text-muted-color,
 		light-dark(
-			color-mix(in oklch, $grey-dark, #fff 20%),
-			color-mix(in oklch, $grey-light, #000 20%),
+			color-mix(in oklch, $grey-dark, #fff 35%),
+			color-mix(in oklch, $grey-light, #000 35%),
 		)
 	) !default;
 
