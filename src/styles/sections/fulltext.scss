@@ -13,6 +13,8 @@
 	}
 
 	img {
+		// Ensure visibility in dark mode since images with transparency may require a white background
+		background: #fff;
 		height: auto;
 		max-width: 100%;
 	}
