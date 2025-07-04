@@ -181,21 +181,30 @@ export default {
 			class="tify-info-section -provider"
 		>
 			<h3>{{ $translate('Provided by') }}</h3>
-			<div v-for="provider in manifestOrCollection.provider" :key="provider.id">
+			<div
+				v-for="provider in manifestOrCollection.provider"
+				:key="provider.id"
+			>
 				<p v-if="provider.label">
 					<template
 						v-for="label, labelIndex in $store.localize(provider.label, '', 'array')"
 						:key="`${provider.id}-${labelIndex}`"
 					>
 						<br v-if="labelIndex">
-						<a v-if="isValidUrl(label)" :href="label">{{ label }}</a>
+						<a
+							v-if="isValidUrl(label)"
+							:href="label"
+						>{{ label }}</a>
 						<template v-else>
 							{{ label }}
 						</template>
 					</template>
 				</p>
 				<p>
-					<template v-for="homepage, homepageIndex in provider.homepage" :key="homepage.id">
+					<template
+						v-for="homepage, homepageIndex in provider.homepage"
+						:key="homepage.id"
+					>
 						<br v-if="homepageIndex">
 						<a :href="homepage.id">
 							{{ homepage.label ? $store.localize(homepage.label) : homepage.id }}
@@ -209,7 +218,10 @@ export default {
 			v-if="logos.length"
 			class="tify-info-section -logo"
 		>
-			<p v-for="logo, index in logos" :key="index">
+			<p
+				v-for="logo, index in logos"
+				:key="index"
+			>
 				<a
 					v-if="logo.link"
 					:href="logo.link"

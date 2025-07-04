@@ -23,11 +23,6 @@ export default {
 		this.updateInfoItems();
 	},
 	methods: {
-		// TODO: Review this - maybe just display ugly strings instead
-		cleanLabel(label) {
-			const cleanedLabel = label.replace('_', ' ');
-			return cleanedLabel.charAt(0).toUpperCase() + cleanedLabel.substr(1);
-		},
 		updateInfoItems() {
 			this.$nextTick(() => {
 				if (!this.$refs.contents) {
@@ -67,7 +62,7 @@ export default {
 			:key="index"
 		>
 			<h4 v-if="item.label">
-				{{ cleanLabel($store.localize(item.label)) }}
+				{{ $store.localize(item.label) }}
 			</h4>
 			<div
 				ref="contents"

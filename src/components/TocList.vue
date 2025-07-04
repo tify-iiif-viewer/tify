@@ -23,8 +23,12 @@ export default {
 				&& this.structures[0].items?.some((item) => item.items)
 				? [true]
 				: [],
-			id: this.$store.getId(`toc-list-${Math.floor(Math.random() * 1e12)}`),
 		};
+	},
+	computed: {
+		id() {
+			return this.$store?.getId('toc-list', true);
+		},
 	},
 	methods: {
 		// TODO: Add unit test

@@ -46,6 +46,14 @@ module.exports = {
 			registeredComponentsOnly: false,
 		}],
 		'vue/html-indent': ['error', 'tab'],
+		'vue/max-attributes-per-line': ['error', {
+			singleline: {
+				max: 1,
+			},
+			multiline: {
+				max: 1,
+			},
+		}],
 		'vue/max-len': ['error', 120],
 		'vue/no-v-html': 'off',
 	},

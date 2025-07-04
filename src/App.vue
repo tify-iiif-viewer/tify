@@ -192,7 +192,10 @@ export default {
 			</button>
 			<div class="tify-error-messages">
 				<!-- NOTE: Error messages can contain user-controlled content -->
-				<p v-for="error in $store.errors" :key="error">
+				<p
+					v-for="error in $store.errors"
+					:key="error"
+				>
 					{{ error }}
 				</p>
 			</div>

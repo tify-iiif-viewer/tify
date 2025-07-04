@@ -11,8 +11,12 @@ export default {
 		return {
 			children: null,
 			expanded: false,
-			id: this.$store.getId(`collection-node-${Math.floor(Math.random() * 1e12)}`),
 		};
+	},
+	computed: {
+		id() {
+			return this.$store.getId('collection-node', true);
+		},
 	},
 	methods: {
 		toggleChildren() {
