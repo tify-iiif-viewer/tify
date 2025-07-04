@@ -44,6 +44,7 @@
     "@vitest/eslint-plugin": "^1.1.28",
     "@vue/eslint-config-airbnb": "^8.0.0",
     "@vue/test-utils": "^2.4.6",
+    "@vueuse/core": "^13.5.0",
     "chalk": "^5.4.1",
     "click-outside-vue3": "^4.0.1",
     "cypress": "^14.0.3",
