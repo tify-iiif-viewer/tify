@@ -73,14 +73,20 @@ export default {
 			<h3>{{ $translate('Download Individual Images') }}</h3>
 			<ul class="tify-export-image-list">
 				<template v-for="page in pages">
-					<li v-if="imageUrls[page]" :key="page">
+					<li
+						v-if="imageUrls[page]"
+						:key="page"
+					>
 						<!-- NOTE: The download attribute is only honored for same-origin URLs -->
 						<a
 							class="tify-export-image-link"
 							:href="imageUrls[page]"
 							:download="`${page}.jpg`"
 						>
-							<img :src="$store.getThumbnailUrl(page, 96)" alt="">
+							<img
+								:src="$store.getThumbnailUrl(page, 96)"
+								alt=""
+							>
 							{{ $translate('Page') }}
 							{{ $store.getPageLabel(page, $store.manifest.items[page - 1].label) }}
 						</a>
