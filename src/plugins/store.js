@@ -3,6 +3,7 @@ import { computed, nextTick, reactive } from 'vue';
 import { upgrade } from '@iiif/parser/upgrader';
 
 import { filterHtml } from '../modules/filter';
+import { getUniqueId } from '../modules/id';
 import { createPromise } from '../modules/promise';
 import { isValidPagesArray, isValidUrl } from '../modules/validation';
 
@@ -47,8 +48,8 @@ function convertManifest(originalManifest) {
 	return manifest;
 }
 
-function Store(args) {
-	const instanceId = `tify-${Math.floor(Math.random() * Date.now())}`;
+function Store(args = {}) {
+	const instanceId = getUniqueId('tify');
 
 	const store = reactive({
 		annotations: [],
@@ -288,8 +289,8 @@ function Store(args) {
 
 			return result;
 		},
-		getId(postfix) {
-			return instanceId + (postfix ? `-${postfix}` : '');
+		getId(postfix, randomStringAdded) {
+			return getUniqueId('', instanceId, postfix + (randomStringAdded ? `-${getUniqueId()}` : ''));
 		},
 		getPageLabel(number, labelObject) {
 			const label = store.localize(labelObject, '');
