@@ -392,7 +392,10 @@ export default {
 					</button>
 				</div>
 
-				<div v-if="fullscreenSupported" class="tify-header-button-group -view">
+				<div
+					v-if="fullscreenSupported"
+					class="tify-header-button-group -view"
+				>
 					<button
 						type="button"
 						class="tify-header-button -icon-only"
