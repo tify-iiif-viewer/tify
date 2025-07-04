@@ -1,4 +1,5 @@
 <script>
+import { useFullscreen } from '@vueuse/core';
 import vClickOutside from 'click-outside-vue3';
 
 import { preventEvent } from '../modules/keyboard';
@@ -14,14 +15,10 @@ export default {
 	data() {
 		return {
 			controlsVisible: false,
-			fullscreenActive: false,
-			screen: this.$store.rootElement.parentNode,
+			fullscreen: useFullscreen(this.$store.rootElement.parentNode),
 		};
 	},
 	computed: {
-		fullscreenSupported() {
-			return document.fullscreenElement === null || document.webkitFullscreenElement === null;
-		},
 		title() {
 			const nbsp = String.fromCharCode(160);
 			return (
@@ -35,16 +32,10 @@ export default {
 	created() {
 		this.$api.expose(this.setView);
 		this.$api.expose(this.toggleDoublePage);
-		this.$api.expose(this.toggleFullscreen);
+		this.$api.expose(this.fullscreen.toggle);
 	},
 	mounted() {
 		this.$store.rootElement.addEventListener('keydown', this.onKeyDown);
-
-		// NOTE: Fullscreen state cannot be computed
-		const vendorPrefixes = ['', 'moz', 'webkit'];
-		vendorPrefixes.forEach((prefix) => {
-			document.addEventListener(`${prefix}fullscreenchange`, this.toggleFullscreenActive);
-		});
 	},
 	beforeUnmount() {
 		this.$store.rootElement.removeEventListener('keydown', this.onKeyDown);
@@ -52,24 +43,6 @@ export default {
 	methods: {
 		closeControlsPopup() {
 			this.controlsVisible = false;
-		},
-		detectFullscreen() {
-			let fullscreenAPI;
-
-			// fullscreenAPI is set to the browser's implementation of the fullscreen API
-			// (if supported). If the fullscreen API isn't supported, fullscreenAPI is set to false.
-			switch (null) {
-				case document.fullscreenElement:
-					fullscreenAPI = document.fullscreenElement;
-					break;
-				case document.webkitFullscreenElement:
-					fullscreenAPI = document.webkitFullscreenElement;
-					break;
-				default:
-					fullscreenAPI = false;
-			}
-
-			return fullscreenAPI;
 		},
 		onKeyDown(event) {
 			if (preventEvent(event)) {
@@ -125,7 +98,7 @@ export default {
 					}
 					break;
 				case 'f':
-					this.toggleFullscreen();
+					this.fullscreen.toggle();
 					break;
 				default:
 			}
@@ -188,35 +161,6 @@ export default {
 
 			this.$store.updateOptions({ pages: newPages });
 			return newPages;
-		},
-		toggleFullscreen(forced) {
-			if ((this.fullscreenActive && forced !== true) || forced === false) {
-				if (document.exitFullscreen) {
-					document.exitFullscreen();
-				} else if (document.mozCancelFullScreen) {
-					// Firefox
-					document.mozCancelFullScreen();
-				} else if (document.webkitExitFullscreen) {
-					// Chrome, Safari and Opera
-					document.webkitExitFullscreen();
-				}
-				return false;
-			}
-
-			if (this.screen.requestFullscreen) {
-				this.screen.requestFullscreen();
-			} else if (this.screen.mozRequestFullScreen) {
-				// Firefox
-				this.screen.mozRequestFullScreen();
-			} else if (this.screen.webkitRequestFullscreen) {
-				// Chrome, Safari and Opera
-				this.screen.webkitRequestFullscreen();
-			}
-
-			return true;
-		},
-		toggleFullscreenActive() {
-			this.fullscreenActive = !this.fullscreenActive;
 		},
 		toggleView(name) {
 			this.closeControlsPopup();
@@ -392,10 +336,7 @@ export default {
 					</button>
 				</div>
 
-				<div
-					v-if="fullscreenSupported"
-					class="tify-header-button-group -view"
-				>
+				<div class="tify-header-button-group -view">
 					<button
 						type="button"
 						class="tify-header-button -icon-only"
@@ -409,13 +350,14 @@ export default {
 						<IconHelpCircleOutline />
 						{{ $translate('Help') }}
 					</button>
+
 					<button
-						v-if="!fullscreenActive"
+						v-if="!fullscreen.isFullscreen"
 						type="button"
 						class="tify-header-button -icon-only"
 						:title="$translate('Fullscreen')"
 						:aria-label="$translate('Fullscreen')"
-						@click="toggleFullscreen"
+						@click="fullscreen.toggle()"
 					>
 						<IconFullscreen />
 						{{ $translate('Fullscreen') }}
@@ -426,7 +368,7 @@ export default {
 						class="tify-header-button -icon-only"
 						:title="$translate('Exit fullscreen')"
 						:aria-label="$translate('Exit fullscreen')"
-						@click="toggleFullscreen"
+						@click="fullscreen.toggle()"
 					>
 						<IconFullscreenExit />
 						{{ $translate('Exit fullscreen') }}
