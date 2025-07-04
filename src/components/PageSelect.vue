@@ -138,7 +138,7 @@ export default {
 		<button
 			type="button"
 			class="tify-page-select-button"
-			:aria-controls="$store.getId('dropdown')"
+			:aria-controls="$getId('page-select-dropdown')"
 			:aria-expanded="isOpen"
 			@click="toggleDropdown()"
 		>
@@ -149,7 +149,7 @@ export default {
 
 		<div
 			v-show="isOpen"
-			:id="$store.getId('dropdown')"
+			:id="$getId('page-select-dropdown')"
 			key="dropdown"
 			class="tify-page-select-dropdown"
 			@click.stop

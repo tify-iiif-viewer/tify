@@ -283,7 +283,7 @@ export default {
 			>
 				<button
 					type="button"
-					:aria-controls="$store.getId('controls')"
+					:aria-controls="$getId('controls')"
 					:aria-expanded="controlsVisible"
 					class="tify-header-button"
 					:title="$translate('View')"
@@ -295,7 +295,7 @@ export default {
 			</div>
 
 			<div
-				:id="$store.getId('controls')"
+				:id="$getId('controls')"
 				class="tify-header-popup"
 				:class="{ '-visible': controlsVisible }"
 			>
@@ -306,7 +306,7 @@ export default {
 						type="button"
 						class="tify-header-button -scan"
 						:class="{ '-active': !$store.options.view }"
-						:aria-controls="$store.getId('scan')"
+						:aria-controls="$getId('scan')"
 						:aria-expanded="!$store.options.view"
 						@click="toggleView(null)"
 					>
@@ -319,7 +319,7 @@ export default {
 						type="button"
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'fulltext' }"
-						:aria-controls="$store.getId('fulltext')"
+						:aria-controls="$getId('fulltext')"
 						:aria-expanded="$store.options.view === 'fulltext'"
 						@click="toggleView('fulltext')"
 					>
@@ -332,7 +332,7 @@ export default {
 						type="button"
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'thumbnails' }"
-						:aria-controls="$store.getId('thumbnails')"
+						:aria-controls="$getId('thumbnails')"
 						:aria-expanded="$store.options.view === 'thumbnails'"
 						@click="toggleView('thumbnails')"
 					>
@@ -345,7 +345,7 @@ export default {
 						type="button"
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'toc' }"
-						:aria-controls="$store.getId('toc')"
+						:aria-controls="$getId('toc')"
 						:aria-expanded="$store.options.view === 'toc'"
 						@click="toggleView('toc')"
 					>
@@ -357,7 +357,7 @@ export default {
 						type="button"
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'info' }"
-						:aria-controls="$store.getId('info')"
+						:aria-controls="$getId('info')"
 						:aria-expanded="$store.options.view === 'info'"
 						@click="toggleView('info')"
 					>
@@ -370,7 +370,7 @@ export default {
 						type="button"
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'export' }"
-						:aria-controls="$store.getId('export')"
+						:aria-controls="$getId('export')"
 						:aria-expanded="$store.options.view === 'export'"
 						@click="toggleView('export')"
 					>
@@ -383,7 +383,7 @@ export default {
 						type="button"
 						class="tify-header-button"
 						:class="{ '-active': $store.options.view === 'collection' }"
-						:aria-controls="$store.getId('collection')"
+						:aria-controls="$getId('collection')"
 						:aria-expanded="$store.options === 'collection'"
 						@click="toggleView('collection')"
 					>
@@ -400,7 +400,7 @@ export default {
 						type="button"
 						class="tify-header-button -icon-only"
 						:class="{ '-active': $store.options.view === 'help' }"
-						:aria-controls="$store.getId('help')"
+						:aria-controls="$getId('help')"
 						:aria-expanded="$store.options.view === 'help'"
 						:title="$translate('Help')"
 						:aria-label="$translate('Help')"
