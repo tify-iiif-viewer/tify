@@ -117,7 +117,7 @@ export default {
 					type="button"
 					class="tify-export-toggle"
 					:class="{ '-close': perElementPdfLinksVisible }"
-					:aria-controls="$store.getId('export-pdf-list')"
+					:aria-controls="$getId('export-pdf-list')"
 					:aria-expanded="perElementPdfLinksVisible"
 					@click="perElementPdfLinksVisible = !perElementPdfLinksVisible"
 				>
@@ -131,7 +131,7 @@ export default {
 				</button>
 				<div
 					v-show="perElementPdfLinksVisible"
-					:id="$store.getId('export-pdf-list')"
+					:id="$getId('export-pdf-list')"
 					class="tify-export-toc"
 				>
 					<h4>{{ $translate('PDFs for each element') }}</h4>

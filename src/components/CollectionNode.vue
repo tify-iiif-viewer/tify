@@ -1,4 +1,6 @@
 <script>
+import { useId } from 'vue';
+
 export default {
 	name: 'CollectionNode',
 	props: {
@@ -11,8 +13,12 @@ export default {
 		return {
 			children: null,
 			expanded: false,
-			id: this.$store.getId(`collection-node-${Math.floor(Math.random() * 1e12)}`),
 		};
+	},
+	computed: {
+		id() {
+			return this.$getId(useId());
+		},
 	},
 	methods: {
 		toggleChildren() {
