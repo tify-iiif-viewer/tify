@@ -47,9 +47,7 @@ function convertManifest(originalManifest) {
 	return manifest;
 }
 
-function Store(args) {
-	const instanceId = `tify-${Math.floor(Math.random() * Date.now())}`;
-
+function Store(args = {}) {
 	const store = reactive({
 		annotations: [],
 		annotationsAvailable: null,
@@ -287,9 +285,6 @@ function Store(args) {
 			}
 
 			return result;
-		},
-		getId(postfix) {
-			return instanceId + (postfix ? `-${postfix}` : '');
 		},
 		getPageLabel(number, labelObject) {
 			const label = store.localize(labelObject, '');

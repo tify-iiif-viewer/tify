@@ -17,6 +17,12 @@ afterEach(() => {
 				],
 				'prefer-native-element': 'off',
 				'require-sri': 'off',
+				'valid-id': [
+					'error',
+					{
+						relaxed: true,
+					},
+				],
 			},
 		},
 		{

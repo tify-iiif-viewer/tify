@@ -6,6 +6,7 @@ import defaultOptions from './config';
 
 import api from './plugins/api';
 import i18n from './plugins/i18n';
+import id from './plugins/id';
 import store from './plugins/store';
 
 window.Tify = function Tify(userOptions = {}) {
@@ -35,6 +36,7 @@ window.Tify = function Tify(userOptions = {}) {
 	})
 		.use(api, { instance })
 		.use(i18n)
+		.use(id)
 		.use(store, { options: this.options });
 
 	// TODO: Add test

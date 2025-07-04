@@ -545,7 +545,7 @@ export default {
 					// same ID "overlay-wrapper" too all wrapper elements. The ID can
 					// be removed once this issue is resolved:
 					// https://github.com/openseadragon/openseadragon/issues/2682
-					element.id = this.$store.getId(`overlay-${page}-${annotationIndex}`);
+					element.id = this.$getId(`overlay-${page}-${annotationIndex}`);
 
 					this.viewer.addOverlay({
 						element,
@@ -684,7 +684,7 @@ export default {
 					:class="{ '-active': filtersActive }"
 					:title="$translate('Toggle image filters')"
 					:aria-label="$translate('Toggle image filters')"
-					:aria-controls="$store.getId('filters')"
+					:aria-controls="$getId('filters')"
 					:aria-expanded="filtersVisible"
 					@click="filtersVisible = !filtersVisible"
 				>
@@ -692,7 +692,7 @@ export default {
 				</button>
 				<div
 					v-show="filtersVisible"
-					:id="$store.getId('filters')"
+					:id="$getId('filters')"
 					class="tify-scan-filters-popup"
 				>
 					<h3 class="tify-sr-only">

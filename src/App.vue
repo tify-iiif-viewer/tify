@@ -131,42 +131,42 @@ export default {
 		>
 			<template v-if="$store.manifest">
 				<!-- Scan must come first, other views in arbitrary order -->
-				<ViewScan :id="$store.getId('scan')" />
+				<ViewScan :id="$getId('scan')" />
 
 				<ViewFulltext
 					v-if="hasAnnotations"
 					v-show="$store.options.view === 'fulltext'"
-					:id="$store.getId('fulltext')"
+					:id="$getId('fulltext')"
 				/>
 				<ViewThumbnails
 					v-show="$store.options.view === 'thumbnails'"
-					:id="$store.getId('thumbnails')"
+					:id="$getId('thumbnails')"
 				/>
 				<ViewToc
 					v-if="hasToc"
 					v-show="$store.options.view === 'toc'"
-					:id="$store.getId('toc')"
+					:id="$getId('toc')"
 				/>
 			</template>
 
 			<ViewExport
 				v-if="$store.collection || $store.manifest"
 				v-show="$store.options.view === 'export'"
-				:id="$store.getId('export')"
+				:id="$getId('export')"
 			/>
 			<ViewInfo
 				v-if="$store.collection || $store.manifest"
 				v-show="$store.options.view === 'info'"
-				:id="$store.getId('info')"
+				:id="$getId('info')"
 			/>
 			<ViewCollection
 				v-if="$store.collection"
 				v-show="$store.options.view === 'collection'"
-				:id="$store.getId('collection')"
+				:id="$getId('collection')"
 			/>
 			<ViewHelp
 				v-show="$store.options.view === 'help'"
-				:id="$store.getId('help')"
+				:id="$getId('help')"
 			/>
 		</div>
 
