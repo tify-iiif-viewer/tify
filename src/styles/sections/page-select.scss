@@ -69,6 +69,17 @@
 	padding: 0;
 	position: relative;
 
+	a {
+		color: inherit;
+		display: block;
+		padding: g(.125);
+		text-decoration: none;
+
+		@include hover {
+			color: inherit;
+		}
+	}
+
 	> li {
 		margin: 0;
 		user-select: none;
@@ -90,17 +101,6 @@
 		&.-highlighted > a {
 			background: $link-color;
 			color: $text-color-inverted;
-		}
-	}
-
-	a {
-		color: inherit;
-		display: block;
-		padding: g(.125);
-		text-decoration: none;
-
-		@include hover {
-			color: inherit;
 		}
 	}
 }

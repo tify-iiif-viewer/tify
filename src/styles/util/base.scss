@@ -49,23 +49,23 @@
 
 	h3 {
 		box-shadow: 0 1px $border-color;
+		color: $text-color-muted;
 		font-size: $font-size-small;
 		font-weight: bold;
 		letter-spacing: .1em;
 		margin: 0 0 g(.5);
-		color: $text-color-muted;
 		padding: 0;
 		text-transform: uppercase;
 	}
 
 	h4 {
+		color: $text-color-muted;
 		font-size: 1em;
 		font-weight: normal;
 		margin: 0;
-		color: $text-color-muted;
 		padding: 0;
 
-		&:nth-of-type(n+2) {
+		&:nth-of-type(n + 2) {
 			margin-top: g(.5);
 		}
 	}

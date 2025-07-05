@@ -55,10 +55,10 @@ $large: 'width > 1199px';
 // Combined values
 $blur: blur(5px);
 $button-bg: var(--tify-button-bg, light-dark($grey-light, $grey)) !default;
-$button-hover-bg:	var(--tify-button-hover-bg, oklch(from $button-bg calc(l + .03) c h)) !default;
+$button-hover-bg: var(--tify-button-hover-bg, oklch(from $button-bg calc(l + .03) c h)) !default;
 $drop-shadow: 0 0 g(.25) #0004 !default;
 $dropdown-bg: var(--tify-dropdown-bg, light-dark(#fff, $grey)) !default;
-$header-bg:	var(--tify-header-bg, light-dark(#fff, $grey-dark)) !default;
+$header-bg: var(--tify-header-bg, light-dark(#fff, $grey-dark)) !default;
 $inset-shadow: 0 0 3px #0002 inset !default;
 $main-bg:
 	var(

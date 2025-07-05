@@ -6,9 +6,9 @@
 	user-select: none;
 
 	a {
-		color: inherit;
 		border: 0;
 		box-shadow: 0 0 0 1px $border-color;
+		color: inherit;
 		text-decoration: none;
 	}
 }
@@ -34,13 +34,13 @@
 		display: block;
 		height: $thumbnail-height;
 		margin: auto;
+		max-width: 100%;
 		object-fit: contain;
 		pointer-events: none;
-		max-width: 100%;
 	}
 
 	&.-current {
-		outline: g(.5 * .33333) solid $base-color-pale;
+		outline: g(.5 * .3333) solid $base-color-pale;
 		outline-offset: 0;
 	}
 }
@@ -60,7 +60,6 @@
 
 	@at-root {
 		.tify-thumbnails-item {
-
 			&.-current {
 				.tify-thumbnails-page {
 					background: $link-color;
