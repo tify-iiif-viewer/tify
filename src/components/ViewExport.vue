@@ -63,7 +63,7 @@ export default {
 		tabindex="0"
 	>
 		<h2 class="tify-sr-only">
-			{{ $translate('Export') }}
+			{{ $translate('Export [noun]') }}
 		</h2>
 
 		<div

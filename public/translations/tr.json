@@ -22,7 +22,7 @@
 	"Exit fullscreen": "Tam ekrandan çık",
 	"Expand": "Genişlet",
 	"Expand all": "Tümünü genişlet",
-	"Export": "Dışa aktar",
+	"Export [noun]": "Dışa aktar",
 	"Filter collection": "Koleksiyonu filtrele",
 	"Filter pages": "Sayfaları filtrele",
 	"First page": "İlk sayfa",
@@ -58,7 +58,7 @@
 	"Reset": "Sıfırla",
 	"Rotate": "Döndür",
 	"Saturation": "Doygunluk",
-	"Scan": "Tara",
+	"Scan [noun]": "Tara",
 	"Source code": "Kaynak kodu",
 	"Table of Contents": "İçindekiler",
 	"Title": "Başlık",
@@ -67,7 +67,7 @@
 	"Toggle image filters": "Görsel filtrelerini aç/kapat",
 	"Toggle page select": "Sayfa seçim modunu aç/kapat",
 	"Version": "Sürüm",
-	"View": "Görüntü",
+	"View [noun]": "Görüntü",
 	"Zoom in": "Yakınlaştır",
 	"Zoom out": "Uzaklaştır"
 }

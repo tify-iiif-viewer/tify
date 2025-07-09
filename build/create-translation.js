@@ -40,7 +40,7 @@ const translationObject = {
 	$language: language,
 };
 
-findTranslatedStrings(`${rootDir}/src`, '\\$translate').forEach((item) => {
+findTranslatedStrings().forEach((item) => {
 	translationObject[item.key] = '';
 });
 
