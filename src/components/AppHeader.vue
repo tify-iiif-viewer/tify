@@ -206,7 +206,11 @@ export default {
 					@click="toggleDoublePage"
 				>
 					<IconViewModule v-if="$store.isCustomPageView" />
-					<IconBookOpenBlankVariant v-else />
+					<!--
+					TODO: Remove custom icon once contribution is merged:
+					https://github.com/Templarian/MaterialDesign/issues/7760
+					-->
+					<IconBookOpenBlankOutline v-else />
 				</button>
 			</div>
 
