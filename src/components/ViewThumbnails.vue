@@ -72,6 +72,10 @@ export default {
 			}, 200);
 		},
 		updateDimensions() {
+			if (!this.$refs.container) {
+				return;
+			}
+
 			const itemTemplate = this.$refs.container.querySelector('.tify-thumbnails-item');
 			const itemStyle = itemTemplate.currentStyle || window.getComputedStyle(itemTemplate);
 			const verticalMargin = parseInt(itemStyle.marginTop, 10) + parseFloat(itemStyle.marginBottom, 10);
