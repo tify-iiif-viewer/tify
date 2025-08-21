@@ -35,6 +35,6 @@ describe('Support for native IIIF 3 manifests', () => {
 			+ '&tify={"view":"info"}',
 		);
 
-		cy.contains('h4', 'Published').next().should('have.text', '—'); // &mdash;
+		cy.contains('h4', 'Published').next().should('have.text', '‒' /* $n/a = figure dash */);
 	});
 });

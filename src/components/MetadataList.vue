@@ -80,7 +80,7 @@ export default {
 					<div
 						v-else
 						:key="`html-${index}`"
-						v-html="filterHtml($store.localize(item.value))"
+						v-html="filterHtml($store.localize(item.value)) || $translate('$n/a')"
 					/>
 				</div>
 

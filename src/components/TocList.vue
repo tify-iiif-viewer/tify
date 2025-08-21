@@ -161,7 +161,10 @@ export default {
 				@click="setPage(structure.firstPage || getFirstPage(structure))"
 			>
 				<span class="tify-toc-label">
-					{{ $store.localize(structure.label) || getFirstPageLabel(structure) }}
+					{{ $store.localize(structure.label, 'string')
+						|| getFirstPageLabel(structure)
+						|| $translate('$n/a')
+					}}
 				</span>
 			</a>
 
