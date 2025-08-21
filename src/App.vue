@@ -93,7 +93,7 @@ export default {
 				return promise;
 			}
 
-			const translationUrl = `${this.$store.options.translationsDirUrl}/${language}.json`;
+			const translationUrl = `${this.$store.options.translationsDirUrl}/${language}.json?${ENV.version}`;
 			this.$store.fetchJson(translationUrl).then((loadedTranslation) => {
 				this.$store.options.language = language;
 				this.$translate.setTranslation(loadedTranslation);
