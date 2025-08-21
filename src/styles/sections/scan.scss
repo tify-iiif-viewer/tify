@@ -24,6 +24,21 @@
 	z-index: 9;
 }
 
+%dot-marker {
+	&::after {
+		background: $base-color;
+		border-radius: 50%;
+		box-shadow: 0 0 g(.25) $base-color-paler;
+		content: '';
+		display: block;
+		height: .5em;
+		position: absolute;
+		right: g(.125);
+		top: g(.125);
+		width: .5em;
+	}
+}
+
 .tify-scan-button {
 	@extend %button;
 	@extend %button-translucent;
@@ -37,11 +52,6 @@
 
 	&:not(:disabled):active {
 		box-shadow: $inset-shadow;
-	}
-
-	.tify-scan-filters & {
-		border: 0;
-		border-radius: 0 0 $br $br;
 	}
 
 	&.-active {
@@ -61,31 +71,79 @@
 	}
 }
 
-.tify-scan-filters {
-	position: relative;
-}
+.tify-scan-dropdown {
+	> .tify-dropdown-button {
+		@extend %button;
+		@extend %button-translucent;
+		padding: g(.25);
+	}
 
-.tify-scan-filters-popup {
-	@include dropdown(left, right);
-	left: g(1.75);
-	padding: g(.5);
-	top: g(.75);
-	width: g(10);
+	&:not(:first-child) > .tify-dropdown-button {
+		border-top: 0;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+		padding-top: g(.25);
+	}
 
-	label {
-		// "100 %"
-		> b {
-			float: right;
-			font-size: $font-size-small;
+	&:not(:last-child) > .tify-dropdown-button {
+		border-bottom: 0;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+		padding-bottom: g(.25);
+	}
+
+	.tify-dropdown-button:not(:disabled):active {
+		box-shadow: $inset-shadow;
+	}
+
+	&.-active .tify-dropdown-button {
+		@extend %dot-marker;
+	}
+
+	.tify-dropdown-content {
+		max-width: g(12);
+
+		button {
+			padding: g(.25) g(.5);
 		}
 	}
 
-	> p {
-		margin: 0;
-
-		+ p {
-			margin-top: g(.5);
+	&.-filters {
+		[type=range] {
+			@include range;
+			margin: g(-1.25) 0 0;
+			padding: g(1.5) 0 g(.25);
 		}
+
+		.tify-dropdown-content {
+			display: flex;
+			flex-direction: column;
+			gap: g(.5);
+			padding: g(.5);
+			width: g(10);
+		}
+	}
+
+	label {
+		align-items: baseline;
+		display: flex;
+		flex-wrap: wrap;
+		gap: g(.25);
+		position: relative;
+
+		// "100 %"
+		> b {
+			font-size: $font-size-small;
+			margin-left: auto;
+		}
+
+		> .tify-icon {
+			align-self: center;
+		}
+	}
+
+	p {
+		margin: 0;
 	}
 }
 
@@ -148,10 +206,6 @@
 		border-radius: $br 0 0 $br;
 		right: 0;
 	}
-}
-
-.tify-scan-range {
-	@include range;
 }
 
 .tify-scan-reset {

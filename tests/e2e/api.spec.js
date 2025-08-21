@@ -11,14 +11,14 @@ describe('API', () => {
 
 		cy.window().its('tify').then((tify) => {
 			tify.ready.then(() => {
-				tify.viewer.viewport.zoomTo(2);
+				tify.viewer.viewport.zoomTo(3);
 				cy.get('[title="Zoom in"]').should('be.disabled');
 
 				tify.setLanguage('de');
 				cy.contains('Seiten');
 
 				tify.setPage(2);
-				cy.contains('.tify-page-select-button', '2 · -');
+				cy.contains('.tify-page-name', '2 · -');
 
 				tify.setView('export');
 				cy.contains('.-active', 'Export');
