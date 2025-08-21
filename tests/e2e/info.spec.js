@@ -49,10 +49,10 @@ describe('Info', () => {
 		cy.contains('Info').click();
 
 		cy.fixture('../../iiif-api/data/manifests/wellcome-b24738918.json').then((manifest) => {
-			const provider = manifest.provider[0];
-			const providerStringWithoutUrl = provider.label.en.slice(0, -1).join('');
-			cy.get('.tify-info-section.-provider').should('contain.text', providerStringWithoutUrl);
-			cy.contains('.tify-info-section.-provider a', provider.homepage[0].label.en.join(''));
+			const nbsp = '\u00A0';
+			const separator = `${nbsp}· `;
+			const providerStringWithoutUrl = manifest.provider[0].label.en.slice(0, -1).join(separator);
+			cy.get('.tify-info-section.-provider p').should('contain.text', providerStringWithoutUrl);
 		});
 	});
 
