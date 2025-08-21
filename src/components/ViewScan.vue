@@ -769,8 +769,8 @@ export default {
 				:aria-label="$translate('Toggle annotations')"
 				@click="toggleOverlays()"
 			>
-				<IconMessageTextOutline v-if="$store.options.annotationsVisible !== false" />
-				<IconMessageOffOutline v-else />
+				<IconCommentTextOutline v-if="$store.options.annotationsVisible !== false" />
+				<IconCommentOffOutline v-else />
 			</button>
 		</div>
 
