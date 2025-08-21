@@ -1,0 +1,15 @@
+.tify-page-name {
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
+
+	&.-wrap {
+		white-space: normal;
+	}
+
+	> span {
+		color: $text-color-muted;
+	}
+}

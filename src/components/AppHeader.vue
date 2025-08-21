@@ -1,13 +1,9 @@
 <script>
-import { useFullscreen } from '@vueuse/core';
-import vClickOutside from 'click-outside-vue3';
+import { onClickOutside, useFullscreen } from '@vueuse/core';
 
 import { preventEvent } from '../modules/keyboard';
 
 export default {
-	directives: {
-		clickOutside: vClickOutside.directive,
-	},
 	props: {
 		fulltextEnabled: Boolean,
 		tocEnabled: Boolean,
@@ -36,6 +32,10 @@ export default {
 	},
 	mounted() {
 		this.$store.rootElement.addEventListener('keydown', this.onKeyDown);
+
+		onClickOutside(this.$refs.controls, () => {
+			this.closeControlsPopup();
+		});
 	},
 	beforeUnmount() {
 		this.$store.rootElement.removeEventListener('keydown', this.onKeyDown);
@@ -216,11 +216,11 @@ export default {
 				</button>
 			</div>
 
-			<PaginationButtons />
+			<PaginationButtons v-if="$store.pageCount > 1" />
 		</div>
 
 		<div
-			v-click-outside="closeControlsPopup"
+			ref="controls"
 			class="tify-header-column -controls"
 		>
 			<h2 class="tify-sr-only">
@@ -246,7 +246,7 @@ export default {
 
 			<div
 				:id="$getId('controls')"
-				class="tify-header-popup"
+				class="tify-dropdown-content -bottom -mobile-only"
 				:class="{ '-visible': controlsVisible }"
 			>
 				<div class="tify-header-button-group -view">

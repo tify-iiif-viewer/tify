@@ -1,5 +1,4 @@
 <script>
-import vClickOutside from 'click-outside-vue3';
 import OpenSeadragon from 'openseadragon';
 
 import { preventEvent } from '../modules/keyboard';
@@ -8,13 +7,9 @@ import { createPromise } from '../modules/promise';
 const gapBetweenPages = 0.005;
 
 export default {
-	directives: {
-		clickOutside: vClickOutside.directive,
-	},
 	data() {
 		return {
 			defaultCanvasCss: '',
-			filtersVisible: false,
 			loadingTimeout: null,
 			overlays: [],
 			promise: createPromise(),
@@ -101,9 +96,6 @@ export default {
 		this.$store.rootElement.removeEventListener('keypress', this.onKeypress);
 	},
 	methods: {
-		closeFilters() {
-			this.filtersVisible = false;
-		},
 		initViewer(reset) {
 			// TODO: All tile sources could be added at once (sequence mode), but
 			// this required the correct resolution to be present in the manifest,
@@ -386,20 +378,12 @@ export default {
 			}
 
 			switch (event.key) {
+				case 'I':
+					this.resetFilters();
+					break;
 				case 'r':
 				case 'R':
 					this.rotateRight(event);
-					break;
-				case 'i':
-					this.filtersVisible = !this.filtersVisible;
-					if (this.filtersVisible) {
-						this.$nextTick(() => this.$refs.firstSlider.focus());
-					} else {
-						this.$store.rootElement.focus();
-					}
-					break;
-				case 'I':
-					this.resetFilters();
 					break;
 
 				// Restore zoom keyboard events, but with custom zoom factor
@@ -673,93 +657,36 @@ export default {
 				<IconRotateRight />
 			</button>
 
-			<div
-				v-click-outside="closeFilters"
-				class="tify-scan-filters"
-				:class="{ '-open': filtersVisible }"
+			<AppDropdown
+				class="tify-scan-dropdown -filters"
+				:class="{ '-active': filtersActive }"
+				alignment="center"
+				position="right"
+				:label="$translate('Toggle image filters')"
+				shortcut="i"
 			>
-				<button
-					type="button"
-					class="tify-scan-button"
-					:class="{ '-active': filtersActive }"
-					:title="$translate('Toggle image filters')"
-					:aria-label="$translate('Toggle image filters')"
-					:aria-controls="$getId('filters')"
-					:aria-expanded="filtersVisible"
-					@click="filtersVisible = !filtersVisible"
-				>
+				<template #button>
 					<IconTune />
-				</button>
-				<div
-					v-show="filtersVisible"
-					:id="$getId('filters')"
-					class="tify-scan-filters-popup"
-				>
-					<h3 class="tify-sr-only">
-						{{ $translate('Image filters') }}
-					</h3>
-					<p>
-						<label>
-							<IconWhiteBalanceSunny />
-							{{ $translate('Brightness') }}
-							<b>{{ Math.round(($store.options.filters.brightness || 1) * 100) }}&nbsp;%</b>
-							<input
-								ref="firstSlider"
-								class="tify-scan-range"
-								max="2"
-								min=".5"
-								step=".01"
-								type="range"
-								:value="$store.options.filters.brightness || 1"
-								@input="setFilter('brightness', $event)"
-							/>
-						</label>
-					</p>
-					<p>
-						<label>
-							<IconBrightness6 />
-							{{ $translate('Contrast') }}
-							<b>{{ Math.round(($store.options.filters.contrast || 1) * 100) }}&nbsp;%</b>
-							<input
-								class="tify-scan-range"
-								max="2"
-								min=".5"
-								step=".01"
-								type="range"
-								:value="$store.options.filters.contrast || 1"
-								@input="setFilter('contrast', $event)"
-							/>
-						</label>
-					</p>
-					<p>
-						<label>
-							<IconPalette />
-							{{ $translate('Saturation') }}
-							<b>{{ Math.round(saturation * 100) }}&nbsp;%</b>
-							<input
-								class="tify-scan-range"
-								max="3"
-								min="0"
-								step=".01"
-								type="range"
-								:value="saturation"
-								@input="setFilter('saturate', $event)"
-							/>
-						</label>
-					</p>
-					<p>
-						<button
-							type="button"
-							class="tify-scan-reset"
-							:disabled="!filtersActive"
-							@click="resetFilters()"
-						>
-							<IconBackupRestore />
-							{{ $translate('Reset') }}
-						</button>
-					</p>
-				</div>
-			</div>
+				</template>
+
+				<h3 class="tify-sr-only">
+					{{ $translate('Image filters') }}
+				</h3>
+
+				<MediaFilters @update="(type, value) => setFilter(type, value)" />
+
+				<p>
+					<button
+						type="button"
+						class="tify-scan-reset"
+						:disabled="!filtersActive"
+						@click.stop="resetFilters()"
+					>
+						<IconBackupRestore />
+						{{ $translate('Reset') }}
+					</button>
+				</p>
+			</AppDropdown>
 
 			<button
 				v-if="$store.annotations.length

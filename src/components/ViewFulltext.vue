@@ -62,9 +62,9 @@ export default {
 				:key="page"
 				class="tify-fulltext-page"
 			>
-				<h3>
-					{{ $translate('Page') }}
-					{{ $store.getPageLabel(page, $store.manifest.items[page - 1].label) }}
+				<!-- eslint-disable-next-line vuejs-accessibility/heading-has-content -->
+				<h3 v-if="$store.pageCount > 1">
+					<PageName :number="page" />
 				</h3>
 				<ul class="tify-fulltext-list">
 					<li

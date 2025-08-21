@@ -8,7 +8,7 @@ describe('Scan', () => {
 
 		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081&tify=${encodedParams}`);
 		cy.get('[title="Toggle image filters"]').click();
-		cy.get('.tify-scan-filters-popup').contains('Saturation 0');
+		cy.get('.tify-scan-dropdown.-filters').contains('Saturation 0');
 	});
 
 	it('resets pan, zoom, rotation and filters at once', () => {
@@ -29,7 +29,7 @@ describe('Scan', () => {
 		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081&tify=${encodedParams}`);
 
 		cy.get('[title="Rotate"].-active');
-		cy.get('[title="Toggle image filters"].-active');
+		cy.get('.tify-scan-dropdown.-filters.-active');
 
 		cy.get('.tify').type('{shift}0');
 		cy.url().should(
@@ -45,11 +45,11 @@ describe('Scan', () => {
 		cy.contains('Reset').should('be.disabled');
 		cy.get('.tify').type('+');
 		cy.get('[title="Reset"]').should('not.be.disabled');
-		cy.get('.tify').type('+=W');
+		cy.get('.tify').type('+=WW');
 		cy.get('[title="Zoom in"]').should('be.disabled');
 		cy.get('.tify').type('-');
 		cy.get('[title="Zoom in"]').should('not.be.disabled');
-		cy.get('.tify').type('-_S');
+		cy.get('.tify').type('-_SS');
 		cy.get('[title="Zoom out"]').should('be.disabled');
 
 		// Pan
