@@ -1,5 +1,5 @@
 describe('Pagination', () => {
-	const currentPage = '.tify-page-select-button';
+	const currentPage = '.tify-page-select > button';
 
 	it('changes the page via buttons', () => {
 		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081&tify={"pages":[15]}`);
@@ -83,15 +83,15 @@ describe('Pagination', () => {
 		cy.contains('Pages').should('not.be.visible');
 
 		cy.get('[title="View"]').click();
-		cy.get('.tify-header-popup [title="Last page"]').click();
-		cy.get('.tify-header-popup [title="Next page"]').should('be.disabled');
-		cy.get('.tify-header-popup [title="Next section"]').should('be.disabled');
-		cy.get('.tify-header-popup [title="Last page"]').should('be.disabled');
+		cy.get('.tify-dropdown-content [title="Last page"]').click();
+		cy.get('.tify-dropdown-content [title="Next page"]').should('be.disabled');
+		cy.get('.tify-dropdown-content [title="Next section"]').should('be.disabled');
+		cy.get('.tify-dropdown-content [title="Last page"]').should('be.disabled');
 
-		cy.get('.tify-header-popup [title="Previous section"]').click();
+		cy.get('.tify-dropdown-content [title="Previous section"]').click();
 		cy.contains(currentPage, '67 · -');
 		cy.get('.tify-header').click();
-		cy.get('.tify-header-popup').should('not.be.visible');
+		cy.get('.tify-dropdown-content').should('not.be.visible');
 	});
 
 	it('hides section buttons if there are less than 2 sections', () => {

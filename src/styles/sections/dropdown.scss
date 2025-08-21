@@ -1,0 +1,69 @@
+.tify-dropdown {
+	position: relative;
+}
+
+.tify-dropdown-content {
+	$bw: clamp(1px, $br, 4px); // border-width
+	background: $dropdown-bg;
+	border: 1px solid $border-color;
+	border-radius: $br;
+	filter: drop-shadow($drop-shadow);
+	min-width: g(4);
+	overflow: visible;
+	padding: $bw;
+	position: absolute;
+	text-shadow: none;
+	z-index: 9;
+
+	&.-bottom {
+		left: 50%;
+		margin: g(.25) 0;
+		top: 100%;
+		transform: translateX(-50%);
+	}
+
+	&.-right {
+		left: 100%;
+		margin: 0 g(.25);
+		top: 50%;
+		transform: translateY(-50%);
+	}
+
+	&.-top {
+		bottom: 100%;
+		left: 50%;
+		margin: g(.25) 0;
+		transform: translateX(-50%);
+	}
+
+	// Wedge
+	&::before {
+		background: $dropdown-bg;
+		border: 1px solid $border-color;
+		clip-path: polygon(0 0, 100% 0, 0 100%);
+		content: '';
+		display: block;
+		height: g(.5);
+		pointer-events: none;
+		position: absolute;
+		width: g(.5);
+	}
+
+	&.-bottom::before {
+		left: 50%;
+		top: g(-.25);
+		transform: translateX(-50%) rotate(45deg);
+	}
+
+	&.-right::before {
+		left: g(-.25);
+		top: 50%;
+		transform: translateY(-50%) rotate(-45deg);
+	}
+
+	&.-top::before {
+		bottom: g(-.25);
+		left: 50%;
+		transform: translateX(-50%) rotate(225deg);
+	}
+}

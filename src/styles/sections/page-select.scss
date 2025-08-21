@@ -1,59 +1,43 @@
 .tify-page-select {
-	a {
-		border: 0;
-		box-shadow: none;
-	}
-}
-
-.tify-page-select-button {
-	@extend %button;
-	background: none;
-	box-shadow: none;
-	height: 100%;
-	max-width: g(4);
-	min-width: g(2);
-	overflow: hidden;
-	padding: g(.25);
-	position: relative;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-
-	@container (#{$tiny}) {
-		max-width: g(6);
+	> .tify-dropdown-button {
+		@extend %button;
+		max-width: g(5);
 		min-width: g(3);
+		overflow: hidden;
+		padding: g(.25) .5em;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+
+		@container (#{$small}) {
+			max-width: g(8);
+			min-width: g(4);
+		}
+
+		@container (#{$medium}) {
+			max-width: g(10);
+		}
+
+		@container (#{$large}) {
+			max-width: g(12);
+		}
 	}
 
-	@container (#{$small}) {
-		max-width: g(8);
-		min-width: g(4);
+	&:not(:only-child) > .tify-dropdown-button {
+		border-radius: $br 0 0 $br;
 	}
 
-	@container (#{$medium}) {
+	> .tify-dropdown-content {
 		max-width: g(10);
-	}
+		min-width: 100%;
 
-	@container (#{$large}) {
-		max-width: g(12);
-	}
-
-	&:not(:disabled) {
-		@include hover {
-			box-shadow: 0 0 0 1px $border-color inset;
-		}
-
-		&:active {
-			box-shadow: $inset-shadow, 0 0 0 1px $border-color inset;
+		@container (#{$large}) {
+			max-width: g(15);
 		}
 	}
-}
-
-.tify-page-select-dropdown {
-	@include dropdown;
-	max-width: 100%;
 }
 
 .tify-page-select-filter {
-	padding: $br $br calc(#{$br} * 2);
+	margin: 0 0 clamp(1px, $br, 4px);
 }
 
 .tify-page-select-input {
@@ -61,46 +45,25 @@
 }
 
 .tify-page-select-list {
-	list-style: none;
-	margin: 0;
-	max-height: g(11);
+	max-height: g(13.5);
 	min-width: 100%;
 	overflow-y: scroll;
-	padding: 0;
-	position: relative;
+	position: relative; // For scroll calculation
 
-	a {
-		color: inherit;
-		display: block;
-		padding: g(.125);
-		text-decoration: none;
+	> li > a {
+		padding: g(.125) g(.25);
 
-		@include hover {
-			color: inherit;
+		&.-current {
+			@extend %button-active;
+		}
+
+		&:not(.-current).-highlighted {
+			background: $base-color-paler;
+			color: $link-hover-color;
 		}
 	}
 
-	> li {
-		margin: 0;
-		user-select: none;
-
-		+ li {
-			border-top: 1px solid $border-color;
-		}
-
-		> a {
-			@include hover {
-				background: $base-color-paler;
-			}
-		}
-
-		&.-current > a {
-			background: $base-color-paler;
-		}
-
-		&.-highlighted > a {
-			background: $link-color;
-			color: $text-color-inverted;
-		}
+	.tify-page-name {
+		width: max-content;
 	}
 }

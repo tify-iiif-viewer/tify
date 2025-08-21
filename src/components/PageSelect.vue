@@ -1,67 +1,22 @@
 <script>
-import vClickOutside from 'click-outside-vue3';
-
-import { preventEvent } from '../modules/keyboard';
-
 export default {
-	directives: {
-		clickOutside: vClickOutside.directive,
-	},
 	data() {
 		return {
 			filter: '',
 			filteredCanvases: [],
 			highlightIndex: 0,
-			isOpen: false,
 		};
-	},
-	computed: {
-		currentPageLabel() {
-			const page = this.$store.options.pages[0] || 1;
-			const canvasIndex = this.$store.options.pages[0] ? this.$store.options.pages[0] - 1 : 0;
-			return this.$store.getPageLabel(page, this.$store.manifest.items[canvasIndex].label);
-		},
 	},
 	watch: {
 		filter() {
 			this.updateFilteredCanvases();
 			this.$nextTick(() => this.updateScroll());
 		},
-		isOpen() {
-			if (!this.isOpen) {
-				return;
-			}
-
-			this.filter = '';
-			this.highlightIndex = this.$store.options.pages[0] - 1;
-		},
 	},
 	mounted() {
 		this.updateFilteredCanvases();
-		this.$store.rootElement.addEventListener('keydown', this.onKeydown);
-	},
-	beforeUnmount() {
-		this.$store.rootElement.removeEventListener('keydown', this.onKeydown);
 	},
 	methods: {
-		closeDropdown() {
-			this.isOpen = false;
-		},
-		onKeydown(event) {
-			if (preventEvent(event)) {
-				return;
-			}
-
-			if (event.key === 'Escape') {
-				this.closeDropdown();
-				return;
-			}
-
-			if (event.key === 'x') {
-				this.toggleDropdown();
-				event.preventDefault();
-			}
-		},
 		onKeyDownArrow() {
 			if (this.highlightIndex < this.filteredCanvases.length - 1) {
 				this.highlightIndex += 1;
@@ -74,26 +29,31 @@ export default {
 				this.updateScroll();
 			}
 		},
+		onOpen() {
+			this.filter = '';
+			this.highlightIndex = this.$store.options.pages.at(-1) - 1;
+
+			this.$nextTick(() => {
+				// No autofocus on (presumed) touchscreens to
+				// prevent touch keyboard from shifting view
+				if (!window.matchMedia('(pointer: coarse)').matches) {
+					this.$refs.search.focus();
+				}
+
+				this.updateScroll();
+			});
+		},
+		resetFilter(event) {
+			if (this.filter) {
+				this.filter = '';
+				event.stopPropagation();
+			}
+		},
 		setPage(page) {
-			this.closeDropdown();
 			this.$store.setPage(page);
 
 			if (!this.$store.isContainerWidthAtLeast('medium')) {
 				this.$store.updateOptions({ view: null });
-			}
-		},
-		toggleDropdown() {
-			this.isOpen = !this.isOpen;
-			if (this.isOpen) {
-				this.$nextTick(() => {
-					// No autofocus on (presumed) touchscreens to prevent
-					// touch keyboard from shifting view
-					if (!window.matchMedia('(pointer: coarse)').matches) {
-						this.$refs.search.focus();
-					}
-
-					this.updateScroll();
-				});
 			}
 		},
 		updateFilteredCanvases() {
@@ -121,9 +81,9 @@ export default {
 		},
 		updateScroll() {
 			const { list } = this.$refs;
-			if (list && list.children[this.highlightIndex]) {
-				const { offsetTop } = list.children[this.highlightIndex];
-				list.scrollTop = offsetTop - ((list.offsetHeight / 2) - list.children[0].offsetHeight);
+			const currentItem = list.children[this.highlightIndex];
+			if (list && currentItem) {
+				list.scrollTop = currentItem.offsetTop - (list.offsetHeight / 2) + (currentItem.offsetHeight / 2);
 			}
 		},
 	},
@@ -131,62 +91,54 @@ export default {
 </script>
 
 <template>
-	<div
-		v-click-outside="closeDropdown"
+	<AppDropdown
 		class="tify-page-select"
+		shortcut="x"
+		@open="onOpen"
 	>
-		<button
-			type="button"
-			class="tify-page-select-button"
-			:aria-controls="$getId('page-select-dropdown')"
-			:aria-expanded="isOpen"
-			@click="toggleDropdown()"
-		>
-			<span class="tify-sr-only">{{ $translate('Current page:') }}</span>
-			{{ currentPageLabel }}
-			<span class="tify-sr-only">/ {{ $translate('Toggle page select') }}</span>
-		</button>
+		<template #button>
+			<!-- NOTE: Trailing spaces in elements are removed in production build -->
+			<span class="tify-sr-only">{{ `${$translate('Current Page')} ` }}</span>
+			<PageName :number="$store.options.pages.find(page => page > 0)" />
+			<span class="tify-sr-only"> / {{ $translate('Toggle page select') }}</span>
+		</template>
 
-		<div
-			v-show="isOpen"
-			:id="$getId('page-select-dropdown')"
-			key="dropdown"
-			class="tify-page-select-dropdown"
-			@click.stop
+		<div class="tify-page-select-filter">
+			<input
+				ref="search"
+				v-model="filter"
+				:aria-label="$translate('Filter pages')"
+				type="text"
+				class="tify-page-select-input"
+				@keyup.enter="$refs.list.querySelectorAll('a')[highlightIndex].click()"
+				@keydown.esc="resetFilter()"
+				@keydown.up.prevent="onKeyUpArrow()"
+				@keydown.down.prevent="onKeyDownArrow()"
+			/>
+		</div>
+		<ol
+			ref="list"
+			class="tify-link-list tify-page-select-list"
 		>
-			<div class="tify-page-select-filter">
-				<input
-					ref="search"
-					v-model="filter"
-					:aria-label="$translate('Filter pages')"
-					type="text"
-					class="tify-page-select-input"
-					@keyup.enter="filteredCanvases[highlightIndex] && $store.setPage(filteredCanvases[highlightIndex].page)"
-					@keydown.esc.prevent="filter ? (filter = '') : closeDropdown()"
-					@keydown.up.prevent="onKeyUpArrow()"
-					@keydown.down.prevent="onKeyDownArrow()"
-				/>
-			</div>
-			<ol
-				ref="list"
-				class="tify-page-select-list"
+			<li
+				v-for="(canvas, index) in filteredCanvases"
+				:key="index"
 			>
-				<li
-					v-for="(canvas, index) in filteredCanvases"
-					:key="index"
+				<!-- eslint-disable-next-line vuejs-accessibility/anchor-has-content -->
+				<a
+					href="javascript:;"
 					:class="{
 						'-current': $store.options.pages.includes(canvas.page),
 						'-highlighted': highlightIndex === index,
 					}"
+					@click="setPage(canvas.page)"
 				>
-					<a
-						href="javascript:;"
-						@click="setPage(canvas.page)"
-					>
-						{{ $store.getPageLabel(canvas.page, canvas.label) }}
-					</a>
-				</li>
-			</ol>
-		</div>
-	</div>
+					<PageName
+						:number="canvas.page"
+						:wrap="true"
+					/>
+				</a>
+			</li>
+		</ol>
+	</AppDropdown>
 </template>

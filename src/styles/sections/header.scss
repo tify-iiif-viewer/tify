@@ -35,7 +35,7 @@
 			display: flex;
 		}
 
-		.tify-header-popup & {
+		.tify-dropdown-content & {
 			box-shadow: 0 -1px $border-color;
 			display: flex;
 			margin: calc(#{$br} * 2 - 1px) 0 0;
@@ -184,29 +184,37 @@
 	&:first-child {
 		flex: 1;
 	}
-}
 
-.tify-header-popup {
-	@include dropdown(right);
-	box-shadow: none;
-	display: none;
-	top: g(2);
+	.tify-dropdown-content.-mobile-only {
+		display: none;
+		left: auto;
+		min-width: 0;
+		right: g(.25);
+		top: g(2);
+		transform: none;
 
-	@container (#{$large}) {
-		background: none;
-		border: 0;
-		display: flex !important;
-		filter: none;
-		margin: 0;
-		position: static;
+		@container (#{$large}) {
+			background: none;
+			border: 0;
+			display: flex !important; // override .-visible
+			filter: none;
+			margin: 0;
+			padding: 0;
+			position: static;
+		}
 
 		&::before {
-			content: none;
-		}
-	}
+			left: auto;
+			right: calc(g(.25) - 1px);
 
-	&.-visible {
-		display: block;
+			@container (#{$large}) {
+				content: none;
+			}
+		}
+
+		&.-visible {
+			display: block;
+		}
 	}
 }
 
