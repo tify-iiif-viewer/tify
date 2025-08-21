@@ -31,10 +31,20 @@
 
 	// For communicating container size to JS
 	&::after {
-		display: none;
+		pointer-events: none;
+		position: absolute;
+		visibility: hidden;
+
+		@container (#{$small}) {
+			content: 'small';
+		}
 
 		@container (#{$medium}) {
-			content: 'isWide';
+			content: 'small medium';
+		}
+
+		@container (#{$large}) {
+			content: 'small medium large';
 		}
 	}
 
