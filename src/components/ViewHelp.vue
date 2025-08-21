@@ -35,11 +35,8 @@ export default {
 		</ul>
 
 		<footer class="tify-help-footer">
-			<p>
-				{{ $translate('Version') }} <b>{{ env.version }}</b>
-				&middot;
-				<span v-html="$translate('$copyright')" />
-			</p>
+			<p v-html="$translate('$copyright')" />
+			<p>{{ $translate('Version') }} <b>{{ env.version }}</b></p>
 		</footer>
 	</section>
 </template>
