@@ -201,7 +201,7 @@ export default {
 				animationTime: 0.4,
 				drawer: 'canvas',
 				element: this.$refs.image,
-				immediateRender: true,
+				immediateRender: this.$store.isContainerWidthAtLeast('small'),
 				preload: this.$store.isWide(),
 				preserveImageSizeOnResize: true,
 				preserveViewport: true,
@@ -762,7 +762,9 @@ export default {
 			</div>
 
 			<button
-				v-if="$store.annotations.length && ($store.options.view === 'fulltext' || !$store.isWide())"
+				v-if="$store.annotations.length
+					&& ($store.options.view === 'fulltext' || !$store.isContainerWidthAtLeast('medium'))
+				"
 				type="button"
 				class="tify-scan-button"
 				:title="$translate('Toggle annotations')"
