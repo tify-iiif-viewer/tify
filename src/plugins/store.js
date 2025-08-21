@@ -623,8 +623,8 @@ function Store(args = {}) {
 				},
 			);
 		},
-		localize(labelObject, fallback = '—' /* &mdash; */, format = 'string') {
-			const nbsp = String.fromCharCode(160);
+		localize(labelObject) {
+			const nbsp = '\u00A0';
 			const separator = `${nbsp}· `;
 
 			if (!store.options.language) {
@@ -641,21 +641,10 @@ function Store(args = {}) {
 
 			const label = labelObject[store.options.language]
 				|| labelObject[store.options.fallbackLanguage]
-				|| Object.values(labelObject)[0];
+				|| Object.values(labelObject)[0]
+				|| '';
 
-			if (format === 'string') {
-				const labelString = label instanceof Array
-					? label.join(separator)
-					: label;
-
-				return (labelString || '').trim() || fallback;
-			}
-
-			const labelArray = label instanceof Array
-				? label
-				: [label];
-
-			return labelArray;
+			return ([].concat(label).join(separator) || '').trim();
 		},
 		setPage(pageOrPages) {
 			let pages = pageOrPages;

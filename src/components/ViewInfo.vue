@@ -186,19 +186,7 @@ export default {
 				:key="provider.id"
 			>
 				<p v-if="provider.label">
-					<template
-						v-for="label, labelIndex in $store.localize(provider.label, '', 'array')"
-						:key="`${provider.id}-${labelIndex}`"
-					>
-						<br v-if="labelIndex">
-						<a
-							v-if="isValidUrl(label)"
-							:href="label"
-						>{{ label }}</a>
-						<template v-else>
-							{{ label }}
-						</template>
-					</template>
+					{{ $store.localize(provider.label) }}
 				</p>
 				<p>
 					<template
