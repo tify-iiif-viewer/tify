@@ -73,7 +73,7 @@ export default {
 		setPage(page) {
 			this.$store.setPage(page);
 
-			if (!this.$store.isWide()) {
+			if (!this.$store.isContainerWidthAtLeast('medium')) {
 				this.$store.updateOptions({ view: null });
 			}
 		},

@@ -66,7 +66,7 @@ function Store(args = {}) {
 
 			if (['scan', ''].includes(store.options.view)
 				&& store.options.annotationsVisible !== false
-				&& !store.isWide()
+				&& !store.isContainerWidthAtLeast('medium')
 			) {
 				return true;
 			}
@@ -373,6 +373,10 @@ function Store(args = {}) {
 			}
 			store.setPage(store.sections[sectionIndex].firstPage);
 		},
+		isContainerWidthAtLeast(size) {
+			return store.rootElement
+				&& window.getComputedStyle(store.rootElement, '::after').content.includes(size);
+		},
 		loadAnnotations() {
 			store.annotationsAvailable = null;
 			store.annotations = [];
@@ -563,7 +567,7 @@ function Store(args = {}) {
 								pages: [store.getStartPage()],
 								pan: {},
 								rotation: null,
-								view: store.isWide() ? 'collection' : null,
+								view: store.isContainerWidthAtLeast('medium') ? 'collection' : null,
 								zoom: null,
 							});
 						}
@@ -674,7 +678,7 @@ function Store(args = {}) {
 				annotationsVisible: store.options.annotationId ? null : store.annotationsVisible,
 			};
 
-			if (options.annotationId && !store.isWide()) {
+			if (options.annotationId && !store.isContainerWidthAtLeast('medium')) {
 				options.view = ['scan', ''].includes(store.options.view) ? 'fulltext' : 'scan';
 			}
 
