@@ -30,14 +30,14 @@ describe('Info', () => {
 		cy.contains('Titelseite');
 
 		cy.get('[title="Last page"]').first().click();
-		cy.contains('Current Element').should('not.exist');
+		cy.contains('Current Section').should('not.exist');
 	});
 
 	it('shows metadata of a nested structure', () => {
 		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-DE_611_BF_5619_1801_1806`);
 		cy.contains('Info').click();
 		Cypress._.times(4, () => cy.get('[title="Next page"]').first().click());
-		cy.contains('Current Element').should('be.visible');
+		cy.contains('Current Section').should('be.visible');
 		cy.contains(
 			'.tify-info-section.-metadata.-structure',
 			'[Brief des Barons von Asch an Heyne vom 29.01./10.02.1801]',
@@ -59,8 +59,7 @@ describe('Info', () => {
 	it('only displays a related homepage once for converted IIIF 2 manifests', () => {
 		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-PPN140716181`);
 		cy.contains('Info').click();
-		cy.get('.tify-info-section.-related a[href$="/DB=1/PPN?PPN=140716181"]')
-			.contains('OPAC');
-		cy.get('.tify-info-section.-provider').contains('OPAC').should('not.exist');
+		cy.get('.tify-info-section.-related a[href$="/DB=1/PPN?PPN=140716181"]').contains('OPAC');
+		cy.get('.tify-info-section.-provider').should('not.exist');
 	});
 });

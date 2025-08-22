@@ -41,6 +41,12 @@ $info-content-max-height: g(6.5);
 	position: relative;
 }
 
+.tify-info-image-labels {
+	font-size: $font-size-small;
+	list-style: none;
+	margin: g(.5) 0;
+}
+
 .tify-info-logo {
 	display: block;
 	height: auto;
@@ -50,30 +56,39 @@ $info-content-max-height: g(6.5);
 }
 
 .tify-info-metadata {
+	.tify-info-section.-pages & {
+		margin-top: g(.5);
+	}
+
 	> div {
 		margin-bottom: g(.5);
 	}
 }
 
 .tify-info-section {
-	margin: 0 0 g();
-	word-break: break-word;
+	@extend %iiif-html;
+	margin: g() 0;
+	overflow-wrap: break-word;
 
-	&.-attribution {
-		// Content may contain an image, insert break before and after
-		img {
-			display: block;
-		}
+	&:first-of-type {
+		margin-top: 0;
 	}
 
 	&.-logo {
 		// Ensure visibility in dark mode since most logos require a white background
-		background: #fff;
+		background: $panel-bg;
+		color-scheme: light;
 		margin: g(-.5);
 		padding: g(.5);
 
 		> :last-child {
 			margin: 0;
+		}
+	}
+
+	&.-pages {
+		.tify-page-name {
+			font-weight: bold;
 		}
 	}
 
@@ -87,23 +102,28 @@ $info-content-max-height: g(6.5);
 .tify-info-toggle {
 	@extend %button-small;
 	margin: g(.5) 0;
-	padding-left: g(.25); // move icon closer to the left
-	position: relative;
+
+	> .tify-icon {
+		margin-left: -.5em;
+	}
 }
 
 .tify-info-value {
+	@extend %iiif-html;
+
 	> div:last-child > :last-child {
 		margin-bottom: 0;
 	}
 
 	.tify-info-content.-collapsed & {
-		max-height: calc(#{$info-content-max-height} - #{g(2)}); // 2 = button height
+		max-height: calc(#{$info-content-max-height} - g(2)); // 2 = button height
 		overflow: hidden;
 
 		&::after {
 			background: $panel-bg;
-			bottom: g(1.5 + .5); // = button height + margin
+			bottom: g(1 + .75); // = button height + margin
 			content: '';
+			font-size: $font-size-small;
 			height: g(2);
 			mask-image: linear-gradient(transparent, #000);
 			position: absolute;
