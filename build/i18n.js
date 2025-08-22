@@ -164,7 +164,7 @@ export function findTranslatedStrings() {
 
 			matches.forEach((match) => {
 				const strings = match[1]
-					.match(/'(.*?)'|"(.*?)"|`(.*?)`/g)
+					.match(/'(.*?)'|"(.*?)"/g)
 					?.map((string) => string.slice(1, -1)); // remove quotes
 
 				if (!strings) {
