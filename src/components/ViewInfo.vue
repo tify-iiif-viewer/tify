@@ -2,6 +2,7 @@
 // TODO: Handle and display manifest.service, see http://iiif.io/api/presentation/2.1/#service
 
 import { filterHtml } from '../modules/filter';
+import { formatDate } from '../modules/formatting';
 import { isValidUrl } from '../modules/validation';
 
 export default {
@@ -11,32 +12,28 @@ export default {
 		};
 	},
 	computed: {
-		manifestOrCollection() {
-			if (this.collectionDataShown) {
-				return this.$store.collection;
-			}
-
-			return this.$store.manifest || this.$store.collection || {};
+		hasProvider() {
+			return this.manifestOrCollection.provider?.some(
+				(provider) => this.$store.localize(provider.label)
+					|| provider.homepage?.length,
+			);
 		},
 		homepages() {
-			// This must be an array as per IIIF docs, yet on some servers it is not
-			const homepages = this.manifestOrCollection.homepage
-				? [].concat(this.manifestOrCollection.homepage)
-				: [];
-
-			return homepages;
+			// This must be an array as per IIIF docs, yet in some manifests it is not
+			return [].concat(this.manifestOrCollection.homepage || []);
 		},
 		logos() {
-			// This must be an array as per IIIF docs, yet on some servers it is not
-			let logos = this.manifestOrCollection.logo
-				? [].concat(this.manifestOrCollection.logo)
-				: [];
+			// This must be an array as per IIIF docs, yet in some manifests it is not
+			let logos = [].concat(this.manifestOrCollection.logo || []);
 
 			this.manifestOrCollection.provider?.forEach((provider) => {
 				if (provider.logo) {
 					logos = logos.concat(provider.logo);
 				}
 			});
+
+			// Deduplicate logos
+			logos = [...new Map(logos.map((logo) => [logo.id, logo])).values()];
 
 			logos = logos.map((logo) => ({
 				id: logo.id,
@@ -45,9 +42,44 @@ export default {
 
 			return logos;
 		},
+		manifestOrCollection() {
+			if (this.collectionDataShown) {
+				return this.$store.collection;
+			}
+
+			return this.$store.manifest || this.$store.collection || {};
+		},
+		metadataItems() {
+			return this.$store.manifest.items
+				.map((item, index) => ({ metadata: item.metadata, number: index + 1 }))
+				.filter(({ metadata, number }) => metadata?.length && this.$store.options.pages.includes(number));
+		},
+		pages() {
+			return this.$store.options.pages.filter((page) => page > 0).map((page) => {
+				const pageItem = {
+					page,
+					media: [],
+				};
+
+				const items = this.$store.manifest.items[page - 1].items?.[0]?.items;
+
+				items?.forEach((item) => {
+					const resources = item.body?.items || [item.body];
+
+					pageItem.media.push(
+						...resources
+							.filter((resource) => resource.label)
+							.map((resource) => ({ label: resource.label })),
+					);
+				});
+
+				return pageItem;
+			});
+		},
 	},
 	methods: {
 		filterHtml,
+		formatDate,
 		isValidUrl,
 	},
 };
@@ -69,7 +101,7 @@ export default {
 			<button
 				type="button"
 				class="tify-info-button"
-				:class="{ '-active': !collectionDataShown }"
+				:aria-pressed="!collectionDataShown"
 				@click="collectionDataShown = false"
 			>
 				{{ $translate('Document') }}
@@ -77,7 +109,7 @@ export default {
 			<button
 				type="button"
 				class="tify-info-button"
-				:class="{ '-active': collectionDataShown }"
+				:aria-pressed="collectionDataShown"
 				@click="collectionDataShown = true"
 			>
 				{{ $translate('Collection') }}
@@ -90,6 +122,30 @@ export default {
 		>
 			<h3>{{ $translate('Title') }}</h3>
 			<p>{{ $store.localize(manifestOrCollection.label) }}</p>
+		</div>
+
+		<div
+			v-if="manifestOrCollection.navDate"
+			class="tify-info-section -time"
+		>
+			<h3>{{ $translate('Date') }}</h3>
+			<p>
+				{{ formatDate(manifestOrCollection.navDate, $store.options.language) }}
+			</p>
+		</div>
+
+		<div
+			v-if="manifestOrCollection.navPlace"
+			class="tify-info-section -place"
+		>
+			<h3>{{ $translate('Place') }}</h3>
+			<p
+				v-for="feature in manifestOrCollection.navPlace.features"
+				:key="feature.id"
+			>
+				<!-- TODO: Add support for map coordinates -->
+				{{ $store.localize(feature.properties.label) }}
+			</p>
 		</div>
 
 		<div
@@ -115,21 +171,54 @@ export default {
 		</div>
 
 		<div
-			v-if="manifestOrCollection.structures && ($store.currentStructure.label || $store.currentStructure.metadata)"
+			v-if="manifestOrCollection.structures
+				&& ($store.currentStructure?.label || $store.currentStructure?.metadata)
+			"
 			class="tify-info-section -metadata -structure"
 		>
-			<h3>{{ $translate('Current Element') }}</h3>
+			<h3>{{ $translate('Current Section') }}</h3>
 			<p
-				v-if="$store.currentStructure.label"
+				v-if="$store.currentStructure?.label"
 				class="tify-info-structure"
 			>
 				{{ $store.localize($store.currentStructure.label) }}
 			</p>
 			<MetadataList
-				v-if="$store.options.view === 'info' && $store.currentStructure.metadata"
+				v-if="$store.options.view === 'info' && $store.currentStructure?.metadata"
 				class="tify-info-section -metadata"
 				:metadata="$store.currentStructure.metadata"
 			/>
+		</div>
+
+		<div
+			v-if="manifestOrCollection.type === 'Manifest'"
+			class="tify-info-section -pages"
+		>
+			<h3>{{ $translate(pages.length > 1 ? 'Current Pages' : 'Current Page') }}</h3>
+			<ol class="tify-list -unstyled">
+				<li
+					v-for="page in pages"
+					:key="page"
+				>
+					<PageName :number="page.page" />
+					<ul
+						v-if="page.media.length"
+						class="tify-info-image-labels"
+					>
+						<li
+							v-for="medium, index in page.media"
+							:key="index"
+						>
+							{{ $store.localize(medium.label) }}
+						</li>
+					</ul>
+					<MetadataList
+						v-if="$store.manifest.items[page.page - 1].metadata"
+						class="tify-info-section -metadata"
+						:metadata="$store.manifest.items[page.page - 1].metadata"
+					/>
+				</li>
+			</ol>
 		</div>
 
 		<div
@@ -152,7 +241,7 @@ export default {
 						v-else
 						:href="homepage.id"
 					>
-						{{ $store.localize(homepage.label) || homepage.id }}
+						{{ homepage.label ? $store.localize(homepage.label) : homepage.id }}
 					</a>
 				</li>
 			</ul>
@@ -177,7 +266,7 @@ export default {
 		</div>
 
 		<div
-			v-if="manifestOrCollection.provider"
+			v-if="hasProvider"
 			class="tify-info-section -provider"
 		>
 			<h3>{{ $translate('Provided by') }}</h3>
@@ -188,17 +277,19 @@ export default {
 				<p v-if="provider.label">
 					{{ $store.localize(provider.label) }}
 				</p>
-				<p>
-					<template
-						v-for="homepage, homepageIndex in provider.homepage"
+				<ul
+					v-if="provider.homepage?.length"
+					class="tify-list"
+				>
+					<li
+						v-for="homepage in provider.homepage"
 						:key="homepage.id"
 					>
-						<br v-if="homepageIndex">
 						<a :href="homepage.id">
 							{{ homepage.label ? $store.localize(homepage.label) : homepage.id }}
 						</a>
-					</template>
-				</p>
+					</li>
+				</ul>
 			</div>
 		</div>
 
@@ -207,7 +298,7 @@ export default {
 			class="tify-info-section -logo"
 		>
 			<p
-				v-for="logo, index in logos"
+				v-for="(logo, index) in logos"
 				:key="index"
 			>
 				<a
@@ -219,7 +310,6 @@ export default {
 						class="tify-info-logo"
 						:src="logo.id"
 						:alt="$translate('Logo')"
-						loading="lazy"
 					/>
 				</a>
 				<img
@@ -227,7 +317,6 @@ export default {
 					class="tify-info-logo"
 					:src="logo.id"
 					:alt="$translate('Logo')"
-					loading="lazy"
 				/>
 			</p>
 		</div>
