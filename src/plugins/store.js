@@ -165,7 +165,8 @@ function Store(args = {}) {
 			}
 
 			if (store.manifest.structures.some((structure) => structure.type === 'Range')) {
-				return store.manifest.structures.length === 1 && store.manifest.structures[0].behavior?.includes('top')
+				return store.manifest.structures.length === 1
+					&& store.manifest.structures[0].behavior?.includes('top')
 					? (store.manifest.structures[0].items || [])
 					: store.manifest.structures;
 			}
@@ -384,8 +385,7 @@ function Store(args = {}) {
 			const lastIndex = pages.length - 1;
 			const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
 			let sectionIndex = 0;
-			while (
-				page >= store.sections[sectionIndex].firstPage
+			while (page >= store.sections[sectionIndex].firstPage
 				|| (page && page >= store.sections[sectionIndex].firstPage)
 			) {
 				sectionIndex += 1;
@@ -405,8 +405,7 @@ function Store(args = {}) {
 			const { pages } = store.options;
 			const page = pages[0] ? pages[0] : pages[1];
 			let sectionIndex = store.sections.length - 1;
-			while (
-				page <= store.sections[sectionIndex].firstPage
+			while (page <= store.sections[sectionIndex].firstPage
 				|| (page && page <= store.sections[sectionIndex].firstPage)
 			) {
 				sectionIndex -= 1;
@@ -470,10 +469,7 @@ function Store(args = {}) {
 					} else if (resource.resource?.label) {
 						html = `<i>${resource.resource.label}</i>`;
 					} else {
-						const items = resource.body instanceof Array
-							? resource.body
-							: [resource.body];
-
+						const items = [].concat(resource.body);
 						const strings = await Promise.all(items.map(async (item) => {
 							if (item?.type === 'Image') {
 								return `<img src="${item.id}" alt="">`;
@@ -630,9 +626,13 @@ function Store(args = {}) {
 
 						let childManifestUrl = '';
 
-						if (store.options.urlQueryParams.includes('childManifestUrl') && queryParams.childManifestUrl) {
+						if (store.options.urlQueryParams.includes('childManifestUrl')
+							&& queryParams.childManifestUrl
+						) {
 							childManifestUrl = queryParams.childManifestUrl;
-						} else if (store.collection.manifests && store.options.childManifestAutoloaded) {
+						} else if (store.collection.manifests
+							&& store.options.childManifestAutoloaded
+						) {
 							childManifestUrl = store.collection.manifests[0].id;
 						}
 
