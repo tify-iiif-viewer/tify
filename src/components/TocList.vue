@@ -117,10 +117,10 @@ export default {
 				v-if="structure.items?.some((item) => item.items)"
 				type="button"
 				class="tify-toc-toggle"
-				:title="$translate(expandedStructures[index] ? 'Collapse' : 'Expand')"
-				:aria-label="$translate(expandedStructures[index] ? 'Collapse' : 'Expand')"
 				:aria-controls="`${id}-${index}`"
 				:aria-expanded="!!expandedStructures[index]"
+				:aria-label="$translate(expandedStructures[index] ? 'Collapse' : 'Expand')"
+				:title="$translate(expandedStructures[index] ? 'Collapse' : 'Expand')"
 				@click="toggleChildren(index)"
 			>
 				<template v-if="expandedStructures[index]">

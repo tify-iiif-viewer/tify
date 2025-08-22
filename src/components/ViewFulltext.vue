@@ -78,8 +78,8 @@ export default {
 							role="button"
 							tabindex="0"
 							class="tify-fulltext-toggle"
-							@keydown.enter.space="$store.toggleAnnotationId(annotation.id)"
 							@click="$store.toggleAnnotationId(annotation.id)"
+							@keydown.enter.space="$store.toggleAnnotationId(annotation.id)"
 							v-html="filterHtml(annotation.html)"
 						/>
 					</li>

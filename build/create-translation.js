@@ -1,5 +1,5 @@
-import fs from 'fs';
-import readline from 'readline';
+import fs from 'node:fs';
+import readline from 'node:readline';
 
 import chalk from 'chalk';
 

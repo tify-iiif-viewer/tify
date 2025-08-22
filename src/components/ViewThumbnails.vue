@@ -24,7 +24,9 @@ export default {
 		'$store.options.pages': function (pages) {
 			this.$nextTick(() => {
 				const currentSelector = '.tify-thumbnails-item.-current';
-				if (pages.length > 2 || (pages.length > 1 && pages[1] !== pages[0] + 1)) {
+				if (pages.length > 2
+					|| (pages.length > 1 && pages[1] !== pages[0] + 1)
+				) {
 					return;
 				}
 

@@ -19,7 +19,10 @@ export function filterHtml(html) {
 		const attributesRegex = /(?:([^\s]+)=(?:"(.*?)"|'(.*?)'))|([^\s]+)/g;
 		const keptAttributes = [];
 		attributes.replace(attributesRegex, (tuple, key) => {
-			if (tuple !== key && allowedAttributes[tag] && allowedAttributes[tag].includes(key)) {
+			if (tuple !== key
+				&& allowedAttributes[tag]
+				&& allowedAttributes[tag].includes(key)
+			) {
 				keptAttributes.push(tuple);
 			}
 		});

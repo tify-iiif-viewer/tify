@@ -1,5 +1,5 @@
-import fs from 'fs';
-import url from 'url';
+import fs from 'node:fs';
+import url from 'node:url';
 
 const rootDir = url.fileURLToPath(new URL('..', import.meta.url));
 
