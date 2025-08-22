@@ -56,7 +56,7 @@ describe('Pagination', () => {
 		cy.contains(currentPage, '68 · -');
 
 		cy.get('.tify').type('b');
-		cy.contains(currentPage, '68 · -');
+		cy.contains(currentPage, '69 · -');
 		cy.get('[title="Toggle double-page"]:not(.-active)');
 
 		cy.get('.tify').type('Q');

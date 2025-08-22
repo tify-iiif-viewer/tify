@@ -3,16 +3,18 @@ export function isValidPagesArray(pages, pageCount) {
 		return false;
 	}
 
-	// Checking for duplicates
+	// Check for duplicates
 	if (new Set(pages).size !== pages.length) {
 		return false;
 	}
 
+	// Check if all pages exist
 	for (let i = 0, len = pages.length; i < len; i += 1) {
 		if (!Number.isInteger(pages[i])
+			// Are there pages out of order?
 			|| (i > 0 && pages[i] > 0 && pages[i] <= pages[i - 1])
-			|| pages[i] < 0
-			|| pages[i] > pageCount
+			// Are there pages out of range? 0 and -1 serve as placeholder values.
+			|| pages[i] < -1 || pages[i] > pageCount
 		) return false;
 	}
 
