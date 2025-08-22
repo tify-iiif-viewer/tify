@@ -4,7 +4,7 @@ import { filterHtml } from '../modules/filter';
 export default {
 	computed: {
 		pages() {
-			return this.$store.options.pages.filter((page) => !!page);
+			return this.$store.options.pages.filter((page) => page > 0);
 		},
 	},
 	watch: {

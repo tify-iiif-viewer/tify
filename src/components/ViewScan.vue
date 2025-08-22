@@ -591,7 +591,7 @@ export default {
 		</h2>
 
 		<button
-			v-if="!$store.isCustomPageView && !$store.isFirstPage"
+			v-if="!$store.isFirstPage"
 			type="button"
 			class="tify-scan-page-button -left"
 			:title="$translate('Previous page')"
@@ -601,7 +601,7 @@ export default {
 			<IconChevronLeft />
 		</button>
 		<button
-			v-if="!$store.isCustomPageView && !$store.isLastPage"
+			v-if="!$store.isLastPage"
 			type="button"
 			class="tify-scan-page-button -right"
 			:title="$translate('Next page')"

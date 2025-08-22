@@ -17,19 +17,27 @@ store.install(app, {
 
 const { $store } = app.config.globalProperties;
 
-describe('getPageLabel', () => {
-	it('gets the page label', () => {
-		expect($store.getPageLabel(1, 'label')).toEqual('1 : label');
-	});
+// TODO: Add test for getFacingPage
 
-	it('gets only the page number if the label is empty', () => {
-		expect($store.getPageLabel(1, {})).toEqual('1');
+describe('getStartPages', () => {
+	it('determines the start page based on startCanvas', () => {
+		expect($store.getStartPages()).toEqual([7]);
 	});
 });
 
-describe('getStartPage', () => {
-	it('determines the start page based on startCanvas', () => {
-		expect($store.getStartPage()).toEqual(7);
+describe('localize', () => {
+	it('returns the fallback string if there is no label', () => {
+		expect($store.localize({})).toEqual('');
+		expect($store.localize({ en: '' })).toEqual('');
+		expect($store.localize({ en: [] })).toEqual('');
+	});
+
+	it('merges multiple strings unless requested otherwise', () => {
+		expect($store.localize({ en: ['A', 'B'] })).toEqual('A · B' /* first space: &nbsp; */);
+	});
+
+	it('returns the first label if the set language is not available', () => {
+		expect($store.localize({ de: 'Beschriftung' })).toEqual('Beschriftung');
 	});
 });
 
@@ -42,7 +50,7 @@ describe('setPage', () => {
 
 	it('throws an error when trying to set an invalid page', () => {
 		expect(() => $store.setPage('nope')).toThrow(RangeError);
-		expect(() => $store.setPage(-1)).toThrow(RangeError);
+		expect(() => $store.setPage(-2)).toThrow(RangeError);
 		expect(() => $store.setPage(999)).toThrow(RangeError);
 		expect(() => $store.setPage([5, 3, 1])).toThrow(RangeError);
 	});
