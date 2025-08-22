@@ -105,7 +105,8 @@
 		}
 	}
 
-	&.-active {
+	&[aria-expanded=true],
+	&[aria-pressed=true] {
 		@extend %button-active;
 	}
 

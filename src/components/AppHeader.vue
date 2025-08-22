@@ -210,9 +210,9 @@ export default {
 					v-if="doublePageEnabled"
 					type="button"
 					class="tify-header-button"
-					:class="{ '-active': $store.options.pages.length > 1 }"
 					:title="$translate('Toggle double-page')"
 					:aria-label="$translate('Toggle double-page')"
+					:aria-pressed="$store.options.pages.length > 1"
 					@click="toggleDoublePage"
 				>
 					<IconViewModule v-if="$store.isCustomPageView" />
@@ -263,7 +263,6 @@ export default {
 						v-if="$store.manifest"
 						type="button"
 						class="tify-header-button -scan"
-						:class="{ '-active': !$store.options.view }"
 						:aria-controls="$getId('scan')"
 						:aria-expanded="!$store.options.view"
 						@click="toggleView(null)"
@@ -276,7 +275,6 @@ export default {
 						v-if="fulltextEnabled"
 						type="button"
 						class="tify-header-button"
-						:class="{ '-active': $store.options.view === 'fulltext' }"
 						:aria-controls="$getId('fulltext')"
 						:aria-expanded="$store.options.view === 'fulltext'"
 						@click="toggleView('fulltext')"
@@ -289,7 +287,6 @@ export default {
 						v-if="$store.manifest"
 						type="button"
 						class="tify-header-button"
-						:class="{ '-active': $store.options.view === 'thumbnails' }"
 						:aria-controls="$getId('thumbnails')"
 						:aria-expanded="$store.options.view === 'thumbnails'"
 						@click="toggleView('thumbnails')"
@@ -302,7 +299,6 @@ export default {
 						v-if="tocEnabled"
 						type="button"
 						class="tify-header-button"
-						:class="{ '-active': $store.options.view === 'toc' }"
 						:aria-controls="$getId('toc')"
 						:aria-expanded="$store.options.view === 'toc'"
 						@click="toggleView('toc')"
@@ -314,7 +310,6 @@ export default {
 					<button
 						type="button"
 						class="tify-header-button"
-						:class="{ '-active': $store.options.view === 'info' }"
 						:aria-controls="$getId('info')"
 						:aria-expanded="$store.options.view === 'info'"
 						@click="toggleView('info')"
@@ -327,7 +322,6 @@ export default {
 						v-if="$store.collection || $store.manifest"
 						type="button"
 						class="tify-header-button"
-						:class="{ '-active': $store.options.view === 'export' }"
 						:aria-controls="$getId('export')"
 						:aria-expanded="$store.options.view === 'export'"
 						@click="toggleView('export')"
@@ -340,9 +334,8 @@ export default {
 						v-if="$store.collection"
 						type="button"
 						class="tify-header-button"
-						:class="{ '-active': $store.options.view === 'collection' }"
 						:aria-controls="$getId('collection')"
-						:aria-expanded="$store.options === 'collection'"
+						:aria-expanded="$store.options.view === 'collection'"
 						@click="toggleView('collection')"
 					>
 						<IconListBoxOutline />
@@ -354,7 +347,6 @@ export default {
 					<button
 						type="button"
 						class="tify-header-button -icon-only"
-						:class="{ '-active': $store.options.view === 'help' }"
 						:aria-controls="$getId('help')"
 						:aria-expanded="$store.options.view === 'help'"
 						:title="$translate('Help')"
