@@ -9,7 +9,7 @@ export default {
 		filteredItems() {
 			const tokens = this.filter.trim().toLowerCase().split(/\s+/);
 			return this.$store.collection.items.filter((item) => {
-				const label = (this.$store.localize(item.label) || '').toLowerCase();
+				const label = this.$store.localize(item.label).toLowerCase();
 				return tokens.every((token) => label.includes(token));
 			});
 		},

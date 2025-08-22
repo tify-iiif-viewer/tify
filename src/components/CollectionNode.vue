@@ -59,25 +59,22 @@ export default {
 <template>
 	<li
 		class="tify-collection-item"
-		:class="{ '-current': $store.manifest && $store.manifest.id === (item['@id'] || item.id) }"
+		:class="{
+			'-current': $store.manifest
+				&& $store.manifest.id === (item['@id'] || item.id),
+		}"
 	>
 		<button
 			v-if="item.type === 'Collection'"
 			type="button"
+			class="tify-collection-link -has-children"
 			:aria-controls="id"
 			:aria-expanded="expanded"
-			class="tify-collection-link -has-children"
+			:aria-label="$translate(expanded ? 'Collapse' : 'Expand')"
 			@click="toggleChildren()"
 		>
-			<template v-if="expanded">
-				<IconMinus />
-				<span class="tify-sr-only">{{ $translate('Collapse') }}</span>
-			</template>
-			<template v-else>
-				<IconPlus />
-				<span class="tify-sr-only">{{ $translate('Expand') }}</span>
-			</template>
-
+			<IconMinus v-if="expanded" />
+			<IconPlus v-else />
 			{{ $store.localize(item.label) }}
 		</button>
 		<a
