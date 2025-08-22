@@ -25,8 +25,11 @@ describe('Info', () => {
 
 	it('shows metadata of the current structure', () => {
 		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-PPN857449303`);
+
+		cy.get('[title="Toggle double-page"]').click();
+
 		cy.contains('Info').click();
-		cy.contains('Current Element').should('be.visible');
+		cy.contains('Current Section').should('be.visible');
 		cy.contains('Titelseite');
 
 		cy.get('[title="Last page"]').first().click();
@@ -35,6 +38,9 @@ describe('Info', () => {
 
 	it('shows metadata of a nested structure', () => {
 		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-DE_611_BF_5619_1801_1806`);
+
+		cy.get('[title="Toggle double-page"]').click();
+
 		cy.contains('Info').click();
 		Cypress._.times(4, () => cy.get('[title="Next page"]').first().click());
 		cy.contains('Current Section').should('be.visible');
