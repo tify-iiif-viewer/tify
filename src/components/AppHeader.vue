@@ -15,6 +15,13 @@ export default {
 		};
 	},
 	computed: {
+		doublePageEnabled() {
+			if (this.$store.manifest.behavior?.some((string) => ['continuous', 'individuals'].includes(string))) {
+				return false;
+			}
+
+			return this.$store.manifest.items.some((item) => item.items?.[0]?.items?.[0]?.body?.type === 'Image');
+		},
 		title() {
 			const nbsp = String.fromCharCode(160);
 			return (
@@ -143,20 +150,20 @@ export default {
 		},
 		toggleDoublePage(forced) {
 			const { pages } = this.$store.options;
+
+			if (!this.doublePageEnabled) {
+				return pages[0];
+			}
+
 			let newPages;
-			if ((pages.length > 1 && forced !== true) || forced === false) {
-				// There are already multiple pages shown; switch back to single page
-				newPages = [pages[0] < 1 ? 1 : pages[0]];
-			} else if (pages[0] < 2) {
-				// Show only page 1 in double-page mode
-				newPages = [0, 1];
-			} else if (pages[0] % 2 > 0) {
-				// An odd page was selected, add the preceding page
-				newPages = [pages[0] - 1, pages[0]];
+			if ((pages.length > 1 && forced !== true)
+				|| forced === false
+			) {
+				// There are already multiple pages shown, switch back to single page
+				newPages = [pages[1] > 0 ? pages[1] : pages[0]];
 			} else {
-				// An even page was selected, add the following page or 0 if it is the last one
-				const followingPage = pages[0] < this.$store.pageCount ? pages[0] + 1 : 0;
-				newPages = [pages[0], followingPage];
+				// There is only one page shown, add facing page
+				newPages = [pages[0], this.$store.getFacingPage(pages[0])].sort();
 			}
 
 			this.$store.updateOptions({ pages: newPages });
@@ -200,6 +207,7 @@ export default {
 				<PageSelect />
 
 				<button
+					v-if="doublePageEnabled"
 					type="button"
 					class="tify-header-button"
 					:class="{ '-active': $store.options.pages.length > 1 }"
