@@ -21,7 +21,7 @@ describe('API', () => {
 				cy.contains('.tify-page-name', '2 · -');
 
 				tify.setView('export');
-				cy.contains('.-active', 'Export');
+				cy.contains('[aria-expanded="true"]', 'Export');
 
 				tify.setLanguage('de');
 				cy.contains('.tify-header-button', 'Seiten');

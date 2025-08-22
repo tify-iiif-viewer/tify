@@ -10,20 +10,16 @@ $info-content-max-height: g(6.5);
 	@extend %button-small;
 	border-radius: 0;
 
+	&[aria-pressed=true] {
+		@extend %button-active;
+	}
+
 	&:first-child {
 		border-radius: $br 0 0 $br;
 	}
 
 	&:last-child {
 		border-radius: 0 $br $br 0;
-	}
-
-	& + & {
-		margin-left: -1px;
-	}
-
-	&.-active {
-		@extend %button-active;
 	}
 }
 

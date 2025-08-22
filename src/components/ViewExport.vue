@@ -119,6 +119,7 @@ export default {
 					:class="{ '-close': perElementPdfLinksVisible }"
 					:aria-controls="$getId('export-pdf-list')"
 					:aria-expanded="perElementPdfLinksVisible"
+					:aria-label="perElementPdfLinksVisible ? $translate('Close PDF list') : null"
 					@click="perElementPdfLinksVisible = !perElementPdfLinksVisible"
 				>
 					<template v-if="!perElementPdfLinksVisible">
@@ -126,7 +127,6 @@ export default {
 					</template>
 					<template v-else>
 						<IconClose />
-						<span class="tify-sr-only">{{ $translate('Close PDF list') }}</span>
 					</template>
 				</button>
 				<div
