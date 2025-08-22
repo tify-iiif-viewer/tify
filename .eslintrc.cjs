@@ -56,6 +56,8 @@ module.exports = {
 		}],
 		'vue/max-len': ['error', 120],
 		'vue/no-v-html': 'off',
+		'vue/v-on-event-hyphenation': ['error', 'never'],
+		'vuejs-accessibility/heading-has-content': 'off', // disabled because of false positives
 	},
 	settings: {
 		'import/resolver': {
