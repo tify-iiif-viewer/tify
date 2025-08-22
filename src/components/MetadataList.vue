@@ -16,20 +16,21 @@ export default {
 	},
 	watch: {
 		metadata() {
-			this.updateInfoItems();
+			this.init();
+		},
+		'$store.options.view': {
+			handler(view) {
+				if (view === 'info') {
+					this.init();
+				}
+			},
+			immediate: true,
 		},
 	},
-	mounted() {
-		this.updateInfoItems();
-	},
 	methods: {
-		updateInfoItems() {
+		init() {
 			this.$nextTick(() => {
-				if (!this.$refs.contents) {
-					return;
-				}
-
-				this.$refs.contents.forEach((content, index) => {
+				this.$refs.contents?.forEach((content, index) => {
 					const fullHeight = content.offsetHeight;
 
 					this.infoItems[index] = {
