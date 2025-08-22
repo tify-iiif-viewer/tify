@@ -7,3 +7,6 @@ import 'vitest-canvas-mock';
 import { vi } from 'vitest';
 
 global.jest = vi;
+
+// Prevent console.warn from polluting test output
+vi.spyOn(console, 'warn').mockImplementation(() => {});
