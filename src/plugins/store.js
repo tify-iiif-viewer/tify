@@ -374,12 +374,10 @@ function Store(args = {}) {
 			store.setPage(1);
 		},
 		goToNextPage() {
-			let page = store.options.pages[0] + 1;
-			if (store.options.pages.length > 1 && page % 2 > 0 && page < store.pageCount) {
-				page += 1;
+			const currentPage = store.options.pages.at(-1);
+			if (currentPage < store.pageCount) {
+				store.setPage(currentPage + 1);
 			}
-
-			store.setPage(page);
 		},
 		goToNextSection() {
 			const { pages } = store.options;
@@ -398,12 +396,10 @@ function Store(args = {}) {
 			store.setPage(store.pageCount);
 		},
 		goToPreviousPage() {
-			let page = store.options.pages[0] - 1;
-			if (store.options.pages.length > 1 && page % 2 > 0 && page > 0) {
-				page -= 1;
+			const currentPage = store.options.pages.find((page) => page > 0);
+			if (currentPage > 1) {
+				store.setPage(currentPage - 1);
 			}
-
-			store.setPage(page);
 		},
 		goToPreviousSection() {
 			const { pages } = store.options;

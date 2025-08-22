@@ -110,7 +110,7 @@ export default {
 				default:
 			}
 
-			if (!this.$store.manifest || this.$store.isCustomPageView) {
+			if (!this.$store.manifest) {
 				return;
 			}
 
