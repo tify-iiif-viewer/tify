@@ -22,7 +22,7 @@ describe('Pagination', () => {
 		cy.contains('16 · 7v');
 
 		cy.get('[title="Toggle double-page"]').first().click();
-		cy.get('[title="Toggle double-page"].-active');
+		cy.get('[title="Toggle double-page"][aria-pressed="true"]');
 	});
 
 	it('changes the page via keyboard', () => {
@@ -37,7 +37,7 @@ describe('Pagination', () => {
 
 		cy.get('.tify').type('b');
 		cy.contains(currentPage, '14 · 6v');
-		cy.get('[title="Toggle double-page"].-active');
+		cy.get('[title="Toggle double-page"][aria-pressed="true"]');
 
 		cy.get('.tify').type('q');
 		cy.contains(currentPage, '12 · 5v');
@@ -57,7 +57,7 @@ describe('Pagination', () => {
 
 		cy.get('.tify').type('b');
 		cy.contains(currentPage, '69 · -');
-		cy.get('[title="Toggle double-page"]:not(.-active)');
+		cy.get('[title="Toggle double-page"][aria-pressed="false"]');
 
 		cy.get('.tify').type('Q');
 		cy.contains(currentPage, '1 · -');

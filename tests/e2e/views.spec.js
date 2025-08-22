@@ -7,25 +7,25 @@ describe('Views', () => {
 		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/wellcome-b19974760&tify=${encodedParams}`);
 
 		cy.contains('Fulltext').click();
-		cy.get('.-active').contains('Fulltext');
+		cy.contains('[aria-expanded="true"]', 'Fulltext');
 
 		cy.contains('Pages').click();
-		cy.get('.-active').contains('Pages');
+		cy.contains('[aria-expanded="true"]', 'Pages');
 
 		cy.contains('Contents').click();
-		cy.get('.-active').contains('Contents');
+		cy.contains('[aria-expanded="true"]', 'Contents');
 
 		cy.contains('Info').click();
-		cy.get('.-active').contains('Info');
+		cy.contains('[aria-expanded="true"]', 'Info');
 
 		cy.contains('Export').click();
-		cy.get('.-active').contains('Export');
+		cy.contains('[aria-expanded="true"]', 'Export');
 
 		cy.contains('Collection').click();
-		cy.get('.-active').contains('Collection');
+		cy.contains('[aria-expanded="true"]', 'Collection');
 
 		cy.contains('Help').click();
-		cy.get('.-active').contains('Help');
+		cy.contains('[aria-expanded="true"]', 'Help');
 	});
 
 	it('changes the view via keyboard', () => {
@@ -38,24 +38,24 @@ describe('Views', () => {
 		cy.contains('The chemist and druggist');
 
 		cy.get('.tify').type('1');
-		cy.get('.-active').contains('Fulltext');
+		cy.contains('[aria-expanded="true"]', 'Fulltext');
 
 		cy.get('.tify').type('2');
-		cy.get('.-active').contains('Pages');
+		cy.contains('[aria-expanded="true"]', 'Pages');
 
 		cy.get('.tify').type('3');
-		cy.get('.-active').contains('Contents');
+		cy.contains('[aria-expanded="true"]', 'Contents');
 
 		cy.get('.tify').type('4');
-		cy.get('.-active').contains('Info');
+		cy.contains('[aria-expanded="true"]', 'Info');
 
 		cy.get('.tify').type('5');
-		cy.get('.-active').contains('Export');
+		cy.contains('[aria-expanded="true"]', 'Export');
 
 		cy.get('.tify').type('6');
-		cy.get('.-active').contains('Collection');
+		cy.contains('[aria-expanded="true"]', 'Collection');
 
 		cy.get('.tify').type('7');
-		cy.get('.-active').contains('Help');
+		cy.contains('[aria-expanded="true"]', 'Help');
 	});
 });
