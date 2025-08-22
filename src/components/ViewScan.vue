@@ -106,9 +106,9 @@ export default {
 			let tileSourceIndex;
 			let totalWidth = 0;
 
-			this.$store.options.pages.forEach((page, index) => {
+			this.$store.options.pages.filter((page) => page > -1).forEach((page, index) => {
 				let opacity = 1;
-				if (page < 1) {
+				if (page === 0) {
 					opacity = 0;
 					tileSourceIndex = index > 0 ? this.$store.pageCount : 1;
 				} else {
@@ -296,8 +296,8 @@ export default {
 			this.stopLoadingWatch();
 
 			const infoPromises = [];
-			this.$store.options.pages.forEach((page) => {
-				if (page < 1 || this.tileSources[page]) {
+			this.$store.options.pages.filter((page) => page > -1).forEach((page) => {
+				if (page === 0 || this.tileSources[page]) {
 					return;
 				}
 
@@ -501,7 +501,7 @@ export default {
 			let firstCanvasWidth;
 			let offset = 0;
 
-			this.$store.options.pages.forEach((page, pageIndex) => {
+			this.$store.options.pages.filter((page) => page > 0).forEach((page, pageIndex) => {
 				if (!this.$store.annotations[page]?.[0]?.coords) {
 					return;
 				}

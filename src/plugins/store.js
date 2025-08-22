@@ -114,18 +114,22 @@ function Store(args = {}) {
 		isCustomPageView: computed(() => {
 			const { pages } = store.options;
 
-			if (!pages) {
+			if (pages?.length === 1) {
 				return false;
 			}
 
-			return pages.length > 2
-				|| (pages.length === 2 && (pages[0] % 2 > 0 || pages[1] !== pages[0] + 1) && pages[1] > 0);
+			if (pages.length > 2) {
+				return true;
+			}
+
+			if (pages[0] < 1 || pages[1] < 1) {
+				return false;
+			}
+
+			return (pages[0] % 2 === 1 || pages[1] % 2 === 0);
 		}),
-		isFirstPage: computed(() => store.options.pages[0] < 2),
-		isLastPage: computed(() => {
-			const { pages } = store.options;
-			return pages[0] >= store.pageCount || pages[pages.length - 1] >= store.pageCount;
-		}),
+		isFirstPage: computed(() => store.options.pages[0] === 1 || store.options.pages[1] === 1),
+		isLastPage: computed(() => store.options.pages.at(-1) === store.pageCount),
 		isLastSection: computed(() => {
 			const { pages } = store.options;
 			const lastIndex = pages.length - 1;
@@ -286,6 +290,36 @@ function Store(args = {}) {
 
 			return result;
 		},
+		getFacingPage(page) {
+			if (store.manifest.items[page - 1].behavior?.includes('non-paged')) {
+				// Marker for pages that must be displayed individually
+				return -1;
+			}
+
+			if (page === 1) {
+				// Show only page 1 in double-page mode
+				return 0;
+			}
+
+			if (page % 2 === 1) {
+				// For an odd (recto) page, add the preceding page
+				if (store.manifest.items[page - 1 - 1]?.behavior?.includes('non-paged')) {
+					return -1;
+				}
+
+				return page - 1;
+			}
+
+			if (store.manifest.items[page + 1 - 1]?.behavior?.includes('non-paged')) {
+				// Potential facing page must be displayed individually
+				return -1;
+			}
+
+			// For an even (verso) page, add the following page, or 0 for the last page
+			return page < store.pageCount
+				? page + 1
+				: 0;
+		},
 		getPageLabel(number, labelObject) {
 			const label = store.localize(labelObject, '');
 
@@ -297,13 +331,23 @@ function Store(args = {}) {
 				? `${number}`
 				: '—'; // &mdash;
 		},
-		getStartPage() {
-			if (!store.manifest.start || !store.manifest.items) {
-				return 1;
+		getStartPages() {
+			let startPage = 1;
+
+			if (store.manifest.items && store.manifest.start) {
+				const startCanvasIndex = store.manifest.items.findIndex(
+					(canvas) => canvas.id === store.manifest.start.id,
+				);
+				startPage = startCanvasIndex >= 0 ? startCanvasIndex + 1 : 1;
 			}
 
-			const startCanvasIndex = store.manifest.items.findIndex((canvas) => canvas.id === store.manifest.start.id);
-			return startCanvasIndex >= 0 ? startCanvasIndex + 1 : 1;
+			if (store.isContainerWidthAtLeast('medium')
+				&& store.manifest.behavior?.includes('paged')
+			) {
+				return [startPage, store.getFacingPage(startPage)].sort();
+			}
+
+			return [startPage];
 		},
 		getThumbnailUrl(page, thumbnailWidth) {
 			const canvas = store.manifest.items[page - 1];
@@ -517,13 +561,14 @@ function Store(args = {}) {
 				params.pages = null;
 			}
 
-			store.options.annotationId = params.annotationId || store.options.annotationId;
-			store.options.childManifestUrl = params.childManifestUrl || store.options.childManifestUrl;
-			store.options.filters = params.filters || store.options.filters;
-			store.options.annotationsVisible = params.annotationsVisible || store.options.annotationsVisible;
+			store.options.urlQueryParams.forEach((key) => {
+				store.options[key] = params[key] ?? store.options[key];
+			});
+
+			// Special handling for some params
 			store.options.pages = caller && caller.type === 'popstate'
-				? params.pages || [store.getStartPage()]
-				: params.pages || store.options.pages || [store.getStartPage()];
+				? params.pages || store.getStartPages()
+				: params.pages || store.options.pages || store.getStartPages();
 			store.options.pan = params.panX || params.panY
 				? { x: params.panX, y: params.panY }
 				: params.pan || store.options.pan;
@@ -564,7 +609,7 @@ function Store(args = {}) {
 						if (params.reset) {
 							store.updateOptions({
 								childManifestUrl: manifestUrl,
-								pages: [store.getStartPage()],
+								pages: store.getStartPages(),
 								pan: {},
 								rotation: null,
 								view: store.isContainerWidthAtLeast('medium') ? 'collection' : null,
@@ -651,22 +696,17 @@ function Store(args = {}) {
 			return ([].concat(label).join(separator) || '').trim();
 		},
 		setPage(pageOrPages) {
-			let pages = pageOrPages;
-			if (!(pageOrPages instanceof Array)) {
-				pages = [pageOrPages];
-			}
+			let pages = [].concat(pageOrPages);
 
 			if (!isValidPagesArray(pages, store.pageCount)) {
 				throw new RangeError('Invalid pages');
 			}
 
 			if (pages.length === 1
-				&& store.options.pages
-				&& store.options.pages[0] % 2 < 1
-				&& (store.options.pages[1] === store.options.pages[0] + 1 || store.options.pages[1] === 0)
+				&& store.options.pages?.length === 2
+				&& !this.isCustomPageView
 			) {
-				const p = pages[0] % 2 > 0 ? pages[0] - 1 : pages[0];
-				pages = [p, p === store.pageCount ? 0 : p + 1];
+				pages = [pages[0], store.getFacingPage(pages[0])].sort();
 			}
 
 			store.updateOptions({ pages });
@@ -702,7 +742,7 @@ function Store(args = {}) {
 				store.options.urlQueryParams.forEach((key) => {
 					const param = store.options[key];
 					if (param === null
-						|| (key === 'pages' && param.length < 2 && param[0] < 2)
+						|| (key === 'pages' && param.toString() === store.getStartPages().toString())
 						|| (typeof param === 'object' && !Object.keys(param).length)
 					) {
 						delete storedOptions[key];

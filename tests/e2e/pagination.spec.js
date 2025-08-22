@@ -69,7 +69,8 @@ describe('Pagination', () => {
 	it('highlights the current page after a page change', () => {
 		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081`);
 		cy.get('[title="Last page"]').first().click();
-		cy.contains('Current page: 69 · -').first().click();
+		cy.contains('Current Page 68 · -').first().click();
+		cy.contains('.-current:not(.-highlighted)', '68 · -');
 		cy.contains('.-current.-highlighted', '69 · -');
 	});
 
