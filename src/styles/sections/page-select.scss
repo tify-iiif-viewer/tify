@@ -4,7 +4,8 @@
 		max-width: g(5);
 		min-width: g(3);
 		overflow: hidden;
-		padding: g(.25) .5em;
+		padding-left: g(.375);
+		padding-right: g(.375);
 		text-overflow: ellipsis;
 		white-space: nowrap;
 
@@ -24,6 +25,11 @@
 
 	&:not(:only-child) > .tify-dropdown-button {
 		border-radius: $br 0 0 $br;
+
+		&:not(:focus, :hover) {
+			border-right: 0;
+			padding-right: calc(g(.375) + 1px);
+		}
 	}
 
 	> .tify-dropdown-content {
@@ -51,15 +57,12 @@
 	position: relative; // For scroll calculation
 
 	> li > a {
-		padding: g(.125) g(.25);
-
 		&.-current {
 			@extend %button-active;
 		}
 
-		&:not(.-current).-highlighted {
-			background: $base-color-paler;
-			color: $link-hover-color;
+		&.-highlighted {
+			border-color: light-dark(black, white);
 		}
 	}
 

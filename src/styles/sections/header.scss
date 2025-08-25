@@ -4,6 +4,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
+	min-height: g(2.25);
 	z-index: 9;
 }
 
@@ -18,12 +19,11 @@
 	&.-page-select {
 		align-self: center;
 		border-radius: $br;
-		box-shadow: 0 0 0 1px $border-color inset;
 		margin: 0;
 		padding: 0;
 
 		@container (#{$small}) {
-			margin: 0 g(.25);
+			margin: 0 g(.375);
 		}
 	}
 
@@ -64,12 +64,12 @@
 	}
 
 	&.-view {
-		display: block;
+		flex-direction: column;
 		margin: 0;
 		padding: 0;
 
 		@container (#{$large}) {
-			display: flex;
+			flex-direction: row;
 			margin: g(.25) 0;
 			padding: 0 g(.25);
 		}
@@ -84,26 +84,7 @@
 }
 
 .tify-header-button {
-	@extend %button;
-	align-self: center;
-	background: none;
-	border: 0;
-	border-radius: $br;
-	box-shadow: none;
-	margin: 0; // Safari fix
-	min-height: g(1.5);
-	min-width: g(1.5);
-	padding: 0;
-
-	&:not(:disabled) {
-		@include hover {
-			box-shadow: 0 0 0 1px $border-color inset;
-		}
-
-		&:active {
-			box-shadow: $inset-shadow, 0 0 0 1px $border-color inset;
-		}
-	}
+	@extend %button-borderless;
 
 	&[aria-expanded=true],
 	&[aria-pressed=true] {
@@ -112,10 +93,11 @@
 
 	&.-icon-only {
 		display: block;
-		font-size: inherit !important;
 
-		@container (#{$large}) {
-			font-size: 0 !important; // Prevent label from showing
+		> span {
+			@container (#{$large}) {
+				font-size: 0; // Prevent label from showing
+			}
 		}
 	}
 
@@ -127,50 +109,52 @@
 		}
 	}
 
-	.tify-header-button-group.-toggle & {
-		margin: g(.125) 0;
-		padding: g(.25);
+	.tify-page-select + & {
+		@extend %button;
+		border-radius: 0 $br $br 0;
+		margin-left: -2px;
 
-		@container (#{$tiny}) {
-			margin: 0;
-			padding: g(.375);
+		&:focus,
+		&:hover {
+			z-index: 1;
 		}
+
+		&:not(:focus, :hover) {
+			border-left: 0;
+			padding-left: g(.25);
+		}
+	}
+
+	.tify-header-button-group.-toggle & {
+		padding: calc(g(.375) - 1px);
 	}
 
 	.tify-header-button-group.-view & {
 		display: flex;
-		gap: .3em;
+		gap: .2em;
 		justify-content: start;
-		padding: g(.25);
 		width: 100%;
+
+		@container (#{$large}) {
+			align-items: center;
+			gap: 0;
+			justify-content: center;
+			width: auto;
+		}
 
 		&:not(.-icon-only) {
 			@container (#{$large}) {
-				align-items: center;
 				flex-direction: column;
-				font-size: $font-size-small;
-				gap: 0;
-				justify-content: center;
-				line-height: 1;
 				min-height: g(1.75);
 				min-width: g(1.75);
 				padding: 0 g(.25) .2em;
-				width: auto;
-			}
-		}
-	}
-
-	.tify-page-select + & {
-		border-radius: 0 $br $br 0;
-		margin-left: -2px;
-
-		&:not(:disabled) {
-			@include hover {
-				box-shadow: 0 0 0 1px $border-color inset;
 			}
 
-			&:active {
-				box-shadow: $inset-shadow, 0 0 0 1px $border-color inset;
+			> span {
+				@container (#{$large}) {
+					font-size: $font-size-small;
+					line-height: 1;
+				}
 			}
 		}
 	}
@@ -206,7 +190,7 @@
 
 		&::before {
 			left: auto;
-			right: calc(g(.25) - 1px);
+			right: calc(g(.375) - 1px);
 
 			@container (#{$large}) {
 				content: none;

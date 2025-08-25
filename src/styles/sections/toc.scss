@@ -12,13 +12,13 @@
 }
 
 .tify-toc-header {
+	display: flex;
 	margin: 0 g(.25) g(.5);
 }
 
 .tify-toc-label {
 	@extend %toc-row-item;
 	padding-right: .2em;
-	transition: inherit;
 }
 
 .tify-toc-link {
@@ -43,8 +43,8 @@
 	&.-dots {
 		// Dotted line below
 		&::after {
-			border-bottom: 1px dotted;
-			bottom: calc(#{g(.5)} - 1px);
+			border-top: 1px dotted;
+			bottom: g(.5);
 			content: '';
 			left: g(.25);
 			min-width: 4em;
@@ -75,7 +75,6 @@
 	@extend %toc-row-item;
 	float: right;
 	padding-left: .2em;
-	transition: inherit;
 	z-index: 1;
 }
 
@@ -86,7 +85,7 @@
 
 	&.-current {
 		// Bold vertical marker
-		box-shadow: calc(#{g(-.5)} + 1px) 0 $panel-bg, g(-.75) 0 $base-color-pale;
+		box-shadow: g(-.5) 0 $panel-bg, g(-.75) 0 $base-color-pale;
 	}
 
 	&.-expanded {
@@ -95,14 +94,14 @@
 			border-left: 1px solid $base-color-pale;
 			content: '';
 			height: 100%;
-			left: g(.75);
+			left: calc(g(.75) - 1px);
 			position: absolute;
 			top: g(.25);
 			z-index: -2;
 		}
 
 		&:last-child::after {
-			height: calc(100% - #{g()});
+			height: calc(100% - g());
 		}
 	}
 
@@ -113,10 +112,10 @@
 			content: '';
 			display: block;
 			height: 100%;
-			left: g(-.5);
+			left: calc(g(-.5) - 1px);
 			position: absolute;
 			top: g(.75);
-			width: g(.5);
+			width: calc(g(.5) + 1px);
 		}
 
 		// Prevent vertical line from protruding at the bottom
@@ -132,7 +131,7 @@
 }
 
 .tify-toc-toggle {
-	@extend %button;
+	@extend %button-small;
 	float: left;
 	margin: g(.25) 0 0 g(.25);
 	padding: 0;
@@ -140,13 +139,12 @@
 
 	// Gap between vertical line and button
 	&::after {
-		border-bottom: g(.25) solid $panel-bg;
-		bottom: g(-.25);
+		border-top: calc(g(.25) + 1px) solid $panel-bg;
 		content: '';
-		left: g(.5);
 		pointer-events: none;
 		position: absolute;
-		width: 1px;
+		top: 100%;
+		width: g();
 		z-index: -1;
 	}
 }

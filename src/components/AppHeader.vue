@@ -268,7 +268,7 @@ export default {
 						@click="toggleView(null)"
 					>
 						<IconImage />
-						{{ $translate('Scan [noun]') }}
+						<span>{{ $translate('Scan [noun]') }}</span>
 					</button>
 
 					<button
@@ -280,7 +280,7 @@ export default {
 						@click="toggleView('text')"
 					>
 						<IconText />
-						{{ $translate('Text') }}
+						<span>{{ $translate('Text') }}</span>
 					</button>
 
 					<button
@@ -292,7 +292,7 @@ export default {
 						@click="toggleView('thumbnails')"
 					>
 						<IconViewModule />
-						{{ $translate('Pages') }}
+						<span>{{ $translate('Pages') }}</span>
 					</button>
 
 					<button
@@ -304,7 +304,7 @@ export default {
 						@click="toggleView('toc')"
 					>
 						<IconTableOfContents />
-						{{ $translate('Contents') }}
+						<span>{{ $translate('Contents') }}</span>
 					</button>
 
 					<button
@@ -315,7 +315,7 @@ export default {
 						@click="toggleView('info')"
 					>
 						<IconInformationVariant />
-						{{ $translate('Info') }}
+						<span>{{ $translate('Info') }}</span>
 					</button>
 
 					<button
@@ -326,8 +326,8 @@ export default {
 						:aria-expanded="$store.options.view === 'export'"
 						@click="toggleView('export')"
 					>
-						<IconDownloadOutline />
-						{{ $translate('Export [noun]') }}
+						<IconTrayArrowDown />
+						<span>{{ $translate('Export [noun]') }}</span>
 					</button>
 
 					<button
@@ -339,7 +339,7 @@ export default {
 						@click="toggleView('collection')"
 					>
 						<IconListBoxOutline />
-						{{ $translate('Collection') }}
+						<span>{{ $translate('Collection') }}</span>
 					</button>
 				</div>
 
@@ -354,7 +354,7 @@ export default {
 						@click="toggleView('help')"
 					>
 						<IconHelpCircleOutline />
-						{{ $translate('Help') }}
+						<span>{{ $translate('Help') }}</span>
 					</button>
 
 					<button
@@ -366,7 +366,7 @@ export default {
 						@click="fullscreen.toggle()"
 					>
 						<IconFullscreen />
-						{{ $translate('Fullscreen') }}
+						<span>{{ $translate('Fullscreen') }}</span>
 					</button>
 					<button
 						v-else
@@ -377,7 +377,7 @@ export default {
 						@click="fullscreen.toggle()"
 					>
 						<IconFullscreenExit />
-						{{ $translate('Exit fullscreen') }}
+						<span>{{ $translate('Exit fullscreen') }}</span>
 					</button>
 				</div>
 

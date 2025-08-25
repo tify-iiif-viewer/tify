@@ -15,7 +15,6 @@ export default {
 <template>
 	<p>
 		<label>
-			<!-- <IconWhiteBalanceSunny /> -->
 			<IconLightbulbOnOutline />
 			{{ $translate('Brightness') }}
 			<b>{{ Math.round(($store.options.filters.brightness || 1) * 100) }}&nbsp;%</b>

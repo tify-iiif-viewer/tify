@@ -2,26 +2,25 @@
 	@extend %panel;
 	background: transparent;
 	box-shadow: none;
+	display: flex;
 	flex: 3;
+	flex-direction: column;
+	overflow: hidden;
 	padding: 0;
 	user-select: none;
 	z-index: 0;
 }
 
 .tify-scan-buttons {
-	backdrop-filter: $blur;
-	background:
-		linear-gradient($border-color 1px, transparent 1px) -1px -1px /
-		auto calc(#{g(1.5)} + 1px); // separators
-	border-radius: $br;
-	box-shadow: 0 0 0 1px $border-color;
 	display: flex;
-	flex-direction: column;
-	gap: 1px;
-	left: g(.25);
-	position: absolute;
-	top: g(.25);
-	z-index: 9;
+
+	&.-controls {
+		flex-direction: column;
+		left: g(.5);
+		position: absolute;
+		top: g(.5);
+		z-index: 1;
+	}
 }
 
 %dot-marker {
@@ -40,42 +39,32 @@
 }
 
 .tify-scan-button {
-	@extend %button;
 	@extend %button-translucent;
-	border-radius: 0;
-	padding: g(.25);
-	position: relative;
-
-	&:first-child {
-		border-radius: $br $br 0 0;
-	}
-
-	&:not(:disabled):active {
-		box-shadow: $inset-shadow;
-	}
 
 	&.-active {
-		// Dot marker
-		&::after {
-			background: $base-color;
-			border-radius: 50%;
-			box-shadow: 0 0 g(.25) $base-color-paler;
-			content: '';
-			display: block;
-			height: .5em;
-			position: absolute;
-			right: g(.25);
-			top: g(.25);
-			width: .5em;
+		@extend %dot-marker;
+	}
+
+	.tify-scan-buttons.-controls & {
+		&:not(:first-child) {
+			border-top: 0;
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+			padding-top: g(.25);
+		}
+
+		&:not(:last-child) {
+			border-bottom: 0;
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+			padding-bottom: g(.25);
 		}
 	}
 }
 
 .tify-scan-dropdown {
 	> .tify-dropdown-button {
-		@extend %button;
 		@extend %button-translucent;
-		padding: g(.25);
 	}
 
 	&:not(:first-child) > .tify-dropdown-button {
@@ -110,7 +99,6 @@
 
 	&.-filters {
 		[type=range] {
-			@include range;
 			margin: g(-1.25) 0 0;
 			padding: g(1.5) 0 g(.25);
 		}
@@ -147,68 +135,72 @@
 	}
 }
 
-// NOTE: OpenSeadragon adds `position: relative`
-.tify-scan-image {
-	height: 100%;
-	overflow: hidden; // For OpenSeadragon plugins that add own elements
-	white-space: nowrap;
-	width: 100%;
+.tify-scan-page-button {
+	@extend %button-translucent;
+	position: absolute;
+	z-index: 1;
 
-	.openseadragon-canvas {
-		outline: 0;
+	&.-left {
+		bottom: g(.5);
+		left: g(.5);
+	}
+
+	&.-right {
+		bottom: g(.5);
+		right: g(.5);
 	}
 }
 
-// Big exception using an ID for styling because that
-// is all we have here, thanks to OpenSeadragon
-// TODO: Revisit after next OpenSeadragon release
-[id^=overlay-wrapper-tify] {
-	border-radius: $br;
-	box-shadow: 0 0 0 1px $link-color, 0 0 0 1.5px #0009;
-	cursor: pointer;
+// NOTE: OpenSeadragon adds `position: relative`
+.tify-scan-image {
+	flex: 1;
+	overflow: hidden; // For OpenSeadragon plugins that add own elements
+	white-space: nowrap;
 
-	@include hover {
-		box-shadow: 0 0 0 2px $link-color, 0 0 0 2.5px #0009;
+	.openseadragon-canvas {
+		outline: 0;
+		z-index: 0;
+
+		// Single annotation overlay container
+		// TODO: Revisit after next OpenSeadragon release (> 5.0.1)
+		> div:not([class]) > div:has(> .tify-scan-overlay) {
+			border-radius: $br;
+			box-shadow: 0 0 0 1px $link-color, 0 0 0 2px oklch(0% 0 0deg / 25%);
+
+			@include hover {
+				box-shadow: 0 0 0 2px $link-color, 0 0 0 3px oklch(0% 0 0deg / 25%);
+			}
+		}
+	}
+
+	&.-annotations-hidden {
+		// Annotation overlays
+		// stylelint-disable-next-line no-descending-specificity
+		.openseadragon-canvas > div:not([class]) {
+			visibility: hidden;
+		}
 	}
 }
 
 .tify-scan-overlay {
+	@extend %button;
+	background: none;
+
+	&:not(:disabled) {
+		@include hover {
+			background: none;
+		}
+	}
+
 	&.-current {
-		border-radius: $br;
 		mix-blend-mode: difference;
 		outline: calc(g(.25) - 2px) solid #fff;
-		outline-offset: 2px;
-	}
-}
-
-.tify-scan-page-button {
-	@extend %button;
-	@extend %button-translucent;
-	bottom: g();
-	box-shadow: 0 0 0 1px $border-color;
-	height: g(2.25);
-	padding: 0;
-	position: absolute;
-	width: g(1);
-	z-index: 1;
-
-	// Prevent scan buttons from overlapping
-	@container (height > 639px) {
-		bottom: 50%;
-	}
-
-	&.-left {
-		border-radius: 0 $br $br 0;
-		left: 0;
-	}
-
-	&.-right {
-		border-radius: $br 0 0 $br;
-		right: 0;
 	}
 }
 
 .tify-scan-reset {
-	@extend %button;
+	@extend %button-small;
+	gap: .2em;
+	height: g(2);
 	width: 100%;
 }

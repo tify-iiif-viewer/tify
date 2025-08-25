@@ -1,0 +1,19 @@
+@mixin input {
+	background: none;
+	border: 1px solid $border-color;
+	border-radius: $br;
+	color: inherit;
+	font: inherit;
+	line-height: inherit;
+	padding: calc(g(.25) - 1px) g(.375);
+
+	&:focus {
+		border-color: $base-color;
+		outline: 0;
+	}
+
+	&:hover:not(:focus) {
+		background: $button-hover-bg;
+		border-color: $border-color;
+	}
+}
