@@ -4,68 +4,49 @@
 	overflow-y: scroll; // NOTE: This is required for thumbnails to be calculated correctly
 	position: relative;
 	user-select: none;
+}
 
-	a {
-		border: 0;
-		box-shadow: 0 0 0 1px $border-color;
-		color: inherit;
-		text-decoration: none;
+.tify-thumbnails-button {
+	@extend %button;
+	color: inherit;
+	display: block;
+	overflow: hidden;
+	padding: 0;
+	text-decoration: none;
+	width: calc($thumbnail-width + 2px);
+
+	.tify-thumbnails-item.-current :is(&, &:active) {
+		box-shadow: 0 0 0 g(.5 * .3333) $base-color-pale;
+	}
+}
+
+.tify-thumbnails-image {
+	align-items: center;
+	background: $highlight-bg;
+	display: flex;
+	height: $thumbnail-height;
+	justify-content: center;
+	object-fit: contain;
+	width: 100%;
+}
+
+.tify-thumbnails-item {
+	display: block;
+	float: left;
+	line-height: g();
+	margin: g(.25);
+
+	.tify-page-name {
+		font-size: $font-size-small;
+		padding: 0 g(.25);
+	}
+
+	&.-current .tify-page-name {
+		background: $link-color;
+		color: $text-color-inverted;
 	}
 }
 
 .tify-thumbnails-list {
 	margin: g(-.25);
-}
-
-.tify-thumbnails-item {
-	background: $highlight-bg;
-	border-radius: $br;
-	cursor: pointer;
-	float: left;
-	margin: g(.25);
-	position: relative;
-	width: $thumbnail-width;
-
-	@include hover {
-		background: $panel-bg;
-	}
-
-	img {
-		display: block;
-		height: $thumbnail-height;
-		margin: auto;
-		max-width: 100%;
-		object-fit: contain;
-		pointer-events: none;
-	}
-
-	&.-current {
-		outline: g(.5 * .3333) solid $base-color-pale;
-		outline-offset: 0;
-	}
-}
-
-.tify-thumbnails-page {
-	border-top: 1px solid $border-color;
-	bottom: 0;
-	display: block;
-	font-size: $font-size-small;
-	height: g();
-	overflow: hidden;
-	padding: 0 g(.25);
-	text-align: center;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	width: 100%;
-
-	@at-root {
-		.tify-thumbnails-item {
-			&.-current {
-				.tify-thumbnails-page {
-					background: $link-color;
-					color: $text-color-inverted;
-				}
-			}
-		}
-	}
 }
