@@ -256,6 +256,11 @@ function Store(args = {}) {
 				return Promise.reject(error);
 			});
 
+			if (!response.ok) {
+				store.loading = 0;
+				return Promise.reject(new Error(response.status));
+			}
+
 			const result = await response.json().catch((error) => {
 				store.loading = 0;
 				return Promise.reject(error);
