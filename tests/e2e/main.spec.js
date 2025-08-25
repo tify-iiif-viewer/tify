@@ -37,6 +37,6 @@ describe('Main', () => {
 		cy.get('.tify-header');
 		cy.contains('Pages');
 		cy.contains('Contents');
-		cy.contains('Error loading translation for "nope"');
+		cy.contains('Error loading translation “nope”');
 	});
 });
