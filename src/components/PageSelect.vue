@@ -118,7 +118,7 @@ export default {
 		</div>
 		<ol
 			ref="list"
-			class="tify-link-list tify-page-select-list"
+			class="tify-button-list tify-page-select-list"
 		>
 			<li
 				v-for="(canvas, index) in filteredCanvases"

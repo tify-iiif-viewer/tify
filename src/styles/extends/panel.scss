@@ -14,12 +14,4 @@
 			border-left: 1px solid $border-color;
 		}
 	}
-
-	&.-active {
-		display: block;
-	}
-
-	&.-always-active {
-		display: block !important;
-	}
 }

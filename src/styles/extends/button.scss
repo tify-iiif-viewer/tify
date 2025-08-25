@@ -1,15 +1,17 @@
 %button {
 	align-items: center;
 	background: $button-bg;
-	border: 0;
+	border: 1px solid $border-color;
 	border-radius: $br;
-	box-shadow: 0 0 0 1px $border-color inset;
-	color: inherit;
-	display: inline-flex;
+	color: $text-color;
+	display: flex;
 	font: inherit;
 	justify-content: center;
-	padding: g(.25) g(.5);
+	min-height: g(1.5);
+	min-width: g(1.5);
+	padding: calc(g(.25) - 1px);
 	text-align: center;
+	text-decoration: none;
 	user-select: none;
 	vertical-align: middle;
 
@@ -21,7 +23,7 @@
 		}
 
 		&:active {
-			box-shadow: $inset-shadow, 0 0 0 1px $border-color inset;
+			box-shadow: $inset-shadow;
 		}
 
 		&:focus-visible {
@@ -34,14 +36,45 @@
 	}
 }
 
+%button-active {
+	background: $link-color;
+	color: $text-color-inverted;
+	z-index: 1;
+
+	&:not(:disabled) {
+		@include hover {
+			background: $link-hover-color;
+			color: $text-color-inverted;
+		}
+	}
+}
+
+%button-borderless {
+	@extend %button;
+	background: none;
+	border: 1px solid transparent;
+	box-shadow: none;
+	margin: 0; // Safari fix
+
+	&:focus,
+	&:hover {
+		&:not(:disabled) {
+			border-color: $border-color;
+		}
+	}
+
+	&:not(:disabled):active {
+		box-shadow: $inset-shadow;
+	}
+}
+
 %button-translucent {
 	@extend %button;
 	backdrop-filter: $blur;
-	background: oklch(from $panel-bg l c h / 40%);
+	background: oklch(from $panel-bg l c h / 38.2%);
 	border: 1px solid $border-color;
 	box-shadow: none;
 	overflow: hidden;
-	padding: calc(g(.25) - 1px);
 
 	&:not(:disabled):active {
 		box-shadow: $inset-shadow;
@@ -57,7 +90,7 @@
 
 	&:not(:disabled) {
 		@include hover {
-			background: $button-hover-bg;
+			background: oklch(from $panel-bg l c h / 61.8%);
 		}
 	}
 
@@ -82,5 +115,7 @@
 %button-small {
 	@extend %button;
 	font-size: $font-size-small;
-	padding: 0 g(.5);
+	min-height: g(1.3333);
+	min-width: g(1.3333);
+	padding: 0 g(.75);
 }

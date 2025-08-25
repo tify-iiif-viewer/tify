@@ -1,14 +1,14 @@
 .tify-loading {
 	animation: fadein .5s forwards .5s, spin 1.2s infinite ease-in-out;
-	background: $base-color-pale;
+	background: $base-color;
 	border-radius: $br;
-	bottom: g(.5);
-	height: g(1.5);
-	left: g(.5);
+	bottom: g(2.5);
+	height: g(1.75);
+	left: g(2.5);
 	opacity: 0;
 	pointer-events: none;
 	position: absolute;
-	width: g(1.5);
+	width: g(1.75);
 
 	@keyframes fadein {
 		0% {

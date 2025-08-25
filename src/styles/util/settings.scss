@@ -1,73 +1,108 @@
-// Shades of grey
-$grey: #262626 !default;
-$grey-dark: #171717 !default;
-$grey-light: #f5f5f5 !default;
+// Base colors
+$base-color: var(--tify-base-color, #06b) !default;
+$base-color-dark: var(
+	--tify-base-color-dark,
+	oklch(from $base-color calc(l * 1.5) c h)
+) !default;
 
 // Semantic colors
-$base-color: var(--tify-base-color, light-dark(#06b, #0cf)) !default;
-$base-color-pale:
-	var(
-		--tify-base-color-pale,
-		light-dark(
-			color-mix(in oklch, #06b, #fff 55%),
-			color-mix(in oklch, #0cf, $grey-dark 55%)
-		)
-	) !default;
-$base-color-paler:
-	var(
-		--tify-base-color-paler,
-		light-dark(
-			color-mix(in oklch, #06b, #fff 95%),
-			color-mix(in oklch, #0cf, $grey-dark 95%)
-		)
-	) !default;
-$border-color: var(--tify-border-color, light-dark(#0002, #ffffff19)) !default;
-$link-color: var(--tify-link-color, $base-color) !default;
-$link-hover-color: var(--tify-link-hover-color, $link-color) !default;
-$text-color: var(--tify-text-color, light-dark($grey-dark, $grey-light)) !default;
-$text-color-inverted: var(--tify-text-color-inverted, light-dark(#fff, $grey-dark)) !default;
-$text-color-muted:
-	var(
-		--tify-text-muted-color,
-		light-dark(
-			color-mix(in oklch, $grey-dark, #fff 35%),
-			color-mix(in oklch, $grey-light, #000 35%),
-		)
-	) !default;
+$bg: var(
+	--tify-bg-color,
+	light-dark(#fff, oklch(from $base-color-dark calc(l * .25) calc(c * .05) h))
+);
+$base-color-pale: var(
+	--tify-base-color-pale,
+	light-dark(
+		color-mix(in oklch, $base-color, $bg 44%),
+		color-mix(in oklch, $base-color-dark, $bg 44%)
+	)
+) !default;
+$base-color-paler: var(
+	--tify-base-color-paler,
+	light-dark(
+		color-mix(in oklch, $base-color, $bg 88%),
+		color-mix(in oklch, $base-color-dark, $bg 88%),
+	)
+) !default;
+$border-color: var(
+	--tify-border-color,
+	light-dark(
+		oklch(from $base-color calc(l * .5) calc(c * .1) h / 15%),
+		oklch(from $base-color-dark calc(l * 2) calc(c * .1) h / 15%),
+	)
+) !default;
+$link-color: var(
+	--tify-link-color,
+	light-dark(
+		$base-color,
+		$base-color-dark
+	)
+) !default;
+$link-hover-color: var(
+	--tify-link-hover-color,
+	light-dark(
+		oklch(from #{$link-color} calc(l * .7) c h),
+		oklch(from #{$link-color} calc(l * 1.1) c h)
+	)
+) !default;
+$text-color: var(
+	--tify-text-color,
+	light-dark(currentcolor, oklch(from currentcolor 100% c h))
+);
+$text-color-inverted: var(
+	--tify-text-color-inverted,
+	light-dark(oklch(from currentcolor 100% c h), oklch(from currentcolor 0% c h))
+);
+$text-color-muted: var(
+	--tify-text-color-inverted,
+	oklch(from currentcolor l c h / 61.8%),
+);
 
 // Dimensions
 $br: var(--tify-border-radius, 2px) !default;
-$font-size: var(--tify-font-size, 16px) !default;
-$font-size-small: var(--tify-font-size-small, max(.75em, 10px)) !default;
-$grid-base: var(--tify-grid-base, 24px) !default;
-$line-height: var(--tify-line-height, #{g()}) !default;
+$font-size: var(--tify-font-size, inherit) !default;
+$font-size-small: var(--tify-font-size-small, max(.75em, 12px)) !default;
+$grid-base: var(--tify-grid-base, 1.5em) !default;
+$line-height: var(--tify-line-height, inherit) !default;
 $thumbnail-height: var(--tify-thumbnail-height, g(4.5)) !default;
 $thumbnail-width: var(--tify-thumbnail-width, g(4)) !default;
 
 // Breakpoints
 // NOTE: This is not configurable via CSS custom properties,
 // which cannot be used in @container queries.
-$tiny: 'width > 359px';
 $small: 'width > 719px';
 $medium: 'width > 959px';
 $large: 'width > 1199px';
 
 // Combined values
-$blur: blur(5px);
-$button-bg: var(--tify-button-bg, light-dark($grey-light, $grey)) !default;
-$button-hover-bg: var(--tify-button-hover-bg, oklch(from $button-bg calc(l + .03) c h)) !default;
-$drop-shadow: 0 0 g(.25) #0004 !default;
-$dropdown-bg: var(--tify-dropdown-bg, light-dark(#fff, $grey)) !default;
-$header-bg: var(--tify-header-bg, light-dark(#fff, $grey-dark)) !default;
-$inset-shadow: 0 0 3px #0002 inset !default;
-$main-bg:
-	var(
-		--tify-body-bg,
-		// dots pattern
-		radial-gradient(
-			light-dark(#aaa, #333) 1px,
-			light-dark(#bbb, #444) 0
-		) 2px 1px / 3px 3px,
-	) !default;
-$panel-bg: var(--tify-bg-color, light-dark(#fff, $grey-dark)) !default;
-$panel-bg-muted: var(--tify-bg-color, light-dark($grey-light, $grey)) !default;
+$blur: blur(8px);
+$button-bg: var(
+	--tify-button-bg,
+	light-dark(
+		oklch(from $base-color 95% calc(c * .02) h),
+		oklch(from $base-color-dark 25% calc(c * .02) h)
+	)
+) !default;
+$button-hover-bg: var(
+	--tify-button-hover-bg,
+	light-dark(
+		oklch(from $base-color 98% calc(c * .02) h),
+		oklch(from $base-color-dark 22% calc(c * .02) h)
+	)
+) !default;
+$drop-shadow: 0 0 g(.25) oklch(0% 0 0deg / 25%) !default;
+$dropdown-bg: $bg !default;
+$header-bg: $bg !default;
+$highlight-bg: var(
+	--tify-highlight-bg,
+	oklch(from currentcolor l calc(c * .1) h / 5%)
+) !default;
+$inset-shadow: 0 .5px 3px $border-color inset !default;
+$main-bg: var(
+	--tify-body-bg,
+	radial-gradient(
+		light-dark(#aaa, #333) 1px,
+		light-dark(#bbb, #444) 0,
+	) 2px 1px / 3px 3px,
+) !default;
+$panel-bg: $bg !default;
