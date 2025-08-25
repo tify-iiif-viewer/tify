@@ -14,6 +14,7 @@
 	overflow: hidden;
 	position: relative;
 	-webkit-tap-highlight-color: transparent;
+	text-wrap: balance;
 
 	&.-light {
 		color-scheme: light;
@@ -48,7 +49,7 @@
 		}
 	}
 
-	a {
+	a:not([class]) {
 		color: $link-color;
 		word-wrap: break-word;
 
@@ -57,15 +58,28 @@
 		}
 	}
 
+	b {
+		font-weight: bold;
+	}
+
 	h3 {
-		box-shadow: 0 1px $border-color;
+		align-items: baseline;
 		color: $text-color-muted;
+		display: flex;
 		font-size: $font-size-small;
 		font-weight: bold;
+		gap: .5em;
 		letter-spacing: .1em;
 		margin: 0 0 g(.5);
 		padding: 0;
 		text-transform: uppercase;
+
+		&::after {
+			background: $border-color;
+			content: '';
+			flex: 1;
+			height: 1px;
+		}
 	}
 
 	h4 {
@@ -91,17 +105,11 @@
 		padding: 0;
 	}
 
-	[type=text] {
-		background: none;
-		border: 1px solid $border-color;
-		border-radius: $br;
-		color: inherit;
-		font: inherit;
-		padding: calc(#{g(.25)} - 1px) .5em;
+	[type=range] {
+		@include range;
+	}
 
-		&:focus {
-			border-color: $base-color;
-			outline: 0;
-		}
+	[type=text] {
+		@include input;
 	}
 }

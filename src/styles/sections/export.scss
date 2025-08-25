@@ -8,19 +8,9 @@
 }
 
 .tify-export-image-link {
-	align-items: center;
-	border-radius: $br;
-	box-shadow: 0 0 0 1px $border-color inset;
-	display: flex;
+	@extend %button;
 	gap: g(.5);
-	padding: g(.5);
 	text-align: left;
-	text-decoration: none;
-	width: 100%;
-
-	@include hover {
-		background: $base-color-paler;
-	}
 
 	img {
 		max-height: g(4.5);
@@ -63,8 +53,8 @@
 	@extend %button-small;
 
 	&.-close {
+		@extend %button;
 		border-radius: 0 $br;
-		padding: g(.25);
 		position: absolute;
 		right: 0;
 		z-index: 1;
