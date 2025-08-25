@@ -10,7 +10,6 @@ export default {
 			itemVMargin: 0,
 			items: [{}], // Dummy thumbnail to get dimensions
 			itemsPerRow: 0,
-			knownImages: [],
 			lastScrollTop: 0,
 			resizeObserver: null,
 			resizeTimeout: null,
@@ -183,28 +182,40 @@ export default {
 			{{ $translate('Pages') }}
 		</h2>
 
-		<div
+		<ol
 			ref="container"
 			class="tify-thumbnails-list"
 		>
-			<a
+			<li
 				v-for="item in items"
 				:key="item.page"
 				class="tify-thumbnails-item"
 				:class="{ '-current': $store.options.pages.includes(item.page) }"
-				href="javascript:;"
-				@click.prevent="setPageAndSwitchView(item.page, $event.ctrlKey)"
-				@touchstart="touchStartTogglePage(item.page)"
-				@touchend="touchEnd"
 			>
-				<img
-					alt=""
-					:src="item.thumbnailUrl || 'data:,'"
-				/>
-				<span class="tify-thumbnails-page">
-					{{ $store.getPageLabel(item.page, item.label) }}
-				</span>
-			</a>
-		</div>
+				<button
+					type="button"
+					class="tify-thumbnails-button"
+					@click.prevent="setPageAndSwitchView(item.page, $event.ctrlKey)"
+					@touchstart="touchStartTogglePage(item.page)"
+					@touchend="touchEnd"
+				>
+					<img
+						v-if="item.thumbnailUrl"
+						class="tify-thumbnails-image"
+						alt=""
+						:src="item.thumbnailUrl"
+					/>
+					<span
+						v-else
+						class="tify-thumbnails-image"
+					>
+						<IconImageBrokenVariant />
+						<span class="tify-sr-only">{{ $translate('Image missing') }}</span>
+					</span>
+
+					<PageName :number="item.page || 1" />
+				</button>
+			</li>
+		</ol>
 	</section>
 </template>
