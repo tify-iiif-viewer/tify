@@ -80,9 +80,6 @@ describe('TOC', () => {
 
 		cy.visit(`/?manifest=${manifestUrl}&tify=${encodedParams}`);
 
-		cy.get('.tify-toc');
-		cy.contains('Expand all').should('not.exist');
-
 		cy.get('.tify-toc .tify-toc-structure.-current').contains('Elizabeth Lyttelton\'s commonplace book');
 	});
 

@@ -13,7 +13,7 @@ export default {
 		isNested() {
 			return this.$store.structures
 				.filter((structure) => structure.items?.some((item) => item.items))
-				.length > 1;
+				.length;
 		},
 	},
 	watch: {
