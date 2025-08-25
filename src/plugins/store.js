@@ -765,7 +765,7 @@ function Store(args = {}) {
 					return;
 				}
 
-				if (updatedOptions.pages) {
+				if (updatedOptions.pages || updatedOptions.view) {
 					window.history.pushState({}, '', url);
 				} else {
 					window.history.replaceState({}, '', url);
