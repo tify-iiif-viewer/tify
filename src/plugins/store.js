@@ -52,7 +52,7 @@ function Store(args = {}) {
 		annotations: [],
 		annotationsAvailable: null,
 		collection: null,
-		errors: [],
+		errors: new Set(),
 		loading: 0,
 		manifest: args.manifest ? convertManifest(args.manifest) : null,
 		options: args.options || {},
@@ -242,11 +242,11 @@ function Store(args = {}) {
 			return mappedStructures;
 		}),
 		addError(message) {
-			store.errors.push(message);
+			store.errors.add(message);
 			console.warn(message); // eslint-disable-line no-console
 		},
 		clearErrors() {
-			store.errors = [];
+			store.errors.clear();
 		},
 		async fetchJson(url) {
 			store.loading += 1;
