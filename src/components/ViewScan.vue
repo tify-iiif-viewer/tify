@@ -1,31 +1,61 @@
 <script>
 import OpenSeadragon from 'openseadragon';
 
+import { parseCoordinatesString } from '../modules/parsing';
 import { preventEvent } from '../modules/keyboard';
 import { createPromise } from '../modules/promise';
 
 const gapBetweenPages = 0.005;
+const zoomFactor = 1.5;
 
 export default {
 	data() {
 		return {
 			defaultCanvasCss: '',
 			loadingTimeout: null,
-			overlays: [],
+			overlayElements: [],
 			promise: createPromise(),
-			tileSources: {},
+			tileSources: [],
 			viewer: null,
-			viewerState: {}, // NOTE: See updateViewerState()
-			zoomFactor: 1.5,
+			viewerState: {
+				// NOTE: See updateViewerState()
+				isReset: true,
+			},
 		};
 	},
 	computed: {
 		filtersActive() {
 			return Object.keys(this.$store.options.filters).length > 0;
 		},
-		saturation() {
-			const saturation = this.$store.options.filters.saturate;
-			return typeof saturation === 'number' ? saturation : 1;
+		paginationButtons() {
+			const positions = this.$store.manifest.viewingDirection?.split('-to-') || ['left', 'right'];
+
+			const buttons = [
+				{
+					hidden: this.$store.isFirstPage,
+					title: this.$translate('Previous page'),
+					onClick: this.$store.goToPreviousPage,
+					position: positions[0],
+				},
+				{
+					hidden: this.$store.isLastPage,
+					title: this.$translate('Next page'),
+					onClick: this.$store.goToNextPage,
+					position: positions[1],
+				},
+			];
+
+			if (this.$store.isReversed) {
+				buttons.reverse();
+			}
+
+			return buttons.filter((button) => !button.hidden);
+		},
+		multiLayerResources() {
+			return this.$store.options.pages.filter((page) => page > 0).map((page, pageIndex) => ({
+				pageIndex,
+				items: this.$store.manifest.items[page - 1].items?.[0]?.items?.[0]?.body?.items,
+			})).filter((resource) => resource.items?.length > 1);
 		},
 	},
 	watch: {
@@ -39,7 +69,10 @@ export default {
 		},
 		// eslint-disable-next-line func-names
 		'$store.options.annotationId': function (annotationId) {
-			this.updateOverlays();
+			this.overlayElements
+				.find((element) => element.classList.contains('-current'))
+				?.classList
+				.remove('-current');
 
 			if (!annotationId) {
 				return;
@@ -47,13 +80,13 @@ export default {
 
 			// Pan current annotation overlay into view if outside of viewport bounds
 			const viewportBounds = this.viewer.viewport.getBounds();
-			const overlayElement = this.overlays
-				.find((overlay) => overlay.id === annotationId)
-				?.element;
+			const overlayElement = this.overlayElements.find((element) => element.id === annotationId);
 
 			if (!overlayElement) {
 				return;
 			}
+
+			overlayElement.classList.add('-current');
 
 			const overlay = this.viewer.getOverlayById(overlayElement);
 			const overlayBounds = overlay.getBounds(this.viewer.viewport);
@@ -101,40 +134,67 @@ export default {
 			// this required the correct resolution to be present in the manifest,
 			// which is currently loaded from the info file since the former is
 			// unreliable.
-			const tileSources = [];
-			let initialWidth = 0;
-			let tileSourceIndex;
-			let totalWidth = 0;
+			const sources = [];
+			let initialSize = 0;
+			let totalSize = 0;
 
-			this.$store.options.pages.filter((page) => page > -1).forEach((page, index) => {
-				let opacity = 1;
-				if (page === 0) {
-					opacity = 0;
-					tileSourceIndex = index > 0 ? this.$store.pageCount : 1;
-				} else {
-					tileSourceIndex = page;
+			const pages = this.$store.isReversed
+				? this.$store.options.pages.toReversed()
+				: this.$store.options.pages;
+
+			pages.filter((page) => page > 0).forEach((page, pageIndex) => {
+				const pageTileSources = this.tileSources.filter(
+					(tileSource) => tileSource.$meta.page === page
+						&& tileSource.$meta.layerIndex === (this.$store.options.layers[pageIndex] || 0),
+				);
+
+				if (!pageTileSources.length) {
+					this.$store.addError(`Image missing for page ${page}`);
 				}
 
-				const tileSource = this.tileSources[tileSourceIndex];
+				pageTileSources.forEach((tileSource, index) => {
+					initialSize = initialSize || tileSource[this.$store.isVertical ? 'height' : 'width'];
 
-				if (!tileSource) {
-					return;
-				}
+					const size = tileSource[this.$store.isVertical ? 'height' : 'width'] / initialSize;
 
-				if (!initialWidth) {
-					initialWidth = tileSource.width;
-				}
+					if (page === 1 && pages[0] === 0) {
+						// Insert placeholder verso page
+						sources.push({
+							opacity: 0,
+							tileSource,
+							[this.$store.isVertical ? 'y' : 'x']: 0,
+							[this.$store.isVertical ? 'height' : 'width']: size,
+						});
 
-				const width = tileSource.width / initialWidth;
+						totalSize += 1 + gapBetweenPages;
+					}
 
-				tileSources.push({
-					opacity,
-					tileSource,
-					width,
-					x: totalWidth,
+					const source = {
+						tileSource,
+						[this.$store.isVertical ? 'y' : 'x']: totalSize,
+						[this.$store.isVertical ? 'height' : 'width']: size,
+					};
+
+					const { target } = this.$store.manifest.items[page - 1].items[0].items[index];
+					const coords = parseCoordinatesString(target);
+					if (coords?.length === 4) {
+						[source.x, source.y, source.width] = coords.map((number) => number / initialSize);
+					} else {
+						totalSize += size + gapBetweenPages;
+					}
+
+					if (page === this.$store.pageCount && pages[0] === 0) {
+						// Insert placeholder recto page
+						sources.push({
+							opacity: 0,
+							tileSource,
+							[this.$store.isVertical ? 'y' : 'x']: totalSize,
+							[this.$store.isVertical ? 'height' : 'width']: size,
+						});
+					}
+
+					sources.push(source);
 				});
-
-				totalWidth += width + gapBetweenPages;
 			});
 
 			if (this.viewer) {
@@ -159,9 +219,7 @@ export default {
 									return;
 								}
 
-								const offsetX = this.$store.options.pages[0]
-									? 0
-									: 1;
+								const offsetX = pages[0] ? 0 : 1;
 								this.viewer.viewport.panTo({
 									x: bounds.x > 0
 										? (bounds.width / 2) + offsetX
@@ -183,7 +241,7 @@ export default {
 					}
 				});
 
-				this.viewer.open(tileSources);
+				this.viewer.open(sources);
 
 				return;
 			}
@@ -199,7 +257,7 @@ export default {
 				preserveViewport: true,
 				showNavigationControl: false,
 				showZoomControl: false,
-				tileSources,
+				tileSources: sources,
 				visibilityRatio: 0.2,
 				...this.$store.options.viewer,
 			});
@@ -296,58 +354,74 @@ export default {
 			this.stopLoadingWatch();
 
 			const infoPromises = [];
-			this.$store.options.pages.filter((page) => page > -1).forEach((page) => {
-				if (page === 0 || this.tileSources[page]) {
-					return;
-				}
+			this.$store.options.pages.filter((page) => page > 0).forEach((page, pageIndex) => {
+				const items = this.$store.manifest.items[page - 1].items?.[0]?.items;
+				const layerIndex = this.$store.options.layers[pageIndex] || 0;
 
-				const resource = this.$store.manifest.items[page - 1].items?.[0]?.items?.[0]?.body;
+				items?.forEach((item, itemIndex) => {
+					if (this.tileSources.find(
+						(tileSource) => tileSource.$meta.page === page
+							&& tileSource.$meta.itemIndex === itemIndex
+							&& tileSource.$meta.layerIndex === layerIndex,
+					)) {
+						return;
+					}
 
-				if (!resource) {
-					this.$store.addError(`Image missing for page ${page}`);
-					return;
-				}
+					const resource = item.body?.items ? item.body.items[layerIndex] : item.body;
 
-				if (resource.service) {
-					const service = resource.service instanceof Array ? resource.service[0] : resource.service;
-					const id = service.id || service['@id'];
-					const infoUrl = `${id}${id.at(-1) === '/' ? '' : '/'}info.json`;
-					infoPromises.push(
-						this.$store.fetchJson(infoUrl).then(
-							(infoItem) => ({ ...infoItem, page }),
-							(error) => {
-								let status;
-								if (error.response && error.response.statusText) {
-									status = error.response.statusText;
-								} else if (error.message) {
-									status = error.message;
-								}
+					if (!resource) {
+						this.$store.addError(`Image missing for page ${page}`);
+						return;
+					}
 
-								this.$store.addError(`Error loading info file for page ${page}${status ? `: ${status}` : ''}`);
-							},
-						),
-					);
-				} else {
-					this.tileSources[page] = {
-						type: 'image',
-						url: resource.id,
-						width: resource.width,
-						height: resource.height,
-					};
-				}
+					const services = resource?.source?.service || resource?.service;
+					if (services) {
+						const service = [].concat(services)[0];
+						const id = service.id || service['@id'];
+						const infoUrl = `${id}${id.at(-1) === '/' ? '' : '/'}info.json`;
+						infoPromises.push(
+							this.$store.fetchJson(infoUrl).then(
+								(infoItem) => ({
+									...infoItem,
+									$meta: {
+										page,
+										itemIndex,
+										layerIndex,
+									},
+								}),
+								(error) => {
+									let status;
+									if (error.response && error.response.statusText) {
+										status = error.response.statusText;
+									} else if (error.message) {
+										status = error.message;
+									}
+
+									this.$store.addError(`Error loading info file for page ${page}${status ? `: ${status}` : ''}`);
+								},
+							),
+						);
+					} else if (resource?.id) {
+						this.tileSources.push({
+							$meta: { page, itemIndex, layerIndex },
+							type: 'image',
+							url: resource.id,
+							width: resource.width,
+							height: resource.height,
+						});
+					}
+				});
 			});
 
 			if (infoPromises.length) {
 				Promise.all(infoPromises).then((infoItems) => {
-					infoItems.forEach((infoItem) => {
-						if (infoItem) {
-							this.tileSources[infoItem.page] = infoItem;
-						}
+					infoItems.filter(Boolean).forEach((infoItem) => {
+						this.tileSources.push(infoItem);
 					});
 
 					this.initViewer(reset);
 				});
-			} else {
+			} else if (this.tileSources.length) {
 				this.initViewer(reset);
 			}
 		},
@@ -466,7 +540,6 @@ export default {
 			this.$store.updateOptions({
 				annotationsVisible: this.$store.options.annotationsVisible !== false ? false : null,
 			});
-			this.updateOverlays();
 		},
 		updateFilterStyle() {
 			if (!this.filtersActive) {
@@ -483,77 +556,77 @@ export default {
 			this.viewer.drawer.canvas.style.cssText = `${this.defaultCanvasCss} filter: ${filterString}`;
 		},
 		updateOverlays() {
-			if (!this.viewer) {
+			if (!this.viewer
+				|| !this.$store.options.pages
+					.filter((page) => page > 0)
+					.every((page) => this.tileSources.some((tileSource) => tileSource.$meta.page === page))
+			) {
 				return;
 			}
 
 			this.viewer.clearOverlays();
-			this.overlays = [];
+			this.overlayElements = [];
 
 			if (!this.$store.annotationsActive) {
 				return;
 			}
 
-			if (this.$store.options.annotationsVisible === false) {
-				return;
-			}
-
-			let firstCanvasWidth;
+			let firstVisibleCanvasSize;
 			let offset = 0;
 
-			this.$store.options.pages.filter((page) => page > 0).forEach((page, pageIndex) => {
+			this.$store.options.pages.filter((page) => page > -1).forEach((page, pageIndex) => {
+				const firstVisibleCanvas = this.tileSources.find(
+					(tileSource) => tileSource.$meta.page === (page === 0 ? 1 : page)
+						&& tileSource.$meta.layerIndex === (this.$store.options.layers[pageIndex] || 0),
+				);
+
+				// Calculate offset for each page, which depends on all previously displayed pages
+				if (pageIndex === 0) {
+					firstVisibleCanvasSize = firstVisibleCanvas[this.$store.isVertical ? 'height' : 'width'];
+
+					if (page === 0) {
+						return;
+					}
+				} else {
+					const prevPage = this.$store.options.pages[pageIndex - 1];
+					const prevCanvasSize = this.$store.manifest.items[prevPage - 1]?.[this.$store.isVertical ? 'height' : 'width']
+						|| firstVisibleCanvasSize;
+					offset += (gapBetweenPages + prevCanvasSize / firstVisibleCanvasSize) * (this.$store.isReversed ? -1 : 1);
+				}
+
 				if (!this.$store.annotations[page]?.[0]?.coords) {
 					return;
 				}
 
-				// Calculate offset for each page, which depends on all previously displayed pages
-				if (!pageIndex) {
-					firstCanvasWidth = (this.$store.manifest.items[page - 1]).width;
-				} else {
-					const prevPage = this.$store.options.pages[pageIndex - 1];
-					const prevCanvasWidth = this.$store.manifest.items[prevPage - 1].width;
-					offset += gapBetweenPages + prevCanvasWidth / firstCanvasWidth;
-				}
-
 				this.$store.annotations[page]?.forEach((annotation, annotationIndex) => {
-					// TODO: Add aria-label?
-					const element = document.createElement('a');
-
-					element.className = `tify-scan-overlay${
+					const button = document.createElement('button');
+					button.ariaLabel = `${page}/${annotationIndex}`;
+					button.className = `tify-scan-overlay${
 						this.$store.options.annotationId === annotation.id
 							? ' -current'
 							: ''
 					}`;
+					button.id = annotation.id;
+					button.type = 'button';
 
-					// NOTE: If the overlay element has no ID, OpenSeadragon adds the
-					// same ID "overlay-wrapper" too all wrapper elements. The ID can
-					// be removed once this issue is resolved:
-					// https://github.com/openseadragon/openseadragon/issues/2682
-					element.id = this.$getId(`overlay-${page}-${annotationIndex}`);
+					// eslint-disable-next-line no-new
+					new OpenSeadragon.MouseTracker({
+						element: button,
+						clickHandler: () => this.$store.toggleAnnotationId(annotation.id),
+						keyDownHandler: (key) => key.keyCode === 13 && this.$store.toggleAnnotationId(annotation.id),
+					});
 
 					this.viewer.addOverlay({
-						element,
+						element: button,
 						location: new OpenSeadragon.Rect(
-							annotation.coords[0] / firstCanvasWidth + offset,
-							annotation.coords[1] / firstCanvasWidth,
-							annotation.coords[2] / firstCanvasWidth,
-							annotation.coords[3] / firstCanvasWidth,
+							annotation.coords[0] / firstVisibleCanvasSize + (this.$store.isVertical ? 0 : offset),
+							annotation.coords[1] / firstVisibleCanvasSize + (this.$store.isVertical ? offset : 0),
+							annotation.coords[2] / firstVisibleCanvasSize,
+							annotation.coords[3] / firstVisibleCanvasSize,
 						),
 					});
 
-					// NOTE: Using addEventListener instead worked only on Firefox
-					// eslint-disable-next-line no-new
-					new OpenSeadragon.MouseTracker({
-						element,
-						clickHandler: () => this.$store.toggleAnnotationId(annotation.id),
-					});
-
-					const overlay = {
-						id: annotation.id,
-						element,
-					};
-
-					this.overlays.push(overlay);
+					this.overlayElements.push(button);
 				});
 			});
 		},
@@ -573,11 +646,11 @@ export default {
 				&& Math.abs(homeBounds.y - currentBounds.y) < 1e-9;
 		},
 		zoomIn() {
-			this.viewer.viewport.zoomBy(this.zoomFactor);
+			this.viewer.viewport.zoomBy(zoomFactor);
 			this.viewer.viewport.applyConstraints();
 		},
 		zoomOut() {
-			this.viewer.viewport.zoomBy(1 / this.zoomFactor);
+			this.viewer.viewport.zoomBy(1 / zoomFactor);
 			this.viewer.viewport.applyConstraints();
 		},
 	},
@@ -585,31 +658,19 @@ export default {
 </script>
 
 <template>
-	<section class="tify-scan">
+	<section
+		class="tify-scan"
+		aria-live="polite"
+	>
 		<h2 class="tify-sr-only">
 			{{ $translate('Scan [noun]') }}
 		</h2>
 
-		<button
-			v-if="!$store.isFirstPage"
-			type="button"
-			class="tify-scan-page-button -left"
-			:title="$translate('Previous page')"
-			:aria-label="$translate('Previous page')"
-			@click="$store.goToPreviousPage()"
-		>
-			<IconChevronLeft />
-		</button>
-		<button
-			v-if="!$store.isLastPage"
-			type="button"
-			class="tify-scan-page-button -right"
-			:title="$translate('Next page')"
-			:aria-label="$translate('Next page')"
-			@click="$store.goToNextPage()"
-		>
-			<IconChevronRight />
-		</button>
+		<div
+			ref="image"
+			class="tify-scan-image"
+			:class="{ '-annotations-hidden': $store.options.annotationsVisible === false }"
+		/>
 
 		<div
 			v-if="viewer"
@@ -701,11 +762,68 @@ export default {
 				<IconCommentTextOutline v-if="$store.options.annotationsVisible !== false" />
 				<IconCommentOffOutline v-else />
 			</button>
+
+			<AppDropdown
+				v-if="multiLayerResources.length"
+				class="tify-scan-dropdown -layers"
+				:class="{ '-active': $store.options.layers.some(Boolean) }"
+				alignment="center"
+				position="right"
+				:label="$translate('Toggle image layer select')"
+				shortcut="c"
+			>
+				<template #button>
+					<IconLayersOutline />
+				</template>
+
+				<h3 class="tify-sr-only">
+					{{ $translate('Layer') }}
+				</h3>
+				<template
+					v-for="resource in multiLayerResources"
+					:key="resource.pageIndex"
+				>
+					<h4 v-if="$store.options.pages.filter(page => page > 0).length > 1">
+						<PageName
+							:number="$store.options.pages[resource.pageIndex]"
+							:wrap="true"
+						/>
+					</h4>
+					<ol class="tify-link-list">
+						<li
+							v-for="(layer, layerIndex) in resource.items"
+							:key="layer.id"
+						>
+							<button
+								type="button"
+								:aria-pressed="layerIndex === ($store.options.layers[resource.pageIndex] || 0)"
+								@click="$store.options.layers[resource.pageIndex] = layerIndex; loadImageInfo()"
+							>
+								{{ $store.localize(layer.label) }}
+							</button>
+						</li>
+					</ol>
+				</template>
+			</AppDropdown>
 		</div>
 
-		<div
-			ref="image"
-			class="tify-scan-image"
-		/>
+		<div class="tify-scan-buttons -pagination">
+			<button
+				v-for="button in paginationButtons"
+				:key="button.position"
+				type="button"
+				class="tify-scan-button"
+				:class="`-${button.position}`"
+				:title="button.title"
+				:aria-label="button.title"
+				@click="button.onClick"
+			>
+				<!-- NOTE: Avoiding <component :is="…" /> in favor of unplugin-vue-components -->
+				<IconChevronLeft v-if="button.position === 'left'" />
+				<IconChevronRight v-else-if="button.position === 'right'" />
+				<IconChevronUp v-else-if="button.position === 'top'" />
+				<IconChevronDown v-else-if="button.position === 'bottom'" />
+			</button>
+		</div>
 	</section>
 </template>

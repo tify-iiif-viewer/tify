@@ -3,6 +3,7 @@ import { computed, nextTick, reactive } from 'vue';
 import { upgrade } from '@iiif/parser/upgrader';
 
 import { filterHtml } from '../modules/filter';
+import { parseCoordinatesString } from '../modules/parsing';
 import { createPromise } from '../modules/promise';
 import { isValidPagesArray, isValidUrl } from '../modules/validation';
 
@@ -79,16 +80,14 @@ function Store(args = {}) {
 			}
 
 			const currentCanvasIds = [];
-			store.options.pages.forEach((page) => {
-				if (page) {
-					currentCanvasIds.push(store.manifest.items[page - 1].id);
-				}
+			store.options.pages.filter((page) => page > 0).forEach((page) => {
+				currentCanvasIds.push(store.manifest.items[page - 1].id);
 			});
 
 			const { length } = store.manifest.structures;
 			let indexOfStructureWithSmallestRange;
 			let smallestRange;
-			for (let i = 0; i < length; i += 1) {
+			for (let i = length - 1; i >= 0; i -= 1) {
 				const structure = store.manifest.structures[i];
 				const { items } = structure;
 				if (items?.some((item) => currentCanvasIds.includes(item.id))) {
@@ -136,6 +135,8 @@ function Store(args = {}) {
 			const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
 			return page >= store.sections[store.sections.length - 1]?.firstPage;
 		}),
+		isReversed: computed(() => ['right-to-left', 'bottom-to-top'].includes(store.manifest.viewingDirection)),
+		isVertical: computed(() => ['top-to-bottom', 'bottom-to-top'].includes(store.manifest.viewingDirection)),
 		pageCount: computed(() => store.manifest?.items?.length),
 		sections: computed(() => {
 			if (!store.manifest.structures) {
@@ -425,8 +426,8 @@ function Store(args = {}) {
 			store.annotationsAvailable = null;
 			store.annotations = [];
 
-			store.options.pages.forEach(async (page) => {
-				if (page < 1 || store.annotations[page]) {
+			store.options.pages?.filter((page) => page > 0).forEach(async (page) => {
+				if (store.annotations[page]) {
 					return;
 				}
 
@@ -488,8 +489,10 @@ function Store(args = {}) {
 								return item.body.value;
 							}
 
-							const url = item?.body?.id
+							const url = item?.items?.[0].id
+								|| item?.body?.id
 								|| item?.body?.['@id']
+								|| item?.id
 								|| annotationId;
 
 							if (isValidUrl(url)) {
@@ -521,15 +524,9 @@ function Store(args = {}) {
 						|| (typeof resource.on === 'string' ? resource.on : null)
 						|| resource.target?.toString();
 
-					const xywh = coordinatesString?.split('xywh=')[1];
-					if (xywh) {
-						const coords = xywh
-							.split(',')
-							.map((number) => parseFloat(number));
-
-						if (coords.length === 4) {
-							annotation.coords = coords;
-						}
+					const coords = parseCoordinatesString(coordinatesString);
+					if (coords?.length === 4) {
+						annotation.coords = coords;
 					}
 
 					store.annotations[page][index] = annotation;
@@ -745,6 +742,7 @@ function Store(args = {}) {
 				store.options.urlQueryParams.forEach((key) => {
 					const param = store.options[key];
 					if (param === null
+						|| (key === 'layers' && !param.some(Boolean))
 						|| (key === 'pages' && param.toString() === store.getStartPages().toString())
 						|| (typeof param === 'object' && !Object.keys(param).length)
 					) {

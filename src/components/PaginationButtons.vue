@@ -2,7 +2,10 @@
 </script>
 
 <template>
-	<div class="tify-header-button-group -pagination">
+	<div
+		class="tify-header-button-group -pagination"
+		:class="{ '-reversed': $store.isReversed, '-vertical': $store.isVertical }"
+	>
 		<button
 			type="button"
 			class="tify-header-button"
