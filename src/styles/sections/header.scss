@@ -35,6 +35,18 @@
 			display: flex;
 		}
 
+		&.-reversed {
+			padding-left: g(.25);
+			padding-right: 0;
+			transform: scale(-1);
+		}
+
+		&.-vertical {
+			.tify-icon {
+				transform: rotate(90deg);
+			}
+		}
+
 		.tify-dropdown-content & {
 			box-shadow: 0 -1px $border-color;
 			display: flex;
@@ -98,6 +110,13 @@
 			@container (#{$large}) {
 				font-size: 0; // Prevent label from showing
 			}
+		}
+	}
+
+	&.-vertical {
+		// stylelint-disable-next-line no-descending-specificity
+		.tify-icon {
+			transform: rotate(90deg);
 		}
 	}
 

@@ -5,7 +5,6 @@
 	display: flex;
 	flex: 3;
 	flex-direction: column;
-	overflow: hidden;
 	padding: 0;
 	user-select: none;
 	z-index: 0;
@@ -19,7 +18,6 @@
 		left: g(.5);
 		position: absolute;
 		top: g(.5);
-		z-index: 1;
 	}
 }
 
@@ -43,6 +41,30 @@
 
 	&.-active {
 		@extend %dot-marker;
+	}
+
+	.tify-scan-buttons.-pagination & {
+		position: absolute;
+
+		&.-left {
+			bottom: g(.5);
+			left: g(.5);
+		}
+
+		&.-right {
+			bottom: g(.5);
+			right: g(.5);
+		}
+
+		&.-top {
+			right: g(.5);
+			top: g(.5);
+		}
+
+		&.-bottom {
+			right: g(.5);
+			bottom: g(.5);
+		}
 	}
 
 	.tify-scan-buttons.-controls & {
@@ -112,6 +134,20 @@
 		}
 	}
 
+	&.-layers .tify-dropdown-content {
+		width: max-content;
+
+		h4 {
+			// stylelint-disable-next-line scss/at-extend-no-missing-placeholder
+			@extend h3;
+			margin: 0 !important;
+		}
+
+		ol:not(:last-child) {
+			margin-bottom: g(.5);
+		}
+	}
+
 	label {
 		align-items: baseline;
 		display: flex;
@@ -132,22 +168,6 @@
 
 	p {
 		margin: 0;
-	}
-}
-
-.tify-scan-page-button {
-	@extend %button-translucent;
-	position: absolute;
-	z-index: 1;
-
-	&.-left {
-		bottom: g(.5);
-		left: g(.5);
-	}
-
-	&.-right {
-		bottom: g(.5);
-		right: g(.5);
 	}
 }
 

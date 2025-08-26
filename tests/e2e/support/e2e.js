@@ -27,7 +27,9 @@ afterEach(() => {
 		},
 		{
 			exclude: [
-				// Attribution may contain invalid HTML if the manifest provides such.
+				// Annotation overlays may contain duplicate IDs
+				'.openseadragon-canvas',
+				// Attribution may contain invalid HTML if the manifest provides such
 				'.tify-info-section.-attribution',
 			],
 		},
