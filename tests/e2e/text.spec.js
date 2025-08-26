@@ -8,12 +8,12 @@ describe('Text (annotations)', () => {
 		cy.get('.tify-scan-overlay').should('have.length', 102);
 
 		// Check the first annotation overlay of each page
-		cy.get('[style*="left: 18.8775px; top: 282.193px"]')
-			.children('.tify-scan-overlay[style*="width: 114.079px; height: 5.04485px"]');
-		cy.get('[style*="left: 413.198px; top: 282.193px"]')
-			.children('.tify-scan-overlay[style*="width: 114.079px; height: 5.04485px"]');
-		cy.get('[style*="left: 807.519px; top: 282.193px"]')
-			.children('.tify-scan-overlay[style*="width: 114.079px; height: 5.04485px"]');
+		cy.get('[style*="left: 11.2881px; top: 271.006px"]')
+			.children('.tify-scan-overlay[style*="width: 68.2152px; height: 3.01665px"]');
+		cy.get('[style*="left: 247.867px; top: 271.006px"]')
+			.children('.tify-scan-overlay[style*="width: 68.2152px; height: 3.01665px"]');
+		cy.get('[style*="left: 484.446px; top: 271.006px"]')
+			.children('.tify-scan-overlay[style*="width: 68.2152px; height: 3.01665px"]');
 	});
 
 	it('loads and displays an annotation list', () => {
@@ -24,9 +24,9 @@ describe('Text (annotations)', () => {
 		cy.contains('Text').click();
 
 		cy.get('[title="Toggle annotations"]').click();
-		cy.get('.tify-scan-overlay').should('not.exist');
+		cy.get('.tify-scan-overlay').should('have.length', 5).should('not.be.visible');
 		cy.get('[title="Toggle annotations"]').click();
-		cy.get('.tify-scan-overlay').should('have.length', 5);
+		cy.get('.tify-scan-overlay').should('have.length', 5).should('be.visible');
 
 		cy.contains('.tify-text-toggle', 'Painting');
 		cy.contains('.tify-text-toggle', 'Person');

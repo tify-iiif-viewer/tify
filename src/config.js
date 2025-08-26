@@ -97,6 +97,15 @@ export default {
 	language: 'en',
 
 	/**
+	 * Determines the initially displayed layer index (0-based integer) for each
+	 * visible page with multiple layers. This option is ignored for pages with
+	 * only one layer or if the layer index does not exist.
+	 *
+	 * @type {Array.<number>}
+	 */
+	layers: [],
+
+	/**
 	 * The URL of the IIIF manifest to load.
 	 *
 	 * @type {?string}
@@ -186,6 +195,7 @@ export default {
 		'annotationId',
 		'annotationsVisible',
 		'childManifestUrl',
+		'layers',
 		'filters',
 		'pages',
 		'pan',

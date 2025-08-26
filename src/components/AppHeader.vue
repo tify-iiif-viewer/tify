@@ -210,6 +210,7 @@ export default {
 					v-if="doublePageEnabled"
 					type="button"
 					class="tify-header-button"
+					:class="{ '-vertical': $store.isVertical }"
 					:title="$translate('Toggle double-page')"
 					:aria-label="$translate('Toggle double-page')"
 					:aria-pressed="$store.options.pages.length > 1"

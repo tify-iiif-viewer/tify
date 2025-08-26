@@ -22,11 +22,7 @@ export default {
 		imageUrls() {
 			const imageUrls = {};
 
-			this.$store.options.pages.forEach((page) => {
-				if (!page) {
-					return;
-				}
-
+			this.$store.options.pages.filter((page) => page > 0).forEach((page) => {
 				const resource = this.$store.manifest.items[page - 1].items?.[0]?.items?.[0]?.body;
 				if (resource?.service) {
 					const service = resource.service instanceof Array ? resource.service[0] : resource.service;
