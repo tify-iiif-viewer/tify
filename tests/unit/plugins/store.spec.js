@@ -1,5 +1,3 @@
-import { describe, it, expect } from 'vitest';
-
 import store from '../../../src/plugins/store';
 
 import manifest from '../../iiif-api/data/manifests/bl-vdc_00000004216E.json';

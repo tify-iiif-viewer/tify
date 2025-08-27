@@ -9,6 +9,7 @@ export default mergeConfig(
 			environment: 'jsdom',
 			include: ['tests/unit/**/*.spec.js'],
 			exclude: [...configDefaults.exclude],
+			globals: true,
 			root: fileURLToPath(new URL('./', import.meta.url)),
 
 			// Prevent canvas-related error in unit tests
