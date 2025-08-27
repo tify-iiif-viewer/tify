@@ -13,6 +13,7 @@ export default {
 		return {
 			defaultCanvasCss: '',
 			loadingTimeout: null,
+			mediaResource: null,
 			overlayElements: [],
 			promise: createPromise(),
 			tileSources: [],
@@ -104,7 +105,7 @@ export default {
 		// eslint-disable-next-line func-names
 		'$store.options.pages': function (newValue, oldValue) {
 			const reset = newValue.length !== oldValue.length;
-			this.loadImageInfo(reset);
+			this.loadInfo(reset);
 		},
 		// eslint-disable-next-line func-names
 		'$store.options.view': function () {
@@ -112,7 +113,7 @@ export default {
 		},
 	},
 	mounted() {
-		this.loadImageInfo();
+		this.loadInfo();
 
 		this.$store.readyPromises.push(this.promise);
 
@@ -203,7 +204,7 @@ export default {
 			if (this.viewer) {
 				this.viewer.addOnceHandler('open', () => {
 					if (this.viewerState.isReset || reset) {
-						this.resetScan();
+						this.resetImage();
 					} else {
 						this.viewer.viewport.applyConstraints(true);
 
@@ -288,7 +289,7 @@ export default {
 
 			this.viewer.addHandler('animation-finish', () => {
 				if (this.viewerState.isReset) {
-					this.removeScanOptions();
+					this.removeImageOptions();
 					return;
 				}
 
@@ -301,11 +302,6 @@ export default {
 					},
 					zoom: Math.round(this.viewer.viewport.getZoom() * 1e3) / 1e3,
 				});
-			});
-
-			// Required for touchscreens: The canvas swallows the touch event, so click-outside is not triggered
-			this.viewer.addHandler('canvas-click', () => {
-				document.body.click();
 			});
 
 			this.viewer.addHandler('open', () => {
@@ -354,13 +350,15 @@ export default {
 			this.defaultCanvasCss = this.viewer.drawer.canvas.style.cssText;
 			this.updateFilterStyle();
 
-			this.$api.expose(this.resetScan);
+			this.$api.expose(this.resetImage);
 			this.$api.expose(this.viewer, 'viewer');
 
 			this.promise.resolve();
 		},
-		loadImageInfo(reset = false) {
+		loadInfo(reset = false) {
 			this.stopLoadingWatch();
+
+			this.mediaResource = null;
 
 			const infoPromises = [];
 			this.$store.options.pages.filter((page) => page > 0).forEach((page, pageIndex) => {
@@ -376,11 +374,40 @@ export default {
 						return;
 					}
 
-					const resource = item.body?.items ? item.body.items[layerIndex] : item.body;
+					let resource = item.body?.items?.[layerIndex] || item.body;
 
 					if (!resource) {
 						this.$store.addError(`Image missing for page ${page}`);
 						return;
+					}
+
+					if (['Sound', 'Video'].includes(resource.type)) {
+						const { pages } = this.$store.options;
+						if (pages.length > 1) {
+							// Reset to single-page view
+							this.$store.updateOptions({ pages: [pages[0] < 1 ? 1 : pages[0]] });
+						}
+
+						// Force re-render because replacing just the <source> while a
+						// video is playing does have no effect
+						this.mediaResource = {};
+						const mediaResource = {
+							format: resource.format,
+							type: resource.type,
+							url: resource.id,
+						};
+						this.$nextTick(() => {
+							this.mediaResource = mediaResource;
+						});
+
+						// TODO: Add support for multiple accompanyingCanvas
+						const accBody = this.$store.manifest
+							.items[page - 1]
+							.accompanyingCanvas
+							?.items?.[0]
+							?.items?.[0]
+							?.body;
+						resource = accBody?.items ? accBody.items[layerIndex] : accBody;
 					}
 
 					const services = resource?.source?.service || resource?.service;
@@ -436,7 +463,6 @@ export default {
 		},
 		onKeydown(event) {
 			if (event.key === 'Escape') {
-				this.filtersVisible = false;
 				this.$store.rootElement.focus();
 			}
 
@@ -449,7 +475,7 @@ export default {
 
 			if (zeroKeyCodes.includes(event.keyCode)) {
 				if (event.shiftKey) {
-					this.resetScan(event);
+					this.resetImage(event);
 				} else {
 					this.viewer.viewport.goHome();
 				}
@@ -483,7 +509,7 @@ export default {
 				default:
 			}
 		},
-		removeScanOptions() {
+		removeImageOptions() {
 			this.$store.updateOptions({
 				pan: {},
 				zoom: null,
@@ -493,7 +519,7 @@ export default {
 			this.viewer.drawer.canvas.style.cssText = this.defaultCanvasCss;
 			this.$store.updateOptions({ filters: {} });
 		},
-		resetScan(includingFiltersAndRotation) {
+		resetImage(includingFiltersAndRotation) {
 			if (includingFiltersAndRotation) {
 				// Rotation has to be reset before pan and zoom
 				this.viewer.viewport.setRotation(0);
@@ -504,7 +530,7 @@ export default {
 			}
 
 			this.viewer.viewport.goHome();
-			this.removeScanOptions();
+			this.removeImageOptions();
 		},
 		rotateRight(event) {
 			const { viewport } = this.viewer;
@@ -610,7 +636,7 @@ export default {
 				this.$store.annotations[page]?.forEach((annotation, annotationIndex) => {
 					const button = document.createElement('button');
 					button.ariaLabel = `${page}/${annotationIndex}`;
-					button.className = `tify-scan-overlay${
+					button.className = `tify-media-overlay${
 						this.$store.options.annotationId === annotation.id
 							? ' -current'
 							: ''
@@ -668,26 +694,26 @@ export default {
 
 <template>
 	<section
-		class="tify-scan"
+		class="tify-media"
 		aria-live="polite"
 	>
 		<h2 class="tify-sr-only">
-			{{ $translate('Scan [noun]') }}
+			{{ $translate('Media') }}
 		</h2>
 
 		<div
 			ref="image"
-			class="tify-scan-image"
+			class="tify-media-image"
 			:class="{ '-annotations-hidden': $store.options.annotationsVisible === false }"
 		/>
 
 		<div
 			v-if="viewer"
-			class="tify-scan-buttons -controls"
+			class="tify-media-buttons -controls"
 		>
 			<button
 				type="button"
-				class="tify-scan-button"
+				class="tify-media-button"
 				:disabled="viewerState.isMaxZoom"
 				:title="$translate('Zoom in')"
 				:aria-label="$translate('Zoom in')"
@@ -697,7 +723,7 @@ export default {
 			</button>
 			<button
 				type="button"
-				class="tify-scan-button"
+				class="tify-media-button"
 				:disabled="viewerState.isMinZoom"
 				:title="$translate('Zoom out')"
 				:aria-label="$translate('Zoom out')"
@@ -707,18 +733,18 @@ export default {
 			</button>
 			<button
 				type="button"
-				class="tify-scan-button"
+				class="tify-media-button"
 				:disabled="viewerState.isReset"
 				:title="$translate('Reset')"
 				:aria-label="$translate('Reset')"
-				@click="resetScan(!!$event.shiftKey)"
+				@click="resetImage(!!$event.shiftKey)"
 			>
 				<IconAspectRatio />
 			</button>
 
 			<button
 				type="button"
-				class="tify-scan-button"
+				class="tify-media-button"
 				:class="{ '-active': !!$store.options.rotation }"
 				:title="$translate('Rotate')"
 				:aria-label="$translate('Rotate')"
@@ -728,7 +754,7 @@ export default {
 			</button>
 
 			<AppDropdown
-				class="tify-scan-dropdown -filters"
+				class="tify-media-dropdown -filters"
 				:class="{ '-active': filtersActive }"
 				alignment="center"
 				position="right"
@@ -748,7 +774,7 @@ export default {
 				<p>
 					<button
 						type="button"
-						class="tify-scan-reset"
+						class="tify-media-reset"
 						:disabled="!filtersActive"
 						@click.stop="resetFilters()"
 					>
@@ -763,7 +789,7 @@ export default {
 					&& ($store.options.view === 'text' || !$store.isContainerWidthAtLeast('medium'))
 				"
 				type="button"
-				class="tify-scan-button"
+				class="tify-media-button"
 				:title="$translate('Toggle annotations')"
 				:aria-label="$translate('Toggle annotations')"
 				@click="toggleOverlays()"
@@ -774,7 +800,7 @@ export default {
 
 			<AppDropdown
 				v-if="multiLayerResources.length"
-				class="tify-scan-dropdown -layers"
+				class="tify-media-dropdown -layers"
 				:class="{ '-active': $store.options.layers.some(Boolean) }"
 				alignment="center"
 				position="right"
@@ -806,7 +832,7 @@ export default {
 							<button
 								type="button"
 								:aria-pressed="layerIndex === ($store.options.layers[resource.pageIndex] || 0)"
-								@click="$store.options.layers[resource.pageIndex] = layerIndex; loadImageInfo()"
+								@click="$store.options.layers[resource.pageIndex] = layerIndex; loadInfo()"
 							>
 								{{ $store.localize(layer.label) }}
 							</button>
@@ -816,12 +842,19 @@ export default {
 			</AppDropdown>
 		</div>
 
-		<div class="tify-scan-buttons -pagination">
+		<AppPlayer
+			v-if="mediaResource?.url"
+			:src="mediaResource.url"
+			:format="mediaResource.format"
+			:hasImage="!!viewer"
+		/>
+
+		<div class="tify-media-buttons -pagination">
 			<button
 				v-for="button in paginationButtons"
 				:key="button.position"
 				type="button"
-				class="tify-scan-button"
+				class="tify-media-button"
 				:class="`-${button.position}`"
 				:title="button.title"
 				:aria-label="button.title"
