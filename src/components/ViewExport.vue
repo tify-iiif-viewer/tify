@@ -8,10 +8,7 @@ export default {
 	},
 	computed: {
 		hasElementPdfLinks() {
-			if (!(this.$store.manifest.structures instanceof Array)
-				|| !this.$store.manifest.structures[0]
-				|| !this.$store.manifest.structures[0].rendering
-			) {
+			if (!this.$store.manifest.structures?.[0]?.rendering) {
 				return false;
 			}
 
@@ -19,35 +16,55 @@ export default {
 
 			return renderings.some((rendering) => rendering.format && rendering.format === 'application/pdf');
 		},
-		imageUrls() {
-			const imageUrls = {};
+		media() {
+			const media = [];
 
 			this.$store.options.pages.filter((page) => page > 0).forEach((page) => {
-				const resource = this.$store.manifest.items[page - 1].items?.[0]?.items?.[0]?.body;
-				if (resource?.service) {
-					const service = resource.service instanceof Array ? resource.service[0] : resource.service;
-					const quality = ['ImageService2', 'ImageService3'].includes(service.type || service['@type'])
-						? 'default'
-						: 'native';
-					const size = service.type === 'ImageService3'
-						? 'max'
-						: 'full';
-					const id = service.id || service['@id'];
-					imageUrls[page] = `${id}${id.at(-1) === '/' ? '' : '/'}full/${size}/0/${quality}.jpg`;
-				} else {
-					imageUrls[page] = resource?.id;
-				}
+				const items = this.$store.manifest.items[page - 1].items?.[0]?.items;
+
+				items?.forEach((item, itemIndex) => {
+					const resources = item.body?.items || [item.body];
+
+					resources.forEach((resource, layerIndex) => {
+						const format = resource.format?.split('/')[1]; // e.g. image/jpeg -> jpeg
+
+						const medium = {
+							fileName: resource.id.split('/').at(-1),
+							format: format?.toUpperCase(),
+							label: resource.label,
+							type: resource.type,
+							url: resource.id,
+							page,
+							itemIndex,
+							layerIndex,
+						};
+
+						if (resource.service) {
+							const service = [].concat(resource.service)[0];
+							const quality = ['ImageService2', 'ImageService3'].includes(service.type || service['@type'])
+								? 'default'
+								: 'native';
+							const size = service.type === 'ImageService3'
+								? 'max'
+								: 'full';
+							const id = service.id || service['@id'];
+
+							const slash = id.at(-1) === '/' ? '' : '/';
+							medium.url = `${id}${slash}full/${size}/0/${quality}.${format === 'jpeg' ? 'jpg' : format}`;
+						}
+
+						media.push(medium);
+					});
+				});
 			});
 
-			return imageUrls;
+			return media;
 		},
 		pages() {
 			return this.$store.options.pages.filter((page) => page > 0);
 		},
 		renderings() {
-			return this.$store.manifest.rendering
-				? [].concat(this.$store.manifest.rendering)
-				: [];
+			return [].concat(this.$store.manifest.rendering || []);
 		},
 	},
 };
@@ -66,28 +83,56 @@ export default {
 			v-if="$store.manifest"
 			class="tify-export-section -links"
 		>
-			<h3>{{ $translate('Download Individual Images') }}</h3>
-			<ul class="tify-export-image-list">
-				<template v-for="page in pages">
-					<li
-						v-if="imageUrls[page]"
-						:key="page"
+			<h3>{{ $translate('Media Files') }}</h3>
+			<ul class="tify-export-list">
+				<li
+					v-for="medium in media"
+					:key="medium.url"
+				>
+					<!-- NOTE: The download attribute is only honored for same-origin URLs -->
+					<a
+						:href="medium.url"
+						class="tify-export-link"
+						download
+						rel="noopener noreferrer"
+						target="_blank"
 					>
-						<!-- NOTE: The download attribute is only honored for same-origin URLs -->
-						<a
-							class="tify-export-image-link"
-							:href="imageUrls[page]"
-							:download="`${page}.jpg`"
-						>
+						<span class="tify-export-link-media">
 							<img
-								:src="$store.getThumbnailUrl(page, 96)"
+								v-if="$store.getThumbnailUrl(medium.page, 96, medium.itemIndex, medium.layerIndex)"
+								:src="$store.getThumbnailUrl(medium.page, 96, medium.itemIndex, medium.layerIndex)"
 								alt=""
 							>
-							{{ $translate('Page') }}
-							{{ $store.getPageLabel(page, $store.manifest.items[page - 1].label) }}
-						</a>
-					</li>
-				</template>
+							<IconWaveform v-else-if="medium.type === 'Sound'" />
+							<IconFilmstrip v-else-if="medium.type === 'Video'" />
+						</span>
+
+						<span class="tify-export-link-text">
+							<PageName
+								:number="medium.page"
+								:wrap="true"
+							/>
+							<span
+								v-if="medium.label"
+								class="tify-export-link-hint"
+							>
+								{{ $store.localize(medium.label) }}
+							</span>
+							<span class="tify-export-link-format">
+								<template v-if="medium.type === 'Sound'">
+									{{ $translate('Audio') }} &middot;
+								</template>
+								<template v-else-if="medium.type === 'Video'">
+									{{ $translate('Video') }} &middot;
+								</template>
+								<template v-else-if="medium.type === 'Image'">
+									{{ $translate('Image') }} &middot;
+								</template>
+								{{ medium.format }}
+							</span>
+						</span>
+					</a>
+				</li>
 			</ul>
 		</div>
 

@@ -7,18 +7,50 @@
 	position: relative;
 }
 
-.tify-export-image-link {
+.tify-export-link {
 	@extend %button;
-	gap: g(.5);
-	text-align: left;
+	align-items: normal;
+	color: $text-color !important;
+	overflow: hidden;
+	padding: 0;
+}
+
+.tify-export-link-format {
+	font-size: $font-size-small;
+	line-height: 1;
+	margin: auto 0 0 auto;
+	white-space: nowrap;
+}
+
+.tify-export-link-hint {
+	color: $text-color;
+	font-size: $font-size-small;
+}
+
+.tify-export-link-media {
+	background: $highlight-bg;
+	padding: g(.5);
+	text-align: center;
 
 	img {
-		max-height: g(4.5);
-		max-width: g(4);
+		display: block;
+		height: g(4.5);
+		object-fit: contain;
+		width: g(4);
 	}
 }
 
-.tify-export-image-list {
+.tify-export-link-text {
+	align-items: start;
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: g(.25);
+	padding: g(.5);
+	text-align: left;
+}
+
+.tify-export-list {
 	list-style: none;
 	margin: 0;
 	padding: 0;
