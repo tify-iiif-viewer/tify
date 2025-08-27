@@ -5,15 +5,15 @@ describe('Text (annotations)', () => {
 		cy.contains('Text').click();
 		cy.contains('Alles höhere Leben - ob Tier oder').should('be.visible');
 
-		cy.get('.tify-scan-overlay').should('have.length', 102);
+		cy.get('.tify-media-overlay').should('have.length', 102);
 
 		// Check the first annotation overlay of each page
 		cy.get('[style*="left: 11.2881px; top: 271.006px"]')
-			.children('.tify-scan-overlay[style*="width: 68.2152px; height: 3.01665px"]');
+			.children('.tify-media-overlay[style*="width: 68.2152px; height: 3.01665px"]');
 		cy.get('[style*="left: 247.867px; top: 271.006px"]')
-			.children('.tify-scan-overlay[style*="width: 68.2152px; height: 3.01665px"]');
+			.children('.tify-media-overlay[style*="width: 68.2152px; height: 3.01665px"]');
 		cy.get('[style*="left: 484.446px; top: 271.006px"]')
-			.children('.tify-scan-overlay[style*="width: 68.2152px; height: 3.01665px"]');
+			.children('.tify-media-overlay[style*="width: 68.2152px; height: 3.01665px"]');
 	});
 
 	it('loads and displays an annotation list', () => {
@@ -24,9 +24,9 @@ describe('Text (annotations)', () => {
 		cy.contains('Text').click();
 
 		cy.get('[title="Toggle annotations"]').click();
-		cy.get('.tify-scan-overlay').should('have.length', 5).should('not.be.visible');
+		cy.get('.tify-media-overlay').should('have.length', 5).should('not.be.visible');
 		cy.get('[title="Toggle annotations"]').click();
-		cy.get('.tify-scan-overlay').should('have.length', 5).should('be.visible');
+		cy.get('.tify-media-overlay').should('have.length', 5).should('be.visible');
 
 		cy.contains('.tify-text-toggle', 'Painting');
 		cy.contains('.tify-text-toggle', 'Person');
@@ -41,8 +41,8 @@ describe('Text (annotations)', () => {
 	it('highlights the corresponding text when an overlay is clicked and vice versa', () => {
 		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/wellcome-b18035723&tify={"view":"text"}`);
 
-		cy.get('.tify-scan-overlay:eq(22)').click();
-		cy.get('.tify-scan-overlay:eq(22)').should('have.class', '-current');
+		cy.get('.tify-media-overlay:eq(22)').click();
+		cy.get('.tify-media-overlay:eq(22)').should('have.class', '-current');
 		cy.contains('.tify-text-item.-current', 'näher kommen');
 	});
 
@@ -59,13 +59,13 @@ describe('Text (annotations)', () => {
 			+ '&tify={"view":"text"}',
 		);
 		cy.contains('Gänseliesel-Brunnen').click();
-		cy.get('.tify-scan-overlay').should('have.length', 1).should('have.class', '-current');
+		cy.get('.tify-media-overlay').should('have.length', 1).should('have.class', '-current');
 
 		cy.visit(
 			`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/cookbook-recipe-0266-full-canvas-annotation`
 			+ '&tify={"view":"text"}',
 		);
-		cy.get('.tify-scan-overlay').should('not.exist');
+		cy.get('.tify-media-overlay').should('not.exist');
 	});
 
 	it('displays images in annotations', () => {

@@ -1,0 +1,166 @@
+.tify-player {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow: hidden;
+	position: absolute;
+	width: 100%;
+
+	&.-audio {
+		align-items: center;
+		justify-content: center;
+		padding: g(.5);
+	}
+
+	&.-bottom {
+		bottom: 1px;
+		height: g(2);
+	}
+}
+
+.tify-player-overlay {
+	align-items: center;
+	background: none;
+	border: 0;
+	color: #fff;
+	cursor: pointer;
+	display: flex;
+	inset: 0 0 g(2);
+	justify-content: center;
+	position: absolute;
+	transition: opacity $td;
+
+	.tify-player.-playing & {
+		opacity: 0;
+	}
+
+	.tify-player.-audio & {
+		margin: g();
+		padding: g(.5);
+		position: static;
+		width: g(4 + .5 * 2);
+
+		&:focus,
+		&:hover {
+			transform: scale(1.1);
+		}
+	}
+
+	.tify-icon {
+		flex: 0 0 g(4);
+		height: auto;
+	}
+}
+
+.tify-player-duration {
+	color: $text-color-muted;
+	font-size: $font-size-small;
+}
+
+.tify-player-av {
+	background: black;
+	flex: 1;
+	height: calc(100% - g(2) - 1px);
+	transition: height $td;
+
+	&::cue {
+		// TODO: Style subtitles
+	}
+}
+
+.tify-player-controls {
+	background: $header-bg;
+	border-top: 1px solid $border-color;
+	display: flex;
+	flex-wrap: wrap;
+	gap: g(.25);
+	justify-content: center;
+	padding: g(.25);
+	transition: margin $td;
+	width: 100%;
+	z-index: 99;
+
+	.tify-player.-audio & {
+		border: 1px solid $border-color;
+		border-radius: $br;
+		max-width: g(32);
+	}
+
+	:fullscreen .tify-player.-playing:not(.-mousing) & {
+		margin-bottom: calc(g(-2) - 1px);
+	}
+
+	> div {
+		align-items: center;
+		display: flex;
+		flex: 1 auto;
+		gap: g(.25);
+		margin: 0;
+		min-width: 0;
+
+		&:last-child {
+			flex: 0 1 g(5);
+			justify-self: end;
+		}
+	}
+}
+
+.tify-player-mute,
+.tify-player-play-pause {
+	@extend %button-borderless;
+	padding: g(.25);
+}
+
+.tify-player-play-pause {
+	.tify-player.-audio & {
+		padding: g(.5);
+	}
+}
+
+.tify-player-seekbar {
+	flex: 1;
+	margin: 0;
+	min-width: g(3);
+}
+
+.tify-player-select {
+	// font-size: $font-size-small;
+
+	.tify-dropdown-button {
+		@extend %button-borderless;
+		flex-direction: column;
+		min-height: g(1.5);
+		min-width: g(1.5);
+		padding: 0;
+	}
+
+	&.-rate button {
+		justify-content: center;
+	}
+}
+
+.tify-player-select-badge {
+	font-size: $font-size-small;
+	line-height: g(.5);
+}
+
+h3.tify-player-select-title {
+	box-shadow: none;
+	margin: 0;
+	padding: 0 g(.25);
+	white-space: nowrap;
+
+	&::after {
+		content: none;
+	}
+}
+
+.tify-player-time {
+	margin: 0 g(.25);
+	white-space: nowrap;
+}
+
+.tify-player-volume {
+	flex: 0 0 g(3);
+	margin: 0;
+}

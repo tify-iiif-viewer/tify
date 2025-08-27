@@ -3,5 +3,14 @@
 	flex: 0 0 24px;
 	height: 24px;
 	vertical-align: middle;
-	width: 24px;
+
+	&.-spin {
+		animation: rotate 1s linear infinite;
+	}
+
+	@keyframes rotate {
+		100% {
+			transform: rotate(360deg);
+		}
+	}
 }

@@ -8,7 +8,7 @@ describe('Scan', () => {
 
 		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081&tify=${encodedParams}`);
 		cy.get('[title="Toggle image filters"]').click();
-		cy.get('.tify-scan-dropdown.-filters').contains('Saturation 0');
+		cy.get('.tify-media-dropdown.-filters').contains('Saturation 0');
 	});
 
 	it('resets pan, zoom, rotation and filters at once', () => {
@@ -29,7 +29,7 @@ describe('Scan', () => {
 		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081&tify=${encodedParams}`);
 
 		cy.get('[title="Rotate"].-active');
-		cy.get('.tify-scan-dropdown.-filters.-active');
+		cy.get('.tify-media-dropdown.-filters.-active');
 
 		cy.get('.tify').type('{shift}0');
 		cy.url().should(
