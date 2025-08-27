@@ -1,0 +1,3 @@
+[submodule "tests/iiif-api/data/iiif-cookbook"]
+	path = tests/iiif-api/data/iiif-cookbook
+	url = git@github.com:IIIF/cookbook-recipes.git
