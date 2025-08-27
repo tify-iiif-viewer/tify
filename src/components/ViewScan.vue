@@ -255,7 +255,7 @@ export default {
 				drawer: 'canvas',
 				element: this.$refs.image,
 				immediateRender: this.$store.isContainerWidthAtLeast('small'),
-				preload: this.$store.isWide(),
+				placeholderFillStyle: 'grey',
 				preserveImageSizeOnResize: true,
 				preserveViewport: true,
 				showNavigationControl: false,
