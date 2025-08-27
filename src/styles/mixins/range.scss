@@ -1,39 +1,38 @@
-// Based on Styling Cross-Browser Compatible Range Inputs with Sass v1.4.1
-// Github: https://github.com/darlanrod/input-range-sass
-// Author: Darlan Rod https://github.com/darlanrod
-// MIT License
+/**
+ * Based on Styling Cross-Browser Compatible Range Inputs with Sass v1.4.1
+ * Github: https://github.com/darlanrod/input-range-sass
+ * Author: Darlan Rod https://github.com/darlanrod
+ * MIT License
+ */
 
 // NOTE: Styles with different vendor prefixes must not be grouped
 
-$track-color: $border-color;
+$track-color: $border-color linear-gradient(
+	to right,
+	oklch(from $link-color l c h / 50%),
+	$link-color var(--value),
+	transparent var(--value)
+);
 $track-focus-color: null;
-$thumb-bg: $link-color;
-$thumb-focus-bg: $link-hover-color;
-$thumb-radius: $br;
-$thumb-height: g();
-$thumb-width: g(.5);
 $track-height: g(.25);
 $track-radius: $br;
 
-@mixin range-track {
-	cursor: pointer;
-	height: $track-height;
-	width: 100%;
+@mixin range-thumb {
+	opacity: 0;
+	width: 0;
 }
 
-@mixin range-thumb {
-	background: $thumb-bg;
-	border: 0;
-	border-radius: $thumb-radius;
-	cursor: pointer;
-	height: $thumb-height;
-	width: $thumb-width;
+@mixin range-track {
+	height: $track-height;
+	width: 100%;
 }
 
 @mixin range {
 	appearance: none;
 	background: none;
-	margin: g(.25) 0 g(-.25);
+	cursor: pointer;
+	height: $track-height;
+	margin: $track-height 0;
 	width: 100%;
 
 	&::-webkit-slider-runnable-track {
@@ -45,8 +44,6 @@ $track-radius: $br;
 
 	&::-webkit-slider-thumb {
 		@include range-thumb;
-		appearance: none;
-		margin-top: calc((#{$track-height} * .5) - (#{$thumb-height} * .5));
 	}
 
 	&::-moz-range-track {
@@ -56,29 +53,13 @@ $track-radius: $br;
 		border-radius: $track-radius;
 	}
 
-	&::-moz-range-thumb {
-		@include range-thumb;
+	&:focus-visible::-moz-range-track,
+	&:hover::-moz-range-track {
+		height: calc(#{$track-height} * 2);
+		margin: calc(#{$track-height} * -.5) 0;
 	}
 
-	&:focus {
-		&::-webkit-slider-runnable-track {
-			background: $track-focus-color;
-			box-shadow: $inset-shadow;
-		}
-
-		&::-webkit-slider-thumb {
-			background: $thumb-focus-bg;
-			box-shadow: $inset-shadow;
-		}
-
-		&::-moz-range-track {
-			background: $track-focus-color;
-			box-shadow: $inset-shadow;
-		}
-
-		&::-moz-range-thumb {
-			background: $thumb-focus-bg;
-			box-shadow: $inset-shadow;
-		}
+	&::-moz-range-thumb {
+		@include range-thumb;
 	}
 }
