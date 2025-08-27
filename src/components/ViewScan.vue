@@ -690,7 +690,7 @@ export default {
 
 			<button
 				v-if="$store.annotations.length
-					&& ($store.options.view === 'fulltext' || !$store.isContainerWidthAtLeast('medium'))
+					&& ($store.options.view === 'text' || !$store.isContainerWidthAtLeast('medium'))
 				"
 				type="button"
 				class="tify-scan-button"

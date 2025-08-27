@@ -46,38 +46,37 @@ export default {
 <template>
 	<section
 		ref="panel"
-		class="tify-fulltext"
+		class="tify-text"
 		tabindex="0"
 	>
 		<h2 class="tify-sr-only">
-			{{ $translate('Fulltext') }}
+			{{ $translate('Text') }}
 		</h2>
 
 		<div
 			v-if="$store.annotationsAvailable !== false"
-			class="tify-fulltext-texts"
+			class="tify-text-pages"
 		>
 			<div
 				v-for="page in pages"
 				:key="page"
-				class="tify-fulltext-page"
+				class="tify-text-page"
 			>
-				<!-- eslint-disable-next-line vuejs-accessibility/heading-has-content -->
 				<h3 v-if="$store.pageCount > 1">
 					<PageName :number="page" />
 				</h3>
-				<ul class="tify-fulltext-list">
+				<ul class="tify-text-list">
 					<li
 						v-for="(annotation, index) in $store.annotations[page]"
 						:key="`${page}-${index}`"
 						:ref="$store.options.annotationId === annotation.id ? 'currentItem' : ''"
-						class="tify-fulltext-item"
+						class="tify-text-item"
 						:class="{ '-current': $store.options.annotationId === annotation.id }"
 					>
 						<div
 							role="button"
 							tabindex="0"
-							class="tify-fulltext-toggle"
+							class="tify-text-toggle"
 							@click="$store.toggleAnnotationId(annotation.id)"
 							@keydown.enter.space="$store.toggleAnnotationId(annotation.id)"
 							v-html="filterHtml(annotation.html)"
@@ -89,9 +88,9 @@ export default {
 
 		<p
 			v-else
-			class="tify-fulltext-none"
+			class="tify-text-none"
 		>
-			{{ $translate('Fulltext not available for this page') }}
+			{{ $translate('Text not available for this page') }}
 		</p>
 	</section>
 </template>

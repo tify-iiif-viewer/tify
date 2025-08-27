@@ -60,7 +60,7 @@ function Store(args = {}) {
 		rootElement: args.rootElement || null,
 		urlUpdateTimeout: null,
 		annotationsActive: computed(() => {
-			if (store.options.view === 'fulltext') {
+			if (store.options.view === 'text') {
 				return true;
 			}
 
@@ -544,7 +544,9 @@ function Store(args = {}) {
 			}
 
 			// For backwards compatibility
-			if (params.view === 'scan') {
+			if (params.view === 'fulltext') {
+				params.view = 'text';
+			} else if (['scan', ''].includes(params.view)) {
 				params.view = null;
 			}
 
@@ -715,7 +717,7 @@ function Store(args = {}) {
 			};
 
 			if (options.annotationId && !store.isContainerWidthAtLeast('medium')) {
-				options.view = ['scan', ''].includes(store.options.view) ? 'fulltext' : 'scan';
+				options.view = store.options.view ? null : 'text';
 			}
 
 			store.updateOptions(options);

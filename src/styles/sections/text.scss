@@ -1,9 +1,9 @@
-.tify-fulltext {
+.tify-text {
 	@extend %panel;
 	overflow-y: auto;
 }
 
-.tify-fulltext-item {
+.tify-text-item {
 	margin: 0 g(-.75);
 	padding: 0 g(.5);
 
@@ -14,19 +14,22 @@
 
 	img {
 		// Ensure visibility in dark mode since images with transparency may require a white background
-		background: #fff;
+		background: $panel-bg;
+		color-scheme: light;
 		height: auto;
+		margin: g(.5) 0;
 		max-width: 100%;
 	}
 }
 
-.tify-fulltext-toggle {
+.tify-text-toggle {
+	@extend %iiif-html;
 	border-radius: $br;
 	cursor: pointer;
 	display: block;
+	overflow-wrap: break-word;
 	padding: g(.25);
 	text-decoration: none;
-	word-break: break-word;
 
 	@include hover {
 		background: $base-color-paler;
@@ -43,16 +46,24 @@
 	}
 }
 
-.tify-fulltext-list {
+.tify-text-list {
 	list-style: none;
 	padding: 0 !important;
 }
 
-.tify-fulltext-none {
+.tify-text-none {
 	color: $text-color-muted;
 	font-style: italic;
 }
 
-.tify-fulltext-page {
+.tify-text-page {
 	margin: 0 g(.25) g() g(.5);
+
+	.tify-page-name {
+		width: auto;
+	}
+
+	.tify-page-name-number:not(:only-child) {
+		margin-left: 0;
+	}
 }

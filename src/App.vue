@@ -15,7 +15,7 @@ export default {
 		};
 	},
 	computed: {
-		hasAnnotations() {
+		hasText() {
 			return this.$store.manifest?.items?.some((canvas) => 'annotations' in canvas);
 		},
 		hasToc() {
@@ -121,7 +121,7 @@ export default {
 	>
 		<AppHeader
 			v-if="readyToRender && ($store.collection || $store.manifest)"
-			:fulltextEnabled="hasAnnotations"
+			:textEnabled="hasText"
 			:tocEnabled="hasToc"
 		/>
 
@@ -133,10 +133,10 @@ export default {
 				<!-- Scan must come first, other views in arbitrary order -->
 				<ViewScan :id="$getId('scan')" />
 
-				<ViewFulltext
-					v-if="hasAnnotations"
-					v-show="$store.options.view === 'fulltext'"
-					:id="$getId('fulltext')"
+				<ViewText
+					v-if="hasText"
+					v-show="$store.options.view === 'text'"
+					:id="$getId('text')"
 				/>
 				<ViewThumbnails
 					v-show="$store.options.view === 'thumbnails'"
