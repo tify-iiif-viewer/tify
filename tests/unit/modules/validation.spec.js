@@ -1,5 +1,3 @@
-import { describe, it, expect } from 'vitest';
-
 import { isValidPagesArray, isValidUrl } from '../../../src/modules/validation';
 
 describe('isValidPagesArray', () => {

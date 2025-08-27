@@ -1,5 +1,3 @@
-import { describe, it, expect } from 'vitest';
-
 import id from '../../../src/plugins/id';
 
 const app = { config: { globalProperties: {} } };
