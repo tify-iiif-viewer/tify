@@ -1,35 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<TEI.2><teiHeader/><text><body>
-      <p id="ID1">
-        <w function="152,444,1776,624">MATHEMATISCHE</w> <w function="1924,456,2824,632">ANNALEN</w><w function="2828,588,2856,632">.</w> </p>
-      <p id="ID2">
-        <w function="726,976,822,1042">IN</w> <w function="870,978,1466,1048">VERBINDUNG</w> <w function="1512,982,1672,1048">MIT</w> <w function="1720,984,1788,1052">С</w> <w function="1828,986,2282,1052">NEUMANN</w> </p>
-      <p id="ID3">
-        <w function="1150,1210,1580,1272">BEGRÜNDET</w> <w function="1628,1228,1872,1276">DURCH</w> </p>
-      <p id="ID4">
-        <w function="360,1422,802,1522">EUDOLF</w> <w function="868,1424,1502,1528">FEIEDEIOH</w> <w function="1564,1432,2024,1532">ALFEED</w> <w function="2096,1436,2624,1536">CLEBSCH</w><w function="2630,1514,2650,1534">.</w> </p>
-      <p id="ID5">
-        <w function="860,1840,1090,1898">Unter</w> <w function="1145,1840,1627,1921">Mitwirkung</w>  <w function="1686,1846,1813,1904">der</w>  <w function="1873,1846,2154,1906">Herren</w> </p>
-      <p id="ID6">
-        <w function="319,2026,484,2093">Prof</w>
-        <w function="481,2079,495,2093">,</w> <w function="532,2029,584,2091">P</w><w function="589,2080,603,2094">.</w> <w function="644,2029,949,2095">Gordan</w> <w function="998,2057,1075,2097">zu</w> <w function="1123,2033,1461,2120">Erlangen</w><w function="1471,2086,1487,2119">,</w> <w function="1542,2035,1707,2102">Prof</w><w function="1702,2087,1717,2102">.</w> <w function="1758,2036,1828,2102">С</w> <w function="1865,2039,2221,2106">Neumann</w> <w function="2271,2066,2347,2106">zu</w> <w function="2396,2043,2668,2132">Leipzig</w><w function="2667,2098,2686,2131">,</w> <w function="833,2140,998,2205">Prof</w><w function="996,2191,1007,2204">.</w> <w function="1048,2141,1110,2204">K</w><w function="1115,2190,1128,2205">.</w> <w function="1168,2141,1743,2208">VonderMühll</w> <w function="1793,2168,1872,2209">zu</w> <w function="1920,2145,2188,2234">Leipzig</w> </p>
-      <p id="ID7">
-        <w function="1027,2418,1452,2494">gegenwärtig</w> <w function="1498,2419,1993,2495">herausgegeben</w> <w function="1450,2616,1563,2654">von</w> </p>
-      <p id="ID8">
-        <w function="410,2760,595,2834">Prof</w>
-        <w function="590,2818,606,2835">.</w> <w function="655,2767,895,2836">Felix</w> <w function="949,2768,1198,2839">Klein</w>        <w function="1437,2773,1567,2837">und</w>   <w function="1670,2769,1858,2842">Prof</w><w function="1849,2829,1864,2845">.</w> <w function="1912,2774,2256,2857">Adolph</w> <w function="2310,2779,2605,2861">Mayer</w> </p>
-      <p id="ID9">
-        <w function="620,2895,679,2924">zu</w> <w function="711,2884,962,2936">Gbttingen</w><w function="968,2914,979,2926">.</w>      <w function="1076,2904,1091,2920">»</w>                                                        <w function="2003,2902,2061,2932">ÏU</w> <w function="2087,2893,2279,2945">Leipzig</w><w function="2281,2925,2292,2936">.</w> </p>
-      <p id="IDa">
-        <w function="1084,3140,1308,3206">XXIX</w>
-        <w function="1314,3192,1326,3206">.</w> <w function="1370,3138,1552,3206">Band</w><w function="1556,3192,1574,3208">.</w>   <w function="1652,3144,1682,3208">1</w><w function="1694,3194,1708,3210">.</w> <w function="1746,3144,1908,3210">Heft</w><w function="1910,3198,1924,3212">.</w> <w function="1170,3442,1280,3498">Mit</w> <w function="1318,3450,1350,3498">3</w> <w function="1388,3444,1814,3516">Figurentafeln</w><w function="1820,3490,1836,3504">.</w> </p>
-      <p id="IDb">
-        <w function="1294,4438,1690,4502">LEIPZIG</w>
-        <w function="1702,4490,1718,4524">,</w> </p>
-      <p id="IDc">
-        <w function="626,4596,910,4644">DRUCK</w> <w function="968,4598,1130,4644">UND</w> <w function="1190,4600,1514,4646">VEKLAG</w> <w function="1572,4600,1736,4650">VON</w> <w function="1786,4606,1828,4650">B</w><w function="1834,4634,1850,4650">.</w> <w function="1896,4604,1944,4652">G</w><w function="1946,4636,1962,4654">.</w> <w function="2010,4604,2382,4652">TEÜBNER</w><w function="2386,4634,2404,4652">.</w> </p>
-      <p id="IDd">
-        <w function="1414,4726,1578,4790">1887</w>
-        <w function="1584,4774,1602,4792">.</w> </p>
-      <pb/>
-      <milestone n="1" type="page"/></body></text></TEI.2>
+<TEI.2>
+	<teiHeader/>
+	<text>
+		<body>
+			<p id="ID1">
+				<w function="152,444,1776,624">MATHEMATISCHE</w>
+				<w function="1924,456,2824,632">ANNALEN</w>
+				<w function="2828,588,2856,632">.</w>
+			</p>
+			<p id="ID2">
+				<w function="726,976,822,1042">IN</w>
+				<w function="870,978,1466,1048">VERBINDUNG</w>
+				<w function="1512,982,1672,1048">MIT</w>
+				<w function="1720,984,1788,1052">С</w>
+				<w function="1828,986,2282,1052">NEUMANN</w>
+			</p>
+			<p id="ID3">
+				<w function="1150,1210,1580,1272">BEGRÜNDET</w>
+				<w function="1628,1228,1872,1276">DURCH</w>
+			</p>
+			<p id="ID4">
+				<w function="360,1422,802,1522">EUDOLF</w>
+				<w function="868,1424,1502,1528">FEIEDEIOH</w>
+				<w function="1564,1432,2024,1532">ALFEED</w>
+				<w function="2096,1436,2624,1536">CLEBSCH</w>
+				<w function="2630,1514,2650,1534">.</w>
+			</p>
+			<p id="ID5">
+				<w function="860,1840,1090,1898">Unter</w>
+				<w function="1145,1840,1627,1921">Mitwirkung</w>
+				<w function="1686,1846,1813,1904">der</w>
+				<w function="1873,1846,2154,1906">Herren</w>
+			</p>
+			<p id="ID6">
+				<w function="319,2026,484,2093">Prof</w>
+				<w function="481,2079,495,2093">,</w>
+				<w function="532,2029,584,2091">P</w>
+				<w function="589,2080,603,2094">.</w>
+				<w function="644,2029,949,2095">Gordan</w>
+				<w function="998,2057,1075,2097">zu</w>
+				<w function="1123,2033,1461,2120">Erlangen</w>
+				<w function="1471,2086,1487,2119">,</w>
+				<w function="1542,2035,1707,2102">Prof</w>
+				<w function="1702,2087,1717,2102">.</w>
+				<w function="1758,2036,1828,2102">С</w>
+				<w function="1865,2039,2221,2106">Neumann</w>
+				<w function="2271,2066,2347,2106">zu</w>
+				<w function="2396,2043,2668,2132">Leipzig</w>
+				<w function="2667,2098,2686,2131">,</w>
+				<w function="833,2140,998,2205">Prof</w>
+				<w function="996,2191,1007,2204">.</w>
+				<w function="1048,2141,1110,2204">K</w>
+				<w function="1115,2190,1128,2205">.</w>
+				<w function="1168,2141,1743,2208">VonderMühll</w>
+				<w function="1793,2168,1872,2209">zu</w>
+				<w function="1920,2145,2188,2234">Leipzig</w>
+			</p>
+			<p id="ID7">
+				<w function="1027,2418,1452,2494">gegenwärtig</w>
+				<w function="1498,2419,1993,2495">herausgegeben</w>
+				<w function="1450,2616,1563,2654">von</w>
+			</p>
+			<p id="ID8">
+				<w function="410,2760,595,2834">Prof</w>
+				<w function="590,2818,606,2835">.</w>
+				<w function="655,2767,895,2836">Felix</w>
+				<w function="949,2768,1198,2839">Klein</w>
+				<w function="1437,2773,1567,2837">und</w>
+				<w function="1670,2769,1858,2842">Prof</w>
+				<w function="1849,2829,1864,2845">.</w>
+				<w function="1912,2774,2256,2857">Adolph</w>
+				<w function="2310,2779,2605,2861">Mayer</w>
+			</p>
+			<p id="ID9">
+				<w function="620,2895,679,2924">zu</w>
+				<w function="711,2884,962,2936">Gbttingen</w>
+				<w function="968,2914,979,2926">.</w>
+				<w function="1076,2904,1091,2920">»</w>
+				<w function="2003,2902,2061,2932">ÏU</w>
+				<w function="2087,2893,2279,2945">Leipzig</w>
+				<w function="2281,2925,2292,2936">.</w>
+			</p>
+			<p id="IDa">
+				<w function="1084,3140,1308,3206">XXIX</w>
+				<w function="1314,3192,1326,3206">.</w>
+				<w function="1370,3138,1552,3206">Band</w>
+				<w function="1556,3192,1574,3208">.</w>
+				<w function="1652,3144,1682,3208">1</w>
+				<w function="1694,3194,1708,3210">.</w>
+				<w function="1746,3144,1908,3210">Heft</w>
+				<w function="1910,3198,1924,3212">.</w>
+				<w function="1170,3442,1280,3498">Mit</w>
+				<w function="1318,3450,1350,3498">3</w>
+				<w function="1388,3444,1814,3516">Figurentafeln</w>
+				<w function="1820,3490,1836,3504">.</w>
+			</p>
+			<p id="IDb">
+				<w function="1294,4438,1690,4502">LEIPZIG</w>
+				<w function="1702,4490,1718,4524">,</w>
+			</p>
+			<p id="IDc">
+				<w function="626,4596,910,4644">DRUCK</w>
+				<w function="968,4598,1130,4644">UND</w>
+				<w function="1190,4600,1514,4646">VEKLAG</w>
+				<w function="1572,4600,1736,4650">VON</w>
+				<w function="1786,4606,1828,4650">B</w>
+				<w function="1834,4634,1850,4650">.</w>
+				<w function="1896,4604,1944,4652">G</w>
+				<w function="1946,4636,1962,4654">.</w>
+				<w function="2010,4604,2382,4652">TEÜBNER</w>
+				<w function="2386,4634,2404,4652">.</w>
+			</p>
+			<p id="IDd">
+				<w function="1414,4726,1578,4790">1887</w>
+				<w function="1584,4774,1602,4792">.</w>
+			</p>
+			<pb/>
+			<milestone n="1" type="page"/>
+		</body>
+	</text>
+</TEI.2>

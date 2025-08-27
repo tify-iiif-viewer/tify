@@ -1,7 +1,7 @@
 describe('Support for native IIIF 3 manifests', () => {
 	it('displays correct metadata', () => {
 		cy.visit(
-			`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/aku-pal-375`
+			`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/aku-pal-375.json`
 			+ '&tify={"view":"info"}',
 		);
 
@@ -11,7 +11,7 @@ describe('Support for native IIIF 3 manifests', () => {
 
 	it('displays the TOC', () => {
 		cy.visit(
-			`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/amherst-63cc6105-570d-407b-af8c-07fda3f8c620.json`
+			`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/amherst-63cc6105-570d-407b-af8c-07fda3f8c620.json`
 			+ '&tify={"view":"toc"}',
 		);
 
@@ -22,7 +22,7 @@ describe('Support for native IIIF 3 manifests', () => {
 
 	it('displays attribution HTML', () => {
 		cy.visit(
-			`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/mskgent-8210.json`
+			`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/mskgent-8210.json`
 			+ '&tify={"view":"info"}',
 		);
 
@@ -31,7 +31,7 @@ describe('Support for native IIIF 3 manifests', () => {
 
 	it('displays a dash for metadata with an empty value', () => {
 		cy.visit(
-			`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/utrecht-1874-325480`
+			`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/utrecht-1874-325480.json`
 			+ '&tify={"view":"info"}',
 		);
 

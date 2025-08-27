@@ -1,7 +1,7 @@
-describe('Thumbnails', () => {
+describe('IIIF Cookbook 0283: Missing image', () => {
 	it('handles a missing thumbnail', () => {
 		cy.visit(
-			`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/cookbook-recipe-0283-missing-image`
+			`/?manifest=${Cypress.env('iiifApiUrl')}/iiif-cookbook/0283-missing-image/manifest.json`
 			+ '&tify={"view":"thumbnails"}',
 		);
 

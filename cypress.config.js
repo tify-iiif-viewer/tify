@@ -1,6 +1,5 @@
 import { defineConfig } from 'cypress';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import htmlvalidate from 'cypress-html-validate/plugin';
 
 // eslint-disable-next-line import/extensions
@@ -13,11 +12,10 @@ server.start(iiifApiPort);
 export default defineConfig({
 	e2e: {
 		baseUrl: 'http://localhost:4173',
-		defaultCommandTimeout: 2000,
 		specPattern: 'tests/e2e/**/*.{cy,spec}.{js,jsx,ts,tsx}',
 
-		viewportWidth: 1600,
-		viewportHeight: 900,
+		viewportWidth: 1280,
+		viewportHeight: 720,
 
 		fixturesFolder: 'tests/e2e/fixtures',
 		screenshotsFolder: 'tests/e2e/screenshots',

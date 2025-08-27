@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import 'cypress-html-validate/commands';
 
 afterEach(() => {

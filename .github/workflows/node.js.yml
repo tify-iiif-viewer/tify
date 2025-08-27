@@ -18,43 +18,45 @@ jobs:
         node-version: [20, 22]
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Get npm cache directory
-      id: npm-cache-dir
-      run: |
-        echo "dir=$(npm config get cache)" >> "$GITHUB_OUTPUT"
-    - name: Cache node modules
-      id: npm-cache
-      uses: actions/cache@v3
-      with:
-        path: ${{ steps.npm-cache-dir.outputs.dir }}
-        key: ${{ runner.os }}-node${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node${{ matrix.node-version }}-
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "dir=$(npm config get cache)" >> "$GITHUB_OUTPUT"
+      - name: Cache node modules
+        id: npm-cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node${{ matrix.node-version }}-
 
-    - name: Cache Cypress binary
-      uses: actions/cache@v3
-      with:
-        path: ~/.cache/Cypress
-        key: cypress-${{ runner.os }}-cypress-node${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
-        restore-keys: |
-          cypress-${{ runner.os }}-cypress-node${{ matrix.node-version }}-
+      - name: Cache Cypress binary
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-cypress-node${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            cypress-${{ runner.os }}-cypress-node${{ matrix.node-version }}-
 
-    - name: Install dependencies
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Run tests
-      run: |
-        npm ci
-        npm run test:unit && npm run build && npm run test:e2e
-    - name: Save test video folder
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: video-${{ runner.os }}-node${{ matrix.node-version }}
-        if-no-files-found: error
-        path: tests/e2e/
+      - name: Install dependencies
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Run tests
+        run: |
+          npm ci
+          npm run test:unit && npm run build && npm run test:e2e
+      - name: Save test video folder
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: video-${{ runner.os }}-node${{ matrix.node-version }}
+          if-no-files-found: error
+          path: tests/e2e/
 
   build-windows:
     runs-on: windows-latest
@@ -64,45 +66,47 @@ jobs:
         node-version: [20, 22]
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Get npm cache directory
-      id: npm-cache-dir
-      shell: pwsh
-      run: |
-        echo "dir=$(npm config get cache)" >> "${env:GITHUB_OUTPUT} "
-    - name: Cache node modules
-      id: npm-cache
-      uses: actions/cache@v3
-      with:
-        path: ${{ steps.npm-cache-dir.outputs.dir }}
-        key: ${{ runner.os }}-node${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node${{ matrix.node-version }}-
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: pwsh
+        run: |
+          echo "dir=$(npm config get cache)" >> "${env:GITHUB_OUTPUT} "
+      - name: Cache node modules
+        id: npm-cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node${{ matrix.node-version }}-
 
-    - name: Cache Cypress binary
-      uses: actions/cache@v3
-      with:
-        path: ~/.cache/Cypress
-        key: cypress-${{ runner.os }}-cypress-node${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
-        restore-keys: |
-          cypress-${{ runner.os }}-cypress-node${{ matrix.node-version }}-
+      - name: Cache Cypress binary
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-cypress-node${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            cypress-${{ runner.os }}-cypress-node${{ matrix.node-version }}-
 
-    - name: Install dependencies
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Run tests
-      run: |
-        npm ci
-        npm run test:unit && npm run build && npm run test:e2e
+      - name: Install dependencies
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Run tests
+        run: |
+          npm ci
+          npm run test:unit && npm run build && npm run test:e2e
 
-    - name: Save test video folder
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: video-${{ runner.os }}-node${{ matrix.node-version }}
-        if-no-files-found: error
-        path: tests/e2e/
+      - name: Save test video folder
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: video-${{ runner.os }}-node${{ matrix.node-version }}
+          if-no-files-found: error
+          path: tests/e2e/
 
   build-mac:
     runs-on: macos-latest
@@ -112,6 +116,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
       - name: Get npm cache directory
         id: npm-cache-dir
         run: |

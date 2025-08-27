@@ -1,6 +1,6 @@
 describe('Main', () => {
 	it('starts the app', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-PPN857449303`);
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-PPN857449303.json`);
 		cy.get('.tify');
 	});
 
@@ -8,7 +8,7 @@ describe('Main', () => {
 		// Prevent the test from failing due to an uncaught exception (which is expected)
 		cy.on('uncaught:exception', () => false);
 
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/invalid`);
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/invalid.json`);
 		cy.contains('Please provide a valid IIIF Presentation API manifest');
 	});
 
@@ -16,12 +16,12 @@ describe('Main', () => {
 		// Prevent the test from failing due to an uncaught exception (which is expected)
 		cy.on('uncaught:exception', () => false);
 
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/not-json`);
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/not-json.json`);
 		cy.contains('Error loading IIIF manifest');
 	});
 
 	it('loads a translation', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-PPN857449303&language=de`);
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-PPN857449303.json&language=de`);
 
 		cy.get('.tify-header');
 		cy.contains('Seiten');
@@ -32,7 +32,7 @@ describe('Main', () => {
 		// Prevent the test from failing due to an uncaught exception (which is expected)
 		cy.on('uncaught:exception', () => false);
 
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-PPN857449303&language=nope`);
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-PPN857449303.json&language=nope`);
 
 		cy.get('.tify-header');
 		cy.contains('Pages');
