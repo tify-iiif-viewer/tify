@@ -5,7 +5,7 @@ import { preventEvent } from '../modules/keyboard';
 
 export default {
 	props: {
-		fulltextEnabled: Boolean,
+		textEnabled: Boolean,
 		tocEnabled: Boolean,
 	},
 	data() {
@@ -69,8 +69,8 @@ export default {
 					}
 					break;
 				case '1':
-					if (this.$store.manifest && this.fulltextEnabled) {
-						this.toggleView('fulltext');
+					if (this.$store.manifest && this.textEnabled) {
+						this.toggleView('text');
 					}
 					break;
 				case '2':
@@ -272,15 +272,15 @@ export default {
 					</button>
 
 					<button
-						v-if="fulltextEnabled"
+						v-if="textEnabled"
 						type="button"
 						class="tify-header-button"
-						:aria-controls="$getId('fulltext')"
-						:aria-expanded="$store.options.view === 'fulltext'"
-						@click="toggleView('fulltext')"
+						:aria-controls="$getId('text')"
+						:aria-expanded="$store.options.view === 'text'"
+						@click="toggleView('text')"
 					>
-						<IconTextLong />
-						{{ $translate('Fulltext') }}
+						<IconText />
+						{{ $translate('Text') }}
 					</button>
 
 					<button

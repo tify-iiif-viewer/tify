@@ -1,6 +1,6 @@
 export default {
 	/**
-	 * The ID of the annotation to highlight when the fulltext view is active.
+	 * The ID of the annotation to highlight when the text view is active.
 	 * Only has effect for manifests with annotations.
 	 *
 	 * @type {?string}
@@ -8,11 +8,11 @@ export default {
 	annotationId: null,
 
 	/**
-	 * When the fulltext view is active (or just the scan view on small screens),
-	 * TIFY displays clickable annotation overlays on the scan, which are linked
-	 * to their corresponding fulltext section. Set to `false` to hide overlays
-	 * by default. Annotation overlays can always be toggled by the user. Only
-	 * has effect for manifests with annotations.
+	 * When the text view is active (or just the scan view on small screens),
+	 * TIFY displays clickable overlays on the image, which are linked to their
+	 * corresponding annotation in the text view. Set to `false` to hide overlays
+	 * by default. Annotation overlays can always be toggled by the user.
+	 * Only has effect for manifests with annotations.
 	 *
 	 * @type {?boolean}
 	 */
