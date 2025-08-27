@@ -200,7 +200,10 @@ export default {
 					v-for="page in pages"
 					:key="page"
 				>
-					<PageName :number="page.page" />
+					<PageName
+						:number="page.page"
+						wrap
+					/>
 					<ul
 						v-if="page.media.length"
 						class="tify-info-image-labels"
