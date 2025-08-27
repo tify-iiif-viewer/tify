@@ -175,7 +175,10 @@ export default {
 						[this.$store.isVertical ? 'height' : 'width']: size,
 					};
 
-					const { target } = this.$store.manifest.items[page - 1].items[0].items[index];
+					// TODO: This should never not be set, but in some rare
+					// cases index is out of bounds, throwing an error here.
+					// Need to investigate further, jury-rigged for now.
+					const { target } = this.$store.manifest.items[page - 1].items[0]?.items[index] || {};
 					const coords = parseCoordinatesString(target);
 					if (coords?.length === 4) {
 						[source.x, source.y, source.width] = coords.map((number) => number / initialSize);
