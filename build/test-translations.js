@@ -6,6 +6,26 @@ import {
 	rootDir,
 } from './i18n.js'; // eslint-disable-line import/extensions
 
+function wrapText(text) {
+	const words = text.split(' ');
+	let line = '';
+	let output = '';
+
+	words.forEach((word) => {
+		// Strip out invisible control characters
+		// eslint-disable-next-line no-control-regex
+		if ((line + word).replace(/\x1b\[[0-9;]*m/g, '').length > process.stdout.columns) {
+			output += `${line.trimEnd()}\n`;
+			line = '';
+		}
+
+		line += `${word} `;
+	});
+
+	output += line.trimEnd();
+	return output;
+}
+
 const translatedStrings = findTranslatedStrings().map((result) => result.key);
 
 if (!translatedStrings.length) {
@@ -31,21 +51,20 @@ results.forEach((result) => {
 
 	['empty', 'missing', 'unused'].forEach((type) => {
 		const issues = result.issues.filter((issue) => issue.type === type);
-		const label = `${type.charAt(0).toUpperCase() + type.slice(1)} keys`;
 		if (issues.length) {
-			console.log(`  ${chalk.redBright(label)}`);
-			console.log(`    ${chalk.red(issues.map((issue) => issue.key).join('\n    '))}`);
+			const label = chalk.bold(`${type.charAt(0).toUpperCase() + type.slice(1)} keys:`);
+			console.log(wrapText(`${label} ${chalk.redBright(issues.map((issue) => issue.key).join(chalk.grey(', ')))}`));
 		}
 	});
 
 	result.notes.forEach((note) => {
-		console.log(`  ${chalk.cyanBright(note)}`);
+		console.log(chalk.cyanBright(note));
 	});
 
 	if (result.notes.length || result.issues.length) {
 		translationsWithIssuesCount += 1;
 	} else {
-		console.log(chalk.greenBright('  Shiny!'));
+		console.log(chalk.greenBright('Shiny!'));
 	}
 
 	console.log();
