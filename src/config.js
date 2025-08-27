@@ -154,7 +154,20 @@ export default {
 	pan: {},
 
 	/**
-	 * The initial rotation of the scan in degrees. Should be a multiple of 90.
+	 * Sets the preferred IIIF image format by file extension. If the image
+	 * format is `null` or if the set format is not supported, it is determined
+	 * by the IIIF Image API, which usually defaults to `jpg`. Possible formats
+	 * are `avif` (not in the IIIF spec yet, but supported by some servers),
+	 * `gif`, `jpg`, `png` and `webp`. Some IIIF Image APIs advertise image
+	 * formats without actually being able to provide them, so this should only
+	 * be used when you have control over all loaded manifests.
+	 *
+	 * @type {?string}
+	 */
+	preferredImageFormat: null,
+
+	/**
+	 * The initial rotation of the image in degrees. Should be a multiple of 90.
 	 *
 	 * @type {?number}
 	 */

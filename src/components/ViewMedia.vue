@@ -452,6 +452,14 @@ export default {
 			if (infoPromises.length) {
 				Promise.all(infoPromises).then((infoItems) => {
 					infoItems.filter(Boolean).forEach((infoItem) => {
+						if (this.$store.options.preferredImageFormat) {
+							const formats = infoItem.extraFormats || infoItem.profile?.[1]?.formats;
+							if (formats?.includes(this.$store.options.preferredImageFormat)) {
+								// eslint-disable-next-line no-param-reassign
+								infoItem.tileFormat = this.$store.options.preferredImageFormat;
+							}
+						}
+
 						this.tileSources.push(infoItem);
 					});
 
