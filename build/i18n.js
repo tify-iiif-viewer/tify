@@ -10,6 +10,7 @@ export const rootDir = url.fileURLToPath(new URL('..', import.meta.url));
 
 const globPattern = `${rootDir}/src/**/*.vue`;
 const excludedGlobPatterns = ['**/demo', '**/icons'];
+const excludedKeys = ['$n/a'];
 const translationFunctionName = '$translate';
 
 function sortTranslation(translation) {
@@ -36,9 +37,10 @@ export function checkTranslationFiles(
 	referenceKeys,
 	options = { addMissing: false, removeUnused: false, sort: false },
 ) {
+	const filteredReferenceKeys = referenceKeys.filter((key) => !excludedKeys.includes(key));
+	const results = [];
 	const translationFiles = fs.readdirSync(translationsDir);
 
-	const results = [];
 	translationFiles.forEach((file) => {
 		const result = {
 			langCode: path.parse(file).name,
@@ -48,21 +50,21 @@ export function checkTranslationFiles(
 
 		const json = fs.readFileSync(`${translationsDir}/${file}`);
 		const translation = JSON.parse(json);
-		const keys = Object.keys(translation);
+		const keys = Object.keys(translation).filter((key) => !excludedKeys.includes(key));
 
 		result.langName = translation.$language;
 
 		const emptyKeys = keys.filter((key) => !translation[key]);
 		result.issues.push(...emptyKeys.map((key) => ({ type: 'empty', key })));
 
-		const missingKeys = referenceKeys.filter((key) => !keys.includes(key));
+		const missingKeys = filteredReferenceKeys.filter((key) => !keys.includes(key));
 		result.issues.push(...missingKeys.map((key) => ({ type: 'missing', key })));
 
-		const unusedKeys = keys.filter((key) => !referenceKeys.includes(key));
+		const unusedKeys = keys.filter((key) => !filteredReferenceKeys.includes(key));
 		result.issues.push(...unusedKeys.map((key) => ({ type: 'unused', key })));
 
 		const keysStr = keys.join(', ');
-		const referenceKeysStr = referenceKeys.join(', ');
+		const referenceKeysStr = filteredReferenceKeys.join(', ');
 		if (!missingKeys.length
 			&& !unusedKeys.length
 			&& keysStr !== referenceKeysStr
