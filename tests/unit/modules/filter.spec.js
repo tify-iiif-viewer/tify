@@ -1,5 +1,3 @@
-import { describe, it, expect } from 'vitest';
-
 import { filterHtml } from '../../../src/modules/filter';
 
 describe('filterHtml', () => {

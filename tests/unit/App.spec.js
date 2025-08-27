@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
+
 import pkg from '../../package.json';
 
 import App from '../../src/App.vue';
@@ -10,6 +10,9 @@ import store from '../../src/plugins/store';
 import i18n from '../../src/plugins/i18n';
 
 describe('setLanguage', () => {
+	// Mock getComputedStyle, which does not exist in Node
+	window.getComputedStyle = () => ({ content: '' });
+
 	const { vm } = mount(App, {
 		global: {
 			plugins: [
