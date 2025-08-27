@@ -1,8 +1,8 @@
-describe('Fulltext', () => {
-	it('displays fulltext and annotation overlays at the correct positions', () => {
+describe('Text (annotations)', () => {
+	it('displays annotations and overlays at the correct positions', () => {
 		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/wellcome-b18035723&tify={"pages":[14,15,16]}`);
 
-		cy.contains('Fulltext').click();
+		cy.contains('Text').click();
 		cy.contains('Alles höhere Leben - ob Tier oder').should('be.visible');
 
 		cy.get('.tify-scan-overlay').should('have.length', 102);
@@ -21,49 +21,49 @@ describe('Fulltext', () => {
 
 		cy.get('[title="Toggle annotations"]').should('not.exist');
 
-		cy.contains('Fulltext').click();
+		cy.contains('Text').click();
 
 		cy.get('[title="Toggle annotations"]').click();
 		cy.get('.tify-scan-overlay').should('not.exist');
 		cy.get('[title="Toggle annotations"]').click();
 		cy.get('.tify-scan-overlay').should('have.length', 5);
 
-		cy.contains('.tify-fulltext-toggle', 'Painting');
-		cy.contains('.tify-fulltext-toggle', 'Person');
+		cy.contains('.tify-text-toggle', 'Painting');
+		cy.contains('.tify-text-toggle', 'Person');
 	});
 
-	it('displays XML fulltext', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-PPN235181684_0029&tify={"view":"fulltext"}`);
+	it('displays XML annotations', () => {
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-PPN235181684_0029&tify={"view":"text"}`);
 
 		cy.contains('Unter Mitwirkung der Herren').should('be.visible');
 	});
 
-	it('highlights the corresponding fulltext section when an overlay is clicked and vice versa', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/wellcome-b18035723&tify={"view":"fulltext"}`);
+	it('highlights the corresponding text when an overlay is clicked and vice versa', () => {
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/wellcome-b18035723&tify={"view":"text"}`);
 
 		cy.get('.tify-scan-overlay:eq(22)').click();
 		cy.get('.tify-scan-overlay:eq(22)').should('have.class', '-current');
-		cy.contains('.tify-fulltext-item.-current', 'näher kommen');
+		cy.contains('.tify-text-item.-current', 'näher kommen');
 	});
 
 	// TODO: Split this up, one test per recipe
 	it('correctly displays manifests from the IIIF cookbook', () => {
 		cy.visit(
 			`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/cookbook-recipe-0019-html-in-annotations`
-			+ '&tify={"view":"fulltext"}',
+			+ '&tify={"view":"text"}',
 		);
-		cy.contains('.tify-fulltext-toggle', 'Gänseliesel Brunnen');
+		cy.contains('.tify-text-toggle', 'Gänseliesel Brunnen');
 
 		cy.visit(
 			`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/cookbook-recipe-0021-tagging`
-			+ '&tify={"view":"fulltext"}',
+			+ '&tify={"view":"text"}',
 		);
 		cy.contains('Gänseliesel-Brunnen').click();
 		cy.get('.tify-scan-overlay').should('have.length', 1).should('have.class', '-current');
 
 		cy.visit(
 			`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/cookbook-recipe-0266-full-canvas-annotation`
-			+ '&tify={"view":"fulltext"}',
+			+ '&tify={"view":"text"}',
 		);
 		cy.get('.tify-scan-overlay').should('not.exist');
 	});
@@ -71,10 +71,10 @@ describe('Fulltext', () => {
 	it('displays images in annotations', () => {
 		cy.visit(
 			`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/cookbook-recipe-0377-image-in-annotation`
-			+ '&tify={"view":"fulltext"}',
+			+ '&tify={"view":"text"}',
 		);
 
-		cy.get('.tify-fulltext img[src$="918ecd18c2592080851777620de9bcb5-fountain/full/300,/0/default.jpg"]');
-		cy.contains('.tify-fulltext', 'Night picture of the Gänseliesel fountain');
+		cy.get('.tify-text img[src$="918ecd18c2592080851777620de9bcb5-fountain/full/300,/0/default.jpg"]');
+		cy.contains('.tify-text', 'Night picture of the Gänseliesel fountain');
 	});
 });

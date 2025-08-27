@@ -6,8 +6,8 @@ describe('Views', () => {
 
 		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/wellcome-b19974760&tify=${encodedParams}`);
 
-		cy.contains('Fulltext').click();
-		cy.contains('[aria-expanded="true"]', 'Fulltext');
+		cy.contains('Text').click();
+		cy.contains('[aria-expanded="true"]', 'Text');
 
 		cy.contains('Pages').click();
 		cy.contains('[aria-expanded="true"]', 'Pages');
@@ -38,7 +38,7 @@ describe('Views', () => {
 		cy.contains('The chemist and druggist');
 
 		cy.get('.tify').type('1');
-		cy.contains('[aria-expanded="true"]', 'Fulltext');
+		cy.contains('[aria-expanded="true"]', 'Text');
 
 		cy.get('.tify').type('2');
 		cy.contains('[aria-expanded="true"]', 'Pages');

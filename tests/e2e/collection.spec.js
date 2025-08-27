@@ -5,7 +5,7 @@ describe('Collection', () => {
 		// Only Info and Collection buttons should be visible
 		cy.contains('Info');
 		cy.contains('Collection');
-		cy.should('not.contain', 'Fulltext');
+		cy.should('not.contain', 'Text');
 		cy.should('not.contain', 'Scan');
 		cy.should('not.contain', 'Contents');
 		cy.should('not.contain', 'Export');
