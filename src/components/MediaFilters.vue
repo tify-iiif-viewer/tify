@@ -25,6 +25,7 @@ export default {
 				step=".01"
 				type="range"
 				:value="$store.options.filters.brightness || 1"
+				:style="`--value: ${(($store.options.filters.brightness || 1) - .5) * .66667 * 100}%`"
 				@input="$emit('update', 'brightness', $event)"
 			/>
 		</label>
@@ -40,6 +41,7 @@ export default {
 				step=".01"
 				type="range"
 				:value="$store.options.filters.contrast || 1"
+				:style="`--value: ${(($store.options.filters.contrast || 1) - .5) * .66667 * 100}%`"
 				@input="$emit('update', 'contrast', $event)"
 			/>
 		</label>
@@ -55,6 +57,7 @@ export default {
 				step=".01"
 				type="range"
 				:value="saturation"
+				:style="`--value: ${(saturation / 3) * 100}%`"
 				@input="$emit('update', 'saturate', $event)"
 			/>
 		</label>
