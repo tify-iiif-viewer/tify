@@ -1,6 +1,6 @@
 describe('TOC', () => {
 	it('allows navigation', () => {
-		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081`;
+		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json`;
 		cy.visit(`/?manifest=${manifestUrl}`);
 
 		cy.contains('Contents').click();
@@ -60,7 +60,7 @@ describe('TOC', () => {
 	});
 
 	it('highlights all current levels', () => {
-		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081`;
+		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json`;
 		cy.visit(`/?manifest=${manifestUrl}`);
 
 		cy.contains('Contents').click();
@@ -72,7 +72,7 @@ describe('TOC', () => {
 	});
 
 	it('is working even when structures are chaotic', () => {
-		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/cambridge-MS-ADD-08640`;
+		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifests/cambridge-MS-ADD-08640.json`;
 		const encodedParams = encodeURIComponent(JSON.stringify({
 			view: 'toc',
 			pages: [4],
@@ -84,7 +84,7 @@ describe('TOC', () => {
 	});
 
 	it('hides items if their "behavior" is "top"', () => {
-		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/digitale-sammlungen-bsb00026283`;
+		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifests/digitale-sammlungen-bsb00026283.json`;
 		const encodedParams = encodeURIComponent(JSON.stringify({
 			view: 'toc',
 		}));
@@ -98,7 +98,7 @@ describe('TOC', () => {
 	});
 
 	it('hides the whole TOC if there are no structures', () => {
-		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/aku-pal-375.json`;
+		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifests/aku-pal-375.json`;
 
 		cy.visit(`/?manifest=${manifestUrl}`);
 
@@ -108,7 +108,7 @@ describe('TOC', () => {
 	});
 
 	it('displays page labels instead of structure labels if the latter are missing', () => {
-		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/bodleian-faeff7fb-f8a7-44b5-95ed-cff9a9ffd198.json`;
+		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifests/bodleian-faeff7fb-f8a7-44b5-95ed-cff9a9ffd198.json`;
 		const encodedParams = encodeURIComponent(JSON.stringify({
 			view: 'toc',
 		}));
@@ -120,7 +120,7 @@ describe('TOC', () => {
 	});
 
 	it('auto-expands a single top-level structure', () => {
-		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifest/cambridge-MS-ADD-08640`;
+		const manifestUrl = `${Cypress.env('iiifApiUrl')}/manifests/cambridge-MS-ADD-08640.json`;
 
 		cy.visit(`/?manifest=${manifestUrl}`);
 
