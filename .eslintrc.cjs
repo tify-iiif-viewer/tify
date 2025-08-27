@@ -12,7 +12,10 @@ module.exports = {
 	globals: {
 		ENV: true, // defined in vite.config.js
 	},
-	ignorePatterns: ['dist'],
+	ignorePatterns: [
+		'dist',
+		'iiif-cookbook',
+	],
 	overrides: [
 		{
 			files: ['*.html'],
