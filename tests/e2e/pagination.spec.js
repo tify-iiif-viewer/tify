@@ -1,24 +1,24 @@
 describe('Pagination', () => {
-	const currentPage = '.tify-page-select > button';
+	const pageButton = '.tify-page-select > button';
 
 	it('changes the page via buttons', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081&tify={"pages":[15]}`);
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json&tify={"pages":[15]}`);
 
-		cy.contains(currentPage, '15 · 7r');
+		cy.contains(pageButton, '15 · 7r');
 
-		cy.get('[title="First page"]').first().click();
-		cy.contains(currentPage, '1 · -');
+		cy.get('[title="First page"]:visible').eq(0).click();
+		cy.contains(pageButton, '1 · -');
 
-		Cypress._.times(2, () => cy.get('[title="Next page"]').first().click());
-		cy.contains(currentPage, '3 · 1r');
+		Cypress._.times(2, () => cy.get('[title="Next page"]:visible').eq(0).click());
+		cy.contains(pageButton, '3 · 1r');
 
-		Cypress._.times(2, () => cy.get('[title="Next section"]').first().click());
-		cy.contains(currentPage, '7 · 3r');
+		Cypress._.times(2, () => cy.get('[title="Next section"]:visible').click());
+		cy.contains(pageButton, '7 · 3r');
 
-		cy.get('[title="Last page"]').first().click();
-		cy.contains(currentPage, '69 · -');
+		cy.get('[title="Last page"]:visible').click();
+		cy.contains(pageButton, '69 · -');
 
-		Cypress._.times(4, () => cy.get('[title="Previous section"]').first().click());
+		Cypress._.times(4, () => cy.get('[title="Previous section"]:visible').click());
 		cy.contains('16 · 7v');
 
 		cy.get('[title="Toggle double-page"]').first().click();
@@ -26,48 +26,48 @@ describe('Pagination', () => {
 	});
 
 	it('changes the page via keyboard', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081&tify={"pages":[15]}`);
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json&tify={"pages":[15]}`);
 
-		cy.contains(currentPage, '15 · 7r');
+		cy.contains(pageButton, '15 · 7r');
 
 		cy.get('.tify').type('q');
-		cy.contains(currentPage, '14 · 6v');
+		cy.contains(pageButton, '14 · 6v');
 		cy.get('.tify').type('e');
-		cy.contains(currentPage, '15 · 7r');
+		cy.contains(pageButton, '15 · 7r');
 
 		cy.get('.tify').type('b');
-		cy.contains(currentPage, '14 · 6v');
+		cy.contains(pageButton, '14 · 6v');
 		cy.get('[title="Toggle double-page"][aria-pressed="true"]');
 
 		cy.get('.tify').type('q');
-		cy.contains(currentPage, '12 · 5v');
+		cy.contains(pageButton, '12 · 5v');
 		cy.get('.tify').type(',');
-		cy.contains(currentPage, '10 · 4v');
+		cy.contains(pageButton, '10 · 4v');
 
 		cy.get('.tify').type('e');
-		cy.contains(currentPage, '12 · 5v');
+		cy.contains(pageButton, '12 · 5v');
 		cy.get('.tify').type('.');
-		cy.contains(currentPage, '14 · 6v');
+		cy.contains(pageButton, '14 · 6v');
 
 		cy.get('.tify').type('Q');
-		cy.contains(currentPage, '1 · -');
+		cy.contains(pageButton, '1 · -');
 
 		cy.get('.tify').type('E');
-		cy.contains(currentPage, '68 · -');
+		cy.contains(pageButton, '68 · -');
 
 		cy.get('.tify').type('b');
-		cy.contains(currentPage, '69 · -');
+		cy.contains(pageButton, '69 · -');
 		cy.get('[title="Toggle double-page"][aria-pressed="false"]');
 
 		cy.get('.tify').type('Q');
-		cy.contains(currentPage, '1 · -');
+		cy.contains(pageButton, '1 · -');
 
 		cy.get('.tify').type('E');
-		cy.contains(currentPage, '69 · -');
+		cy.contains(pageButton, '69 · -');
 	});
 
 	it('highlights the current page after a page change', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081`);
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json`);
 		cy.get('[title="Last page"]').first().click();
 		cy.contains('Current Page 68 · -').first().click();
 		cy.contains('.-current:not(.-highlighted)', '68 · -');
@@ -76,27 +76,27 @@ describe('Pagination', () => {
 
 	it('changes the page on small touchscreens', () => {
 		cy.viewport(375, 667);
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-HANS_DE_7_w042081`);
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json`);
 
-		cy.get('[title="View"]').click();
+		cy.get('[aria-label=View]').click();
 		cy.contains('Pages').should('be.visible');
-		cy.get('[title="View"]').click();
+		cy.get('[aria-label=View]').click();
 		cy.contains('Pages').should('not.be.visible');
 
-		cy.get('[title="View"]').click();
+		cy.get('[aria-label=View]').click();
 		cy.get('.tify-dropdown-content [title="Last page"]').click();
 		cy.get('.tify-dropdown-content [title="Next page"]').should('be.disabled');
 		cy.get('.tify-dropdown-content [title="Next section"]').should('be.disabled');
 		cy.get('.tify-dropdown-content [title="Last page"]').should('be.disabled');
 
 		cy.get('.tify-dropdown-content [title="Previous section"]').click();
-		cy.contains(currentPage, '67 · -');
+		cy.contains(pageButton, '67 · -');
 		cy.get('.tify-header').click();
 		cy.get('.tify-dropdown-content').should('not.be.visible');
 	});
 
 	it('hides section buttons if there are less than 2 sections', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/gdz-PPN140716181.json`);
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-PPN140716181.json`);
 
 		cy.contains('Von Gottes Gnaden');
 		cy.contains('Previous section').should('not.exist');

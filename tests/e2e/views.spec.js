@@ -1,10 +1,10 @@
 describe('Views', () => {
 	it('changes the view via buttons', () => {
 		const encodedParams = encodeURIComponent(JSON.stringify({
-			childManifestUrl: `${Cypress.env('iiifApiUrl')}/manifest/wellcome-b19974760_1_0004`,
+			childManifestUrl: `${Cypress.env('iiifApiUrl')}/manifests/wellcome-b19974760_1_0004.json`,
 		}));
 
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/wellcome-b19974760&tify=${encodedParams}`);
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/wellcome-b19974760.json&tify=${encodedParams}`);
 
 		cy.contains('Text').click();
 		cy.contains('[aria-expanded="true"]', 'Text');
@@ -21,7 +21,7 @@ describe('Views', () => {
 		cy.contains('Export').click();
 		cy.contains('[aria-expanded="true"]', 'Export');
 
-		cy.contains('Collection').click();
+		cy.contains('.tify-header-button', 'Collection').click();
 		cy.contains('[aria-expanded="true"]', 'Collection');
 
 		cy.contains('Help').click();
@@ -30,10 +30,10 @@ describe('Views', () => {
 
 	it('changes the view via keyboard', () => {
 		const encodedParams = encodeURIComponent(JSON.stringify({
-			childManifestUrl: `${Cypress.env('iiifApiUrl')}/manifest/wellcome-b19974760_1_0004`,
+			childManifestUrl: `${Cypress.env('iiifApiUrl')}/manifests/wellcome-b19974760_1_0004.json`,
 		}));
 
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifest/wellcome-b19974760&tify=${encodedParams}`);
+		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/wellcome-b19974760.json&tify=${encodedParams}`);
 
 		cy.contains('The chemist and druggist');
 
