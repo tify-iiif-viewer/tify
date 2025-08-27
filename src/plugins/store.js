@@ -65,10 +65,7 @@ function Store(args = {}) {
 				return true;
 			}
 
-			if (['scan', ''].includes(store.options.view)
-				&& store.options.annotationsVisible !== false
-				&& !store.isContainerWidthAtLeast('medium')
-			) {
+			if (!store.options.view && !store.isContainerWidthAtLeast('medium')) {
 				return true;
 			}
 
