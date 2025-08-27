@@ -8,16 +8,17 @@ import { createPromise } from '../modules/promise';
 import { isValidPagesArray, isValidUrl } from '../modules/validation';
 
 function convertManifest(originalManifest) {
-	// For IIIF 2: "related" may be erroneously converted, save for later
+	// For IIIF 2: Some properties are erroneously converted, save for later
 	const { related } = originalManifest;
+	const { requiredStatement } = originalManifest;
 
 	// Convert IIIF 2 manifest to IIIF 3 (IIIF 3 remains unchanged)
 	// NOTE: originalManifest may be modified during conversion
 	const manifest = upgrade(originalManifest);
 
-	// For IIIF 2: Restore "related" items
-	if (related && originalManifest['@context'] === 'http://iiif.io/api/presentation/2/context.json') {
-		[].concat(related).forEach((object) => {
+	// Fix converted IIIF 2 manifests
+	if (originalManifest['@context'] === 'http://iiif.io/api/presentation/2/context.json') {
+		[].concat(related || []).forEach((object) => {
 			manifest.homepage = manifest.homepage || [];
 			manifest.homepage.push(
 				typeof object === 'string'
@@ -28,21 +29,30 @@ function convertManifest(originalManifest) {
 						format: object.format,
 					},
 			);
-
-			// Remove homepage from "provider" if the same URL is already in "related"
-			manifest.provider?.forEach((provider, providerIndex) => {
-				provider?.homepage?.forEach((homepage, homepageIndex) => {
-					if (homepage.id === object['@id']) {
-						manifest.provider[providerIndex].homepage.splice(homepageIndex, 1);
-					}
-				});
-			});
 		});
-	}
 
-	// Remove dummy provider
-	if (manifest.provider?.[0]?.label?.none?.[0] === 'Unknown') {
-		delete manifest.provider[0].label;
+		manifest.provider?.forEach((provider, providerIndex) => {
+			if (!provider.homepage) {
+				return;
+			}
+
+			manifest.provider[providerIndex].homepage = provider.homepage
+				.filter((providerHomepage) => (
+					// Remove provider dummy homepage
+					providerHomepage.id !== 'http://example.org/undefined/1'
+					// Remove provider homepage if the same URL is already in "homepage"
+					&& !manifest.homepage.find((homepage) => homepage.id === providerHomepage.id)
+				));
+		});
+
+		// Remove dummy provider, restore requiredStatement
+		if (manifest.provider?.[0]?.label?.none?.[0] === 'Unknown') {
+			delete manifest.provider[0].label;
+
+			if (requiredStatement && !manifest.requiredStatement) {
+				manifest.requiredStatement = requiredStatement;
+			}
+		}
 	}
 
 	return manifest;
@@ -353,26 +363,47 @@ function Store(args = {}) {
 
 			return [startPage];
 		},
-		getThumbnailUrl(page, thumbnailWidth) {
+		getThumbnailUrl(page, thumbnailWidth, itemIndex = 0, layerIndex = 0) {
 			const canvas = store.manifest.items[page - 1];
 
 			const thumbnail = canvas.thumbnail?.[0];
-			if (thumbnail?.id && thumbnail?.width >= thumbnailWidth) {
+			if (thumbnail?.id
+				&& thumbnail?.width >= thumbnailWidth
+			) {
 				return thumbnail.id;
 			}
 
-			const resource = canvas.items?.[0]?.items?.[0]?.body;
-			if (resource?.service) {
-				const service = resource.service instanceof Array ? resource.service[0] : resource.service;
+			const body = canvas.items?.[0]?.items?.[itemIndex]?.body;
+			const resource = body?.items ? body.items[layerIndex] : body;
+			const thumbnailService = thumbnail?.service || resource?.source?.service || resource?.service;
+			if (thumbnailService) {
+				const service = [].concat(thumbnailService)[0];
 				const quality = ['ImageService2', 'ImageService3'].includes(service.type || service['@type'])
 					? 'default'
 					: 'native';
 				const id = service.id || service['@id'];
-				// TODO: this.$store.options.preferredImageFormat
-				return `${id}${id.at(-1) === '/' ? '' : '/'}full/${thumbnailWidth},/0/${quality}.jpg`;
+
+				// Use recommended (and probably cached) size if possible
+				let width = thumbnailWidth;
+				if (thumbnail?.service) {
+					service.sizes?.forEach((size) => {
+						if (size.width >= width && size.width <= width * 2) {
+							width = size.width;
+						}
+					});
+				}
+
+				// TODO: Add support for store.options.preferredImageFormat
+				const format = 'jpg';
+				const slash = id.at(-1) === '/' ? '' : '/';
+				return `${id}${slash}full/${width},/0/${quality}.${format}`;
 			}
 
-			return thumbnail?.id || resource?.id;
+			if (resource?.type === 'Image') {
+				return thumbnail?.id || resource?.id;
+			}
+
+			return '';
 		},
 		goToFirstPage() {
 			store.setPage(1);
@@ -421,7 +452,6 @@ function Store(args = {}) {
 		},
 		loadAnnotations() {
 			store.annotationsAvailable = null;
-			store.annotations = [];
 
 			store.options.pages?.filter((page) => page > 0).forEach(async (page) => {
 				if (store.annotations[page]) {
@@ -570,9 +600,6 @@ function Store(args = {}) {
 				? params.view
 				: store.options.view;
 			store.options.zoom = parseFloat(params.zoom) || store.options.zoom;
-		},
-		isWide() {
-			return getComputedStyle(store.rootElement, '::after').content === '"isWide"';
 		},
 		loadManifest(manifestUrl, params = {}) {
 			const promise = createPromise();
