@@ -1,4 +1,4 @@
-.tify-scan {
+.tify-media {
 	@extend %panel;
 	background: transparent;
 	box-shadow: none;
@@ -10,7 +10,7 @@
 	z-index: 0;
 }
 
-.tify-scan-buttons {
+.tify-media-buttons {
 	display: flex;
 
 	&.-controls {
@@ -36,14 +36,14 @@
 	}
 }
 
-.tify-scan-button {
+.tify-media-button {
 	@extend %button-translucent;
 
 	&.-active {
 		@extend %dot-marker;
 	}
 
-	.tify-scan-buttons.-pagination & {
+	.tify-media-buttons.-pagination & {
 		position: absolute;
 
 		&.-left {
@@ -67,7 +67,7 @@
 		}
 	}
 
-	.tify-scan-buttons.-controls & {
+	.tify-media-buttons.-controls & {
 		&:not(:first-child) {
 			border-top: 0;
 			border-top-left-radius: 0;
@@ -84,7 +84,7 @@
 	}
 }
 
-.tify-scan-dropdown {
+.tify-media-dropdown {
 	> .tify-dropdown-button {
 		@extend %button-translucent;
 	}
@@ -172,7 +172,7 @@
 }
 
 // NOTE: OpenSeadragon adds `position: relative`
-.tify-scan-image {
+.tify-media-image {
 	flex: 1;
 	overflow: hidden; // For OpenSeadragon plugins that add own elements
 	white-space: nowrap;
@@ -183,7 +183,7 @@
 
 		// Single annotation overlay container
 		// TODO: Revisit after next OpenSeadragon release (> 5.0.1)
-		> div:not([class]) > div:has(> .tify-scan-overlay) {
+		> div:not([class]) > div:has(> .tify-media-overlay) {
 			border-radius: $br;
 			box-shadow: 0 0 0 1px $link-color, 0 0 0 2px oklch(0% 0 0deg / 25%);
 
@@ -202,7 +202,7 @@
 	}
 }
 
-.tify-scan-overlay {
+.tify-media-overlay {
 	@extend %button;
 	background: none;
 
@@ -218,7 +218,7 @@
 	}
 }
 
-.tify-scan-reset {
+.tify-media-reset {
 	@extend %button-small;
 	gap: .2em;
 	height: g(2);

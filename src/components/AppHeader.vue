@@ -263,13 +263,13 @@ export default {
 					<button
 						v-if="$store.manifest"
 						type="button"
-						class="tify-header-button -scan"
-						:aria-controls="$getId('scan')"
+						class="tify-header-button -media"
+						:aria-controls="$getId('media')"
 						:aria-expanded="!$store.options.view"
 						@click="toggleView(null)"
 					>
-						<IconImage />
-						<span>{{ $translate('Scan [noun]') }}</span>
+						<IconImageArea />
+						<span>{{ $translate('Media') }}</span>
 					</button>
 
 					<button

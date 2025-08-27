@@ -5,7 +5,12 @@
 	flex-wrap: wrap;
 	justify-content: space-between;
 	min-height: g(2.25);
+	transition: margin $td;
 	z-index: 9;
+
+	:fullscreen:has(.tify-player.-playing:not(.-mousing)) & {
+		margin-top: g(-2.5);
+	}
 }
 
 .tify-header-button-group {
@@ -120,9 +125,7 @@
 		}
 	}
 
-	&.-scan {
-		display: flex !important;
-
+	&.-media {
 		@container (#{$medium}) {
 			display: none !important;
 		}

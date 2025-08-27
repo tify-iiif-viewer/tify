@@ -8,7 +8,7 @@ export default {
 	annotationId: null,
 
 	/**
-	 * When the text view is active (or just the scan view on small screens),
+	 * When the text view is active (or just the media view on small containers),
 	 * TIFY displays clickable overlays on the image, which are linked to their
 	 * corresponding annotation in the text view. Set to `false` to hide overlays
 	 * by default. Annotation overlays can always be toggled by the user.
@@ -205,9 +205,9 @@ export default {
 	],
 
 	/**
-	 * The initially displayed view (panel); `fulltext`, `thumbnails`, `toc`,
-	 * `info`, `help`, or `null` to display (only) the scan. On large screens,
-	 * the scan is always shown next to the selected view.
+	 * The initially displayed view (panel); `text`, `thumbnails`, `toc`, `info`,
+	 * `help`, or `null` to display (only) the media. On large containers, the
+	 * media view is always shown next to the selected view.
 	 *
 	 * @type {?string}
 	 */

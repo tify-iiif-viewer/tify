@@ -132,8 +132,8 @@ export default {
 			class="tify-main"
 		>
 			<template v-if="$store.manifest">
-				<!-- Scan must come first, other views in arbitrary order -->
-				<ViewScan :id="$getId('scan')" />
+				<!-- Media must come first, other views in arbitrary order -->
+				<ViewMedia :id="$getId('media')" />
 
 				<ViewText
 					v-if="hasText"

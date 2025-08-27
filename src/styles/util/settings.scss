@@ -67,6 +67,9 @@ $line-height: var(--tify-line-height, inherit) !default;
 $thumbnail-height: var(--tify-thumbnail-height, g(4.5)) !default;
 $thumbnail-width: var(--tify-thumbnail-width, g(4)) !default;
 
+// Timings
+$td: var(--tify-transition-duration, .4s) !default;
+
 // Breakpoints
 // NOTE: This is not configurable via CSS custom properties,
 // which cannot be used in @container queries.
