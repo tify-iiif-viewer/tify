@@ -46,6 +46,13 @@ export default defineConfig({
 			},
 		},
 	},
+	css: {
+		preprocessorOptions: {
+			scss: {
+				silenceDeprecations: ['import'],
+			},
+		},
+	},
 	// https://vitejs.dev/config/#environment-variables
 	define: {
 		ENV: {
