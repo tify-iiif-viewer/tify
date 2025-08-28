@@ -183,11 +183,16 @@
 
 		// Single annotation overlay container
 		// TODO: Revisit after next OpenSeadragon release (> 5.0.1)
-		> div:not([class]) > div:has(> .tify-media-overlay) {
+		div:has(> .tify-media-overlay) {
 			border-radius: $br;
 			box-shadow: 0 0 0 1px $link-color, 0 0 0 2px oklch(0% 0 0deg / 25%);
 
-			@include hover {
+			// NOTE: Separating focus and hover to work around LightningCSS bug
+			&:focus {
+				box-shadow: 0 0 0 2px $link-color, 0 0 0 3px oklch(0% 0 0deg / 25%);
+			}
+
+			&:hover {
 				box-shadow: 0 0 0 2px $link-color, 0 0 0 3px oklch(0% 0 0deg / 25%);
 			}
 		}
@@ -196,7 +201,7 @@
 	&.-annotations-hidden {
 		// Annotation overlays
 		// stylelint-disable-next-line no-descending-specificity
-		.openseadragon-canvas > div:not([class]) {
+		.openseadragon-canvas > div {
 			visibility: hidden;
 		}
 	}
@@ -215,6 +220,7 @@
 	&.-current {
 		mix-blend-mode: difference;
 		outline: calc(g(.25) - 2px) solid #fff;
+		outline-offset: 2px;
 	}
 }
 
