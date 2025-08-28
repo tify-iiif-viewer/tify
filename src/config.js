@@ -52,8 +52,8 @@ export default {
 	colorMode: 'auto',
 
 	/**
-	 * The HTML element into which TIFY is mounted. If set to `null`, TIFY is not
-	 * mounted at all until `mount` is called (see docs/api.md).
+	 * The HTML element into which TIFY is mounted. If not set, TIFY is not
+	 * mounted until `mount` is called (see docs/api.md).
 	 *
 	 * @type {?string|HTMLElement}
 	 */
@@ -132,7 +132,7 @@ export default {
 	 *
 	 * @type {string}
 	 */
-	pageLabelFormat: `P${String.fromCharCode(160)/* &nbsp; */}· L`,
+	pageLabelFormat: 'P&nbsp;· L',
 
 	/**
 	 * The page(s) to display initially. If `null`, the initial page is
