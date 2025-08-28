@@ -4,6 +4,7 @@ export default {
 		// NOTE: Order of extends matters
 		'@stylistic/stylelint-config',
 		'stylelint-config-standard-scss',
+		'stylelint-config-recommended-vue/scss',
 	],
 	plugins: [
 		'stylelint-order',
