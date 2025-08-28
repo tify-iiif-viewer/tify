@@ -8,7 +8,7 @@ IIIF, which stands for “International Image Interoperability Framework”, def
 
 Any number of pages can be viewed next to each other.
 
-Open the pages view and select multiple pages by clicking on them while pressing <kbd>Ctrl</kbd> &ndash; or long-press if you are using a touch screen.
+Open the pages view and select multiple pages by clicking on them while pressing <kbd>Ctrl</kbd> &ndash; or long-press on a touch screen.
 
 ## Key Bindings
 
@@ -17,21 +17,21 @@ TIFY can be fully controlled via keyboard.
 ### View
 
 | Action | Key |
-| --- | :---: |
-| Fulltext (if available) | <kbd>1</kbd> |
+| --- | --- |
+| Media | <kbd>Backspace</kbd> (only on small containers) |
+| Text | <kbd>1</kbd> (if available) |
 | Pages | <kbd>2</kbd> |
-| Contents (if available) | <kbd>3</kbd> |
+| Contents | <kbd>3</kbd> (if available) |
 | Info | <kbd>4</kbd> |
 | Export | <kbd>5</kbd> |
-| Collection (if available) | <kbd>6</kbd> |
+| Collection | <kbd>6</kbd> (if available) |
 | Help | <kbd>7</kbd> |
-| Scan | <kbd>Backspace</kbd> |
 | Toggle fullscreen | <kbd>F</kbd> |
 
 ### Turning Pages
 
 | Action | Key |
-| --- | :---: |
+| --- | --- |
 | Previous page | <kbd>Q</kbd> or <kbd>,</kbd> |
 | Next page | <kbd>E</kbd> or <kbd>.</kbd> |
 | First page | <kbd>&#8679;Q</kbd> |
@@ -42,7 +42,7 @@ TIFY can be fully controlled via keyboard.
 ### Scan
 
 | Action | Key |
-| --- | :---: |
+| --- | --- |
 | Pan | <kbd>W</kbd> <kbd>S</kbd> <kbd>A</kbd> <kbd>D</kbd> |
 | Zoom in | <kbd>&#8679;W</kbd> or <kbd>+</kbd> |
 | Zoom out | <kbd>&#8679;S</kbd> or <kbd>-</kbd> |

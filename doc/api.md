@@ -72,9 +72,9 @@ tify.ready.then(() => {
 
 	Parameters:
 
-	- `name`: string (required)
+	- `name`: null or string (required)
 
-		The view’s name; `'export'`, `'fulltext'`, `'help'`, `'info'`, `'thumbnails'`, `'toc'`, or `null` to display (only) the scan.
+		The view name: `'export'`, `'help'`, `'info'`, `'text'`, `'thumbnails'`, `'toc'`, or `null` to display (only) the media view.
 
 - **`toggleDoublePage`**
 
