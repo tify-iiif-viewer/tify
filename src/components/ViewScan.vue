@@ -613,7 +613,7 @@ export default {
 
 		<div
 			v-if="viewer"
-			class="tify-scan-buttons"
+			class="tify-scan-buttons -controls"
 		>
 			<button
 				type="button"
@@ -649,7 +649,7 @@ export default {
 			<button
 				type="button"
 				class="tify-scan-button"
-				:class="{ '-active': $store.options.rotation }"
+				:class="{ '-active': !!$store.options.rotation }"
 				:title="$translate('Rotate')"
 				:aria-label="$translate('Rotate')"
 				@click="rotateRight($event)"
