@@ -60,6 +60,7 @@ $text-color-muted: var(
 
 // Dimensions
 $br: var(--tify-border-radius, 2px) !default;
+$demo-sidebar-width: 12rem;
 $font-size: var(--tify-font-size, inherit) !default;
 $font-size-small: var(--tify-font-size-small, max(.75em, 12px)) !default;
 $grid-base: var(--tify-grid-base, 1.5em) !default;

@@ -179,7 +179,7 @@ export default {
 					<h3 class="tify-player-select-title">
 						{{ $translate('Playback rate') }}
 					</h3>
-					<ol class="tify-link-list">
+					<ol class="tify-button-list">
 						<li
 							v-for="rate in rates"
 							:key="rate"
@@ -211,7 +211,7 @@ export default {
 					<h3 class="tify-player-select-title">
 						{{ $translate('Closed Captions') }}
 					</h3>
-					<ol class="tify-link-list">
+					<ol class="tify-button-list">
 						<li
 							v-for="subtitle in subtitles"
 							:key="subtitle.id"
