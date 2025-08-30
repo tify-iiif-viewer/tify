@@ -12,6 +12,7 @@ describe('filterHtml', () => {
 				<img src='keep - single quotes' alt="keep" id="remove" data-remove>
 				<br class="keep tag remove class">
 				<i><span invalid="remove attr">keep this</span></i>
+				<a href=keep-this-unquoted-attribute style=remove-this-unquotes-attribute>Text</a>
 			</p>
 		`;
 
@@ -25,6 +26,7 @@ describe('filterHtml', () => {
 				<img src='keep - single quotes' alt="keep">
 				<br>
 				<i><span>keep this</span></i>
+				<a href=keep-this-unquoted-attribute>Text</a>
 			</p>
 		`;
 
