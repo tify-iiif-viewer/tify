@@ -832,7 +832,7 @@ export default {
 							:wrap="true"
 						/>
 					</h4>
-					<ol class="tify-link-list">
+					<ol class="tify-button-list">
 						<li
 							v-for="(layer, layerIndex) in resource.items"
 							:key="layer.id"

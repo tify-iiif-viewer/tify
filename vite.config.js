@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 
-import { readdirSync, readFileSync } from 'node:fs';
-import { inspect } from 'node:util';
+import fs from 'node:fs';
 
 import vue from '@vitejs/plugin-vue';
 import componentsAutoImport from 'unplugin-vue-components/vite'; // eslint-disable-line import/no-unresolved
@@ -15,34 +14,21 @@ import pkg from './package.json';
 
 const repositoryUrl = pkg.repository.url.replace(/git\+(.+)\.git/, '$1');
 
-const transformIndexPlugin = () => ({
-	transformIndexHtml(html) {
-		const translationsDir = './public/translations';
-
-		const petiteVue = readFileSync('./node_modules/petite-vue/dist/petite-vue.iife.js').toString().trim();
-
-		const languages = { en: 'English' };
-		readdirSync(translationsDir).forEach((file) => {
-			languages[file.split('.')[0]] = JSON.parse(readFileSync(`${translationsDir}/${file}`)).$language;
-		});
-
-		return html
-			.replace(/\$VITE_PETITE_VUE;?/, petiteVue)
-			.replace('$VITE_LANGUAGES', inspect(languages, { breakLength: Infinity, compact: true }));
-	},
-});
-
 // https://vitejs.dev/config/
 export default defineConfig({
 	base: process.env.BASE || '/',
 	build: {
 		outDir: process.env.OUTDIR || './dist',
 		rollupOptions: {
+			input: {
+				demo: 'index.html',
+				tify: 'src/main.js',
+			},
 			output: {
 				// https://rollupjs.org/guide/en/#outputentryfilenames
-				entryFileNames: process.env.HASHED ? 'tify.[hash].js' : 'tify.js',
+				entryFileNames: '[name].js',
 				// https://rollupjs.org/guide/en/#outputassetfilenames
-				assetFileNames: process.env.HASHED ? 'tify.[hash].[ext]' : 'tify.[ext]',
+				assetFileNames: '[name].[ext]',
 			},
 		},
 	},
@@ -65,15 +51,15 @@ export default defineConfig({
 	},
 	plugins: [
 		// Prepend copyright notice to each compiled file
-		banner(
-			'/*!'
+		banner((fileName) => (fileName.startsWith('tify')
+			&& '/*!'
 				+ `\nTIFY v${pkg.version}`
 				+ `\n(c) 2017-${new Date().getFullYear()}`
 				+ ' Göttingen State and University Library (https://www.sub.uni-goettingen.de/)'
 				+ `\n${pkg.license}`
 				+ `\n${pkg.homepage}`
-				+ '\n*/',
-		),
+				+ '\n*/'
+		)),
 		componentsAutoImport({
 			dts: false, // disable generating components.d.ts file
 			resolvers: [
@@ -82,9 +68,15 @@ export default defineConfig({
 					// Replacing "\" with "/" so it works on Windows; path.normalize cannot help here
 					const baseDir = __dirname.replaceAll('\\', '/');
 					const dir = `${baseDir}/src/components${componentName.startsWith('Icon') ? '/icons' : ''}`;
+					const path = `${dir}/${componentName}.vue`;
+
+					if (!fs.existsSync(path)) {
+						return false;
+					}
+
 					return {
 						name: componentName,
-						from: `${dir}/${componentName}.vue`,
+						from: path,
 					};
 				},
 			],
@@ -92,7 +84,7 @@ export default defineConfig({
 		eslint({
 			cache: true,
 			// Poor man's ignore file parser, since --ignore-path is not supported
-			exclude: readFileSync('.gitignore')
+			exclude: fs.readFileSync('.gitignore')
 				.toString()
 				.split('\n')
 				.filter((line) => line && !line.startsWith('#'))
@@ -100,7 +92,12 @@ export default defineConfig({
 			fix: true,
 		}),
 		sassGlobImport(),
-		transformIndexPlugin(),
 		vue(),
+		{
+			// Replace ghastly spaces with tabs in index.html :)
+			transformIndexHtml(html) {
+				return html.replace(/^ {2}/gm, '\t');
+			},
+		},
 	],
 });
