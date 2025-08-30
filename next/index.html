@@ -6,9 +6,198 @@
 	<link rel="icon" href="/tify/next/tify.DDW8MAeX.ico">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>TIFY</title>
-	<style>:root{--base-color:#06b;--border-color:#0003;--header-bg:#f5f5f5}*,:before,:after{font:inherit;margin:0;padding:0}[v-cloak]{display:none!important}html{color:#333;background:#666;font-size:24px}body{margin:0;font:16px/1rem sans-serif}.badge{background:var(--base-color);float:left;color:#fff;text-transform:uppercase;text-align:center;border-radius:2px;min-width:.75rem;margin:.2rem .4em 0 0;padding:.2em;font-size:.618em;font-weight:700;line-height:1}.bold{font-weight:700}.button{background:var(--base-color)linear-gradient(#fff2,#fff0);color:#fff;cursor:pointer;white-space:nowrap;border:0;border-radius:2px;min-width:1.25rem;margin:.125rem;padding:.125rem .5rem;font-size:.8125em}.button:focus,.button:not(:disabled):hover{background:var(--base-color)linear-gradient(#fff4,#fff2)}.button:not(:disabled):active{box-shadow:inset 0 .5px 3px #0004,inset 0 0 0 1px #0002}.button:disabled{opacity:.5}.button.-narrow{padding:.125rem 0}.container{height:100vh}.header+.container{height:calc(100vh - 1.75rem)}.form{align-items:center;width:100%;padding:.125rem;display:flex}.header{background:var(--header-bg);-webkit-backdrop-filter:blur(1px);backdrop-filter:blur(1px);z-index:10;box-shadow:0 -1px var(--border-color)inset;display:flex;position:relative}.input{color:var(--base-color);background:0 0;border:1px solid #0000;border-radius:2px;flex:1;min-width:0;margin:.125rem;padding:calc(.125rem - 1px) calc(.25rem - 1px)}.input:focus{background:linear-gradient(var(--header-bg),var(--header-bg)),linear-gradient(var(--header-bg)80%,var(--base-color)80%);background-origin:border-box;background-clip:padding-box,border-box;outline:none}.instances{flex-wrap:wrap;display:flex}.instance{box-shadow:-1px 0 var(--border-color),0 -1px var(--border-color);z-index:1;flex:1;position:relative}.link{color:var(--base-color);text-decoration:none}.link:focus,.link:hover{text-decoration:underline}.menu{position:relative}.menu-dropdown{filter:drop-shadow(0 0 .5rem #0006);opacity:1;white-space:nowrap;background:#fff;border-radius:2px;min-width:5rem;padding:.5rem .75rem;list-style:none;transition:all .2s;display:block;position:absolute;top:calc(100% + .125rem);right:.125rem}.menu-dropdown[hidden]{opacity:0;visibility:hidden;top:calc(100% - .125rem)}.menu-dropdown:before{content:"";border:.25rem solid #0000;border-bottom-color:#fff;position:absolute;bottom:100%;right:.375rem}.menu-list{list-style:none}.menu-list+.menu-list{box-shadow:0 1px var(--border-color)inset;margin-top:.5rem;padding-top:.5rem}</style>
-  <script type="module" crossorigin src="/tify/next/tify.C9OUBFcD.js"></script>
-  <link rel="stylesheet" crossorigin href="/tify/next/tify.CwrVv-Tc.css">
+	<style>
+		:root {
+			--base-color: #06b;
+			--border-color: #0003;
+			--header-bg: #f5f5f5;
+		}
+
+		*,
+		*::before,
+		*::after {
+			margin: 0;
+			padding: 0;
+			font: inherit;
+		}
+
+		[v-cloak] {
+			display: none !important;
+		}
+
+		html {
+			background: #666;
+			color: #333;
+			font-size: 24px;
+		}
+
+		body {
+			font: 16px/1rem sans-serif;
+			margin: 0;
+		}
+
+		.badge {
+			background: var(--base-color);
+			float: left;
+			border-radius: 2px;
+			color: #fff;
+			font-size: .618em;
+			font-weight: bold;
+			line-height: 1;
+			min-width: .75rem;
+			padding: .2em;
+			text-transform: uppercase;
+			text-align: center;
+			margin: .2rem .4em 0 0;
+		}
+
+		.bold {
+			font-weight: bold;
+		}
+
+		.button {
+			background: var(--base-color) linear-gradient(#fff2, #fff0);
+			border: 0;
+			border-radius: 2px;
+			color: #fff;
+			cursor: pointer;
+			font-size: .8125em;
+			margin: .125rem;
+			min-width: 1.25rem;
+			padding: .125rem .5rem;
+			white-space: nowrap;
+		}
+
+		.button:focus,
+		.button:not(:disabled):hover {
+			background: var(--base-color) linear-gradient(#fff4, #fff2);
+		}
+
+		.button:not(:disabled):active {
+			box-shadow: 0 .5px 3px #0004 inset, 0 0 0 1px #0002 inset;
+		}
+
+		.button:disabled {
+			opacity: .5;
+		}
+
+		.button.-narrow {
+			padding: .125rem 0;
+		}
+
+		.container {
+			height: 100vh;
+		}
+
+		.header + .container {
+			height: calc(100vh - 1.75rem);
+		}
+
+		.form {
+			display: flex;
+			align-items: center;
+			padding: .125rem;
+			width: 100%;
+		}
+
+		.header {
+			background: var(--header-bg);
+			backdrop-filter: blur(1px);
+			display: flex;
+			position: relative;
+			z-index: 10;
+			box-shadow: 0 -1px var(--border-color) inset;
+		}
+
+		.input {
+			background: none;
+			border: 1px solid transparent;
+			border-radius: 2px;
+			color: var(--base-color);
+			flex: 1;
+			margin: .125rem;
+			min-width: 0;
+			padding: calc(.125rem - 1px) calc(.25rem - 1px);
+		}
+
+		.input:focus {
+			background:
+				linear-gradient(var(--header-bg), var(--header-bg)),
+				linear-gradient(var(--header-bg) 80%, var(--base-color) 80%);
+			background-origin: border-box;
+			background-clip: padding-box, border-box;
+			outline: none;
+		}
+
+		.instances {
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		.instance {
+			box-shadow: -1px 0 var(--border-color), 0 -1px var(--border-color);
+			flex: 1;
+			position: relative;
+			z-index: 1;
+		}
+
+		.link {
+			color: var(--base-color);
+			text-decoration: none;
+		}
+
+		.link:focus,
+		.link:hover {
+			text-decoration: underline;
+		}
+
+		.menu {
+			position: relative;
+		}
+
+		.menu-dropdown {
+			background: #fff;
+			border-radius: 2px;
+			display: block;
+			filter: drop-shadow(0 0 .5rem #0006);
+			list-style: none;
+			min-width: 5rem;
+			opacity: 1;
+			padding: .5rem .75rem;
+			position: absolute;
+			right: .125rem;
+			top: calc(100% + .125rem);
+			transition: all .2s;
+			white-space: nowrap;
+		}
+
+		.menu-dropdown[hidden] {
+			opacity: 0;
+			top: calc(100% - .125rem);
+			visibility: hidden;
+		}
+
+		.menu-dropdown::before {
+			bottom: 100%;
+			content: '';
+			border: .25rem solid;
+			border-color: transparent transparent #fff;
+			position: absolute;
+			right: .375rem;
+		}
+
+		.menu-list {
+			list-style: none;
+		}
+
+		.menu-list + .menu-list {
+			box-shadow: 0 1px var(--border-color) inset;
+			margin-top: .5rem;
+			padding-top: .5rem;
+		}
+	</style>
+  <script type="module" crossorigin src="/tify/next/tify.BTRBv4vh.js"></script>
+  <link rel="stylesheet" crossorigin href="/tify/next/tify.wxaRVuLt.css">
 </head>
 
 <body v-scope @vue:mounted="mounted">
