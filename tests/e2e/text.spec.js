@@ -10,11 +10,11 @@ describe('Text (annotations)', () => {
 		// TODO: Test first page in double-page mode
 
 		// Check the first annotation overlay of each page
-		cy.get('[style*="left: 8.79344px; top: 209.845px"]')
+		cy.get('[style*="left: 8.79344px; top: 206.345px"]')
 			.children('.tify-media-overlay[style*="width: 53.1397px; height: 2.34997px"]');
-		cy.get('[style*="left: 193.089px; top: 209.845px"]')
+		cy.get('[style*="left: 193.089px; top: 206.345px"]')
 			.children('.tify-media-overlay[style*="width: 53.1397px; height: 2.34997px"]');
-		cy.get('[style*="left: 377.384px; top: 209.845px"]')
+		cy.get('[style*="left: 377.384px; top: 206.345px"]')
 			.children('.tify-media-overlay[style*="width: 53.1397px; height: 2.34997px"]');
 	});
 
@@ -47,7 +47,4 @@ describe('Text (annotations)', () => {
 		cy.get('.tify-media-overlay:eq(22)').should('have.class', '-current');
 		cy.contains('.tify-text-item.-current', 'näher kommen');
 	});
-
-	// TODO: Add test for manifests/biblhertz-garofalo-ligorio-comparison.json
-	// Check annotation overlay positions
 });
