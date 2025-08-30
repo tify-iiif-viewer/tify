@@ -16,7 +16,7 @@ export function filterHtml(html) {
 		}
 
 		// Iterate over all attributes and keep only allowed ones
-		const attributesRegex = /(?:([^\s]+)=(?:"(.*?)"|'(.*?)'))|([^\s]+)/g;
+		const attributesRegex = /(?:([^\s]+)=(?:"(.*?)"|'(.*?)'|([^\s>]+)))|([^\s]+)/g;
 		const keptAttributes = [];
 		attributes.replace(attributesRegex, (tuple, key) => {
 			if (tuple !== key
