@@ -180,7 +180,7 @@ export default {
 					// cases index is out of bounds, throwing an error here.
 					// Need to investigate further, jury-rigged for now.
 					const { target } = this.$store.manifest.items[page - 1].items[0]?.items[index] || {};
-					const coords = parseCoordinatesString(target);
+					const coords = parseCoordinatesString(target?.id || target || '');
 					if (coords?.length === 4) {
 						[source.x, source.y, source.width] = coords.map((number) => number / initialSize);
 					} else {

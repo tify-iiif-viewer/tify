@@ -549,7 +549,9 @@ function Store(args = {}) {
 
 					const coordinatesString = resource.on?.selector?.value
 						|| (typeof resource.on === 'string' ? resource.on : null)
-						|| resource.target?.toString();
+						|| resource.target?.id
+						|| resource.target
+						|| '';
 
 					const coords = parseCoordinatesString(coordinatesString);
 					if (coords?.length === 4) {
