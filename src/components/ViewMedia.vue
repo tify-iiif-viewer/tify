@@ -158,7 +158,11 @@ export default {
 
 					const size = tileSource[this.$store.isVertical ? 'height' : 'width'] / initialSize;
 
-					if (page === 1 && pages[0] === 0) {
+					if ((this.$store.options.pages[0] === 0)
+						&& ((!this.$store.isReversed && page === 1)
+							|| (this.$store.isReversed && page === this.$store.pageCount)
+						)
+					) {
 						// Insert placeholder verso page
 						sources.push({
 							opacity: 0,
@@ -187,7 +191,11 @@ export default {
 						totalSize += size + gapBetweenPages;
 					}
 
-					if (page === this.$store.pageCount && pages[0] === 0) {
+					if ((this.$store.options.pages[0] === 0)
+						&& ((!this.$store.isReversed && page === this.$store.pageCount)
+							|| (this.$store.isReversed && page === 1)
+						)
+					) {
 						// Insert placeholder recto page
 						sources.push({
 							opacity: 0,
