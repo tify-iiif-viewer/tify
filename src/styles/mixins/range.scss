@@ -9,7 +9,8 @@
 
 $track-color: $border-color linear-gradient(
 	to right,
-	oklch(from $link-color l c h / 50%),
+	// NOTE: Using color-mix() instead of oklch() for Firefox 128 ESR
+	color-mix(in oklch, $link-color, transparent),
 	$link-color var(--value),
 	transparent var(--value)
 );
