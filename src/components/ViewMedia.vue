@@ -13,7 +13,7 @@ export default {
 		return {
 			defaultCanvasCss: '',
 			loadingTimeout: null,
-			mediaResource: null,
+			avResource: null,
 			overlayElements: [],
 			promise: createPromise(),
 			tileSources: [],
@@ -148,10 +148,6 @@ export default {
 					(tileSource) => tileSource.$meta.page === page
 						&& tileSource.$meta.layerIndex === (this.$store.options.layers[pageIndex] || 0),
 				);
-
-				if (!pageTileSources.length) {
-					this.$store.addError(`Image missing for page ${page}`);
-				}
 
 				pageTileSources.forEach((tileSource, index) => {
 					initialSize = initialSize || tileSource[this.$store.isVertical ? 'height' : 'width'];
@@ -366,15 +362,53 @@ export default {
 		loadInfo(reset = false) {
 			this.stopLoadingWatch();
 
-			this.mediaResource = null;
+			this.avResource = null;
+
+			let imageResource;
+			let avResource;
 
 			const infoPromises = [];
+
 			this.$store.options.pages.filter((page) => page > 0).forEach((page, pageIndex) => {
-				const items = this.$store.manifest.items[page - 1].items?.[0]?.items;
+				const pageItem = this.$store.manifest.items[page - 1];
 				const layerIndex = this.$store.options.layers[pageIndex] || 0;
 
-				items?.forEach((item, itemIndex) => {
-					if (this.tileSources.find(
+				pageItem.items?.[0]?.items?.forEach((item, itemIndex) => {
+					const resource = item.body?.items?.[layerIndex] || item.body;
+
+					if (!resource) {
+						this.$store.addError(`Resource missing for page ${page}`);
+						return;
+					}
+
+					if (['Sound', 'Video'].includes(resource?.type)) {
+						// Reset to single-page view; page change re-triggers loadInfo
+						if (this.$store.options.pages[1] > -1) {
+							this.$store.updateOptions({ pages: [page] });
+							return;
+						}
+
+						// Force re-render because replacing just the <source> while a
+						// video is playing does have no effect
+						this.avResource = {};
+						avResource = {
+							format: resource.format,
+							type: resource.type,
+							url: resource.id,
+						};
+						this.$nextTick(() => {
+							this.avResource = avResource;
+						});
+
+						// TODO: Add support for selecting from multiple accompanyingCanvas
+						const canvas = pageItem.accompanyingCanvas || pageItem.placeholderCanvas;
+						const accompanyingBody = canvas?.items?.[0]?.items?.[0]?.body;
+						imageResource = accompanyingBody?.items?.[layerIndex] || accompanyingBody;
+					} else {
+						imageResource = resource;
+					}
+
+					if (imageResource && this.tileSources.find(
 						(tileSource) => tileSource.$meta.page === page
 							&& tileSource.$meta.itemIndex === itemIndex
 							&& tileSource.$meta.layerIndex === layerIndex,
@@ -382,43 +416,7 @@ export default {
 						return;
 					}
 
-					let resource = item.body?.items?.[layerIndex] || item.body;
-
-					if (!resource) {
-						this.$store.addError(`Image missing for page ${page}`);
-						return;
-					}
-
-					if (['Sound', 'Video'].includes(resource.type)) {
-						const { pages } = this.$store.options;
-						if (pages.length > 1) {
-							// Reset to single-page view
-							this.$store.updateOptions({ pages: [pages[0] < 1 ? 1 : pages[0]] });
-						}
-
-						// Force re-render because replacing just the <source> while a
-						// video is playing does have no effect
-						this.mediaResource = {};
-						const mediaResource = {
-							format: resource.format,
-							type: resource.type,
-							url: resource.id,
-						};
-						this.$nextTick(() => {
-							this.mediaResource = mediaResource;
-						});
-
-						// TODO: Add support for multiple accompanyingCanvas
-						const accBody = this.$store.manifest
-							.items[page - 1]
-							.accompanyingCanvas
-							?.items?.[0]
-							?.items?.[0]
-							?.body;
-						resource = accBody?.items ? accBody.items[layerIndex] : accBody;
-					}
-
-					const services = resource?.source?.service || resource?.service;
+					const services = imageResource?.source?.service || imageResource?.service;
 					if (services) {
 						const service = [].concat(services)[0];
 						const id = service.id || service['@id'];
@@ -445,16 +443,20 @@ export default {
 								},
 							),
 						);
-					} else if (resource?.id) {
+					} else if (imageResource?.id) {
 						this.tileSources.push({
 							$meta: { page, itemIndex, layerIndex },
 							type: 'image',
-							url: resource.id,
-							width: resource.width,
-							height: resource.height,
+							url: imageResource.id,
+							width: imageResource.width,
+							height: imageResource.height,
 						});
 					}
 				});
+
+				if (!imageResource && !avResource) {
+					this.$store.addError(`Image missing for page ${page}`);
+				}
 			});
 
 			if (infoPromises.length) {
@@ -471,9 +473,16 @@ export default {
 						this.tileSources.push(infoItem);
 					});
 
-					this.initViewer(reset);
+					// Only re-init the viewer if the resolved promises correspond to
+					// the currently displayed pages. When quickly flipping through
+					// pages or on slow connections, promises could resolve when the
+					// corresponding pages are no longer displayed.
+					const pages = this.$store.options.pages.filter((page) => page > 0);
+					if (pages.every((page, index) => infoItems[index].$meta.page === page)) {
+						this.initViewer(reset);
+					}
 				});
-			} else if (this.tileSources.length) {
+			} else if (imageResource) {
 				this.initViewer(reset);
 			}
 		},
@@ -859,9 +868,9 @@ export default {
 		</div>
 
 		<AppPlayer
-			v-if="mediaResource?.url"
-			:src="mediaResource.url"
-			:format="mediaResource.format"
+			v-if="avResource?.url"
+			:src="avResource.url"
+			:format="avResource.format"
 			:hasImage="!!viewer"
 		/>
 
