@@ -22,6 +22,11 @@ export default mergeConfig(
 					},
 				},
 			},
+
+			// Disable output truncation
+			chaiConfig: {
+				truncateThreshold: 0,
+			},
 		},
 	}),
 );
