@@ -68,6 +68,14 @@
 	}
 }
 
+%button-small {
+	@extend %button;
+	font-size: $font-size-small;
+	min-height: g(1.3333);
+	min-width: g(1.3333);
+	padding: 0 g(.75);
+}
+
 %button-translucent {
 	@extend %button;
 	backdrop-filter: $blur;
@@ -97,25 +105,4 @@
 	> * {
 		filter: drop-shadow(0 0 .5px $panel-bg);
 	}
-}
-
-%button-active {
-	background: $link-color;
-	color: $text-color-inverted;
-	z-index: 1;
-
-	&:not(:disabled) {
-		@include hover {
-			background: $link-hover-color;
-			color: $text-color-inverted;
-		}
-	}
-}
-
-%button-small {
-	@extend %button;
-	font-size: $font-size-small;
-	min-height: g(1.3333);
-	min-width: g(1.3333);
-	padding: 0 g(.75);
 }
