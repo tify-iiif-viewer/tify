@@ -9,19 +9,19 @@ $base-color-dark: var(
 $bg: var(
 	--tify-bg-color,
 	light-dark(#fff, oklch(from $base-color-dark calc(l * .25) calc(c * .05) h))
-);
+) !default;
 $base-color-pale: var(
 	--tify-base-color-pale,
 	light-dark(
-		color-mix(in oklch, $base-color, $bg 44%),
-		color-mix(in oklch, $base-color-dark, $bg 44%)
+		color-mix(in oklch, $base-color, $bg 45%),
+		color-mix(in oklch, $base-color-dark, $bg 45%)
 	)
 ) !default;
 $base-color-paler: var(
 	--tify-base-color-paler,
 	light-dark(
-		color-mix(in oklch, $base-color, $bg 88%),
-		color-mix(in oklch, $base-color-dark, $bg 88%),
+		color-mix(in oklch, $base-color, $bg 90%),
+		color-mix(in oklch, $base-color-dark, $bg 90%),
 	)
 ) !default;
 $border-color: var(
@@ -41,22 +41,29 @@ $link-color: var(
 $link-hover-color: var(
 	--tify-link-hover-color,
 	light-dark(
-		oklch(from #{$link-color} calc(l * .7) c h),
-		oklch(from #{$link-color} calc(l * 1.1) c h)
+		color-mix(in oklch, $link-color 90%, black),
+		color-mix(in oklch, $link-color 90%, white),
 	)
 ) !default;
 $text-color: var(
 	--tify-text-color,
-	light-dark(currentcolor, oklch(from currentcolor 100% c h))
-);
+	light-dark(
+		currentcolor,
+		oklch(from currentcolor 100% c h),
+	)
+) !default;
 $text-color-inverted: var(
 	--tify-text-color-inverted,
-	light-dark(oklch(from currentcolor 100% c h), oklch(from currentcolor 0% c h))
-);
+	light-dark(
+		oklch(from currentcolor 100% c h),
+		oklch(from currentcolor 0% c h),
+	)
+) !default;
 $text-color-muted: var(
-	--tify-text-color-inverted,
-	oklch(from currentcolor l c h / 61.8%),
-);
+	--tify-text-color-muted,
+	// NOTE: Using color-mix() instead of oklch() for Firefox 128 ESR
+	color-mix(in oklch, currentcolor 61.8%, transparent),
+) !default;
 
 // Dimensions
 $br: var(--tify-border-radius, 2px) !default;
@@ -74,12 +81,12 @@ $td: var(--tify-transition-duration, .4s) !default;
 // Breakpoints
 // NOTE: This is not configurable via CSS custom properties,
 // which cannot be used in @container queries.
-$small: 'width > 719px';
-$medium: 'width > 959px';
-$large: 'width > 1199px';
+$small: 'width > 719px' !default;
+$medium: 'width > 959px' !default;
+$large: 'width > 1199px' !default;
 
 // Combined values
-$blur: blur(8px);
+$blur: blur(8px) !default;
 $button-bg: var(
 	--tify-button-bg,
 	light-dark(
