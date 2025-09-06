@@ -14,6 +14,7 @@ describe('filterHtml', () => {
 				<i><span invalid="remove attr">keep this</span></i>
 				<a href=keep-this-unquoted-attribute style=remove-this-unquotes-attribute>Text</a>
 			</p>
+			<a id="remove" href="somewhere" style="nope!">Text</a>
 		`;
 
 		const filteredHtml = `
@@ -28,6 +29,7 @@ describe('filterHtml', () => {
 				<i><span>keep this</span></i>
 				<a href=keep-this-unquoted-attribute>Text</a>
 			</p>
+			<a href="somewhere">Text</a>
 		`;
 
 		expect(filterHtml(html)).toEqual(filteredHtml);
