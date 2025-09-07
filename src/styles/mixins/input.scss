@@ -7,13 +7,13 @@
 	line-height: inherit;
 	padding: calc(g(.25) - 1px) g(.375);
 
-	&:focus {
-		border-color: $base-color;
+	&:focus,
+	&:hover {
+		border-color: $link-color;
 		outline: 0;
 	}
 
-	&:hover:not(:focus) {
-		background: $button-hover-bg;
-		border-color: $border-color;
+	&:focus {
+		box-shadow: 0 0 0 1px $base-color-pale;
 	}
 }
