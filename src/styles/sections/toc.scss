@@ -33,6 +33,7 @@
 
 	@include hover {
 		background: $base-color-paler;
+		color: $link-hover-color;
 
 		// Element label and page number
 		> span {
