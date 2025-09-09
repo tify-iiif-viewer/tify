@@ -27,7 +27,8 @@ a {
 	gap: .2em;
 	text-decoration: none;
 
-	@include hover {
+	&:focus,
+	&:hover {
 		color: $link-hover-color;
 	}
 }
