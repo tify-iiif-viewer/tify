@@ -23,7 +23,8 @@
 	display: flex;
 	padding: g(.25);
 
-	@include hover {
+	&:focus,
+	&:hover {
 		background: #0002;
 	}
 }

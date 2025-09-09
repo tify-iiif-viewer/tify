@@ -31,7 +31,8 @@
 	position: relative;
 	text-decoration: none;
 
-	@include hover {
+	&:focus,
+	&:hover {
 		background: $base-color-paler;
 		color: $link-hover-color;
 

@@ -67,7 +67,8 @@ a {
 	text-align: left;
 
 	&:not(:disabled) {
-		@include hover {
+		&:focus,
+		&:hover {
 			color: $text-color-inverted;
 		}
 	}
