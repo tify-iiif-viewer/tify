@@ -20,14 +20,14 @@ export default {
 			};
 		},
 		label() {
-			return striptags(this.$store.localize(this.$store.manifest.items[this.number - 1].label));
+			return striptags(this.$store.localize(this.$store.manifest.items[this.number - 1].label))
+				|| this.$translate('$n/a');
 		},
 		html() {
-			const html = this.$store.options.pageLabelFormat
+			return `<span>${this.$store.options.pageLabelFormat}</span>`
 				.replace('P', `${this.number}`)
-				.replace('L', `</span>${this.label || this.$translate('$n/a')}<span>`);
-
-			return `<span>${html}</span>`;
+				.replace('L', `</span>${this.label}<span>`)
+				.replace('<span></span>', '');
 		},
 	},
 };
