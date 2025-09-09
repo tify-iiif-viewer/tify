@@ -18,7 +18,9 @@
 	&:not(:disabled) {
 		cursor: pointer;
 
-		@include hover {
+		&:active,
+		&:focus,
+		&:hover {
 			background: $button-hover-bg;
 		}
 
@@ -42,7 +44,9 @@
 	z-index: 1;
 
 	&:not(:disabled) {
-		@include hover {
+		&:active,
+		&:focus,
+		&:hover {
 			background: $link-hover-color;
 			color: $text-color-inverted;
 		}
@@ -56,15 +60,16 @@
 	box-shadow: none;
 	margin: 0; // Safari fix
 
-	&:focus,
-	&:hover {
-		&:not(:disabled) {
+	&:not(:disabled) {
+		&:active,
+		&:focus,
+		&:hover {
 			border-color: $border-color;
 		}
-	}
 
-	&:not(:disabled):active {
-		box-shadow: $inset-shadow;
+		&:active {
+			box-shadow: $inset-shadow;
+		}
 	}
 }
 
@@ -84,8 +89,16 @@
 	box-shadow: none;
 	overflow: hidden;
 
-	&:not(:disabled):active {
-		box-shadow: $inset-shadow;
+	&:not(:disabled) {
+		&:active,
+		&:focus,
+		&:hover {
+			background: oklch(from $panel-bg l c h / 61.8%);
+		}
+
+		&:active {
+			box-shadow: $inset-shadow;
+		}
 	}
 
 	&[disabled] {
@@ -93,12 +106,6 @@
 
 		> * {
 			opacity: .3;
-		}
-	}
-
-	&:not(:disabled) {
-		@include hover {
-			background: oklch(from $panel-bg l c h / 61.8%);
 		}
 	}
 

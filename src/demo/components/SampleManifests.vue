@@ -67,7 +67,8 @@ a {
 	text-align: left;
 
 	&:not(:disabled) {
-		@include hover {
+		&:focus,
+		&:hover {
 			color: $text-color-inverted;
 		}
 	}
@@ -79,17 +80,12 @@ img {
 	opacity: .9;
 	transition: transform calc($td * 2);
 
-	@at-root {
-		button {
-			@include hover {
-				img {
-					filter: none;
-					opacity: 1;
-					transform: scale(1.1);
-					transition-duration: $td;
-				}
-			}
-		}
+	button:focus &,
+	button:hover & {
+		filter: none;
+		opacity: 1;
+		transform: scale(1.1);
+		transition-duration: $td;
 	}
 }
 

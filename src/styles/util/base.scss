@@ -53,7 +53,8 @@
 		color: $link-color;
 		word-wrap: break-word;
 
-		@include hover {
+		&:focus,
+		&:hover {
 			color: $link-hover-color;
 		}
 	}

@@ -212,7 +212,8 @@
 	background: none;
 
 	&:not(:disabled) {
-		@include hover {
+		&:focus,
+		&:hover {
 			background: none;
 		}
 	}
