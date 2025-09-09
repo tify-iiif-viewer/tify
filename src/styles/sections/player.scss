@@ -3,7 +3,6 @@
 	flex-direction: column;
 	height: 100%;
 	overflow: hidden;
-	position: absolute;
 	width: 100%;
 
 	&.-audio {
@@ -13,55 +12,18 @@
 	}
 
 	&.-bottom {
-		bottom: 1px;
-		height: g(2);
+		height: calc(g(2) + 1px);
+		margin-top: auto;
 	}
-}
-
-.tify-player-overlay {
-	align-items: center;
-	background: none;
-	border: 0;
-	color: #fff;
-	cursor: pointer;
-	display: flex;
-	inset: 0 0 g(2);
-	justify-content: center;
-	position: absolute;
-	transition: opacity $td;
-
-	.tify-player.-playing & {
-		opacity: 0;
-	}
-
-	.tify-player.-audio & {
-		margin: g();
-		padding: g(.5);
-		position: static;
-		width: g(4 + .5 * 2);
-
-		&:focus,
-		&:hover {
-			transform: scale(1.1);
-		}
-	}
-
-	.tify-icon {
-		flex: 0 0 g(4);
-		height: auto;
-	}
-}
-
-.tify-player-duration {
-	color: $text-color-muted;
-	font-size: $font-size-small;
 }
 
 .tify-player-av {
 	background: black;
+	cursor: pointer;
 	flex: 1;
 	height: calc(100% - g(2) - 1px);
 	transition: height $td;
+	z-index: 0;
 
 	&::cue {
 		// TODO: Style subtitles
@@ -105,15 +67,43 @@
 	}
 }
 
-.tify-player-mute,
-.tify-player-play-pause {
+.tify-player-duration {
+	color: $text-color-muted;
+	font-size: $font-size-small;
+}
+
+.tify-player-overlay {
+	align-items: center;
+	background: none;
+	border: 0;
+	color: #fff;
+	display: flex;
+	inset: 0 0 g(2);
+	justify-content: center;
+	pointer-events: none;
+	position: absolute;
+	transition: opacity $td;
+	z-index: 1;
+
+	&.-hidden {
+		opacity: 0;
+	}
+
+	.tify-icon {
+		flex: 0 0 g(4);
+		height: auto;
+	}
+}
+
+.tify-player-mute {
 	@extend %button-borderless;
-	padding: g(.25);
 }
 
 .tify-player-play-pause {
+	@extend %button-borderless;
+
 	.tify-player.-audio & {
-		padding: g(.5);
+		padding: calc(g(.5) - 1px);
 	}
 }
 
