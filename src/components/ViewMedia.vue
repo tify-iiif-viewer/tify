@@ -70,6 +70,10 @@ export default {
 		},
 		// eslint-disable-next-line func-names
 		'$store.options.annotationId': function (annotationId) {
+			if (!this.viewer) {
+				return;
+			}
+
 			this.overlayElements
 				.find((element) => element.classList.contains('-current'))
 				?.classList
@@ -867,13 +871,6 @@ export default {
 			</AppDropdown>
 		</div>
 
-		<AppPlayer
-			v-if="avResource?.url"
-			:src="avResource.url"
-			:format="avResource.format"
-			:hasImage="!!viewer"
-		/>
-
 		<div class="tify-media-buttons -pagination">
 			<button
 				v-for="button in paginationButtons"
@@ -892,5 +889,12 @@ export default {
 				<IconChevronDown v-else-if="button.position === 'bottom'" />
 			</button>
 		</div>
+
+		<AppPlayer
+			v-if="avResource?.url"
+			:src="avResource.url"
+			:format="avResource.format"
+			:hasImage="!!viewer"
+		/>
 	</section>
 </template>

@@ -93,7 +93,7 @@ export default {
 			-${type}
 			${mouseMoving || media.paused ? '-mousing' : ''}
 			${media.playing || media.waiting ? '-playing' : ''}
-			${hasImage ? '-bottom' : ''}
+			${hasImage && (type === 'audio' || !media.currentTime) ? '-bottom' : ''}
 		`"
 		@keydown.space.prevent="media.playing = !media.playing"
 	>
@@ -104,6 +104,7 @@ export default {
 			:poster="$store.getThumbnailUrl($store.options.pages[0], 0)"
 			preload="metadata"
 			crossorigin="anonymous"
+			@click="media.playing = !media.playing; onMouseMove()"
 		>
 			<source
 				:src="src"
@@ -117,16 +118,18 @@ export default {
 				:src="subtitle.id"
 			/>
 		</component>
-		<!-- TODO: Add loading indicator for media.waiting, and check media.stalled -->
-		<button
-			v-if="type === 'video' && !hasImage && !media.waiting"
+		<!-- TODO: Evaluate media.stalled -->
+		<div
+			v-if="type === 'video'"
 			class="tify-player-overlay"
-			type="button"
-			aria-hidden
-			@click="media.playing = !media.playing; onMouseMove()"
+			:class="{ '-hidden': media.playing || (hasImage && !media.currentTime) }"
 		>
-			<IconPlay v-if="media.currentTime < 1" />
-		</button>
+			<IconLoading
+				v-if="media.waiting"
+				class="-spin"
+			/>
+			<IconPlay v-else-if="!media.currentTime" />
+		</div>
 
 		<div class="tify-player-controls">
 			<div>
@@ -134,14 +137,9 @@ export default {
 					type="button"
 					class="tify-player-play-pause"
 					:aria-label="$translate(media.paused ? 'Play [verb]' : 'Pause [verb]')"
-					:disabled="media.waiting"
 					@click="media.playing = !media.playing"
 				>
-					<IconLoading
-						v-if="media.waiting"
-						class="-spin"
-					/>
-					<IconPause v-else-if="media.playing" />
+					<IconPause v-if="media.playing || (media.seeking && media.waiting)" />
 					<IconPlay v-else />
 				</button>
 				<input
