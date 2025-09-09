@@ -236,7 +236,7 @@ button {
 
 .instance {
 	background: $bg;
-	color: $text-color;
+	color: light-dark(black, white);
 	container-type: size;
 	flex: 1;
 	min-width: 320px;

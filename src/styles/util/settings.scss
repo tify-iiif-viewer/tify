@@ -47,10 +47,7 @@ $link-hover-color: var(
 ) !default;
 $text-color: var(
 	--tify-text-color,
-	light-dark(
-		currentcolor,
-		oklch(from currentcolor 100% c h),
-	)
+	inherit,
 ) !default;
 $text-color-inverted: var(
 	--tify-text-color-inverted,
