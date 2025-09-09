@@ -31,7 +31,8 @@
 	padding: g(.25);
 	text-decoration: none;
 
-	@include hover {
+	&:focus,
+	&:hover {
 		background: $base-color-paler;
 		color: $link-color;
 
