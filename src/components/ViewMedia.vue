@@ -676,7 +676,16 @@ export default {
 					// eslint-disable-next-line no-new
 					new OpenSeadragon.MouseTracker({
 						element: button,
-						clickHandler: () => this.$store.toggleAnnotationId(annotation.id),
+						clickHandler: (event) => {
+							if (!event.quick) {
+								// Click triggered by drag-end
+								return;
+							}
+
+							// TODO: Canvas touch event triggers click on newly opened
+							// view on small containers. Using timeout as a workaround.
+							setTimeout(() => this.$store.toggleAnnotationId(annotation.id), 5);
+						},
 						keyDownHandler: (key) => key.keyCode === 13 && this.$store.toggleAnnotationId(annotation.id),
 					});
 
