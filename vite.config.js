@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 
 import fs from 'node:fs';
+import path from 'node:path';
 
 import vue from '@vitejs/plugin-vue';
 import componentsAutoImport from 'unplugin-vue-components/vite'; // eslint-disable-line import/no-unresolved
@@ -61,22 +62,26 @@ export default defineConfig({
 				+ '\n*/'
 		)),
 		componentsAutoImport({
+			dirs: [
+				path.resolve(__dirname, 'generated'),
+				path.resolve(__dirname, 'src/components'),
+			],
 			dts: false, // disable generating components.d.ts file
 			resolvers: [
 				(componentName) => {
 					// NOTE: Full path required for unit tests with Vitest
 					// Replacing "\" with "/" so it works on Windows; path.normalize cannot help here
 					const baseDir = __dirname.replaceAll('\\', '/');
-					const dir = `${baseDir}/src/components${componentName.startsWith('Icon') ? '/icons' : ''}`;
-					const path = `${dir}/${componentName}.vue`;
+					const componentDir = componentName.startsWith('Icon') ? 'generated/icons' : 'src/components';
+					const componentPath = `${baseDir}/${componentDir}/${componentName}.vue`;
 
-					if (!fs.existsSync(path)) {
+					if (!fs.existsSync(componentPath)) {
 						return false;
 					}
 
 					return {
 						name: componentName,
-						from: path,
+						from: componentPath,
 					};
 				},
 			],

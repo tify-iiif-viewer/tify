@@ -9,7 +9,7 @@ if (!fs.existsSync(`${rootDir}/node_modules/@mdi/js`)) {
 
 const mdi = await import('@mdi/js');
 
-const iconsDir = `${rootDir}/src/components/icons`;
+const iconsDir = `${rootDir}/generated/icons`;
 
 fs.mkdirSync(iconsDir, { recursive: true });
 
