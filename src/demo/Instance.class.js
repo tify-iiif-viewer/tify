@@ -16,6 +16,8 @@ export default class Instance {
 		this.tify?.destroy();
 		this.tify = null;
 
+		Instance.updateDocumentTitle();
+
 		const url = new URL(window.location);
 		url.searchParams.delete(`language${this.id}`);
 		url.searchParams.delete(`manifest${this.id}`);
@@ -55,6 +57,8 @@ export default class Instance {
 			urlQueryKey: `tify${this.id}`,
 		});
 
+		this.tify.ready.then(() => Instance.updateDocumentTitle());
+
 		// eslint-disable-next-line no-underscore-dangle
 		if (window.getComputedStyle(this.tify.app._container.firstChild, '::after').content !== '"wide"') {
 			this.sidebarOpen = false;
@@ -77,5 +81,11 @@ export default class Instance {
 			url.searchParams.set(`language${this.id}`, code);
 		}
 		window.history.pushState(null, '', url.toString());
+	}
+
+	// TODO: Add test
+	static updateDocumentTitle() {
+		const titles = document.querySelectorAll('.tify-header-title');
+		document.title = `TIFY${[...titles].map((title) => ` · ${title.textContent}`).join('')}`;
 	}
 }
