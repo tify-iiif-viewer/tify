@@ -9,7 +9,7 @@ export const indention = '\t';
 export const rootDir = url.fileURLToPath(new URL('..', import.meta.url));
 
 const globPattern = `${rootDir}/src/**/*.vue`;
-const excludedGlobPatterns = ['**/demo', '**/icons'];
+const excludedGlobPatterns = ['**/demo'];
 const excludedKeys = ['$n/a'];
 const translationFunctionName = '$translate';
 
