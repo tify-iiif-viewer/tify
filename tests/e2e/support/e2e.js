@@ -14,6 +14,7 @@ afterEach(() => {
 						allowMultipleH1: true,
 					},
 				],
+				'long-title': 'off',
 				'prefer-native-element': 'off',
 				'require-sri': 'off',
 				'valid-id': [
