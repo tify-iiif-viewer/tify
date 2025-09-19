@@ -18,6 +18,13 @@
   "license": "AGPL-3.0",
   "main": "dist/tify.js",
   "type": "module",
+  "files": [
+    "dist",
+    "doc",
+    "src",
+    "LICENSE",
+    "*.md"
+  ],
   "scripts": {
     "build": "vite build",
     "dev": "vite",
