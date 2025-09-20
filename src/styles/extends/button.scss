@@ -22,6 +22,8 @@
 		&:focus,
 		&:hover {
 			background: $button-hover-bg;
+			border: 1px solid $border-color;
+			color: $text-color;
 		}
 
 		&:active {

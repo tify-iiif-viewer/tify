@@ -62,8 +62,8 @@
 		}
 
 		&.-bottom {
-			right: g(.5);
 			bottom: g(.5);
+			right: g(.5);
 		}
 	}
 
@@ -210,6 +210,8 @@
 .tify-media-overlay {
 	@extend %button;
 	background: none;
+	min-height: 0;
+	min-width: 0;
 
 	&:not(:disabled) {
 		&:focus,

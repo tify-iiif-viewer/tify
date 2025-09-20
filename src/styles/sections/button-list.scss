@@ -6,20 +6,25 @@
 	margin: 0;
 	padding: 0;
 
-	> li > a,
-	> li > button {
-		@extend %button-borderless;
-		display: flex;
-		justify-content: start;
-		padding: g(.125) g(.375);
-		text-align: left;
-		width: 100%;
+	> li {
+		margin: 0;
+		padding: 0;
 
-		&[aria-pressed=true],
-		&[aria-pressed=true]:focus,
-		&[aria-pressed=true]:hover {
-			background: $link-color;
-			color: $text-color-inverted;
+		> a,
+		> button {
+			@extend %button-borderless;
+			display: flex;
+			justify-content: start;
+			padding: g(.125) g(.375);
+			text-align: left;
+			width: 100%;
+
+			&[aria-pressed=true],
+			&[aria-pressed=true]:focus,
+			&[aria-pressed=true]:hover {
+				background: $link-color;
+				color: $text-color-inverted;
+			}
 		}
 	}
 }

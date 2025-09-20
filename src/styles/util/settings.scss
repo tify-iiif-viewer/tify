@@ -21,14 +21,14 @@ $base-color-paler: var(
 	--tify-base-color-paler,
 	light-dark(
 		color-mix(in oklch, $base-color, $bg 90%),
-		color-mix(in oklch, $base-color-dark, $bg 90%),
+		color-mix(in oklch, $base-color-dark, $bg 90%)
 	)
 ) !default;
 $border-color: var(
 	--tify-border-color,
 	light-dark(
 		oklch(from $base-color calc(l * .5) calc(c * .1) h / 15%),
-		oklch(from $base-color-dark calc(l * 2) calc(c * .1) h / 15%),
+		oklch(from $base-color-dark calc(l * 2) calc(c * .1) h / 15%)
 	)
 ) !default;
 $link-color: var(
@@ -42,24 +42,27 @@ $link-hover-color: var(
 	--tify-link-hover-color,
 	light-dark(
 		color-mix(in oklch, $link-color 90%, black),
-		color-mix(in oklch, $link-color 90%, white),
+		color-mix(in oklch, $link-color 90%, white)
 	)
 ) !default;
 $text-color: var(
 	--tify-text-color,
-	inherit,
+	light-dark(
+		currentcolor,
+		oklch(from currentcolor 100% c h)
+	)
 ) !default;
 $text-color-inverted: var(
 	--tify-text-color-inverted,
 	light-dark(
 		oklch(from currentcolor 100% c h),
-		oklch(from currentcolor 0% c h),
+		oklch(from currentcolor 0% c h)
 	)
 ) !default;
 $text-color-muted: var(
 	--tify-text-color-muted,
 	// NOTE: Using color-mix() instead of oklch() for Firefox 128 ESR
-	color-mix(in oklch, currentcolor 61.8%, transparent),
+	color-mix(in oklch, currentcolor 61.8%, transparent)
 ) !default;
 
 // Dimensions
@@ -110,7 +113,7 @@ $main-bg: var(
 	--tify-body-bg,
 	radial-gradient(
 		light-dark(#aaa, #333) 1px,
-		light-dark(#bbb, #444) 0,
-	) 2px 1px / 3px 3px,
+		light-dark(#bbb, #444) 0
+	) 2px 1px / 3px 3px
 ) !default;
 $panel-bg: $bg !default;

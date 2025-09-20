@@ -44,9 +44,9 @@
 	@extend %button;
 	align-items: start;
 	gap: .2em;
+	justify-content: left;
 	padding-left: g(.375);
 	padding-right: g(.375);
-	justify-content: left;
 	text-align: left;
 	text-decoration: none;
 	width: 100%;
