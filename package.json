@@ -19,6 +19,7 @@
   "main": "dist/tify.js",
   "type": "module",
   "files": [
+    "build",
     "dist",
     "doc",
     "src",
