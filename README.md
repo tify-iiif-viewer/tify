@@ -25,17 +25,17 @@ Embed TIFY into your website in three easy steps:
 	- Either download TIFY and copy the contents of the `dist` directory to your server:
 
 		``` html
-		<script src="tify.js?v0.34.0"></script>
-		<link rel="stylesheet" href="tify.css?v0.34.0">
+		<script src="tify.js?v0.34.1"></script>
+		<link rel="stylesheet" href="tify.css?v0.34.1">
 		```
 
-		> To avoid issues with browser caching, add a query parameter with the current version, e.g. `?v0.34.0`.
+		> To avoid issues with browser caching, add a query parameter with the current version, e.g. `?v0.34.1`.
 
 	- Or use [jsDelivr](https://www.jsdelivr.com/):
 
 		``` html
-		<script src="https://cdn.jsdelivr.net/npm/tify@0.34.0/dist/tify.js"></script>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tify@0.34.0/dist/tify.css">
+		<script src="https://cdn.jsdelivr.net/npm/tify@0.34.1/dist/tify.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tify@0.34.1/dist/tify.css">
 		```
 
 	- Or `import` TIFY into your web application:
