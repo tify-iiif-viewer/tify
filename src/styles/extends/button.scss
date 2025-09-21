@@ -22,7 +22,7 @@
 		&:focus,
 		&:hover {
 			background: $button-hover-bg;
-			border: 1px solid $border-color;
+			border-color: $border-color;
 			color: $text-color;
 		}
 
