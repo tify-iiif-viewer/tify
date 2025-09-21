@@ -42,11 +42,8 @@ export default {
 	transform: translate(-.1em); // center visually
 }
 
-.current,
-.current:focus,
-.current:hover {
-	background: $link-color !important;
-	color: $text-color-inverted;
+.current {
+	@extend %button-active;
 }
 
 :deep(.tify-dropdown-button) {

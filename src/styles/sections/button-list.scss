@@ -18,13 +18,10 @@
 			padding: g(.125) g(.375);
 			text-align: left;
 			width: 100%;
+		}
 
-			&[aria-pressed=true],
-			&[aria-pressed=true]:focus,
-			&[aria-pressed=true]:hover {
-				background: $link-color;
-				color: $text-color-inverted;
-			}
+		> button[aria-pressed=true] {
+			@extend %button-active;
 		}
 	}
 }

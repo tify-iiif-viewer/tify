@@ -69,14 +69,14 @@
 
 	.tify-media-buttons.-controls & {
 		&:not(:first-child) {
-			border-top: 0;
+			border-top: 0 !important;
 			border-top-left-radius: 0;
 			border-top-right-radius: 0;
 			padding-top: g(.25);
 		}
 
 		&:not(:last-child) {
-			border-bottom: 0;
+			border-bottom: 0 !important;
 			border-bottom-left-radius: 0;
 			border-bottom-right-radius: 0;
 			padding-bottom: g(.25);
@@ -90,14 +90,14 @@
 	}
 
 	&:not(:first-child) > .tify-dropdown-button {
-		border-top: 0;
+		border-top: 0 !important;
 		border-top-left-radius: 0;
 		border-top-right-radius: 0;
 		padding-top: g(.25);
 	}
 
 	&:not(:last-child) > .tify-dropdown-button {
-		border-bottom: 0;
+		border-bottom: 0 !important;
 		border-bottom-left-radius: 0;
 		border-bottom-right-radius: 0;
 		padding-bottom: g(.25);

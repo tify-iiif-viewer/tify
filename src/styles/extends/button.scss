@@ -63,12 +63,6 @@
 	margin: 0; // Safari fix
 
 	&:not(:disabled) {
-		&:active,
-		&:focus,
-		&:hover {
-			border-color: $border-color;
-		}
-
 		&:active {
 			box-shadow: $inset-shadow;
 		}
