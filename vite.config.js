@@ -100,11 +100,13 @@ export default defineConfig({
 		vue(),
 		{
 			transformIndexHtml(html) {
-				return html
-					// Replace ghastly spaces with tabs :)
-					.replace(/^ {2}/gm, '\t')
-					// Append current version for cache busting
-					.replace(/(<link.+?href=".+?|<script.+?src=".+?)(")/g, `$1?${pkg.version}$2`);
+				return process.env.NODE_ENV !== 'production'
+					? html
+					: html
+						// Replace ghastly spaces with tabs :)
+						.replace(/^ {2}/gm, '\t')
+						// Append current version to all assets for cache busting
+						.replace(/(<(?:link.+?href|script.+?src)=".+?)(")/g, `$1?${pkg.version}$2`);
 			},
 		},
 	],
