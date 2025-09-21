@@ -67,6 +67,7 @@ a {
 	text-align: left;
 
 	&:not(:disabled) {
+		&:active,
 		&:focus,
 		&:hover {
 			color: $text-color-inverted;
@@ -80,6 +81,7 @@ img {
 	opacity: .9;
 	transition: transform calc($td * 2);
 
+	a:active &,
 	a:focus &,
 	a:hover & {
 		filter: none;
@@ -122,6 +124,7 @@ ul {
 		font-weight: bold;
 	}
 
+	a:active &,
 	a:focus &,
 	a:hover & {
 		background: $link-hover-color;
