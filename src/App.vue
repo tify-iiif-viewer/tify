@@ -24,8 +24,10 @@ export default {
 	},
 	watch: {
 		// eslint-disable-next-line func-names
-		'$store.options.pages': function () {
-			this.$store.options.layers = [];
+		'$store.options.pages': function (newPages, oldPages) {
+			if (oldPages) {
+				this.$store.options.layers = [];
+			}
 
 			if (this.$store.annotationsActive) {
 				this.$store.loadAnnotations();
