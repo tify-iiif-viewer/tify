@@ -1,7 +1,8 @@
 .tify-page-select {
 	> .tify-dropdown-button {
 		@extend %button;
-		line-height: 1;
+		height: 100%;
+		line-height: 1.5;
 		max-width: g(5);
 		min-width: g(3);
 		overflow: hidden;
