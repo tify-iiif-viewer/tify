@@ -12,57 +12,63 @@ Continue reading to learn how to integrate TIFY into your website or application
 
 ## Embedding TIFY
 
-TIFY is available as an [npm package](https://www.npmjs.com/package/tify):
+Add an empty HTML block element with an `id` and a set height:
 
-``` bash
-npm install tify
+``` html
+<div id="tify" style="height: 640px"></div>
 ```
 
-Embed TIFY into your website in three easy steps:
+Include TIFY:
 
-1. Include both the JavaScript and the stylesheet.
+- Either via [npm](www.npmjs.com/package/tify) (recommended):
 
-	- Either download TIFY and copy the contents of the `dist` directory to your server:
-
-		``` html
-		<script src="tify.js?v0.34.4"></script>
-		<link rel="stylesheet" href="tify.css?v0.34.4">
-		```
-
-		> To avoid issues with browser caching, add a query parameter with the current version, e.g. `?v0.34.4`.
-
-	- Or use [jsDelivr](https://www.jsdelivr.com/):
-
-		``` html
-		<script src="https://cdn.jsdelivr.net/npm/tify@0.34.4/dist/tify.js"></script>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tify@0.34.4/dist/tify.css">
-		```
-
-	- Or `import` TIFY into your web application:
-
-		``` js
-		import 'tify'
-		import 'tify/dist/tify.css'
-		```
-
-2. Add an HTML block element with an `id` and set its `height`.
-
-	``` html
-	<div id="tify" style="height: 640px"></div>
+	``` bash
+	npm install tify
 	```
 
-3. Create a TIFY instance.
+	- If you are using a build tool like [Vite](https://vite.dev/), `import` the required files and create a TIFY instance:
+
+		``` js
+		import 'tify/dist/tify.css'
+		import Tify from 'tify'
+
+		new Tify({
+		  container: '#tify',
+		  manifestUrl: 'https://iiif.io/api/cookbook/recipe/0009-book-1/manifest.json',
+		})
+		```
+
+	- Otherwise, upload everything from `node_modules/tify/dist` to your web server and add this to the HTML output:
+
+		``` html
+		<link rel="stylesheet" href="tify.css?0.34.4">
+
+		<script type="module">
+		import Tify from './tify.js?0.34.4'
+
+		new Tify({
+		  container: '#tify',
+		  manifestUrl: 'https://iiif.io/api/cookbook/recipe/0009-book-1/manifest.json',
+		})
+		</script>
+		```
+
+		Adjust the paths as needed. Appending `?0.34.4` prevents caching issues when upgrading.
+
+- Or use a <abbr title="Content Delivery Network">CDN</abbr> like [jsDelivr](https://www.jsdelivr.com/package/npm/tify) or [UNPKG](https://app.unpkg.com/tify):
 
 	``` html
-	<script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tify@0.34.4/dist/tify.css">
+
+	<script type="module">
+	import Tify from 'https://cdn.jsdelivr.net/npm/tify@0.34.4/dist/tify.js'
+
 	new Tify({
 	  container: '#tify',
-	  manifestUrl: 'https://example.org/iiif-manifest.json',
+	  manifestUrl: 'https://iiif.io/api/cookbook/recipe/0009-book-1/manifest.json',
 	})
 	</script>
 	```
-
-Many aspects of the theme can be modified with SCSS variables or CSS custom properties, allowing you to easily adapt TIFY’s appearance to your website. [See the theme settings file](src/styles/util/settings.scss) for all available variables.
 
 ## Upgrading
 
@@ -94,6 +100,10 @@ new Tify({
   zoom: 1.2,
 })
 ```
+
+## Customizing
+
+Many aspects of the theme can be modified with SCSS variables or CSS custom properties, allowing you to easily adapt TIFY’s appearance to your website. [See the theme settings file](src/styles/util/settings.scss) for all available variables.
 
 ## API
 

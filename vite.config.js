@@ -31,6 +31,7 @@ export default defineConfig({
 				// https://rollupjs.org/guide/en/#outputassetfilenames
 				assetFileNames: '[name].[ext]',
 			},
+			preserveEntrySignatures: 'preserve',
 		},
 	},
 	css: {
