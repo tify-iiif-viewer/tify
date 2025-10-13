@@ -53,7 +53,6 @@ export default class Instance {
 			contentStateEnabled: this.hasContentState,
 			language: this.language,
 			manifestUrl: this.manifestUrl,
-			translationsDirUrl: 'translations',
 			urlQueryKey: `tify${this.id}`,
 		});
 
