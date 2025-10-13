@@ -17,11 +17,15 @@ window.Tify = function Tify(userOptions = {}) {
 	};
 
 	if (!this.options.translationsDirUrl) {
-		const scripts = document.getElementsByTagName('script');
-		const tifyScript = [...scripts].find((script) => script.src.includes('/tify'));
-		if (tifyScript) {
-			const { src } = tifyScript;
-			this.options.translationsDirUrl = `${src.substring(0, src.lastIndexOf('/'))}/translations`;
+		if (import.meta.env.DEV) {
+			this.options.translationsDirUrl = 'translations';
+		} else {
+			try {
+				const { url } = import.meta;
+				this.options.translationsDirUrl = `${url.slice(0, url.lastIndexOf('/'))}/translations`;
+			} catch {
+				// Nothing to do here
+			}
 		}
 	}
 
