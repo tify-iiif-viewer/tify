@@ -4,8 +4,8 @@ describe('IIIF Cookbook 0002: Simple audio file', () => {
 	});
 
 	it('shows the audio player', () => {
-		cy.contains('h1', 'Simplest Audio Example 1')
-		cy.get('audio')
+		cy.contains('h1', 'Simplest Audio Example 1');
+		cy.get('audio');
 
 		// TODO: Extend
 	});
