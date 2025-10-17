@@ -2,6 +2,7 @@
 
 ## v0.34
 
+- If you load `tify.js` directly, wether self-hosted or from a CDN, you need to use `<script type="module">`. [See readme for details.](README.md)
 - TIFY now inherits the host website’s font size and line height; most dimensions are derived from the font size. Add the following CSS to restore the previous dimensions:
 
 	``` css
