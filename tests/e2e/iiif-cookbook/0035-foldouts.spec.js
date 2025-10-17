@@ -20,12 +20,21 @@ describe('IIIF Cookbook 0025: Foldout as separate page in double-page view', () 
 
 		cy.get('[title="Next page"]').eq(0).click();
 		cy.get('.tify-thumbnails-item.-current:nth-child(5)');
-		cy.get('.tify-thumbnails-item.-current').should('have.length', 1);
+		cy.get('.tify-thumbnails-item.-current:nth-child(6)');
+		cy.get('.tify-thumbnails-item.-current').should('have.length', 2);
 
 		cy.get('[title="Next page"]').eq(0).click();
-		cy.get('.tify-thumbnails-item.-current:nth-child(6)');
 		cy.get('.tify-thumbnails-item.-current:nth-child(7)');
+		cy.get('.tify-thumbnails-item.-current:nth-child(8)');
 		cy.get('.tify-thumbnails-item.-current').should('have.length', 2);
+
+		cy.get('[title="Next page"]').eq(0).click();
+		cy.get('.tify-thumbnails-item.-current:nth-child(9)');
+		cy.get('.tify-thumbnails-item.-current').should('have.length', 1);
+
+		cy.get('[title="Previous page"]').eq(0).click().click();
+		cy.get('.tify-thumbnails-item.-current:nth-child(5)');
+		cy.get('.tify-thumbnails-item.-current:nth-child(6)');
 
 		cy.contains('.tify-thumbnails-item', 'Foldout, unfolded').click();
 		cy.get('.tify-thumbnails-item.-current:nth-child(4)');
