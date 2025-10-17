@@ -9,4 +9,4 @@ describe('IIIF Cookbook 0019: HTML in annotations', () => {
 	it('displays the annotation', () => {
 		cy.contains('.tify-text-toggle', 'Gänseliesel Brunnen');
 	});
-})
+});

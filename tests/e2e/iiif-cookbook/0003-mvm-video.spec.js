@@ -4,7 +4,7 @@ describe('IIIF Cookbook 0003: Simple video file', () => {
 	});
 
 	it('shows the audio player', () => {
-		cy.contains('h1', 'Video Example 3')
+		cy.contains('h1', 'Video Example 3');
 		cy.get('video').should('be.visible');
 
 		// TODO: Extend

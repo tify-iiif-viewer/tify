@@ -14,7 +14,7 @@ module.exports = {
 	},
 	ignorePatterns: [
 		'dist',
-		'iiif-cookbook',
+		'**/data/iiif-cookbook',
 	],
 	overrides: [
 		{
