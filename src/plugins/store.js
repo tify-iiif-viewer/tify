@@ -124,7 +124,7 @@ function Store(args = {}) {
 		isCustomPageView: computed(() => {
 			const { pages } = store.options;
 
-			if (pages?.length === 1) {
+			if (pages.length === 1) {
 				return false;
 			}
 
@@ -136,7 +136,7 @@ function Store(args = {}) {
 				return false;
 			}
 
-			return (pages[0] % 2 === 1 || pages[1] % 2 === 0);
+			return (pages[1] - pages[0] !== 1);
 		}),
 		isFirstPage: computed(() => store.options.pages[0] === 1 || store.options.pages[1] === 1),
 		isLastPage: computed(() => store.options.pages.at(-1) === store.pageCount),
@@ -309,31 +309,39 @@ function Store(args = {}) {
 			return result;
 		},
 		getFacingPage(page) {
+			// Special return values:
+			//  0: Placeholder facing page for the first page or a verso last page
+			// -1: Marker for non-paged pages in a paged document to retain double-page mode
+
+			// If the current page is non-paged, just return the marker
 			if (store.manifest.items[page - 1].behavior?.includes('non-paged')) {
-				// Marker for pages that must be displayed individually
 				return -1;
 			}
 
+			// The first page is always displayed individually
 			if (page === 1) {
-				// Show only page 1 in double-page mode
 				return 0;
 			}
 
-			if (page % 2 === 1) {
-				// For an odd (recto) page, add the preceding page
-				if (store.manifest.items[page - 1 - 1]?.behavior?.includes('non-paged')) {
+			const precedingNonPagedItems = store.manifest.items
+				.slice(0, page - 1)
+				.filter((item) => item.behavior?.includes('non-paged'));
+			const offsetPage = page + (precedingNonPagedItems.length % 2);
+
+			// For an odd (recto) page, add the preceding page unless it is non-paged
+			if (offsetPage % 2 === 1) {
+				if (store.manifest.items[(page - 1) - 1]?.behavior?.includes('non-paged')) {
 					return -1;
 				}
 
 				return page - 1;
 			}
 
-			if (store.manifest.items[page + 1 - 1]?.behavior?.includes('non-paged')) {
-				// Potential facing page must be displayed individually
+			// For an even (verso) page, add the following page if available, unless it is non-paged
+			if (store.manifest.items[(page - 1) + 1]?.behavior?.includes('non-paged')) {
 				return -1;
 			}
 
-			// For an even (verso) page, add the following page, or 0 for the last page
 			return page < store.pageCount
 				? page + 1
 				: 0;
