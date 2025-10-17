@@ -7,15 +7,15 @@ describe('IIIF Cookbook 0033: Multiple choice of images in a single view (canvas
 		cy.get('[title="Toggle image layer select"]')
 			.click();
 
-		cy.contains('[aria-pressed=true]', 'Natural Light')
+		cy.contains('[aria-pressed=true]', 'Natural Light');
 		cy.contains('[aria-pressed=false]', 'X-Ray')
-			.click()
+			.click();
 
 		cy.get('.tify-media-dropdown.-layers.-active > button')
-			.click()
+			.click();
 
-		cy.contains('[aria-pressed=false]', 'Natural Light')
-		cy.contains('[aria-pressed=true]', 'X-Ray')
+		cy.contains('[aria-pressed=false]', 'Natural Light');
+		cy.contains('[aria-pressed=true]', 'X-Ray');
 	});
 
 	it('remembers the selected layer', () => {
@@ -26,9 +26,9 @@ describe('IIIF Cookbook 0033: Multiple choice of images in a single view (canvas
 		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/iiif-cookbook/0033-choice/manifest.json&tify=${encodedParams}`);
 
 		cy.get('.tify-media-dropdown.-layers.-active > button')
-			.click()
+			.click();
 
-		cy.contains('[aria-pressed=false]', 'Natural Light')
-		cy.contains('[aria-pressed=true]', 'X-Ray')
+		cy.contains('[aria-pressed=false]', 'Natural Light');
+		cy.contains('[aria-pressed=true]', 'X-Ray');
 	});
 });
