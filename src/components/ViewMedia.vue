@@ -482,7 +482,7 @@ export default {
 					// pages or on slow connections, promises could resolve when the
 					// corresponding pages are no longer displayed.
 					const pages = this.$store.options.pages.filter((page) => page > 0);
-					if (pages.every((page, index) => infoItems[index].$meta.page === page)) {
+					if (pages.every((page, index) => infoItems[index]?.$meta.page === page)) {
 						this.initViewer(reset);
 					}
 				});
