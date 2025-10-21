@@ -281,11 +281,11 @@ export default {
 					{{ $store.localize(provider.label) }}
 				</p>
 				<ul
-					v-if="provider.homepage?.length"
+					v-if="provider.homepage?.length || provider.seeAlso?.length"
 					class="tify-list"
 				>
 					<li
-						v-for="homepage in provider.homepage"
+						v-for="homepage in [...provider.homepage || [], ...provider.seeAlso || []]"
 						:key="homepage.id"
 					>
 						<a :href="homepage.id">
