@@ -6,23 +6,25 @@
 
 .tify-collection-controls {
 	display: flex;
-
-	> :first-child {
-		border-radius: $br 0 0 $br;
-	}
-
-	> :last-child {
-		border-radius: 0 $br $br 0;
-	}
 }
 
 .tify-collection-filter {
+	border-radius: $br 0 0 $br;
 	flex: 1;
 	max-width: 36em;
 
 	&:focus {
 		z-index: 1;
 	}
+}
+
+.tify-collection-header {
+	backdrop-filter: $blur;
+	background: oklch(from $panel-bg l c h / 61.8%);
+	margin: g(-.5) g(-.5) 0;
+	padding: g(.5);
+	position: sticky;
+	top: g(-.5);
 }
 
 .tify-collection-list {
@@ -71,5 +73,6 @@
 
 .tify-collection-reset {
 	@extend %button-small;
+	border-radius: 0 $br $br 0;
 	margin-left: -1px;
 }
