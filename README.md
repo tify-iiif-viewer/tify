@@ -41,10 +41,10 @@ Include TIFY:
 	- Otherwise, upload everything from `node_modules/tify/dist` to your web server and add this to the HTML output:
 
 		``` html
-		<link rel="stylesheet" href="tify.css?0.34.4">
+		<link rel="stylesheet" href="tify.css?0.34.5">
 
 		<script type="module">
-		import Tify from './tify.js?0.34.4'
+		import Tify from './tify.js?0.34.5'
 
 		new Tify({
 		  container: '#tify',
@@ -53,15 +53,15 @@ Include TIFY:
 		</script>
 		```
 
-		Adjust the paths as needed. Appending `?0.34.4` prevents caching issues when upgrading.
+		Adjust the paths as needed. Appending `?0.34.5` prevents caching issues when upgrading.
 
 - Or use a <abbr title="Content Delivery Network">CDN</abbr> like [jsDelivr](https://www.jsdelivr.com/package/npm/tify) or [UNPKG](https://app.unpkg.com/tify):
 
 	``` html
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tify@0.34.4/dist/tify.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tify@0.34.5/dist/tify.css">
 
 	<script type="module">
-	import Tify from 'https://cdn.jsdelivr.net/npm/tify@0.34.4/dist/tify.js'
+	import Tify from 'https://cdn.jsdelivr.net/npm/tify@0.34.5/dist/tify.js'
 
 	new Tify({
 	  container: '#tify',
