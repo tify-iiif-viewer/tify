@@ -73,8 +73,8 @@ $info-content-max-height: g(6.75);
 		// Ensure visibility in dark mode since most logos require a white background
 		background: $panel-bg;
 		color-scheme: light;
-		margin: g(-.5);
-		padding: g(.5);
+		margin: g(-.25) g(-.5) g(-1);
+		padding: g(.25) g(.75);
 
 		> :last-child {
 			margin: 0;

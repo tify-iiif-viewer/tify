@@ -22,32 +22,34 @@ export default {
 		class="tify-collection"
 		tabindex="0"
 	>
-		<h2 class="tify-sr-only">
-			{{ $translate('Collection') }}
-		</h2>
+		<header class="tify-collection-header">
+			<h2 class="tify-sr-only">
+				{{ $translate('Collection') }}
+			</h2>
 
-		<p
-			v-if="$store.collection.items.length > 5"
-			class="tify-collection-controls"
-		>
-			<input
-				v-model="filter"
-				:aria-label="$translate('Filter collection')"
-				class="tify-collection-filter"
-				:placeholder="$translate('Filter collection')"
-				type="text"
-				@keydown.esc.prevent="filter ? (filter = '') : $event.target.blur()"
-				@keydown.stop
-			/>
-			<button
-				type="button"
-				class="tify-collection-reset"
-				:disabled="!filter"
-				@click="filter = ''"
+			<div
+				v-if="$store.collection.items.length > 5"
+				class="tify-collection-controls"
 			>
-				{{ $translate('Reset') }}
-			</button>
-		</p>
+				<input
+					v-model="filter"
+					:aria-label="$translate('Filter collection')"
+					class="tify-collection-filter"
+					:placeholder="$translate('Filter collection')"
+					type="text"
+					@keydown.esc.prevent="filter ? (filter = '') : $event.target.blur()"
+					@keydown.stop
+				/>
+				<button
+					type="button"
+					class="tify-collection-reset"
+					:disabled="!filter"
+					@click="filter = ''"
+				>
+					{{ $translate('Reset') }}
+				</button>
+			</div>
+		</header>
 
 		<ol
 			v-if="filteredItems.length"
