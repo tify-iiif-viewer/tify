@@ -143,17 +143,27 @@ Run end-to-end tests:
 
 ## Translations
 
-Translations reside in `public/translations`. Each language is represented by a JSON file, where the file name is the language’s [ISO 639 alpha-2 code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes). Each file consists of a single object of key-value pairs; the key is the original English string, the value is the translation.
+Translations reside in `public/translations` for TIFY and in `src/demo/translation` for the demo application. Each language is represented by a JSON file, its name is the language’s [ISO 639 alpha-2 code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes), e.g. `de.json` for the German translation. Each file consists of a single object of key-value pairs; the key is the original English string, the value is the translated string.
 
-The key `$language` denotes the native name of the translation’s language.
+The first key `$language` denotes the native name (endonym) of the translation’s language.
 
-There are more special keys starting with `$`; while all other keys are to be translated literally, these keys serve as placeholders for longer sections of text, see `src/strings.json`.
+TIFY uses a few other special keys starting with `$`. While all other keys are to be translated literally, these keys serve as placeholders for longer sections of text as defined in `src/strings.json`.
 
-English keys (but not translated values) may contains translation hints in square brackets, e.g. `View [noun]` should be treated as a noun, not as a verb.
+English keys (but not translated values) may contain translation hints in square brackets, e.g. `View [noun]` should be treated as a noun, not as a verb.
 
-To create a new empty translation, run `node build/create-translation.js` and follow the prompts.
+To **add a new language** to TIFY and its demo, run
 
-To check all translations for validity and completeness, use `npm run test:i18n` or `npm run test:i18n:fix`, the latter adding missing keys, removing unused keys, and sorting keys.
+```
+node build/create-translation.js
+```
+
+and follow the prompt.
+
+
+To **check all translations** for validity and completeness:
+
+- Lint and report problems: `npm run test:i18n`
+- Lint, report, and update translation files by adding missing keys, removing unused keys, and sorting all entries: `npm run test:i18n:fix`
 
 ---
 
