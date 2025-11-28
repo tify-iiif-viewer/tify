@@ -1,8 +1,7 @@
 {
 	"$language": "Български",
 	"Add instance": "Добавяне на инстанция",
-	"auto": "автоматично",
-	"Close sidebar": "Затвори страничната лента",
+	"automatic": "автоматично",
 	"Collection": "Колекция",
 	"Color mode": "Цветови режим",
 	"dark": "тъмен",
@@ -11,5 +10,6 @@
 	"light [adjective]": "светъл",
 	"Load": "Зареждане",
 	"Remove instance": "Премахни инстанция",
-	"Sample IIIF manifests": "Примерни IIIF манифести"
+	"Sample IIIF manifests": "Примерни IIIF манифести",
+	"Toggle sidebar": "Превключи страничната лента"
 }

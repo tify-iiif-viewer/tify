@@ -9,12 +9,25 @@ export default {
 	emits: [
 		'change',
 	],
+	methods: {
+		getLabel(colorMode) {
+			if (colorMode === 'auto') {
+				return this.$translate('automatic', this.instance);
+			}
+
+			if (colorMode === 'light') {
+				return this.$translate('light [adjective]', this.instance);
+			}
+
+			return this.$translate('dark', this.instance);
+		},
+	},
 };
 </script>
 
 <template>
 	<ul
-		aria-label="Color mode"
+		:aria-label="$translate('Color mode', instance)"
 		role="toolbar"
 	>
 		<li
@@ -23,9 +36,9 @@ export default {
 		>
 			<button
 				type="button"
-				:aria-label="$translate(colorMode, instance)"
+				:aria-label="getLabel(colorMode)"
 				:aria-pressed="instance.colorMode === colorMode"
-				:title="$translate(colorMode, instance)"
+				:title="getLabel(colorMode)"
 				@click="$emit('change', colorMode)"
 			>
 				<IconThemeLightDark v-if="colorMode === 'auto'" />

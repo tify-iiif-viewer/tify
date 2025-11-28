@@ -1,8 +1,7 @@
 {
 	"$language": "Türkçe",
 	"Add instance": "Yeni örnek",
-	"auto": "otomatik",
-	"Close sidebar": "Kenar çubuğunu kapat",
+	"automatic": "otomatik",
 	"Collection": "Koleksiyon",
 	"Color mode": "Renk modu",
 	"dark": "koyu",
@@ -11,5 +10,6 @@
 	"light [adjective]": "açık",
 	"Load": "Yükle",
 	"Remove instance": "Örneği kaldır",
-	"Sample IIIF manifests": "Örnek IIIF manifestleri"
+	"Sample IIIF manifests": "Örnek IIIF manifestleri",
+	"Toggle sidebar": "Kenar çubuğunu değiştir"
 }

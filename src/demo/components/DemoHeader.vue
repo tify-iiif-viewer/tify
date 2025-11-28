@@ -24,7 +24,7 @@ export default {
 		<button
 			v-if="instance.tify"
 			type="button"
-			aria-label="Toggle sidebar"
+			:aria-label="$translate('Toggle sidebar', instance)"
 			:aria-controls="`sidebar${instance.id}`"
 			:aria-expanded="instance.sidebarOpen"
 			@click="$emit('toggleSidebar')"
@@ -49,7 +49,7 @@ export default {
 				v-show="instance.manifestUrl && instance.manifestUrl !== instance.tify?.options.manifestUrl"
 				type="submit"
 				class="submit"
-				:aria-label="$translate('Load manifest', instance)"
+				:aria-label="$translate('Load', instance)"
 			>
 				<IconArrowRight />
 			</button>
