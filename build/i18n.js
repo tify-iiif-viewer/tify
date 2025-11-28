@@ -5,13 +5,24 @@ import url from 'node:url';
 import chalk from 'chalk';
 import * as Diff from 'diff';
 
-export const indention = '\t';
-export const rootDir = url.fileURLToPath(new URL('..', import.meta.url));
-
-const globPattern = `${rootDir}/src/**/*.vue`;
-const excludedGlobPatterns = ['**/demo'];
-const excludedKeys = ['$n/a'];
+const excludedStrings = ['$n/a'];
+const rootDir = url.fileURLToPath(new URL('..', import.meta.url)).replace(/\/$/, '');
 const translationFunctionName = '$translate';
+
+export const indention = '\t';
+export const scopes = [
+	{
+		name: 'Demo',
+		translationsDir: `${rootDir}/src/demo/translations`,
+		globPattern: `${rootDir}/src/demo/**/*.vue`,
+	},
+	{
+		name: 'TIFY',
+		translationsDir: `${rootDir}/public/translations`,
+		globPattern: `${rootDir}/src/**/*.vue`,
+		excludedGlobPatterns: ['**/demo'],
+	},
+];
 
 function sortTranslation(translation) {
 	return Object.keys(translation)
@@ -30,89 +41,6 @@ function sortTranslation(translation) {
 			acc[key] = translation[key];
 			return acc;
 		}, {});
-}
-
-export function checkTranslationFiles(
-	translationsDir,
-	referenceKeys,
-	options = { addMissing: false, removeUnused: false, sort: false },
-) {
-	const filteredReferenceKeys = referenceKeys.filter((key) => !excludedKeys.includes(key));
-	const results = [];
-	const translationFiles = fs.readdirSync(translationsDir);
-
-	translationFiles.forEach((file) => {
-		const result = {
-			langCode: path.parse(file).name,
-			notes: [],
-			issues: [],
-		};
-
-		const json = fs.readFileSync(`${translationsDir}/${file}`);
-		const translation = JSON.parse(json);
-		const keys = Object.keys(translation).filter((key) => !excludedKeys.includes(key));
-
-		result.langName = translation.$language;
-
-		const emptyKeys = keys.filter((key) => !translation[key]);
-		result.issues.push(...emptyKeys.map((key) => ({ type: 'empty', key })));
-
-		const missingKeys = filteredReferenceKeys.filter((key) => !keys.includes(key));
-		result.issues.push(...missingKeys.map((key) => ({ type: 'missing', key })));
-
-		const unusedKeys = keys.filter((key) => !filteredReferenceKeys.includes(key));
-		result.issues.push(...unusedKeys.map((key) => ({ type: 'unused', key })));
-
-		const keysStr = keys.join(', ');
-		const referenceKeysStr = filteredReferenceKeys.join(', ');
-		if (!missingKeys.length
-			&& !unusedKeys.length
-			&& keysStr !== referenceKeysStr
-		) {
-			const diffs = Diff.diffChars(keysStr, referenceKeysStr);
-
-			const difference = diffs.map((part) => {
-				if (part.added) {
-					return chalk.green(part.value);
-				}
-
-				if (part.removed) {
-					return chalk.red(part.value);
-				}
-
-				return part.value;
-			}).join('');
-
-			result.notes.push(`Keys are not properly sorted: ${chalk.reset(difference)}`);
-		}
-
-		results.push(result);
-
-		if (options.addMissing && missingKeys.length) {
-			missingKeys.forEach((key) => {
-				translation[key] = '';
-			});
-			result.notes.push('Added missing keys, please add translations');
-		}
-
-		if (options.removeUnused && unusedKeys.length) {
-			unusedKeys.forEach((key) => {
-				delete translation[key];
-			});
-			result.notes.push('Removed unused keys');
-		}
-
-		const updatedTranslation = options.sort
-			? sortTranslation(translation)
-			: translation;
-
-		if (options.addMissing || options.removeUnused || options.sort) {
-			const updatedJson = JSON.stringify(updatedTranslation, null, indention);
-			fs.writeFileSync(`${translationsDir}/${file}`, `${updatedJson}\n`);
-		}
-	});
-
-	return results;
 }
 
 /**
@@ -143,7 +71,7 @@ export function checkTranslationFiles(
  * 		'2',
  * 	)
  */
-export function findTranslatedStrings() {
+export function findTranslatedStrings(globPattern, excludedGlobPatterns = []) {
 	const filePaths = fs.globSync(globPattern, { exclude: excludedGlobPatterns });
 	const results = [];
 
@@ -187,6 +115,10 @@ export function findTranslatedStrings() {
 					return;
 				}
 
+				if (strings.every((string) => excludedStrings.includes(string))) {
+					return;
+				}
+
 				const matchObject = {
 					file: filePath,
 					line: lineNumber,
@@ -212,6 +144,108 @@ export function findTranslatedStrings() {
 	});
 
 	results.sort((a, b) => a.key.localeCompare(b.key));
+
+	return results;
+}
+
+export function checkTranslations(options = {
+	translationsDir: `${rootDir}/public/translations`,
+	globPattern: `${rootDir}/src/**/*.vue`,
+	excludedGlobPatterns: [],
+	addMissing: false,
+	removeUnused: false,
+	sort: false,
+}) {
+	const translatedStrings = findTranslatedStrings(
+		options.globPattern,
+		options.excludedGlobPatterns || [],
+	).map((result) => result.key);
+
+	if (!translatedStrings.length) {
+		console.log('No translated strings found');
+		return [];
+	}
+
+	translatedStrings.unshift('$language');
+
+	const filteredReferenceKeys = translatedStrings.filter((key) => !excludedStrings.includes(key));
+	const results = [];
+	const translationFiles = fs.readdirSync(options.translationsDir);
+
+	translationFiles.forEach((file) => {
+		const result = {
+			langCode: path.parse(file).name,
+			notes: [],
+			issues: [],
+		};
+
+		const json = fs.readFileSync(`${options.translationsDir}/${file}`);
+		const translation = JSON.parse(json);
+		const keys = Object.keys(translation).filter((key) => !excludedStrings.includes(key));
+
+		result.langName = translation.$language;
+
+		const emptyKeys = keys.filter((key) => !translation[key]);
+		result.issues.push(...emptyKeys.map((key) => ({ type: 'empty', key })));
+
+		const missingKeys = filteredReferenceKeys.filter((key) => !keys.includes(key));
+		result.issues.push(...missingKeys.map((key) => ({ type: 'missing', key })));
+
+		const unusedKeys = keys.filter((key) => !filteredReferenceKeys.includes(key));
+		result.issues.push(...unusedKeys.map((key) => ({ type: 'unused', key })));
+
+		const keysStr = keys.join(', ');
+		const referenceKeysStr = filteredReferenceKeys.join(', ');
+		if (!missingKeys.length
+			&& !unusedKeys.length
+			&& keysStr !== referenceKeysStr
+		) {
+			const diffs = Diff.diffChars(keysStr, referenceKeysStr);
+
+			const difference = diffs.map((part) => {
+				if (part.added) {
+					return chalk.greenBright(part.value);
+				}
+
+				if (part.removed) {
+					return chalk.redBright(part.value);
+				}
+
+				return part.value;
+			}).join('');
+
+			if (options.sort) {
+				result.notes.push('Keys sorted');
+			} else {
+				result.issues.push({ type: 'wrong order', key: difference });
+			}
+		}
+
+		if (options.addMissing && missingKeys.length) {
+			missingKeys.forEach((key) => {
+				translation[key] = '';
+			});
+			result.notes.push('Missing keys added, please add translations');
+		}
+
+		if (options.removeUnused && unusedKeys.length) {
+			unusedKeys.forEach((key) => {
+				delete translation[key];
+			});
+			result.notes.push('Unused keys removed');
+		}
+
+		const updatedTranslation = options.sort
+			? sortTranslation(translation)
+			: translation;
+
+		if (options.addMissing || options.removeUnused || options.sort) {
+			const updatedJson = JSON.stringify(updatedTranslation, null, indention);
+			fs.writeFileSync(`${options.translationsDir}/${file}`, `${updatedJson}\n`);
+		}
+
+		results.push(result);
+	});
 
 	return results;
 }

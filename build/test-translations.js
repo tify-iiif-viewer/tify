@@ -1,12 +1,32 @@
 import chalk from 'chalk';
 
 import {
-	checkTranslationFiles,
-	findTranslatedStrings,
-	rootDir,
+	checkTranslations,
+	scopes,
 } from './i18n.js'; // eslint-disable-line import/extensions
 
-function wrapText(text) {
+function groupByLangCode(source) {
+	const byLang = new Map();
+
+	Object.entries(source).forEach(([scopeName, items]) => {
+		items.forEach((item) => {
+			const { langCode, langName, ...scope } = item;
+
+			if (!byLang.has(langCode)) {
+				byLang.set(langCode, { langCode, langName });
+			}
+
+			const target = byLang.get(langCode);
+			target.scopes ??= [];
+			scope.name = scopeName;
+			target.scopes.push(scope);
+		});
+	});
+
+	return Array.from(byLang.values());
+}
+
+function wrapText(text, indent = 0) {
 	const words = text.split(' ');
 	let line = '';
 	let output = '';
@@ -14,8 +34,8 @@ function wrapText(text) {
 	words.forEach((word) => {
 		// Strip out invisible control characters
 		// eslint-disable-next-line no-control-regex
-		if ((line + word).replace(/\x1b\[[0-9;]*m/g, '').length > process.stdout.columns) {
-			output += `${line.trimEnd()}\n`;
+		if ((line + word).replace(/\x1b\[[0-9;]*m/g, '').length > (process.stdout.columns - indent)) {
+			output += `${line.trimEnd()}\n${' '.repeat(indent)}`;
 			line = '';
 		}
 
@@ -26,54 +46,65 @@ function wrapText(text) {
 	return output;
 }
 
-const translatedStrings = findTranslatedStrings().map((result) => result.key);
-
-if (!translatedStrings.length) {
-	console.log('No translated strings found');
-	process.exit(1);
-}
-
-translatedStrings.unshift('$language');
-
 const options = {
 	addMissing: process.argv.includes('--add'),
 	removeUnused: process.argv.includes('--remove'),
 	sort: process.argv.includes('--sort'),
 };
 
-const translationsDir = `${rootDir}public/translations`;
-const results = checkTranslationFiles(translationsDir, translatedStrings, options);
-
-let translationsWithIssuesCount = 0;
-
-results.forEach((result) => {
-	console.log(`${chalk.dim('file://')}${translationsDir}/${chalk.bold(result.langCode)}.json · ${result.langName}`);
-
-	['empty', 'missing', 'unused'].forEach((type) => {
-		const issues = result.issues.filter((issue) => issue.type === type);
-		if (issues.length) {
-			const label = chalk.bold(`${type.charAt(0).toUpperCase() + type.slice(1)} keys:`);
-			console.log(wrapText(`${label} ${chalk.redBright(issues.map((issue) => issue.key).join(chalk.grey(', ')))}`));
-		}
-	});
-
-	result.notes.forEach((note) => {
-		console.log(chalk.cyanBright(note));
-	});
-
-	if (result.notes.length || result.issues.length) {
-		translationsWithIssuesCount += 1;
-	} else {
-		console.log(chalk.greenBright('Shiny!'));
-	}
-
-	console.log();
+const results = {};
+scopes.forEach((scope) => {
+	results[scope.name] = checkTranslations({ ...scope, ...options });
 });
 
-console.log(`Checked ${results.length} languages, ${
-	translationsWithIssuesCount
-		? chalk.redBright(`found issues with ${translationsWithIssuesCount}.`)
-		: chalk.greenBright('found no issues.')
+const groupedResults = groupByLangCode(results);
+
+groupedResults.forEach((result) => {
+	console.log(chalk.bgBlue(` ${chalk.bold(result.langCode.toUpperCase())} · ${result.langName} `));
+	console.log();
+
+	scopes.forEach((scope) => {
+		const filePath = `${scope.translationsDir}/${result.langCode}.json`;
+		const resultScope = result.scopes.find((item) => item.name === scope.name);
+
+		const icon = !resultScope || resultScope.notes.length + resultScope.issues.length > 0
+			? chalk.redBright('✖')
+			: chalk.greenBright('✔');
+
+		if (!resultScope) {
+			console.log(`${icon} ${scope.name}: ${chalk.redBright(`file ${filePath} not found`)}`);
+			console.log();
+			return;
+		}
+
+		console.log(`${icon} ${resultScope.name}: ${chalk.dim('file://')}${filePath}`);
+
+		const issueTypes = new Set(resultScope.issues.map((issue) => issue.type));
+		issueTypes.forEach((type) => {
+			const issues = resultScope.issues.filter((issue) => issue.type === type);
+			if (issues.length) {
+				console.log();
+				const label = chalk.redBright(`${type.charAt(0).toUpperCase() + type.slice(1)}:`);
+				console.log(wrapText(`  ${label} ${chalk.dim(issues.map((issue) => issue.key).join(', '))}`, 2));
+			}
+		});
+
+		resultScope.notes.forEach((note) => {
+			console.log();
+			console.log(chalk.cyanBright(`  ${note}`));
+		});
+
+		console.log();
+	});
+});
+
+const langaugesWithIssuesCount = groupedResults
+	.filter((result) => result.scopes.length !== scopes.length
+		|| result.scopes.some((scope) => scope.notes.length + scope.issues.length > 1)).length;
+console.log(`Checked ${groupedResults.length} langauges, ${
+	langaugesWithIssuesCount
+		? chalk.bgRed(` found issues with ${langaugesWithIssuesCount} `)
+		: chalk.bgGreen(' found no issues ')
 }`);
 
-process.exit(translationsWithIssuesCount ? 1 : 0);
+process.exit(langaugesWithIssuesCount ? 1 : 0);
