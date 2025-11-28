@@ -25,7 +25,7 @@ export default {
 </script>
 
 <template>
-	<ul>
+	<ul :aria-label="$translate('Sample IIIF manifests', instance)">
 		<li
 			v-for="manifest in manifests"
 			:key="manifest.url"

@@ -1,8 +1,7 @@
 {
 	"$language": "Esperanto",
 	"Add instance": "Aldoni instancon",
-	"auto": "aŭtomate",
-	"Close sidebar": "Fermi flankan panelon",
+	"automatic": "aŭtomate",
 	"Collection": "Kolekto",
 	"Color mode": "Kolora reĝimo",
 	"dark": "malhela",
@@ -11,5 +10,6 @@
 	"light [adjective]": "hela",
 	"Load": "Ŝargi",
 	"Remove instance": "Forigi instancon",
-	"Sample IIIF manifests": "Ekzemplaj IIIF-manifestoj"
+	"Sample IIIF manifests": "Ekzemplaj IIIF-manifestoj",
+	"Toggle sidebar": " Baskuli flankpanelon"
 }

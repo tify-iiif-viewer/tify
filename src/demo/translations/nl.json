@@ -1,8 +1,7 @@
 {
 	"$language": "Nederlands",
 	"Add instance": "Instantie toevoegen",
-	"auto": "automatisch",
-	"Close sidebar": "Zijbalk sluiten",
+	"automatic": "automatisch",
 	"Collection": "Collectie",
 	"Color mode": "Kleurmodus",
 	"dark": "donker",
@@ -11,5 +10,6 @@
 	"light [adjective]": "licht",
 	"Load": "Laden",
 	"Remove instance": "Instantie verwijderen",
-	"Sample IIIF manifests": "Voorbeeld IIIF-manifesten"
+	"Sample IIIF manifests": "Voorbeeld IIIF-manifesten",
+	"Toggle sidebar": "Zijbalk schakelen"
 }

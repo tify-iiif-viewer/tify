@@ -1,8 +1,7 @@
 {
 	"$language": "Deutsch",
 	"Add instance": "Neue Instanz",
-	"auto": "automatisch",
-	"Close sidebar": "",
+	"automatic": "automatisch",
 	"Collection": "Sammlung",
 	"Color mode": "Farbmodus",
 	"dark": "dunkel",
@@ -11,5 +10,6 @@
 	"light [adjective]": "hell",
 	"Load": "Laden",
 	"Remove instance": "Entferne Instanz",
-	"Sample IIIF manifests": "Beispiel-IIIF-Manifeste"
+	"Sample IIIF manifests": "Beispiel-IIIF-Manifeste",
+	"Toggle sidebar": "Seitenleiste umschalten"
 }

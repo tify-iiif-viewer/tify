@@ -1,8 +1,7 @@
 {
 	"$language": "Hrvatski",
 	"Add instance": "Dodaj instancu",
-	"auto": "automatski",
-	"Close sidebar": "Zatvori bočnu traku",
+	"automatic": "automatski",
 	"Collection": "Zbirka",
 	"Color mode": "Način boja",
 	"dark": "tamno",
@@ -11,5 +10,6 @@
 	"light [adjective]": "svijetlo",
 	"Load": "Učitaj",
 	"Remove instance": "Ukloni instancu",
-	"Sample IIIF manifests": "Primjeri IIIF manifesta"
+	"Sample IIIF manifests": "Primjeri IIIF manifesta",
+	"Toggle sidebar": "Prebaci bočnu traku"
 }
