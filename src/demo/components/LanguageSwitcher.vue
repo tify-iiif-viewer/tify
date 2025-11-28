@@ -7,6 +7,18 @@ export default {
 		},
 	},
 	emits: ['change'],
+	computed: {
+		languages() {
+			const collator = new Intl.Collator('und'); // und = undetermined, i.e. language-agnostic
+			return Object
+				.entries(this.$translations)
+				.map(([code, translation]) => ({
+					code,
+					name: translation.$language,
+				}))
+				.sort((a, b) => collator.compare(a.name, b.name));
+		},
+	},
 };
 </script>
 
@@ -19,15 +31,15 @@ export default {
 
 		<ol class="tify-button-list">
 			<li
-				v-for="(translation, code) in $translations"
-				:key="code"
+				v-for="language in languages"
+				:key="language.code"
 			>
 				<a
 					href="javascript:;"
-					:class="{ current: instance.language === code }"
-					@click="$emit('change', code)"
+					:class="{ current: instance.language === language.code }"
+					@click="$emit('change', language.code)"
 				>
-					{{ translation.$language }}
+					{{ language.name }}
 				</a>
 			</li>
 		</ol>
