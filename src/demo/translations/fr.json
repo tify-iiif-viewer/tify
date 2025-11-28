@@ -1,8 +1,7 @@
 {
 	"$language": "Français",
 	"Add instance": "Nouvelle instance",
-	"auto": "automatique",
-	"Close sidebar": "Fermer la barre latérale",
+	"automatic": "automatique",
 	"Collection": "Collection",
 	"Color mode": "Mode couleur",
 	"dark": "sombre",
@@ -11,5 +10,6 @@
 	"light [adjective]": "clair",
 	"Load": "Charger",
 	"Remove instance": "Supprimer l’instance",
-	"Sample IIIF manifests": "Exemples de manifestes IIIF"
+	"Sample IIIF manifests": "Exemples de manifestes IIIF",
+	"Toggle sidebar": "Basculer la barre latérale"
 }

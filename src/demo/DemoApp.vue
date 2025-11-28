@@ -129,15 +129,12 @@ export default {
 					:hidden="!instance.sidebarOpen && instance.tify"
 				>
 					<div class="sidebar-header">
-						<component
-							:is="instance.tify ? 'div' : 'h1'"
-							class="logo"
-						>
+						<h1 class="logo">
 							<!-- eslint-disable-next-line vuejs-accessibility/anchor-has-content -->
 							<a href=".">
 								<TifyLogo />
 							</a>
-						</component>
+						</h1>
 
 						<div
 							class="sidebar-controls"
@@ -169,6 +166,9 @@ export default {
 						</div>
 					</div>
 
+					<h2 class="tify-sr-only">
+						{{ $translate('Sample IIIF manifests', instance) }}
+					</h2>
 					<SampleManifests
 						:instance="instance"
 						@load="url => instance.initTify(url)"

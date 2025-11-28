@@ -1,8 +1,7 @@
 {
 	"$language": "Shqip",
 	"Add instance": "Shto instancë",
-	"auto": "automatikisht",
-	"Close sidebar": "Mbyll shiritin anësor",
+	"automatic": "automatikisht",
 	"Collection": "Koleksion",
 	"Color mode": "Mënyra e ngjyrave",
 	"dark": "i errët",
@@ -11,5 +10,6 @@
 	"light [adjective]": "i hapur",
 	"Load": "Ngarko",
 	"Remove instance": "Hiq instancën",
-	"Sample IIIF manifests": "Shembuj të manifesteve IIIF"
+	"Sample IIIF manifests": "Shembuj të manifesteve IIIF",
+	"Toggle sidebar": "Aktivo shiritin anësor"
 }

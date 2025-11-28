@@ -1,8 +1,7 @@
 {
 	"$language": "Polski",
 	"Add instance": "Dodaj instancję",
-	"auto": "automatycznie",
-	"Close sidebar": "Zamknij pasek boczny",
+	"automatic": "automatycznie",
 	"Collection": "Kolekcja",
 	"Color mode": "Tryb kolorów",
 	"dark": "ciemny",
@@ -11,5 +10,6 @@
 	"light [adjective]": "jasny",
 	"Load": "Załaduj",
 	"Remove instance": "Usuń instancję",
-	"Sample IIIF manifests": "Przykładowe manifesty IIIF"
+	"Sample IIIF manifests": "Przykładowe manifesty IIIF",
+	"Toggle sidebar": "Przełącz pasek boczny"
 }
