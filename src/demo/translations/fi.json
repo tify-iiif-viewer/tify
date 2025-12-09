@@ -1,15 +1,15 @@
 {
 	"$language": "Suomi",
 	"Add instance": "Lisää näkymä",
-	"auto": "automaattinen",
-	"Close sidebar": "Sulje sivupaneeli",
+	"automatic": "automaattinen",
 	"Collection": "Kokoelma",
 	"Color mode": "Väritila",
 	"dark": "tumma",
 	"IIIF manifest URL": "IIIF-manifestin URL",
 	"Language": "Kieli",
-	"light": "vaalea",
+	"light [adjective]": "vaalea",
 	"Load": "Lataa",
 	"Remove instance": "Sulje näkymä",
-	"Sample IIIF manifests": "IIIF-esimerkkimanifesteja"
+	"Sample IIIF manifests": "IIIF-esimerkkimanifesteja",
+	"Toggle sidebar": "Avaa/sulje sivupaneeli"
 }
