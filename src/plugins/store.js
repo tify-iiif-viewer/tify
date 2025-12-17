@@ -512,6 +512,27 @@ function Store(args = {}) {
 								return `<img src="${item.id}" alt="">`;
 							}
 
+							// Handle SpecificResource type (canvas/resource links)
+							// These are navigation links to other canvases, not text to fetch
+							// See: https://www.w3.org/TR/annotation-model/#specific-resources
+							if (item?.type === 'SpecificResource' && item?.source) {
+								const targetCanvasId = item.source.id || item.source['@id'];
+								if (targetCanvasId) {
+									// Find the page number for this canvas
+									const targetPage = store.manifest?.items?.findIndex(
+										(c) => c.id === targetCanvasId,
+									);
+									if (targetPage >= 0) {
+										// Return a clickable link that navigates to the target page
+										const label = store.localize(item.source.label) || `Page ${targetPage + 1}`;
+										return `<a href="#" class="tify-annotation-link" data-tify-page="${targetPage + 1}">${label}</a>`;
+									}
+								}
+								// If we can't find the target page, skip this body
+								// (don't try to fetch it as text)
+								return '';
+							}
+
 							if (item?.value) {
 								return item.value;
 							}
@@ -523,10 +544,11 @@ function Store(args = {}) {
 							const url = item?.items?.[0].id
 								|| item?.body?.id
 								|| item?.body?.['@id']
-								|| item?.id
-								|| annotationId;
+								|| item?.id;
 
-							if (isValidUrl(url)) {
+							// Only fetch if we have an actual content URL
+							// Don't fall back to annotationId (which is just an identifier)
+							if (url && isValidUrl(url)) {
 								return store.fetchText(url);
 							}
 
