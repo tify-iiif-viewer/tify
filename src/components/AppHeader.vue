@@ -35,7 +35,7 @@ export default {
 	created() {
 		this.$api.expose(this.setView);
 		this.$api.expose(this.toggleDoublePage);
-		this.$api.expose(this.fullscreen.toggle);
+		this.$api.expose(this.fullscreen.toggle, 'toggleFullscreen');
 	},
 	mounted() {
 		this.$store.rootElement.addEventListener('keydown', this.onKeyDown);
