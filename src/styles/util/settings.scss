@@ -8,7 +8,10 @@ $base-color-dark: var(
 // Semantic colors
 $bg: var(
 	--tify-bg-color,
-	light-dark(#fff, oklch(from $base-color-dark calc(l * .25) calc(c * .05) h))
+	light-dark(
+		#fff,
+		oklch(from $base-color-dark calc(l * .25) calc(c * .05) h)
+	)
 ) !default;
 $base-color-pale: var(
 	--tify-base-color-pale,

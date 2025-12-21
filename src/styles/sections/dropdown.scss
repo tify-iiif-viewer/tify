@@ -3,14 +3,13 @@
 }
 
 .tify-dropdown-content {
-	$bw: clamp(1px, $br, 4px); // border-width
 	background: $dropdown-bg;
 	border: 1px solid $border-color;
 	border-radius: $br;
 	filter: drop-shadow($drop-shadow);
 	min-width: g(4);
 	overflow: visible;
-	padding: $bw;
+	padding: clamp(1px, $br, 4px);
 	position: absolute;
 	text-shadow: none;
 	z-index: 9;
