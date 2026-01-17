@@ -2,6 +2,9 @@ describe('Main', () => {
 	it('starts the app', () => {
 		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-PPN857449303.json`);
 		cy.get('.tify');
+
+		// Assert each icon has an additional class that starts with "-"
+		cy.get('.tify-icon').each((icon) => expect(icon.attr('class')).to.match(/ \-[a-z0-9-]+$/))
 	});
 
 	it('checks the manifest (valid JSON, but not IIIF)', () => {
