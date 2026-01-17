@@ -14,10 +14,15 @@ const iconsDir = `${rootDir}/generated/icons`;
 fs.mkdirSync(iconsDir, { recursive: true });
 
 Object.keys(mdi).forEach((key) => {
+	const dashedKey = key
+		.replace(/^mdi/, '')
+		.replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+		.toLowerCase();
+
 	const componentHtml = `
 
 <template>
-	<svg class="tify-icon" aria-hidden="true" viewBox="0 0 24 24">
+	<svg class="tify-icon -${dashedKey}" aria-hidden="true" viewBox="0 0 24 24">
 		<path d="${mdi[key]}"/>
 	</svg>
 </template>
