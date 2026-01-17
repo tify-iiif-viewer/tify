@@ -111,12 +111,6 @@
 
 	&.-icon-only {
 		display: block;
-
-		> span {
-			@container (#{$large}) {
-				font-size: 0; // Prevent label from showing
-			}
-		}
 	}
 
 	&.-vertical {
@@ -170,15 +164,24 @@
 				flex-direction: column;
 				min-height: g(1.75);
 				min-width: g(1.75);
-				padding: 0 g(.25) .2em;
+				padding: 0 g(.25);
 			}
+		}
+	}
+}
 
-			> span {
-				@container (#{$large}) {
-					font-size: $font-size-small;
-					line-height: 1;
-				}
-			}
+.tify-header-button-label {
+	.tify-header-button.-icon-only & {
+		@container (#{$large}) {
+			font-size: 0; // Hide label
+		}
+	}
+
+	.tify-header-button-group.-view .tify-header-button:not(.-icon-only) & {
+		@container (#{$large}) {
+			font-size: $font-size-small;
+			line-height: 1;
+			margin-bottom: .2em;
 		}
 	}
 }
