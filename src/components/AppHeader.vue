@@ -269,7 +269,7 @@ export default {
 						@click="toggleView(null)"
 					>
 						<IconImageArea />
-						<span>{{ $translate('Media') }}</span>
+						<span class="tify-header-button-label">{{ $translate('Media') }}</span>
 					</button>
 
 					<button
@@ -281,7 +281,7 @@ export default {
 						@click="toggleView('text')"
 					>
 						<IconText />
-						<span>{{ $translate('Text') }}</span>
+						<span class="tify-header-button-label">{{ $translate('Text') }}</span>
 					</button>
 
 					<button
@@ -293,7 +293,7 @@ export default {
 						@click="toggleView('thumbnails')"
 					>
 						<IconViewModule />
-						<span>{{ $translate('Pages') }}</span>
+						<span class="tify-header-button-label">{{ $translate('Pages') }}</span>
 					</button>
 
 					<button
@@ -305,7 +305,7 @@ export default {
 						@click="toggleView('toc')"
 					>
 						<IconTableOfContents />
-						<span>{{ $translate('Contents') }}</span>
+						<span class="tify-header-button-label">{{ $translate('Contents') }}</span>
 					</button>
 
 					<button
@@ -316,7 +316,7 @@ export default {
 						@click="toggleView('info')"
 					>
 						<IconInformationVariant />
-						<span>{{ $translate('Info') }}</span>
+						<span class="tify-header-button-label">{{ $translate('Info') }}</span>
 					</button>
 
 					<button
@@ -328,7 +328,7 @@ export default {
 						@click="toggleView('export')"
 					>
 						<IconTrayArrowDown />
-						<span>{{ $translate('Export [noun]') }}</span>
+						<span class="tify-header-button-label">{{ $translate('Export [noun]') }}</span>
 					</button>
 
 					<button
@@ -340,7 +340,7 @@ export default {
 						@click="toggleView('collection')"
 					>
 						<IconListBoxOutline />
-						<span>{{ $translate('Collection') }}</span>
+						<span class="tify-header-button-label">{{ $translate('Collection') }}</span>
 					</button>
 				</div>
 
@@ -355,7 +355,7 @@ export default {
 						@click="toggleView('help')"
 					>
 						<IconHelpCircleOutline />
-						<span>{{ $translate('Help') }}</span>
+						<span class="tify-header-button-label">{{ $translate('Help') }}</span>
 					</button>
 
 					<button
@@ -367,7 +367,7 @@ export default {
 						@click="fullscreen.toggle()"
 					>
 						<IconFullscreen />
-						<span>{{ $translate('Fullscreen') }}</span>
+						<span class="tify-header-button-label">{{ $translate('Fullscreen') }}</span>
 					</button>
 					<button
 						v-else
@@ -378,7 +378,7 @@ export default {
 						@click="fullscreen.toggle()"
 					>
 						<IconFullscreenExit />
-						<span>{{ $translate('Exit fullscreen') }}</span>
+						<span class="tify-header-button-label">{{ $translate('Exit fullscreen') }}</span>
 					</button>
 				</div>
 

@@ -1,6 +1,6 @@
 <template>
 	<svg
-		class="tify-icon"
+		class="tify-icon -book-open-blank-outline"
 		aria-hidden="true"
 		viewBox="0 0 24 24"
 	>
