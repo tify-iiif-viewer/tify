@@ -132,13 +132,13 @@ export default {
 			</button>
 
 			<a
-				v-if="purpose === 'pdf' && structure.pageCount"
+				v-if="purpose === 'pdf'"
 				class="tify-toc-link"
 				:href="structure.rendering[0].id"
 				download
 			>
 				{{ $store.localize(structure.label) }}
-				({{ structure.pageCount }}&nbsp;{{ $translate(structure.pageCount === 1 ? 'page' : 'pages') }})
+				({{ structure.items.length }}&nbsp;{{ $translate(structure.items.length === 1 ? 'page' : 'pages') }})
 			</a>
 			<!-- Only display page label if structure has a different label -->
 			<a
