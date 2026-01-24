@@ -49,7 +49,7 @@
   "devDependencies": {
     "@html-eslint/eslint-plugin": "^0.45.0",
     "@html-eslint/parser": "^0.45.0",
-    "@iiif/parser": "^2.2.1",
+    "@iiif/parser": "^2.2.9",
     "@mdi/js": "^7.4.47",
     "@rushstack/eslint-patch": "^1.12.0",
     "@stylistic/stylelint-config": "^3.0.1",

@@ -176,40 +176,27 @@ function Store(args = {}) {
 				return [];
 			}
 
-			if (store.manifest.structures.some((structure) => structure.type === 'Range')) {
-				return store.manifest.structures.length === 1
-					&& store.manifest.structures[0].behavior?.includes('top')
-					? (store.manifest.structures[0].items || [])
-					: store.manifest.structures;
-			}
+			const topLevelStructures = store.manifest.structures[0]?.behavior?.includes('top')
+				? (store.manifest.structures[0].items || [])
+				: store.manifest.structures;
 
 			const mappedStructures = [];
 			const canvases = store.manifest.items;
-			const structuresCount = store.manifest.structures.length;
+			const structuresCount = topLevelStructures.length;
 
 			for (let i = 0; i < structuresCount; i += 1) {
-				const structure = { ...store.manifest.structures[i] };
-
-				// TODO: Add full behavior support, see https://iiif.io/api/presentation/3.0/#behavior
+				const structure = { ...topLevelStructures[i] };
 
 				if (structure.items) {
+					// TODO: This ID may be a range ID, but we need a canvas ID. Dig deeper until we find one?
 					const firstCanvasIdOfStructure = structure.items[0].id;
 					structure.firstPage = canvases.findIndex((canvas) => canvas.id === firstCanvasIdOfStructure) + 1;
 
 					const lastCanvasIdOfStructure = structure.items.at(-1).id;
 					structure.lastPage = canvases.findIndex((canvas) => canvas.id === lastCanvasIdOfStructure) + 1;
-
-					if (!canvases[structure.firstPage - 1]) {
-						// Excluding structure if its range has no canvases
-						continue; // eslint-disable-line no-continue
-					}
-				} else if (canvases?.[0]) {
-					structure.firstPage = 1;
-					structure.lastPage = store.pageCount;
 				}
 
 				structure.level = 0;
-				structure.pageCount = structure.lastPage - structure.firstPage + 1;
 
 				mappedStructures.push(structure);
 			}

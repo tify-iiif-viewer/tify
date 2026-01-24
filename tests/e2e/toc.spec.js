@@ -115,8 +115,8 @@ describe('TOC', () => {
 
 		cy.visit(`/?manifest=${manifestUrl}&tify=${encodedParams}`);
 
-		cy.contains('Upper cover');
-		cy.contains('fol. 1r');
+		cy.contains('.tify-toc-list', 'Upper cover');
+		cy.contains('.tify-toc-list', 'fol. 1r');
 	});
 
 	it('auto-expands a single top-level structure', () => {
