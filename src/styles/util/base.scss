@@ -1,20 +1,28 @@
 .tify {
 	background: $main-bg;
+	background-clip: padding-box;
+	border: 1px solid $border-color;
+	border-radius: $br;
 	box-sizing: border-box;
 	color: $text-color;
 	color-scheme: light dark;
-	container-type: size;
+	container-type: inline-size;
 	display: flex;
 	flex-direction: column;
 	font-size: $font-size;
 	height: 100%;
 	line-height: $line-height;
+	margin: -1px;
 	min-height: 240px;
 	min-width: 240px;
 	overflow: hidden;
 	position: relative;
 	-webkit-tap-highlight-color: transparent;
 	text-wrap: balance;
+
+	:fullscreen & {
+		border-radius: 0;
+	}
 
 	&.-light {
 		color-scheme: light;
