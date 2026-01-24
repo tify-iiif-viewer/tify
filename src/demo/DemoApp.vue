@@ -202,6 +202,11 @@ export default {
 	outline-offset: 2px;
 	padding: 0;
 }
+
+.tify {
+	border: 0;
+	border-radius: 0;
+}
 </style>
 
 <style lang="scss" scoped>

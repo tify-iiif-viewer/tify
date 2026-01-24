@@ -22,10 +22,6 @@
 	position: relative;
 
 	&.-page-select {
-		align-items: stretch;
-		align-self: center;
-		border-radius: $br;
-		margin: 0;
 		padding: 0;
 
 		@container (#{$small}) {
