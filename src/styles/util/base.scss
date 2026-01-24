@@ -1,5 +1,8 @@
 .tify {
 	background: $main-bg;
+	background-clip: padding-box;
+	border: 1px solid $border-color;
+	border-radius: $br;
 	box-sizing: border-box;
 	color: $text-color;
 	color-scheme: light dark;
@@ -15,6 +18,11 @@
 	position: relative;
 	-webkit-tap-highlight-color: transparent;
 	text-wrap: balance;
+
+	:fullscreen & {
+		border: 0;
+		border-radius: 0;
+	}
 
 	&.-light {
 		color-scheme: light;
