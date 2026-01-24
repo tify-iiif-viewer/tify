@@ -5,12 +5,12 @@
 	vertical-align: middle;
 
 	&.-spin {
-		animation: rotate 1s linear infinite;
+		animation: tify-icon-spin 1s linear infinite;
 	}
+}
 
-	@keyframes rotate {
-		100% {
-			transform: rotate(360deg);
-		}
+@keyframes tify-icon-spin {
+	100% {
+		transform: rotate(360deg);
 	}
 }

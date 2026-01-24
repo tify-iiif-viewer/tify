@@ -1,5 +1,7 @@
 .tify-loading {
-	animation: fadein .5s forwards .5s, spin 1.2s infinite ease-in-out;
+	animation:
+		tify-loading-fadein .5s forwards .5s,
+		tify-loading-spin 1.2s infinite ease-in-out;
 	background: $base-color;
 	border-radius: $br;
 	bottom: g(2.5);
@@ -9,28 +11,28 @@
 	pointer-events: none;
 	position: absolute;
 	width: g(1.75);
+}
 
-	@keyframes fadein {
-		0% {
-			opacity: 0;
-		}
-
-		100% {
-			opacity: 1;
-		}
+@keyframes tify-loading-fadein {
+	0% {
+		opacity: 0;
 	}
 
-	@keyframes spin {
-		0% {
-			transform: perspective(120px) rotateX(0deg) rotateY(0deg);
-		}
+	100% {
+		opacity: 1;
+	}
+}
 
-		50% {
-			transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
-		}
+@keyframes tify-loading-spin {
+	0% {
+		transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+	}
 
-		100% {
-			transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
-		}
+	50% {
+		transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+	}
+
+	100% {
+		transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
 	}
 }
