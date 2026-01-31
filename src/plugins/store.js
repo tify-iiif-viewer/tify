@@ -549,12 +549,11 @@ function Store(args = {}) {
 					const coordinatesString = resource.on?.selector?.value
 						|| (typeof resource.on === 'string' ? resource.on : null)
 						|| resource.target?.id
-						|| resource.target
-						|| '';
+						|| resource.target;
 
-					const coords = parseCoordinatesString(coordinatesString);
-					if (coords?.length === 4) {
-						annotation.coords = coords;
+					const coordinates = parseCoordinatesString(coordinatesString);
+					if (coordinates) {
+						annotation.coords = coordinates;
 					}
 
 					store.annotations[page][index] = annotation;
