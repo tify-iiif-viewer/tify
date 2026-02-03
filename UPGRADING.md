@@ -1,5 +1,9 @@
 # Upgrading TIFY
 
+## v0.35
+
+No breaking changes.
+
 ## v0.34
 
 - If you load `tify.js` directly, wether self-hosted or from a CDN, you need to use `<script type="module">`. [See readme for details.](README.md)
