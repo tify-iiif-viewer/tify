@@ -44,6 +44,10 @@ tify.ready.then(() => {
 
 		By default, only pan and zoom are reset. If `true`, image filters and rotation are reset, too.
 
+- **`getPageCount`**
+
+	Returns the number of pages in the presentation.
+
 - **`setPage`**
 
 	Changes the active page or pages.

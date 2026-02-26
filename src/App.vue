@@ -42,6 +42,7 @@ export default {
 	},
 	created() {
 		this.$api.expose(this.setLanguage);
+		this.$api.expose(this.$store.getPageCount);
 		this.$api.expose(this.$store.setPage);
 		this.$api.expose(this.$store.updateOptions);
 	},

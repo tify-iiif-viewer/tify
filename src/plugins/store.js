@@ -333,6 +333,7 @@ function Store(args = {}) {
 				? page + 1
 				: 0;
 		},
+		getPageCount: () => store.pageCount,
 		getPageLabel(number, labelObject) {
 			const label = store.localize(labelObject, '');
 
