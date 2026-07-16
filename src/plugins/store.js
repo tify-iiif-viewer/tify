@@ -337,7 +337,10 @@ function Store(args = {}) {
 			const label = store.localize(labelObject, '');
 
 			if (label) {
-				return store.options.pageLabelFormat.replace('P', number).replace('L', label);
+				return store.options.pageLabelFormat
+					.replace('L', label)
+					.replace('P', number)
+					.replace('T', store.pageCount);
 			}
 
 			return store.options.pageLabelFormat.includes('P')

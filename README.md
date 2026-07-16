@@ -87,7 +87,7 @@ new Tify({
   container: '#tify',
   language: 'de',
   manifestUrl: 'https://example.org/iiif-manifest.json',
-  pageLabelFormat: 'P (L)',
+  pageLabelFormat: 'P (L) / T',
   pages: [2, 3],
   pan: { x: .45, y: .6 },
   translationsDirUrl: '/translations/tify',

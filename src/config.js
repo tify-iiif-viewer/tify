@@ -124,11 +124,11 @@ export default {
 
 	/**
 	 * Defines how page labels are displayed in the page selector and in the
-	 * thumbnails view. The placeholder `P` is replaced by the page number
-	 * (consecutive numbers starting at `1`) while `L` is replaced by the
-	 * page label, which can be any string, defined by the manifest.
-	 * If the page label is missing, only the page number is displayed,
-	 * regardless of the format.
+	 * thumbnails view. Use these placeholders:
+	 *
+	 * `L`: page label, defined by the manifest (`–` if missing)
+	 * `P`: page number (consecutive numbers starting at `1`)
+	 * `T`: total number of pages
 	 *
 	 * @type {string}
 	 */
