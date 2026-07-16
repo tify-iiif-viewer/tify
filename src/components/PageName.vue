@@ -25,9 +25,9 @@ export default {
 		},
 		html() {
 			return `<span>${this.$store.options.pageLabelFormat}</span>`
+				.replace('L', `</span>${this.label}<span>`)
 				.replace('P', `${this.number}`)
 				.replace('T', `${this.$store.pageCount}`)
-				.replace('L', `</span>${this.label}<span>`)
 				.replace('<span></span>', '');
 		},
 	},

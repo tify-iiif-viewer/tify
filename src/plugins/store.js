@@ -338,9 +338,9 @@ function Store(args = {}) {
 
 			if (label) {
 				return store.options.pageLabelFormat
+					.replace('L', label)
 					.replace('P', number)
-					.replace('T', store.pageCount)
-					.replace('L', label);
+					.replace('T', store.pageCount);
 			}
 
 			return store.options.pageLabelFormat.includes('P')
