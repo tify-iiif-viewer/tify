@@ -203,8 +203,15 @@ export default {
 							const nativeHeight = tileSource.height / initialSize;
 							source.x = x + (w / 2) - (nativeWidth / 2);
 							source.y = y + (h / 2) - (nativeHeight / 2);
-							source.width = nativeWidth;
-							source.height = nativeHeight;
+							// Only set ONE dimension — OpenSeadragon computes the other from
+							// the tileSource's own aspect ratio, and setting both throws
+							// ("specifying both width and height to a tiledImage is not
+							// supported"), which silently broke rendering for that image.
+							if (this.$store.isVertical) {
+								source.height = nativeHeight;
+							} else {
+								source.width = nativeWidth;
+							}
 						} else {
 							[source.x, source.y, source.width] = [x, y, w];
 						}
