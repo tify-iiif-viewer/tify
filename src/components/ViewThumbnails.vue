@@ -211,7 +211,7 @@ export default {
 						v-else
 						class="tify-thumbnails-image"
 					>
-						<IconImageBrokenVariant />
+						<IconBrokenImage />
 						<span class="tify-sr-only">{{ $translate('Image missing') }}</span>
 					</span>
 
