@@ -83,7 +83,6 @@ groupedResults.forEach((result) => {
 		issueTypes.forEach((type) => {
 			const issues = resultScope.issues.filter((issue) => issue.type === type);
 			if (issues.length) {
-				console.log();
 				const label = chalk.redBright(`${type.charAt(0).toUpperCase() + type.slice(1)}:`);
 				console.log(wrapText(`  ${label} ${chalk.dim(issues.map((issue) => issue.key).join(', '))}`, 2));
 			}
@@ -93,9 +92,9 @@ groupedResults.forEach((result) => {
 			console.log();
 			console.log(chalk.cyanBright(`  ${note}`));
 		});
-
-		console.log();
 	});
+
+	console.log();
 });
 
 const langaugesWithIssuesCount = groupedResults
