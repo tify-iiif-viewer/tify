@@ -1,6 +1,6 @@
 describe('IIIF Cookbook 0010: Viewing direction', () => {
 	it('supports right-to-left manifests', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/iiif-cookbook/0010-book-2-viewing-direction/manifest-rtl.json`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/iiif-cookbook/0010-book-2-viewing-direction/manifest-rtl.json`);
 		cy.contains('header', 'front cover');
 
 		cy.get('header [title="Next page"]:visible').click();
@@ -18,7 +18,7 @@ describe('IIIF Cookbook 0010: Viewing direction', () => {
 	});
 
 	it('supports top-to-bottom manifests', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/iiif-cookbook/0010-book-2-viewing-direction/manifest-ttb.json`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/iiif-cookbook/0010-book-2-viewing-direction/manifest-ttb.json`);
 		cy.contains('header', 'image 1');
 
 		cy.get('header [title="Next page"]:visible').click();

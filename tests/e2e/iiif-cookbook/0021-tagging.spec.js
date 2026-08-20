@@ -1,7 +1,7 @@
 describe('IIIF Cookbook 0019: HTML in annotations', () => {
 	it('displays the annotation overlay', () => {
 		cy.visit(
-			`/?manifest=${Cypress.env('iiifApiUrl')}/iiif-cookbook/0021-tagging/manifest.json`
+			`/?manifest=${Cypress.expose('iiifApiUrl')}/iiif-cookbook/0021-tagging/manifest.json`
 			+ '&tify={"view":"text"}',
 		);
 		cy.contains('Gänseliesel-Brunnen').click();

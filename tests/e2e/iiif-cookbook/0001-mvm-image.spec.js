@@ -1,6 +1,6 @@
 describe('IIIF Cookbook 0001: Simple single-page manifest without image service', () => {
 	before(() => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/iiif-cookbook/0001-mvm-image/manifest.json`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/iiif-cookbook/0001-mvm-image/manifest.json`);
 	});
 
 	it('shows the title and the canvas', () => {
