@@ -1,16 +1,11 @@
 .tify-list {
-	list-style: disc outside;
+	list-style: none;
 	margin: 0 0 g(.5);
-	padding: 0 0 0 g();
-
-	&:has(> li:only-child),
-	&.-unstyled {
-		list-style: none;
-		padding: 0;
-	}
+	padding: 0;
 
 	li {
-		margin: 0;
+		margin: 0 0 0 1em;
 		padding: 0;
+		text-indent: -1em;
 	}
 }
