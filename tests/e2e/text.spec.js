@@ -1,6 +1,6 @@
 describe('Text (annotations)', () => {
 	it('displays annotations and overlays at the correct positions', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/wellcome-b18035723.json&tify={"pages":[14,15,16]}`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/wellcome-b18035723.json&tify={"pages":[14,15,16]}`);
 
 		cy.contains('Text').click();
 		cy.contains('Alles höhere Leben - ob Tier oder').should('be.visible');
@@ -19,7 +19,7 @@ describe('Text (annotations)', () => {
 	});
 
 	it('loads and displays an annotation list', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/harvard-art-museum-299843.json`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/harvard-art-museum-299843.json`);
 
 		cy.get('[title="Toggle annotations"]').should('not.exist');
 
@@ -35,13 +35,13 @@ describe('Text (annotations)', () => {
 	});
 
 	it('displays XML annotations', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-PPN235181684_0029.json&tify={"view":"text"}`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/gdz-PPN235181684_0029.json&tify={"view":"text"}`);
 
 		cy.contains('Unter Mitwirkung der Herren').should('be.visible');
 	});
 
 	it('highlights the corresponding text when an overlay is clicked and vice versa', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/wellcome-b18035723.json&tify={"view":"text"}`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/wellcome-b18035723.json&tify={"view":"text"}`);
 
 		cy.get('.tify-media-overlay:eq(22)').click();
 		cy.get('.tify-media-overlay:eq(22)').should('have.class', '-current');

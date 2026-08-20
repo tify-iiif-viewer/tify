@@ -1,7 +1,7 @@
 describe('IIIF Cookbook 0377: Image in annotations', () => {
 	it('displays images in annotations', () => {
 		cy.visit(
-			`/?manifest=${Cypress.env('iiifApiUrl')}/iiif-cookbook/0377-image-in-annotation/manifest.json`
+			`/?manifest=${Cypress.expose('iiifApiUrl')}/iiif-cookbook/0377-image-in-annotation/manifest.json`
 			+ '&tify={"view":"text"}',
 		);
 

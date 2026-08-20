@@ -2,7 +2,7 @@ describe('Pagination', () => {
 	const pageButton = '.tify-page-select > button';
 
 	it('changes the page via buttons', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json&tify={"pages":[15]}`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json&tify={"pages":[15]}`);
 
 		cy.contains(pageButton, '15 · 7r');
 
@@ -26,7 +26,7 @@ describe('Pagination', () => {
 	});
 
 	it('changes the page via keyboard', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json&tify={"pages":[15]}`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json&tify={"pages":[15]}`);
 
 		cy.contains(pageButton, '15 · 7r');
 
@@ -67,7 +67,7 @@ describe('Pagination', () => {
 	});
 
 	it('highlights the current page after a page change', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json`);
 		cy.get('[title="Last page"]').first().click();
 		cy.contains('Current Page 68 · -').first().click();
 		cy.contains('.-current:not(.-highlighted)', '68 · -');
@@ -76,7 +76,7 @@ describe('Pagination', () => {
 
 	it('changes the page on small touchscreens', () => {
 		cy.viewport(375, 667);
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json`);
 
 		cy.get('[aria-label=View]').click();
 		cy.contains('Pages').should('be.visible');
@@ -96,7 +96,7 @@ describe('Pagination', () => {
 	});
 
 	it('hides section buttons if there are less than 2 sections', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-PPN140716181.json`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/gdz-PPN140716181.json`);
 
 		cy.contains('Von Gottes Gnaden');
 		cy.contains('Previous section').should('not.exist');

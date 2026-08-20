@@ -1,6 +1,6 @@
 describe('IIIF Cookbook 0033: Multiple choice of images in a single view (canvas)', () => {
 	it('can switch layers with the layers button', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/iiif-cookbook/0033-choice/manifest.json`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/iiif-cookbook/0033-choice/manifest.json`);
 
 		cy.contains('John Dee performing an experiment before Queen Elizabeth I.');
 
@@ -23,7 +23,7 @@ describe('IIIF Cookbook 0033: Multiple choice of images in a single view (canvas
 			layers: [1],
 		}));
 
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/iiif-cookbook/0033-choice/manifest.json&tify=${encodedParams}`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/iiif-cookbook/0033-choice/manifest.json&tify=${encodedParams}`);
 
 		cy.get('.tify-media-dropdown.-layers.-active > button')
 			.click();

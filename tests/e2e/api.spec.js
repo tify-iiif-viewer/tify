@@ -2,7 +2,7 @@
 
 describe('API', () => {
 	it('controls TIFY programmatically', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-PPN857449303.json`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/gdz-PPN857449303.json`);
 
 		// NOTE: Cypress’ afterEach hook (used for HTML validation) breaks tests
 		// within nested promises for unknown reasons, so we use a small hack to

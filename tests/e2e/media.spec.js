@@ -6,7 +6,7 @@ describe('Media', () => {
 			},
 		}));
 
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json&tify=${encodedParams}`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json&tify=${encodedParams}`);
 		cy.get('[title="Toggle image filters"]').click();
 		cy.get('.tify-media-dropdown').contains('Saturation 0');
 	});
@@ -26,7 +26,7 @@ describe('Media', () => {
 			zoom: 2,
 		}));
 
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json&tify=${encodedParams}`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json&tify=${encodedParams}`);
 
 		cy.get('[title="Rotate"].-active');
 		cy.get('.tify-dropdown.-active [title="Toggle image filters"]');
@@ -34,12 +34,12 @@ describe('Media', () => {
 		cy.get('.tify').type('{shift}0');
 		cy.url().should(
 			'include',
-			`/?manifest=${encodeURIComponent(`${Cypress.env('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json`)}`,
+			`/?manifest=${encodeURIComponent(`${Cypress.expose('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json`)}`,
 		);
 	});
 
 	it('controls the image via keyboard', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json`);
 
 		// Zoom
 		cy.contains('Reset').should('be.disabled');
@@ -80,7 +80,7 @@ describe('Media', () => {
 	});
 
 	it('shows only usable pagination buttons', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json`);
 
 		cy.get('.tify-media-button.-left').should('not.exist');
 		cy.get('.tify-media-button.-right');

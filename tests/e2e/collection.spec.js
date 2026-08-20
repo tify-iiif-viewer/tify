@@ -1,6 +1,6 @@
 describe('Collection', () => {
 	it('shows the collection view', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/wellcome-b19974760.json`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/wellcome-b19974760.json`);
 
 		// Only Info and Collection buttons should be visible
 		cy.contains('Info');
@@ -16,7 +16,7 @@ describe('Collection', () => {
 	});
 
 	it('filters the collection list', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/wellcome-b19974760.json`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/wellcome-b19974760.json`);
 
 		cy.get('[aria-label="Filter collection"]').type('2008');
 		cy.get('.tify-collection-item').should('have.length', 2);
@@ -26,10 +26,10 @@ describe('Collection', () => {
 
 	it('loads a child manifest', () => {
 		const encodedParams = encodeURIComponent(JSON.stringify({
-			childManifestUrl: `${Cypress.env('iiifApiUrl')}/manifests/wellcome-b19974760_1_0004.json`,
+			childManifestUrl: `${Cypress.expose('iiifApiUrl')}/manifests/wellcome-b19974760_1_0004.json`,
 		}));
 
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/wellcome-b19974760.json&tify=${encodedParams}`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/wellcome-b19974760.json&tify=${encodedParams}`);
 
 		cy.contains('Info').click();
 		cy.contains('.tify-info-button', 'Collection').click();
@@ -42,7 +42,7 @@ describe('Collection', () => {
 	});
 
 	it('highlights the current child manifest', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/wellcome-b19974760.json`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/wellcome-b19974760.json`);
 
 		cy.contains('Volume 1').click();
 		cy.contains('15. September 1859').click();

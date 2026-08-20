@@ -1,7 +1,7 @@
 describe('Multi-instance', () => {
 	it('starts multiple independent apps with different manifests', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-PPN857449303.json`
-			+ `&manifest2=${Cypress.env('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/gdz-PPN857449303.json`
+			+ `&manifest2=${Cypress.expose('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json`);
 
 		cy.contains('De Supputatione Multitudinis');
 		cy.contains('Algebra : Vorlesungsmanuskript');
