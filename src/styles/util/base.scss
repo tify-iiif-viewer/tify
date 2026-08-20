@@ -14,7 +14,6 @@
 	overflow: hidden;
 	position: relative;
 	-webkit-tap-highlight-color: transparent;
-	text-wrap: balance;
 
 	&.-light {
 		color-scheme: light;
@@ -63,6 +62,7 @@
 		font-weight: bold;
 	}
 
+	h2,
 	h3 {
 		align-items: baseline;
 		color: $text-color-muted;
@@ -74,6 +74,7 @@
 		margin: 0 0 g(.5);
 		padding: 0;
 		text-transform: uppercase;
+		text-wrap: balance;
 
 		&::after {
 			background: $border-color;
@@ -89,6 +90,7 @@
 		font-weight: normal;
 		margin: 0;
 		padding: 0;
+		text-wrap: balance;
 
 		&:nth-of-type(n + 2) {
 			margin-top: g(.5);
