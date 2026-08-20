@@ -794,7 +794,6 @@ export default {
 						:disabled="!filtersActive"
 						@click.stop="resetFilters()"
 					>
-						<IconBackupRestore />
 						{{ $translate('Reset') }}
 					</button>
 				</p>

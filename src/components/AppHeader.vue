@@ -269,7 +269,7 @@ export default {
 								<span class="tify-header-button-label">{{ $translate('Pages') }}</span>
 							</template>
 							<template v-else-if="view === 'toc'">
-								<IconTableOfContents />
+								<IconToc />
 								<span class="tify-header-button-label">{{ $translate('Contents') }}</span>
 							</template>
 							<template v-else-if="view === 'info'">

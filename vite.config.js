@@ -1,13 +1,14 @@
 import { defineConfig } from 'vite';
 
 import fs from 'node:fs';
-import path from 'node:path';
 
 import vue from '@vitejs/plugin-vue';
-import componentsAutoImport from 'unplugin-vue-components/vite'; // eslint-disable-line import/no-unresolved
+
 import banner from 'vite-plugin-banner';
 import eslint from 'vite-plugin-eslint';
 import sassGlobImport from 'vite-plugin-sass-glob-import';
+import unpluginIcons from 'unplugin-icons/vite'; // eslint-disable-line import/no-extraneous-dependencies
+import unpluginVueComponents from 'unplugin-vue-components/vite';
 
 import 'dotenv/config';
 
@@ -62,34 +63,37 @@ export default defineConfig({
 				+ `\n${pkg.homepage}`
 				+ '\n*/'
 		)),
-		componentsAutoImport({
-			dirs: [
-				path.resolve(__dirname, 'generated'),
-				path.resolve(__dirname, 'src/components'),
-			],
+		// https://github.com/unplugin/unplugin-icons
+		unpluginIcons({
+			autoInstall: false,
+			scale: 1,
+			iconCustomizer(collectionName, iconName, props) {
+				/* eslint-disable no-param-reassign, no-underscore-dangle */
+				props.__iconify_loader_height = '';
+				props.__iconify_loader_width = '';
+				props.class = `tify-icon -${iconName}`;
+				props['aria-hidden'] = true;
+			},
+		}),
+		// https://github.com/unplugin/unplugin-vue-components
+		unpluginVueComponents({
 			dts: false, // disable generating components.d.ts file
 			resolvers: [
 				(componentName) => {
-					// NOTE: Full path required for unit tests with Vitest
-					// Replacing "\" with "/" so it works on Windows; path.normalize cannot help here
-					const baseDir = __dirname.replaceAll('\\', '/');
-					const componentDir = componentName.startsWith('Icon') ? 'generated/icons' : 'src/components';
-					const componentPath = `${baseDir}/${componentDir}/${componentName}.vue`;
-
-					if (!fs.existsSync(componentPath)) {
-						return false;
+					if (componentName.startsWith('Icon')) {
+						return {
+							from: `~icons/mdi/${componentName.replace(/^Icon/, '')}`,
+						};
 					}
 
-					return {
-						name: componentName,
-						from: componentPath,
-					};
+					return undefined;
 				},
 			],
 		}),
+
 		eslint({
 			cache: true,
-			// Poor man's ignore file parser, since --ignore-path is not supported
+			// Poor man’s ignore file parser, since --ignore-path is not supported
 			exclude: fs.readFileSync('.gitignore')
 				.toString()
 				.split('\n')
