@@ -101,7 +101,7 @@ export default {
 			:is="type"
 			ref="av"
 			class="tify-player-av"
-			:poster="$store.getThumbnailUrl($store.options.pages[0], 0)"
+			:poster="$store.getThumbnailUrl($store.options.pages[0], 0) || undefined"
 			preload="metadata"
 			crossorigin="anonymous"
 			@click="media.playing = !media.playing; onMouseMove()"
