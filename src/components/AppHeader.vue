@@ -114,30 +114,20 @@ export default {
 				return;
 			}
 
-			const { pages } = this.$store.options;
-
 			switch (event.key) {
 				case 'q':
 				case ',':
-					if (pages[0] > 1) {
-						this.$store.goToPreviousPage();
-					}
+					this.$store.goToPreviousPage();
 					break;
 				case 'e':
 				case '.':
-					if (!this.isLastPage) {
-						this.$store.goToNextPage();
-					}
+					this.$store.goToNextPage();
 					break;
 				case 'Q':
-					if (pages[0] > 1) {
-						this.$store.goToFirstPage();
-					}
+					this.$store.goToFirstPage();
 					break;
 				case 'E':
-					if (!this.isLastPage) {
-						this.$store.goToLastPage();
-					}
+					this.$store.goToLastPage();
 					break;
 				default:
 			}

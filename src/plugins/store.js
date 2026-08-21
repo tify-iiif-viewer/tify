@@ -408,15 +408,25 @@ function Store(args = {}) {
 			return '';
 		},
 		goToFirstPage() {
+			if (store.isFirstPage) {
+				return;
+			}
+
 			store.setPage(1);
 		},
 		goToNextPage() {
-			const currentPage = store.options.pages.at(-1);
-			if (currentPage < store.pageCount) {
-				store.setPage(currentPage + 1);
+			if (store.isLastPage) {
+				return;
 			}
+
+			const currentPage = store.options.pages.at(-1);
+			store.setPage(currentPage + 1);
 		},
 		goToNextSection() {
+			if (store.isLastSection) {
+				return;
+			}
+
 			const { pages } = store.options;
 			const lastIndex = pages.length - 1;
 			const page = pages[lastIndex] ? pages[lastIndex] : pages[lastIndex - 1];
@@ -429,15 +439,27 @@ function Store(args = {}) {
 			store.setPage(store.sections[sectionIndex].firstPage);
 		},
 		goToLastPage() {
+			if (store.isLastPage) {
+				return;
+			}
+
 			store.setPage(store.pageCount);
 		},
 		goToPreviousPage() {
+			if (store.isFirstPage) {
+				return;
+			}
+
 			const currentPage = store.options.pages.find((page) => page > 0);
 			if (currentPage > 1) {
 				store.setPage(currentPage - 1);
 			}
 		},
 		goToPreviousSection() {
+			if (store.isFirstPage) {
+				return;
+			}
+
 			const { pages } = store.options;
 			const page = pages[0] ? pages[0] : pages[1];
 			let sectionIndex = store.sections.length - 1;
