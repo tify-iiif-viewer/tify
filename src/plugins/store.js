@@ -280,6 +280,7 @@ function Store(args = {}) {
 			});
 
 			if (!response.ok) {
+				store.loading = 0;
 				console.warn('Error loading annotation'); // eslint-disable-line no-console
 				return '';
 			}
