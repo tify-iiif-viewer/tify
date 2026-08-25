@@ -8,7 +8,7 @@ TIFY is a slim and mobile-friendly [IIIF](https://iiif.io/) document viewer buil
 
 **[Check out the demo.](https://tify-iiif-viewer.github.io/tify/)**
 
-Continue reading to learn how to integrate TIFY into your website or application and about its options and API, [visit the website for usage examples](https://tify.rocks/), or [have a look at the documentation](doc).
+Continue reading to learn how to integrate TIFY into your website or application and about its options and API, [visit the website for usage examples](https://tify.rocks/), or [have a look at the documentation](doc/index.md).
 
 ## Embedding TIFY
 
