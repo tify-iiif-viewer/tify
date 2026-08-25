@@ -1,3 +1,12 @@
+/**
+ * TIFY’s default options, documented inline. This file is the canonical
+ * reference for all available options.
+ *
+ * User options are shallow-merged into these defaults: top-level keys are
+ * replaced as a whole, i.e. nested objects like `filters`, `pan` or `viewer`
+ * are not merged property by property.
+ */
+
 export default {
 	/**
 	 * The ID of the annotation to highlight when the text view is active.
@@ -80,7 +89,7 @@ export default {
 	/**
 	 * Sets the initial image filters. Available properties are `brightness`,
 	 * `contrast` (both a floating-point number between `0.5` and `2`) and
-	 * `saturation` (floating-point number between `0` and `3`), all optional.
+	 * `saturate` (floating-point number between `0` and `3`), all optional.
 	 *
 	 * @type {object}
 	 */
@@ -124,7 +133,7 @@ export default {
 
 	/**
 	 * Defines how page labels are displayed in the page selector and in the
-	 * thumbnails view. Use these placeholders:
+	 * thumbnails view. May contain HTML. Use these placeholders:
 	 *
 	 * `L`: page label, defined by the manifest (`–` if missing)
 	 * `P`: page number (consecutive numbers starting at `1`)
@@ -200,7 +209,8 @@ export default {
 	/**
 	 * The parameter keys to be read from and stored in the URL query. Only has
 	 * effect if `urlQueryKey` is set, in which case parameters read from the URL
-	 * override options of the same name.
+	 * override options of the same name. The default array contains all
+	 * possible values.
 	 *
 	 * @type {Array.<string>}
 	 */
