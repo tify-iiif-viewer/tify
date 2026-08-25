@@ -429,11 +429,7 @@ export default {
 							this.$store.fetchJson(infoUrl).then(
 								(infoItem) => ({
 									...infoItem,
-									$meta: {
-										page,
-										itemIndex,
-										layerIndex,
-									},
+									$meta: { page, itemIndex, layerIndex },
 								}),
 								(error) => {
 									let status;
@@ -477,12 +473,13 @@ export default {
 						this.tileSources.push(infoItem);
 					});
 
-					// Only re-init the viewer if the resolved promises correspond to
-					// the currently displayed pages. When quickly flipping through
-					// pages or on slow connections, promises could resolve when the
-					// corresponding pages are no longer displayed.
+					// Only re-init the viewer if at least one resolved promise
+					// corresponds to one of the currently displayed pages. When
+					// quickly flipping through pages or on slow connections,
+					// promises could resolve when the corresponding pages are no
+					// longer displayed.
 					const pages = this.$store.options.pages.filter((page) => page > 0);
-					if (pages.every((page, index) => infoItems[index]?.$meta.page === page)) {
+					if (infoItems.some((infoItem) => pages.includes(infoItem?.$meta.page))) {
 						this.initViewer(reset);
 					}
 				});

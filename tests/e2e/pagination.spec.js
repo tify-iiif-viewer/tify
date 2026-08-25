@@ -102,4 +102,22 @@ describe('Pagination', () => {
 		cy.contains('Previous section').should('not.exist');
 		cy.contains('Next section').should('not.exist');
 	});
+
+	it('allows rapidly flipping through pages', () => {
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json`);
+
+		cy.get('.tify').type('eeeeeeee', { delay: 0 });
+		cy.contains(pageButton, '16');
+	});
+
+	it('gracefully handles errors when loading info.json', () => {
+		cy.intercept({ url: '**/info.json', times: 1 }, { statusCode: 500 }).as('infoError');
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/harvard-art-museum-299843.json`);
+
+		cy.wait('@infoError');
+		cy.get('.tify-error').should('contain', 'Error loading info file');
+
+		cy.get('.tify').type('e');
+		cy.get('.openseadragon-canvas').should('be.visible');
+	});
 });
