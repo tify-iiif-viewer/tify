@@ -16,16 +16,11 @@ TIFY can be fully controlled via keyboard.
 
 ### View
 
+<kbd>1</kbd> to <kbd>9</kbd> toggle views in their respective order.
+
 | Action | Key |
 | --- | --- |
-| Media | <kbd>Backspace</kbd> (only on small containers) |
-| Text | <kbd>1</kbd> (if available) |
-| Pages | <kbd>2</kbd> |
-| Contents | <kbd>3</kbd> (if available) |
-| Info | <kbd>4</kbd> |
-| Export | <kbd>5</kbd> |
-| Collection | <kbd>6</kbd> (if available) |
-| Help | <kbd>7</kbd> |
+| Media view only | <kbd>0</kbd> |
 | Toggle fullscreen | <kbd>F</kbd> |
 
 ### Turning Pages

@@ -55,7 +55,24 @@ describe('Views', () => {
 		cy.get('.tify').type('6');
 		cy.contains('[aria-expanded="true"]', 'Collection');
 
-		cy.get('.tify').type('7');
+		cy.get('.tify').type('h');
 		cy.contains('[aria-expanded="true"]', 'Help');
+	});
+
+	it('changes the view via keyboard with custom view config', () => {
+		cy.visit(
+			`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/gdz-PPN857449303.json`,
+			{
+				onBeforeLoad: Cypress.tifyConfig({
+					views: ['info', 'export'],
+				}),
+			},
+		);
+
+		cy.get('.tify').type('1');
+		cy.contains('[aria-expanded="true"]', 'Info');
+
+		cy.get('.tify').type('2');
+		cy.contains('[aria-expanded="true"]', 'Export');
 	});
 });

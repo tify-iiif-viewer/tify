@@ -228,9 +228,9 @@ export default {
 	],
 
 	/**
-	 * The initially displayed view (panel); `text`, `thumbnails`, `toc`, `info`,
-	 * `help`, or `null` to display (only) the media. On large containers, the
-	 * media view is always shown next to the selected view.
+	 * The initially displayed view (panel); see option `views` for allowed
+	 * values. Set to `null` to display (only) the media view. On large
+	 * containers, the media view is always visible.
 	 *
 	 * @type {?string}
 	 */
@@ -244,6 +244,22 @@ export default {
 	 * @type {object}
 	 */
 	viewer: {},
+
+	/**
+	 * The enabled views (panels) and their order. All views are enabled by
+	 * default, but depending on the manifest, some views may be omitted.
+	 * The media view cannot be changed.
+	 *
+	 * @type {Array.<string>}
+	 */
+	views: [
+		'text',
+		'thumbnails',
+		'toc',
+		'info',
+		'export',
+		'collection',
+	],
 
 	/**
 	 * Sets the initial zoom level. The higher the number, the deeper the zoom.
