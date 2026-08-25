@@ -74,7 +74,7 @@ tify.ready.then(() => {
 
 	- `name`: null or string (required)
 
-		The view name: `'export'`, `'help'`, `'info'`, `'text'`, `'thumbnails'`, `'toc'`, or `null` to display (only) the media view.
+		The view name: `'collection', 'export'`, `'help'`, `'info'`, `'text'`, `'thumbnails'`, `'toc'`, or `null` to display (only) the media view.
 
 - **`toggleDoublePage`**
 
