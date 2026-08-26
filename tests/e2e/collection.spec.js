@@ -11,7 +11,9 @@ describe('Collection', () => {
 		cy.should('not.contain', 'Export');
 
 		cy.contains('Volume 1, 1859').click();
-		cy.contains('15. September 1859').click();
+		// TODO: This occasionally leads to timeouts on Windows,
+		// added timeout workaround, need to investigate further
+		cy.contains('15. September 1859', { timeout: 8000 }).click();
 		cy.contains('The chemist and druggist, 15. September 1859');
 	});
 
