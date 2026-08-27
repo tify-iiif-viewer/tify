@@ -111,7 +111,7 @@ export default {
 			v-for="instance in instances"
 			:key="instance.id"
 			class="instance"
-			:style="`color-scheme: ${instance.colorMode === 'auto' ? 'light dark' : instance.colorMode}`"
+			:style="`color-scheme: ${instance.colorMode === 'system' ? 'light dark' : instance.colorMode}`"
 		>
 			<DemoHeader
 				:instance="instance"

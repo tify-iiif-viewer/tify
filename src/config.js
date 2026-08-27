@@ -52,13 +52,14 @@ export default {
 	/**
 	 * Determines if TIFY is displayed in light or dark mode.
 	 *
-	 * `light`: Use light mode, regardless of browser preferences.
-	 * `dark`: Use dark mode, regardless of browser preferences.
-	 * `auto`: Determine color mode automatically based on browser preferences.
+	 * `auto`: Determine color mode based on the host website’s `color-scheme`.
+	 * `dark`: Use dark mode, regardless of browser preference.
+	 * `light`: Use light mode, regardless of browser preference.
+	 * `system`: Determine color mode based on browser preference.
 	 *
 	 * @type {string}
 	 */
-	colorMode: 'light',
+	colorMode: 'auto',
 
 	/**
 	 * The HTML element into which TIFY is mounted. If not set, TIFY is not

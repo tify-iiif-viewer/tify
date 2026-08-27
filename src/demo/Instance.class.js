@@ -2,7 +2,7 @@
 
 export default class Instance {
 	constructor(options = {}) {
-		this.colorMode = 'auto'; // TODO: Store in URL?
+		this.colorMode = 'system'; // TODO: Store in URL?
 		this.hasContentState = !!(new URL(window.location)).searchParams.get('iiif-content');
 		this.id = options.id;
 		this.language = options.language || 'en';
