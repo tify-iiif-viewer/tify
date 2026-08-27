@@ -21,16 +21,25 @@ export default {
 
 		<ul class="tify-list">
 			<li>
-				<a :href="env.repositoryUrl">{{ $translate('Source code') }}</a>
+				<a
+					:href="`${env.blobBaseUrl}/doc/index.md`"
+					rel="noopener noreferrer"
+					target="_blank"
+				>{{ $translate('Documentation') }}</a>
 			</li>
 			<li>
-				<a :href="`${env.blobBaseUrl}/doc`">{{ $translate('Documentation') }}</a>
+				<a
+					:href="env.bugsUrl"
+					rel="noopener noreferrer"
+					target="_blank"
+				>{{ $translate('Report a bug') }}</a>
 			</li>
 			<li>
-				<a :href="`${env.blobBaseUrl}/CONTRIBUTORS.md`">{{ $translate('Contributors') }}</a>
-			</li>
-			<li>
-				<a :href="env.bugsUrl">{{ $translate('Report a bug') }}</a>
+				<a
+					:href="env.repositoryUrl"
+					rel="noopener noreferrer"
+					target="_blank"
+				>{{ $translate('Source code') }}</a>
 			</li>
 		</ul>
 
