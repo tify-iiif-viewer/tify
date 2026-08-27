@@ -31,11 +31,9 @@ describe('Media', () => {
 		cy.get('[title="Rotate"].-active');
 		cy.get('.tify-dropdown.-active [title="Toggle image filters"]');
 
-		cy.get('.tify').type('{shift}0');
-		cy.url().should(
-			'include',
-			`/?manifest=${encodeURIComponent(`${Cypress.expose('iiifApiUrl')}/manifests/gdz-HANS_DE_7_w042081.json`)}`,
-		);
+		cy.get('.tify').type('{home}');
+		cy.url().should('include', 'brightness');
+		cy.url().should('not.match', /pan|rotation|zoom/);
 	});
 
 	it('controls the image via keyboard', () => {
@@ -53,7 +51,7 @@ describe('Media', () => {
 		cy.get('[title="Zoom out"]').should('be.disabled');
 
 		// Pan
-		cy.get('.tify').type('0', { delay: 500 });
+		cy.get('.tify').type('{home}', { delay: 500 });
 		cy.get('[title="Reset"]').should('be.disabled');
 		cy.get('.tify').type('wd');
 		cy.get('[title="Reset"]').should('not.be.disabled');

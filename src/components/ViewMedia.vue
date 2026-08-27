@@ -492,19 +492,8 @@ export default {
 				this.$store.rootElement.focus();
 			}
 
-			// Reset pan, zoom, rotation and filters
-			const zeroKeyCodes = [
-				45, // Insert (Shift+Numpad0)
-				48, // 0
-				96, // Numpad0
-			];
-
-			if (zeroKeyCodes.includes(event.keyCode)) {
-				if (event.shiftKey) {
-					this.resetImage(event);
-				} else {
-					this.viewer.viewport.goHome();
-				}
+			if (event.key === 'Home') {
+				this.resetImage();
 			}
 		},
 		onKeypress(event) {
@@ -518,7 +507,7 @@ export default {
 					break;
 				case 'r':
 				case 'R':
-					this.rotateRight(event);
+					this.rotate(event);
 					break;
 
 				// Restore zoom keyboard events, but with custom zoom factor
@@ -545,24 +534,16 @@ export default {
 			this.viewer.drawer.canvas.style.cssText = this.defaultCanvasCss;
 			this.$store.updateOptions({ filters: {} });
 		},
-		resetImage(includingFiltersAndRotation) {
-			if (includingFiltersAndRotation) {
-				// Rotation has to be reset before pan and zoom
-				this.viewer.viewport.setRotation(0);
-				this.$store.updateOptions({ rotation: null });
-				if (this.filtersActive) {
-					this.resetFilters();
-				}
-			}
+		resetImage() {
+			this.viewer.viewport.setRotation(0);
+			this.$store.updateOptions({ rotation: null });
 
 			this.viewer.viewport.goHome();
 			this.removeImageOptions();
 		},
-		rotateRight(event) {
+		rotate(event) {
 			const { viewport } = this.viewer;
-			const degrees = event && event.shiftKey
-				? 0
-				: (viewport.getRotation() + 90) % 360;
+			const degrees = (viewport.getRotation() + 90 * (event && event.shiftKey ? -1 : 1)) % 360;
 			viewport.setRotation(degrees);
 			this.$store.updateOptions({ rotation: degrees || null });
 		},
@@ -772,7 +753,7 @@ export default {
 				:disabled="viewerState.isReset"
 				:title="$translate('Reset')"
 				:aria-label="$translate('Reset')"
-				@click="resetImage(!!$event.shiftKey)"
+				@click="resetImage()"
 			>
 				<IconAspectRatio />
 			</button>
@@ -783,7 +764,7 @@ export default {
 				:class="{ '-active': !!$store.options.rotation }"
 				:title="$translate('Rotate')"
 				:aria-label="$translate('Rotate')"
-				@click="rotateRight($event)"
+				@click="rotate($event)"
 			>
 				<IconRotateRight />
 			</button>
