@@ -11,7 +11,7 @@ export default {
 	],
 	methods: {
 		getLabel(colorMode) {
-			if (colorMode === 'auto') {
+			if (colorMode === 'system') {
 				return this.$translate('automatic', this.instance);
 			}
 
@@ -31,7 +31,7 @@ export default {
 		role="toolbar"
 	>
 		<li
-			v-for="colorMode in ['auto', 'light', 'dark']"
+			v-for="colorMode in ['system', 'light', 'dark']"
 			:key="colorMode"
 		>
 			<button
@@ -41,7 +41,7 @@ export default {
 				:title="getLabel(colorMode)"
 				@click="$emit('change', colorMode)"
 			>
-				<IconThemeLightDark v-if="colorMode === 'auto'" />
+				<IconThemeLightDark v-if="colorMode === 'system'" />
 				<IconWeatherSunny v-else-if="colorMode === 'light'" />
 				<IconWeatherNight v-else />
 			</button>
