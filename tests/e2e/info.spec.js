@@ -1,3 +1,6 @@
+// TODO: Add test for manifests/biblhertz-garofalo-ligorio-comparison.json
+// TODO: Add test for image labels
+
 describe('Info', () => {
 	it('displays related metadata', () => {
 		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/wellcome-b18035723.json`);
@@ -68,6 +71,9 @@ describe('Info', () => {
 		cy.get('.tify-info-section.-provider').should('not.exist');
 	});
 
-	// TODO: Add test for manifests/biblhertz-garofalo-ligorio-comparison.json
-	// Check image labels in info view
+	it('displays the license link for converted IIIF 2 manifests', () => {
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/wellcome-b18035723.json`);
+		cy.contains('Info').click();
+		cy.get('.tify-info-section.-license a[href$="/licenses/by-nc/4.0/"]').contains('/licenses/by-nc/4.0/');
+	});
 });

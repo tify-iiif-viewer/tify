@@ -9,9 +9,12 @@ import { isValidPagesArray, isValidUrl } from '../modules/validation';
 
 function convertManifest(originalManifest) {
 	// For IIIF 2: Some properties are erroneously converted, save for later
-	const { related } = originalManifest;
-	const { requiredStatement } = originalManifest;
-	const { viewingDirection } = originalManifest;
+	const {
+		license,
+		related,
+		requiredStatement,
+		viewingDirection,
+	} = originalManifest;
 
 	// Convert IIIF 2 manifest to IIIF 3 (IIIF 3 remains unchanged)
 	// NOTE: originalManifest may be modified during conversion
@@ -53,6 +56,10 @@ function convertManifest(originalManifest) {
 			if (requiredStatement && !manifest.requiredStatement) {
 				manifest.requiredStatement = requiredStatement;
 			}
+		}
+
+		if (license && !manifest.rights) {
+			manifest.rights = license;
 		}
 
 		// Restore viewingDirection
