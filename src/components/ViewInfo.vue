@@ -251,14 +251,6 @@ export default {
 		</div>
 
 		<div
-			v-if="manifestOrCollection.requiredStatement"
-			class="tify-info-section -attribution"
-		>
-			<h3>{{ $store.localize(manifestOrCollection.requiredStatement.label) }}</h3>
-			<div v-html="filterHtml($store.localize(manifestOrCollection.requiredStatement.value))" />
-		</div>
-
-		<div
 			v-if="manifestOrCollection.rights"
 			class="tify-info-section -license"
 		>
@@ -266,6 +258,14 @@ export default {
 			<p>
 				<a :href="manifestOrCollection.rights">{{ manifestOrCollection.rights }}</a>
 			</p>
+		</div>
+
+		<div
+			v-if="manifestOrCollection.requiredStatement"
+			class="tify-info-section -attribution"
+		>
+			<h3>{{ $store.localize(manifestOrCollection.requiredStatement.label) }}</h3>
+			<div v-html="filterHtml($store.localize(manifestOrCollection.requiredStatement.value))" />
 		</div>
 
 		<div
