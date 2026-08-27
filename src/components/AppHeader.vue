@@ -15,6 +15,26 @@ export default {
 		};
 	},
 	computed: {
+		availableViews() {
+			return [null, ...this.$store.options.views].filter((name) => {
+				switch (name) {
+					case null:
+						return !!this.$store.manifest;
+					case 'text':
+						return this.textEnabled;
+					case 'thumbnails':
+						return !!this.$store.manifest;
+					case 'toc':
+						return this.tocEnabled;
+					case 'export':
+						return !!this.$store.collection || !!this.$store.manifest;
+					case 'collection':
+						return !!this.$store.collection;
+					default:
+						return true;
+				}
+			});
+		},
 		doublePageEnabled() {
 			if (this.$store.manifest.behavior?.some((string) => ['continuous', 'individuals'].includes(string))) {
 				return false;
@@ -61,44 +81,12 @@ export default {
 				return;
 			}
 
+			const number = Number(event.key);
+			if (number <= this.availableViews.length) {
+				this.toggleView(this.availableViews[number]);
+			}
+
 			switch (event.key) {
-				case 'Backspace':
-					// switchViewSmall is visible, i.e. screen is small
-					if (this.$refs.switchViewSmall.offsetParent) {
-						this.toggleView(null);
-					}
-					break;
-				case '1':
-					if (this.$store.manifest && this.textEnabled) {
-						this.toggleView('text');
-					}
-					break;
-				case '2':
-					if (this.$store.manifest) {
-						this.toggleView('thumbnails');
-					}
-					break;
-				case '3':
-					if (this.$store.manifest && this.tocEnabled) {
-						this.toggleView('toc');
-					}
-					break;
-				case '4':
-					this.toggleView('info');
-					break;
-				case '5':
-					if (this.$store.collection || this.$store.manifest) {
-						this.toggleView('export');
-					}
-					break;
-				case '6':
-					if (this.$store.collection) {
-						this.toggleView('collection');
-					}
-					break;
-				case '7':
-					this.toggleView('help');
-					break;
 				case 'b':
 					if (this.$store.manifest) {
 						this.toggleDoublePage();
@@ -106,6 +94,9 @@ export default {
 					break;
 				case 'f':
 					this.fullscreen.toggle();
+					break;
+				case 'h':
+					this.toggleView('help');
 					break;
 				default:
 			}
@@ -161,6 +152,10 @@ export default {
 		},
 		toggleView(name) {
 			this.closeControlsPopup();
+
+			if (name !== 'help' && !this.availableViews.includes(name)) {
+				return false;
+			}
 
 			const view = name === this.$store.options.view
 				&& this.$store.manifest
@@ -249,89 +244,48 @@ export default {
 				:class="{ '-visible': controlsVisible }"
 			>
 				<div class="tify-header-button-group -view">
-					<!-- NOTE: This button is hidden on large containers -->
-					<button
-						v-if="$store.manifest"
-						type="button"
-						class="tify-header-button -media"
-						:aria-controls="$getId('media')"
-						:aria-expanded="!$store.options.view"
-						@click="toggleView(null)"
+					<template
+						v-for="view in availableViews"
+						:key="view"
 					>
-						<IconImageArea />
-						<span class="tify-header-button-label">{{ $translate('Media') }}</span>
-					</button>
-
-					<button
-						v-if="textEnabled"
-						type="button"
-						class="tify-header-button"
-						:aria-controls="$getId('text')"
-						:aria-expanded="$store.options.view === 'text'"
-						@click="toggleView('text')"
-					>
-						<IconText />
-						<span class="tify-header-button-label">{{ $translate('Text') }}</span>
-					</button>
-
-					<button
-						v-if="$store.manifest"
-						type="button"
-						class="tify-header-button"
-						:aria-controls="$getId('thumbnails')"
-						:aria-expanded="$store.options.view === 'thumbnails'"
-						@click="toggleView('thumbnails')"
-					>
-						<IconViewModule />
-						<span class="tify-header-button-label">{{ $translate('Pages') }}</span>
-					</button>
-
-					<button
-						v-if="tocEnabled"
-						type="button"
-						class="tify-header-button"
-						:aria-controls="$getId('toc')"
-						:aria-expanded="$store.options.view === 'toc'"
-						@click="toggleView('toc')"
-					>
-						<IconTableOfContents />
-						<span class="tify-header-button-label">{{ $translate('Contents') }}</span>
-					</button>
-
-					<button
-						type="button"
-						class="tify-header-button"
-						:aria-controls="$getId('info')"
-						:aria-expanded="$store.options.view === 'info'"
-						@click="toggleView('info')"
-					>
-						<IconInformationVariant />
-						<span class="tify-header-button-label">{{ $translate('Info') }}</span>
-					</button>
-
-					<button
-						v-if="$store.collection || $store.manifest"
-						type="button"
-						class="tify-header-button"
-						:aria-controls="$getId('export')"
-						:aria-expanded="$store.options.view === 'export'"
-						@click="toggleView('export')"
-					>
-						<IconTrayArrowDown />
-						<span class="tify-header-button-label">{{ $translate('Export [noun]') }}</span>
-					</button>
-
-					<button
-						v-if="$store.collection"
-						type="button"
-						class="tify-header-button"
-						:aria-controls="$getId('collection')"
-						:aria-expanded="$store.options.view === 'collection'"
-						@click="toggleView('collection')"
-					>
-						<IconListBoxOutline />
-						<span class="tify-header-button-label">{{ $translate('Collection') }}</span>
-					</button>
+						<button
+							type="button"
+							:class="`tify-header-button -${view || 'media'}`"
+							:aria-controls="$getId(view || 'media')"
+							:aria-expanded="$store.options.view === view"
+							@click="toggleView(view)"
+						>
+							<template v-if="!view">
+								<!-- NOTE: This button is hidden on large containers -->
+								<IconImageArea />
+								<span class="tify-header-button-label">{{ $translate('Media') }}</span>
+							</template>
+							<template v-if="view === 'text'">
+								<IconText />
+								<span class="tify-header-button-label">{{ $translate('Text') }}</span>
+							</template>
+							<template v-else-if="view === 'thumbnails'">
+								<IconViewModule />
+								<span class="tify-header-button-label">{{ $translate('Pages') }}</span>
+							</template>
+							<template v-else-if="view === 'toc'">
+								<IconTableOfContents />
+								<span class="tify-header-button-label">{{ $translate('Contents') }}</span>
+							</template>
+							<template v-else-if="view === 'info'">
+								<IconInformationVariant />
+								<span class="tify-header-button-label">{{ $translate('Info') }}</span>
+							</template>
+							<template v-else-if="view === 'export'">
+								<IconTrayArrowDown />
+								<span class="tify-header-button-label">{{ $translate('Export [noun]') }}</span>
+							</template>
+							<template v-else-if="view === 'collection'">
+								<IconListBoxOutline />
+								<span class="tify-header-button-label">{{ $translate('Collection') }}</span>
+							</template>
+						</button>
+					</template>
 				</div>
 
 				<div class="tify-header-button-group -view">

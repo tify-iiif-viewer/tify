@@ -45,15 +45,16 @@ export default class Instance {
 			window.history.pushState(null, '', url.toString());
 		}
 
-		// TODO: Allow to add custom TIFY options like translation overrides
-
 		this.tify = new Tify({
-			container: document.getElementById(`container${this.id}`),
-			colorMode: this.colorMode,
-			contentStateEnabled: this.hasContentState,
-			language: this.language,
-			manifestUrl: this.manifestUrl,
-			urlQueryKey: `tify${this.id}`,
+			...window.tifyConfig,
+			...{
+				container: document.getElementById(`container${this.id}`),
+				colorMode: this.colorMode,
+				contentStateEnabled: this.hasContentState,
+				language: this.language,
+				manifestUrl: this.manifestUrl,
+				urlQueryKey: `tify${this.id}`,
+			},
 		});
 
 		this.tify.ready.then(() => Instance.updateDocumentTitle());
