@@ -84,6 +84,7 @@ An example with most options set to non-default values:
 
 ``` js
 new Tify({
+  colorMode: 'dark',
   container: '#tify',
   language: 'de',
   manifestUrl: 'https://example.org/iiif-manifest.json',
@@ -97,6 +98,11 @@ new Tify({
   viewer: {
     immediateRender: false,
   },
+  views: [
+    'info',
+    'collection',
+    'thumbnails',
+  ],
   zoom: 1.2,
 })
 ```
