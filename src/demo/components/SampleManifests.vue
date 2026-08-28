@@ -119,6 +119,7 @@ ul {
 	border-radius: $br;
 	box-decoration-break: clone;
 	padding: .5em .75em;
+	text-wrap: balance;
 
 	b {
 		font-weight: bold;

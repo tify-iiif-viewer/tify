@@ -1,3 +1,12 @@
+/**
+ * TIFY’s default options, documented inline. This file is the canonical
+ * reference for all available options.
+ *
+ * User options are shallow-merged into these defaults: top-level keys are
+ * replaced as a whole, i.e. nested objects like `filters`, `pan` or `viewer`
+ * are not merged property by property.
+ */
+
 export default {
 	/**
 	 * The ID of the annotation to highlight when the text view is active.
@@ -43,13 +52,13 @@ export default {
 	/**
 	 * Determines if TIFY is displayed in light or dark mode.
 	 *
-	 * `auto`: Determine color mode automatically based on browser preferences.
 	 * `light`: Use light mode, regardless of browser preferences.
 	 * `dark`: Use dark mode, regardless of browser preferences.
+	 * `auto`: Determine color mode automatically based on browser preferences.
 	 *
 	 * @type {string}
 	 */
-	colorMode: 'auto',
+	colorMode: 'light',
 
 	/**
 	 * The HTML element into which TIFY is mounted. If not set, TIFY is not
@@ -80,7 +89,7 @@ export default {
 	/**
 	 * Sets the initial image filters. Available properties are `brightness`,
 	 * `contrast` (both a floating-point number between `0.5` and `2`) and
-	 * `saturation` (floating-point number between `0` and `3`), all optional.
+	 * `saturate` (floating-point number between `0` and `3`), all optional.
 	 *
 	 * @type {object}
 	 */
@@ -124,7 +133,7 @@ export default {
 
 	/**
 	 * Defines how page labels are displayed in the page selector and in the
-	 * thumbnails view. Use these placeholders:
+	 * thumbnails view. May contain HTML. Use these placeholders:
 	 *
 	 * `L`: page label, defined by the manifest (`–` if missing)
 	 * `P`: page number (consecutive numbers starting at `1`)
@@ -200,7 +209,8 @@ export default {
 	/**
 	 * The parameter keys to be read from and stored in the URL query. Only has
 	 * effect if `urlQueryKey` is set, in which case parameters read from the URL
-	 * override options of the same name.
+	 * override options of the same name. The default array contains all
+	 * possible values.
 	 *
 	 * @type {Array.<string>}
 	 */
@@ -218,9 +228,9 @@ export default {
 	],
 
 	/**
-	 * The initially displayed view (panel); `text`, `thumbnails`, `toc`, `info`,
-	 * `help`, or `null` to display (only) the media. On large containers, the
-	 * media view is always shown next to the selected view.
+	 * The initially displayed view (panel); see option `views` for allowed
+	 * values. Set to `null` to display (only) the media view. On large
+	 * containers, the media view is always visible.
 	 *
 	 * @type {?string}
 	 */
@@ -234,6 +244,22 @@ export default {
 	 * @type {object}
 	 */
 	viewer: {},
+
+	/**
+	 * The enabled views (panels) and their order. All views are enabled by
+	 * default, but depending on the manifest, some views may be omitted.
+	 * The media view cannot be changed.
+	 *
+	 * @type {Array.<string>}
+	 */
+	views: [
+		'text',
+		'thumbnails',
+		'toc',
+		'info',
+		'export',
+		'collection',
+	],
 
 	/**
 	 * Sets the initial zoom level. The higher the number, the deeper the zoom.

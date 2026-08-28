@@ -1,10 +1,10 @@
 describe('Views', () => {
 	it('changes the view via buttons', () => {
 		const encodedParams = encodeURIComponent(JSON.stringify({
-			childManifestUrl: `${Cypress.env('iiifApiUrl')}/manifests/wellcome-b19974760_1_0004.json`,
+			childManifestUrl: `${Cypress.expose('iiifApiUrl')}/manifests/wellcome-b19974760_1_0004.json`,
 		}));
 
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/wellcome-b19974760.json&tify=${encodedParams}`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/wellcome-b19974760.json&tify=${encodedParams}`);
 
 		cy.contains('Text').click();
 		cy.contains('[aria-expanded="true"]', 'Text');
@@ -30,10 +30,10 @@ describe('Views', () => {
 
 	it('changes the view via keyboard', () => {
 		const encodedParams = encodeURIComponent(JSON.stringify({
-			childManifestUrl: `${Cypress.env('iiifApiUrl')}/manifests/wellcome-b19974760_1_0004.json`,
+			childManifestUrl: `${Cypress.expose('iiifApiUrl')}/manifests/wellcome-b19974760_1_0004.json`,
 		}));
 
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/wellcome-b19974760.json&tify=${encodedParams}`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/wellcome-b19974760.json&tify=${encodedParams}`);
 
 		cy.contains('The chemist and druggist');
 
@@ -55,7 +55,24 @@ describe('Views', () => {
 		cy.get('.tify').type('6');
 		cy.contains('[aria-expanded="true"]', 'Collection');
 
-		cy.get('.tify').type('7');
+		cy.get('.tify').type('h');
 		cy.contains('[aria-expanded="true"]', 'Help');
+	});
+
+	it('changes the view via keyboard with custom view config', () => {
+		cy.visit(
+			`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/gdz-PPN857449303.json`,
+			{
+				onBeforeLoad: Cypress.tifyConfig({
+					views: ['info', 'export'],
+				}),
+			},
+		);
+
+		cy.get('.tify').type('1');
+		cy.contains('[aria-expanded="true"]', 'Info');
+
+		cy.get('.tify').type('2');
+		cy.contains('[aria-expanded="true"]', 'Export');
 	});
 });

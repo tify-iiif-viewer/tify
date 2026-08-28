@@ -1,6 +1,6 @@
 describe('IIIF Cookbook 0025: Foldout as separate page in double-page view', () => {
 	it('supports non-paged pages in paged manifests', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/iiif-cookbook/0035-foldouts/manifest.json`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/iiif-cookbook/0035-foldouts/manifest.json`);
 
 		cy.contains('header', 'Front cover');
 		cy.get('[title="Toggle double-page"][aria-pressed=true]');
@@ -32,7 +32,9 @@ describe('IIIF Cookbook 0025: Foldout as separate page in double-page view', () 
 		cy.get('.tify-thumbnails-item.-current:nth-child(9)');
 		cy.get('.tify-thumbnails-item.-current').should('have.length', 1);
 
-		cy.get('[title="Previous page"]').eq(0).click().click();
+		for (let i = 0; i < 2; i += 1) {
+			cy.get('[title="Previous page"]').eq(0).click();
+		}
 		cy.get('.tify-thumbnails-item.-current:nth-child(5)');
 		cy.get('.tify-thumbnails-item.-current:nth-child(6)');
 

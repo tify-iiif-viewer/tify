@@ -1,9 +1,21 @@
 import 'cypress-html-validate/commands';
 
+Cypress.on('window:before:load', (win) => {
+	cy.spy(win.console, 'error');
+});
+
+Cypress.tifyConfig = (tifyConfig) => (win) => {
+	Object.assign(win, { tifyConfig });
+};
+
 afterEach(() => {
 	if (cy.bypassAfterEach) {
 		return;
 	}
+
+	cy.window().then((win) => {
+		expect(win.console.error).to.have.callCount(0);
+	});
 
 	cy.htmlvalidate(
 		{

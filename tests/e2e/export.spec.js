@@ -1,6 +1,6 @@
 describe('Export', () => {
 	it('displays export links', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/gdz-PPN857449303.json`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/gdz-PPN857449303.json`);
 
 		cy.contains('Export').click();
 		cy.contains('Media Files').should('be.visible');
@@ -20,7 +20,7 @@ describe('Export', () => {
 	});
 
 	it('hides "Other Formats" if not available', () => {
-		cy.visit(`/?manifest=${Cypress.env('iiifApiUrl')}/manifests/aku-pal-375.json`);
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/aku-pal-375.json`);
 
 		cy.contains('Export').click();
 

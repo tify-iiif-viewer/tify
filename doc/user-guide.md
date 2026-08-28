@@ -16,16 +16,12 @@ TIFY can be fully controlled via keyboard.
 
 ### View
 
+<kbd>1</kbd> to <kbd>9</kbd> toggle views in their respective order.
+
 | Action | Key |
 | --- | --- |
-| Media | <kbd>Backspace</kbd> (only on small containers) |
-| Text | <kbd>1</kbd> (if available) |
-| Pages | <kbd>2</kbd> |
-| Contents | <kbd>3</kbd> (if available) |
-| Info | <kbd>4</kbd> |
-| Export | <kbd>5</kbd> |
-| Collection | <kbd>6</kbd> (if available) |
-| Help | <kbd>7</kbd> |
+| Media view only | <kbd>0</kbd> |
+| Help view | <kbd>H</kbd> |
 | Toggle fullscreen | <kbd>F</kbd> |
 
 ### Turning Pages
@@ -34,21 +30,20 @@ TIFY can be fully controlled via keyboard.
 | --- | --- |
 | Previous page | <kbd>Q</kbd> or <kbd>,</kbd> |
 | Next page | <kbd>E</kbd> or <kbd>.</kbd> |
-| First page | <kbd>&#8679;Q</kbd> |
-| Last page | <kbd>&#8679;E</kbd> |
+| First page | <kbd>&#8679;</kbd> + <kbd>Q</kbd> |
+| Last page | <kbd>&#8679;</kbd> + <kbd>E</kbd> |
 | Jump to page | <kbd>X</kbd> |
 | Toggle double-page | <kbd>B</kbd> |
 
-### Scan
+### Image
 
 | Action | Key |
 | --- | --- |
 | Pan | <kbd>W</kbd> <kbd>S</kbd> <kbd>A</kbd> <kbd>D</kbd> |
-| Zoom in | <kbd>&#8679;W</kbd> or <kbd>+</kbd> |
-| Zoom out | <kbd>&#8679;S</kbd> or <kbd>-</kbd> |
-| Rotate (90 degrees clockwise) | <kbd>R</kbd> |
+| Zoom in | <kbd>&#8679;</kbd> + <kbd>W</kbd> or <kbd>+</kbd> |
+| Zoom out | <kbd>&#8679;</kbd> + <kbd>S</kbd> or <kbd>-</kbd> |
+| Rotate 90 degrees clockwise | <kbd>R</kbd> |
+| Rotate 90 degrees counter-clockwise | <kbd>&#8679;</kbd> + <kbd>R</kbd> |
+| Reset pan, zoom and rotation | <kbd>Home</kbd> |
 | Toggle filters | <kbd>I</kbd> |
-| Reset pan and zoom | <kbd>0</kbd> |
-| Reset rotation | <kbd>&#8679;</kbd> + <kbd>R</kbd> |
-| Reset filters | <kbd>&#8679;</kbd> + </kbd>I</kbd> |
-| Reset all | <kbd>&#8679;</kbd> + <kbd>0</kbd> |
+| Reset filters | <kbd>&#8679;</kbd> + <kbd>I</kbd> |

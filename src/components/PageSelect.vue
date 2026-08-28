@@ -110,7 +110,7 @@ export default {
 				:aria-label="$translate('Filter pages')"
 				type="text"
 				class="tify-page-select-input"
-				@keyup.enter="$refs.list.querySelectorAll('a')[highlightIndex].click()"
+				@keyup.enter="$refs.list.querySelectorAll('a')[highlightIndex]?.click()"
 				@keydown.esc="resetFilter()"
 				@keydown.up.prevent="onKeyUpArrow()"
 				@keydown.down.prevent="onKeyDownArrow()"

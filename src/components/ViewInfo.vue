@@ -190,7 +190,7 @@ export default {
 			class="tify-info-section -pages"
 		>
 			<h3>{{ $translate(pages.length > 1 ? 'Current Pages' : 'Current Page') }}</h3>
-			<ol class="tify-list -unstyled">
+			<ol class="tify-list">
 				<li
 					v-for="page in pages"
 					:key="page"
@@ -246,14 +246,6 @@ export default {
 		</div>
 
 		<div
-			v-if="manifestOrCollection.requiredStatement"
-			class="tify-info-section -attribution"
-		>
-			<h3>{{ $store.localize(manifestOrCollection.requiredStatement.label) }}</h3>
-			<div v-html="filterHtml($store.localize(manifestOrCollection.requiredStatement.value))" />
-		</div>
-
-		<div
 			v-if="manifestOrCollection.rights"
 			class="tify-info-section -license"
 		>
@@ -261,6 +253,14 @@ export default {
 			<p>
 				<a :href="manifestOrCollection.rights">{{ manifestOrCollection.rights }}</a>
 			</p>
+		</div>
+
+		<div
+			v-if="manifestOrCollection.requiredStatement"
+			class="tify-info-section -attribution"
+		>
+			<h3>{{ $store.localize(manifestOrCollection.requiredStatement.label) }}</h3>
+			<div v-html="filterHtml($store.localize(manifestOrCollection.requiredStatement.value))" />
 		</div>
 
 		<div

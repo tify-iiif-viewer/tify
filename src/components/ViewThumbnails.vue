@@ -7,7 +7,7 @@ export default {
 	data() {
 		return {
 			itemHeight: 0,
-			itemVMargin: 0,
+			itemVerticalMargin: 0,
 			items: [{}], // Dummy thumbnail to get dimensions
 			itemsPerRow: 0,
 			lastScrollTop: 0,
@@ -85,8 +85,10 @@ export default {
 
 			const horizontalMargin = parseInt(itemStyle.marginLeft, 10) + parseFloat(itemStyle.marginRight, 10);
 			const itemWidth = itemTemplate.offsetWidth + horizontalMargin;
-			this.thumbnailWidth = itemTemplate.offsetWidth;
-			this.itemsPerRow = Math.floor(this.$refs.container.clientWidth / itemWidth);
+			this.thumbnailWidth = itemTemplate.querySelector('.tify-thumbnails-button').clientWidth;
+
+			// Using getBoundingClientRect() because offsetWidth rounds to full pixels
+			this.itemsPerRow = Math.floor(this.$refs.container.getBoundingClientRect().width / itemWidth);
 
 			const totalRows = Math.ceil(this.$store.manifest.items.length / this.itemsPerRow);
 			const containerHeight = totalRows * this.itemHeight;
@@ -121,7 +123,7 @@ export default {
 		},
 		scrollToCurrentPage(animated = true) {
 			const rowsBefore = Math.floor((this.$store.options.pages[0] - 1) / this.itemsPerRow);
-			const scrollPos = (rowsBefore * this.itemHeight) + (this.itemVMargin - 50);
+			const scrollPos = (rowsBefore * this.itemHeight) + (this.itemVerticalMargin - 50);
 			if (animated) {
 				scrollTo(this.$el, scrollPos);
 			} else {
@@ -209,7 +211,7 @@ export default {
 						v-else
 						class="tify-thumbnails-image"
 					>
-						<IconImageBrokenVariant />
+						<IconBrokenImage />
 						<span class="tify-sr-only">{{ $translate('Image missing') }}</span>
 					</span>
 

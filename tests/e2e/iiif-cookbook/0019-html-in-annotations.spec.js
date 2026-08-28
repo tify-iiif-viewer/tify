@@ -1,7 +1,7 @@
 describe('IIIF Cookbook 0019: HTML in annotations', () => {
 	before(() => {
 		cy.visit(
-			`/?manifest=${Cypress.env('iiifApiUrl')}/iiif-cookbook/0019-html-in-annotations/manifest.json`
+			`/?manifest=${Cypress.expose('iiifApiUrl')}/iiif-cookbook/0019-html-in-annotations/manifest.json`
 			+ '&tify={"view":"text"}',
 		);
 	});

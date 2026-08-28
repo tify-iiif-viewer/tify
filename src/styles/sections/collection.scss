@@ -25,6 +25,7 @@
 	padding: g(.5);
 	position: sticky;
 	top: g(-.5);
+	z-index: 9; // Keep filter on top when host website affects list styles
 }
 
 .tify-collection-list {

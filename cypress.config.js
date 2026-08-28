@@ -7,9 +7,11 @@ import server from './tests/iiif-api/server.js';
 
 const iiifApiPort = 8082;
 
+console.log();
 server.start(iiifApiPort);
 
 export default defineConfig({
+	allowCypressEnv: false,
 	e2e: {
 		baseUrl: 'http://localhost:4173',
 		specPattern: 'tests/e2e/**/*.{cy,spec}.{js,jsx,ts,tsx}',
@@ -27,7 +29,7 @@ export default defineConfig({
 			htmlvalidate.install(on);
 		},
 	},
-	env: {
+	expose: {
 		iiifApiUrl: `http://0.0.0.0:${iiifApiPort}`,
 	},
 });
