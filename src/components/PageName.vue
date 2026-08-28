@@ -13,12 +13,6 @@ export default {
 		},
 	},
 	computed: {
-		classes() {
-			return {
-				L: 'tify-page-name-label',
-				P: 'tify-page-name-number',
-			};
-		},
 		label() {
 			return striptags(this.$store.localize(this.$store.manifest.items[this.number - 1].label))
 				|| this.$translate('$n/a');

@@ -49,11 +49,6 @@ export default {
 
 			return this.$store.manifest || this.$store.collection || {};
 		},
-		metadataItems() {
-			return this.$store.manifest.items
-				.map((item, index) => ({ metadata: item.metadata, number: index + 1 }))
-				.filter(({ metadata, number }) => metadata?.length && this.$store.options.pages.includes(number));
-		},
 		pages() {
 			return this.$store.options.pages.filter((page) => page > 0).map((page) => {
 				const pageItem = {

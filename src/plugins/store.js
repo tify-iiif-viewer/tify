@@ -341,20 +341,6 @@ function Store(args = {}) {
 				? page + 1
 				: 0;
 		},
-		getPageLabel(number, labelObject) {
-			const label = store.localize(labelObject, '');
-
-			if (label) {
-				return store.options.pageLabelFormat
-					.replace('L', label)
-					.replace('P', number)
-					.replace('T', store.pageCount);
-			}
-
-			return store.options.pageLabelFormat.includes('P')
-				? `${number}`
-				: '—'; // &mdash;
-		},
 		getStartPages() {
 			let startPage = 1;
 
