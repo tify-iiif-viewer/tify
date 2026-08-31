@@ -60,6 +60,17 @@ $info-content-max-height: g(6.75);
 	}
 }
 
+.tify-info-pages {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	> li {
+		margin: 0;
+		padding: 0;
+	}
+}
+
 .tify-info-section {
 	@extend %iiif-html;
 	margin: g() 0;
