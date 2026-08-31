@@ -16,6 +16,28 @@ const thumbnailWidth = 240;
 const thumbnailHeight = 240;
 const thumbnailOverflow = 8;
 
+// Blocks fetches to loopback, link-local and private-network hosts to prevent SSRF
+const blockedHostnamePatterns = [
+	/^localhost$/i,
+	/^127\./,
+	/^10\./,
+	/^172\.(1[6-9]|2\d|3[0-1])\./,
+	/^192\.168\./,
+	/^169\.254\./,
+	/^\[?::1\]?$/,
+	/^0\.0\.0\.0$/,
+];
+
+function isAllowedManifestUrl(url) {
+	try {
+		const { protocol, hostname } = new URL(url);
+		return (protocol === 'http:' || protocol === 'https:')
+			&& !blockedHostnamePatterns.some((pattern) => pattern.test(hostname));
+	} catch {
+		return false;
+	}
+}
+
 if (!fs.existsSync(thumbnailsDir)) {
 	fs.mkdirSync(thumbnailsDir, { recursive: true });
 }
@@ -31,6 +53,10 @@ async function saveThumbnail(manifestUrl, parentUrl = '') {
 	}
 
 	// Fetch IIIF manifest
+	if (!isAllowedManifestUrl(manifestUrl)) {
+		return { error: 'Manifest URL is not allowed' };
+	}
+
 	let manifestRes;
 	try {
 		manifestRes = await fetch(manifestUrl);
