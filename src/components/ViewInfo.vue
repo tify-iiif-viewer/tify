@@ -190,7 +190,7 @@ export default {
 			class="tify-info-section -pages"
 		>
 			<h3>{{ $translate(pages.length > 1 ? 'Current Pages' : 'Current Page') }}</h3>
-			<ol class="tify-list">
+			<ol class="tify-info-pages">
 				<li
 					v-for="page in pages"
 					:key="page"
