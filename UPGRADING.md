@@ -1,5 +1,9 @@
 # Upgrading TIFY
 
+## v0.36
+
+- The default `colorMode: 'auto'` now follows the host website’s `color-scheme` instead of the browser preference. Use `colorMode: 'system'` for the previous behavior.
+
 ## v0.35
 
 No breaking changes.
