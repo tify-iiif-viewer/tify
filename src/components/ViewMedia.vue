@@ -140,6 +140,7 @@ export default {
 			// which is currently loaded from the info file since the former is
 			// unreliable.
 			const sources = [];
+			const rotations = [];
 			let initialSize = 0;
 			let totalSize = 0;
 
@@ -157,6 +158,8 @@ export default {
 					initialSize = initialSize || tileSource[this.$store.isVertical ? 'height' : 'width'];
 
 					const size = tileSource[this.$store.isVertical ? 'height' : 'width'] / initialSize;
+					const degrees = tileSource.degrees || 0;
+					const flipped = tileSource.flipped || false;
 
 					if ((this.$store.options.pages[0] === 0)
 						&& ((!this.$store.isReversed && page === 1)
@@ -170,6 +173,7 @@ export default {
 							[this.$store.isVertical ? 'y' : 'x']: 0,
 							[this.$store.isVertical ? 'height' : 'width']: size,
 						});
+						rotations.push({ degrees: 0, flipped: false });
 
 						totalSize += 1 + gapBetweenPages;
 					}
@@ -186,7 +190,31 @@ export default {
 					const { target } = this.$store.manifest.items[page - 1].items[0]?.items[index] || {};
 					const coordinates = parseCoordinatesString(target?.id || target);
 					if (coordinates) {
-						[source.x, source.y, source.width] = coordinates.map((number) => number / initialSize);
+						const [x, y, w, h] = coordinates.map((number) => number / initialSize);
+
+						if (degrees) {
+							// `coordinates` is the already-rotated bounding box (the manifest's
+							// own xywh target), but OpenSeadragon rotates a tiled image around
+							// the center of its native, unrotated content box. Rotation about
+							// center doesn't move the center, so re-derive the unrotated
+							// content box from the image's native size, anchored at the same
+							// center the rotated box specifies.
+							const nativeWidth = tileSource.width / initialSize;
+							const nativeHeight = tileSource.height / initialSize;
+							source.x = x + (w / 2) - (nativeWidth / 2);
+							source.y = y + (h / 2) - (nativeHeight / 2);
+							// Only set ONE dimension — OpenSeadragon computes the other from
+							// the tileSource's own aspect ratio, and setting both throws
+							// ("specifying both width and height to a tiledImage is not
+							// supported"), which silently broke rendering for that image.
+							if (this.$store.isVertical) {
+								source.height = nativeHeight;
+							} else {
+								source.width = nativeWidth;
+							}
+						} else {
+							[source.x, source.y, source.width] = [x, y, w];
+						}
 					} else {
 						totalSize += size + gapBetweenPages;
 					}
@@ -203,13 +231,40 @@ export default {
 							[this.$store.isVertical ? 'y' : 'x']: totalSize,
 							[this.$store.isVertical ? 'height' : 'width']: size,
 						});
+						rotations.push({ degrees: 0, flipped: false });
 					}
 
 					sources.push(source);
+					rotations.push({ degrees, flipped });
 				});
 			});
 
+			// OpenSeadragon's TiledImage constructor doesn't reliably support
+			// `degrees`/`flipped` passed as part of the initial tile source options
+			// (setting either, even to its own default value, can throw during
+			// construction), so apply IIIF ImageApiSelector rotation/mirror after
+			// each image has actually been added, via the documented setRotation()/
+			// setFlip() instance methods instead.
+			let itemsAdded = 0;
+			const applyRotations = ({ item }) => {
+				const { degrees, flipped } = rotations[itemsAdded] || {};
+				itemsAdded += 1;
+
+				if (degrees) {
+					item.setRotation(degrees, true);
+				}
+				if (flipped) {
+					item.setFlip(true);
+				}
+
+				if (itemsAdded >= rotations.length) {
+					this.viewer.world.removeHandler('add-item', applyRotations);
+				}
+			};
+
 			if (this.viewer) {
+				this.viewer.world.addHandler('add-item', applyRotations);
+
 				this.viewer.addOnceHandler('open', () => {
 					if (this.viewerState.isReset || reset) {
 						this.resetImage();
@@ -273,6 +328,8 @@ export default {
 				visibilityRatio: 0.2,
 				...this.$store.options.viewer,
 			});
+
+			this.viewer.world.addHandler('add-item', applyRotations);
 
 			// Disable OpenSeadragons built-in key handlers which interfere with TIFY's keyboard shortcuts
 			this.viewer.addHandler('canvas-key', (event) => {
@@ -420,6 +477,17 @@ export default {
 						return;
 					}
 
+					// IIIF ImageApiSelector rotation/mirror on a SpecificResource body: applied
+					// via OpenSeadragon's own per-image degrees/flipped options (set below, in
+					// initViewer), not via a server-side rotated request URL.
+					const selector = imageResource?.type === 'SpecificResource'
+						&& imageResource.selector?.type === 'ImageApiSelector'
+						? imageResource.selector
+						: null;
+					const rotationValue = selector?.rotation ?? '0';
+					const flipped = rotationValue.startsWith('!');
+					const degrees = parseFloat(flipped ? rotationValue.slice(1) : rotationValue) || 0;
+
 					const services = imageResource?.source?.service || imageResource?.service;
 					if (services) {
 						const service = [].concat(services)[0];
@@ -429,6 +497,8 @@ export default {
 							this.$store.fetchJson(infoUrl).then(
 								(infoItem) => ({
 									...infoItem,
+									degrees,
+									flipped,
 									$meta: { page, itemIndex, layerIndex },
 								}),
 								(error) => {
@@ -446,6 +516,8 @@ export default {
 					} else if (imageResource?.id) {
 						this.tileSources.push({
 							$meta: { page, itemIndex, layerIndex },
+							degrees,
+							flipped,
 							type: 'image',
 							url: imageResource.id,
 							width: imageResource.width,

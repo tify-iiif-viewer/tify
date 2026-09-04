@@ -25,13 +25,19 @@ export default {
 				items?.forEach((item, itemIndex) => {
 					const resources = item.body?.items || [item.body];
 
-					resources.forEach((resource, layerIndex) => {
+					resources.forEach((rawResource, layerIndex) => {
+						// A SpecificResource body (e.g. carrying an ImageApiSelector for
+						// rotation/mirror) has no id/format/service of its own — the real
+						// image is at .source.
+						const isSpecific = rawResource.type === 'SpecificResource';
+						const resource = isSpecific ? (rawResource.source || {}) : rawResource;
+
 						const format = resource.format?.split('/')[1]; // e.g. image/jpeg -> jpeg
 
 						const medium = {
-							fileName: resource.id.split('/').at(-1),
+							fileName: resource.id?.split('/').at(-1),
 							format: format?.toUpperCase(),
-							label: resource.label,
+							label: rawResource.label || resource.label,
 							type: resource.type,
 							url: resource.id,
 							page,
