@@ -87,7 +87,7 @@
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-sass-glob-import": "^5.0.0",
     "vite-plugin-vue-devtools": "^8.2.1",
-    "vitest": "^3.2.7",
+    "vitest": "^5.0.0",
     "vitest-canvas-mock": "^0.3.3",
     "vue": "^3.5.41"
   },
