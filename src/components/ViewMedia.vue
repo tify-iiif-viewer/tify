@@ -624,7 +624,11 @@ export default {
 
 				// Calculate offset for each page, which depends on all previously displayed pages
 				if (pageIndex === 0) {
-					firstVisibleCanvasSize = firstVisibleCanvas[this.$store.isVertical ? 'height' : 'width'];
+					// Annotation coordinates are in canvas space, so normalise by the
+					// canvas size rather than the image size, falling back to the latter
+					firstVisibleCanvasSize = (
+						this.$store.manifest.items[(page === 0 ? 1 : page) - 1] || firstVisibleCanvas
+					)[this.$store.isVertical ? 'height' : 'width'];
 
 					if (page === 0) {
 						return;
