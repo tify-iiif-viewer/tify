@@ -7,6 +7,9 @@ import { parseCoordinatesString } from '../modules/parsing';
 import { createPromise } from '../modules/promise';
 import { isValidPagesArray, isValidUrl } from '../modules/validation';
 
+// Marks manifests converted from IIIF 2, whose range hierarchy must be inferred
+const isConvertedFromIiif2 = Symbol('isConvertedFromIiif2');
+
 function convertManifest(originalManifest) {
 	// For IIIF 2: Some properties are erroneously converted, save for later
 	const {
@@ -22,6 +25,8 @@ function convertManifest(originalManifest) {
 
 	// Fix converted IIIF 2 manifests
 	if (originalManifest['@context'] === 'http://iiif.io/api/presentation/2/context.json') {
+		manifest[isConvertedFromIiif2] = true;
+
 		[].concat(related || []).forEach((object) => {
 			manifest.homepage = manifest.homepage || [];
 			manifest.homepage.push(
@@ -206,6 +211,12 @@ function Store(args = {}) {
 				structure.level = 0;
 
 				mappedStructures.push(structure);
+			}
+
+			// IIIF 3 expresses range hierarchy explicitly, so top-level ranges are
+			// shown as they are
+			if (!store.manifest[isConvertedFromIiif2]) {
+				return mappedStructures;
 			}
 
 			// IIIF 2 manifests often express range hierarchy via "within", which is
