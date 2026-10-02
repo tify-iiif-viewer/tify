@@ -208,6 +208,15 @@ function Store(args = {}) {
 				mappedStructures.push(structure);
 			}
 
+			// IIIF 2 manifests often express range hierarchy via "within", which is
+			// lost during conversion, so nesting is inferred: a range is nested in
+			// another if all of its items are also items of the other range. Note
+			// that ranges may be discontinuous, e.g. text pages plus plates at the
+			// end of a volume, so comparing first and last pages is not sufficient.
+			const itemIds = mappedStructures.map((structure) => new Set(
+				(structure.items || []).map((item) => item.id),
+			));
+
 			let maxLevel = 0;
 			for (let i = 0; i < mappedStructures.length; i += 1) {
 				const structure = mappedStructures[i];
@@ -215,8 +224,8 @@ function Store(args = {}) {
 				for (let j = i + 1; j < mappedStructures.length; j += 1) {
 					const structure2 = mappedStructures[j];
 
-					if (structure2.firstPage >= structure.firstPage
-						&& structure2.lastPage <= structure.lastPage
+					if (itemIds[j].size
+						&& [...itemIds[j]].every((id) => itemIds[i].has(id))
 					) {
 						structure.items = (structure.items || []).filter((item) => item.label);
 						structure.items.push(structure2);
