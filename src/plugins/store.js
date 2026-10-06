@@ -7,6 +7,9 @@ import { parseCoordinatesString } from '../modules/parsing';
 import { createPromise } from '../modules/promise';
 import { isValidPagesArray, isValidUrl } from '../modules/validation';
 
+// Marks manifests converted from IIIF 2, whose range hierarchy must be inferred
+const isConvertedFromIiif2 = Symbol('isConvertedFromIiif2');
+
 function convertManifest(originalManifest) {
 	// For IIIF 2: Some properties are erroneously converted, save for later
 	const {
@@ -22,6 +25,8 @@ function convertManifest(originalManifest) {
 
 	// Fix converted IIIF 2 manifests
 	if (originalManifest['@context'] === 'http://iiif.io/api/presentation/2/context.json') {
+		manifest[isConvertedFromIiif2] = true;
+
 		[].concat(related || []).forEach((object) => {
 			manifest.homepage = manifest.homepage || [];
 			manifest.homepage.push(
@@ -208,6 +213,21 @@ function Store(args = {}) {
 				mappedStructures.push(structure);
 			}
 
+			// IIIF 3 expresses range hierarchy explicitly, so top-level ranges are
+			// shown as they are
+			if (!store.manifest[isConvertedFromIiif2]) {
+				return mappedStructures;
+			}
+
+			// IIIF 2 manifests often express range hierarchy via "within", which is
+			// lost during conversion, so nesting is inferred: a range is nested in
+			// another if all of its items are also items of the other range. Note
+			// that ranges may be discontinuous, e.g. text pages plus plates at the
+			// end of a volume, so comparing first and last pages is not sufficient.
+			const itemIds = mappedStructures.map((structure) => new Set(
+				(structure.items || []).map((item) => item.id),
+			));
+
 			let maxLevel = 0;
 			for (let i = 0; i < mappedStructures.length; i += 1) {
 				const structure = mappedStructures[i];
@@ -215,8 +235,8 @@ function Store(args = {}) {
 				for (let j = i + 1; j < mappedStructures.length; j += 1) {
 					const structure2 = mappedStructures[j];
 
-					if (structure2.firstPage >= structure.firstPage
-						&& structure2.lastPage <= structure.lastPage
+					if (itemIds[j].size
+						&& [...itemIds[j]].every((id) => itemIds[i].has(id))
 					) {
 						structure.items = (structure.items || []).filter((item) => item.label);
 						structure.items.push(structure2);
