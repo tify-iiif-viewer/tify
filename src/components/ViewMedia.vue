@@ -636,11 +636,15 @@ export default {
 					offset += (gapBetweenPages + prevCanvasSize / firstVisibleCanvasSize) * (this.$store.isReversed ? -1 : 1);
 				}
 
-				if (!this.$store.annotations[page]?.[0]?.coords) {
+				if (!this.$store.annotations[page]?.some((annotation) => annotation?.coords)) {
 					return;
 				}
 
 				this.$store.annotations[page]?.forEach((annotation, annotationIndex) => {
+					if (!annotation?.coords) {
+						return;
+					}
+
 					const button = document.createElement('button');
 					button.ariaLabel = `${page}/${annotationIndex}`;
 					button.className = `tify-media-overlay${
