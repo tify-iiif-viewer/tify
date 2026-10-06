@@ -484,24 +484,33 @@ function Store(args = {}) {
 
 				store.annotations[page] = [];
 
-				let resources = canvas.annotations[0].items;
+				// Gather annotations from all annotation pages, not just the first
+				let resources = [];
 
-				if (!resources) {
-					const annotationListUrl = canvas.annotations[0].id;
+				// eslint-disable-next-line no-restricted-syntax
+				for (const annotationPage of canvas.annotations) {
+					let items = annotationPage?.items;
 
-					try {
-						const annotationList = await store.fetchJson(annotationListUrl);
-						resources = annotationList.resources || annotationList.items;
-					} catch (error) {
-						const status = error.response ? error.response.statusText : error.message;
-						// eslint-disable-next-line no-console
-						console.warn(`Could not load annotations: ${status}`);
-						store.annotationsAvailable = false;
-						return;
+					if (!items && annotationPage?.id) {
+						try {
+							// eslint-disable-next-line no-await-in-loop
+							const annotationList = await store.fetchJson(annotationPage.id);
+							items = annotationList.resources || annotationList.items;
+						} catch (error) {
+							const status = error.response ? error.response.statusText : error.message;
+							// eslint-disable-next-line no-console
+							console.warn(`Could not load annotations: ${status}`);
+							continue; // eslint-disable-line no-continue
+						}
+					}
+
+					if (items instanceof Array) {
+						resources = resources.concat(items);
 					}
 				}
 
-				if (!(resources instanceof Array)) {
+				if (!resources.length) {
+					store.annotationsAvailable = false;
 					return;
 				}
 
