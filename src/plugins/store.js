@@ -753,6 +753,17 @@ function Store(args = {}) {
 			}
 
 			store.updateOptions({ pages });
+
+			// Lets embedders (e.g. pb-tify) react to page changes regardless of
+			// origin (external API call vs. in-viewer navigation), since there is
+			// no other way to observe that distinction from outside the instance.
+			if (store.rootElement) {
+				store.rootElement.dispatchEvent(new CustomEvent('tify-page-change', {
+					detail: { pages },
+					bubbles: true,
+				}));
+			}
+
 			return pages;
 		},
 		toggleAnnotationId(annotationId) {
