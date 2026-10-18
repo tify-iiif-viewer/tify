@@ -1,0 +1,96 @@
+{
+	"@context": [
+		"http://www.w3.org/ns/anno.jsonld",
+		"http://iiif.io/api/search/2/context.json"
+	],
+	"id": "https://example.org/search/v2?q=gouda",
+	"type": "AnnotationPage",
+	"partOf": {
+		"id": "https://example.org/search/v2",
+		"type": "AnnotationCollection",
+		"total": 3
+	},
+	"items": [
+		{
+			"id": "https://example.org/search/v2/annotation/0",
+			"type": "Annotation",
+			"motivation": "highlighting",
+			"body": {
+				"type": "TextualBody",
+				"value": "Gouda",
+				"format": "text/plain"
+			},
+			"target": {
+				"type": "SpecificResource",
+				"source": "https://example.org/search/canvas/p1",
+				"selector": {
+					"type": "FragmentSelector",
+					"conformsTo": "http://www.w3.org/TR/media-frags/",
+					"value": "xywh=100,200,300,50"
+				}
+			}
+		},
+		{
+			"id": "https://example.org/search/v2/annotation/1",
+			"type": "Annotation",
+			"motivation": "highlighting",
+			"body": {
+				"type": "TextualBody",
+				"value": "Gouda",
+				"format": "text/plain"
+			},
+			"target": {
+				"type": "SpecificResource",
+				"source": "https://example.org/search/canvas/p3",
+				"selector": {
+					"type": "FragmentSelector",
+					"conformsTo": "http://www.w3.org/TR/media-frags/",
+					"value": "xywh=700,1500,200,40"
+				}
+			}
+		},
+		{
+			"id": "https://example.org/search/v2/annotation/2",
+			"type": "Annotation",
+			"motivation": "highlighting",
+			"body": {
+				"type": "TextualBody",
+				"value": "Goude",
+				"format": "text/plain"
+			},
+			"target": {
+				"type": "SpecificResource",
+				"source": "https://example.org/search/canvas/p3",
+				"selector": {
+					"type": "FragmentSelector",
+					"conformsTo": "http://www.w3.org/TR/media-frags/",
+					"value": "xywh=200,1800,250,40"
+				}
+			}
+		}
+	],
+	"annotations": [
+		{
+			"type": "AnnotationPage",
+			"items": [
+				{
+					"id": "https://example.org/search/v2/hit/0",
+					"type": "Annotation",
+					"motivation": "contextualizing",
+					"target": {
+						"type": "SpecificResource",
+						"source": "https://example.org/search/v2/annotation/1",
+						"selector": [
+							{
+								"type": "TextQuoteSelector",
+								"prefix": "the city of ",
+								"exact": "Gouda",
+								"suffix": " in Holland"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

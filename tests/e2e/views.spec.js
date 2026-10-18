@@ -41,18 +41,21 @@ describe('Views', () => {
 		cy.contains('[aria-expanded="true"]', 'Text');
 
 		cy.get('.tify').type('2');
-		cy.contains('[aria-expanded="true"]', 'Pages');
+		cy.contains('[aria-expanded="true"]', 'Search');
 
 		cy.get('.tify').type('3');
-		cy.contains('[aria-expanded="true"]', 'Contents');
+		cy.contains('[aria-expanded="true"]', 'Pages');
 
 		cy.get('.tify').type('4');
-		cy.contains('[aria-expanded="true"]', 'Info');
+		cy.contains('[aria-expanded="true"]', 'Contents');
 
 		cy.get('.tify').type('5');
-		cy.contains('[aria-expanded="true"]', 'Export');
+		cy.contains('[aria-expanded="true"]', 'Info');
 
 		cy.get('.tify').type('6');
+		cy.contains('[aria-expanded="true"]', 'Export');
+
+		cy.get('.tify').type('7');
 		cy.contains('[aria-expanded="true"]', 'Collection');
 
 		cy.get('.tify').type('h');

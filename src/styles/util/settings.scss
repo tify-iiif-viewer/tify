@@ -120,3 +120,7 @@ $main-bg: var(
 	) 2px 1px / 3px 3px
 ) !default;
 $panel-bg: $bg !default;
+$search-hit-color: var(
+	--tify-search-hit-color,
+	oklch(85% .17 90deg)
+) !default;

@@ -5,6 +5,7 @@ import { upgrade } from '@iiif/parser/upgrader';
 import { filterHtml } from '../modules/filter';
 import { parseCoordinatesString } from '../modules/parsing';
 import { createPromise } from '../modules/promise';
+import { getSearchService, getSearchUrl, parseSearchResponse } from '../modules/search';
 import { isValidPagesArray, isValidUrl } from '../modules/validation';
 
 function convertManifest(originalManifest) {
@@ -69,6 +70,16 @@ function convertManifest(originalManifest) {
 	return manifest;
 }
 
+function getEmptySearch() {
+	return {
+		currentHitId: null,
+		hits: [],
+		next: null,
+		query: null,
+		total: null,
+	};
+}
+
 function Store(args = {}) {
 	const store = reactive({
 		annotations: [],
@@ -80,6 +91,7 @@ function Store(args = {}) {
 		options: args.options || {},
 		readyPromises: [],
 		rootElement: args.rootElement || null,
+		search: getEmptySearch(),
 		urlUpdateTimeout: null,
 		annotationsActive: computed(() => {
 			if (store.options.view === 'text') {
@@ -639,6 +651,9 @@ function Store(args = {}) {
 					await nextTick();
 
 					if (manifest.type === 'Manifest') {
+						// Results of another manifest do not apply, so the search
+						// view runs the query again
+						store.search = getEmptySearch();
 						store.manifest = manifest;
 
 						// Merging user-set query params with defaults
@@ -737,6 +752,69 @@ function Store(args = {}) {
 				|| '';
 
 			return ([].concat(label).join(separator) || '').trim();
+		},
+		async loadMoreSearchResults() {
+			const { next, query } = store.search;
+			if (!next) {
+				return;
+			}
+
+			let response;
+			try {
+				response = await store.fetchJson(next);
+			} catch (error) {
+				store.addError(`Error loading search results: ${error.message}`);
+				return;
+			}
+
+			// Discard results if another search has been started in the meantime
+			if (query !== store.search.query) {
+				return;
+			}
+
+			const result = parseSearchResponse(response, store.manifest);
+			store.search.hits = [...store.search.hits, ...result.hits];
+			store.search.next = result.next;
+		},
+		async runSearch(query) {
+			const trimmedQuery = (query || '').trim();
+			const service = getSearchService(store.manifest);
+
+			store.search = { ...getEmptySearch(), query: trimmedQuery || null };
+
+			if (!trimmedQuery || !service) {
+				return;
+			}
+
+			let response;
+			try {
+				response = await store.fetchJson(getSearchUrl(service.id, trimmedQuery));
+			} catch (error) {
+				store.addError(`Error loading search results: ${error.message}`);
+				return;
+			}
+
+			// Discard results if another search has been started in the meantime
+			if (trimmedQuery !== store.search.query) {
+				return;
+			}
+
+			const result = parseSearchResponse(response, store.manifest);
+			store.search.hits = result.hits;
+			store.search.next = result.next;
+			store.search.total = result.total;
+		},
+		setCurrentSearchHit(hit) {
+			store.search.currentHitId = hit.id;
+
+			const visiblePages = store.options.pages.filter((page) => page > 0);
+			if (!visiblePages.includes(hit.page)) {
+				store.setPage(hit.page);
+			}
+
+			if (!store.isContainerWidthAtLeast('medium')) {
+				store.updateOptions({ view: null });
+			}
 		},
 		setPage(pageOrPages) {
 			let pages = [].concat(pageOrPages);

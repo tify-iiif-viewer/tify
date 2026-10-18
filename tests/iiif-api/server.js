@@ -90,7 +90,7 @@ server.on('request', (req, res) => {
 		const data = fs.readFileSync(filePath, 'utf8')
 			?.replace(
 				// Rewrite all remote URLs to local ones, except IIIF API profiles
-				/(?!http:\/\/iiif.io\/api\/(image|\w+\/\d+\/context\.json))https?:\/\/[a-z0-9-.:]*/gi,
+				/(?!http:\/\/iiif.io\/api\/(image|search\/\d+\/search|\w+\/\d+\/context\.json))https?:\/\/[a-z0-9-.:]*/gi,
 				`http://127.0.0.1:${server.port}`,
 			)
 			.replace(
@@ -132,6 +132,9 @@ server.on('request', (req, res) => {
 		} else if (segments[0] === 'fulltext') {
 			// Rewrite XML annotation URLs for local testing
 			outputJson(`annotations/gdz-${segments[1]}-${segments[2]}`);
+		} else if (segments[0] === 'search' && ['v1', 'v2'].includes(segments[1]?.split('?')[0])) {
+			// Search results do not depend on the query
+			outputJson(`search/${segments[1].split('?')[0]}.json`);
 		} else if (['jpg', 'png', 'svg'].includes(segments.at(-1).split('.').at(-1))) {
 			outputImage();
 		} else if (['audio', 'video'].includes(segments[0])) {

@@ -5,6 +5,7 @@ import { preventEvent } from '../modules/keyboard';
 
 export default {
 	props: {
+		searchEnabled: Boolean,
 		textEnabled: Boolean,
 		tocEnabled: Boolean,
 	},
@@ -22,6 +23,8 @@ export default {
 						return !!this.$store.manifest;
 					case 'text':
 						return this.textEnabled;
+					case 'search':
+						return this.searchEnabled;
 					case 'thumbnails':
 						return !!this.$store.manifest;
 					case 'toc':
@@ -263,6 +266,10 @@ export default {
 							<template v-if="view === 'text'">
 								<IconText />
 								<span class="tify-header-button-label">{{ $translate('Text') }}</span>
+							</template>
+							<template v-else-if="view === 'search'">
+								<IconMagnify />
+								<span class="tify-header-button-label">{{ $translate('Search') }}</span>
 							</template>
 							<template v-else-if="view === 'thumbnails'">
 								<IconViewModule />

@@ -1,0 +1,30 @@
+{
+	"@context": "http://iiif.io/api/presentation/3/context.json",
+	"id": "https://example.org/manifests/search-collection.json",
+	"type": "Collection",
+	"label": {
+		"en": [
+			"Searchable collection"
+		]
+	},
+	"items": [
+		{
+			"id": "https://example.org/manifests/search.json",
+			"type": "Manifest",
+			"label": {
+				"en": [
+					"Searchable document"
+				]
+			}
+		},
+		{
+			"id": "https://example.org/manifests/search-v1.json",
+			"type": "Manifest",
+			"label": {
+				"en": [
+					"Searchable document with Search 1"
+				]
+			}
+		}
+	]
+}
