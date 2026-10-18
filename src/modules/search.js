@@ -141,7 +141,8 @@ export function parseSearchResponse(response, manifest) {
 		annotationIds.forEach((annotationId, index) => {
 			contextByAnnotationId[annotationId] = {
 				before: index === 0 ? hit.before || '' : '',
-				match: hit.match || '',
+				// A hit may span multiple annotations, each with its own text
+				match: annotationIds.length === 1 ? hit.match || '' : '',
 				after: index === annotationIds.length - 1 ? hit.after || '' : '',
 			};
 		});
@@ -166,7 +167,8 @@ export function parseSearchResponse(response, manifest) {
 			id,
 			page,
 			coords,
-			text: getText(annotation.body || annotation.resource) || context.match || '',
+			// The context has the text as found in the document, the body may be the query
+			text: context.match || getText(annotation.body || annotation.resource) || '',
 			before: context.before || '',
 			after: context.after || '',
 		});

@@ -211,6 +211,33 @@ describe('parseSearchResponse', () => {
 		expect(parseSearchResponse({}, manifest)).toEqual({ total: 0, next: null, hits: [] });
 	});
 
+	it('prefers the matched text of the context over the body of the hit', () => {
+		const result = parseSearchResponse({
+			items: [
+				{
+					id: 'https://example.org/anno/1',
+					motivation: 'highlighting',
+					body: { type: 'TextualBody', value: 'gouda' },
+					target: 'https://example.org/canvas/1#xywh=1,2,3,4',
+				},
+			],
+			annotations: [{
+				items: [{
+					motivation: 'contextualizing',
+					target: {
+						source: 'https://example.org/anno/1',
+						selector: [{
+							type: 'TextQuoteSelector', prefix: 'Adresboek ', exact: 'GOUDA', suffix: ', 1885',
+						}],
+					},
+				}],
+			}],
+		}, manifest);
+
+		expect(result.hits[0].text).toBe('GOUDA');
+		expect(result.hits[0].before).toBe('Adresboek ');
+	});
+
 	it('uses contextualizing annotations erroneously listed as items for context only', () => {
 		const result = parseSearchResponse({
 			partOf: { total: 3 },
