@@ -70,6 +70,16 @@ function convertManifest(originalManifest) {
 	return manifest;
 }
 
+function getEmptySearch() {
+	return {
+		currentHitId: null,
+		hits: [],
+		next: null,
+		query: null,
+		total: null,
+	};
+}
+
 function Store(args = {}) {
 	const store = reactive({
 		annotations: [],
@@ -81,13 +91,7 @@ function Store(args = {}) {
 		options: args.options || {},
 		readyPromises: [],
 		rootElement: args.rootElement || null,
-		search: {
-			currentHitId: null,
-			hits: [],
-			next: null,
-			query: null,
-			total: null,
-		},
+		search: getEmptySearch(),
 		urlUpdateTimeout: null,
 		annotationsActive: computed(() => {
 			if (store.options.view === 'text') {
@@ -647,6 +651,9 @@ function Store(args = {}) {
 					await nextTick();
 
 					if (manifest.type === 'Manifest') {
+						// Results of another manifest do not apply, so the search
+						// view runs the query again
+						store.search = getEmptySearch();
 						store.manifest = manifest;
 
 						// Merging user-set query params with defaults
@@ -773,11 +780,7 @@ function Store(args = {}) {
 			const trimmedQuery = (query || '').trim();
 			const service = getSearchService(store.manifest);
 
-			store.search.currentHitId = null;
-			store.search.hits = [];
-			store.search.next = null;
-			store.search.query = trimmedQuery || null;
-			store.search.total = null;
+			store.search = { ...getEmptySearch(), query: trimmedQuery || null };
 
 			if (!trimmedQuery || !service) {
 				return;

@@ -40,4 +40,21 @@ describe('Search', () => {
 		cy.contains('.tify-page-select > button', '2');
 		cy.get('.tify-media-overlay.-search.-current').should('have.length', 1);
 	});
+
+	it('runs the search again when another manifest of a collection is loaded', () => {
+		cy.visit(`/?manifest=${Cypress.expose('iiifApiUrl')}/manifests/search-collection.json`);
+
+		cy.contains('.tify-collection-link', /^\s*Searchable document\s*$/).click();
+		cy.contains('.tify-header-button', 'Search').click();
+		cy.get('.tify-search-input').type('gouda{enter}');
+		cy.contains('.tify-search-count', '3 results');
+
+		cy.contains('.tify-header-button', 'Collection').click();
+		cy.contains('.tify-collection-link', 'Searchable document with Search 1').click();
+
+		cy.contains('.tify-header-button', 'Search').click();
+		cy.get('.tify-search-input').should('have.value', 'gouda');
+		cy.contains('.tify-search-count', '1 result');
+		cy.contains('.tify-search-hit', 'cheese from Gouda.');
+	});
 });
