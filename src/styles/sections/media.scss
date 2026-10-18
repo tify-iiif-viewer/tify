@@ -196,12 +196,23 @@
 				box-shadow: 0 0 0 2px $link-color, 0 0 0 3px oklch(0% 0 0deg / 25%);
 			}
 		}
+
+		// Search hit overlay container
+		// stylelint-disable-next-line no-descending-specificity
+		div:has(> .tify-media-overlay.-search) {
+			box-shadow: 0 0 0 1px $search-hit-color, 0 0 0 2px oklch(0% 0 0deg / 25%);
+
+			&:focus,
+			&:hover {
+				box-shadow: 0 0 0 2px $search-hit-color, 0 0 0 3px oklch(0% 0 0deg / 25%);
+			}
+		}
 	}
 
 	&.-annotations-hidden {
-		// Annotation overlays
+		// Annotation overlays, but not search hits
 		// stylelint-disable-next-line no-descending-specificity
-		.openseadragon-canvas > div {
+		.openseadragon-canvas div:has(> .tify-media-overlay:not(.-search)) {
 			visibility: hidden;
 		}
 	}
@@ -224,6 +235,23 @@
 		mix-blend-mode: difference;
 		outline: calc(g(.25) - 2px) solid #fff;
 		outline-offset: 2px;
+	}
+
+	&.-search {
+		background: oklch(from $search-hit-color l c h / 40%);
+
+		&:not(:disabled) {
+			&:focus,
+			&:hover {
+				background: oklch(from $search-hit-color l c h / 55%);
+			}
+		}
+
+		&.-current {
+			background: oklch(from $search-hit-color l c h / 55%);
+			mix-blend-mode: normal;
+			outline-color: $search-hit-color;
+		}
 	}
 }
 

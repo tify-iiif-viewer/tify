@@ -16,6 +16,8 @@ export default {
 			avResource: null,
 			overlayElements: [],
 			promise: createPromise(),
+			searchHitPanPending: false,
+			searchOverlayElements: [],
 			tileSources: [],
 			viewer: null,
 			viewerState: {
@@ -114,6 +116,21 @@ export default {
 		// eslint-disable-next-line func-names
 		'$store.options.view': function () {
 			this.updateOverlays();
+		},
+		// eslint-disable-next-line func-names
+		'$store.search.hits': function () {
+			this.updateOverlays();
+		},
+		// eslint-disable-next-line func-names
+		'$store.search.currentHitId': function (hitId) {
+			this.searchOverlayElements.forEach((element) => {
+				element.classList.toggle('-current', element.dataset.hitId === hitId);
+			});
+
+			// The hit may be on a page that is yet to be loaded, so panning may
+			// have to wait until updateOverlays() is called
+			this.searchHitPanPending = !!hitId;
+			this.panToCurrentSearchHit();
 		},
 	},
 	mounted() {
@@ -524,6 +541,27 @@ export default {
 				default:
 			}
 		},
+		panToCurrentSearchHit() {
+			if (!this.viewer || !this.searchHitPanPending) {
+				return;
+			}
+
+			const overlayElement = this.searchOverlayElements.find(
+				(element) => element.dataset.hitId === this.$store.search.currentHitId,
+			);
+
+			if (!overlayElement) {
+				return;
+			}
+
+			this.searchHitPanPending = false;
+
+			// Pan current search hit into view if outside of viewport bounds
+			const overlayBounds = this.viewer.getOverlayById(overlayElement).getBounds(this.viewer.viewport);
+			if (!this.viewer.viewport.getBounds().intersection(overlayBounds)) {
+				this.viewer.viewport.panTo(overlayBounds.getCenter());
+			}
+		},
 		removeImageOptions() {
 			this.$store.updateOptions({
 				pan: {},
@@ -608,13 +646,24 @@ export default {
 
 			this.viewer.clearOverlays();
 			this.overlayElements = [];
+			this.searchOverlayElements = [];
 
-			if (!this.$store.annotationsActive) {
+			const { annotationsActive } = this.$store;
+			const searchHits = this.$store.search.hits;
+
+			if (!annotationsActive && !searchHits.length) {
 				return;
 			}
 
 			let firstVisibleCanvasSize;
 			let offset = 0;
+
+			const getLocation = (coords) => new OpenSeadragon.Rect(
+				coords[0] / firstVisibleCanvasSize + (this.$store.isVertical ? 0 : offset),
+				coords[1] / firstVisibleCanvasSize + (this.$store.isVertical ? offset : 0),
+				coords[2] / firstVisibleCanvasSize,
+				coords[3] / firstVisibleCanvasSize,
+			);
 
 			this.$store.options.pages.filter((page) => page > -1).forEach((page, pageIndex) => {
 				const firstVisibleCanvas = this.tileSources.find(
@@ -636,19 +685,52 @@ export default {
 					offset += (gapBetweenPages + prevCanvasSize / firstVisibleCanvasSize) * (this.$store.isReversed ? -1 : 1);
 				}
 
-				if (!this.$store.annotations[page]?.[0]?.coords) {
-					return;
+				if (annotationsActive && this.$store.annotations[page]?.[0]?.coords) {
+					this.$store.annotations[page]?.forEach((annotation, annotationIndex) => {
+						const button = document.createElement('button');
+						button.ariaLabel = `${page}/${annotationIndex}`;
+						button.className = `tify-media-overlay${
+							this.$store.options.annotationId === annotation.id
+								? ' -current'
+								: ''
+						}`;
+						button.id = annotation.id;
+						button.type = 'button';
+
+						// eslint-disable-next-line no-new
+						new OpenSeadragon.MouseTracker({
+							element: button,
+							clickHandler: (event) => {
+								if (!event.quick) {
+									// Click triggered by drag-end
+									return;
+								}
+
+								// TODO: Canvas touch event triggers click on newly opened
+								// view on small containers. Using timeout as a workaround.
+								setTimeout(() => this.$store.toggleAnnotationId(annotation.id), 5);
+							},
+							keyDownHandler: (key) => key.keyCode === 13 && this.$store.toggleAnnotationId(annotation.id),
+						});
+
+						this.viewer.addOverlay({
+							element: button,
+							location: getLocation(annotation.coords),
+						});
+
+						this.overlayElements.push(button);
+					});
 				}
 
-				this.$store.annotations[page]?.forEach((annotation, annotationIndex) => {
+				searchHits.filter((hit) => hit.page === page && hit.coords).forEach((hit) => {
 					const button = document.createElement('button');
-					button.ariaLabel = `${page}/${annotationIndex}`;
-					button.className = `tify-media-overlay${
-						this.$store.options.annotationId === annotation.id
+					button.ariaLabel = hit.text;
+					button.className = `tify-media-overlay -search${
+						this.$store.search.currentHitId === hit.id
 							? ' -current'
 							: ''
 					}`;
-					button.id = annotation.id;
+					button.dataset.hitId = hit.id;
 					button.type = 'button';
 
 					// eslint-disable-next-line no-new
@@ -660,26 +742,25 @@ export default {
 								return;
 							}
 
-							// TODO: Canvas touch event triggers click on newly opened
-							// view on small containers. Using timeout as a workaround.
-							setTimeout(() => this.$store.toggleAnnotationId(annotation.id), 5);
+							this.$store.search.currentHitId = hit.id;
 						},
-						keyDownHandler: (key) => key.keyCode === 13 && this.$store.toggleAnnotationId(annotation.id),
+						keyDownHandler: (key) => {
+							if (key.keyCode === 13) {
+								this.$store.search.currentHitId = hit.id;
+							}
+						},
 					});
 
 					this.viewer.addOverlay({
 						element: button,
-						location: new OpenSeadragon.Rect(
-							annotation.coords[0] / firstVisibleCanvasSize + (this.$store.isVertical ? 0 : offset),
-							annotation.coords[1] / firstVisibleCanvasSize + (this.$store.isVertical ? offset : 0),
-							annotation.coords[2] / firstVisibleCanvasSize,
-							annotation.coords[3] / firstVisibleCanvasSize,
-						),
+						location: getLocation(hit.coords),
 					});
 
-					this.overlayElements.push(button);
+					this.searchOverlayElements.push(button);
 				});
 			});
+
+			this.panToCurrentSearchHit();
 		},
 		// NOTE: With Vue 3, watching return values of OpenSeadragon function via
 		// `computed` is no longer working, so we need to actively keep track of

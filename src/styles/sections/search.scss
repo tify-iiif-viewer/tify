@@ -1,0 +1,106 @@
+.tify-search {
+	@extend %panel;
+	overflow-y: auto;
+}
+
+.tify-search-form {
+	backdrop-filter: $blur;
+	background: oklch(from $panel-bg l c h / 61.8%);
+	display: flex;
+	margin: g(-.5) g(-.5) g(.5);
+	padding: g(.5);
+	position: sticky;
+	top: g(-.5);
+	z-index: 2; // Keep form above list items, but below header dropdowns
+}
+
+.tify-search-input {
+	border-radius: $br 0 0 $br;
+	flex: 1;
+	min-width: 0;
+
+	// Override dimensions host websites may set for inputs
+	.tify-search-form & {
+		height: auto;
+		margin: 0;
+		min-height: 0;
+	}
+
+	&:focus {
+		z-index: 1;
+	}
+}
+
+.tify-search-button {
+	@extend %button-small;
+	border-radius: 0 $br $br 0;
+	margin-left: -1px;
+}
+
+.tify-search-count,
+.tify-search-none {
+	color: $text-color-muted;
+	margin: 0 0 g(.5);
+}
+
+.tify-search-none {
+	font-style: italic;
+}
+
+.tify-search-page {
+	margin: 0 0 g(.5);
+
+	.tify-page-name {
+		width: auto;
+	}
+}
+
+.tify-search-list {
+	list-style: none;
+	margin: 0;
+	padding: 0 !important;
+}
+
+.tify-search-item {
+	margin: 0 g(-.25);
+
+	&.-current {
+		box-shadow: g(-.25) 0 $base-color-pale;
+	}
+}
+
+.tify-search-hit {
+	background: none;
+	border: 0;
+	border-radius: $br;
+	color: inherit;
+	cursor: pointer;
+	display: block;
+	font: inherit;
+	overflow-wrap: break-word;
+	padding: g(.25);
+	text-align: left;
+	width: 100%;
+
+	&:focus,
+	&:hover {
+		background: $base-color-paler;
+		color: $link-color;
+	}
+
+	.tify-search-item.-current & {
+		color: $link-color;
+	}
+
+	mark {
+		background: oklch(from $search-hit-color l c h / 50%);
+		border-radius: $br;
+		color: inherit;
+		padding: 0 .1em;
+	}
+}
+
+.tify-search-more {
+	@extend %button-small;
+	width: 100%;
+}

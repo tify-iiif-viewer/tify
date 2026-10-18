@@ -1,5 +1,6 @@
 <script>
 import { createPromise } from './modules/promise';
+import { getSearchService } from './modules/search';
 
 export default {
 	props: {
@@ -15,6 +16,9 @@ export default {
 		};
 	},
 	computed: {
+		hasSearch() {
+			return !!getSearchService(this.$store.manifest);
+		},
 		hasText() {
 			return this.$store.manifest?.items?.some((canvas) => 'annotations' in canvas);
 		},
@@ -125,6 +129,7 @@ export default {
 	>
 		<AppHeader
 			v-if="readyToRender && ($store.collection || $store.manifest)"
+			:searchEnabled="hasSearch"
 			:textEnabled="hasText"
 			:tocEnabled="hasToc"
 		/>
@@ -141,6 +146,11 @@ export default {
 					v-if="hasText"
 					v-show="$store.options.view === 'text'"
 					:id="$getId('text')"
+				/>
+				<ViewSearch
+					v-if="hasSearch"
+					v-show="$store.options.view === 'search'"
+					:id="$getId('search')"
 				/>
 				<ViewThumbnails
 					v-show="$store.options.view === 'thumbnails'"

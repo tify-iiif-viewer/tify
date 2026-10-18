@@ -184,6 +184,15 @@ export default {
 	rotation: null,
 
 	/**
+	 * The initial search query. Only has effect for manifests with a IIIF
+	 * Content Search service (version 1 or 2), whose results are displayed in
+	 * the search view and highlighted on the image.
+	 *
+	 * @type {?string}
+	 */
+	searchQuery: null,
+
+	/**
 	 * The URL of the directory where TIFY finds its translations, without a
 	 * trailing `/`. If not set, TIFY tries to determine this URL automatically
 	 * from its `<script>` element, but this may not work depending on how TIFY
@@ -224,6 +233,7 @@ export default {
 		'pages',
 		'pan',
 		'rotation',
+		'searchQuery',
 		'view',
 		'zoom',
 	],
@@ -255,6 +265,7 @@ export default {
 	 */
 	views: [
 		'text',
+		'search',
 		'thumbnails',
 		'toc',
 		'info',

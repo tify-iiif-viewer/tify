@@ -1,0 +1,33 @@
+{
+	"@context": "http://iiif.io/api/search/1/context.json",
+	"@id": "https://example.org/search/v1?q=gouda",
+	"@type": "sc:AnnotationList",
+	"within": {
+		"@type": "sc:Layer",
+		"total": 1
+	},
+	"startIndex": 0,
+	"resources": [
+		{
+			"@id": "https://example.org/search/v1/annotation/0",
+			"@type": "oa:Annotation",
+			"motivation": "sc:painting",
+			"resource": {
+				"@type": "cnt:ContentAsText",
+				"chars": "Gouda"
+			},
+			"on": "https://example.org/search/canvas/p2#xywh=400,600,300,50"
+		}
+	],
+	"hits": [
+		{
+			"@type": "search:Hit",
+			"annotations": [
+				"https://example.org/search/v1/annotation/0"
+			],
+			"match": "Gouda",
+			"before": "cheese from ",
+			"after": "."
+		}
+	]
+}
